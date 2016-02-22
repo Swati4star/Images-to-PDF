@@ -61,22 +61,25 @@ public class ViewFiles extends Fragment {
 
         ArrayList<String> inFiles = new ArrayList<String >();
         File[] files = folder.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-            } else {
-                if(file.getName().endsWith(".pdf")){
-                    inFiles.add(file.getPath());
+        if(files==null)
+            Toast.makeText(ac,"No PDFs right now",Toast.LENGTH_LONG).show();
+            else{
+            for (File file : files) {
+                if (file.isDirectory()) {
+                } else {
+                    if (file.getName().endsWith(".pdf")) {
+                        inFiles.add(file.getPath());
 
-                    Log.e("adding",file.getName());
+                        Log.e("adding", file.getName());
 
+                    }
                 }
             }
+
+            Files_adapter adapter = new Files_adapter(ac, inFiles);
+            GridView g = (GridView) root.findViewById(R.id.list);
+            g.setAdapter(adapter);
         }
-
-        Files_adapter adapter = new Files_adapter(ac,inFiles);
-        GridView g = (GridView) root.findViewById(R.id.list);
-        g.setAdapter(adapter);
-
         return super.onCreateView(inflater, container, savedInstanceState);
 
     }

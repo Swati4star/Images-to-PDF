@@ -31,11 +31,6 @@
         android:id="@+id/badd"
         android:text="Select Images"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pdfcreate"
-        android:text="Create Pdf"/>
 
     <Button
         android:layout_width="match_parent"
@@ -43,6 +38,17 @@
         android:id="@+id/b"
         android:visibility="gone"
         android:text="Open Pdf"/>
+
+    <com.dd.morphingbutton.MorphingButton
+        android:id="@+id/pdfcreate"
+        android:text="Create Pdf"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mb_white"/>
+
 
 </LinearLayout>
 </ScrollView>

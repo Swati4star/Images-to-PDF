@@ -10,6 +10,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -39,10 +43,11 @@ public class First extends Fragment {
 
     private int PICK_IMAGE_REQUEST = 1;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
+    private int mMorphCounter1 = 1;
 
     List<String> imagesuri;
     TextView t;
-    Button b, badd, bcreate;
+    Button b, badd;
     String path;
     Activity ac;
 
@@ -64,7 +69,6 @@ public class First extends Fragment {
         t = (TextView) root.findViewById(R.id.text);
         b = (Button) root.findViewById(R.id.b);
         badd = (Button) root.findViewById(R.id.badd);
-        bcreate = (Button) root.findViewById(R.id.pdfcreate);
 
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -102,12 +106,22 @@ public class First extends Fragment {
         });
 
 
-        bcreate.setOnClickListener(new View.OnClickListener() {
+
+
+        final MorphingButton btnMorph1 = (MorphingButton) root.findViewById(R.id.pdfcreate);
+        btnMorph1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                imcreate();
+            public void onClick(View view) {
+                if(imagesuri.size()==0){
+                    Toast.makeText(ac, "No Images selected", Toast.LENGTH_LONG).show();
+
+                }else {
+                    imcreate();
+                    onMorphButton1Clicked(btnMorph1);
+                }
             }
         });
+
 
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -144,14 +158,43 @@ public class First extends Fragment {
         }
     }
 
+    private void onMorphButton1Clicked(final MorphingButton btnMorph) {
+        if (mMorphCounter1 == 0) {
+            mMorphCounter1++;
+            morphToSquare(btnMorph, integer(R.integer.mb_animation));
+        } else if (mMorphCounter1 == 1) {
+            mMorphCounter1 = 0;
+            morphToSuccess(btnMorph);
+        }
+    }
 
+    private void morphToSquare(final MorphingButton btnMorph, int duration) {
+        MorphingButton.Params square = MorphingButton.Params.create()
+                .duration(duration)
+                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
+                .width(dimen(R.dimen.mb_width_200))
+                .height(dimen(R.dimen.mb_height_56))
+                .color(color(R.color.mb_blue))
+                .colorPressed(color(R.color.mb_blue_dark))
+                .text(getString(R.string.mb_button));
+        btnMorph.morph(square);
+    }
+
+    private void morphToSuccess(final MorphingButton btnMorph) {
+        MorphingButton.Params circle = MorphingButton.Params.create()
+                .duration(integer(R.integer.mb_animation))
+                .cornerRadius(dimen(R.dimen.mb_height_56))
+                .width(dimen(R.dimen.mb_height_56))
+                .height(dimen(R.dimen.mb_height_56))
+                .color(color(R.color.mb_green))
+                .colorPressed(color(R.color.mb_green_dark))
+                .icon(R.drawable.ic_done);
+        btnMorph.morph(circle);
+    }
     public void imcreate() {
         new doindstuuf().execute();
     }
-
-
-
-    public class doindstuuf extends AsyncTask<String,String,String>{
+   public class doindstuuf extends AsyncTask<String,String,String>{
 
         Dialog d;
 
@@ -159,7 +202,8 @@ public class First extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             d = new Dialog(ac);
-            d.setTitle("Creating..");
+            d.setTitle("Creating PDF. This may take a while!");
+            d.setCancelable(false);
             d.show();
         }
 
@@ -274,9 +318,21 @@ public class First extends Fragment {
             }
 
             document.close();
+            imagesuri.clear();
 
             return null;
         }
+    }
+
+    public int integer(@IntegerRes int resId) {
+        return getResources().getInteger(resId);
+    }
+    public int dimen(@DimenRes int resId) {
+        return (int) getResources().getDimension(resId);
+    }
+
+    public int color(@ColorRes int resId) {
+        return getResources().getColor(resId);
     }
 
 }

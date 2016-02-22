@@ -30,4 +30,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.github.ParkSangGwon:TedPicker:v1.0.7'
     compile files('libs/itextg-5.5.4.jar')
+    compile 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56' // commit hash
+
 }
