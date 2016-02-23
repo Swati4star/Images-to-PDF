@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
@@ -9,23 +10,22 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="swati4star.createpdf.MainActivity">
 
-
-    <ImageView
+    <com.andexert.library.RippleView
+        android:id="@+id/ripp"
         android:layout_width="match_parent"
-        android:id="@+id/iv"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-
+        android:layout_height="match_parent"
+        ripple:rv_color="@color/colorPrimary"
+        ripple:rv_type="rectangle">
     <TextView
         android:text="Vfdavadvfdbv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:fontFamily="casual"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_weight="0.8"
         android:id="@+id/name"/>
 
 
-
+</com.andexert.library.RippleView>
 </LinearLayout>

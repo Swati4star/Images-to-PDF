@@ -13,17 +13,17 @@ import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.itextpdf.text.Document;
@@ -41,34 +41,35 @@ import java.util.List;
 public class First extends Fragment {
 
 
-    private int PICK_IMAGE_REQUEST = 1;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private int mMorphCounter1 = 1;
 
     List<String> imagesuri;
+    MorphingButton btnMorph1;
     TextView t;
-    Button b, badd;
+    MorphingButton b, badd;
     String path;
     Activity ac;
+    String filename;
+    MorphingButton buttt;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ac = (Activity)context;
+        ac = (Activity) context;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_first,container);
+        View root = inflater.inflate(R.layout.fragment_first, container,false);
 
         imagesuri = new ArrayList<>();
 
 
         t = (TextView) root.findViewById(R.id.text);
-        b = (Button) root.findViewById(R.id.b);
-        badd = (Button) root.findViewById(R.id.badd);
+        b = (MorphingButton) root.findViewById(R.id.b);
+        badd = (MorphingButton) root.findViewById(R.id.badd);
 
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -92,79 +93,78 @@ public class First extends Fragment {
         badd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
-
-                Intent intent  = new Intent(ac, ImagePickerActivity.class);
-                startActivityForResult(intent,INTENT_REQUEST_GET_IMAGES);
+                Intent intent = new Intent(ac, ImagePickerActivity.class);
+                startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
 
 
             }
         });
 
 
-
-
-        final MorphingButton btnMorph1 = (MorphingButton) root.findViewById(R.id.pdfcreate);
+        btnMorph1 = (MorphingButton) root.findViewById(R.id.pdfcreate);
+        buttt = btnMorph1;
+        morphToSquare(buttt,integer(R.integer.mb_animation));
+        b.setVisibility(View.GONE);
         btnMorph1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imagesuri.size()==0){
+                if (imagesuri.size() == 0) {
                     Toast.makeText(ac, "No Images selected", Toast.LENGTH_LONG).show();
 
-                }else {
-                    imcreate();
-                    onMorphButton1Clicked(btnMorph1);
+                } else {
+                    new MaterialDialog.Builder(ac)
+                            .title("Creating PDF")
+                            .content("Enter file name")
+                            .input("Example : abc",null, new MaterialDialog.InputCallback() {
+                                @Override
+                                public void onInput(MaterialDialog dialog, CharSequence input) {
+                                    // Do something
+                                    if(input ==null){
+                                        Toast.makeText(ac, "Images added", Toast.LENGTH_LONG).show();
+
+                                    }else {
+                                        filename = input.toString();
+                                        imcreate();
+                                        onMorphButton1Clicked(btnMorph1);
+                                    }
+                                }
+                            })
+                            .show();
                 }
             }
         });
 
 
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return root;
 
     }
-
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-
-            Uri uri = data.getData();
-
-            String pat = uri.getPath();
-            imagesuri.add(pat);
-
-            Toast.makeText(ac, "Image added", Toast.LENGTH_LONG).show();
-            t.append(pat + "\n");
-
-
-        }else
-        if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK ) {
-
-            ArrayList<Uri>  image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
-
-            //do something
-
-            for(int i=0;i<image_uris.size();i++)
+            ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+            for (int i = 0; i < image_uris.size(); i++) {
                 imagesuri.add(image_uris.get(i).getPath());
+                                                    t.append(ima                                                                                                  ge_uris.get(i).getPath()+"\n");
+            }
+            Toast.makeText(ac, "Images added", Toast.LENGTH_LONG).show();
 
+            morphToSquare(buttt, integer(R.integer.mb_animation));
         }
     }
 
     private void onMorphButton1Clicked(final MorphingButton btnMorph) {
         if (mMorphCounter1 == 0) {
             mMorphCounter1++;
-            morphToSquare(btnMorph, integer(R.integer.mb_animation));
+            buttt = btnMorph;
         } else if (mMorphCounter1 == 1) {
-            mMorphCounter1 = 0;
-            morphToSuccess(btnMorph);
+
+            buttt = btnMorph;
+
         }
     }
 
@@ -191,20 +191,25 @@ public class First extends Fragment {
                 .icon(R.drawable.ic_done);
         btnMorph.morph(circle);
     }
+
     public void imcreate() {
         new doindstuuf().execute();
     }
-   public class doindstuuf extends AsyncTask<String,String,String>{
 
-        Dialog d;
+    public class doindstuuf extends AsyncTask<String, String, String> {
+
+        MaterialDialog.Builder d = new MaterialDialog.Builder(ac)
+                .title("Please Wait")
+                .content("Creating PDF. This may take a while.")
+                .cancelable(false)
+                .progress(true, 0);
+        MaterialDialog dialog = d.build();
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            d = new Dialog(ac);
-            d.setTitle("Creating PDF. This may take a while!");
-            d.setCancelable(false);
-            d.show();
+            dialog.show();
         }
 
         @Override
@@ -212,17 +217,12 @@ public class First extends Fragment {
             super.onPostExecute(s);
             b.setVisibility(View.VISIBLE);
             t.append("done");
-
-            d.dismiss();
+            dialog.dismiss();
+            morphToSuccess(buttt);
         }
 
         @Override
         protected String doInBackground(String... params) {
-
-
-
-
-
 
 
             File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
@@ -232,15 +232,13 @@ public class First extends Fragment {
             }
 
 
-
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/";
 
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
 
-            String t = Long.toString(System.currentTimeMillis());
-            path = path + "MyPDFFILE" +t+
+            path = path +   filename +
                     ".pdf";
-            File f = new File(file, "MyPDFFILE" +t+
+            File f = new File(file,  filename +
                     ".pdf");
 
             Log.v("stage 1", "store the pdf in sd card");
@@ -258,16 +256,15 @@ public class First extends Fragment {
 
 
                 Log.v("Stage 3", "Pdf writer");
-              //  t.append("Pdf writer\n");
+                //  t.append("Pdf writer\n");
 
                 document.open();
 
                 Log.v("Stage 4", "Document opened");
-               // t.append("Document opened\n");
+                // t.append("Document opened\n");
 
 
                 for (int i = 0; i < imagesuri.size(); i++) {
-
 
 
                     Bitmap bmp = BitmapFactory.decodeFile(imagesuri.get(i));
@@ -275,19 +272,13 @@ public class First extends Fragment {
                     bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
 
 
-
                     Image image = Image.getInstance(stream.toByteArray());
 
 
-
-
-                    if(bmp.getWidth()>documentRect.getWidth() || bmp.getHeight()>documentRect.getHeight())
-                    {
+                    if (bmp.getWidth() > documentRect.getWidth() || bmp.getHeight() > documentRect.getHeight()) {
                         //bitmap is larger than page,so set bitmap's size similar to the whole page
                         image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                    }
-                    else
-                    {
+                    } else {
                         //bitmap is smaller than page, so add bitmap simply.[note: if you want to fill page by stretching image, you may set size similar to page as above]
                         image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
                     }
@@ -295,7 +286,7 @@ public class First extends Fragment {
 
                     Log.v("Stage 6", "Image path adding");
 
-                    image.setAbsolutePosition((documentRect.getWidth()-image.getScaledWidth())/2, (documentRect.getHeight()-image.getScaledHeight())/2);
+                    image.setAbsolutePosition((documentRect.getWidth() - image.getScaledWidth()) / 2, (documentRect.getHeight() - image.getScaledHeight()) / 2);
                     Log.v("Stage 7", "Image Alignments");
 
                     image.setBorder(Image.BOX);
@@ -307,12 +298,12 @@ public class First extends Fragment {
                 }
 
                 Log.v("Stage 8", "Image adding");
-               // t.append("Image adding\n");
+                // t.append("Image adding\n");
 
                 document.close();
 
-                Log.v("Stage 7", "Document Closed"+path);
-             //   t.append("Document Closed\n");
+                Log.v("Stage 7", "Document Closed" + path);
+                //   t.append("Document Closed\n");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -327,6 +318,7 @@ public class First extends Fragment {
     public int integer(@IntegerRes int resId) {
         return getResources().getInteger(resId);
     }
+
     public int dimen(@DimenRes int resId) {
         return (int) getResources().getDimension(resId);
     }

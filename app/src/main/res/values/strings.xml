@@ -6,4 +6,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title">PDF Actions</string>
+    <string name="choose">choose</string>
+
+    <array name="items">
+        <item>Open File</item>
+        <item>Delete File</item>
+    </array>
+
+    <array name="itemIds">
+        <item>open</item>
+        <item>delete</item>
+    </array>
+
 </resources>

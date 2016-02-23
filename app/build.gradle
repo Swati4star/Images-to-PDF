@@ -31,5 +31,9 @@ dependencies {
     compile 'com.github.ParkSangGwon:TedPicker:v1.0.7'
     compile files('libs/itextg-5.5.4.jar')
     compile 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56' // commit hash
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
+        transitive = true
+    }
+    compile 'com.github.traex.rippleeffect:library:1.3'
 
 }

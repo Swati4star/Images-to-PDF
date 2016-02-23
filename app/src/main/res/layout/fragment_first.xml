@@ -25,23 +25,37 @@
 
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+
+    <com.dd.morphingbutton.MorphingButton
         android:id="@+id/badd"
-        android:text="Select Images"/>
-
-
-    <Button
-        android:layout_width="match_parent"
+        android:text="Select Images"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/mb_white"/>
+
+
+    <com.dd.morphingbutton.MorphingButton
         android:id="@+id/b"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
         android:visibility="gone"
-        android:text="Open Pdf"/>
+        android:gravity="center"
+        android:text="Open Pdf"
+        android:padding="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mb_white"/>
+
 
     <com.dd.morphingbutton.MorphingButton
         android:id="@+id/pdfcreate"
         android:text="Create Pdf"
+        android:layout_margin="10dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"

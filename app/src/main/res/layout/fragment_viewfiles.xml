@@ -9,10 +9,9 @@
     android:orientation="vertical"
     tools:context="swati4star.createpdf.First">
 
-    <GridView
+    <ListView
         android:layout_width="match_parent"
         android:id="@+id/list"
-        android:numColumns="3"
         android:layout_height="match_parent"/>
 
 </LinearLayout>

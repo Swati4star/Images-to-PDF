@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.andexert.library.RippleView;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -35,7 +38,7 @@ public class Files_adapter extends BaseAdapter {
     ArrayList<String> FeedItems;
     TextView t;
     LinearLayout l;
-    ImageView iv;
+    RippleView ripple;
 
     public Files_adapter(Context context, ArrayList<String> FeedItems) {
         this.context = context;
@@ -72,34 +75,64 @@ public class Files_adapter extends BaseAdapter {
 
         t = (TextView) vi.findViewById(R.id.name);
         l = (LinearLayout) vi.findViewById(R.id.parent);
-        iv = (ImageView) vi.findViewById(R.id.iv);
+        ripple = (RippleView) vi.findViewById(R.id.ripp);
 
         String[] x = FeedItems.get(position).split("/");
 
         t.setText(x[x.length-1]);
 
 
-
-        l.setOnClickListener(new View.OnClickListener() {
+        ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
-            public void onClick(View view) {
+            public void onComplete(RippleView rippleView) {
+                new MaterialDialog.Builder(context)
+                        .title(R.string.title)
+                        .items(R.array.items)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                Toast.makeText(context, which + ": " + text + ", ID = " + view.getId(), Toast.LENGTH_SHORT).show();
 
 
-                File file = new File(FeedItems.get(position));
-                Intent target = new Intent(Intent.ACTION_VIEW);
-                target.setDataAndType(Uri.fromFile(file), "application/pdf");
-                target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                switch(view.getId()){
+                                    case 0 :  File file = new File(FeedItems.get(position));
+                                        Intent target = new Intent(Intent.ACTION_VIEW);
+                                        target.setDataAndType(Uri.fromFile(file), "application/pdf");
+                                        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-                Intent intent = Intent.createChooser(target, "Open File");
-                try {
-                    context.startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(context, "No app to read PDF File", Toast.LENGTH_LONG).show();
-                }
+                                        Intent intent = Intent.createChooser(target, "Open File");
+                                        try {
+                                            context.startActivity(intent);
+                                        } catch (ActivityNotFoundException e) {
+                                            Toast.makeText(context, "No app to read PDF File", Toast.LENGTH_LONG).show();
+                                        }
+                                        break;
 
+
+                                    case 1 : //delete
+                                        File fdelete = new File(FeedItems.get(position));
+                                        if (fdelete.exists()) {
+                                            if (fdelete.delete()) {
+                                                Toast.makeText(context, "File deleted.", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toast.makeText(context, "File can't be deleted.", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                        break;
+
+                                }
+
+                            }
+                        })
+                        .show();
 
             }
         });
+
+
+
+
 
         return vi;
     }

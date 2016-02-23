@@ -14,11 +14,16 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,20 +44,23 @@ public class ViewFiles extends Fragment {
 
 
 
-    String path;
     Activity ac;
-
+    ListView g;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         ac = (Activity)context;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_viewfiles,container);
+
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container,Bundle savedInstanceState) {
+
+        View root = inflater.inflate(R.layout.fragment_viewfiles,container,false);
         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
         boolean success = true;
         if (!folder.exists()) {
@@ -77,16 +85,38 @@ public class ViewFiles extends Fragment {
             }
 
             Files_adapter adapter = new Files_adapter(ac, inFiles);
-            GridView g = (GridView) root.findViewById(R.id.list);
+           g = (ListView) root.findViewById(R.id.list);
             g.setAdapter(adapter);
+            registerForContextMenu(g);
         }
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return root;
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.list) {
+            MenuInflater inflater = ac.getMenuInflater();
+            inflater.inflate(R.menu.menu_list, menu);
+        }
     }
 
 
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()) {
+            case R.id.add:
+                // add stuff here
+                return true;
+            case R.id.edit:
+                // edit stuff here
+                return true;
 
-
-
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 }
