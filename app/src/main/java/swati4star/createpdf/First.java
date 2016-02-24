@@ -121,7 +121,7 @@ public class First extends Fragment {
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
                                     // Do something
                                     if(input ==null){
-                                        Toast.makeText(ac, "Images added", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ac, "Name cannot be blank", Toast.LENGTH_LONG).show();
 
                                     }else {
                                         filename = input.toString();
@@ -149,7 +149,6 @@ public class First extends Fragment {
             ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (int i = 0; i < image_uris.size(); i++) {
                 imagesuri.add(image_uris.get(i).getPath());
-                                                    t.append(ima                                                                                                  ge_uris.get(i).getPath()+"\n");
             }
             Toast.makeText(ac, "Images added", Toast.LENGTH_LONG).show();
 

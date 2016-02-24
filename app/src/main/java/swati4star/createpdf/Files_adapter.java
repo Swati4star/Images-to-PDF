@@ -95,7 +95,7 @@ public class Files_adapter extends BaseAdapter {
                                 Toast.makeText(context, which + ": " + text + ", ID = " + view.getId(), Toast.LENGTH_SHORT).show();
 
 
-                                switch(view.getId()){
+                                switch(which){
                                     case 0 :  File file = new File(FeedItems.get(position));
                                         Intent target = new Intent(Intent.ACTION_VIEW);
                                         target.setDataAndType(Uri.fromFile(file), "application/pdf");
@@ -121,11 +121,43 @@ public class Files_adapter extends BaseAdapter {
                                         }
                                         break;
 
+
+
+                                    case 2 : //delete
+                                        new MaterialDialog.Builder(context)
+                                                .title("Creating PDF")
+                                                .content("Enter file name")
+                                                .input("Example : abc",null, new MaterialDialog.InputCallback() {
+                                                    @Override
+                                                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                                                        // Do something
+                                                        if(input ==null){
+                                                            Toast.makeText(context, "Name cannot be blank", Toast.LENGTH_LONG).show();
+
+                                                        }else {
+                                                            String newname = input.toString();
+                                                            File oldfile = new File(FeedItems.get(position));
+                                                            String x[]=FeedItems.get(position).split("/");
+                                                            File newfile = new File(x[x.length-1]+"/"+newname);
+
+                                                            if (oldfile.renameTo(newfile)) {
+                                                                Toast.makeText(context, "File renamed.", Toast.LENGTH_LONG).show();
+                                                            } else {
+                                                                Toast.makeText(context, "File can't be renamed.", Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    }
+                                                })
+                                                .show();
+                                        break;
+
+
                                 }
 
                             }
                         })
                         .show();
+                notifyDataSetChanged();
 
             }
         });
@@ -137,6 +169,10 @@ public class Files_adapter extends BaseAdapter {
         return vi;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
 
 
+    }
 }
