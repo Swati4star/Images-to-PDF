@@ -156,8 +156,6 @@ public class First extends Fragment {
         }
     }
 
-
-
     private void onMorphButton1Clicked(final MorphingButton btnMorph) {
         if (mMorphCounter1 == 0) {
             mMorphCounter1++;
