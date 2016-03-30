@@ -10,5 +10,5 @@ An app to convert images to PDF file
 <img src="/screenshots/pdf.png" width="200px">
 <img src="/screenshots/pdf_options.png" width="200px">
 <img src="/screenshots/select.png" width="200px">
-<img src="/screenshots/selecting1.png" width="200px">
+<img src="/screenshots/selecting.png" width="200px">
 <img src="/screenshots/selecting2.png" width="200px">
