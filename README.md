@@ -1,5 +1,6 @@
 # Images To PDF
-An app to convert images to PDF file
+Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :D
+Here is an easy to use android app to convert images to PDF file!
 
 ####Creating a PDF file
 
