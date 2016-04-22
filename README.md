@@ -38,3 +38,9 @@ Hurray! PDF Files of selected images is created.
 <img src="/screenshots/list.png" width="200px">
 <img src="/screenshots/pdf.png" width="200px">
 <img src="/screenshots/pdf_options.png" width="200px">
+
+
+
+
+##Project Maintainers
+This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For any sort of queries feel free to mail at swati4star@gmail.com.
