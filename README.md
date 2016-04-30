@@ -1,4 +1,8 @@
 # Images To PDF
+
+### Badges
+[![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF) 
+
 Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:
 Here is an easy to use android app to convert images to PDF file!
 
