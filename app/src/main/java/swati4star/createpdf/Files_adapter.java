@@ -123,7 +123,7 @@ public class Files_adapter extends BaseAdapter {
 
 
 
-                                    case 2 : //delete
+                                    case 2 : //rename
                                         new MaterialDialog.Builder(context)
                                                 .title("Creating PDF")
                                                 .content("Enter file name")
@@ -138,7 +138,14 @@ public class Files_adapter extends BaseAdapter {
                                                             String newname = input.toString();
                                                             File oldfile = new File(FeedItems.get(position));
                                                             String x[]=FeedItems.get(position).split("/");
-                                                            File newfile = new File(x[x.length-1]+"/"+newname);
+                                                            String newfilename="";
+                                                            for(int i=0;i<x.length-1;i++)
+                                                                newfilename = newfilename+"/"+x[i];
+
+                                                            File newfile = new File(newfilename+"/"+newname+".pdf");
+
+                                                            Log.e("Old file name",oldfile+" ");
+                                                            Log.e("New file name",newfile+" ");
 
                                                             if (oldfile.renameTo(newfile)) {
                                                                 Toast.makeText(context, "File renamed.", Toast.LENGTH_LONG).show();

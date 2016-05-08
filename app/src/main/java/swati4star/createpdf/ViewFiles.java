@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -40,38 +41,60 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewFiles extends Fragment {
-
+public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
     Activity ac;
     ListView g;
+    SwipeRefreshLayout swipeView;
+    ArrayList<String> inFiles;
+    File[] files;
+    Files_adapter adapter;
+    File folder;
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ac = (Activity)context;
+        ac = (Activity) context;
     }
 
 
-
-
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_viewfiles,container,false);
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
+        View root = inflater.inflate(R.layout.fragment_viewfiles, container, false);
+        folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
+        //Create/Open folder
         boolean success = true;
         if (!folder.exists()) {
             success = folder.mkdir();
         }
 
-        ArrayList<String> inFiles = new ArrayList<String >();
-        File[] files = folder.listFiles();
-        if(files==null)
-            Toast.makeText(ac,"No PDFs right now",Toast.LENGTH_LONG).show();
-            else{
+
+        swipeView = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
+        inFiles = new ArrayList<String>();
+        files = folder.listFiles();
+        g = (ListView) root.findViewById(R.id.list);
+        adapter = new Files_adapter(ac, inFiles);
+        g.setAdapter(adapter);
+        swipeView.setOnRefreshListener(this);
+
+        fill_data();
+
+
+        return root;
+
+    }
+
+
+    public void fill_data() {
+
+        inFiles = new ArrayList<String>();
+        files = folder.listFiles();
+        if (files == null)
+            Toast.makeText(ac, "No PDFs right now", Toast.LENGTH_LONG).show();
+        else {
             for (File file : files) {
                 if (file.isDirectory()) {
                 } else {
@@ -84,39 +107,19 @@ public class ViewFiles extends Fragment {
                 }
             }
 
-            Files_adapter adapter = new Files_adapter(ac, inFiles);
-           g = (ListView) root.findViewById(R.id.list);
-            g.setAdapter(adapter);
-            registerForContextMenu(g);
         }
-        return root;
+        Log.e("done","adding");
+        adapter = new Files_adapter(ac, inFiles);
+        g.setAdapter(adapter);
 
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId()==R.id.list) {
-            MenuInflater inflater = ac.getMenuInflater();
-            inflater.inflate(R.menu.menu_list, menu);
-        }
-    }
+    public void onRefresh() {
 
+        Log.e("refresh","refreshing dta");
 
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch(item.getItemId()) {
-            case R.id.add:
-                // add stuff here
-                return true;
-            case R.id.edit:
-                // edit stuff here
-                return true;
-
-            default:
-                return super.onContextItemSelected(item);
-        }
+        fill_data();
+        swipeView.setRefreshing(false);
     }
 }
