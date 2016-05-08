@@ -52,6 +52,7 @@ public class First extends Fragment {
     Activity ac;
     String filename;
     MorphingButton buttt;
+    Image image;
 
     @Override
     public void onAttach(Context context) {
@@ -64,12 +65,13 @@ public class First extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_first, container,false);
 
+        //initialising variables
         imagesuri = new ArrayList<>();
-
-
         t = (TextView) root.findViewById(R.id.text);
         b = (MorphingButton) root.findViewById(R.id.b);
         badd = (MorphingButton) root.findViewById(R.id.badd);
+        btnMorph1 = (MorphingButton) root.findViewById(R.id.pdfcreate);
+        buttt = btnMorph1;
 
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -97,13 +99,10 @@ public class First extends Fragment {
                 Intent intent = new Intent(ac, ImagePickerActivity.class);
                 startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
 
-
             }
         });
 
 
-        btnMorph1 = (MorphingButton) root.findViewById(R.id.pdfcreate);
-        buttt = btnMorph1;
         morphToSquare(buttt,integer(R.integer.mb_animation));
         b.setVisibility(View.GONE);
         btnMorph1.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +118,6 @@ public class First extends Fragment {
                             .input("Example : abc",null, new MaterialDialog.InputCallback() {
                                 @Override
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
-                                    // Do something
                                     if(input ==null){
                                         Toast.makeText(ac, "Name cannot be blank", Toast.LENGTH_LONG).show();
 
@@ -273,7 +271,7 @@ public class First extends Fragment {
                     bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
 
 
-                    Image image = Image.getInstance(stream.toByteArray());
+                    image = Image.getInstance(imagesuri.get(i));
 
 
                     if (bmp.getWidth() > documentRect.getWidth() || bmp.getHeight() > documentRect.getHeight()) {
@@ -295,6 +293,7 @@ public class First extends Fragment {
                     image.setBorderWidth(15);
 
                     document.add(image);
+
                     document.newPage();
                 }
 
