@@ -3,19 +3,21 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context="swati4star.createpdf.First">
+
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe">
-    <ListView
-        android:layout_width="match_parent"
-        android:id="@+id/list"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

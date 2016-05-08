@@ -79,7 +79,7 @@ public class Files_adapter extends BaseAdapter {
 
         String[] x = FeedItems.get(position).split("/");
 
-        t.setText(x[x.length-1]);
+        t.setText(x[x.length - 1]);
 
 
         ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
@@ -95,8 +95,9 @@ public class Files_adapter extends BaseAdapter {
                                 Toast.makeText(context, which + ": " + text + ", ID = " + view.getId(), Toast.LENGTH_SHORT).show();
 
 
-                                switch(which){
-                                    case 0 :  File file = new File(FeedItems.get(position));
+                                switch (which) {
+                                    case 0:
+                                        File file = new File(FeedItems.get(position));
                                         Intent target = new Intent(Intent.ACTION_VIEW);
                                         target.setDataAndType(Uri.fromFile(file), "application/pdf");
                                         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -110,7 +111,7 @@ public class Files_adapter extends BaseAdapter {
                                         break;
 
 
-                                    case 1 : //delete
+                                    case 1: //delete
                                         File fdelete = new File(FeedItems.get(position));
                                         if (fdelete.exists()) {
                                             if (fdelete.delete()) {
@@ -122,30 +123,29 @@ public class Files_adapter extends BaseAdapter {
                                         break;
 
 
-
-                                    case 2 : //rename
+                                    case 2: //rename
                                         new MaterialDialog.Builder(context)
                                                 .title("Creating PDF")
                                                 .content("Enter file name")
-                                                .input("Example : abc",null, new MaterialDialog.InputCallback() {
+                                                .input("Example : abc", null, new MaterialDialog.InputCallback() {
                                                     @Override
                                                     public void onInput(MaterialDialog dialog, CharSequence input) {
                                                         // Do something
-                                                        if(input ==null){
+                                                        if (input == null) {
                                                             Toast.makeText(context, "Name cannot be blank", Toast.LENGTH_LONG).show();
 
-                                                        }else {
+                                                        } else {
                                                             String newname = input.toString();
                                                             File oldfile = new File(FeedItems.get(position));
-                                                            String x[]=FeedItems.get(position).split("/");
-                                                            String newfilename="";
-                                                            for(int i=0;i<x.length-1;i++)
-                                                                newfilename = newfilename+"/"+x[i];
+                                                            String x[] = FeedItems.get(position).split("/");
+                                                            String newfilename = "";
+                                                            for (int i = 0; i < x.length - 1; i++)
+                                                                newfilename = newfilename + "/" + x[i];
 
-                                                            File newfile = new File(newfilename+"/"+newname+".pdf");
+                                                            File newfile = new File(newfilename + "/" + newname + ".pdf");
 
-                                                            Log.e("Old file name",oldfile+" ");
-                                                            Log.e("New file name",newfile+" ");
+                                                            Log.e("Old file name", oldfile + " ");
+                                                            Log.e("New file name", newfile + " ");
 
                                                             if (oldfile.renameTo(newfile)) {
                                                                 Toast.makeText(context, "File renamed.", Toast.LENGTH_LONG).show();
@@ -168,9 +168,6 @@ public class Files_adapter extends BaseAdapter {
 
             }
         });
-
-
-
 
 
         return vi;
