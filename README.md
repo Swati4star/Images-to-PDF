@@ -8,6 +8,7 @@ Here is an easy to use android app to convert images to PDF file!
 
 <img src="/screenshots/image_to_pdf.gif"  width="300px">
 
+[Sample Apk](https://dl.dropboxusercontent.com/s/ugpju98f0y2t947/app-debug.apk)
 
 ####Creating a PDF file
 
