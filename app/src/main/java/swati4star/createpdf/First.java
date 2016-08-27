@@ -1,7 +1,6 @@
 package swati4star.createpdf;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +70,6 @@ public class First extends Fragment {
         badd = (MorphingButton) root.findViewById(R.id.badd);
         btnMorph1 = (MorphingButton) root.findViewById(R.id.pdfcreate);
         buttt = btnMorph1;
-
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override

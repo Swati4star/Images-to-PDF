@@ -3,24 +3,18 @@ package swati4star.createpdf;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.RectF;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.andexert.library.RippleView;
+import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,7 +32,7 @@ public class Files_adapter extends BaseAdapter {
     ArrayList<String> FeedItems;
     TextView t;
     LinearLayout l;
-    RippleView ripple;
+    MaterialRippleLayout ripple;
 
     public Files_adapter(Context context, ArrayList<String> FeedItems) {
         this.context = context;
@@ -75,16 +69,15 @@ public class Files_adapter extends BaseAdapter {
 
         t = (TextView) vi.findViewById(R.id.name);
         l = (LinearLayout) vi.findViewById(R.id.parent);
-        ripple = (RippleView) vi.findViewById(R.id.ripp);
+        ripple = (MaterialRippleLayout) vi.findViewById(R.id.ripple);
 
         String[] x = FeedItems.get(position).split("/");
 
         t.setText(x[x.length - 1]);
 
-
-        ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        ripple.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onClick(View view) {
                 new MaterialDialog.Builder(context)
                         .title(R.string.title)
                         .items(R.array.items)
