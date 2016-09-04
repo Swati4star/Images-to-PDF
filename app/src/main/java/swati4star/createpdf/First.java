@@ -1,19 +1,23 @@
 package swati4star.createpdf;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +44,7 @@ public class First extends Fragment {
 
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private int mMorphCounter1 = 1;
 
     List<String> imagesuri;
@@ -51,6 +56,7 @@ public class First extends Fragment {
     String filename;
     MorphingButton buttt;
     Image image;
+    Boolean permissionsGranted = false;
 
     @Override
     public void onAttach(Context context) {
@@ -59,9 +65,9 @@ public class First extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_first, container,false);
+        View root = inflater.inflate(R.layout.fragment_first, container, false);
 
         //initialising variables
         imagesuri = new ArrayList<>();
@@ -70,6 +76,19 @@ public class First extends Fragment {
         badd = (MorphingButton) root.findViewById(R.id.badd);
         btnMorph1 = (MorphingButton) root.findViewById(R.id.pdfcreate);
         buttt = btnMorph1;
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(ac,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA},
+                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+            }
+        }
+
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,32 +112,46 @@ public class First extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(ac, ImagePickerActivity.class);
-                startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(ac,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.CAMERA},
+                                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+                    } else {
+                        selectImages();
+                    }
+                } else {
+                    selectImages();
+                }
             }
         });
 
 
-        morphToSquare(buttt,integer(R.integer.mb_animation));
+        morphToSquare(buttt, integer(R.integer.mb_animation));
         b.setVisibility(View.GONE);
         btnMorph1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imagesuri.size() == 0) {
+                if (!permissionsGranted) {
+                    Toast.makeText(ac, "Insufficient Permissions!", Toast.LENGTH_LONG)
+                            .show();
+                } else if (imagesuri.size() == 0) {
                     Toast.makeText(ac, "No Images selected", Toast.LENGTH_LONG).show();
 
                 } else {
                     new MaterialDialog.Builder(ac)
                             .title("Creating PDF")
                             .content("Enter file name")
-                            .input("Example : abc",null, new MaterialDialog.InputCallback() {
+                            .input("Example : abc", null, new MaterialDialog.InputCallback() {
                                 @Override
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
-                                    if(input ==null){
+                                    if (input == null) {
                                         Toast.makeText(ac, "Name cannot be blank", Toast.LENGTH_LONG).show();
 
-                                    }else {
+                                    } else {
                                         filename = input.toString();
                                         imcreate();
                                         onMorphButton1Clicked(btnMorph1);
@@ -136,6 +169,33 @@ public class First extends Fragment {
     }
 
 
+    public void selectImages() {
+        Intent intent = new Intent(ac, ImagePickerActivity.class);
+        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    selectImages();
+                    Toast.makeText(ac, "Permissions Given!", Toast.LENGTH_LONG)
+                            .show();
+
+                } else {
+                    Toast.makeText(ac, "Insufficient Permissions!", Toast.LENGTH_LONG)
+                            .show();
+                }
+                return;
+            }
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -150,7 +210,6 @@ public class First extends Fragment {
             morphToSquare(buttt, integer(R.integer.mb_animation));
         }
     }
-
 
 
     private void onMorphButton1Clicked(final MorphingButton btnMorph) {
@@ -232,9 +291,9 @@ public class First extends Fragment {
 
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
 
-            path = path +   filename +
+            path = path + filename +
                     ".pdf";
-            File f = new File(file,  filename +
+            File f = new File(file, filename +
                     ".pdf");
 
             Log.v("stage 1", "store the pdf in sd card");
