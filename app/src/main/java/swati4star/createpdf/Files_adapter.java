@@ -4,6 +4,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.CancellationSignal;
+import android.os.ParcelFileDescriptor;
+import android.print.PageRange;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintDocumentInfo;
+import android.print.PrintManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +25,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 
@@ -151,6 +165,10 @@ public class Files_adapter extends BaseAdapter {
                                                 .show();
                                         break;
 
+                                    case 3:
+                                        doPrint(FeedItems.get(position));
+                                        break;
+
 
                                 }
 
@@ -165,6 +183,70 @@ public class Files_adapter extends BaseAdapter {
 
         return vi;
     }
+
+
+    String fileName;
+
+    private void doPrint(String f) {
+        PrintManager printManager = (PrintManager) context
+                .getSystemService(Context.PRINT_SERVICE);
+
+        fileName = f;
+        String jobName = context.getString(R.string.app_name) + " Document";
+        printManager.print(jobName, pda, null);
+    }
+
+
+    PrintDocumentAdapter pda = new PrintDocumentAdapter() {
+
+        @Override
+        public void onWrite(PageRange[] pages, ParcelFileDescriptor destination, CancellationSignal cancellationSignal, WriteResultCallback callback) {
+            InputStream input = null;
+            OutputStream output = null;
+
+            try {
+
+                input = new FileInputStream(fileName);
+                output = new FileOutputStream(destination.getFileDescriptor());
+
+                byte[] buf = new byte[1024];
+                int bytesRead;
+
+                while ((bytesRead = input.read(buf)) > 0) {
+                    output.write(buf, 0, bytesRead);
+                }
+
+                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
+
+            } catch (Exception e) {
+                //Catch exception
+            } finally {
+                try {
+                    if (input != null) {
+                        input.close();
+                    }
+                    if (output != null) {
+                        output.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void onLayout(PrintAttributes oldAttributes, PrintAttributes newAttributes, CancellationSignal cancellationSignal, LayoutResultCallback callback, Bundle extras) {
+
+            if (cancellationSignal.isCanceled()) {
+                callback.onLayoutCancelled();
+                return;
+            }
+
+            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile").setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT).build();
+
+            callback.onLayoutFinished(pdi, true);
+        }
+    };
 
     @Override
     public void notifyDataSetChanged() {

@@ -13,12 +13,14 @@
         <item>Open File</item>
         <item>Delete File</item>
         <item>Rename File</item>
+        <item>Print File</item>
     </array>
 
     <array name="itemIds">
         <item>open</item>
         <item>delete</item>
         <item>rename</item>
+        <item>print</item>
     </array>
 
 </resources>
