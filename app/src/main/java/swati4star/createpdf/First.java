@@ -56,7 +56,6 @@ public class First extends Fragment {
     String filename;
     MorphingButton buttt;
     Image image;
-    Boolean permissionsGranted = false;
 
     @Override
     public void onAttach(Context context) {
@@ -79,9 +78,15 @@ public class First extends Fragment {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(ac,
+            if ( (ContextCompat.checkSelfPermission(ac,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
+                    != PackageManager.PERMISSION_GRANTED )|| (ContextCompat.checkSelfPermission(ac,
+                    Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED ) || (ContextCompat.checkSelfPermission(ac,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED ))
+
+            {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.CAMERA},
@@ -135,10 +140,7 @@ public class First extends Fragment {
         btnMorph1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!permissionsGranted) {
-                    Toast.makeText(ac, "Insufficient Permissions!", Toast.LENGTH_LONG)
-                            .show();
-                } else if (imagesuri.size() == 0) {
+                if (imagesuri.size() == 0) {
                     Toast.makeText(ac, "No Images selected", Toast.LENGTH_LONG).show();
 
                 } else {
