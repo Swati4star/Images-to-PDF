@@ -9,6 +9,8 @@
     <string name="title">PDF 操作</string>
     <string name="choose">選択</string>
 
+    <string name="mb_button">PDF を作成</string>
+
     <array name="items">
         <item>ファイルを開く</item>
         <item>ファイルを削除</item>
