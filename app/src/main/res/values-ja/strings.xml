@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">PDF Creator</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
+
+    <string name="action_settings">設定</string>
+    <string name="title">PDF 操作</string>
+    <string name="choose">選択</string>
+
+    <string name="mb_button">PDF を作成</string>
+
+    <array name="items">
+        <item>ファイルを開く</item>
+        <item>ファイルを削除</item>
+        <item>ファイルの名前を変更</item>
+        <item>ファイルを印刷</item>
+    </array>
+
+    <array name="itemIds">
+        <item>open</item>
+        <item>delete</item>
+        <item>rename</item>
+        <item>print</item>
+    </array>
+
+</resources>
