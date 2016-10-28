@@ -22,16 +22,17 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        // Set navigation drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        Fragment fragment;
-        FragmentManager fragmentManager = getSupportFragmentManager(); // For AppCompat use getSupportFragmentManager
-        fragment = new First();
-        fragmentManager.beginTransaction().replace(R.id.f, fragment).commit();
+
+        // Set Home fragment
+        Fragment fragment = new Home();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -48,23 +49,20 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment;
-        FragmentManager fragmentManager = getSupportFragmentManager(); // For AppCompat use getSupportFragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-            fragment = new First();
-            fragmentManager.beginTransaction().replace(R.id.f, fragment).commit();
+            fragment = new Home();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         } else if (id == R.id.nav_gallery) {
             fragment = new ViewFiles();
-            fragmentManager.beginTransaction().replace(R.id.f, fragment).commit();
-
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

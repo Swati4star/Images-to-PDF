@@ -9,6 +9,11 @@
     <string name="title">PDF Actions</string>
     <string name="choose">choose</string>
 
+    <string name="file_name_text">File Name</string>
+    <string name="select_images_text">Select Images</string>
+    <string name="open_pdf_text">Open PDF</string>
+    <string name="create_pdf_text">Create PDF</string>
+
     <array name="items">
         <item>Open File</item>
         <item>Delete File</item>

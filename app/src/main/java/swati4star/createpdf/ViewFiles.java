@@ -18,83 +18,79 @@ import java.util.ArrayList;
 
 public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-
-    Activity ac;
-    ListView g;
+    Activity activity;
+    ListView listView;
     SwipeRefreshLayout swipeView;
     ArrayList<String> inFiles;
+    FilesAdapter adapter;
     File[] files;
-    Files_adapter adapter;
     File folder;
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ac = (Activity) context;
+        activity = (Activity) context;
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_viewfiles, container, false);
+        View root = inflater.inflate(R.layout.fragment_view_files, container, false);
         folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
+
         //Create/Open folder
         boolean success = true;
         if (!folder.exists()) {
             success = folder.mkdir();
         }
 
-
+        // Initialize variables
         swipeView = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
-        inFiles = new ArrayList<String>();
+        listView = (ListView) root.findViewById(R.id.list);
+        inFiles = new ArrayList<>();
         files = folder.listFiles();
-        g = (ListView) root.findViewById(R.id.list);
-        adapter = new Files_adapter(ac, inFiles);
-        g.setAdapter(adapter);
+        adapter = new FilesAdapter(activity, inFiles);
+        listView.setAdapter(adapter);
         swipeView.setOnRefreshListener(this);
 
-        fill_data();
-
+        // Populate data into listView
+        populateListView();
 
         return root;
-
     }
 
+    /**
+     * Populate data into listView
+     */
+    public void populateListView() {
 
-    public void fill_data() {
-
-        inFiles = new ArrayList<String>();
+        inFiles = new ArrayList<>();
         files = folder.listFiles();
         if (files == null)
-            Toast.makeText(ac, "No PDFs right now", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "No PDFs right now", Toast.LENGTH_LONG).show();
         else {
             for (File file : files) {
-                if (file.isDirectory()) {
-                } else {
-                    if (file.getName().endsWith(".pdf")) {
+                if (!file.isDirectory() && file.getName().endsWith(".pdf")) {
                         inFiles.add(file.getPath());
+                        Log.v("adding", file.getName());
 
-                        Log.e("adding", file.getName());
-
-                    }
                 }
             }
 
         }
-        Log.e("done","adding");
-        adapter = new Files_adapter(ac, inFiles);
-        g.setAdapter(adapter);
+        Log.v("done", "adding");
+        adapter = new FilesAdapter(activity, inFiles);
+        listView.setAdapter(adapter);
 
     }
 
     @Override
     public void onRefresh() {
 
-        Log.e("refresh","refreshing dta");
+        Log.v("refresh", "refreshing dta");
 
-        fill_data();
+        populateListView();
         swipeView.setRefreshing(false);
     }
 }

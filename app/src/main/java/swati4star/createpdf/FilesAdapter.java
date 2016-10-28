@@ -26,45 +26,59 @@ import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-
 /**
  * Created by swati on 9/10/15.
+ * <p>
+ * An adapter to view the existing PDF files
  */
 
 
-public class Files_adapter extends BaseAdapter {
+public class FilesAdapter extends BaseAdapter {
 
-    Context context;
-    private static LayoutInflater inflater = null;
-    ArrayList<String> FeedItems;
-    TextView t;
-    LinearLayout l;
-    MaterialRippleLayout ripple;
+    private Context mContext;
+    private static LayoutInflater inflater;
+    private ArrayList<String> mFeedItems;
+    TextView textView;
+    LinearLayout linearLayout;
+    private MaterialRippleLayout mRipple;
+    private String mFileName;
 
-    public Files_adapter(Context context, ArrayList<String> FeedItems) {
-        this.context = context;
-        this.FeedItems = FeedItems;
+    /**
+     * Returns adapter instance
+     * @param context       the context calling this adapter
+     * @param FeedItems     array list containing path of files
+     */
+    public FilesAdapter(Context context, ArrayList<String> FeedItems) {
+        this.mContext = context;
+        this.mFeedItems = FeedItems;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /**
+     * Return number of elements in adapter
+     * @return  count of number of elements
+     */
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
-        return FeedItems.size();
+        return mFeedItems.size();
     }
 
+    /**
+     * get Particular item at a given position
+     * @param position  the position of item
+     * @return object referencing the item at given position
+     */
     @Override
     public Object getItem(int position) {
-        return FeedItems.get(position);
+        return mFeedItems.get(position);
     }
 
 
@@ -78,73 +92,69 @@ public class Files_adapter extends BaseAdapter {
     public View getView(final int position, final View convertView, ViewGroup parent) {
         View vi = convertView;
         if (vi == null)
-            vi = inflater.inflate(R.layout.file_litsitem, null);
+            vi = inflater.inflate(R.layout.file_list_item, null);
 
+        textView = (TextView) vi.findViewById(R.id.name);
+        linearLayout = (LinearLayout) vi.findViewById(R.id.parent);
+        mRipple = (MaterialRippleLayout) vi.findViewById(R.id.ripple);
 
-        t = (TextView) vi.findViewById(R.id.name);
-        l = (LinearLayout) vi.findViewById(R.id.parent);
-        ripple = (MaterialRippleLayout) vi.findViewById(R.id.ripple);
+        // Extract file name from path
+        String[] name = mFeedItems.get(position).split("/");
+        textView.setText(name[name.length - 1]);
 
-        String[] x = FeedItems.get(position).split("/");
-
-        t.setText(x[x.length - 1]);
-
-        ripple.setOnClickListener(new View.OnClickListener() {
+        mRipple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(context)
+                new MaterialDialog.Builder(mContext)
                         .title(R.string.title)
                         .items(R.array.items)
                         .itemsIds(R.array.itemIds)
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                Toast.makeText(context, which + ": " + text + ", ID = " + view.getId(), Toast.LENGTH_SHORT).show();
-
 
                                 switch (which) {
-                                    case 0:
-                                        File file = new File(FeedItems.get(position));
+                                    case 0: //Open
+                                        File file = new File(mFeedItems.get(position));
                                         Intent target = new Intent(Intent.ACTION_VIEW);
                                         target.setDataAndType(Uri.fromFile(file), "application/pdf");
                                         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                                         Intent intent = Intent.createChooser(target, "Open File");
                                         try {
-                                            context.startActivity(intent);
+                                            mContext.startActivity(intent);
                                         } catch (ActivityNotFoundException e) {
-                                            Toast.makeText(context, "No app to read PDF File", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(mContext, "No app to read PDF File", Toast.LENGTH_LONG).show();
                                         }
                                         break;
 
 
                                     case 1: //delete
-                                        File fdelete = new File(FeedItems.get(position));
+                                        File fdelete = new File(mFeedItems.get(position));
                                         if (fdelete.exists()) {
                                             if (fdelete.delete()) {
-                                                Toast.makeText(context, "File deleted.", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(mContext, "File deleted.", Toast.LENGTH_LONG).show();
                                             } else {
-                                                Toast.makeText(context, "File can't be deleted.", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(mContext, "File can't be deleted.", Toast.LENGTH_LONG).show();
                                             }
                                         }
                                         break;
 
 
                                     case 2: //rename
-                                        new MaterialDialog.Builder(context)
+                                        new MaterialDialog.Builder(mContext)
                                                 .title("Creating PDF")
                                                 .content("Enter file name")
                                                 .input("Example : abc", null, new MaterialDialog.InputCallback() {
                                                     @Override
                                                     public void onInput(MaterialDialog dialog, CharSequence input) {
-                                                        // Do something
                                                         if (input == null) {
-                                                            Toast.makeText(context, "Name cannot be blank", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(mContext, "Name cannot be blank", Toast.LENGTH_LONG).show();
 
                                                         } else {
                                                             String newname = input.toString();
-                                                            File oldfile = new File(FeedItems.get(position));
-                                                            String x[] = FeedItems.get(position).split("/");
+                                                            File oldfile = new File(mFeedItems.get(position));
+                                                            String x[] = mFeedItems.get(position).split("/");
                                                             String newfilename = "";
                                                             for (int i = 0; i < x.length - 1; i++)
                                                                 newfilename = newfilename + "/" + x[i];
@@ -155,9 +165,9 @@ public class Files_adapter extends BaseAdapter {
                                                             Log.e("New file name", newfile + " ");
 
                                                             if (oldfile.renameTo(newfile)) {
-                                                                Toast.makeText(context, "File renamed.", Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(mContext, "File renamed.", Toast.LENGTH_LONG).show();
                                                             } else {
-                                                                Toast.makeText(context, "File can't be renamed.", Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(mContext, "File can't be renamed.", Toast.LENGTH_LONG).show();
                                                             }
                                                         }
                                                     }
@@ -165,48 +175,42 @@ public class Files_adapter extends BaseAdapter {
                                                 .show();
                                         break;
 
-                                    case 3:
-                                        doPrint(FeedItems.get(position));
+                                    case 3: //Print
+                                        doPrint(mFeedItems.get(position));
                                         break;
-
-
                                 }
-
                             }
                         })
                         .show();
                 notifyDataSetChanged();
-
             }
         });
-
 
         return vi;
     }
 
-
-    String fileName;
-
-    private void doPrint(String f) {
-        PrintManager printManager = (PrintManager) context
+    /**
+     * Prints a file
+     * @param fileName Path of file to be printed
+     */
+    private void doPrint(String fileName) {
+        PrintManager printManager = (PrintManager) mContext
                 .getSystemService(Context.PRINT_SERVICE);
 
-        fileName = f;
-        String jobName = context.getString(R.string.app_name) + " Document";
+        mFileName = fileName;
+        String jobName = mContext.getString(R.string.app_name) + " Document";
         printManager.print(jobName, pda, null);
     }
 
 
-    PrintDocumentAdapter pda = new PrintDocumentAdapter() {
+    private PrintDocumentAdapter pda = new PrintDocumentAdapter() {
 
         @Override
         public void onWrite(PageRange[] pages, ParcelFileDescriptor destination, CancellationSignal cancellationSignal, WriteResultCallback callback) {
             InputStream input = null;
             OutputStream output = null;
-
             try {
-
-                input = new FileInputStream(fileName);
+                input = new FileInputStream(mFileName);
                 output = new FileOutputStream(destination.getFileDescriptor());
 
                 byte[] buf = new byte[1024];
@@ -241,7 +245,6 @@ public class Files_adapter extends BaseAdapter {
                 callback.onLayoutCancelled();
                 return;
             }
-
             PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile").setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT).build();
 
             callback.onLayoutFinished(pdi, true);
@@ -251,7 +254,5 @@ public class Files_adapter extends BaseAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-
-
     }
 }
