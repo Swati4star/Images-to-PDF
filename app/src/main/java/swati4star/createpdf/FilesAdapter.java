@@ -32,6 +32,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by swati on 9/10/15.
  * <p>
@@ -44,15 +47,27 @@ public class FilesAdapter extends BaseAdapter {
     private Context mContext;
     private static LayoutInflater inflater;
     private ArrayList<String> mFeedItems;
-    TextView textView;
-    LinearLayout linearLayout;
-    private MaterialRippleLayout mRipple;
     private String mFileName;
+
+    static class viewHolder {
+
+        @BindView(R.id.name)
+        TextView textView;
+        @BindView(R.id.parent)
+        LinearLayout linearLayout;
+        @BindView(R.id.ripple)
+        MaterialRippleLayout mRipple;
+
+        public viewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
 
     /**
      * Returns adapter instance
-     * @param context       the context calling this adapter
-     * @param FeedItems     array list containing path of files
+     *
+     * @param context   the context calling this adapter
+     * @param FeedItems array list containing path of files
      */
     public FilesAdapter(Context context, ArrayList<String> FeedItems) {
         this.mContext = context;
@@ -64,7 +79,8 @@ public class FilesAdapter extends BaseAdapter {
 
     /**
      * Return number of elements in adapter
-     * @return  count of number of elements
+     *
+     * @return count of number of elements
      */
     @Override
     public int getCount() {
@@ -73,7 +89,8 @@ public class FilesAdapter extends BaseAdapter {
 
     /**
      * get Particular item at a given position
-     * @param position  the position of item
+     *
+     * @param position the position of item
      * @return object referencing the item at given position
      */
     @Override
@@ -87,22 +104,22 @@ public class FilesAdapter extends BaseAdapter {
         return position;
     }
 
-
     @Override
-    public View getView(final int position, final View convertView, ViewGroup parent) {
-        View vi = convertView;
-        if (vi == null)
-            vi = inflater.inflate(R.layout.file_list_item, null);
-
-        textView = (TextView) vi.findViewById(R.id.name);
-        linearLayout = (LinearLayout) vi.findViewById(R.id.parent);
-        mRipple = (MaterialRippleLayout) vi.findViewById(R.id.ripple);
+    public View getView(final int position, View view, ViewGroup parent) {
+        viewHolder holder;
+        if (view != null) {
+            holder = (viewHolder) view.getTag();
+        } else {
+            view = inflater.inflate(R.layout.file_list_item, parent, false);
+            holder = new viewHolder(view);
+            view.setTag(holder);
+        }
 
         // Extract file name from path
         String[] name = mFeedItems.get(position).split("/");
-        textView.setText(name[name.length - 1]);
+        holder.textView.setText(name[name.length - 1]);
 
-        mRipple.setOnClickListener(new View.OnClickListener() {
+        holder.mRipple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new MaterialDialog.Builder(mContext)
@@ -115,64 +132,17 @@ public class FilesAdapter extends BaseAdapter {
 
                                 switch (which) {
                                     case 0: //Open
-                                        File file = new File(mFeedItems.get(position));
-                                        Intent target = new Intent(Intent.ACTION_VIEW);
-                                        target.setDataAndType(Uri.fromFile(file), "application/pdf");
-                                        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                                        Intent intent = Intent.createChooser(target, "Open File");
-                                        try {
-                                            mContext.startActivity(intent);
-                                        } catch (ActivityNotFoundException e) {
-                                            Toast.makeText(mContext, "No app to read PDF File", Toast.LENGTH_LONG).show();
-                                        }
+                                        openFile(mFeedItems.get(position));
                                         break;
 
 
                                     case 1: //delete
-                                        File fdelete = new File(mFeedItems.get(position));
-                                        if (fdelete.exists()) {
-                                            if (fdelete.delete()) {
-                                                Toast.makeText(mContext, "File deleted.", Toast.LENGTH_LONG).show();
-                                            } else {
-                                                Toast.makeText(mContext, "File can't be deleted.", Toast.LENGTH_LONG).show();
-                                            }
-                                        }
+                                        deleteFile(mFeedItems.get(position));
                                         break;
 
 
                                     case 2: //rename
-                                        new MaterialDialog.Builder(mContext)
-                                                .title("Creating PDF")
-                                                .content("Enter file name")
-                                                .input("Example : abc", null, new MaterialDialog.InputCallback() {
-                                                    @Override
-                                                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                                                        if (input == null) {
-                                                            Toast.makeText(mContext, "Name cannot be blank", Toast.LENGTH_LONG).show();
-
-                                                        } else {
-                                                            String newname = input.toString();
-                                                            File oldfile = new File(mFeedItems.get(position));
-                                                            String x[] = mFeedItems.get(position).split("/");
-                                                            String newfilename = "";
-                                                            for (int i = 0; i < x.length - 1; i++)
-                                                                newfilename = newfilename + "/" + x[i];
-
-                                                            File newfile = new File(newfilename + "/" + newname + ".pdf");
-
-                                                            Log.e("Old file name", oldfile + " ");
-                                                            Log.e("New file name", newfile + " ");
-
-                                                            if (oldfile.renameTo(newfile)) {
-                                                                Toast.makeText(mContext, "File renamed.", Toast.LENGTH_LONG).show();
-                                                            } else {
-                                                                Toast.makeText(mContext, "File can't be renamed.", Toast.LENGTH_LONG).show();
-                                                            }
-                                                        }
-                                                    }
-                                                })
-                                                .show();
+                                        renameFile(position);
                                         break;
 
                                     case 3: //Print
@@ -186,11 +156,72 @@ public class FilesAdapter extends BaseAdapter {
             }
         });
 
-        return vi;
+        return view;
+    }
+
+    private void openFile(String name) {
+        File file = new File(name);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setDataAndType(Uri.fromFile(file), "application/pdf");
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Intent intent = Intent.createChooser(target, "Open File");
+        try {
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(mContext, "No app to read PDF File", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void deleteFile(String name) {
+        File fdelete = new File(name);
+        if (fdelete.exists()) {
+            if (fdelete.delete()) {
+                Toast.makeText(mContext, "File deleted.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(mContext, "File can't be deleted.", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    private void renameFile(final int position) {
+        new MaterialDialog.Builder(mContext)
+                .title("Creating PDF")
+                .content("Enter file name")
+                .input("Example : abc", null, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        if (input == null) {
+                            Toast.makeText(mContext, "Name cannot be blank", Toast.LENGTH_LONG).show();
+
+                        } else {
+                            String newname = input.toString();
+                            File oldfile = new File(mFeedItems.get(position));
+                            String x[] = mFeedItems.get(position).split("/");
+                            String newfilename = "";
+                            for (int i = 0; i < x.length - 1; i++)
+                                newfilename = newfilename + "/" + x[i];
+
+                            File newfile = new File(newfilename + "/" + newname + ".pdf");
+
+                            Log.e("Old file name", oldfile + " ");
+                            Log.e("New file name", newfile + " ");
+
+                            if (oldfile.renameTo(newfile)) {
+                                Toast.makeText(mContext, "File renamed.", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(mContext, "File can't be renamed.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                })
+                .show();
     }
 
     /**
      * Prints a file
+     *
      * @param fileName Path of file to be printed
      */
     private void doPrint(String fileName) {

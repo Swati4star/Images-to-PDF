@@ -16,15 +16,19 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     Activity activity;
-    ListView listView;
-    SwipeRefreshLayout swipeView;
     ArrayList<String> inFiles;
     FilesAdapter adapter;
     File[] files;
     File folder;
+
+    @BindView(R.id.list)    ListView listView;
+    @BindView(R.id.swipe)   SwipeRefreshLayout swipeView;
 
     @Override
     public void onAttach(Context context) {
@@ -37,17 +41,15 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
-        folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
+        ButterKnife.bind(this, root);
 
         //Create/Open folder
-        boolean success = true;
+        folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
         if (!folder.exists()) {
-            success = folder.mkdir();
+            folder.mkdir();
         }
 
         // Initialize variables
-        swipeView = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
-        listView = (ListView) root.findViewById(R.id.list);
         inFiles = new ArrayList<>();
         files = folder.listFiles();
         adapter = new FilesAdapter(activity, inFiles);
@@ -89,7 +91,6 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     public void onRefresh() {
 
         Log.v("refresh", "refreshing dta");
-
         populateListView();
         swipeView.setRefreshing(false);
     }
