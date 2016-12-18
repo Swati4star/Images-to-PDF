@@ -40,6 +40,10 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Home fragment to start with creating PDF
  */
@@ -48,13 +52,15 @@ public class Home extends Fragment {
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private int mMorphCounter1 = 1;
-
     Activity activity;
     List<String> imagesUri;
-    MorphingButton createPdf, openPdf, addImages;
-    TextView textView;
-    Image image;
     String path, filename;
+    Image image;
+
+    @BindView(R.id.pdfcreate) MorphingButton createPdf;
+    @BindView(R.id.pdfOpen)   MorphingButton openPdf;
+    @BindView(R.id.addImages) MorphingButton addImages;
+    @BindView(R.id.text)      TextView textView;
 
     @Override
     public void onAttach(Context context) {
@@ -66,13 +72,11 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, root);
 
         //initialising variables
         imagesUri = new ArrayList<>();
-        textView = (TextView) root.findViewById(R.id.text);
-        openPdf = (MorphingButton) root.findViewById(R.id.pdfOpen);
-        addImages = (MorphingButton) root.findViewById(R.id.addImages);
-        createPdf = (MorphingButton) root.findViewById(R.id.pdfcreate);
+
         morphToSquare(createPdf, integer(R.integer.mb_animation));
         openPdf.setVisibility(View.GONE);
 
@@ -88,77 +92,73 @@ public class Home extends Fragment {
             }
         }
 
-        // Adding Images to PDF
-        addImages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check if permissions are granted
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ContextCompat.checkSelfPermission(activity,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                                        Manifest.permission.CAMERA},
-                                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-                    } else {
-                        selectImages();
-                    }
-                } else {
-                    selectImages();
-                }
-            }
-        });
-
-        // Create Pdf of selected images
-        createPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (imagesUri.size() == 0) {
-                    Toast.makeText(activity, "No Images selected", Toast.LENGTH_LONG).show();
-                } else {
-                    new MaterialDialog.Builder(activity)
-                            .title("Creating PDF")
-                            .content("Enter file name")
-                            .input("Example : abc", null, new MaterialDialog.InputCallback() {
-                                @Override
-                                public void onInput(MaterialDialog dialog, CharSequence input) {
-                                    if (input == null) {
-                                        Toast.makeText(activity, "Name cannot be blank", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        filename = input.toString();
-
-                                        new creatingPDF().execute();
-
-                                        if (mMorphCounter1 == 0) {
-                                            mMorphCounter1++;
-                                        }
-                                    }
-                                }
-                            })
-                            .show();
-                }
-            }
-        });
-
-        // Open newly created PDf
-        openPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                File file = new File(path);
-                Intent target = new Intent(Intent.ACTION_VIEW);
-                target.setDataAndType(Uri.fromFile(file), "application/pdf");
-                target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                Intent intent = Intent.createChooser(target, "Open File");
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(activity, "No app to read PDF File", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
         return root;
+    }
+
+    // Adding Images to PDF
+    @OnClick(R.id.addImages)
+    void startAddingImages() {
+        // Check if permissions are granted
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA},
+                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+            } else {
+                selectImages();
+            }
+        } else {
+            selectImages();
+        }
+    }
+
+
+    // Create Pdf of selected images
+    @OnClick(R.id.pdfcreate)
+    void createPdf() {
+        if (imagesUri.size() == 0) {
+            Toast.makeText(activity, "No Images selected", Toast.LENGTH_LONG).show();
+        } else {
+            new MaterialDialog.Builder(activity)
+                    .title("Creating PDF")
+                    .content("Enter file name")
+                    .input("Example : abc", null, new MaterialDialog.InputCallback() {
+                        @Override
+                        public void onInput(MaterialDialog dialog, CharSequence input) {
+                            if (input == null) {
+                                Toast.makeText(activity, "Name cannot be blank", Toast.LENGTH_LONG).show();
+                            } else {
+                                filename = input.toString();
+
+                                new creatingPDF().execute();
+
+                                if (mMorphCounter1 == 0) {
+                                    mMorphCounter1++;
+                                }
+                            }
+                        }
+                    })
+                    .show();
+        }
+    }
+
+
+    @OnClick(R.id.pdfOpen)
+    void openPdf() {
+        File file = new File(path);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setDataAndType(Uri.fromFile(file), "application/pdf");
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Intent intent = Intent.createChooser(target, "Open File");
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(activity, "No app to read PDF File", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
