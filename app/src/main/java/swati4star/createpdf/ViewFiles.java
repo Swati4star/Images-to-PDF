@@ -27,8 +27,8 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     File[] files;
     File folder;
 
-    @BindView(R.id.list)    ListView listView;
-    @BindView(R.id.swipe)   SwipeRefreshLayout swipeView;
+    ListView listView;
+    SwipeRefreshLayout swipeView;
 
     @Override
     public void onAttach(Context context) {
@@ -41,7 +41,9 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
-        ButterKnife.bind(this, root);
+
+        listView = (ListView) root.findViewById(R.id.list);
+        swipeView = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
 
         //Create/Open folder
         folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
