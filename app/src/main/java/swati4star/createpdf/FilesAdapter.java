@@ -51,11 +51,7 @@ public class FilesAdapter extends BaseAdapter {
 
     static class viewHolder {
 
-        @BindView(R.id.name)
         TextView textView;
-        @BindView(R.id.parent)
-        LinearLayout linearLayout;
-        @BindView(R.id.ripple)
         MaterialRippleLayout mRipple;
 
         public viewHolder(View view) {
@@ -112,6 +108,8 @@ public class FilesAdapter extends BaseAdapter {
         } else {
             view = inflater.inflate(R.layout.file_list_item, parent, false);
             holder = new viewHolder(view);
+            holder.textView = (TextView) view.findViewById(R.id.name);
+            holder.mRipple = (MaterialRippleLayout) view.findViewById(R.id.ripple);
             view.setTag(holder);
         }
 

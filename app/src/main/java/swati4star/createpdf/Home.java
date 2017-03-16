@@ -57,10 +57,10 @@ public class Home extends Fragment {
     String path, filename;
     Image image;
 
-    @BindView(R.id.pdfcreate) MorphingButton createPdf;
-    @BindView(R.id.pdfOpen)   MorphingButton openPdf;
-    @BindView(R.id.addImages) MorphingButton addImages;
-    @BindView(R.id.text)      TextView textView;
+    MorphingButton createPdf;
+    MorphingButton openPdf;
+    MorphingButton addImages;
+    TextView textView;
 
     @Override
     public void onAttach(Context context) {
@@ -76,9 +76,34 @@ public class Home extends Fragment {
 
         //initialising variables
         imagesUri = new ArrayList<>();
+        addImages = (MorphingButton) root.findViewById(R.id.addImages);
+        createPdf = (MorphingButton) root.findViewById(R.id.pdfcreate);
+        openPdf = (MorphingButton) root.findViewById(R.id.pdfOpen);
+        textView = (TextView) root.findViewById(R.id.text);
 
         morphToSquare(createPdf, integer(R.integer.mb_animation));
         openPdf.setVisibility(View.GONE);
+
+        addImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startAddingImages();
+            }
+        });
+
+        createPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createPdf();
+            }
+        });
+
+        openPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPdf();
+            }
+        });
 
         // Get runtime permissions if build version >= Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -96,7 +121,6 @@ public class Home extends Fragment {
     }
 
     // Adding Images to PDF
-    @OnClick(R.id.addImages)
     void startAddingImages() {
         // Check if permissions are granted
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -117,7 +141,6 @@ public class Home extends Fragment {
 
 
     // Create Pdf of selected images
-    @OnClick(R.id.pdfcreate)
     void createPdf() {
         if (imagesUri.size() == 0) {
             Toast.makeText(activity, "No Images selected", Toast.LENGTH_LONG).show();
@@ -146,7 +169,6 @@ public class Home extends Fragment {
     }
 
 
-    @OnClick(R.id.pdfOpen)
     void openPdf() {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
