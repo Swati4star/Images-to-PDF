@@ -3,11 +3,14 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-23.0.3
-    - android-23
+    - build-tools-25.0.2
+    - android-25
 # Support library
     - extra-android-support
     - extra-android-m2repository
+
+jdk:
+  - oraclejdk8
 
 before_script:
     - chmod +x gradlew
