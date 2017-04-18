@@ -2,7 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
+<<<<<<< HEAD
     buildToolsVersion '25.0.0'
+=======
+    buildToolsVersion "23.0.3"
+
+>>>>>>> 106e127... travis fix
     defaultConfig {
         applicationId "swati4star.createpdf"
         minSdkVersion 19
