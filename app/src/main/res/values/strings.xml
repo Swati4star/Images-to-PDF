@@ -28,4 +28,7 @@
         <item>print</item>
     </array>
 
+    <string name="please_wait">Please Wait</string>
+    <string name="populating_list">Populating list. This may take a while.</string>
+
 </resources>
