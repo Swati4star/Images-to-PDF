@@ -1,17 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
 <<<<<<< HEAD
+    compileSdkVersion 23
     buildToolsVersion '25.0.0'
 =======
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
->>>>>>> 106e127... travis fix
+>>>>>>> 9ab3f4a... Updated build versions
     defaultConfig {
         applicationId "swati4star.createpdf"
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -34,8 +35,8 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
     compile 'com.itextpdf:itextg:5.5.9'
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'

@@ -4,12 +4,12 @@ android:
   components:
     - platform-tools
     - tools
-<<<<<<< HEAD
     - build-tools-25.0.0
-=======
-    - build-tools-23.0.3
->>>>>>> 106e127... travis fix
+<<<<<<< HEAD
     - android-23
+=======
+    - android-25
+>>>>>>> 9ab3f4a... Updated build versions
 # Support library
     - extra-android-support
     - extra-android-m2repository

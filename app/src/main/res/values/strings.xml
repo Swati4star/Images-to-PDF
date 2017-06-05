@@ -29,6 +29,6 @@
     </array>
 
     <string name="please_wait">Please Wait</string>
-    <string name="populating_list">Populating list. This may take a while.</string>
+    <string name="populating_list">Fetching files. This may take a while</string>
 
 </resources>
