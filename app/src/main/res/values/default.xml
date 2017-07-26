@@ -26,6 +26,4 @@
     <dimen name="mb_height_4">4dp</dimen>
 
     <integer name="mb_animation">500</integer>
-
-    <string name="mb_button">Create PDF</string>
 </resources>

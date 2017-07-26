@@ -15,7 +15,6 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
     Toolbar toolbar;
     DrawerLayout drawer;
 
@@ -53,8 +52,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -62,19 +59,21 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (id == R.id.nav_camera) {
-            fragment = new Home();
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-        } else if (id == R.id.nav_gallery) {
-            fragment = new ViewFiles();
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        switch (id) {
+            case R.id.nav_camera:
+                fragment = new Home();
+                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+                break;
+            case R.id.nav_gallery:
+                fragment = new ViewFiles();
+                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

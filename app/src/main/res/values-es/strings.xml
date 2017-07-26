@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PDF Creator</string>
+
+    <string name="navigation_drawer_open">Abrir menú lateral</string>
+    <string name="navigation_drawer_close">Cerrar menú lateral</string>
+
+    <string name="action_settings">Configuración</string>
+    <string name="title">Acciones PDF</string>
+
+    <string name="file_name_text">Nombre del fichero</string>
+    <string name="select_images_text">Seleccionar Imágenes</string>
+    <string name="open_pdf_text">Abrir PDF</string>
+    <string name="create_pdf_text">Crear PDF</string>
+    <string name="mb_button">Crear PDF</string>
+
+    <array name="items">
+        <item>Abrir Fichero</item>
+        <item>Borrar Fichero</item>
+        <item>Renombrar Fichero</item>
+        <item>Imprimir Fichero</item>
+    </array>
+
+    <string name="please_wait">Por favor espere</string>
+    <string name="populating_list">Recuperando los ficheros. Esto puede tomar un tiempo</string>
+
+    <string name="main">Inicio</string>
+    <string name="viewFiles">Ver Ficheros</string>
+
+    <string name="toast_no_images">Ninguna imagen seleccionada</string>
+    <string name="toast_name_not_blank">El nombre no puede estar en blanco</string>
+    <string name="toast_permissions_given">Permisos concedidos!</string>
+    <string name="toast_insufficient_permissions">Permisos insuficientes!</string>
+    <string name="toast_images_added">Imágenes añadidas</string>
+    <string name="toast_file_renamed">Fichero renombrado.</string>
+    <string name="toast_file_not_renamed">El fichero no puede ser renombrado.</string>
+    <string name="toast_no_pdfs">Sin PDFs por ahora</string>
+    <string name="toast_file_deleted">Fichero borrado.</string>
+    <string name="toast_file_not_deleted">El fichero no puede ser borrado.</string>
+
+    <string name="creating_pdf">Creando PDF</string>
+    <string name="enter_file_name">Escribe un nombre de fichero</string>
+    <string name="example">Ejemplo : abc</string>
+    <string name="toast_no_pdf_app">No hay app para abrir ficheros PDF</string>
+    <string name="open_file">Abrir Firchero</string>
+    <string name="done">hecho</string>
+</resources>

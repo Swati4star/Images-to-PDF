@@ -141,16 +141,16 @@ public class Home extends Fragment {
     // Create Pdf of selected images
     void createPdf() {
         if (imagesUri.size() == 0) {
-            Toast.makeText(activity, "No Images selected", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
         } else {
             new MaterialDialog.Builder(activity)
-                    .title("Creating PDF")
-                    .content("Enter file name")
-                    .input("Example : abc", null, new MaterialDialog.InputCallback() {
+                    .title(R.string.creating_pdf)
+                    .content(R.string.enter_file_name)
+                    .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
                             if (input == null) {
-                                Toast.makeText(activity, "Name cannot be blank", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
                             } else {
                                 filename = input.toString();
 
@@ -170,14 +170,14 @@ public class Home extends Fragment {
     void openPdf() {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file), "application/pdf");
+        target.setDataAndType(Uri.fromFile(file), getString(R.string.pdf_type));
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-        Intent intent = Intent.createChooser(target, "Open File");
+        Intent intent = Intent.createChooser(target, getString(R.string.open_file));
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(activity, "No app to read PDF File", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.toast_no_pdf_app, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -202,9 +202,9 @@ public class Home extends Fragment {
             case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImages();
-                    Toast.makeText(activity, "Permissions Given!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, R.string.toast_permissions_given, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(activity, "Insufficient Permissions!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, R.string.toast_insufficient_permissions, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -226,7 +226,7 @@ public class Home extends Fragment {
             for (int i = 0; i < image_uris.size(); i++) {
                 imagesUri.add(image_uris.get(i).getPath());
             }
-            Toast.makeText(activity, "Images added", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
             morphToSquare(createPdf, integer(R.integer.mb_animation));
         }
     }
@@ -273,8 +273,8 @@ public class Home extends Fragment {
 
         // Progress dialog
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                .title("Please Wait")
-                .content("Creating PDF. This may take a while.")
+                .title(R.string.please_wait)
+                .content(R.string.populating_list)
                 .cancelable(false)
                 .progress(true, 0);
         MaterialDialog dialog = builder.build();
@@ -290,18 +290,18 @@ public class Home extends Fragment {
         protected String doInBackground(String... params) {
 
 
-            File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
+            File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
             boolean success = true;
             if (!folder.exists()) {
                 success = folder.mkdir();
             }
 
 
-            path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/";
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
 
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
 
-            path = path + filename + ".pdf";
+            path = path + filename + getString(R.string.pdf_ext);
 
             Log.v("stage 1", "store the pdf in sd card");
 
@@ -374,7 +374,7 @@ public class Home extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             openPdf.setVisibility(View.VISIBLE);
-            textView.append("done");
+            textView.append(getString(R.string.done));
             dialog.dismiss();
             morphToSuccess(createPdf);
         }

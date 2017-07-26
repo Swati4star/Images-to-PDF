@@ -1,18 +1,17 @@
 <resources>
     <string name="app_name">PDF Creator</string>
-    <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
     <string name="title">PDF Actions</string>
-    <string name="choose">choose</string>
 
     <string name="file_name_text">File Name</string>
     <string name="select_images_text">Select Images</string>
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
+    <string name="mb_button">Create PDF</string>
 
     <array name="items">
         <item>Open File</item>
@@ -21,14 +20,38 @@
         <item>Print File</item>
     </array>
 
-    <array name="itemIds">
+    <array name="itemIds" translatable="false">
         <item>open</item>
         <item>delete</item>
         <item>rename</item>
         <item>print</item>
     </array>
 
+    <string name="pdf_ext" translatable="false">.pdf</string>
+    <string name="pdf_dir" translatable="false">/PDFfiles/</string>
+    <string name="pdf_type" translatable="false">application/pdf</string>
+
     <string name="please_wait">Please Wait</string>
     <string name="populating_list">Fetching files. This may take a while</string>
 
+    <string name="main">Main</string>
+    <string name="viewFiles">View Files</string>
+
+    <string name="toast_no_images">No Images selected</string>
+    <string name="toast_name_not_blank">Name cannot be blank</string>
+    <string name="toast_permissions_given">Permissions Given!</string>
+    <string name="toast_insufficient_permissions">Insufficient Permissions!</string>
+    <string name="toast_images_added">Images added</string>
+    <string name="toast_file_renamed">File renamed.</string>
+    <string name="toast_file_not_renamed">File can\'t be renamed.</string>
+    <string name="toast_no_pdfs">No PDFs right now</string>
+    <string name="toast_file_deleted">File deleted.</string>
+    <string name="toast_file_not_deleted">File can\'t be deleted.</string>
+
+    <string name="creating_pdf">Creating PDF</string>
+    <string name="enter_file_name">Enter file name</string>
+    <string name="example">Example : abc</string>
+    <string name="toast_no_pdf_app">No app to read PDF File</string>
+    <string name="open_file">Open File</string>
+    <string name="done">done</string>
 </resources>

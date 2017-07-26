@@ -158,14 +158,14 @@ public class FilesAdapter extends BaseAdapter {
     private void openFile(String name) {
         File file = new File(name);
         Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file), "application/pdf");
+        target.setDataAndType(Uri.fromFile(file), mContext.getString(R.string.pdf_type));
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-        Intent intent = Intent.createChooser(target, "Open File");
+        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
         try {
             mContext.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(mContext, "No app to read PDF File", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, mContext.getString(R.string.toast_no_pdf_app), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -173,9 +173,9 @@ public class FilesAdapter extends BaseAdapter {
         File fdelete = new File(name);
         if (fdelete.exists()) {
             if (fdelete.delete()) {
-                Toast.makeText(mContext, "File deleted.", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(mContext, "File can't be deleted.", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
             }
         }
 
@@ -183,13 +183,13 @@ public class FilesAdapter extends BaseAdapter {
 
     private void renameFile(final int position) {
         new MaterialDialog.Builder(mContext)
-                .title("Creating PDF")
-                .content("Enter file name")
-                .input("Example : abc", null, new MaterialDialog.InputCallback() {
+                .title(R.string.creating_pdf)
+                .content(R.string.enter_file_name)
+                .input(mContext.getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         if (input == null) {
-                            Toast.makeText(mContext, "Name cannot be blank", Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
 
                         } else {
                             String newname = input.toString();
@@ -199,15 +199,15 @@ public class FilesAdapter extends BaseAdapter {
                             for (int i = 0; i < x.length - 1; i++)
                                 newfilename = newfilename + "/" + x[i];
 
-                            File newfile = new File(newfilename + "/" + newname + ".pdf");
+                            File newfile = new File(newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
 
                             Log.e("Old file name", oldfile + " ");
                             Log.e("New file name", newfile + " ");
 
                             if (oldfile.renameTo(newfile)) {
-                                Toast.makeText(mContext, "File renamed.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(mContext, "File can't be renamed.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
                             }
                         }
                     }

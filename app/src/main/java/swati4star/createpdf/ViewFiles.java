@@ -46,7 +46,7 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
         swipeView = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
 
         //Create/Open folder
-        folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFfiles/");
+        folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
         if (!folder.exists()) {
             folder.mkdir();
         }
@@ -72,10 +72,10 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
         inFiles = new ArrayList<>();
         files = folder.listFiles();
         if (files == null)
-            Toast.makeText(activity, "No PDFs right now", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.toast_no_pdfs, Toast.LENGTH_LONG).show();
         else {
             for (File file : files) {
-                if (!file.isDirectory() && file.getName().endsWith(".pdf")) {
+                if (!file.isDirectory() && file.getName().endsWith(getString(R.string.pdf_ext))) {
                     inFiles.add(file.getPath());
                     Log.v("adding", file.getName());
                 }
