@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -38,6 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -374,7 +376,15 @@ public class Home extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             openPdf.setVisibility(View.VISIBLE);
-            textView.append("done");
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "PDF created!", Snackbar.LENGTH_LONG)
+                    .setAction("View", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ArrayList<String> list = new ArrayList<String>(Arrays.asList(path));
+                            FilesAdapter filesAdapter = new FilesAdapter(getContext(), list);
+                            filesAdapter.openFile(path);
+                        }
+                    }).show();
             dialog.dismiss();
             morphToSuccess(createPdf);
         }
