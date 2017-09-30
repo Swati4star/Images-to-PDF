@@ -156,7 +156,7 @@ public class FilesAdapter extends BaseAdapter {
         return view;
     }
 
-    private void openFile(String name) {
+    public void openFile(String name) {
         File file = new File(name);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setDataAndType(Uri.fromFile(file), "application/pdf");
