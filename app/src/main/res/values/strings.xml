@@ -19,6 +19,7 @@
         <item>Delete File</item>
         <item>Rename File</item>
         <item>Print File</item>
+        <item>E-mail File</item>
     </array>
 
     <array name="itemIds">
@@ -26,6 +27,7 @@
         <item>delete</item>
         <item>rename</item>
         <item>print</item>
+        <item>e-mail</item>
     </array>
 
     <string name="please_wait">Please Wait</string>
