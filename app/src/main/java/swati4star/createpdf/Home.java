@@ -42,6 +42,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
+
 /**
  * Home fragment to start with creating PDF
  */
@@ -54,7 +55,6 @@ public class Home extends Fragment {
     List<String> imagesUri;
     String path, filename;
     Image image;
-
     MorphingButton createPdf;
     MorphingButton openPdf;
     MorphingButton addImages;
@@ -78,6 +78,7 @@ public class Home extends Fragment {
         createPdf = (MorphingButton) root.findViewById(R.id.pdfcreate);
         openPdf = (MorphingButton) root.findViewById(R.id.pdfOpen);
         textView = (TextView) root.findViewById(R.id.text);
+
 
         morphToSquare(createPdf, integer(R.integer.mb_animation));
         openPdf.setVisibility(View.GONE);

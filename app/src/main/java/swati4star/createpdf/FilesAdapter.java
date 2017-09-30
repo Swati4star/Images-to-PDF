@@ -108,6 +108,7 @@ public class FilesAdapter extends BaseAdapter {
             holder = new viewHolder(view);
             holder.textView = (TextView) view.findViewById(R.id.name);
             holder.mRipple = (MaterialRippleLayout) view.findViewById(R.id.ripple);
+
             view.setTag(holder);
         }
 
