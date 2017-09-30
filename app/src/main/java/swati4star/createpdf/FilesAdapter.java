@@ -31,7 +31,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+
+
 import butterknife.ButterKnife;
+
 
 /**
  * Created by swati on 9/10/15.
@@ -108,6 +111,7 @@ public class FilesAdapter extends BaseAdapter {
             holder = new viewHolder(view);
             holder.textView = (TextView) view.findViewById(R.id.name);
             holder.mRipple = (MaterialRippleLayout) view.findViewById(R.id.ripple);
+
             view.setTag(holder);
         }
 
@@ -144,6 +148,9 @@ public class FilesAdapter extends BaseAdapter {
                                     case 3: //Print
                                         doPrint(mFeedItems.get(position));
                                         break;
+                                    case 4: //Email
+                                        emailFile(mFeedItems.get(position));
+                                        break;
                                 }
                             }
                         })
@@ -155,7 +162,7 @@ public class FilesAdapter extends BaseAdapter {
         return view;
     }
 
-    private void openFile(String name) {
+    public void openFile(String name) {
         File file = new File(name);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setDataAndType(Uri.fromFile(file), mContext.getString(R.string.pdf_type));
@@ -227,6 +234,22 @@ public class FilesAdapter extends BaseAdapter {
         mFileName = fileName;
         String jobName = mContext.getString(R.string.app_name) + " Document";
         printManager.print(jobName, pda, null);
+    }
+
+    /**
+     * Emails the desired PDF using application of choice by user
+     *
+     * @author RakiRoad
+     */
+    private void emailFile(String name){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{""});
+        intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(name)));
+        intent.setType("text/plain");
+
+        mContext.startActivity(Intent.createChooser(intent, "Send mail"));
     }
 
 

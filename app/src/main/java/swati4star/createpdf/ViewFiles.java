@@ -19,6 +19,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import java.io.File;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     Activity activity;
@@ -26,7 +29,6 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     FilesAdapter adapter;
     File[] files;
     File folder;
-
     ListView listView;
     SwipeRefreshLayout swipeView;
 

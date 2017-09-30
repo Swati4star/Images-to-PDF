@@ -18,6 +18,7 @@
         <item>Delete File</item>
         <item>Rename File</item>
         <item>Print File</item>
+        <item>E-mail File</item>
     </array>
 
     <array name="itemIds" translatable="false">
@@ -25,6 +26,7 @@
         <item>delete</item>
         <item>rename</item>
         <item>print</item>
+        <item>e-mail</item>
     </array>
 
     <string name="pdf_ext" translatable="false">.pdf</string>
