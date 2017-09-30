@@ -374,7 +374,8 @@ public class Home extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             openPdf.setVisibility(View.VISIBLE);
-            textView.append("done");
+//            textView.append("done");
+            Toast.makeText(this, "PDF Created", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             morphToSuccess(createPdf);
         }
