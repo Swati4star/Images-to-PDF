@@ -135,11 +135,9 @@ public class FilesAdapter extends BaseAdapter {
                                         openFile(mFeedItems.get(position));
                                         break;
 
-
                                     case 1: //delete
-                                        deleteFile(mFeedItems.get(position));
+                                        deleteFile(mFeedItems.get(position), position);
                                         break;
-
 
                                     case 2: //rename
                                         renameFile(position);
@@ -148,6 +146,7 @@ public class FilesAdapter extends BaseAdapter {
                                     case 3: //Print
                                         doPrint(mFeedItems.get(position));
                                         break;
+
                                     case 4: //Email
                                         emailFile(mFeedItems.get(position));
                                         break;
@@ -176,11 +175,13 @@ public class FilesAdapter extends BaseAdapter {
         }
     }
 
-    private void deleteFile(String name) {
+    private void deleteFile(String name, int position) {
         File fdelete = new File(name);
         if (fdelete.exists()) {
             if (fdelete.delete()) {
                 Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
+                mFeedItems.remove(position);
+                notifyDataSetChanged();
             } else {
                 Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
             }
@@ -213,6 +214,8 @@ public class FilesAdapter extends BaseAdapter {
 
                             if (oldfile.renameTo(newfile)) {
                                 Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
+                                mFeedItems.set(position, newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
+                                notifyDataSetChanged();
                             } else {
                                 Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
                             }
@@ -305,4 +308,5 @@ public class FilesAdapter extends BaseAdapter {
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
     }
+
 }
