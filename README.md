@@ -18,23 +18,16 @@ Here is an easy to use android app to convert images to PDF file!
 <img src="/screenshots/options.png" width="400px">
 
 
-
 ##### Step 2 : Select the images
-<img src="/screenshots/select.png" width="400px">
-<img src="/screenshots/selecting2.png" width="400px">
-
+<img src="/screenshots/select.png" width="400px"> <img src="/screenshots/selecting2.png" width="400px">
 
 
 ##### Step 3 : Name the PDF file
 <img src="/screenshots/name.png" width="400px">
 
 
-
 ##### Step 4 : Creating PDF
-<img src="/screenshots/creating.png" width="400px">
-<img src="/screenshots/dobe.png" width="400px">
-
-
+<img src="/screenshots/creating.png" width="400px"> <img src="/screenshots/dobe.png" width="400px">
 
 
 Hurray! PDF Files of selected images is created.
@@ -42,8 +35,7 @@ Hurray! PDF Files of selected images is created.
 
 #### Viewing the PDF files
 
-<img src="/screenshots/list.png" width="400px">
-<img src="/screenshots/pdf_options.png" width="400px">
+<img src="/screenshots/list.png" width="400px"> <img src="/screenshots/pdf_options.png" width="400px">
 
 ### Contributing
 
