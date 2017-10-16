@@ -152,7 +152,7 @@ public class Home extends Fragment {
                     .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
-                            if (input == null) {
+                            if (input.length() == 0) {
                                 Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
                             } else {
                                 filename = input.toString();
