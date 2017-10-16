@@ -225,6 +225,8 @@ public class Home extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
 
+            imagesUri.clear();
+
             ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (int i = 0; i < image_uris.size(); i++) {
                 imagesUri.add(image_uris.get(i).getPath());
