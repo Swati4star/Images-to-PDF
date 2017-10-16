@@ -5,8 +5,8 @@
 
 [<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/swati4star.createpdf)
 
-Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:
-Here is an easy to use android app to convert images to PDF file!
+Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
+Here is an easy to use Android app to convert images to PDF file!
 
 <img src="/screenshots/image_to_pdf.gif"  width="300px">
 
@@ -14,7 +14,7 @@ Here is an easy to use android app to convert images to PDF file!
 
 #### Creating a PDF file
 
-##### Step 1 : User can view the pdf files previously created or create a new one! 
+##### Step 1 : User can view the PDF files previously created or create a new one! 
 <img src="/screenshots/options.png" width="400px">
 
 
@@ -30,7 +30,7 @@ Here is an easy to use android app to convert images to PDF file!
 <img src="/screenshots/creating.png" width="400px"> <img src="/screenshots/dobe.png" width="400px">
 
 
-Hurray! PDF Files of selected images is created.
+Hurray! PDF files of selected images are created.
 
 
 #### Viewing the PDF files
