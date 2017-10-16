@@ -189,6 +189,16 @@ public class Home extends Fragment {
      */
     public void selectImages() {
         Intent intent = new Intent(activity, ImagePickerActivity.class);
+
+        //add to intent the URIs of the already selected images
+        //first they are converted to Uri objects
+        ArrayList<Uri> uris = new ArrayList<>(imagesUri.size());
+        for (String stringUri : imagesUri) {
+            uris.add(Uri.parse(stringUri));
+        }
+        // add them to the intent
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS,uris);
+
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 
