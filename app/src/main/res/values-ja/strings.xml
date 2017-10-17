@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">PDF Creator</string>
+
+    <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
+
+    <string name="action_settings">設定</string>
+    <string name="title">PDF 操作</string>
+
+    <string name="file_name_text">File Name</string>
+    <string name="select_images_text">Select Images</string>
+    <string name="open_pdf_text">Open PDF</string>
+    <string name="create_pdf_text">Create PDF</string>
+
+    <string name="mb_button">PDF を作成</string>
+
+    <array name="items">
+        <item>ファイルを開く</item>
+        <item>ファイルを削除</item>
+        <item>ファイルの名前を変更</item>
+        <item>ファイルを印刷</item>
+    </array>
+
+    <string name="please_wait">Please Wait</string>
+    <string name="populating_list">Fetching files. This may take a while</string>
+
+    <string name="main">Main</string>
+    <string name="viewFiles">View Files</string>
+
+    <string name="toast_no_images">No Images selected</string>
+    <string name="toast_name_not_blank">Name cannot be blank</string>
+    <string name="toast_permissions_given">Permissions Given!</string>
+    <string name="toast_insufficient_permissions">Insufficient Permissions!</string>
+    <string name="toast_images_added">Images added</string>
+    <string name="toast_file_renamed">File renamed.</string>
+    <string name="toast_file_not_renamed">File can\'t be renamed.</string>
+    <string name="toast_no_pdfs">No PDFs right now</string>
+    <string name="toast_file_deleted">File deleted.</string>
+    <string name="toast_file_not_deleted">File can\'t be deleted.</string>
+
+    <string name="creating_pdf">Creating PDF</string>
+    <string name="enter_file_name">Enter file name</string>
+    <string name="example">Example : abc</string>
+    <string name="toast_no_pdf_app">No app to read PDF File</string>
+    <string name="open_file">Open File</string>
+    <string name="done">done</string>
+</resources>
