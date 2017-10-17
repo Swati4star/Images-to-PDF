@@ -12,6 +12,7 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +31,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
-
 
 import butterknife.ButterKnife;
 
@@ -147,8 +146,8 @@ public class FilesAdapter extends BaseAdapter {
                                         doPrint(mFeedItems.get(position));
                                         break;
 
-                                    case 4: //Email
-                                        emailFile(mFeedItems.get(position));
+                                    case 4: //Share
+                                        shareFile(mFeedItems.get(position));
                                         break;
                                 }
                             }
@@ -244,15 +243,18 @@ public class FilesAdapter extends BaseAdapter {
      *
      * @author RakiRoad
      */
-    private void emailFile(String name){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_SUBJECT, "");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{""});
+    private void shareFile(String name){
+        Uri uri= FileProvider.getUriForFile(mContext,"com.swati4star.shareFile",new File(name));
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(name)));
-        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_STREAM,uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("application/pdf");
+        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
 
-        mContext.startActivity(Intent.createChooser(intent, "Send mail"));
+
+
     }
 
 
