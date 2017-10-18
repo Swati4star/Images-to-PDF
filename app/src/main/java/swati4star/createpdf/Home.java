@@ -152,7 +152,7 @@ public class Home extends Fragment {
                     .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
-                            if (input == null) {
+                            if (input == null || input.toString().trim().equals("")) {
                                 Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
                             } else {
                                 filename = input.toString();
@@ -189,6 +189,16 @@ public class Home extends Fragment {
      */
     public void selectImages() {
         Intent intent = new Intent(activity, ImagePickerActivity.class);
+
+        //add to intent the URIs of the already selected images
+        //first they are converted to Uri objects
+        ArrayList<Uri> uris = new ArrayList<>(imagesUri.size());
+        for (String stringUri : imagesUri) {
+            uris.add(Uri.parse(stringUri));
+        }
+        // add them to the intent
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS,uris);
+
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 
@@ -224,6 +234,8 @@ public class Home extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
+
+            imagesUri.clear();
 
             ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (int i = 0; i < image_uris.size(); i++) {
