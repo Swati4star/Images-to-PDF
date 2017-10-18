@@ -18,7 +18,7 @@
         <item>Delete File</item>
         <item>Rename File</item>
         <item>Print File</item>
-        <item>E-mail File</item>
+        <item>Share File</item>
     </array>
 
     <array name="itemIds" translatable="false">
