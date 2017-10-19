@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity
         // Set navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        //Replaced setDrawerListener with addDrawerListener because it was deprecated.
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         switchLayout();
@@ -94,20 +95,23 @@ public class MainActivity extends AppCompatActivity
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             // Set Home fragment
-            Fragment fragment = new Home();
             FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment fragment = new Home();
             fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         }
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
 
-            // Set ViewFiles fragment
+            // Set ViewFiles fragment and Home fragment.
             FragmentManager fragmentManager = getSupportFragmentManager();
+
+            Fragment fragment = new Home();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
 
             Fragment viewFragment = new ViewFiles();
 
             //Add the newly created viewFragment to it's fragment_view_files_holder in activity_main_layout.xml
-            fragmentManager.beginTransaction().add(R.id.fragment_view_files_holder, viewFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_view_files_holder, viewFragment).commit();
         }
     }
 }
