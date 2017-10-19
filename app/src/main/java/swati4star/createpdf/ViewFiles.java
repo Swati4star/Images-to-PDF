@@ -12,15 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -31,6 +29,7 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     File folder;
     ListView listView;
     SwipeRefreshLayout swipeView;
+    TextView emptyStatusTextView;
 
     @Override
     public void onAttach(Context context) {
@@ -46,6 +45,7 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
         listView = (ListView) root.findViewById(R.id.list);
         swipeView = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
+        emptyStatusTextView = (TextView) root.findViewById(R.id.emptyStatusTextView);
 
         //Create/Open folder
         folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
@@ -56,6 +56,9 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
         // Initialize variables
         inFiles = new ArrayList<>();
         files = folder.listFiles();
+        if (files.length == 0) {
+            emptyStatusTextView.setVisibility(View.VISIBLE);
+        }
         adapter = new FilesAdapter(activity, inFiles);
         listView.setAdapter(adapter);
         swipeView.setOnRefreshListener(this);
