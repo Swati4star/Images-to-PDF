@@ -49,12 +49,12 @@ public class FilesAdapter extends BaseAdapter {
     private ArrayList<String> mFeedItems;
     private String mFileName;
 
-    static class viewHolder {
+    static class ViewHolder {
 
         TextView textView;
         MaterialRippleLayout mRipple;
 
-        public viewHolder(View view) {
+        public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
@@ -63,11 +63,11 @@ public class FilesAdapter extends BaseAdapter {
      * Returns adapter instance
      *
      * @param context   the context calling this adapter
-     * @param FeedItems array list containing path of files
+     * @param feedItems array list containing path of files
      */
-    public FilesAdapter(Context context, ArrayList<String> FeedItems) {
+    public FilesAdapter(Context context, ArrayList<String> feedItems) {
         this.mContext = context;
-        this.mFeedItems = FeedItems;
+        this.mFeedItems = feedItems;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -102,12 +102,12 @@ public class FilesAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
-        viewHolder holder;
+        ViewHolder holder;
         if (view != null) {
-            holder = (viewHolder) view.getTag();
+            holder = (ViewHolder) view.getTag();
         } else {
             view = inflater.inflate(R.layout.file_list_item, parent, false);
-            holder = new viewHolder(view);
+            holder = new ViewHolder(view);
             holder.textView = (TextView) view.findViewById(R.id.name);
             holder.mRipple = (MaterialRippleLayout) view.findViewById(R.id.ripple);
 
@@ -201,7 +201,7 @@ public class FilesAdapter extends BaseAdapter {
                         } else {
                             String newname = input.toString();
                             File oldfile = new File(mFeedItems.get(position));
-                            String x[] = mFeedItems.get(position).split("/");
+                            String[] x = mFeedItems.get(position).split("/");
                             String newfilename = "";
                             for (int i = 0; i < x.length - 1; i++)
                                 newfilename = newfilename + "/" + x[i];
@@ -213,7 +213,8 @@ public class FilesAdapter extends BaseAdapter {
 
                             if (oldfile.renameTo(newfile)) {
                                 Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
-                                mFeedItems.set(position, newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
+                                mFeedItems.set(position,
+                                        newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
                                 notifyDataSetChanged();
                             } else {
                                 Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
@@ -235,7 +236,7 @@ public class FilesAdapter extends BaseAdapter {
 
         mFileName = fileName;
         String jobName = mContext.getString(R.string.app_name) + " Document";
-        printManager.print(jobName, pda, null);
+        printManager.print(jobName, mPrintDocumentAdapter, null);
     }
 
     /**
@@ -243,22 +244,25 @@ public class FilesAdapter extends BaseAdapter {
      *
      * @author RakiRoad
      */
-    private void shareFile(String name){
-        Uri uri= FileProvider.getUriForFile(mContext,"com.swati4star.shareFile",new File(name));
+    private void shareFile(String name) {
+        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", new File(name));
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
-        intent.putExtra(Intent.EXTRA_STREAM,uri);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("application/pdf");
         mContext.startActivity(Intent.createChooser(intent, "Sharing"));
     }
 
 
-    private PrintDocumentAdapter pda = new PrintDocumentAdapter() {
+    private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
 
         @Override
-        public void onWrite(PageRange[] pages, ParcelFileDescriptor destination, CancellationSignal cancellationSignal, WriteResultCallback callback) {
+        public void onWrite(PageRange[] pages,
+                            ParcelFileDescriptor destination,
+                            CancellationSignal cancellationSignal,
+                            WriteResultCallback callback) {
             InputStream input = null;
             OutputStream output = null;
             try {
@@ -291,13 +295,19 @@ public class FilesAdapter extends BaseAdapter {
         }
 
         @Override
-        public void onLayout(PrintAttributes oldAttributes, PrintAttributes newAttributes, CancellationSignal cancellationSignal, LayoutResultCallback callback, Bundle extras) {
+        public void onLayout(PrintAttributes oldAttributes,
+                             PrintAttributes newAttributes,
+                             CancellationSignal cancellationSignal,
+                             LayoutResultCallback callback,
+                             Bundle extras) {
 
             if (cancellationSignal.isCanceled()) {
                 callback.onLayoutCancelled();
                 return;
             }
-            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile").setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT).build();
+            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
+                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
+                    .build();
 
             callback.onLayoutFinished(pdi, true);
         }

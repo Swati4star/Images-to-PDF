@@ -108,12 +108,16 @@ public class Home extends Fragment {
 
         // Get runtime permissions if build version >= Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+            if ((ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)) {
+
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             }
         }
@@ -129,8 +133,8 @@ public class Home extends Fragment {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             } else {
                 selectImages();
@@ -157,7 +161,7 @@ public class Home extends Fragment {
                             } else {
                                 filename = input.toString();
 
-                                new creatingPDF().execute();
+                                new CreatingPdf().execute();
 
                                 if (mMorphCounter1 == 0) {
                                     mMorphCounter1++;
@@ -197,7 +201,7 @@ public class Home extends Fragment {
             uris.add(Uri.parse(stringUri));
         }
         // add them to the intent
-        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS,uris);
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
@@ -210,7 +214,7 @@ public class Home extends Fragment {
      * @param grantResults bool array indicating if permission is granted
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -237,9 +241,9 @@ public class Home extends Fragment {
 
             imagesUri.clear();
 
-            ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
-            for (int i = 0; i < image_uris.size(); i++) {
-                imagesUri.add(image_uris.get(i).getPath());
+            ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+            for (int i = 0; i < imageUris.size(); i++) {
+                imagesUri.add(imageUris.get(i).getPath());
             }
             Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
             morphToSquare(createPdf, integer(R.integer.mb_animation));
@@ -284,7 +288,7 @@ public class Home extends Fragment {
     /**
      * An async task that converts selected images to Pdf
      */
-    public class creatingPDF extends AsyncTask<String, String, String> {
+    public class CreatingPdf extends AsyncTask<String, String, String> {
 
         // Progress dialog
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
@@ -305,7 +309,8 @@ public class Home extends Fragment {
         protected String doInBackground(String... params) {
 
 
-            File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
+            File folder = new File(
+                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
             boolean success = true;
             if (!folder.exists()) {
                 success = folder.mkdir();
@@ -314,7 +319,8 @@ public class Home extends Fragment {
 
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
 
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
+            File file = new File(
+                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
 
             path = path + filename + getString(R.string.pdf_ext);
 
@@ -351,14 +357,18 @@ public class Home extends Fragment {
                         //bitmap is larger than page,so set bitmap's size similar to the whole page
                         image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
                     } else {
-                        //bitmap is smaller than page, so add bitmap simply.[note: if you want to fill page by stretching image, you may set size similar to page as above]
+                        //bitmap is smaller than page, so add bitmap simply.
+                        //[note: if you want to fill page by stretching image,
+                        // you may set size similar to page as above]
                         image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
                     }
 
 
                     Log.v("Stage 6", "Image path adding");
 
-                    image.setAbsolutePosition((documentRect.getWidth() - image.getScaledWidth()) / 2, (documentRect.getHeight() - image.getScaledHeight()) / 2);
+                    image.setAbsolutePosition(
+                            (documentRect.getWidth() - image.getScaledWidth()) / 2,
+                            (documentRect.getHeight() - image.getScaledHeight()) / 2);
                     Log.v("Stage 7", "Image Alignments");
 
                     image.setBorder(Image.BOX);
