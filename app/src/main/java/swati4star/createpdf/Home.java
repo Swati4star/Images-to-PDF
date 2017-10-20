@@ -144,6 +144,134 @@ public class Home extends Fragment {
         }
     }
 
+    /**
+     * An async task that converts selected images to Pdf
+     */
+    public class CreatingPdf extends AsyncTask<String, String, String> {
+
+        // Progress dialog
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                .title(R.string.please_wait)
+                .content(R.string.populating_list)
+                .cancelable(false)
+                .progress(true, 0);
+        MaterialDialog dialog = builder.build();
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            File folder = new File(
+                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
+            boolean success = true;
+            if (!folder.exists()) {
+                success = folder.mkdir();
+            }
+
+
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
+
+            File file = new File(
+                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
+
+            path = path + filename + getString(R.string.pdf_ext);
+
+            Log.v("stage 1", "store the pdf in sd card");
+
+            Document document = new Document(PageSize.A4, 38, 38, 50, 38);
+
+            Log.v("stage 2", "Document Created");
+
+            Rectangle documentRect = document.getPageSize();
+
+
+            try {
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
+
+                Log.v("Stage 3", "Pdf writer");
+
+                document.open();
+
+                Log.v("Stage 4", "Document opened");
+
+                for (int i = 0; i < imagesUri.size(); i++) {
+
+
+                    Bitmap bmp = BitmapFactory.decodeFile(imagesUri.get(i));
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
+
+
+                    image = Image.getInstance(imagesUri.get(i));
+
+
+                    if (bmp.getWidth() > documentRect.getWidth() || bmp.getHeight() > documentRect.getHeight()) {
+                        //bitmap is larger than page,so set bitmap's size similar to the whole page
+                        image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
+                    } else {
+                        //bitmap is smaller than page, so add bitmap simply.
+                        //[note: if you want to fill page by stretching image,
+                        // you may set size similar to page as above]
+                        image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
+                    }
+
+
+                    Log.v("Stage 6", "Image path adding");
+
+                    image.setAbsolutePosition(
+                            (documentRect.getWidth() - image.getScaledWidth()) / 2,
+                            (documentRect.getHeight() - image.getScaledHeight()) / 2);
+                    Log.v("Stage 7", "Image Alignments");
+
+                    image.setBorder(Image.BOX);
+
+                    image.setBorderWidth(15);
+
+                    document.add(image);
+
+                    document.newPage();
+                }
+
+                Log.v("Stage 8", "Image adding");
+
+                document.close();
+
+                Log.v("Stage 7", "Document Closed" + path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            document.close();
+            imagesUri.clear();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            openPdf.setVisibility(View.VISIBLE);
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "PDF created!", Snackbar.LENGTH_LONG)
+                    .setAction("View", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ArrayList<String> list = new ArrayList<String>(Arrays.asList(path));
+                            FilesAdapter filesAdapter = new FilesAdapter(getContext(), list);
+                            filesAdapter.openFile(path);
+                        }
+                    }).show();
+            dialog.dismiss();
+            morphToSuccess(createPdf);
+        }
+    }
+
 
     // Create Pdf of selected images
     void createPdf() {
@@ -283,134 +411,6 @@ public class Home extends Fragment {
                 .colorPressed(color(R.color.mb_green_dark))
                 .icon(R.drawable.ic_done);
         btnMorph.morph(circle);
-    }
-
-    /**
-     * An async task that converts selected images to Pdf
-     */
-    public class CreatingPdf extends AsyncTask<String, String, String> {
-
-        // Progress dialog
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                .title(R.string.please_wait)
-                .content(R.string.populating_list)
-                .cancelable(false)
-                .progress(true, 0);
-        MaterialDialog dialog = builder.build();
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-            File folder = new File(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
-            boolean success = true;
-            if (!folder.exists()) {
-                success = folder.mkdir();
-            }
-
-
-            path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
-
-            File file = new File(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
-
-            path = path + filename + getString(R.string.pdf_ext);
-
-            Log.v("stage 1", "store the pdf in sd card");
-
-            Document document = new Document(PageSize.A4, 38, 38, 50, 38);
-
-            Log.v("stage 2", "Document Created");
-
-            Rectangle documentRect = document.getPageSize();
-
-
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-
-                Log.v("Stage 3", "Pdf writer");
-
-                document.open();
-
-                Log.v("Stage 4", "Document opened");
-
-                for (int i = 0; i < imagesUri.size(); i++) {
-
-
-                    Bitmap bmp = BitmapFactory.decodeFile(imagesUri.get(i));
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
-
-
-                    image = Image.getInstance(imagesUri.get(i));
-
-
-                    if (bmp.getWidth() > documentRect.getWidth() || bmp.getHeight() > documentRect.getHeight()) {
-                        //bitmap is larger than page,so set bitmap's size similar to the whole page
-                        image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                    } else {
-                        //bitmap is smaller than page, so add bitmap simply.
-                        //[note: if you want to fill page by stretching image,
-                        // you may set size similar to page as above]
-                        image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
-                    }
-
-
-                    Log.v("Stage 6", "Image path adding");
-
-                    image.setAbsolutePosition(
-                            (documentRect.getWidth() - image.getScaledWidth()) / 2,
-                            (documentRect.getHeight() - image.getScaledHeight()) / 2);
-                    Log.v("Stage 7", "Image Alignments");
-
-                    image.setBorder(Image.BOX);
-
-                    image.setBorderWidth(15);
-
-                    document.add(image);
-
-                    document.newPage();
-                }
-
-                Log.v("Stage 8", "Image adding");
-
-                document.close();
-
-                Log.v("Stage 7", "Document Closed" + path);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            document.close();
-            imagesUri.clear();
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            openPdf.setVisibility(View.VISIBLE);
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "PDF created!", Snackbar.LENGTH_LONG)
-                    .setAction("View", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ArrayList<String> list = new ArrayList<String>(Arrays.asList(path));
-                            FilesAdapter filesAdapter = new FilesAdapter(getContext(), list);
-                            filesAdapter.openFile(path);
-                        }
-                    }).show();
-            dialog.dismiss();
-            morphToSuccess(createPdf);
-        }
     }
 
     public int integer(@IntegerRes int resId) {
