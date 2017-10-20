@@ -181,6 +181,9 @@ public class FilesAdapter extends BaseAdapter {
                 Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
                 mFeedItems.remove(position);
                 notifyDataSetChanged();
+                if (mFeedItems.size() == 0) {
+                    ViewFiles.emptyStatusTextView.setVisibility(View.VISIBLE);
+                }
             } else {
                 Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
             }

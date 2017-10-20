@@ -29,7 +29,7 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     File folder;
     ListView listView;
     SwipeRefreshLayout swipeView;
-    TextView emptyStatusTextView;
+    public static TextView emptyStatusTextView;
 
     @Override
     public void onAttach(Context context) {
