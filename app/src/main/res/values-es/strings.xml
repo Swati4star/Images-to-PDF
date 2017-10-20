@@ -44,4 +44,7 @@
     <string name="toast_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
     <string name="done">hecho</string>
+    <string name="sort">Ordenar</string>
+    <string name="sort_name">Nombre</string>
+    <string name="sort_date">Fecha</string>
 </resources>

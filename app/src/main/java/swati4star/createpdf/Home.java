@@ -39,10 +39,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
+
+import static java.util.Collections.singletonList;
 
 
 /**
@@ -109,15 +110,14 @@ public class Home extends Fragment {
         // Get runtime permissions if build version >= Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ((ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) ||
+                    != PackageManager.PERMISSION_GRANTED) ||
                     (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED) ||
+                            != PackageManager.PERMISSION_GRANTED) ||
                     (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED)) {
-
+                            != PackageManager.PERMISSION_GRANTED)) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             }
         }
@@ -133,8 +133,8 @@ public class Home extends Fragment {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             } else {
                 selectImages();
@@ -262,7 +262,7 @@ public class Home extends Fragment {
                     .setAction("View", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ArrayList<String> list = new ArrayList<String>(Arrays.asList(path));
+                            ArrayList<File> list = new ArrayList<>(singletonList(new File(path)));
                             FilesAdapter filesAdapter = new FilesAdapter(getContext(), list);
                             filesAdapter.openFile(path);
                         }
