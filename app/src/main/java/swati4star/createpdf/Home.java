@@ -66,7 +66,7 @@ public class Home extends Fragment {
     MorphingButton cropImages;
     TextView textView;
     private int mMorphCounter1 = 1;
-    private int imageCounter = 0;
+    private static int imageCounter = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -165,14 +165,17 @@ public class Home extends Fragment {
             Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
             return;
         }
-        for (String imageUri : tempUris) {
-            CropImage.activity(Uri.fromFile(new File(imageUri)))
+        next();
+    }
+
+    void next() {
+        if (imageCounter != tempUris.size()) {
+            CropImage.activity(Uri.fromFile(new File(tempUris.get(imageCounter))))
                     .setActivityMenuIconColor(color(R.color.colorPrimary))
                     .setInitialCropWindowPaddingRatio(0)
                     .setAllowRotation(true)
-                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + imageCount)
+                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (imageCounter+1))
                     .start(getContext(), this);
-            imageCount++;
         }
     }
 
@@ -281,6 +284,7 @@ public class Home extends Fragment {
             document.close();
             imagesUri.clear();
             tempUris.clear();
+            imageCounter = 0;
 
             return null;
         }
@@ -410,21 +414,21 @@ public class Home extends Fragment {
             cropImages.setVisibility(View.VISIBLE);
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            Uri resultUri=null;
             if (resultCode == Activity.RESULT_OK) {
-                resultUri = result.getUri();
+                Uri resultUri = result.getUri();
                 imagesUri.add(resultUri.getPath());
+                Toast.makeText(activity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Toast.makeText(activity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
+                imagesUri.add(tempUris.get(imageCounter));
                 error.printStackTrace();
-            }
-            if (resultUri == null) {
+            } else {
                 imagesUri.add(tempUris.get(imageCounter));
             }
-            imageCounter++;
-            Toast.makeText(activity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
             morphToSquare(createPdf, integer(R.integer.mb_animation));
+            imageCounter++;
+            next();
         }
     }
 
