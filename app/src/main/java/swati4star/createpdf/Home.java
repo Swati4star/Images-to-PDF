@@ -163,6 +163,10 @@ public class Home extends Fragment {
 
     void cropImages() {
         int imageCount = 1;
+        if (tempUris.size() == 0) {
+            Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+            return;
+        }
         for (String imageUri : tempUris) {
             CropImage.activity(Uri.fromFile(new File(imageUri)))
                     .setActivityMenuIconColor(color(R.color.colorPrimary))
