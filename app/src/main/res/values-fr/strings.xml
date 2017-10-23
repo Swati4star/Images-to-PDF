@@ -43,4 +43,8 @@
     <string name="toast_no_pdf_app">Il  n\'y a pas d\'app pour lire fichiers PDF</string>
     <string name="open_file">Ouvrir Fichier</string>
     <string name="done">fait</string>
+    <string name="toast_error_getCropped">Erreur en obtenant image recadrée</string>
+    <string name="crop_images_text">Recadrer images</string>
+    <string name="cropImage_activityTitle">Recadrer image No.</string>
+    <string name="toast_imagecropped">Image recadrée</string>
 </resources>

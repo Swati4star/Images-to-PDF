@@ -44,4 +44,8 @@
     <string name="toast_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
     <string name="done">hecho</string>
+    <string name="cropImage_activityTitle">Recortar imagen No.</string>
+    <string name="crop_images_text">Recorta imágenes</string>
+    <string name="toast_error_getCropped">Error al obtener imágenes recortadas</string>
+    <string name="toast_imagecropped">Imágenes recortadas</string>
 </resources>
