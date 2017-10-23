@@ -53,14 +53,15 @@ import static android.view.View.GONE;
 /**
  * Home fragment to start with creating PDF
  */
+
 public class Home extends Fragment {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private int mMorphCounter1 = 1;
     Activity activity;
-    List<String> imagesUri;
-    List<String> tempUris;
+    ArrayList<String> imagesUri;
+    ArrayList<String> tempUris;
     String path, filename;
     Image image;
     MorphingButton createPdf;
@@ -172,31 +173,34 @@ public class Home extends Fragment {
     // Create Pdf of selected images
     void createPdf() {
         if (imagesUri.size() == 0) {
-            Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
-        } else {
-            new MaterialDialog.Builder(activity)
-                    .title(R.string.creating_pdf)
-                    .content(R.string.enter_file_name)
-                    .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
-                        @Override
-                        public void onInput(MaterialDialog dialog, CharSequence input) {
-                            if (input == null || input.toString().trim().equals("")) {
-                                Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
-                            } else {
-                                filename = input.toString();
+            if (tempUris.size() == 0) {
+                Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                imagesUri = (ArrayList<String>) tempUris.clone();
+            }
+        }
+        new MaterialDialog.Builder(activity)
+                .title(R.string.creating_pdf)
+                .content(R.string.enter_file_name)
+                .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        if (input == null || input.toString().trim().equals("")) {
+                            Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
+                        } else {
+                            filename = input.toString();
 
-                                new creatingPDF().execute();
+                            new creatingPDF().execute();
 
-                                if (mMorphCounter1 == 0) {
-                                    mMorphCounter1++;
-                                }
+                            if (mMorphCounter1 == 0) {
+                                mMorphCounter1++;
                             }
                         }
-                    })
-                    .show();
-        }
+                    }
+                })
+                .show();
     }
-
 
     void openPdf() {
         File file = new File(path);
@@ -225,7 +229,7 @@ public class Home extends Fragment {
             uris.add(Uri.fromFile(new File(stringUri)));
         }
         // add them to the intent
-        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS,uris);
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
