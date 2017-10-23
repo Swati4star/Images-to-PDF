@@ -8,6 +8,10 @@
     android:orientation="vertical"
     tools:context=".Home">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
@@ -19,5 +23,17 @@
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No PDFs Created"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/emptyStatusTextView"
+        android:visibility="gone"/>
+
+    </FrameLayout>
 
 </LinearLayout>

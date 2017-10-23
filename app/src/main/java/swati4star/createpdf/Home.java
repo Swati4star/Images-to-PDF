@@ -125,12 +125,16 @@ public class Home extends Fragment {
 
         // Get runtime permissions if build version >= Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+            if ((ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)) {
+
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             }
         }
@@ -146,8 +150,8 @@ public class Home extends Fragment {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             } else {
                 selectImages();
@@ -168,161 +172,6 @@ public class Home extends Fragment {
                     .start(getContext(), this);
             imageCount++;
         }
-    }
-
-    // Create Pdf of selected images
-    void createPdf() {
-        if (imagesUri.size() == 0) {
-            if (tempUris.size() == 0) {
-                Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
-                return;
-            } else {
-                imagesUri = (ArrayList<String>) tempUris.clone();
-            }
-        }
-        new MaterialDialog.Builder(activity)
-                .title(R.string.creating_pdf)
-                .content(R.string.enter_file_name)
-                .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        if (input == null || input.toString().trim().equals("")) {
-                            Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
-                        } else {
-                            filename = input.toString();
-
-                            new creatingPDF().execute();
-
-                            if (mMorphCounter1 == 0) {
-                                mMorphCounter1++;
-                            }
-                        }
-                    }
-                })
-                .show();
-    }
-
-    void openPdf() {
-        File file = new File(path);
-        Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file), getString(R.string.pdf_type));
-        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-        Intent intent = Intent.createChooser(target, getString(R.string.open_file));
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(activity, R.string.toast_no_pdf_app, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * Opens ImagePickerActivity to select Images
-     */
-    public void selectImages() {
-        Intent intent = new Intent(activity, ImagePickerActivity.class);
-
-        //add to intent the URIs of the already selected images
-        //first they are converted to Uri objects
-        ArrayList<Uri> uris = new ArrayList<>(tempUris.size());
-        for (String stringUri : tempUris) {
-            uris.add(Uri.fromFile(new File(stringUri)));
-        }
-        // add them to the intent
-        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
-
-        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
-    }
-
-    /**
-     * Called after user is asked to grant permissions
-     *
-     * @param requestCode  REQUEST Code for opening permissions
-     * @param permissions  permissions asked to user
-     * @param grantResults bool array indicating if permission is granted
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    selectImages();
-                    Toast.makeText(activity, R.string.toast_permissions_given, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(activity, R.string.toast_insufficient_permissions, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-    /**
-     * Called after ImagePickerActivity is called
-     *
-     * @param requestCode REQUEST Code for opening ImagePickerActivity
-     * @param resultCode  result code of the process
-     * @param data        Data of the image selected
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
-
-            tempUris.clear();
-
-            ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
-            for (int i = 0; i < image_uris.size(); i++) {
-                tempUris.add(image_uris.get(i).getPath());
-            }
-            Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
-            cropImages.setVisibility(View.VISIBLE);
-        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == Activity.RESULT_OK) {
-                Uri resultUri = result.getUri();
-                imagesUri.add(resultUri.getPath());
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-                Toast.makeText(activity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-            Toast.makeText(activity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
-            morphToSquare(createPdf, integer(R.integer.mb_animation));
-        }
-    }
-
-    /**
-     * Converts morph button ot square shape
-     *
-     * @param btnMorph the button to be converted
-     * @param duration time period of transition
-     */
-    private void morphToSquare(final MorphingButton btnMorph, int duration) {
-        MorphingButton.Params square = MorphingButton.Params.create()
-                .duration(duration)
-                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
-                .width(dimen(R.dimen.mb_width_200))
-                .height(dimen(R.dimen.mb_height_56))
-                .color(color(R.color.mb_blue))
-                .colorPressed(color(R.color.mb_blue_dark))
-                .text(getString(R.string.mb_button));
-        btnMorph.morph(square);
-    }
-
-    /**
-     * Converts morph button into success shape
-     *
-     * @param btnMorph the button to be converted
-     */
-    private void morphToSuccess(final MorphingButton btnMorph) {
-        MorphingButton.Params circle = MorphingButton.Params.create()
-                .duration(integer(R.integer.mb_animation))
-                .cornerRadius(dimen(R.dimen.mb_height_56))
-                .width(dimen(R.dimen.mb_height_56))
-                .height(dimen(R.dimen.mb_height_56))
-                .color(color(R.color.mb_green))
-                .colorPressed(color(R.color.mb_green_dark))
-                .icon(R.drawable.ic_done);
-        btnMorph.morph(circle);
     }
 
     /**
@@ -347,7 +196,6 @@ public class Home extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-
 
             File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
             boolean success = true;
@@ -424,6 +272,7 @@ public class Home extends Fragment {
 
             document.close();
             imagesUri.clear();
+            tempUris.clear();
 
             return null;
         }
@@ -444,6 +293,161 @@ public class Home extends Fragment {
             dialog.dismiss();
             morphToSuccess(createPdf);
         }
+    }
+
+    // Create Pdf of selected images
+    void createPdf() {
+        if (imagesUri.size() == 0) {
+            if (tempUris.size() == 0) {
+                Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                imagesUri = (ArrayList<String>) tempUris.clone();
+            }
+        }
+        new MaterialDialog.Builder(activity)
+                .title(R.string.creating_pdf)
+                .content(R.string.enter_file_name)
+                .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        if (input == null || input.toString().trim().equals("")) {
+                            Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
+                        } else {
+                            filename = input.toString();
+
+                            new creatingPDF().execute();
+
+                            if (mMorphCounter1 == 0) {
+                                mMorphCounter1++;
+                            }
+                        }
+                    }
+                })
+                .show();
+    }
+
+    void openPdf() {
+        File file = new File(path);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setDataAndType(Uri.fromFile(file), getString(R.string.pdf_type));
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Intent intent = Intent.createChooser(target, getString(R.string.open_file));
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(activity, R.string.toast_no_pdf_app, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Opens ImagePickerActivity to select Images
+     */
+    public void selectImages() {
+        Intent intent = new Intent(activity, ImagePickerActivity.class);
+
+        //add to intent the URIs of the already selected images
+        //first they are converted to Uri objects
+        ArrayList<Uri> uris = new ArrayList<>(tempUris.size());
+        for (String stringUri : tempUris) {
+            uris.add(Uri.fromFile(new File(stringUri)));
+        }
+        // add them to the intent
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
+
+        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+    }
+
+    /**
+     * Called after user is asked to grant permissions
+     *
+     * @param requestCode  REQUEST Code for opening permissions
+     * @param permissions  permissions asked to user
+     * @param grantResults bool array indicating if permission is granted
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    selectImages();
+                    Toast.makeText(activity, R.string.toast_permissions_given, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(activity, R.string.toast_insufficient_permissions, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    /**
+     * Called after ImagePickerActivity is called
+     *
+     * @param requestCode REQUEST Code for opening ImagePickerActivity
+     * @param resultCode  result code of the process
+     * @param data        Data of the image selected
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
+
+            tempUris.clear();
+          
+            ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+            for (int i = 0; i < image_uris.size(); i++) {
+                tempUris.add(image_uris.get(i).getPath());
+            }
+            Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
+            cropImages.setVisibility(View.VISIBLE);
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == Activity.RESULT_OK) {
+                Uri resultUri = result.getUri();
+                imagesUri.add(resultUri.getPath());
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Toast.makeText(activity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+            Toast.makeText(activity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
+            morphToSquare(createPdf, integer(R.integer.mb_animation));
+        }
+    }
+
+    /**
+     * Converts morph button ot square shape
+     *
+     * @param btnMorph the button to be converted
+     * @param duration time period of transition
+     */
+    private void morphToSquare(final MorphingButton btnMorph, int duration) {
+        MorphingButton.Params square = MorphingButton.Params.create()
+                .duration(duration)
+                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
+                .width(dimen(R.dimen.mb_width_200))
+                .height(dimen(R.dimen.mb_height_56))
+                .color(color(R.color.mb_blue))
+                .colorPressed(color(R.color.mb_blue_dark))
+                .text(getString(R.string.mb_button));
+        btnMorph.morph(square);
+    }
+
+    /**
+     * Converts morph button into success shape
+     *
+     * @param btnMorph the button to be converted
+     */
+    private void morphToSuccess(final MorphingButton btnMorph) {
+        MorphingButton.Params circle = MorphingButton.Params.create()
+                .duration(integer(R.integer.mb_animation))
+                .cornerRadius(dimen(R.dimen.mb_height_56))
+                .width(dimen(R.dimen.mb_height_56))
+                .height(dimen(R.dimen.mb_height_56))
+                .color(color(R.color.mb_green))
+                .colorPressed(color(R.color.mb_green_dark))
+                .icon(R.drawable.ic_done);
+        btnMorph.morph(circle);
     }
 
     public int integer(@IntegerRes int resId) {
