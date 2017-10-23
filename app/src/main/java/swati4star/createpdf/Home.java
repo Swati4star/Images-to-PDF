@@ -55,7 +55,6 @@ public class Home extends Fragment {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
-    private int mMorphCounter1 = 1;
     Activity activity;
     ArrayList<String> imagesUri;
     ArrayList<String> tempUris;
@@ -66,6 +65,7 @@ public class Home extends Fragment {
     MorphingButton addImages;
     MorphingButton cropImages;
     TextView textView;
+    private int mMorphCounter1 = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -130,8 +130,8 @@ public class Home extends Fragment {
                             != PackageManager.PERMISSION_GRANTED)) {
 
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             }
         }
@@ -147,8 +147,8 @@ public class Home extends Fragment {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             } else {
                 selectImages();
