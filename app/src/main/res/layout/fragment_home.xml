@@ -32,6 +32,18 @@
             android:textColor="@color/mb_white" />
 
         <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/cropImages"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/crop_images_text"
+            android:textColor="@color/mb_white"
+            android:visibility="gone"/>
+
+        <com.dd.morphingbutton.MorphingButton
             android:id="@+id/pdfOpen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

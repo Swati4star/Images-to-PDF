@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
@@ -34,15 +35,19 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
+
+import static android.view.View.GONE;
 
 
 /**
@@ -55,11 +60,13 @@ public class Home extends Fragment {
     private int mMorphCounter1 = 1;
     Activity activity;
     List<String> imagesUri;
+    List<String> tempUris;
     String path, filename;
     Image image;
     MorphingButton createPdf;
     MorphingButton openPdf;
     MorphingButton addImages;
+    MorphingButton cropImages;
     TextView textView;
 
     @Override
@@ -76,19 +83,28 @@ public class Home extends Fragment {
 
         //initialising variables
         imagesUri = new ArrayList<>();
+        tempUris = new ArrayList<>();
         addImages = (MorphingButton) root.findViewById(R.id.addImages);
+        cropImages = (MorphingButton) root.findViewById(R.id.cropImages);
         createPdf = (MorphingButton) root.findViewById(R.id.pdfcreate);
         openPdf = (MorphingButton) root.findViewById(R.id.pdfOpen);
         textView = (TextView) root.findViewById(R.id.text);
 
 
         morphToSquare(createPdf, integer(R.integer.mb_animation));
-        openPdf.setVisibility(View.GONE);
+        openPdf.setVisibility(GONE);
 
         addImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startAddingImages();
+            }
+        });
+
+        cropImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cropImages();
             }
         });
 
@@ -140,6 +156,12 @@ public class Home extends Fragment {
         }
     }
 
+    void cropImages() {
+        for (String imageUri : tempUris) {
+            CropImage.activity(Uri.fromFile(new File(imageUri)))
+                    .start(getContext(), this);
+        }
+    }
 
     // Create Pdf of selected images
     void createPdf() {
@@ -192,9 +214,9 @@ public class Home extends Fragment {
 
         //add to intent the URIs of the already selected images
         //first they are converted to Uri objects
-        ArrayList<Uri> uris = new ArrayList<>(imagesUri.size());
-        for (String stringUri : imagesUri) {
-            uris.add(Uri.parse(stringUri));
+        ArrayList<Uri> uris = new ArrayList<>(tempUris.size());
+        for (String stringUri : tempUris) {
+            uris.add(Uri.fromFile(new File(stringUri)));
         }
         // add them to the intent
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS,uris);
@@ -235,13 +257,24 @@ public class Home extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
 
-            imagesUri.clear();
+            tempUris.clear();
 
             ArrayList<Uri> image_uris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (int i = 0; i < image_uris.size(); i++) {
-                imagesUri.add(image_uris.get(i).getPath());
+                tempUris.add(image_uris.get(i).getPath());
             }
             Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
+            cropImages.setVisibility(View.VISIBLE);
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == Activity.RESULT_OK) {
+                Uri resultUri = result.getUri();
+                imagesUri.add(resultUri.getPath());
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                error.printStackTrace();
+            }
+            Toast.makeText(activity, "Images cropped", Toast.LENGTH_LONG).show();
             morphToSquare(createPdf, integer(R.integer.mb_animation));
         }
     }
@@ -326,7 +359,6 @@ public class Home extends Fragment {
 
             Rectangle documentRect = document.getPageSize();
 
-
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
 
@@ -339,7 +371,7 @@ public class Home extends Fragment {
                 for (int i = 0; i < imagesUri.size(); i++) {
 
 
-                    Bitmap bmp = BitmapFactory.decodeFile(imagesUri.get(i));
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), Uri.fromFile(new File(imagesUri.get(i))));
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
 
