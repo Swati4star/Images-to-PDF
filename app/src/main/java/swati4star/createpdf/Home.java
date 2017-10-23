@@ -66,6 +66,7 @@ public class Home extends Fragment {
     MorphingButton cropImages;
     TextView textView;
     private int mMorphCounter1 = 1;
+    private int imageCounter = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -205,7 +206,6 @@ public class Home extends Fragment {
                 success = folder.mkdir();
             }
 
-
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
 
             File file = new File(
@@ -252,7 +252,6 @@ public class Home extends Fragment {
                         // you may set size similar to page as above]
                         image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
                     }
-
 
                     Log.v("Stage 6", "Image path adding");
 
@@ -411,14 +410,19 @@ public class Home extends Fragment {
             cropImages.setVisibility(View.VISIBLE);
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            Uri resultUri=null;
             if (resultCode == Activity.RESULT_OK) {
-                Uri resultUri = result.getUri();
+                resultUri = result.getUri();
                 imagesUri.add(resultUri.getPath());
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Toast.makeText(activity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
+            if (resultUri == null) {
+                imagesUri.add(tempUris.get(imageCounter));
+            }
+            imageCounter++;
             Toast.makeText(activity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
             morphToSquare(createPdf, integer(R.integer.mb_animation));
         }
