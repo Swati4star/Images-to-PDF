@@ -57,4 +57,7 @@
     <string name="toast_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
     <string name="done">done</string>
+    <string name="toast_error_getCropped">Error on getting cropped image</string>
+    <string name="toast_imagecropped">Images cropped</string>
+    <string name="cropImage_activityTitle">Crop image no.</string>
 </resources>

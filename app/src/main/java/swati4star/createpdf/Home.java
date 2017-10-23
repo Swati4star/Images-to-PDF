@@ -160,10 +160,10 @@ public class Home extends Fragment {
         int imageCount = 1;
         for (String imageUri : tempUris) {
             CropImage.activity(Uri.fromFile(new File(imageUri)))
-                    .setActivityMenuIconColor(getResources().getColor(R.color.colorPrimary))
+                    .setActivityMenuIconColor(color(R.color.colorPrimary))
                     .setInitialCropWindowPaddingRatio(0)
                     .setAllowRotation(true)
-                    .setActivityTitle("Crop image no. " + imageCount)
+                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + imageCount)
                     .start(getContext(), this);
             imageCount++;
         }
@@ -278,10 +278,10 @@ public class Home extends Fragment {
                 imagesUri.add(resultUri.getPath());
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
-                Toast.makeText(activity, "Error on getting cropped image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
-            Toast.makeText(activity, "Images cropped", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
             morphToSquare(createPdf, integer(R.integer.mb_animation));
         }
     }
