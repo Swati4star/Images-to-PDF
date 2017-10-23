@@ -30,7 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -46,7 +46,7 @@ public class FilesAdapter extends BaseAdapter {
 
     private Context mContext;
     private static LayoutInflater inflater;
-    private ArrayList<String> mFeedItems;
+    private List<String> mFeedItems;
     private String mFileName;
 
     static class ViewHolder {
@@ -65,7 +65,7 @@ public class FilesAdapter extends BaseAdapter {
      * @param context   the context calling this adapter
      * @param feedItems array list containing path of files
      */
-    public FilesAdapter(Context context, ArrayList<String> feedItems) {
+    FilesAdapter(Context context, List<String> feedItems) {
         this.mContext = context;
         this.mFeedItems = feedItems;
 
