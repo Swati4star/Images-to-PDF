@@ -66,7 +66,7 @@ public class Home extends Fragment {
     MorphingButton cropImages;
     TextView textView;
     private int mMorphCounter1 = 1;
-    private static int imageCounter = 0;
+    private static int mImageCounter = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -169,12 +169,12 @@ public class Home extends Fragment {
     }
 
     void next() {
-        if (imageCounter != tempUris.size()) {
-            CropImage.activity(Uri.fromFile(new File(tempUris.get(imageCounter))))
+        if (mImageCounter != tempUris.size()) {
+            CropImage.activity(Uri.fromFile(new File(tempUris.get(mImageCounter))))
                     .setActivityMenuIconColor(color(R.color.colorPrimary))
                     .setInitialCropWindowPaddingRatio(0)
                     .setAllowRotation(true)
-                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (imageCounter+1))
+                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter +1))
                     .start(getContext(), this);
         }
     }
@@ -284,7 +284,7 @@ public class Home extends Fragment {
             document.close();
             imagesUri.clear();
             tempUris.clear();
-            imageCounter = 0;
+            mImageCounter = 0;
 
             return null;
         }
@@ -421,13 +421,13 @@ public class Home extends Fragment {
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Toast.makeText(activity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
-                imagesUri.add(tempUris.get(imageCounter));
+                imagesUri.add(tempUris.get(mImageCounter));
                 error.printStackTrace();
             } else {
-                imagesUri.add(tempUris.get(imageCounter));
+                imagesUri.add(tempUris.get(mImageCounter));
             }
             morphToSquare(createPdf, integer(R.integer.mb_animation));
-            imageCounter++;
+            mImageCounter++;
             next();
         }
     }
