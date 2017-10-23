@@ -241,7 +241,7 @@ public class Home extends Fragment {
 
             imagesUri.clear();
 
-            ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+            List<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (int i = 0; i < imageUris.size(); i++) {
                 imagesUri.add(imageUris.get(i).getPath());
             }

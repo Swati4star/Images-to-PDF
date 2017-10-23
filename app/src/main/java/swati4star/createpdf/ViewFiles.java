@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     Activity activity;
-    ArrayList<String> inFiles;
+    List<String> inFiles;
     FilesAdapter adapter;
     File[] files;
     File folder;
