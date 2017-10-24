@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static TextView emptyStatusTextView;
     Activity activity;
     ArrayList<String> inFiles;
     FilesAdapter adapter;
@@ -29,7 +30,6 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
     File folder;
     ListView listView;
     SwipeRefreshLayout swipeView;
-    public static TextView emptyStatusTextView;
 
     @Override
     public void onAttach(Context context) {
@@ -118,7 +118,6 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
                 @Override
                 public void run() {
-
                     populateListView();
                 }
             });
