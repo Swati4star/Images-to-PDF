@@ -23,7 +23,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -63,9 +62,8 @@ public class Home extends Fragment {
     Image image;
     MorphingButton createPdf;
     MorphingButton openPdf;
-    MorphingButton addImages;
     MorphingButton cropImages;
-    TextView textView;
+    MorphingButton addImages;
     private int mMorphCounter1 = 1;
 
     @Override
@@ -83,15 +81,14 @@ public class Home extends Fragment {
         //initialising variables
         imagesUri = new ArrayList<>();
         tempUris = new ArrayList<>();
-        addImages = (MorphingButton) root.findViewById(R.id.addImages);
         cropImages = (MorphingButton) root.findViewById(R.id.cropImages);
-        createPdf = (MorphingButton) root.findViewById(R.id.pdfcreate);
+        createPdf = (MorphingButton) root.findViewById(R.id.pdfCreate);
         openPdf = (MorphingButton) root.findViewById(R.id.pdfOpen);
-        textView = (TextView) root.findViewById(R.id.text);
+        addImages = (MorphingButton) root.findViewById(R.id.addImages);
 
-
-        morphToSquare(createPdf, integer(R.integer.mb_animation));
+        morphToSquare(createPdf, integerRes(R.integer.mb_animation));
         openPdf.setVisibility(GONE);
+
 
         addImages.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +157,6 @@ public class Home extends Fragment {
     }
 
     void cropImages() {
-        int imageCount = 1;
         if (tempUris.size() == 0) {
             Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
             return;
@@ -171,7 +167,7 @@ public class Home extends Fragment {
     void next() {
         if (mImageCounter != tempUris.size()) {
             CropImage.activity(Uri.fromFile(new File(tempUris.get(mImageCounter))))
-                    .setActivityMenuIconColor(color(R.color.colorPrimary))
+                    .setActivityMenuIconColor(colorRes(R.color.colorPrimary))
                     .setInitialCropWindowPaddingRatio(0)
                     .setAllowRotation(true)
                     .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
@@ -298,7 +294,7 @@ public class Home extends Fragment {
             } else {
                 imagesUri.add(tempUris.get(mImageCounter));
             }
-            morphToSquare(createPdf, integer(R.integer.mb_animation));
+            morphToSquare(createPdf, integerRes(R.integer.mb_animation));
             mImageCounter++;
             next();
         }
@@ -313,11 +309,11 @@ public class Home extends Fragment {
     private void morphToSquare(final MorphingButton btnMorph, int duration) {
         MorphingButton.Params square = MorphingButton.Params.create()
                 .duration(duration)
-                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
-                .width(dimen(R.dimen.mb_width_200))
-                .height(dimen(R.dimen.mb_height_56))
-                .color(color(R.color.mb_blue))
-                .colorPressed(color(R.color.mb_blue_dark))
+                .cornerRadius(dimenRes(R.dimen.mb_corner_radius_2))
+                .width(dimenRes(R.dimen.mb_width_200))
+                .height(dimenRes(R.dimen.mb_height_56))
+                .color(colorRes(R.color.mb_blue))
+                .colorPressed(colorRes(R.color.mb_blue_dark))
                 .text(getString(R.string.mb_button));
         btnMorph.morph(square);
     }
@@ -329,32 +325,32 @@ public class Home extends Fragment {
      */
     private void morphToSuccess(final MorphingButton btnMorph) {
         MorphingButton.Params circle = MorphingButton.Params.create()
-                .duration(integer(R.integer.mb_animation))
-                .cornerRadius(dimen(R.dimen.mb_height_56))
-                .width(dimen(R.dimen.mb_height_56))
-                .height(dimen(R.dimen.mb_height_56))
-                .color(color(R.color.mb_green))
-                .colorPressed(color(R.color.mb_green_dark))
+                .duration(integerRes(R.integer.mb_animation))
+                .cornerRadius(dimenRes(R.dimen.mb_height_56))
+                .width(dimenRes(R.dimen.mb_height_56))
+                .height(dimenRes(R.dimen.mb_height_56))
+                .color(colorRes(R.color.mb_green))
+                .colorPressed(colorRes(R.color.mb_green_dark))
                 .icon(R.drawable.ic_done);
         btnMorph.morph(circle);
     }
 
-    public int integer(@IntegerRes int resId) {
+    public int integerRes(@IntegerRes int resId) {
         return getResources().getInteger(resId);
     }
 
-    public int dimen(@DimenRes int resId) {
+    public int dimenRes(@DimenRes int resId) {
         return (int) getResources().getDimension(resId);
     }
 
-    public int color(@ColorRes int resId) {
+    public int colorRes(@ColorRes int resId) {
         return getResources().getColor(resId);
     }
 
     /**
      * An async task that converts selected images to Pdf
      */
-    public class CreatingPdf extends AsyncTask<String, String, String> {
+    private class CreatingPdf extends AsyncTask<String, String, String> {
 
         // Progress dialog
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
@@ -374,17 +370,16 @@ public class Home extends Fragment {
         @Override
         protected String doInBackground(String... params) {
 
-            File folder = new File(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
-            boolean success = true;
-            if (!folder.exists()) {
-                success = folder.mkdir();
-            }
-
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
 
-            File file = new File(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
+            File folder = new File(path);
+            if (!folder.exists()) {
+                boolean success = folder.mkdir();
+                if (!success) {
+                    Toast.makeText(activity, "Error on creating application folder", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
+            }
 
             path = path + filename + getString(R.string.pdf_ext);
 
@@ -465,8 +460,8 @@ public class Home extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             openPdf.setVisibility(View.VISIBLE);
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "PDF created!", Snackbar.LENGTH_LONG)
-                    .setAction("View", new View.OnClickListener() {
+            Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             ArrayList<String> list = new ArrayList<String>(Arrays.asList(path));

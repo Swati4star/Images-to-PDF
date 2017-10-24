@@ -48,4 +48,6 @@
     <string name="crop_images_text">Recorta imágenes</string>
     <string name="toast_error_getCropped">Error al obtener imágenes recortadas</string>
     <string name="toast_imagecropped">Imágenes recortadas</string>
+    <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snackbar_viewAction">View</string>
 </resources>

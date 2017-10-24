@@ -47,4 +47,6 @@
     <string name="crop_images_text">Recadrer images</string>
     <string name="cropImage_activityTitle">Recadrer image No.</string>
     <string name="toast_imagecropped">Image recadrée</string>
+    <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snackbar_viewAction">View</string>
 </resources>
