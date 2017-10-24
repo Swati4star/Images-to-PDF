@@ -460,7 +460,9 @@ public class Home extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             openPdf.setVisibility(View.VISIBLE);
-            Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+            Snackbar.make(getActivity().findViewById(android.R.id.content)
+                    , R.string.snackbar_pdfCreated
+                    , Snackbar.LENGTH_LONG)
                     .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
