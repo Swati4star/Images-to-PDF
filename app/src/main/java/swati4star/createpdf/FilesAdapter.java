@@ -12,6 +12,7 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
+import android.support.annotation.StringRes;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -44,20 +46,66 @@ import butterknife.ButterKnife;
 
 public class FilesAdapter extends BaseAdapter {
 
-    private Context mContext;
     private static LayoutInflater inflater;
+    private Context mContext;
     private ArrayList<String> mFeedItems;
     private String mFileName;
+    private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
 
-    static class ViewHolder {
+        @Override
+        public void onWrite(PageRange[] pages,
+                            ParcelFileDescriptor destination,
+                            CancellationSignal cancellationSignal,
+                            WriteResultCallback callback) {
+            InputStream input = null;
+            OutputStream output = null;
+            try {
+                input = new FileInputStream(mFileName);
+                output = new FileOutputStream(destination.getFileDescriptor());
 
-        TextView textView;
-        MaterialRippleLayout mRipple;
+                byte[] buf = new byte[1024];
+                int bytesRead;
 
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
+                while ((bytesRead = input.read(buf)) > 0) {
+                    output.write(buf, 0, bytesRead);
+                }
+
+                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
+
+            } catch (Exception e) {
+                //Catch exception
+            } finally {
+                try {
+                    if (input != null) {
+                        input.close();
+                    }
+                    if (output != null) {
+                        output.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-    }
+
+        @Override
+        public void onLayout(PrintAttributes oldAttributes,
+                             PrintAttributes newAttributes,
+                             CancellationSignal cancellationSignal,
+                             LayoutResultCallback callback,
+                             Bundle extras) {
+
+            if (cancellationSignal.isCanceled()) {
+                callback.onLayoutCancelled();
+                return;
+            }
+            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
+                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
+                    .build();
+
+            callback.onLayoutFinished(pdi, true);
+        }
+    };
 
     /**
      * Returns adapter instance
@@ -138,15 +186,19 @@ public class FilesAdapter extends BaseAdapter {
                                         deleteFile(mFeedItems.get(position), position);
                                         break;
 
-                                    case 2: //rename
+                                    case 2: //delete all
+                                        deleteAllFiles();
+                                        break;
+
+                                    case 3: //rename
                                         renameFile(position);
                                         break;
 
-                                    case 3: //Print
+                                    case 4: //Print
                                         doPrint(mFeedItems.get(position));
                                         break;
 
-                                    case 4: //Email
+                                    case 5: //Email
                                         shareFile(mFeedItems.get(position));
                                         break;
                                 }
@@ -174,10 +226,10 @@ public class FilesAdapter extends BaseAdapter {
         }
     }
 
-    private void deleteFile(String name, int position) {
-        File fdelete = new File(name);
-        if (fdelete.exists()) {
-            if (fdelete.delete()) {
+    private void deleteFile(String path, int position) {
+        File fDelete = new File(path);
+        if (fDelete.exists()) {
+            if (fDelete.delete()) {
                 Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
                 mFeedItems.remove(position);
                 notifyDataSetChanged();
@@ -189,6 +241,30 @@ public class FilesAdapter extends BaseAdapter {
             }
         }
 
+    }
+
+    private void deleteAllFiles() {
+        int deletedCount = 0;
+        List<String> toRemove = new ArrayList<>();
+        for (String path : mFeedItems) {
+            File fDelete = new File(path);
+            if (fDelete.exists()) {
+                if (fDelete.delete()) {
+                    toRemove.add(path);
+                    deletedCount++;
+                }
+            }
+        }
+        for (String sToRemove : toRemove) {
+            mFeedItems.remove(sToRemove);
+        }
+        notifyDataSetChanged();
+        if (mFeedItems.size() == 0) {
+            ViewFiles.emptyStatusTextView.setVisibility(View.VISIBLE);
+        }
+        Toast.makeText(mContext
+                , String.format(stringRes(R.string.toast_multipleFiles_deleted), deletedCount)
+                , Toast.LENGTH_SHORT).show();
     }
 
     private void renameFile(final int position) {
@@ -258,67 +334,23 @@ public class FilesAdapter extends BaseAdapter {
         mContext.startActivity(Intent.createChooser(intent, "Sharing"));
     }
 
-
-    private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
-
-        @Override
-        public void onWrite(PageRange[] pages,
-                            ParcelFileDescriptor destination,
-                            CancellationSignal cancellationSignal,
-                            WriteResultCallback callback) {
-            InputStream input = null;
-            OutputStream output = null;
-            try {
-                input = new FileInputStream(mFileName);
-                output = new FileOutputStream(destination.getFileDescriptor());
-
-                byte[] buf = new byte[1024];
-                int bytesRead;
-
-                while ((bytesRead = input.read(buf)) > 0) {
-                    output.write(buf, 0, bytesRead);
-                }
-
-                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
-
-            } catch (Exception e) {
-                //Catch exception
-            } finally {
-                try {
-                    if (input != null) {
-                        input.close();
-                    }
-                    if (output != null) {
-                        output.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        @Override
-        public void onLayout(PrintAttributes oldAttributes,
-                             PrintAttributes newAttributes,
-                             CancellationSignal cancellationSignal,
-                             LayoutResultCallback callback,
-                             Bundle extras) {
-
-            if (cancellationSignal.isCanceled()) {
-                callback.onLayoutCancelled();
-                return;
-            }
-            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
-                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                    .build();
-
-            callback.onLayoutFinished(pdi, true);
-        }
-    };
+    public String stringRes(@StringRes int resId) {
+        return mContext.getString(resId);
+    }
 
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
+    }
+
+    static class ViewHolder {
+
+        TextView textView;
+        MaterialRippleLayout mRipple;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
 }

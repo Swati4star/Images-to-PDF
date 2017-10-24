@@ -49,4 +49,5 @@
     <string name="toast_imagecropped">Image recadrée</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
+    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
 </resources>

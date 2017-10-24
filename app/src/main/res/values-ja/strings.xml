@@ -50,4 +50,5 @@
     <string name="toast_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
+    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
 </resources>

@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -170,7 +171,7 @@ public class Home extends Fragment {
                     .setActivityMenuIconColor(colorRes(R.color.colorPrimary))
                     .setInitialCropWindowPaddingRatio(0)
                     .setAllowRotation(true)
-                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
+                    .setActivityTitle(stringRes(R.string.cropImage_activityTitle) + (mImageCounter + 1))
                     .start(getContext(), this);
         }
     }
@@ -188,7 +189,7 @@ public class Home extends Fragment {
         new MaterialDialog.Builder(activity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
+                .input(stringRes(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         if (input == null || input.toString().trim().equals("")) {
@@ -210,10 +211,10 @@ public class Home extends Fragment {
     void openPdf() {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file), getString(R.string.pdf_type));
+        target.setDataAndType(Uri.fromFile(file), stringRes(R.string.pdf_type));
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-        Intent intent = Intent.createChooser(target, getString(R.string.open_file));
+        Intent intent = Intent.createChooser(target, stringRes(R.string.open_file));
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
@@ -314,7 +315,7 @@ public class Home extends Fragment {
                 .height(dimenRes(R.dimen.mb_height_56))
                 .color(colorRes(R.color.mb_blue))
                 .colorPressed(colorRes(R.color.mb_blue_dark))
-                .text(getString(R.string.mb_button));
+                .text(stringRes(R.string.mb_button));
         btnMorph.morph(square);
     }
 
@@ -337,6 +338,10 @@ public class Home extends Fragment {
 
     public int integerRes(@IntegerRes int resId) {
         return getResources().getInteger(resId);
+    }
+
+    public String stringRes(@StringRes int resId) {
+        return getResources().getString(resId);
     }
 
     public int dimenRes(@DimenRes int resId) {
@@ -370,7 +375,7 @@ public class Home extends Fragment {
         @Override
         protected String doInBackground(String... params) {
 
-            path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + stringRes(R.string.pdf_dir);
 
             File folder = new File(path);
             if (!folder.exists()) {
@@ -381,7 +386,7 @@ public class Home extends Fragment {
                 }
             }
 
-            path = path + filename + getString(R.string.pdf_ext);
+            path = path + filename + stringRes(R.string.pdf_ext);
 
             Log.v("stage 1", "store the pdf in sd card");
 
