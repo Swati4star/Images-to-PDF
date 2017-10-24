@@ -46,7 +46,7 @@ public class FilesAdapter extends BaseAdapter {
 
     private Context mContext;
     private static LayoutInflater inflater;
-    private ArrayList<String> mFeedItems;
+    private ArrayList<File> mFeedItems;
     private String mFileName;
 
     static class ViewHolder {
@@ -65,12 +65,22 @@ public class FilesAdapter extends BaseAdapter {
      * @param context   the context calling this adapter
      * @param feedItems array list containing path of files
      */
-    public FilesAdapter(Context context, ArrayList<String> feedItems) {
+    public FilesAdapter(Context context, ArrayList<File> feedItems) {
         this.mContext = context;
         this.mFeedItems = feedItems;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    /**
+     * Sets pdf files
+     *
+     * @param pdfFiles array list containing path of files
+     */
+    public void setData(ArrayList<File> pdfFiles) {
+        mFeedItems = pdfFiles;
+        notifyDataSetChanged();
     }
 
     /**
@@ -91,7 +101,7 @@ public class FilesAdapter extends BaseAdapter {
      */
     @Override
     public Object getItem(int position) {
-        return mFeedItems.get(position);
+        return mFeedItems.get(position).getPath();
     }
 
 
@@ -115,7 +125,8 @@ public class FilesAdapter extends BaseAdapter {
         }
 
         // Extract file name from path
-        String[] name = mFeedItems.get(position).split("/");
+        final String fileName = mFeedItems.get(position).getPath();
+        String[] name = fileName.split("/");
         holder.textView.setText(name[name.length - 1]);
 
         holder.mRipple.setOnClickListener(new View.OnClickListener() {
@@ -131,11 +142,11 @@ public class FilesAdapter extends BaseAdapter {
 
                                 switch (which) {
                                     case 0: //Open
-                                        openFile(mFeedItems.get(position));
+                                        openFile(fileName);
                                         break;
 
                                     case 1: //delete
-                                        deleteFile(mFeedItems.get(position), position);
+                                        deleteFile(fileName, position);
                                         break;
 
                                     case 2: //rename
@@ -143,11 +154,11 @@ public class FilesAdapter extends BaseAdapter {
                                         break;
 
                                     case 3: //Print
-                                        doPrint(mFeedItems.get(position));
+                                        doPrint(fileName);
                                         break;
 
                                     case 4: //Email
-                                        shareFile(mFeedItems.get(position));
+                                        shareFile(fileName);
                                         break;
                                 }
                             }
@@ -203,8 +214,8 @@ public class FilesAdapter extends BaseAdapter {
 
                         } else {
                             String newname = input.toString();
-                            File oldfile = new File(mFeedItems.get(position));
-                            String[] x = mFeedItems.get(position).split("/");
+                            File oldfile = mFeedItems.get(position);
+                            String[] x = mFeedItems.get(position).getPath().split("/");
                             String newfilename = "";
                             for (int i = 0; i < x.length - 1; i++)
                                 newfilename = newfilename + "/" + x[i];
@@ -216,8 +227,7 @@ public class FilesAdapter extends BaseAdapter {
 
                             if (oldfile.renameTo(newfile)) {
                                 Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
-                                mFeedItems.set(position,
-                                        newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
+                                mFeedItems.set(position, newfile);
                                 notifyDataSetChanged();
                             } else {
                                 Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
@@ -315,10 +325,5 @@ public class FilesAdapter extends BaseAdapter {
             callback.onLayoutFinished(pdi, true);
         }
     };
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
 
 }

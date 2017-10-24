@@ -43,4 +43,7 @@
     <string name="toast_no_pdf_app">Il  n\'y a pas d\'app pour lire fichiers PDF</string>
     <string name="open_file">Ouvrir Fichier</string>
     <string name="done">fait</string>
+    <string name="sort">Trier</string>
+    <string name="sort_name">Nom</string>
+    <string name="sort_date">Date</string>
 </resources>
