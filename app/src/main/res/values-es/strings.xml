@@ -44,4 +44,17 @@
     <string name="toast_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
     <string name="done">hecho</string>
+    <string name="cropImage_activityTitle">Recortar imagen No.</string>
+    <string name="crop_images_text">Recorta imágenes</string>
+    <string name="toast_error_getCropped">Error al obtener imágenes recortadas</string>
+    <string name="toast_imagecropped">Imágenes recortadas</string>
+    <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snackbar_viewAction">View</string>
+    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
+
+    <string name="sort">Ordenar</string>
+    <string name="sort_name">Nombre</string>
+    <string name="sort_date">Fecha</string>
+    <string name="image_options_text">Image Enhancement Options</string>
+
 </resources>

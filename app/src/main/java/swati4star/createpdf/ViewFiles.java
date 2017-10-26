@@ -2,35 +2,42 @@ package swati4star.createpdf;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private static final int NAME_INDEX = 0;
+    private static final int DATE_INDEX = 1;
+
     Activity activity;
-    ArrayList<String> inFiles;
     FilesAdapter adapter;
-    File[] files;
-    File folder;
     ListView listView;
     SwipeRefreshLayout swipeView;
+    public static TextView emptyStatusTextView;
 
     @Override
     public void onAttach(Context context) {
@@ -40,66 +47,73 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
 
         listView = (ListView) root.findViewById(R.id.list);
         swipeView = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
+        emptyStatusTextView = (TextView) root.findViewById(R.id.emptyStatusTextView);
 
         //Create/Open folder
-        folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
+        File folder = getOrCreatePdfDirectory();
 
         // Initialize variables
-        inFiles = new ArrayList<>();
-        files = folder.listFiles();
-        adapter = new FilesAdapter(activity, inFiles);
+        final ArrayList<File> pdfFiles = new ArrayList<>();
+        final File[] files = folder.listFiles();
+        if (files.length == 0) {
+            emptyStatusTextView.setVisibility(View.VISIBLE);
+        }
+        adapter = new FilesAdapter(activity, pdfFiles);
         listView.setAdapter(adapter);
         swipeView.setOnRefreshListener(this);
 
         // Populate data into listView
-        new PopulateList().execute();
+        populatePdfList();
 
         return root;
     }
 
-    /**
-     * Populate data into listView
-     */
-    public void populateListView() {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.activity_view_files_actions, menu);
+    }
 
-        inFiles = new ArrayList<>();
-        files = folder.listFiles();
-        if (files == null)
-            Toast.makeText(activity, R.string.toast_no_pdfs, Toast.LENGTH_LONG).show();
-        else {
-            for (File file : files) {
-                if (!file.isDirectory() && file.getName().endsWith(getString(R.string.pdf_ext))) {
-                    inFiles.add(file.getPath());
-                    Log.v("adding", file.getName());
-                }
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_sort:
+                displaySortDialog();
+                break;
+            default:
+                break;
         }
-        Log.v("done", "adding");
-        adapter = new FilesAdapter(activity, inFiles);
-        listView.setAdapter(adapter);
+        return true;
     }
 
     @Override
     public void onRefresh() {
 
         Log.v("refresh", "refreshing dta");
-        new PopulateList().execute();
+        populatePdfList();
         swipeView.setRefreshing(false);
+    }
+
+    private void populatePdfList() {
+        new PopulateList().execute();
     }
 
     /**
      * AsyncTask used to populate the list of elements in the background
      */
-    public class PopulateList extends AsyncTask<Void, Void, Void> {
+    private class PopulateList extends AsyncTask<Void, Void, Void> {
 
         // Progress dialog
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
@@ -115,7 +129,6 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
                 @Override
                 public void run() {
-
                     populateListView();
                 }
             });
@@ -133,5 +146,81 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
             super.onPostExecute(v);
             dialog.dismiss();
         }
+
+        /**
+         * Populate data into listView
+         */
+        private void populateListView() {
+            ArrayList<File> pdfFiles = new ArrayList<>();
+            final File[] files = getOrCreatePdfDirectory().listFiles();
+            if (files == null)
+                Toast.makeText(activity, R.string.toast_no_pdfs, Toast.LENGTH_LONG).show();
+            else {
+                pdfFiles = getPdfsFromPdfFolder();
+            }
+            Log.v("done", "adding");
+            adapter.setData(pdfFiles);
+            listView.setAdapter(adapter);
+        }
+    }
+
+    private void displaySortDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Sort by")
+                .setItems(R.array.sort_options, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ArrayList<File> pdfsFromFolder = getPdfsFromPdfFolder();
+                        switch (which) {
+                            case DATE_INDEX:
+                                sortFilesByDateNewestToOldest(pdfsFromFolder);
+                                adapter.setData(pdfsFromFolder);
+                                break;
+                            case NAME_INDEX:
+                                sortByNameAlphabetical(pdfsFromFolder);
+                                adapter.setData(pdfsFromFolder);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void sortByNameAlphabetical(ArrayList<File> pdfsFromFolder) {
+        Collections.sort(pdfsFromFolder);
+    }
+
+    private void sortFilesByDateNewestToOldest(ArrayList<File> pdfsFromFolder) {
+        Collections.sort(pdfsFromFolder, new Comparator<File>() {
+            @Override
+            public int compare(File file, File file2) {
+                return Long.compare(file2.lastModified(), file.lastModified());
+            }
+        });
+    }
+
+    private ArrayList<File> getPdfsFromPdfFolder() {
+        return getPdfsFromFolder(getOrCreatePdfDirectory().listFiles());
+    }
+
+    private File getOrCreatePdfDirectory() {
+        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                + getString(R.string.pdf_dir));
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        return folder;
+    }
+
+    private ArrayList<File> getPdfsFromFolder(File[] files) {
+        final ArrayList<File> pdfFiles = new ArrayList<>();
+        for (File file : files) {
+            if (!file.isDirectory() && file.getName().endsWith(getString(R.string.pdf_ext))) {
+                pdfFiles.add(file);
+                Log.v("adding", file.getName());
+            }
+        }
+        return pdfFiles;
     }
 }

@@ -44,4 +44,17 @@
     <string name="toast_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
     <string name="done">done</string>
+    <string name="crop_images_text">Crop images</string>
+    <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="toast_imagecropped">Images cropped</string>
+    <string name="toast_error_getCropped">Error on getting cropped images</string>
+    <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snackbar_viewAction">View</string>
+    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
+
+    <string name="sort">Sort</string>
+    <string name="sort_name">Name</string>
+    <string name="sort_date">Date</string>
+    <string name="image_options_text">Image Enhancement Options</string>
+
 </resources>
