@@ -10,6 +10,7 @@
 
     <string name="file_name_text">Nom du fichier</string>
     <string name="select_images_text">Choisir Images</string>
+    <string name="crop_images_text">Crop images</string>
     <string name="open_pdf_text">Ouvrir PDF</string>
     <string name="create_pdf_text">Créer PDF</string>
     <string name="mb_button">Créer PDF</string>
@@ -46,4 +47,11 @@
     <string name="sort">Trier</string>
     <string name="sort_name">Nom</string>
     <string name="sort_date">Date</string>
+
+    <string name="toast_error_getCropped">Error on getting cropped images</string>
+    <string name="toast_imagecropped">Images cropped</string>
+    <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snackbar_viewAction">View</string>
+    <string name="image_options_text">Image Enhancement Options</string>
 </resources>

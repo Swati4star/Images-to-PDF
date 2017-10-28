@@ -7,12 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
@@ -34,12 +34,12 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -53,15 +53,18 @@ public class Home extends Fragment {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
-    private int mMorphCounter1 = 1;
+    private static int mImageCounter = 0;
     Activity activity;
-    List<String> imagesUri;
+    ArrayList<String> imagesUri;
+    ArrayList<String> tempUris;
     String path, filename;
     Image image;
     MorphingButton createPdf;
     MorphingButton openPdf;
     MorphingButton addImages;
+    MorphingButton cropImages;
     TextView textView;
+    private int mMorphCounter1 = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -77,8 +80,10 @@ public class Home extends Fragment {
 
         //initialising variables
         imagesUri = new ArrayList<>();
+        tempUris = new ArrayList<>();
         addImages = (MorphingButton) root.findViewById(R.id.addImages);
-        createPdf = (MorphingButton) root.findViewById(R.id.pdfcreate);
+        cropImages = (MorphingButton) root.findViewById(R.id.cropImages);
+        createPdf = (MorphingButton) root.findViewById(R.id.pdfCreate);
         openPdf = (MorphingButton) root.findViewById(R.id.pdfOpen);
         textView = (TextView) root.findViewById(R.id.text);
 
@@ -90,6 +95,13 @@ public class Home extends Fragment {
             @Override
             public void onClick(View view) {
                 startAddingImages();
+            }
+        });
+
+        cropImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cropImages();
             }
         });
 
@@ -116,8 +128,8 @@ public class Home extends Fragment {
                     (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED)) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             }
         }
@@ -133,8 +145,8 @@ public class Home extends Fragment {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             } else {
                 selectImages();
@@ -144,163 +156,56 @@ public class Home extends Fragment {
         }
     }
 
-    /**
-     * An async task that converts selected images to Pdf
-     */
-    public class CreatingPdf extends AsyncTask<String, String, String> {
-
-        // Progress dialog
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                .title(R.string.please_wait)
-                .content(R.string.populating_list)
-                .cancelable(false)
-                .progress(true, 0);
-        MaterialDialog dialog = builder.build();
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog.show();
+    void cropImages() {
+        if (tempUris.size() == 0) {
+            Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+            return;
         }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-            File folder = new File(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
-            boolean success = true;
-            if (!folder.exists()) {
-                success = folder.mkdir();
-            }
-
-
-            path = Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir);
-
-            File file = new File(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + getString(R.string.pdf_dir));
-
-            path = path + filename + getString(R.string.pdf_ext);
-
-            Log.v("stage 1", "store the pdf in sd card");
-
-            Document document = new Document(PageSize.A4, 38, 38, 50, 38);
-
-            Log.v("stage 2", "Document Created");
-
-            Rectangle documentRect = document.getPageSize();
-
-
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-
-                Log.v("Stage 3", "Pdf writer");
-
-                document.open();
-
-                Log.v("Stage 4", "Document opened");
-
-                for (int i = 0; i < imagesUri.size(); i++) {
-
-
-                    Bitmap bmp = BitmapFactory.decodeFile(imagesUri.get(i));
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
-
-
-                    image = Image.getInstance(imagesUri.get(i));
-
-
-                    if (bmp.getWidth() > documentRect.getWidth() || bmp.getHeight() > documentRect.getHeight()) {
-                        //bitmap is larger than page,so set bitmap's size similar to the whole page
-                        image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                    } else {
-                        //bitmap is smaller than page, so add bitmap simply.
-                        //[note: if you want to fill page by stretching image,
-                        // you may set size similar to page as above]
-                        image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
-                    }
-
-
-                    Log.v("Stage 6", "Image path adding");
-
-                    image.setAbsolutePosition(
-                            (documentRect.getWidth() - image.getScaledWidth()) / 2,
-                            (documentRect.getHeight() - image.getScaledHeight()) / 2);
-                    Log.v("Stage 7", "Image Alignments");
-
-                    image.setBorder(Image.BOX);
-
-                    image.setBorderWidth(15);
-
-                    document.add(image);
-
-                    document.newPage();
-                }
-
-                Log.v("Stage 8", "Image adding");
-
-                document.close();
-
-                Log.v("Stage 7", "Document Closed" + path);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            document.close();
-            imagesUri.clear();
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            openPdf.setVisibility(View.VISIBLE);
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "PDF created!", Snackbar.LENGTH_LONG)
-                    .setAction("View", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ArrayList<File> list = new ArrayList<>(singletonList(new File(path)));
-                            FilesAdapter filesAdapter = new FilesAdapter(getContext(), list);
-                            filesAdapter.openFile(path);
-                        }
-                    }).show();
-            dialog.dismiss();
-            morphToSuccess(createPdf);
-        }
+        next();
     }
 
+    void next() {
+        if (mImageCounter != tempUris.size()) {
+            CropImage.activity(Uri.fromFile(new File(tempUris.get(mImageCounter))))
+                    .setActivityMenuIconColor(color(R.color.colorPrimary))
+                    .setInitialCropWindowPaddingRatio(0)
+                    .setAllowRotation(true)
+                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
+                    .start(getContext(), this);
+        }
+    }
 
     // Create Pdf of selected images
     void createPdf() {
         if (imagesUri.size() == 0) {
-            Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
-        } else {
-            new MaterialDialog.Builder(activity)
-                    .title(R.string.creating_pdf)
-                    .content(R.string.enter_file_name)
-                    .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
-                        @Override
-                        public void onInput(MaterialDialog dialog, CharSequence input) {
-                            if (input == null || input.toString().trim().equals("")) {
-                                Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
-                            } else {
-                                filename = input.toString();
+            if (tempUris.size() == 0) {
+                Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                imagesUri = (ArrayList<String>) tempUris.clone();
+            }
+        }
+        new MaterialDialog.Builder(activity)
+                .title(R.string.creating_pdf)
+                .content(R.string.enter_file_name)
+                .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        if (input == null || input.toString().trim().equals("")) {
+                            Toast.makeText(activity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
+                        } else {
+                            filename = input.toString();
 
-                                new CreatingPdf().execute();
+                            new CreatingPdf().execute();
 
-                                if (mMorphCounter1 == 0) {
-                                    mMorphCounter1++;
-                                }
+                            if (mMorphCounter1 == 0) {
+                                mMorphCounter1++;
                             }
                         }
-                    })
-                    .show();
-        }
+                    }
+                })
+                .show();
     }
-
 
     void openPdf() {
         File file = new File(path);
@@ -324,9 +229,9 @@ public class Home extends Fragment {
 
         //add to intent the URIs of the already selected images
         //first they are converted to Uri objects
-        ArrayList<Uri> uris = new ArrayList<>(imagesUri.size());
-        for (String stringUri : imagesUri) {
-            uris.add(Uri.parse(stringUri));
+        ArrayList<Uri> uris = new ArrayList<>(tempUris.size());
+        for (String stringUri : tempUris) {
+            uris.add(Uri.fromFile(new File(stringUri)));
         }
         // add them to the intent
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
@@ -367,14 +272,31 @@ public class Home extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
 
-            imagesUri.clear();
+            tempUris.clear();
 
             ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (int i = 0; i < imageUris.size(); i++) {
-                imagesUri.add(imageUris.get(i).getPath());
+                tempUris.add(imageUris.get(i).getPath());
             }
             Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
+            cropImages.setVisibility(View.VISIBLE);
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == Activity.RESULT_OK) {
+                Uri resultUri = result.getUri();
+                imagesUri.add(resultUri.getPath());
+                Toast.makeText(activity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Toast.makeText(activity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
+                imagesUri.add(tempUris.get(mImageCounter));
+                error.printStackTrace();
+            } else {
+                imagesUri.add(tempUris.get(mImageCounter));
+            }
             morphToSquare(createPdf, integer(R.integer.mb_animation));
+            mImageCounter++;
+            next();
         }
     }
 
@@ -423,6 +345,133 @@ public class Home extends Fragment {
 
     public int color(@ColorRes int resId) {
         return getResources().getColor(resId);
+    }
+
+    /**
+     * An async task that converts selected images to Pdf
+     */
+    public class CreatingPdf extends AsyncTask<String, String, String> {
+
+        // Progress dialog
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                .title(R.string.please_wait)
+                .content(R.string.populating_list)
+                .cancelable(false)
+                .progress(true, 0);
+        MaterialDialog dialog = builder.build();
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + Home.this.getString(R.string.pdf_dir);
+
+            File folder = new File(path);
+            if (!folder.exists()) {
+                boolean success = folder.mkdir();
+                if (!success) {
+                    Toast.makeText(activity, "Error on creating application folder", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
+            }
+
+            path = path + filename + Home.this.getString(R.string.pdf_ext);
+
+            Log.v("stage 1", "store the pdf in sd card");
+
+            Document document = new Document(PageSize.A4, 38, 38, 50, 38);
+
+            Log.v("stage 2", "Document Created");
+
+            Rectangle documentRect = document.getPageSize();
+
+            try {
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
+
+                Log.v("Stage 3", "Pdf writer");
+
+                document.open();
+
+                Log.v("Stage 4", "Document opened");
+
+                for (int i = 0; i < imagesUri.size(); i++) {
+
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(
+                            activity.getContentResolver(), Uri.fromFile(new File(imagesUri.get(i))));
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
+
+
+                    image = Image.getInstance(imagesUri.get(i));
+
+
+                    if (bmp.getWidth() > documentRect.getWidth()
+                            || bmp.getHeight() > documentRect.getHeight()) {
+                        //bitmap is larger than page,so set bitmap's size similar to the whole page
+                        image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
+                    } else {
+                        //bitmap is smaller than page, so add bitmap simply.
+                        //[note: if you want to fill page by stretching image,
+                        // you may set size similar to page as above]
+                        image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
+                    }
+
+                    Log.v("Stage 6", "Image path adding");
+
+                    image.setAbsolutePosition(
+                            (documentRect.getWidth() - image.getScaledWidth()) / 2,
+                            (documentRect.getHeight() - image.getScaledHeight()) / 2);
+                    Log.v("Stage 7", "Image Alignments");
+
+                    image.setBorder(Image.BOX);
+
+                    image.setBorderWidth(15);
+
+                    document.add(image);
+
+                    document.newPage();
+                }
+
+                Log.v("Stage 8", "Image adding");
+
+                document.close();
+
+                Log.v("Stage 7", "Document Closed" + path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            document.close();
+            imagesUri.clear();
+            tempUris.clear();
+            mImageCounter = 0;
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            openPdf.setVisibility(View.VISIBLE);
+            Snackbar.make(getActivity().findViewById(android.R.id.content)
+                    , R.string.snackbar_pdfCreated
+                    , Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ArrayList<File> list = new ArrayList<>(singletonList(new File(path)));
+                            FilesAdapter filesAdapter = new FilesAdapter(getContext(), list);
+                            filesAdapter.openFile(path);
+                        }
+                    }).show();
+            dialog.dismiss();
+            morphToSuccess(createPdf);
+        }
     }
 
 }
