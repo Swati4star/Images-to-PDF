@@ -12,6 +12,7 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
+import android.support.annotation.StringRes;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -44,20 +46,66 @@ import butterknife.ButterKnife;
 
 public class FilesAdapter extends BaseAdapter {
 
-    private Context mContext;
     private static LayoutInflater inflater;
+    private Context mContext;
     private ArrayList<File> mFeedItems;
     private String mFileName;
+    private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
 
-    static class ViewHolder {
+        @Override
+        public void onWrite(PageRange[] pages,
+                            ParcelFileDescriptor destination,
+                            CancellationSignal cancellationSignal,
+                            WriteResultCallback callback) {
+            InputStream input = null;
+            OutputStream output = null;
+            try {
+                input = new FileInputStream(mFileName);
+                output = new FileOutputStream(destination.getFileDescriptor());
 
-        TextView textView;
-        MaterialRippleLayout mRipple;
+                byte[] buf = new byte[1024];
+                int bytesRead;
 
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
+                while ((bytesRead = input.read(buf)) > 0) {
+                    output.write(buf, 0, bytesRead);
+                }
+
+                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
+
+            } catch (Exception e) {
+                //Catch exception
+            } finally {
+                try {
+                    if (input != null) {
+                        input.close();
+                    }
+                    if (output != null) {
+                        output.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-    }
+
+        @Override
+        public void onLayout(PrintAttributes oldAttributes,
+                             PrintAttributes newAttributes,
+                             CancellationSignal cancellationSignal,
+                             LayoutResultCallback callback,
+                             Bundle extras) {
+
+            if (cancellationSignal.isCanceled()) {
+                callback.onLayoutCancelled();
+                return;
+            }
+            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
+                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
+                    .build();
+
+            callback.onLayoutFinished(pdi, true);
+        }
+    };
 
     /**
      * Returns adapter instance
@@ -125,7 +173,8 @@ public class FilesAdapter extends BaseAdapter {
         }
 
         // Extract file name from path
-        final String fileName = mFeedItems.get(position).getPath();
+        final File file = mFeedItems.get(position);
+        final String fileName = file.getPath();
         String[] name = fileName.split("/");
         holder.textView.setText(name[name.length - 1]);
 
@@ -142,23 +191,27 @@ public class FilesAdapter extends BaseAdapter {
 
                                 switch (which) {
                                     case 0: //Open
-                                        openFile(fileName);
+                                        openFile(file);
                                         break;
 
                                     case 1: //delete
-                                        deleteFile(fileName, position);
+                                        deleteFile(file, position);
                                         break;
 
-                                    case 2: //rename
+                                    case 2: //delete all
+                                        deleteAllFiles();
+                                        break;
+
+                                    case 3: //rename
                                         renameFile(position);
                                         break;
 
-                                    case 3: //Print
-                                        doPrint(fileName);
+                                    case 4: //Print
+                                        doPrint(mFeedItems.get(position));
                                         break;
 
-                                    case 4: //Email
-                                        shareFile(fileName);
+                                    case 5: //Email
+                                        shareFile(mFeedItems.get(position));
                                         break;
                                 }
                             }
@@ -171,8 +224,7 @@ public class FilesAdapter extends BaseAdapter {
         return view;
     }
 
-    public void openFile(String name) {
-        File file = new File(name);
+    public void openFile(File file) {
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setDataAndType(Uri.fromFile(file), mContext.getString(R.string.pdf_type));
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -185,10 +237,9 @@ public class FilesAdapter extends BaseAdapter {
         }
     }
 
-    private void deleteFile(String name, int position) {
-        File fdelete = new File(name);
-        if (fdelete.exists()) {
-            if (fdelete.delete()) {
+    private void deleteFile(File fDelete, int position) {
+        if (fDelete.exists()) {
+            if (fDelete.delete()) {
                 Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
                 mFeedItems.remove(position);
                 notifyDataSetChanged();
@@ -200,6 +251,29 @@ public class FilesAdapter extends BaseAdapter {
             }
         }
 
+    }
+
+    private void deleteAllFiles() {
+        int deletedCount = 0;
+        List<File> toRemove = new ArrayList<>();
+        for (File fDelete : mFeedItems) {
+            if (fDelete.exists()) {
+                if (fDelete.delete()) {
+                    toRemove.add(fDelete);
+                    deletedCount++;
+                }
+            }
+        }
+        for (File fToRemove : toRemove) {
+            mFeedItems.remove(fToRemove);
+        }
+        notifyDataSetChanged();
+        if (mFeedItems.size() == 0) {
+            ViewFiles.emptyStatusTextView.setVisibility(View.VISIBLE);
+        }
+        Toast.makeText(mContext
+                , String.format(stringRes(R.string.toast_multipleFiles_deleted), deletedCount)
+                , Toast.LENGTH_SHORT).show();
     }
 
     private void renameFile(final int position) {
@@ -216,6 +290,7 @@ public class FilesAdapter extends BaseAdapter {
                             String newname = input.toString();
                             File oldfile = mFeedItems.get(position);
                             String[] x = mFeedItems.get(position).getPath().split("/");
+
                             String newfilename = "";
                             for (int i = 0; i < x.length - 1; i++)
                                 newfilename = newfilename + "/" + x[i];
@@ -228,6 +303,7 @@ public class FilesAdapter extends BaseAdapter {
                             if (oldfile.renameTo(newfile)) {
                                 Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
                                 mFeedItems.set(position, newfile);
+
                                 notifyDataSetChanged();
                             } else {
                                 Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
@@ -241,13 +317,13 @@ public class FilesAdapter extends BaseAdapter {
     /**
      * Prints a file
      *
-     * @param fileName Path of file to be printed
+     * @param file File to be printed
      */
-    private void doPrint(String fileName) {
+    private void doPrint(File file) {
         PrintManager printManager = (PrintManager) mContext
                 .getSystemService(Context.PRINT_SERVICE);
 
-        mFileName = fileName;
+        mFileName = file.getPath();
         String jobName = mContext.getString(R.string.app_name) + " Document";
         printManager.print(jobName, mPrintDocumentAdapter, null);
     }
@@ -257,8 +333,8 @@ public class FilesAdapter extends BaseAdapter {
      *
      * @author RakiRoad
      */
-    private void shareFile(String name) {
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", new File(name));
+    private void shareFile(File file) {
+        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
@@ -268,62 +344,19 @@ public class FilesAdapter extends BaseAdapter {
         mContext.startActivity(Intent.createChooser(intent, "Sharing"));
     }
 
+    public String stringRes(@StringRes int resId) {
+        return mContext.getString(resId);
+    }
 
-    private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
+    static class ViewHolder {
 
-        @Override
-        public void onWrite(PageRange[] pages,
-                            ParcelFileDescriptor destination,
-                            CancellationSignal cancellationSignal,
-                            WriteResultCallback callback) {
-            InputStream input = null;
-            OutputStream output = null;
-            try {
-                input = new FileInputStream(mFileName);
-                output = new FileOutputStream(destination.getFileDescriptor());
+        TextView textView;
+        MaterialRippleLayout mRipple;
 
-                byte[] buf = new byte[1024];
-                int bytesRead;
-
-                while ((bytesRead = input.read(buf)) > 0) {
-                    output.write(buf, 0, bytesRead);
-                }
-
-                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
-
-            } catch (Exception e) {
-                //Catch exception
-            } finally {
-                try {
-                    if (input != null) {
-                        input.close();
-                    }
-                    if (output != null) {
-                        output.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
         }
+    }
 
-        @Override
-        public void onLayout(PrintAttributes oldAttributes,
-                             PrintAttributes newAttributes,
-                             CancellationSignal cancellationSignal,
-                             LayoutResultCallback callback,
-                             Bundle extras) {
-
-            if (cancellationSignal.isCanceled()) {
-                callback.onLayoutCancelled();
-                return;
-            }
-            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
-                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                    .build();
-
-            callback.onLayoutFinished(pdi, true);
-        }
-    };
 
 }

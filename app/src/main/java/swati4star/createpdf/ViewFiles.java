@@ -129,7 +129,6 @@ public class ViewFiles extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
                 @Override
                 public void run() {
-
                     populateListView();
                 }
             });
