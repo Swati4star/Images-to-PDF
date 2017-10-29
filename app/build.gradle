@@ -6,6 +6,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "swati4star.createpdf"
+        vectorDrawables.useSupportLibrary = true
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
@@ -36,6 +37,8 @@ dependencies {
     compile 'com.itextpdf:itextg:5.5.9'
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'
+    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
     compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
         transitive = true

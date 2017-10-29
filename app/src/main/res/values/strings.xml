@@ -17,6 +17,7 @@
     <array name="items">
         <item>Open File</item>
         <item>Delete File</item>
+        <item>Delete All Files</item>
         <item>Rename File</item>
         <item>Print File</item>
         <item>Share File</item>
@@ -25,6 +26,7 @@
     <array name="itemIds" translatable="false">
         <item>open</item>
         <item>delete</item>
+        <item>deleteAll</item>
         <item>rename</item>
         <item>print</item>
         <item>e-mail</item>
@@ -50,6 +52,7 @@
     <string name="toast_no_pdfs">No PDFs right now</string>
     <string name="toast_file_deleted">File deleted.</string>
     <string name="toast_file_not_deleted">File can\'t be deleted.</string>
+    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>
