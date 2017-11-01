@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <item name="activity_dual" type="layout">@layout/activity_main_land</item>
-</resources>
