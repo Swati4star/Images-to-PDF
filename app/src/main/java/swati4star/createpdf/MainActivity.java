@@ -1,6 +1,7 @@
 package swati4star.createpdf;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -24,7 +25,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        /*Changed the setContentView from activity_main to the newly created activity_dual in the refs.xml files
+        * */
+        setContentView(R.layout.activity_dual);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -33,13 +37,11 @@ public class MainActivity extends AppCompatActivity
         // Set navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        //Replaced setDrawerListener with addDrawerListener because it was deprecated.
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Set Home fragment
-        Fragment fragment = new Home();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        switchLayout();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -81,5 +83,35 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /*
+    * Newly added method for switching layout according to device orientation
+    *
+    * Added by Abdelaziz faki aka Azooz2014 */
+    public void switchLayout(){
+
+        //Checking the orientation of the device in order to choose the right layout.
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            // Set Home fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment fragment = new Home();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        }
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+            // Set ViewFiles fragment and Home fragment.
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            Fragment fragment = new Home();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
+            Fragment viewFragment = new ViewFiles();
+
+            //Add the newly created viewFragment to it's fragment_view_files_holder in activity_main_layout.xml
+            fragmentManager.beginTransaction().replace(R.id.fragment_view_files_holder, viewFragment).commit();
+        }
     }
 }
