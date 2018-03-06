@@ -1,4 +1,4 @@
-package swati4star.createpdf;
+package swati4star.createpdf.fragment;
 
 import android.Manifest;
 import android.app.Activity;
@@ -42,14 +42,16 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.ViewFilesAdapter;
 
 import static java.util.Collections.singletonList;
 
 
 /**
- * Home fragment to start with creating PDF
+ * HomeFragment fragment to start with creating PDF
  */
-public class Home extends Fragment {
+public class HomeFragment extends Fragment {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
@@ -369,7 +371,8 @@ public class Home extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            path = Environment.getExternalStorageDirectory().getAbsolutePath() + Home.this.getString(R.string.pdf_dir);
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                    HomeFragment.this.getString(R.string.pdf_dir);
 
             File folder = new File(path);
             if (!folder.exists()) {
@@ -380,7 +383,7 @@ public class Home extends Fragment {
                 }
             }
 
-            path = path + filename + Home.this.getString(R.string.pdf_ext);
+            path = path + filename + HomeFragment.this.getString(R.string.pdf_ext);
 
             Log.v("stage 1", "store the pdf in sd card");
 
@@ -465,7 +468,7 @@ public class Home extends Fragment {
                         @Override
                         public void onClick(View v) {
                             ArrayList<File> list = new ArrayList<>(singletonList(new File(path)));
-                            FilesAdapter filesAdapter = new FilesAdapter(getContext(), list);
+                            ViewFilesAdapter filesAdapter = new ViewFilesAdapter(getContext(), list);
                             filesAdapter.openFile(path);
                         }
                     }).show();

@@ -18,6 +18,7 @@
     <array name="items">
         <item>Ouvrir Fichier</item>
         <item>Supprimer Fichier</item>
+        <item>Delete All Files</item>
         <item>Renommer Fichier</item>
         <item>Imprimer Fichier</item>
     </array>
@@ -37,6 +38,7 @@
     <string name="toast_no_pdfs">Pas de fichiers PDF maintenant</string>
     <string name="toast_file_deleted">Fichier supprimé.</string>
     <string name="toast_file_not_deleted">Le fichier ne peut pas être supprimé.</string>
+    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
 
     <string name="creating_pdf">Créant PDF</string>
     <string name="enter_file_name">Écrire le nom du fichier</string>
