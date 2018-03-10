@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +53,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private Context mContext;
     private ArrayList<File> mFileList;
     private String mFileName;
-    private ArrayList<Integer> onDeleteNames;
+    private ArrayList<Integer> mDeleteNames;
     private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
 
         @Override
@@ -121,7 +120,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public ViewFilesAdapter(Context context, ArrayList<File> feedItems) {
         this.mContext = context;
         this.mFileList = feedItems;
-        onDeleteNames = new ArrayList<>();
+        mDeleteNames = new ArrayList<>();
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -143,7 +142,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
         holder.mFilename.setText(name[name.length - 1]);
 
-        if (onDeleteNames.contains(position))
+        if (mDeleteNames.contains(position))
             holder.checkBox.setChecked(true);
         else
             holder.checkBox.setChecked(false);
@@ -152,9 +151,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    onDeleteNames.add(filePosition);
+                    mDeleteNames.add(filePosition);
                 } else {
-                    onDeleteNames.remove(Integer.valueOf(filePosition));
+                    mDeleteNames.remove(Integer.valueOf(filePosition));
                 }
             }
         });
@@ -252,7 +251,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     public void deleteFiles() {
         ArrayList<File> newList = new ArrayList<>(mFileList);
-        for (int position : onDeleteNames) {
+        for (int position : mDeleteNames) {
             String fileName = newList.get(position).getPath();
             File fdelete = new File(fileName);
             if (fdelete.exists()) {
@@ -266,7 +265,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 }
             }
         }
-        onDeleteNames.clear();
+        mDeleteNames.clear();
         setData(newList);
     }
 

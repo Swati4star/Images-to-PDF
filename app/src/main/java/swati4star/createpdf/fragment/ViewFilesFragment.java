@@ -112,7 +112,9 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
 
     private void deleteFiles() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Do you want to delete all selected files?").setNegativeButton("No", dialogClickListener).setPositiveButton("Yes", dialogClickListener);
+        builder.setTitle("Do you want to delete all selected files?")
+                .setNegativeButton("No", dialogClickListener)
+                .setPositiveButton("Yes", dialogClickListener);
         builder.create().show();
     }
 
