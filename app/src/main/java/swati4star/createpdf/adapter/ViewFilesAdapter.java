@@ -15,7 +15,6 @@ import android.print.PrintManager;
 import android.support.annotation.StringRes;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,7 +136,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void onBindViewHolder(ViewFilesHolder holder, int position) {
-        Log.e("logs", "getItemCount: " + mFileList.size());
         // Extract file name from path
         final String fileName = mFileList.get(position).getPath();
         final int filePosition = position;
@@ -157,9 +155,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     onDeleteNames.add(filePosition);
                 } else {
                     onDeleteNames.remove(Integer.valueOf(filePosition));
-                }
-                for (Integer i:onDeleteNames){
-                    Log.e("logs","onDeleteNamesContains: "+i);
                 }
             }
         });
@@ -260,12 +255,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     public void deleteFiles() {
-        for (Integer i:onDeleteNames){
-            Log.e("logs","onDeleteNamesContains: "+i);
-        }
-        for (File i:mFileList){
-            Log.e("logs","File list contains: "+i.getName());
-        }
         ArrayList<File> newList = new ArrayList<>(mFileList);
         for (int position : onDeleteNames) {
             String fileName = newList.get(position).getPath();
@@ -328,8 +317,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
                             File newfile = new File(newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
 
-                            Log.e("Old file name", oldfile + " ");
-                            Log.e("New file name", newfile + " ");
+              /*              Log.e("Old file name", oldfile + " ");
+                            Log.e("New file name", newfile + " ");*/
 
                             if (oldfile.renameTo(newfile)) {
                                 Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
