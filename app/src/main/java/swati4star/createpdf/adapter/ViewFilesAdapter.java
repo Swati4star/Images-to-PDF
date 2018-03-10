@@ -179,19 +179,16 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         deleteFile(fileName, filePosition);
                                         break;
 
-                                    case 2: //delete all files
-                                        deleteAllFiles();
-                                        break;
 
-                                    case 3: //rename
+                                    case 2: //rename
                                         renameFile(filePosition);
                                         break;
 
-                                    case 4: //Print
+                                    case 3: //Print
                                         doPrint(fileName);
                                         break;
 
-                                    case 5: //Email
+                                    case 4: //Email
                                         shareFile(fileName);
                                         break;
                                 }

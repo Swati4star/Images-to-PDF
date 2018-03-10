@@ -18,7 +18,6 @@
     <array name="items">
         <item>Ouvrir Fichier</item>
         <item>Supprimer Fichier</item>
-        <item>Delete All Files</item>
         <item>Renommer Fichier</item>
         <item>Imprimer Fichier</item>
     </array>

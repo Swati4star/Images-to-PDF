@@ -17,7 +17,6 @@
     <array name="items">
         <item>Open File</item>
         <item>Delete File</item>
-        <item>Delete All Files</item>
         <item>Rename File</item>
         <item>Print File</item>
         <item>Share File</item>
