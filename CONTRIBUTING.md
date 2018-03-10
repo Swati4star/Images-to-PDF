@@ -13,8 +13,8 @@ on the issue, you may take it up ( just leave a comment on the issue).
 
 ### 2. Fork & create a branch
 
-If this is something you think you can fix, then [fork Active Admin][] and
-create a branch with a descriptive name.
+If this is something you think you can fix, then create a branch with a 
+descriptive name.
 
 A good branch name would be (where issue #13 is the ticket you're working on):
 
