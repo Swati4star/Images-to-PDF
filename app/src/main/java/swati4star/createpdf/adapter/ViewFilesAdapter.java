@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private Context mContext;
     private ArrayList<File> mFileList;
     private String mFileName;
+    private ArrayList<Integer> onDeleteNames;
     private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
 
         @Override
@@ -119,6 +122,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public ViewFilesAdapter(Context context, ArrayList<File> feedItems) {
         this.mContext = context;
         this.mFileList = feedItems;
+        onDeleteNames = new ArrayList<>();
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -133,13 +137,32 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void onBindViewHolder(ViewFilesHolder holder, int position) {
-        Log.d("logs", "getItemCount: " + mFileList.size());
+        Log.e("logs", "getItemCount: " + mFileList.size());
         // Extract file name from path
         final String fileName = mFileList.get(position).getPath();
         final int filePosition = position;
         String[] name = fileName.split("/");
 
         holder.mFilename.setText(name[name.length - 1]);
+
+        if (onDeleteNames.contains(position))
+            holder.checkBox.setChecked(true);
+        else
+            holder.checkBox.setChecked(false);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    onDeleteNames.add(filePosition);
+                } else {
+                    onDeleteNames.remove(Integer.valueOf(filePosition));
+                }
+                for (Integer i:onDeleteNames){
+                    Log.e("logs","onDeleteNamesContains: "+i);
+                }
+            }
+        });
 
         holder.mRipple.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,6 +257,32 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             }
         }
 
+    }
+
+    public void deleteFiles() {
+        for (Integer i:onDeleteNames){
+            Log.e("logs","onDeleteNamesContains: "+i);
+        }
+        for (File i:mFileList){
+            Log.e("logs","File list contains: "+i.getName());
+        }
+        ArrayList<File> newList = new ArrayList<>(mFileList);
+        for (int position : onDeleteNames) {
+            String fileName = newList.get(position).getPath();
+            File fdelete = new File(fileName);
+            if (fdelete.exists()) {
+                if (fdelete.delete()) {
+                    newList.remove(position);
+                    if (newList.size() == 0) {
+                        ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        onDeleteNames.clear();
+        setData(newList);
     }
 
     // iterate through filelist and remove all elements
@@ -335,6 +384,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         MaterialRippleLayout mRipple;
         @BindView(R.id.fileName)
         TextView mFilename;
+        @BindView(R.id.checkbox)
+        CheckBox checkBox;
 
 
         public ViewFilesHolder(View itemView) {

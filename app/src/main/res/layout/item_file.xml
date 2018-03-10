@@ -12,14 +12,30 @@
                   android:id="@+id/parent"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="vertical"
+                  android:orientation="horizontal"
+
                   app:layout_behavior="@string/appbar_scrolling_view_behavior"
                   tools:context=".activity.MainActivity">
 
         <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/rippleCheck"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+        <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/fileRipple"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8">
 
             <TextView
                 android:id="@+id/fileName"

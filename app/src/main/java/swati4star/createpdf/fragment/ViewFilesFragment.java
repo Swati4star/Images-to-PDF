@@ -101,11 +101,34 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
             case R.id.item_sort:
                 displaySortDialog();
                 break;
+            case R.id.item_delete:
+                deleteFiles();
+                break;
             default:
                 break;
         }
         return true;
     }
+
+    private void deleteFiles() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Do you want to delete all selected files?").setNegativeButton("No", dialogClickListener).setPositiveButton("Yes", dialogClickListener);
+        builder.create().show();
+    }
+
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    mViewFilesAdapter.deleteFiles();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onRefresh() {
