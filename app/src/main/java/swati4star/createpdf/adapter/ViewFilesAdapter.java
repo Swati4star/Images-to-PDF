@@ -179,7 +179,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         deleteFile(fileName, filePosition);
                                         break;
 
-
                                     case 2: //rename
                                         renameFile(filePosition);
                                         break;
@@ -269,30 +268,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         }
         onDeleteNames.clear();
         setData(newList);
-    }
-
-    // iterate through filelist and remove all elements
-    private void deleteAllFiles() {
-        int deletedCount = 0;
-        List<File> toRemove = new ArrayList<>();
-        for (File fDelete : mFileList) {
-            if (fDelete.exists()) {
-                if (fDelete.delete()) {
-                    toRemove.add(fDelete);
-                    deletedCount++;
-                }
-            }
-        }
-        for (File fToRemove : toRemove) {
-            mFileList.remove(fToRemove);
-        }
-        notifyDataSetChanged();
-        if (mFileList.size() == 0) {
-            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
-        }
-        Toast.makeText(mContext
-                , String.format(string(R.string.toast_multipleFiles_deleted), deletedCount)
-                , Toast.LENGTH_SHORT).show();
     }
 
     private void renameFile(final int position) {
