@@ -55,6 +55,8 @@ public class HomeFragment extends Fragment {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private static final int HORIZONTAL_BORDER = 100;
+    private static final int VERTICAL_BORDER = 100;
     private static int mImageCounter = 0;
     Activity activity;
     ArrayList<String> imagesUri;
@@ -65,8 +67,11 @@ public class HomeFragment extends Fragment {
     MorphingButton openPdf;
     MorphingButton addImages;
     MorphingButton cropImages;
+    MorphingButton borderImages;
+    TextView borderImagesValue;
     TextView textView;
     private int mMorphCounter1 = 1;
+    private boolean borderAdded = false;
 
     @Override
     public void onAttach(Context context) {
@@ -85,6 +90,8 @@ public class HomeFragment extends Fragment {
         tempUris = new ArrayList<>();
         addImages = (MorphingButton) root.findViewById(R.id.addImages);
         cropImages = (MorphingButton) root.findViewById(R.id.cropImages);
+        borderImages = (MorphingButton) root.findViewById(R.id.borderImages);
+        borderImagesValue = (TextView) root.findViewById(R.id.borderImagesValue);
         createPdf = (MorphingButton) root.findViewById(R.id.pdfCreate);
         openPdf = (MorphingButton) root.findViewById(R.id.pdfOpen);
         textView = (TextView) root.findViewById(R.id.text);
@@ -104,6 +111,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cropImages();
+            }
+        });
+
+        borderImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                borderImages();
             }
         });
 
@@ -164,6 +178,14 @@ public class HomeFragment extends Fragment {
             return;
         }
         next();
+    }
+
+    void borderImages() {
+        if (tempUris.size() == 0) {
+            Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+            return;
+        }
+            new BorderImageDialogFragment().show(getFragmentManager(), "BorderImageDialogFragment");
     }
 
     void next() {
@@ -282,6 +304,7 @@ public class HomeFragment extends Fragment {
             }
             Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
             cropImages.setVisibility(View.VISIBLE);
+            borderImages.setVisibility(View.VISIBLE);
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == Activity.RESULT_OK) {
@@ -347,6 +370,17 @@ public class HomeFragment extends Fragment {
 
     public int color(@ColorRes int resId) {
         return getResources().getColor(resId);
+    }
+
+    public void setBorder(boolean borderSelection) {
+        borderAdded = borderSelection;
+        // display border selection
+        if(borderAdded){
+            borderImagesValue.setText(R.string.border_images_value_true);
+        }
+        else {
+            borderImagesValue.setText(R.string.border_images_value_false);
+        }
     }
 
     /**
@@ -416,12 +450,22 @@ public class HomeFragment extends Fragment {
                     if (bmp.getWidth() > documentRect.getWidth()
                             || bmp.getHeight() > documentRect.getHeight()) {
                         //bitmap is larger than page,so set bitmap's size similar to the whole page
-                        image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
+                        if(borderAdded){
+                            image.scaleAbsolute(documentRect.getWidth()-VERTICAL_BORDER, documentRect.getHeight()-HORIZONTAL_BORDER);
+                        }
+                        else {
+                            image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
+                        }
                     } else {
                         //bitmap is smaller than page, so add bitmap simply.
                         //[note: if you want to fill page by stretching image,
                         // you may set size similar to page as above]
-                        image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
+                        if(borderAdded){
+                            image.scaleAbsolute(bmp.getWidth()-VERTICAL_BORDER, bmp.getHeight()-HORIZONTAL_BORDER);
+                        }
+                        else {
+                            image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
+                        }
                     }
 
                     Log.v("Stage 6", "Image path adding");
@@ -430,10 +474,6 @@ public class HomeFragment extends Fragment {
                             (documentRect.getWidth() - image.getScaledWidth()) / 2,
                             (documentRect.getHeight() - image.getScaledHeight()) / 2);
                     Log.v("Stage 7", "Image Alignments");
-
-                    image.setBorder(Image.BOX);
-
-                    image.setBorderWidth(15);
 
                     document.add(image);
 
@@ -476,5 +516,4 @@ public class HomeFragment extends Fragment {
             morphToSuccess(createPdf);
         }
     }
-
 }
