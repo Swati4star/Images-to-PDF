@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
     TextView borderImagesValue;
     TextView textView;
     private int mMorphCounter1 = 1;
-    private boolean borderAdded = false;
+    private boolean mBorderAdded = false;
 
     @Override
     public void onAttach(Context context) {
@@ -184,7 +184,8 @@ public class HomeFragment extends Fragment {
         if (tempUris.size() == 0) {
             Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
             return;
-        } new BorderImageDialogFragment().show(getFragmentManager(), "BorderImageDialogFragment");
+        }
+        new BorderImageDialogFragment().show(getFragmentManager(), "BorderImageDialogFragment");
     }
 
     void next() {
@@ -372,9 +373,9 @@ public class HomeFragment extends Fragment {
     }
 
     public void setBorder(boolean borderSelection) {
-        borderAdded = borderSelection;
+        mBorderAdded = borderSelection;
         // display border selection
-        if (borderAdded) { borderImagesValue.setText(R.string.border_images_value_true);
+        if (mBorderAdded) { borderImagesValue.setText(R.string.border_images_value_true);
         }
         else { borderImagesValue.setText(R.string.border_images_value_false); }
     }
@@ -446,21 +447,20 @@ public class HomeFragment extends Fragment {
                     if (bmp.getWidth() > documentRect.getWidth()
                             || bmp.getHeight() > documentRect.getHeight()) {
                         //bitmap is larger than page,so set bitmap's size similar to the whole page
-                        if (borderAdded) {
+                        if (mBorderAdded) {
                             image.scaleAbsolute(documentRect.getWidth()-VERTICAL_BORDER,
                                     documentRect.getHeight()-HORIZONTAL_BORDER);
-                        }
-                        else {
-                            image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight()); }
+                        } else {
+                            image.scaleAbsolute(documentRect.getWidth(),
+                                    documentRect.getHeight()); }
                     } else {
                         //bitmap is smaller than page, so add bitmap simply.
                         //[note: if you want to fill page by stretching image,
                         // you may set size similar to page as above]
-                        if (borderAdded) {
+                        if (mBorderAdded) {
                             image.scaleAbsolute(bmp.getWidth()-VERTICAL_BORDER,
                                     bmp.getHeight()-HORIZONTAL_BORDER);
-                        }
-                        else {
+                        } else {
                             image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
                         }
                     }
