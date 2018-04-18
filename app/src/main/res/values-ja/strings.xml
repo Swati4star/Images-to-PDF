@@ -10,6 +10,7 @@
     <string name="file_name_text">File Name</string>
     <string name="select_images_text">Select Images</string>
     <string name="crop_images_text">Crop images</string>
+    <string name="border_images_text">Border images</string>
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
 
@@ -54,6 +55,14 @@
     <string name="toast_error_getCropped">Error on getting cropped images</string>
     <string name="toast_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="toast_error_getBordered">Error on getting bordered images</string>
+    <string name="toast_imagebordered">Images bordered</string>
+    <string name="borderImage_activityTitle">Border image No.</string>
+    <string name="border_images_question">Add border to images?</string>
+    <string name="border_images_choice_no">No</string>
+    <string name="border_images_choice_yes">Yes</string>
+    <string name="border_images_value_false">No border</string>
+    <string name="border_images_value_true">Images bordered</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="image_options_text">Image Enhancement Options</string>
