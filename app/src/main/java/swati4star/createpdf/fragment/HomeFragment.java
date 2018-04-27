@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
@@ -36,12 +35,12 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import id.zelory.compressor.Compressor;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 
@@ -404,11 +403,10 @@ public class HomeFragment extends Fragment {
 
                 for (int i = 0; i < imagesUri.size(); i++) {
 
-                    Bitmap bmp = MediaStore.Images.Media.getBitmap(
-                            activity.getContentResolver(), Uri.fromFile(new File(imagesUri.get(i))));
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
-
+                    Bitmap bmp = new Compressor(getContext())
+                            .setQuality(70)
+                            .setCompressFormat(Bitmap.CompressFormat.PNG)
+                            .compressToBitmap(new File(imagesUri.get(i)));
 
                     image = Image.getInstance(imagesUri.get(i));
 
