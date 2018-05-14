@@ -208,8 +208,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void openFile(String name) {
         File file = new File(name);
         Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file), mContext.getString(R.string.pdf_type));
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+
+        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
         try {
