@@ -18,6 +18,7 @@ import android.support.annotation.IntegerRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -211,8 +212,11 @@ public class HomeFragment extends Fragment {
     void openPdf() {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file), getString(R.string.pdf_type));
+        Uri uri = FileProvider.getUriForFile(activity, "com.swati4star.shareFile", file);
+
+        target.setDataAndType(uri, getString(R.string.pdf_type));
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         Intent intent = Intent.createChooser(target, getString(R.string.open_file));
         try {
