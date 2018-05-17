@@ -26,6 +26,8 @@
     <string name="populating_list">Recherche des fichiers. Cela peut prendre un peu de temps</string>
     <string name="main">Accueil</string>
     <string name="viewFiles">Voir Fichiers</string>
+    <string name="feedback">Feedback</string>
+
 
     <string name="toast_no_images">Pas d\'images choisies</string>
     <string name="toast_name_not_blank">Le nom ne pas être vide</string>

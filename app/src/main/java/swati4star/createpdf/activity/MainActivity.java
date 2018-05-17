@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.HomeFragment;
@@ -73,11 +74,29 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ViewFilesFragment();
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
                 break;
+            case R.id.nav_feedback:
+                GetFeedback();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    void GetFeedback()
+    {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"swari4star@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Suggestions for Images To PDF Converter");
+        i.putExtra(Intent.EXTRA_TEXT   , "Kindly write your previous feeback, ot just drop a Hi! :)");
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

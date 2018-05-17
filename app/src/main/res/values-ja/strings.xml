@@ -27,6 +27,8 @@
 
     <string name="main">Main</string>
     <string name="viewFiles">View Files</string>
+    <string name="feedback">Feedback</string>
+
 
     <string name="toast_no_images">No Images selected</string>
     <string name="toast_name_not_blank">Name cannot be blank</string>
