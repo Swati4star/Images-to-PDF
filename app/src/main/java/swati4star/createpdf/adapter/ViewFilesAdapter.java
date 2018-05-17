@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private Context mContext;
     private ArrayList<File> mFileList;
     private String mFileName;
+    private ArrayList<Integer> mDeleteNames;
     private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
 
         @Override
@@ -119,6 +122,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public ViewFilesAdapter(Context context, ArrayList<File> feedItems) {
         this.mContext = context;
         this.mFileList = feedItems;
+        mDeleteNames = new ArrayList<>();
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -141,6 +145,22 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
         holder.mFilename.setText(name[name.length - 1]);
 
+        if (mDeleteNames.contains(position))
+            holder.checkBox.setChecked(true);
+        else
+            holder.checkBox.setChecked(false);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mDeleteNames.add(filePosition);
+                } else {
+                    mDeleteNames.remove(Integer.valueOf(filePosition));
+                }
+            }
+        });
+
         holder.mRipple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,19 +181,15 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         deleteFile(fileName, filePosition);
                                         break;
 
-                                    case 2: //delete all files
-                                        deleteAllFiles();
-                                        break;
-
-                                    case 3: //rename
+                                    case 2: //rename
                                         renameFile(filePosition);
                                         break;
 
-                                    case 4: //Print
+                                    case 3: //Print
                                         doPrint(fileName);
                                         break;
 
-                                    case 5: //Email
+                                    case 4: //Email
                                         shareFile(fileName);
                                         break;
                                 }
@@ -241,28 +257,26 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     // iterate through filelist and remove all elements
-    private void deleteAllFiles() {
-        int deletedCount = 0;
-        List<File> toRemove = new ArrayList<>();
-        for (File fDelete : mFileList) {
-            if (fDelete.exists()) {
-                if (fDelete.delete()) {
-                    toRemove.add(fDelete);
-                    deletedCount++;
+    public void deleteFiles() {
+        ArrayList<File> newList = new ArrayList<>(mFileList);
+        for (int position : mDeleteNames) {
+            String fileName = newList.get(position).getPath();
+            File fdelete = new File(fileName);
+            if (fdelete.exists()) {
+                if (fdelete.delete()) {
+                    newList.remove(position);
+                    if (newList.size() == 0) {
+                        ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
                 }
             }
         }
-        for (File fToRemove : toRemove) {
-            mFileList.remove(fToRemove);
-        }
-        notifyDataSetChanged();
-        if (mFileList.size() == 0) {
-            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
-        }
-        Toast.makeText(mContext
-                , String.format(string(R.string.toast_multipleFiles_deleted), deletedCount)
-                , Toast.LENGTH_SHORT).show();
+        mDeleteNames.clear();
+        setData(newList);
     }
+
 
     private void renameFile(final int position) {
         new MaterialDialog.Builder(mContext)
@@ -282,9 +296,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                 newfilename = newfilename + "/" + x[i];
 
                             File newfile = new File(newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
-
-                            Log.e("Old file name", oldfile + " ");
-                            Log.e("New file name", newfile + " ");
 
                             if (oldfile.renameTo(newfile)) {
                                 Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
@@ -339,6 +350,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         MaterialRippleLayout mRipple;
         @BindView(R.id.fileName)
         TextView mFilename;
+        @BindView(R.id.checkbox)
+        CheckBox checkBox;
 
 
         public ViewFilesHolder(View itemView) {

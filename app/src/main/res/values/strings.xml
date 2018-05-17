@@ -17,7 +17,6 @@
     <array name="items">
         <item>Open File</item>
         <item>Delete File</item>
-        <item>Delete All Files</item>
         <item>Rename File</item>
         <item>Print File</item>
         <item>Share File</item>
@@ -26,7 +25,6 @@
     <array name="itemIds" translatable="false">
         <item>open</item>
         <item>delete</item>
-        <item>deleteAll</item>
         <item>rename</item>
         <item>print</item>
         <item>e-mail</item>
@@ -70,4 +68,5 @@
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="image_options_text">Image Enhancement Options</string>
+    <string name="delete">delete</string>
 </resources>

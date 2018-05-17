@@ -18,7 +18,6 @@
     <array name="items">
         <item>Ouvrir Fichier</item>
         <item>Supprimer Fichier</item>
-        <item>Delete All Files</item>
         <item>Renommer Fichier</item>
         <item>Imprimer Fichier</item>
     </array>
@@ -56,4 +55,5 @@
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="image_options_text">Image Enhancement Options</string>
+    <string name="delete">effacer</string>
 </resources>
