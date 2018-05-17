@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
                 break;
             case R.id.nav_feedback:
-                GetFeedback();
+                getFeedback();
                 break;
         }
 
@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    void GetFeedback()
-    {
+    void getFeedback() {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"swari4star@gmail.com"});
