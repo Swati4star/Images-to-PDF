@@ -13,6 +13,9 @@ Here is an easy to use Android app to convert images to PDF file!
 
 [Sample Apk](https://dl.dropboxusercontent.com/s/ugpju98f0y2t947/app-debug.apk)
 
+### Slack
+You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com/](https://imagestopdf.slack.com/) and chat with developers. Use [this link](https://join.slack.com/t/imagestopdf/shared_invite/enQtMzY3NzkyODY2ODM5LTU2YTk3ZWExMmE0OTJjZGU3ODM1MGM4NzQ2OGNmNjhjYzYzYTBmMzdkNTkxZGY0NGYwZDI3MWQ1NDY5NzA3Yzk) to join our slack team.
+
 #### Creating a PDF file
 
 ##### Step 1 : User can view the PDF files previously created or create a new one! 
