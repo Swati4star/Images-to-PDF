@@ -284,6 +284,7 @@ public class HomeFragment extends Fragment {
                 tempUris.add(imageUris.get(i).getPath());
             }
             Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
+            morphToSquare(createPdf, integer(R.integer.mb_animation));
             cropImages.setVisibility(View.VISIBLE);
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
