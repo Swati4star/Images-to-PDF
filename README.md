@@ -23,7 +23,7 @@ You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com
 
 
 ##### Step 2 : Select the images
-<img src="/screenshots/select.png" width="190px"> <img src="/screenshots/selecting2.jpg" width="190px">
+<img src="/screenshots/select.jpg" width="190px"> <img src="/screenshots/selecting2.jpg" width="190px">
 
 
 ##### Step 3 : Name the PDF file
