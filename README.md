@@ -19,19 +19,19 @@ You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com
 #### Creating a PDF file
 
 ##### Step 1 : User can view the PDF files previously created or create a new one! 
-<img src="/screenshots/options.png" width="190px">
+<img src="/screenshots/options.jpg" width="190px">
 
 
 ##### Step 2 : Select the images
-<img src="/screenshots/select.png" width="190px"> <img src="/screenshots/selecting2.png" width="190px">
+<img src="/screenshots/select.png" width="190px"> <img src="/screenshots/selecting2.jpg" width="190px">
 
 
 ##### Step 3 : Name the PDF file
-<img src="/screenshots/name.png" width="190px">
+<img src="/screenshots/name.jpg" width="190px">
 
 
 ##### Step 4 : Creating PDF
-<img src="/screenshots/done.png" width="190px">
+<img src="/screenshots/done.jpg" width="190px">
 
 
 Hurray! PDF files of selected images are created.
@@ -39,7 +39,7 @@ Hurray! PDF files of selected images are created.
 
 #### Viewing the PDF files
 
-<img src="/screenshots/list.png" width="190px"> <img src="/screenshots/pdf_options.png" width="190px">
+<img src="/screenshots/list.jpg" width="190px"> <img src="/screenshots/pdf_options.jpg" width="190px">
 
 ### Contributing
 
