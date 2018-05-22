@@ -2,6 +2,7 @@
 
 ### Badges
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF) [![Circle CI](https://circleci.com/gh/Swati4star/Images-to-PDF.svg?style=svg)](https://circleci.com/gh/Swati4star/Images-to-PDF)
+[![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF)
 
 <a href="https://play.google.com/store/apps/details?id=swati4star.createpdf"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height=80px/></a> [<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/swati4star.createpdf) 
 
