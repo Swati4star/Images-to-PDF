@@ -41,15 +41,15 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     private static final int DATE_INDEX = 1;
     @SuppressLint("StaticFieldLeak")
     public static TextView emptyStatusTextView;
-    private Activity activity;
+    private Activity mActivity;
     private ViewFilesAdapter mViewFilesAdapter;
-    private RecyclerView viewFilesListRecyclerView;
-    private SwipeRefreshLayout swipeView;
+    private RecyclerView mViewFilesListRecyclerView;
+    private SwipeRefreshLayout mSwipeView;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (Activity) context;
+        mActivity = (Activity) context;
     }
 
 
@@ -64,8 +64,8 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
 
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
 
-        viewFilesListRecyclerView = root.findViewById(R.id.filesRecyclerView);
-        swipeView = root.findViewById(R.id.swipe);
+        mViewFilesListRecyclerView = root.findViewById(R.id.filesRecyclerView);
+        mSwipeView = root.findViewById(R.id.swipe);
         emptyStatusTextView = root.findViewById(R.id.emptyStatusTextView);
 
         //Create/Open folder
@@ -77,12 +77,12 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
         if (files.length == 0) {
             emptyStatusTextView.setVisibility(View.VISIBLE);
         }
-        mViewFilesAdapter = new ViewFilesAdapter(activity, pdfFiles);
+        mViewFilesAdapter = new ViewFilesAdapter(mActivity, pdfFiles);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
-        viewFilesListRecyclerView.setLayoutManager(mLayoutManager);
-        viewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
-        viewFilesListRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
-        swipeView.setOnRefreshListener(this);
+        mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
+        mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+        mViewFilesListRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
+        mSwipeView.setOnRefreshListener(this);
 
         // Populate data into listView
         populatePdfList();
@@ -112,14 +112,14 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void deleteFiles() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle("Do you want to delete all selected files?")
-                .setNegativeButton("No", dialogClickListener)
-                .setPositiveButton("Yes", dialogClickListener);
+                .setNegativeButton("No", mDialogClickListener)
+                .setPositiveButton("Yes", mDialogClickListener);
         builder.create().show();
     }
 
-    private final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
@@ -139,7 +139,7 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
 
         Log.v("refresh", "refreshing dta");
         populatePdfList();
-        swipeView.setRefreshing(false);
+        mSwipeView.setRefreshing(false);
     }
 
     private void populatePdfList() {
@@ -147,7 +147,7 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void displaySortDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle("Sort by")
                 .setItems(R.array.sort_options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -213,16 +213,16 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     private class PopulateList extends AsyncTask<Void, Void, Void> {
 
         // Progress dialog
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                .title(activity.getResources().getString(R.string.please_wait))
-                .content(activity.getResources().getString(R.string.populating_list))
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
+                .title(mActivity.getResources().getString(R.string.please_wait))
+                .content(mActivity.getResources().getString(R.string.populating_list))
                 .cancelable(false)
                 .progress(true, 0);
         final MaterialDialog dialog = builder.build();
 
         @Override
         protected Void doInBackground(Void... voids) {
-            activity.runOnUiThread(new Runnable() {
+            mActivity.runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {
@@ -252,13 +252,13 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = getOrCreatePdfDirectory().listFiles();
             if (files == null)
-                Toast.makeText(activity, R.string.toast_no_pdfs, Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, R.string.toast_no_pdfs, Toast.LENGTH_LONG).show();
             else {
                 pdfFiles = getPdfsFromPdfFolder();
             }
             Log.v("done", "adding");
             mViewFilesAdapter.setData(pdfFiles);
-            viewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+            mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
         }
     }
 }

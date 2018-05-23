@@ -243,14 +243,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
                 mFileList.remove(position);
                 notifyDataSetChanged();
-                if (mFileList.size() == 0) {
-                    ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
-                }
             } else {
                 Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
             }
         }
-
+        if (mFileList.size() == 0)
+            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
     }
 
     // iterate through filelist and remove all elements
@@ -268,9 +266,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             }
         }
         mDeleteNames.clear();
-        if (newList.size() == 0) {
+        if (newList.size() == 0)
             ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
-        }
         setData(newList);
     }
 
@@ -282,29 +279,25 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .input(mContext.getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input == null) {
+                        if (input == null)
                             Toast.makeText(mContext, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
-                        } else {
-                            String newname = input.toString();
+                        else {
                             File oldfile = mFileList.get(position);
-                            String[] x = mFileList.get(position).getPath().split("/");
-                            String newfilename = "";
-                            for (int i = 0; i < x.length - 1; i++)
-                                newfilename = newfilename + "/" + x[i];
+                            String oldPath =   mFileList.get(position).getPath();
+                            int index = oldPath.lastIndexOf('/');
+                            String newfilename = oldPath.substring(0, index) + "/" + input.toString() +
+                                    mContext.getString(R.string.pdf_ext);
 
-                            File newfile = new File(newfilename + "/" + newname + mContext.getString(R.string.pdf_ext));
-
+                            File newfile = new File(newfilename);
                             if (oldfile.renameTo(newfile)) {
                                 Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
                                 mFileList.set(position, newfile);
                                 notifyDataSetChanged();
-                            } else {
+                            } else
                                 Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
-                            }
                         }
                     }
-                })
-                .show();
+                }).show();
     }
 
     /**
@@ -318,7 +311,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
         mFileName = fileName;
         String jobName = mContext.getString(R.string.app_name) + " Document";
-        if(printManager != null)
+        if (printManager != null)
             printManager.print(jobName, mPrintDocumentAdapter, null);
     }
 
