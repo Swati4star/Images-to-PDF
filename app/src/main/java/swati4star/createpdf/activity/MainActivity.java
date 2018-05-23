@@ -14,14 +14,17 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.fragment.BorderImageDialogFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        BorderImageDialogFragment.OnFragmentInteractionListener {
 
     Toolbar toolbar;
     DrawerLayout drawer;
+    HomeFragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,9 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         // Set HomeFragment fragment
-        Fragment fragment = new HomeFragment();
+        homeFragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content, homeFragment).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -67,8 +70,8 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_camera:
-                fragment = new HomeFragment();
-                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+                homeFragment = new HomeFragment();
+                fragmentManager.beginTransaction().replace(R.id.content, homeFragment).commit();
                 break;
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();
@@ -101,5 +104,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void setBorder(boolean b) {
+        homeFragment.setBorder(b);
     }
 }

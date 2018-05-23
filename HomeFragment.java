@@ -12,13 +12,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +36,12 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
-import id.zelory.compressor.Compressor;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
     TextView borderImagesValue;
     TextView textView;
     private int mMorphCounter1 = 1;
-    private boolean borderAdded = false;
+    private boolean mBorderAdded = false;
 
     @Override
     public void onAttach(Context context) {
@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment {
             Toast.makeText(activity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
             return;
         }
-            new BorderImageDialogFragment().show(getFragmentManager(), "BorderImageDialogFragment");
+        new BorderImageDialogFragment().show(getFragmentManager(), "BorderImageDialogFragment");
     }
 
     void next() {
@@ -234,11 +234,8 @@ public class HomeFragment extends Fragment {
     void openPdf() {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
-        Uri uri = FileProvider.getUriForFile(activity, "com.swati4star.shareFile", file);
-
-        target.setDataAndType(uri, getString(R.string.pdf_type));
+        target.setDataAndType(Uri.fromFile(file), getString(R.string.pdf_type));
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         Intent intent = Intent.createChooser(target, getString(R.string.open_file));
         try {
@@ -306,7 +303,6 @@ public class HomeFragment extends Fragment {
                 tempUris.add(imageUris.get(i).getPath());
             }
             Toast.makeText(activity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
-            morphToSquare(createPdf, integer(R.integer.mb_animation));
             cropImages.setVisibility(View.VISIBLE);
             borderImages.setVisibility(View.VISIBLE);
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -377,14 +373,11 @@ public class HomeFragment extends Fragment {
     }
 
     public void setBorder(boolean borderSelection) {
-        borderAdded = borderSelection;
+        mBorderAdded = borderSelection;
         // display border selection
-        if(borderAdded){
-            borderImagesValue.setText(R.string.border_images_value_true);
+        if (mBorderAdded) { borderImagesValue.setText(R.string.border_images_value_true);
         }
-        else {
-            borderImagesValue.setText(R.string.border_images_value_false);
-        }
+        else { borderImagesValue.setText(R.string.border_images_value_false); }
     }
 
     /**
@@ -442,10 +435,11 @@ public class HomeFragment extends Fragment {
 
                 for (int i = 0; i < imagesUri.size(); i++) {
 
-                    Bitmap bmp = new Compressor(getContext())
-                            .setQuality(70)
-                            .setCompressFormat(Bitmap.CompressFormat.PNG)
-                            .compressToBitmap(new File(imagesUri.get(i)));
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(
+                            activity.getContentResolver(), Uri.fromFile(new File(imagesUri.get(i))));
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
+
 
                     image = Image.getInstance(imagesUri.get(i));
 
@@ -453,20 +447,20 @@ public class HomeFragment extends Fragment {
                     if (bmp.getWidth() > documentRect.getWidth()
                             || bmp.getHeight() > documentRect.getHeight()) {
                         //bitmap is larger than page,so set bitmap's size similar to the whole page
-                        if(borderAdded){
-                            image.scaleAbsolute(documentRect.getWidth()-VERTICAL_BORDER, documentRect.getHeight()-HORIZONTAL_BORDER);
-                        }
-                        else {
-                            image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                        }
+                        if (mBorderAdded) {
+                            image.scaleAbsolute(documentRect.getWidth()-VERTICAL_BORDER,
+                                    documentRect.getHeight()-HORIZONTAL_BORDER);
+                        } else {
+                            image.scaleAbsolute(documentRect.getWidth(),
+                                    documentRect.getHeight()); }
                     } else {
                         //bitmap is smaller than page, so add bitmap simply.
                         //[note: if you want to fill page by stretching image,
                         // you may set size similar to page as above]
-                        if(borderAdded){
-                            image.scaleAbsolute(bmp.getWidth()-VERTICAL_BORDER, bmp.getHeight()-HORIZONTAL_BORDER);
-                        }
-                        else {
+                        if (mBorderAdded) {
+                            image.scaleAbsolute(bmp.getWidth()-VERTICAL_BORDER,
+                                    bmp.getHeight()-HORIZONTAL_BORDER);
+                        } else {
                             image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
                         }
                     }

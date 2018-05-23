@@ -78,7 +78,20 @@
                 android:textStyle="bold"/>
 
             <com.dd.morphingbutton.MorphingButton
-                android:id="@+id/cropImages"
+            android:id="@+id/cropImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/crop_images_text"
+            android:textColor="@color/mb_white"
+            />
+
+            <com.dd.morphingbutton.MorphingButton
+                android:id="@+id/borderImages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -86,9 +99,17 @@
                 android:layout_weight="0"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="@string/crop_images_text"
+                android:text="@string/border_images_text"
                 android:textColor="@color/mb_white"
                 />
+            <TextView
+                android:id="@+id/borderImagesValue"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="" />
         </LinearLayout>
 
 
