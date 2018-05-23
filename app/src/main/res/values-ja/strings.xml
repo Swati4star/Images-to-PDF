@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">PDF Creator</string>
+    <string name="app_name">PDF Converter</string>
 
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
     <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
 
-    <string name="action_settings">設定</string>
     <string name="title">PDF 操作</string>
 
     <string name="file_name_text">File Name</string>
@@ -20,6 +19,7 @@
         <item>ファイルを削除</item>
         <item>ファイルの名前を変更</item>
         <item>ファイルを印刷</item>
+        <item>Share File</item>
     </array>
 
     <string name="please_wait">Please Wait</string>
@@ -40,17 +40,14 @@
     <string name="toast_no_pdfs">No PDFs right now</string>
     <string name="toast_file_deleted">File deleted.</string>
     <string name="toast_file_not_deleted">File can\'t be deleted.</string>
-    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
+    <string name="toast_folder_not_created">Error on creating application folder.</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>
     <string name="example">Example : abc</string>
     <string name="toast_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
-    <string name="done">done</string>
     <string name="sort">Sort</string>
-    <string name="sort_name">Name</string>
-    <string name="sort_date">Date</string>
 
     <string name="toast_error_getCropped">Error on getting cropped images</string>
     <string name="toast_imagecropped">Images cropped</string>
@@ -59,4 +56,7 @@
     <string name="snackbar_viewAction">View</string>
     <string name="image_options_text">Image Enhancement Options</string>
     <string name="delete">delete</string>
+    <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
+    <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
+    <string name="toast_no_email_clients">There are no email clients installed.</string>
 </resources>

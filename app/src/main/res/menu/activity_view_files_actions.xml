@@ -6,12 +6,12 @@
         android:id="@+id/item_sort"
         android:icon="@drawable/ic_sort_white_24px"
         android:title="@string/sort"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/item_delete"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/delete"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

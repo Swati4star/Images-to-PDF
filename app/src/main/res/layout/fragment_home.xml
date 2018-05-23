@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +12,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".fragment.HomeFragment"
-    >
+    tools:ignore="Overdraw">
 
     <com.dd.morphingbutton.MorphingButton
         android:id="@+id/addImages"
@@ -25,7 +24,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/select_images_text"
-        android:textColor="@color/mb_white"/>
+        android:textColor="@color/mb_white" />
 
     <com.dd.morphingbutton.MorphingButton
         android:id="@+id/pdfOpen"
@@ -38,7 +37,7 @@
         android:padding="10dp"
         android:text="@string/open_pdf_text"
         android:textColor="@color/mb_white"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.dd.morphingbutton.MorphingButton
         android:id="@+id/pdfCreate"
@@ -50,7 +49,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/create_pdf_text"
-        android:textColor="@color/mb_white"/>
+        android:textColor="@color/mb_white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +57,8 @@
         android:layout_weight="1"
         android:elevation="1dp"
         android:gravity="bottom|center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,20 +75,19 @@
                 android:text="@string/image_options_text"
                 android:textAllCaps="false"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <com.dd.morphingbutton.MorphingButton
                 android:id="@+id/cropImages"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="0"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/crop_images_text"
-                android:textColor="@color/mb_white"
-                />
+                android:textColor="@color/mb_white" />
         </LinearLayout>
 
 

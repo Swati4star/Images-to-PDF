@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Images to PDF"
+        android:text="@string/app_name"
         android:textColor="#fff"
         android:textSize="20sp"
         android:textStyle="bold"/>

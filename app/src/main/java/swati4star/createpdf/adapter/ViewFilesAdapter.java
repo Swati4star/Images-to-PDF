@@ -12,6 +12,7 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,12 +51,11 @@ import swati4star.createpdf.fragment.ViewFilesFragment;
 
 public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder> {
 
-    private static LayoutInflater inflater;
-    private Context mContext;
+    private final Context mContext;
     private ArrayList<File> mFileList;
     private String mFileName;
-    private ArrayList<Integer> mDeleteNames;
-    private PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
+    private final ArrayList<Integer> mDeleteNames;
+    private final PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
 
         @Override
         public void onWrite(PageRange[] pages,
@@ -123,20 +122,18 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         this.mContext = context;
         this.mFileList = feedItems;
         mDeleteNames = new ArrayList<>();
-
-        inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    @NonNull
     @Override
-    public ViewFilesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_file, parent, false);
         return new ViewFilesHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ViewFilesHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewFilesHolder holder, int position) {
         Log.d("logs", "getItemCount: " + mFileList.size());
         // Extract file name from path
         final String fileName = mFileList.get(position).getPath();
@@ -265,15 +262,15 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             if (fdelete.exists()) {
                 if (fdelete.delete()) {
                     newList.remove(position);
-                    if (newList.size() == 0) {
-                        ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
-                    }
                 } else {
                     Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
                 }
             }
         }
         mDeleteNames.clear();
+        if (newList.size() == 0) {
+            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
+        }
         setData(newList);
     }
 
@@ -284,7 +281,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .content(R.string.enter_file_name)
                 .input(mContext.getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         if (input == null) {
                             Toast.makeText(mContext, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
                         } else {
@@ -321,7 +318,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
         mFileName = fileName;
         String jobName = mContext.getString(R.string.app_name) + " Document";
-        printManager.print(jobName, mPrintDocumentAdapter, null);
+        if(printManager != null)
+            printManager.print(jobName, mPrintDocumentAdapter, null);
     }
 
     /**
@@ -353,8 +351,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         @BindView(R.id.checkbox)
         CheckBox checkBox;
 
-
-        public ViewFilesHolder(View itemView) {
+        ViewFilesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PDF Creator</string>
+    <string name="app_name">PDF Converter</string>
 
     <string name="navigation_drawer_open">Abrir menú lateral</string>
     <string name="navigation_drawer_close">Cerrar menú lateral</string>
 
-    <string name="action_settings">Configuración</string>
     <string name="title">Acciones PDF</string>
 
     <string name="file_name_text">Nombre del fichero</string>
@@ -20,6 +19,7 @@
         <item>Borrar Fichero</item>
         <item>Renombrar Fichero</item>
         <item>Imprimir Fichero</item>
+        <item>Share File</item>
     </array>
 
     <string name="please_wait">Por favor espere</string>
@@ -40,17 +40,14 @@
     <string name="toast_no_pdfs">Sin PDFs por ahora</string>
     <string name="toast_file_deleted">Fichero borrado.</string>
     <string name="toast_file_not_deleted">El fichero no puede ser borrado.</string>
-    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
+    <string name="toast_folder_not_created">Error on creating application folder.</string>
 
     <string name="creating_pdf">Creando PDF</string>
     <string name="enter_file_name">Escribe un nombre de fichero</string>
     <string name="example">Ejemplo : abc</string>
     <string name="toast_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
-    <string name="done">hecho</string>
     <string name="sort">Ordenar</string>
-    <string name="sort_name">Nombre</string>
-    <string name="sort_date">Fecha</string>
 
     <string name="toast_error_getCropped">Error on getting cropped images</string>
     <string name="toast_imagecropped">Images cropped</string>
@@ -59,4 +56,7 @@
     <string name="snackbar_viewAction">View</string>
     <string name="image_options_text">Image Enhancement Options</string>
     <string name="delete">borrar</string>
+    <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
+    <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
+    <string name="toast_no_email_clients">There are no email clients installed.</string>
 </resources>

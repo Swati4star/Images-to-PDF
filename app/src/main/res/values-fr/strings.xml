@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PDF Creator</string>
+    <string name="app_name">PDF Converter</string>
 
     <string name="navigation_drawer_open">Ouvrir menu lateral</string>
     <string name="navigation_drawer_close">Fermer menu lateral</string>
 
-    <string name="action_settings">Configuration</string>
     <string name="title">Actions PDF</string>
 
     <string name="file_name_text">Nom du fichier</string>
@@ -20,6 +19,7 @@
         <item>Supprimer Fichier</item>
         <item>Renommer Fichier</item>
         <item>Imprimer Fichier</item>
+        <item>Share File</item>
     </array>
 
     <string name="please_wait">Patientez</string>
@@ -39,17 +39,14 @@
     <string name="toast_no_pdfs">Pas de fichiers PDF maintenant</string>
     <string name="toast_file_deleted">Fichier supprimé.</string>
     <string name="toast_file_not_deleted">Le fichier ne peut pas être supprimé.</string>
-    <string name="toast_multipleFiles_deleted" formatted="false">%d files deleted.</string>
+    <string name="toast_folder_not_created">Error on creating application folder.</string>
 
     <string name="creating_pdf">Créant PDF</string>
     <string name="enter_file_name">Écrire le nom du fichier</string>
     <string name="example">Exemple : abc</string>
     <string name="toast_no_pdf_app">Il  n\'y a pas d\'app pour lire fichiers PDF</string>
     <string name="open_file">Ouvrir Fichier</string>
-    <string name="done">fait</string>
     <string name="sort">Trier</string>
-    <string name="sort_name">Nom</string>
-    <string name="sort_date">Date</string>
 
     <string name="toast_error_getCropped">Error on getting cropped images</string>
     <string name="toast_imagecropped">Images cropped</string>
@@ -58,4 +55,7 @@
     <string name="snackbar_viewAction">View</string>
     <string name="image_options_text">Image Enhancement Options</string>
     <string name="delete">effacer</string>
+    <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
+    <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
+    <string name="toast_no_email_clients">There are no email clients installed.</string>
 </resources>

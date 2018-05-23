@@ -15,7 +15,7 @@ import swati4star.createpdf.R;
  */
 
 public class ViewFilesDividerItemDecoration extends RecyclerView.ItemDecoration {
-    private Drawable mDivider;
+    private final Drawable mDivider;
 
     public ViewFilesDividerItemDecoration(Context context) {
         mDivider = context.getResources().getDrawable(R.drawable.files_divider);
