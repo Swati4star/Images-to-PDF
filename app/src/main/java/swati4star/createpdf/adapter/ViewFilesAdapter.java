@@ -253,18 +253,20 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     // iterate through filelist and remove all elements
     public void deleteFiles() {
-        ArrayList<File> newList = new ArrayList<>(mFileList);
         for (int position : mDeleteNames) {
-            String fileName = newList.get(position).getPath();
+            String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
             if (fdelete.exists()) {
-                if (fdelete.delete()) {
-                    newList.remove(position);
-                } else {
+                if (!fdelete.delete())
                     Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
-                }
             }
         }
+
+        ArrayList<File> newList = new ArrayList<>();
+        for (int position = 0; position < mFileList.size(); position++)
+            if (!mDeleteNames.contains(position))
+                newList.add(mFileList.get(position));
+
         mDeleteNames.clear();
         if (newList.size() == 0)
             ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);

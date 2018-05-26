@@ -36,9 +36,13 @@
     <string name="please_wait">Please Wait</string>
     <string name="populating_list">Fetching files. This may take a while</string>
 
+    <!-- Navigation drawer strings -->
     <string name="main">Main</string>
     <string name="viewFiles">View Files</string>
+    <string name="extras">Extras</string>
     <string name="feedback">Feedback</string>
+    <string name="share">Share</string>
+    <string name="rate_us">Rate us</string>
 
     <!--Toast strings -->
     <string name="toast_no_images">No Images selected</string>
@@ -68,10 +72,24 @@
     <string name="image_options_text">Image Enhancement Options</string>
     <string name="delete">delete</string>
 
+    <!-- Share strings -->
+    <string name="share_chooser">Select app to send message…</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_us_text">Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .It converts images to PDF so smoothly. :)</string>
+    <string name="toast_no_share_app">No application to share.</string>
+    <string name="playstore_not_installed">Play services not installed!</string>
+    <string name="rate_positive">Rate now</string>
+    <string name="rate_negative">No, thanks</string>
+    <string name="rate_title">Rate us!</string>
+    <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
+
+
     <!-- Feedback Strings -->
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
     <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
     <string name="toast_no_email_clients">There are no email clients installed.</string>
+    <string name="feedback_chooser">"Send mail…"</string>
 
 
 </resources>

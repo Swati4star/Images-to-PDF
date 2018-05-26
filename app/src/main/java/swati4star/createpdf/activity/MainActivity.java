@@ -1,6 +1,8 @@
 package swati4star.createpdf.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -9,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -75,6 +78,12 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_feedback:
                 getFeedback();
                 break;
+            case R.id.nav_share:
+                shareApplication();
+                break;
+            case R.id.nav_rate_us:
+                rateUs();
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -83,16 +92,57 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getFeedback() {
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"swari4star@gmail.com"});
-        i.putExtra(Intent.EXTRA_SUBJECT, R.string.feedback_subject);
-        i.putExtra(Intent.EXTRA_TEXT   , R.string.feedback_text);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL  , new String[]{"swari4star@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feedback_subject));
+        intent.putExtra(Intent.EXTRA_TEXT   , getResources().getString(R.string.feedback_text));
         try {
-            startActivity(Intent.createChooser(i, "Send mail..."));
+            startActivity(Intent.createChooser(intent, getString(R.string.feedback_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(MainActivity.this, R.string.toast_no_email_clients, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.toast_no_email_clients), Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void shareApplication() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT , getResources().getString(R.string.rate_us_text));
+        try {
+            startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(MainActivity.this, getString(R.string.toast_no_share_app), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void rateUs() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(getString(R.string.rate_title))
+                .setMessage(getString(R.string.rate_dialog_text))
+                .setNegativeButton(getString(R.string.rate_negative), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                })
+                .setPositiveButton(getString(R.string.rate_positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                            Uri.parse("market://details?id=" +
+                                                    getApplicationContext().getPackageName())));
+                        } catch (Exception e) {
+                            Toast.makeText(MainActivity.this,
+                                    getString(R.string.playstore_not_installed),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        dialogInterface.dismiss();
+
+                    }
+                });
+        builder.create().show();
+
+    }
 }

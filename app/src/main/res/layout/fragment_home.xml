@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,83 +14,82 @@
     tools:context=".fragment.HomeFragment"
     tools:ignore="Overdraw">
 
-    <com.dd.morphingbutton.MorphingButton
-        android:id="@+id/addImages"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_weight="0"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/select_images_text"
-        android:textColor="@color/mb_white" />
-
-    <com.dd.morphingbutton.MorphingButton
-        android:id="@+id/pdfOpen"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_weight="0"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/open_pdf_text"
-        android:textColor="@color/mb_white"
-        android:visibility="gone" />
-
-    <com.dd.morphingbutton.MorphingButton
-        android:id="@+id/pdfCreate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_weight="0"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/create_pdf_text"
-        android:textColor="@color/mb_white" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:elevation="1dp"
-        android:gravity="bottom|center"
-        android:orientation="vertical"
-        tools:targetApi="lollipop">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/addImages"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/home_imageoptions_border"
-            android:orientation="vertical"
-            android:padding="30dp">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/select_images_text"
+            android:textColor="@color/mb_white" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:text="@string/image_options_text"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <com.dd.morphingbutton.MorphingButton
-                android:id="@+id/cropImages"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="@string/crop_images_text"
-                android:textColor="@color/mb_white" />
-        </LinearLayout>
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/pdfOpen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/open_pdf_text"
+            android:textColor="@color/mb_white"
+            android:visibility="gone" />
 
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/pdfCreate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/create_pdf_text"
+            android:textColor="@color/mb_white" />
 
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/home_imageoptions_border"
+        android:elevation="1dp"
+        android:gravity="bottom|center"
+        android:orientation="vertical"
+        android:padding="30dp"
+        tools:targetApi="lollipop">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="@string/image_options_text"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/cropImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/crop_images_text"
+            android:textColor="@color/mb_white" />
+
+
+    </LinearLayout>
+</RelativeLayout>

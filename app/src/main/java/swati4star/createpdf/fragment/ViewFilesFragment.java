@@ -252,7 +252,7 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = getOrCreatePdfDirectory().listFiles();
             if (files == null)
-                Toast.makeText(mActivity, R.string.toast_no_pdfs, Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, getResources().getString(R.string.toast_no_pdfs), Toast.LENGTH_LONG).show();
             else {
                 pdfFiles = getPdfsFromPdfFolder();
             }
