@@ -41,7 +41,9 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
@@ -58,13 +60,18 @@ public class HomeFragment extends Fragment {
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private static int mImageCounter = 0;
     private Activity mActivity;
-    private ArrayList<String> mImagesUri;
-    private ArrayList<String> mTempUris;
+    private ArrayList<String> mImagesUri = new ArrayList<>() ;
+    private ArrayList<String> mTempUris = new ArrayList<>();
     private String mPath;
     private String mFilename;
-    private MorphingButton mCreatePdf;
-    private MorphingButton mOpenPdf;
-    private MorphingButton mCropImages;
+    @BindView(R.id.addImages)
+    MorphingButton addImages;
+    @BindView(R.id.pdfCreate)
+    MorphingButton mCreatePdf;
+    @BindView(R.id.pdfOpen)
+    MorphingButton mOpenPdf;
+    @BindView(R.id.cropImages)
+    MorphingButton mCropImages;
     private int mMorphCounter1 = 1;
 
     @Override
@@ -79,45 +86,8 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, root);
 
-        //initialising variables
-        mImagesUri = new ArrayList<>();
-        mTempUris = new ArrayList<>();
-        MorphingButton addImages = root.findViewById(R.id.addImages);
-        mCropImages = root.findViewById(R.id.cropImages);
-        mCreatePdf = root.findViewById(R.id.pdfCreate);
-        mOpenPdf = root.findViewById(R.id.pdfOpen);
-
-
         morphToSquare(mCreatePdf, integer());
         mOpenPdf.setVisibility(View.GONE);
-
-        addImages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAddingImages();
-            }
-        });
-
-        mCropImages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cropImages();
-            }
-        });
-
-        mCreatePdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createPdf();
-            }
-        });
-
-        mOpenPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPdf();
-            }
-        });
 
         // Get runtime permissions if build version >= Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -138,7 +108,8 @@ public class HomeFragment extends Fragment {
     }
 
     // Adding Images to PDF
-    private void startAddingImages() {
+    @OnClick(R.id.addImages)
+    void startAddingImages() {
         // Check if permissions are granted
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(mActivity,
@@ -156,7 +127,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void cropImages() {
+    @OnClick(R.id.cropImages)
+    void cropImages() {
         if (mTempUris.size() == 0) {
             Toast.makeText(mActivity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
             return;
@@ -177,7 +149,8 @@ public class HomeFragment extends Fragment {
 
     // Create Pdf of selected images
     @SuppressWarnings("unchecked")
-    private void createPdf() {
+    @OnClick({R.id.pdfCreate})
+    void createPdf() {
         if (mImagesUri.size() == 0) {
             if (mTempUris.size() == 0) {
                 Toast.makeText(mActivity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
@@ -206,7 +179,8 @@ public class HomeFragment extends Fragment {
                 .show();
     }
 
-    private void openPdf() {
+    @OnClick(R.id.pdfOpen)
+    void openPdf() {
         File file = new File(mPath);
         Intent target = new Intent(Intent.ACTION_VIEW);
         Uri uri = FileProvider.getUriForFile(mActivity, "com.swati4star.shareFile", file);
@@ -274,11 +248,15 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
+
+        if (resultCode != Activity.RESULT_OK)
+            return;
+
+        if (requestCode == INTENT_REQUEST_GET_IMAGES) {
             mTempUris.clear();
             ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
-            for (int i = 0; i < imageUris.size(); i++)
-                mTempUris.add(imageUris.get(i).getPath());
+            for (Uri uri : imageUris)
+                mTempUris.add(uri.getPath());
             Toast.makeText(mActivity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
             morphToSquare(mCreatePdf, integer());
             mCropImages.setVisibility(View.VISIBLE);

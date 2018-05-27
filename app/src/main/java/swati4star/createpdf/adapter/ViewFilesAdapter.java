@@ -256,10 +256,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         for (int position : mDeleteNames) {
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
-            if (fdelete.exists()) {
-                if (!fdelete.delete())
+            if (fdelete.exists() && !fdelete.delete())
                     Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
-            }
         }
 
         ArrayList<File> newList = new ArrayList<>();

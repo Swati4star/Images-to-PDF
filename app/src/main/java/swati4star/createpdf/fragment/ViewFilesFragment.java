@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
@@ -39,12 +41,13 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
 
     private static final int NAME_INDEX = 0;
     private static final int DATE_INDEX = 1;
-    @SuppressLint("StaticFieldLeak")
-    public static TextView emptyStatusTextView;
     private Activity mActivity;
-    private ViewFilesAdapter mViewFilesAdapter;
-    private RecyclerView mViewFilesListRecyclerView;
-    private SwipeRefreshLayout mSwipeView;
+    ViewFilesAdapter mViewFilesAdapter;
+    @BindView(R.id.filesRecyclerView)
+    RecyclerView mViewFilesListRecyclerView;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout mSwipeView;
+    public static TextView emptyStatusTextView;
 
     @Override
     public void onAttach(Context context) {
@@ -63,9 +66,8 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
+        ButterKnife.bind(this, root);
 
-        mViewFilesListRecyclerView = root.findViewById(R.id.filesRecyclerView);
-        mSwipeView = root.findViewById(R.id.swipe);
         emptyStatusTextView = root.findViewById(R.id.emptyStatusTextView);
 
         //Create/Open folder
