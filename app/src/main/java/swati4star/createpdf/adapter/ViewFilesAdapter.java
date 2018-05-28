@@ -271,7 +271,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         setData(newList);
     }
 
-
     private void renameFile(final int position) {
         new MaterialDialog.Builder(mContext)
                 .title(R.string.creating_pdf)

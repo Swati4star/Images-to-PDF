@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private static int mImageCounter = 0;
     private Activity mActivity;
-    private ArrayList<String> mImagesUri = new ArrayList<>() ;
+    private ArrayList<String> mImagesUri = new ArrayList<>();
     private ArrayList<String> mTempUris = new ArrayList<>();
     private String mPath;
     private String mFilename;
@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void next() {
-        if (mImageCounter != mTempUris.size()) {
+        if (mImageCounter != mTempUris.size() && mImageCounter < mTempUris.size()) {
             CropImage.activity(Uri.fromFile(new File(mTempUris.get(mImageCounter))))
                     .setActivityMenuIconColor(color(R.color.colorPrimary))
                     .setInitialCropWindowPaddingRatio(0)
@@ -336,17 +336,19 @@ public class HomeFragment extends Fragment {
     class CreatingPdf extends AsyncTask<String, String, String> {
 
         // Progress dialog
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
-                .title(R.string.please_wait)
-                .content(R.string.populating_list)
-                .cancelable(false)
-                .progress(true, 0);
-        final MaterialDialog dialog = builder.build();
-
+        MaterialDialog dialog;
+        boolean success;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            final MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
+                    .title(R.string.please_wait)
+                    .content(R.string.populating_list)
+                    .cancelable(false)
+                    .progress(true, 0);
+            dialog = builder.build();
+            success = true;
             dialog.show();
         }
 
@@ -357,9 +359,8 @@ public class HomeFragment extends Fragment {
 
             File folder = new File(mPath);
             if (!folder.exists()) {
-                boolean success = folder.mkdir();
+                success = folder.mkdir();
                 if (!success) {
-                    Toast.makeText(mActivity, R.string.toast_folder_not_created, Toast.LENGTH_SHORT).show();
                     return null;
                 }
             }
@@ -435,6 +436,13 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            dialog.dismiss();
+
+            if (!success) {
+                Toast.makeText(mActivity, R.string.toast_folder_not_created, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             mOpenPdf.setVisibility(View.VISIBLE);
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
                     , R.string.snackbar_pdfCreated
@@ -447,7 +455,6 @@ public class HomeFragment extends Fragment {
                             filesAdapter.openFile(mPath);
                         }
                     }).show();
-            dialog.dismiss();
             morphToSuccess(mCreatePdf);
         }
     }

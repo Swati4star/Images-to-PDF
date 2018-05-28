@@ -190,7 +190,7 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
 
     private File getOrCreatePdfDirectory() {
         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + getString(R.string.pdf_dir));
+                + mActivity.getResources().getString(R.string.pdf_dir));
         if (!folder.exists()) {
             boolean isCreated = folder.mkdir();
         }
@@ -215,20 +215,13 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     private class PopulateList extends AsyncTask<Void, Void, Void> {
 
         // Progress dialog
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
-                .title(mActivity.getResources().getString(R.string.please_wait))
-                .content(mActivity.getResources().getString(R.string.populating_list))
-                .cancelable(false)
-                .progress(true, 0);
-        final MaterialDialog dialog = builder.build();
+        MaterialDialog dialog;
 
         @Override
         protected Void doInBackground(Void... voids) {
             mActivity.runOnUiThread(new Runnable() {
-
                 @Override
                 public void run() {
-
                     populateListView();
                 }
             });
@@ -238,6 +231,12 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            final MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
+                    .title(mActivity.getResources().getString(R.string.please_wait))
+                    .content(mActivity.getResources().getString(R.string.populating_list))
+                    .cancelable(false)
+                    .progress(true, 0);
+            dialog = builder.build();
             dialog.show();
         }
 
