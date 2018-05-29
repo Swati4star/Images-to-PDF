@@ -105,7 +105,9 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
                 displaySortDialog();
                 break;
             case R.id.item_delete:
-                deleteFiles();
+                if(mViewFilesAdapter.areItemsForDeleteSelected()) {
+                    deleteFiles();
+                }
                 break;
             default:
                 break;
