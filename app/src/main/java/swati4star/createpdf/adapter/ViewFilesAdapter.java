@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
-import com.itextpdf.text.pdf.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
