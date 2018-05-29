@@ -236,6 +236,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         }
     }
 
+    public boolean areItemsForDeleteSelected(){
+        return mDeleteNames.size() > 0;
+    }
+
     private void deleteFile(String name, int position) {
         File fdelete = new File(name);
         if (fdelete.exists()) {
