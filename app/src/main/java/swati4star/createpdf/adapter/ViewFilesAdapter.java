@@ -278,7 +278,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .input(mContext.getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input == null)
+                        if (input == null || input.toString().trim().isEmpty())
                             Toast.makeText(mContext, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
                         else {
                             File oldfile = mFileList.get(position);
