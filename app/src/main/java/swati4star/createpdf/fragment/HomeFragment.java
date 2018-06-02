@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> mTempUris = new ArrayList<>();
     private String mPath;
     private String mFilename;
+    private boolean mOpenSelectImages = false;
     @BindView(R.id.addImages)
     MorphingButton addImages;
     @BindView(R.id.pdfCreate)
@@ -97,6 +98,7 @@ public class HomeFragment extends Fragment {
                             != PackageManager.PERMISSION_GRANTED) ||
                     (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED)) {
+                mOpenSelectImages = false; // We don't want next activity to open after getting permissions
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                 Manifest.permission.READ_EXTERNAL_STORAGE,
                                                 Manifest.permission.CAMERA},
@@ -115,6 +117,7 @@ public class HomeFragment extends Fragment {
             if (ContextCompat.checkSelfPermission(mActivity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
+                mOpenSelectImages = true; // We want next activity to open after getting permissions
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                 Manifest.permission.READ_EXTERNAL_STORAGE,
                                                 Manifest.permission.CAMERA},
@@ -229,7 +232,8 @@ public class HomeFragment extends Fragment {
         switch (requestCode) {
             case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    selectImages();
+                    if (mOpenSelectImages)
+                        selectImages();
                     Toast.makeText(mActivity, R.string.toast_permissions_given, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(mActivity, R.string.toast_insufficient_permissions, Toast.LENGTH_LONG).show();
