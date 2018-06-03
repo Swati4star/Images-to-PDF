@@ -48,6 +48,7 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.swipe)
     SwipeRefreshLayout mSwipeView;
     public static TextView emptyStatusTextView;
+    private int mCurrentSortingIndex = -1;
 
     @Override
     public void onAttach(Context context) {
@@ -162,10 +163,12 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
                             case DATE_INDEX:
                                 sortFilesByDateNewestToOldest(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
+                                mCurrentSortingIndex = DATE_INDEX;
                                 break;
                             case NAME_INDEX:
                                 sortByNameAlphabetical(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
+                                mCurrentSortingIndex = NAME_INDEX;
                                 break;
                             default:
                                 break;
@@ -262,6 +265,11 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
                 pdfFiles = getPdfsFromPdfFolder();
             }
             Log.v("done", "adding");
+            if (mCurrentSortingIndex == NAME_INDEX) {
+                sortByNameAlphabetical(pdfFiles);
+            } else if (mCurrentSortingIndex == DATE_INDEX) {
+                sortFilesByDateNewestToOldest(pdfFiles);
+            }
             mViewFilesAdapter.setData(pdfFiles);
             mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
         }
