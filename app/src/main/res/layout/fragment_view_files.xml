@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:gravity="center"
-        android:text="@string/toast_no_pdfs"
+        android:text="@string/snackbar_no_pdfs"
         android:textSize="17sp"
         android:visibility="gone" />
 

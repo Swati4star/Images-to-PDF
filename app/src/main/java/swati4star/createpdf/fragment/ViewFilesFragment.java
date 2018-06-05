@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -22,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,7 +110,9 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
                 if (mViewFilesAdapter.areItemsForDeleteSelected()) {
                     deleteFiles();
                 } else {
-                    Toast.makeText(mActivity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.snackbar_no_images,
+                            Snackbar.LENGTH_LONG).show();
                 }
                 break;
             default:
@@ -260,7 +263,9 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = getOrCreatePdfDirectory().listFiles();
             if (files == null)
-                Toast.makeText(mActivity, getResources().getString(R.string.toast_no_pdfs), Toast.LENGTH_LONG).show();
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_no_pdfs,
+                        Snackbar.LENGTH_LONG).show();
             else {
                 pdfFiles = getPdfsFromPdfFolder();
             }

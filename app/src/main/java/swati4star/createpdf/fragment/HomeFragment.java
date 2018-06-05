@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
@@ -133,7 +132,9 @@ public class HomeFragment extends Fragment {
     @OnClick(R.id.cropImages)
     void cropImages() {
         if (mTempUris.size() == 0) {
-            Toast.makeText(mActivity, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
             return;
         }
         next();
@@ -156,7 +157,9 @@ public class HomeFragment extends Fragment {
     void createPdf() {
         if (mImagesUri.size() == 0) {
             if (mTempUris.size() == 0) {
-                Toast.makeText(mActivity, R.string.toast_no_images, Toast.LENGTH_LONG).show();
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_no_images,
+                        Snackbar.LENGTH_LONG).show();
                 return;
             } else
                 mImagesUri = (ArrayList<String>) mTempUris.clone();
@@ -168,7 +171,9 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         if (input == null || input.toString().trim().equals("")) {
-                            Toast.makeText(mActivity, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                    R.string.snackbar_name_not_blank,
+                                    Snackbar.LENGTH_LONG).show();
                         } else {
                             mFilename = input.toString();
 
@@ -196,7 +201,9 @@ public class HomeFragment extends Fragment {
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(mActivity, R.string.toast_no_pdf_app, Toast.LENGTH_LONG).show();
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_pdf_app,
+                    Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -234,9 +241,13 @@ public class HomeFragment extends Fragment {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (mOpenSelectImages)
                         selectImages();
-                    Toast.makeText(mActivity, R.string.toast_permissions_given, Toast.LENGTH_LONG).show();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.snackbar_permissions_given,
+                            Snackbar.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mActivity, R.string.toast_insufficient_permissions, Toast.LENGTH_LONG).show();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.snackbar_insufficient_permissions,
+                            Snackbar.LENGTH_LONG).show();
                 }
             }
         }
@@ -261,7 +272,9 @@ public class HomeFragment extends Fragment {
             ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (Uri uri : imageUris)
                 mTempUris.add(uri.getPath());
-            Toast.makeText(mActivity, R.string.toast_images_added, Toast.LENGTH_LONG).show();
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_images_added,
+                    Snackbar.LENGTH_LONG).show();
             morphToSquare(mCreatePdf, integer());
             mCropImages.setVisibility(View.VISIBLE);
 
@@ -271,11 +284,15 @@ public class HomeFragment extends Fragment {
                 case Activity.RESULT_OK :
                     Uri resultUri = result.getUri();
                     mImagesUri.add(resultUri.getPath());
-                    Toast.makeText(mActivity, R.string.toast_imagecropped, Toast.LENGTH_LONG).show();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.snackbar_imagecropped,
+                            Snackbar.LENGTH_LONG).show();
                     break;
                 case CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE:
                     Exception error = result.getError();
-                    Toast.makeText(mActivity, R.string.toast_error_getCropped, Toast.LENGTH_LONG).show();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.snackbar_error_getCropped,
+                            Snackbar.LENGTH_LONG).show();
                     error.printStackTrace();
                 default:
                     mImagesUri.add(mTempUris.get(mImageCounter));
@@ -443,7 +460,9 @@ public class HomeFragment extends Fragment {
             dialog.dismiss();
 
             if (!success) {
-                Toast.makeText(mActivity, R.string.toast_folder_not_created, Toast.LENGTH_SHORT).show();
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_folder_not_created,
+                        Snackbar.LENGTH_LONG).show();
                 return;
             }
 

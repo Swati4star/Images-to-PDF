@@ -30,27 +30,27 @@
     <string name="feedback">Feedback</string>
 
 
-    <string name="toast_no_images">Ninguna imagen seleccionada</string>
-    <string name="toast_name_not_blank">El nombre no puede estar en blanco</string>
-    <string name="toast_permissions_given">Permisos concedidos!</string>
-    <string name="toast_insufficient_permissions">Permisos insuficientes!</string>
-    <string name="toast_images_added">Imágenes añadidas</string>
-    <string name="toast_file_renamed">Fichero renombrado.</string>
-    <string name="toast_file_not_renamed">El fichero no puede ser renombrado.</string>
-    <string name="toast_no_pdfs">Sin PDFs por ahora</string>
-    <string name="toast_file_deleted">Fichero borrado.</string>
-    <string name="toast_file_not_deleted">El fichero no puede ser borrado.</string>
-    <string name="toast_folder_not_created">Error on creating application folder.</string>
+    <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
+    <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
+    <string name="snackbar_permissions_given">Permisos concedidos!</string>
+    <string name="snackbar_insufficient_permissions">Permisos insuficientes!</string>
+    <string name="snackbar_images_added">Imágenes añadidas</string>
+    <string name="snackbar_file_renamed">Fichero renombrado.</string>
+    <string name="snackbar_file_not_renamed">El fichero no puede ser renombrado.</string>
+    <string name="snackbar_no_pdfs">Sin PDFs por ahora</string>
+    <string name="snackbar_file_deleted">Fichero borrado.</string>
+    <string name="snackbar_file_not_deleted">El fichero no puede ser borrado.</string>
+    <string name="snackbar_folder_not_created">Error on creating application folder.</string>
 
     <string name="creating_pdf">Creando PDF</string>
     <string name="enter_file_name">Escribe un nombre de fichero</string>
     <string name="example">Ejemplo : abc</string>
-    <string name="toast_no_pdf_app">No hay app para abrir ficheros PDF</string>
+    <string name="snackbar_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
     <string name="sort">Ordenar</string>
 
-    <string name="toast_error_getCropped">Error on getting cropped images</string>
-    <string name="toast_imagecropped">Images cropped</string>
+    <string name="snackbar_error_getCropped">Error on getting cropped images</string>
+    <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
@@ -58,10 +58,10 @@
     <string name="delete">borrar</string>
     <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
-    <string name="toast_no_email_clients">There are no email clients installed.</string>
+    <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="share">Share</string>
     <string name="rate_us_text">"Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .     It converts images to PDF so smmothly. :) "</string>
-    <string name="toast_no_share_app">No application to share.</string>
+    <string name="snackbar_no_share_app">No application to share.</string>
     <string name="extras">Extras</string>
     <string name="rate_us">Rate us</string>
     <string name="share_chooser">Select app to send message…</string>

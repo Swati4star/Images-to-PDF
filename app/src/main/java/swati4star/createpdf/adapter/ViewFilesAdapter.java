@@ -1,5 +1,6 @@
 package swati4star.createpdf.adapter;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +54,7 @@ import swati4star.createpdf.fragment.ViewFilesFragment;
 public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder> {
 
     private final Context mContext;
+    private final Activity mActivity;
     private ArrayList<File> mFileList;
     private String mFileName;
     private final ArrayList<Integer> mDeleteNames;
@@ -115,11 +118,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     /**
      * Returns adapter instance
      *
-     * @param context   the context calling this adapter
+     * @param activity the activity calling this adapter
      * @param feedItems array list containing path of files
      */
-    public ViewFilesAdapter(Context context, ArrayList<File> feedItems) {
-        this.mContext = context;
+    public ViewFilesAdapter(Activity activity, ArrayList<File> feedItems) {
+        this.mActivity = activity;
+        this.mContext = activity;
         this.mFileList = feedItems;
         mDeleteNames = new ArrayList<>();
     }
@@ -232,7 +236,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         try {
             mContext.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(mContext, mContext.getString(R.string.toast_no_pdf_app), Toast.LENGTH_LONG).show();
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_pdf_app,
+                    Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -244,11 +250,15 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         File fdelete = new File(name);
         if (fdelete.exists()) {
             if (fdelete.delete()) {
-                Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_file_deleted,
+                        Snackbar.LENGTH_LONG).show();
                 mFileList.remove(position);
                 notifyDataSetChanged();
             } else {
-                Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_file_not_deleted,
+                        Snackbar.LENGTH_LONG).show();
             }
         }
         if (mFileList.size() == 0)
@@ -260,8 +270,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         for (int position : mDeleteNames) {
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
-            if (fdelete.exists() && !fdelete.delete())
-                    Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
+            if (fdelete.exists() && !fdelete.delete()) {
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_file_not_deleted,
+                        Snackbar.LENGTH_LONG).show();
+            }
         }
 
         ArrayList<File> newList = new ArrayList<>();
@@ -282,9 +295,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .input(mContext.getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input == null || input.toString().trim().isEmpty())
-                            Toast.makeText(mContext, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
-                        else {
+                        if (input == null || input.toString().trim().isEmpty()) {
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                    R.string.snackbar_name_not_blank,
+                                    Snackbar.LENGTH_LONG).show();
+                        } else {
                             File oldfile = mFileList.get(position);
                             String oldPath =   mFileList.get(position).getPath();
                             int index = oldPath.lastIndexOf('/');
@@ -293,11 +308,16 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
                             File newfile = new File(newfilename);
                             if (oldfile.renameTo(newfile)) {
-                                Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                        R.string.snackbar_file_renamed,
+                                        Snackbar.LENGTH_LONG).show();
                                 mFileList.set(position, newfile);
                                 notifyDataSetChanged();
-                            } else
-                                Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
+                            } else {
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                        R.string.snackbar_file_not_renamed,
+                                        Snackbar.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }).show();
