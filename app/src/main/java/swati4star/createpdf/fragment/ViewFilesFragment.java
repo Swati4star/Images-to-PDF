@@ -42,6 +42,8 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
 
     private static final int NAME_INDEX = 0;
     private static final int DATE_INDEX = 1;
+    private static final int SIZE_INCREASING_ORDER_INDEX = 2;
+    private static final int SIZE_DECREASING_ORDER_INDEX = 3;
     private Activity mActivity;
     ViewFilesAdapter mViewFilesAdapter;
     @BindView(R.id.filesRecyclerView)
@@ -173,6 +175,16 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = NAME_INDEX;
                                 break;
+                            case SIZE_INCREASING_ORDER_INDEX:
+                                sortFilesBySizeIncreasingOrder(pdfsFromFolder);
+                                mViewFilesAdapter.setData(pdfsFromFolder);
+                                mCurrentSortingIndex = SIZE_INCREASING_ORDER_INDEX;
+                                break;
+                            case SIZE_DECREASING_ORDER_INDEX:
+                                sortFilesBySizeDecreasingOrder(pdfsFromFolder);
+                                mViewFilesAdapter.setData(pdfsFromFolder);
+                                mCurrentSortingIndex = SIZE_DECREASING_ORDER_INDEX;
+                                break;
                             default:
                                 break;
                         }
@@ -190,6 +202,24 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public int compare(File file, File file2) {
                 return Long.compare(file2.lastModified(), file.lastModified());
+            }
+        });
+    }
+
+    private void sortFilesBySizeIncreasingOrder(ArrayList<File> pdfsFromFolder) {
+        Collections.sort(pdfsFromFolder, new Comparator<File>() {
+            @Override
+            public int compare(File file1, File file2) {
+                return Long.compare(file1.length(), file2.length());
+            }
+        });
+    }
+
+    private void sortFilesBySizeDecreasingOrder(ArrayList<File> pdfsFromFolder) {
+        Collections.sort(pdfsFromFolder, new Comparator<File>() {
+            @Override
+            public int compare(File file1, File file2) {
+                return Long.compare(file2.length(), file1.length());
             }
         });
     }
@@ -274,6 +304,10 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
                 sortByNameAlphabetical(pdfFiles);
             } else if (mCurrentSortingIndex == DATE_INDEX) {
                 sortFilesByDateNewestToOldest(pdfFiles);
+            } else if (mCurrentSortingIndex == SIZE_INCREASING_ORDER_INDEX) {
+                sortFilesBySizeIncreasingOrder(pdfFiles);
+            } else if (mCurrentSortingIndex == SIZE_DECREASING_ORDER_INDEX) {
+                sortFilesBySizeDecreasingOrder(pdfFiles);
             }
             mViewFilesAdapter.setData(pdfFiles);
             mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);

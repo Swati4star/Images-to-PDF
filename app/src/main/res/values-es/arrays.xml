@@ -3,5 +3,7 @@
     <string-array name="sort_options">
         <item>Nombre</item>
         <item>Fecha</item>
+        <item>Tamaño  ▲</item>
+        <item>Tamaño  ▼</item>
     </string-array>
 </resources>
