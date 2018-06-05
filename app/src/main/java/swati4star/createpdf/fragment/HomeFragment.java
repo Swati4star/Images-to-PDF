@@ -474,7 +474,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             ArrayList<File> list = new ArrayList<>(singletonList(new File(mPath)));
-                            ViewFilesAdapter filesAdapter = new ViewFilesAdapter(mActivity, list);
+                            ViewFilesAdapter filesAdapter = new ViewFilesAdapter(mActivity, list, null);
                             filesAdapter.openFile(mPath);
                         }
                     }).show();

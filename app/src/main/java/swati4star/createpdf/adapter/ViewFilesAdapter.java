@@ -55,6 +55,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     private final Context mContext;
     private final Activity mActivity;
+    private final EmptyStateChangeListener mEmptyStateChangeListener;
     private ArrayList<File> mFileList;
     private String mFileName;
     private final ArrayList<Integer> mDeleteNames;
@@ -120,10 +121,14 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      *
      * @param activity the activity calling this adapter
      * @param feedItems array list containing path of files
+     * @param emptyStateChangeListener interface for empty state change
      */
-    public ViewFilesAdapter(Activity activity, ArrayList<File> feedItems) {
+    public ViewFilesAdapter(Activity activity,
+                            ArrayList<File> feedItems,
+                            EmptyStateChangeListener emptyStateChangeListener) {
         this.mActivity = activity;
         this.mContext = activity;
+        this.mEmptyStateChangeListener = emptyStateChangeListener;
         this.mFileList = feedItems;
         mDeleteNames = new ArrayList<>();
     }
@@ -261,8 +266,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         Snackbar.LENGTH_LONG).show();
             }
         }
-        if (mFileList.size() == 0)
-            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
+        if (mFileList.size() == 0) {
+            mEmptyStateChangeListener.setEmptyStateVisible();
+        }
     }
 
     // iterate through filelist and remove all elements
@@ -283,8 +289,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 newList.add(mFileList.get(position));
 
         mDeleteNames.clear();
-        if (newList.size() == 0)
-            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
+        if (newList.size() == 0) {
+            mEmptyStateChangeListener.setEmptyStateVisible();
+        }
         setData(newList);
     }
 
@@ -373,4 +380,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         }
     }
 
+    public interface EmptyStateChangeListener {
+        void setEmptyStateVisible();
+        void setEmptyStateGone();
+    }
 }

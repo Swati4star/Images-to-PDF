@@ -38,7 +38,8 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
-public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ViewFilesFragment extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener, ViewFilesAdapter.EmptyStateChangeListener {
 
     private static final int NAME_INDEX = 0;
     private static final int DATE_INDEX = 1;
@@ -50,7 +51,8 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
     RecyclerView mViewFilesListRecyclerView;
     @BindView(R.id.swipe)
     SwipeRefreshLayout mSwipeView;
-    public static TextView emptyStatusTextView;
+    @BindView(R.id.emptyStatusTextView)
+    public TextView emptyStatusTextView;
     private int mCurrentSortingIndex = -1;
 
     @Override
@@ -72,8 +74,6 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
         ButterKnife.bind(this, root);
 
-        emptyStatusTextView = root.findViewById(R.id.emptyStatusTextView);
-
         //Create/Open folder
         File folder = getOrCreatePdfDirectory();
 
@@ -83,7 +83,7 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
         if (files.length == 0) {
             emptyStatusTextView.setVisibility(View.VISIBLE);
         }
-        mViewFilesAdapter = new ViewFilesAdapter(mActivity, pdfFiles);
+        mViewFilesAdapter = new ViewFilesAdapter(mActivity, pdfFiles, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
         mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
         mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
@@ -246,6 +246,16 @@ public class ViewFilesFragment extends Fragment implements SwipeRefreshLayout.On
             }
         }
         return pdfFiles;
+    }
+
+    @Override
+    public void setEmptyStateVisible() {
+        emptyStatusTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setEmptyStateGone() {
+        emptyStatusTextView.setVisibility(View.GONE);
     }
 
     /**
