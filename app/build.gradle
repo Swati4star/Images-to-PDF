@@ -27,7 +27,7 @@ android {
 }
 repositories {
     mavenCentral()
-    maven { url 'http://repo.commonsware.com.s3.amazonaws.com' }
+    maven { url 'https://s3.amazonaws.com/repo.commonsware.com' }
     maven { url 'https://jitpack.io' }
 }
 
