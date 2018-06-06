@@ -46,7 +46,7 @@ public class ViewFilesFragment extends Fragment
     private static final int SIZE_INCREASING_ORDER_INDEX = 2;
     private static final int SIZE_DECREASING_ORDER_INDEX = 3;
     private Activity mActivity;
-    ViewFilesAdapter mViewFilesAdapter;
+    private ViewFilesAdapter mViewFilesAdapter;
     @BindView(R.id.filesRecyclerView)
     RecyclerView mViewFilesListRecyclerView;
     @BindView(R.id.swipe)
@@ -310,14 +310,19 @@ public class ViewFilesFragment extends Fragment
                 pdfFiles = getPdfsFromPdfFolder();
             }
             Log.v("done", "adding");
-            if (mCurrentSortingIndex == NAME_INDEX) {
-                sortByNameAlphabetical(pdfFiles);
-            } else if (mCurrentSortingIndex == DATE_INDEX) {
-                sortFilesByDateNewestToOldest(pdfFiles);
-            } else if (mCurrentSortingIndex == SIZE_INCREASING_ORDER_INDEX) {
-                sortFilesBySizeIncreasingOrder(pdfFiles);
-            } else if (mCurrentSortingIndex == SIZE_DECREASING_ORDER_INDEX) {
-                sortFilesBySizeDecreasingOrder(pdfFiles);
+            switch (mCurrentSortingIndex) {
+                case NAME_INDEX:
+                    sortByNameAlphabetical(pdfFiles);
+                    break;
+                case DATE_INDEX:
+                    sortFilesByDateNewestToOldest(pdfFiles);
+                    break;
+                case SIZE_INCREASING_ORDER_INDEX:
+                    sortFilesBySizeIncreasingOrder(pdfFiles);
+                    break;
+                case SIZE_DECREASING_ORDER_INDEX:
+                    sortFilesBySizeDecreasingOrder(pdfFiles);
+                    break;
             }
             mViewFilesAdapter.setData(pdfFiles);
             mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
