@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
     android:background="@color/mb_white"
     android:orientation="vertical"
     tools:context=".fragment.HomeFragment">
@@ -17,7 +16,6 @@
             android:id="@+id/filesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
@@ -29,5 +27,4 @@
         android:text="@string/snackbar_no_pdfs"
         android:textSize="17sp"
         android:visibility="gone" />
-
 </FrameLayout>

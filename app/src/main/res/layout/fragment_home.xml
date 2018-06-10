@@ -1,95 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
-    android:background="@color/mb_white"
+    android:background="#eceff1"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".fragment.HomeFragment"
     tools:ignore="Overdraw">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.dd.morphingbutton.MorphingButton
-            android:id="@+id/addImages"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/select_images_text"
-            android:textColor="@color/mb_white" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
 
-        <com.dd.morphingbutton.MorphingButton
-            android:id="@+id/pdfOpen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/open_pdf_text"
-            android:textColor="@color/mb_white"
-            android:visibility="gone" />
+                <com.dd.morphingbutton.MorphingButton
+                    android:id="@+id/addImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/select_images_text"
+                    android:textColor="@color/mb_white" />
 
-        <com.dd.morphingbutton.MorphingButton
-            android:id="@+id/pdfCreate"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/create_pdf_text"
-            android:textColor="@color/mb_white" />
+                <com.dd.morphingbutton.MorphingButton
+                    android:id="@+id/pdfOpen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/open_pdf_text"
+                    android:textColor="@color/mb_white"
+                    android:visibility="gone" />
 
-    </LinearLayout>
+                <com.dd.morphingbutton.MorphingButton
+                    android:id="@+id/pdfCreate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/create_pdf_text"
+                    android:textColor="@color/mb_white" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/home_imageoptions_border"
-        android:elevation="1dp"
-        android:gravity="bottom|center"
-        android:orientation="vertical"
-        android:padding="30dp"
-        tools:targetApi="lollipop">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:gravity="bottom|center"
+                android:orientation="vertical"
+                tools:targetApi="lollipop">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:text="@string/image_options_text"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGray" />
 
-        <com.dd.morphingbutton.MorphingButton
-            android:id="@+id/cropImages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/crop_images_text"
-            android:textColor="@color/mb_white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:text="@string/more_options_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorGray"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-
-    </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/enhancement_options_recycle_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

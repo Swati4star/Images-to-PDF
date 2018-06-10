@@ -8,7 +8,8 @@
 
     <string name="file_name_text">File Name</string>
     <string name="select_images_text">Select Images</string>
-    <string name="crop_images_text">Crop images</string>
+    <string name="password_protect_pdf_text">Password Protect PDF</string>
+    <string name="edit_images_text">Edit Images</string>
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
     <string name="mb_button">Create PDF</string>
@@ -69,7 +70,7 @@
     <string name="cropImage_activityTitle">Crop image No.</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
-    <string name="image_options_text">Image Enhancement Options</string>
+    <string name="more_options_text">More Enhancement Options</string>
     <string name="delete">delete</string>
 
     <!-- Share strings -->

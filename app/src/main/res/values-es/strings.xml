@@ -9,7 +9,8 @@
 
     <string name="file_name_text">Nombre del fichero</string>
     <string name="select_images_text">Seleccionar Imágenes</string>
-    <string name="crop_images_text">Crop images</string>
+    <string name="password_protect_pdf_text">Password Protect PDF</string>
+    <string name="edit_images_text">Edit Images</string>
     <string name="open_pdf_text">Abrir PDF</string>
     <string name="create_pdf_text">Crear PDF</string>
     <string name="mb_button">Crear PDF</string>
@@ -54,7 +55,7 @@
     <string name="cropImage_activityTitle">Crop image No.</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
-    <string name="image_options_text">Image Enhancement Options</string>
+    <string name="more_options_text">More Enhancement Options</string>
     <string name="delete">borrar</string>
     <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>

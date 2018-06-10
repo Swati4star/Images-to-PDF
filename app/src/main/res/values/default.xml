@@ -9,7 +9,9 @@
 
     <dimen name="mb_corner_radius_2">2dp</dimen>
     <dimen name="mb_width_200">200dp</dimen>
+    <dimen name="mb_width_328">328dp</dimen>
     <dimen name="mb_height_56">56dp</dimen>
+    <dimen name="mb_height_48">48dp</dimen>
 
     <integer name="mb_animation">500</integer>
 </resources>

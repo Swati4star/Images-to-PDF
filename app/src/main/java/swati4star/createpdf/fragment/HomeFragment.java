@@ -20,6 +20,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -45,7 +48,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
 import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
+import swati4star.createpdf.util.EnhancementOptionsEntity;
 
 import static java.util.Collections.singletonList;
 
@@ -53,7 +58,7 @@ import static java.util.Collections.singletonList;
 /**
  * HomeFragment fragment to start with creating PDF
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
@@ -70,9 +75,10 @@ public class HomeFragment extends Fragment {
     MorphingButton mCreatePdf;
     @BindView(R.id.pdfOpen)
     MorphingButton mOpenPdf;
-    @BindView(R.id.cropImages)
-    MorphingButton mCropImages;
+    @BindView(R.id.enhancement_options_recycle_view)
+    RecyclerView mEnhancementOptionsRecycleView;
     private int mMorphCounter1 = 1;
+    private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -105,7 +111,16 @@ public class HomeFragment extends Fragment {
             }
         }
 
+        showEnhancementOptions();
+
         return root;
+    }
+
+    private void showEnhancementOptions() {
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, getEnhancementOptions());
+        mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }
 
     // Adding Images to PDF
@@ -129,7 +144,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.cropImages)
     void cropImages() {
         if (mTempUris.size() == 0) {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
@@ -276,8 +290,7 @@ public class HomeFragment extends Fragment {
                     R.string.snackbar_images_added,
                     Snackbar.LENGTH_LONG).show();
             morphToSquare(mCreatePdf, integer());
-            mCropImages.setVisibility(View.VISIBLE);
-
+            mOpenPdf.setVisibility(View.GONE);
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             switch (resultCode) {
@@ -313,8 +326,8 @@ public class HomeFragment extends Fragment {
         MorphingButton.Params square = MorphingButton.Params.create()
                 .duration(duration)
                 .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
-                .width(dimen(R.dimen.mb_width_200))
-                .height(dimen(R.dimen.mb_height_56))
+                .width(dimen(R.dimen.mb_width_328))
+                .height(dimen(R.dimen.mb_height_48))
                 .color(color(R.color.mb_blue))
                 .colorPressed(color(R.color.mb_blue_dark))
                 .text(getString(R.string.mb_button));
@@ -348,6 +361,20 @@ public class HomeFragment extends Fragment {
 
     private int color(@ColorRes int resId) {
         return getResources().getColor(resId);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        switch (position) {
+            case 0:
+                // TODO - implement Protect PDF option
+                break;
+            case 1:
+                cropImages();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -488,4 +515,17 @@ public class HomeFragment extends Fragment {
         mImageCounter = 0;
     }
 
+    public List<EnhancementOptionsEntity> getEnhancementOptions() {
+        ArrayList<EnhancementOptionsEntity> enhancementOptionsEntityArrayList = new ArrayList<>();
+
+        enhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24),
+                        getResources().getString(R.string.password_protect_pdf_text)));
+
+        enhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_crop_rotate_24),
+                        getResources().getString(R.string.edit_images_text)));
+
+        return enhancementOptionsEntityArrayList;
+    }
 }
