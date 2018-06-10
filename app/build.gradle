@@ -9,8 +9,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 6
-        versionName "2.3"
+        versionCode 8
+        versionName "2.5"
     }
     buildTypes {
         release {
@@ -27,7 +27,7 @@ android {
 }
 repositories {
     mavenCentral()
-    maven { url 'http://repo.commonsware.com.s3.amazonaws.com' }
+    maven { url 'https://s3.amazonaws.com/repo.commonsware.com' }
     maven { url 'https://jitpack.io' }
 }
 

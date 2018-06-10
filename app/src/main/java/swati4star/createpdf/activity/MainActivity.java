@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +16,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.HomeFragment;
@@ -100,7 +102,9 @@ public class MainActivity extends AppCompatActivity
         try {
             startActivity(Intent.createChooser(intent, getString(R.string.feedback_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(MainActivity.this, getString(R.string.toast_no_email_clients), Toast.LENGTH_SHORT).show();
+            Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content),
+                    R.string.snackbar_no_email_clients,
+                    Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -111,7 +115,9 @@ public class MainActivity extends AppCompatActivity
         try {
             startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(MainActivity.this, getString(R.string.toast_no_share_app), Toast.LENGTH_SHORT).show();
+            Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content),
+                    R.string.snackbar_no_share_app,
+                    Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -134,15 +140,14 @@ public class MainActivity extends AppCompatActivity
                                             Uri.parse("market://details?id=" +
                                                     getApplicationContext().getPackageName())));
                         } catch (Exception e) {
-                            Toast.makeText(MainActivity.this,
-                                    getString(R.string.playstore_not_installed),
-                                    Toast.LENGTH_SHORT).show();
+                            Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content),
+                                    R.string.playstore_not_installed,
+                                    Snackbar.LENGTH_LONG).show();
                         }
                         dialogInterface.dismiss();
 
                     }
                 });
         builder.create().show();
-
     }
 }
