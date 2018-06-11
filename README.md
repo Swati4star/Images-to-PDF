@@ -9,7 +9,6 @@
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
-[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/swati4star.createpdf) 
 
 Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
 Here is an easy to use Android app to convert images to PDF file!
