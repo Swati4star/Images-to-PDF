@@ -94,11 +94,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getFeedback() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL  , new String[]{"swari4star@gmail.com"});
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"swati4star@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feedback_subject));
-        intent.putExtra(Intent.EXTRA_TEXT   , getResources().getString(R.string.feedback_text));
+        intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.feedback_text));
         try {
             startActivity(Intent.createChooser(intent, getString(R.string.feedback_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity
                     Snackbar.LENGTH_LONG).show();
         }
     }
+
 
     private void shareApplication() {
         Intent intent = new Intent(Intent.ACTION_SEND);
