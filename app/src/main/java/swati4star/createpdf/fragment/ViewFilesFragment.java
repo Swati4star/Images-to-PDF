@@ -302,7 +302,7 @@ public class ViewFilesFragment extends Fragment
         private void populateListView() {
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = getOrCreatePdfDirectory().listFiles();
-            if (files == null)
+            if (files.length == 0)
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
                         Snackbar.LENGTH_LONG).show();
