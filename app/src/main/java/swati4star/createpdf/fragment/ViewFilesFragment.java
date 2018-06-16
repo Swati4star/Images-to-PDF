@@ -26,6 +26,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -302,10 +304,12 @@ public class ViewFilesFragment extends Fragment
         private void populateListView() {
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = getOrCreatePdfDirectory().listFiles();
-            if (files.length == 0)
+            if (files.length == 0){
+                setEmptyStateVisible();
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
                         Snackbar.LENGTH_LONG).show();
+            }
             else {
                 pdfFiles = getPdfsFromPdfFolder();
             }
