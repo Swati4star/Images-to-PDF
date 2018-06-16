@@ -303,7 +303,7 @@ public class ViewFilesFragment extends Fragment
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = getOrCreatePdfDirectory().listFiles();
             if (files.length == 0) {
-                setEmptyStateVisible();
+                setEmptyStateVisible(); //will make sure that TextView will appear
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
                         Snackbar.LENGTH_LONG).show();
