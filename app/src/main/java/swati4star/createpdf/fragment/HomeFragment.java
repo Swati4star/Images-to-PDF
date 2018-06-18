@@ -22,11 +22,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.ImagePickerActivity;
@@ -51,6 +53,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
+import swati4star.createpdf.util.StringUtils;
 
 import static java.util.Collections.singletonList;
 
@@ -68,6 +71,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private ArrayList<String> mTempUris = new ArrayList<>();
     private String mPath;
     private String mFilename;
+    private String mPassword;
     private boolean mOpenSelectImages = false;
     @BindView(R.id.addImages)
     MorphingButton addImages;
@@ -79,6 +83,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     RecyclerView mEnhancementOptionsRecycleView;
     private int mMorphCounter1 = 1;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
+    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
@@ -184,7 +189,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input == null || input.toString().trim().equals("")) {
+                        if (StringUtils.isEmpty(input)) {
                             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
@@ -363,20 +368,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         return getResources().getColor(resId);
     }
 
-    @Override
-    public void onItemClick(int position) {
-        switch (position) {
-            case 0:
-                // TODO - implement Protect PDF option
-                break;
-            case 1:
-                cropImages();
-                break;
-            default:
-                break;
-        }
-    }
-
     /**
      * An async task that converts selected images to Pdf
      */
@@ -427,6 +418,15 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(mPath));
 
                 Log.v("Stage 3", "Pdf writer");
+
+                if (StringUtils.isNotEmpty(mPassword)) {
+                    writer.setEncryption(mPassword.getBytes(),
+                            getString(R.string.app_name).getBytes(),
+                            PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
+                            PdfWriter.ENCRYPTION_AES_128);
+
+                    Log.v("Stage 3.1", "Set Encryption");
+                }
 
                 document.open();
 
@@ -513,19 +513,87 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mImagesUri.clear();
         mTempUris.clear();
         mImageCounter = 0;
+        mPassword = null;
     }
 
     public List<EnhancementOptionsEntity> getEnhancementOptions() {
-        ArrayList<EnhancementOptionsEntity> enhancementOptionsEntityArrayList = new ArrayList<>();
+        mEnhancementOptionsEntityArrayList.clear();
 
-        enhancementOptionsEntityArrayList.add(
+        mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24),
                         getResources().getString(R.string.password_protect_pdf_text)));
 
-        enhancementOptionsEntityArrayList.add(
+        mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_crop_rotate_24),
                         getResources().getString(R.string.edit_images_text)));
 
-        return enhancementOptionsEntityArrayList;
+        return mEnhancementOptionsEntityArrayList;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        switch (position) {
+            case 0:
+                passwordProtectPDF();
+                break;
+            case 1:
+                cropImages();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void passwordProtectPDF() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
+                .title(R.string.set_password)
+                .content(R.string.enter_password)
+                .input(getString(R.string.example_password), mPassword, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        if (StringUtils.isEmpty(input)) {
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                    R.string.snackbar_password_cannot_be_blank,
+                                    Snackbar.LENGTH_LONG).show();
+                        } else {
+                            mPassword = input.toString();
+                            onPasswordAdded();
+                        }
+                    }
+                })
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel);
+
+        if (StringUtils.isNotEmpty(mPassword)) {
+            builder.neutralText(R.string.remove).onNeutral(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    mPassword = null;
+                    onPasswordRemoved();
+                }
+            });
+        }
+
+        builder.show();
+    }
+
+    private void onPasswordAdded() {
+        mEnhancementOptionsEntityArrayList.get(0)
+                .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
+    private void onPasswordRemoved() {
+        mEnhancementOptionsEntityArrayList.get(0)
+                .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 }

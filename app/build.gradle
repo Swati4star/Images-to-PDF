@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.5.1'
     implementation 'id.zelory:compressor:2.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.madgag.spongycastle:core:1.58.0.0'
 }

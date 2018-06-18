@@ -65,6 +65,12 @@
     <string name="open_file">Open File</string>
     <string name="sort">Sort</string>
 
+    <string name="set_password">Set Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="example_password">Example: pass@123</string>
+    <string name="snackbar_password_cannot_be_blank">Password cannot be blank</string>
+    <string name="remove">Remove</string>
+
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>

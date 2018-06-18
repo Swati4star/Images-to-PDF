@@ -50,6 +50,12 @@
     <string name="open_file">Abrir Firchero</string>
     <string name="sort">Ordenar</string>
 
+    <string name="set_password">Configurar la clave</string>
+    <string name="enter_password">Introducir la contraseña</string>
+    <string name="example_password">Ejemplo: pass@123</string>
+    <string name="snackbar_password_cannot_be_blank">La contraseña no puede estar en blanco</string>
+    <string name="remove">Retirar</string>
+
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>

@@ -50,6 +50,12 @@
     <string name="open_file">Open File</string>
     <string name="sort">Sort</string>
 
+    <string name="set_password">パスワードを設定してください</string>
+    <string name="enter_password">パスワードを入力する</string>
+    <string name="example_password">例: pass@123</string>
+    <string name="snackbar_password_cannot_be_blank">パスワードは空白にできません</string>
+    <string name="remove">削除する</string>
+
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>

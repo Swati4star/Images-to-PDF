@@ -49,6 +49,12 @@
     <string name="open_file">Ouvrir Fichier</string>
     <string name="sort">Trier</string>
 
+    <string name="set_password">Définir le mot</string>
+    <string name="enter_password">Entrer le mot de passe</string>
+    <string name="example_password">Exemple: pass@123</string>
+    <string name="snackbar_password_cannot_be_blank">Le mot de passe ne peut pas être vide</string>
+    <string name="remove">Retirer</string>
+
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>
