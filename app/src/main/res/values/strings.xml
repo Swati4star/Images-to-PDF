@@ -1,14 +1,15 @@
 <resources>
-    <string name="app_name">PDF Creator</string>
+    <string name="app_name">PDF Converter</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="title">PDF Actions</string>
 
     <string name="file_name_text">File Name</string>
     <string name="select_images_text">Select Images</string>
+    <string name="password_protect_pdf_text">Password Protect PDF</string>
+    <string name="edit_images_text">Edit Images</string>
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
     <string name="mb_button">Create PDF</string>
@@ -36,24 +37,66 @@
     <string name="please_wait">Please Wait</string>
     <string name="populating_list">Fetching files. This may take a while</string>
 
+    <!-- Navigation drawer strings -->
     <string name="main">Main</string>
     <string name="viewFiles">View Files</string>
+    <string name="extras">Extras</string>
+    <string name="feedback">Feedback</string>
+    <string name="share">Share</string>
+    <string name="rate_us">Rate us</string>
 
-    <string name="toast_no_images">No Images selected</string>
-    <string name="toast_name_not_blank">Name cannot be blank</string>
-    <string name="toast_permissions_given">Permissions Given!</string>
-    <string name="toast_insufficient_permissions">Insufficient Permissions!</string>
-    <string name="toast_images_added">Images added</string>
-    <string name="toast_file_renamed">File renamed.</string>
-    <string name="toast_file_not_renamed">File can\'t be renamed.</string>
-    <string name="toast_no_pdfs">No PDFs right now</string>
-    <string name="toast_file_deleted">File deleted.</string>
-    <string name="toast_file_not_deleted">File can\'t be deleted.</string>
+    <!--Snackbar strings -->
+    <string name="snackbar_no_images">No Images selected</string>
+    <string name="snackbar_name_not_blank">Name cannot be blank</string>
+    <string name="snackbar_permissions_given">Permissions Given!</string>
+    <string name="snackbar_insufficient_permissions">Insufficient Permissions!</string>
+    <string name="snackbar_images_added">Images added</string>
+    <string name="snackbar_file_renamed">File renamed.</string>
+    <string name="snackbar_file_not_renamed">File can\'t be renamed.</string>
+    <string name="snackbar_no_pdfs">No PDFs right now</string>
+    <string name="snackbar_file_deleted">File deleted.</string>
+    <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
+    <string name="snackbar_folder_not_created">Error on creating application folder.</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>
     <string name="example">Example : abc</string>
-    <string name="toast_no_pdf_app">No app to read PDF File</string>
+    <string name="snackbar_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
-    <string name="done">done</string>
+    <string name="sort">Sort</string>
+
+    <string name="set_password">Set Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="example_password">Example: pass@123</string>
+    <string name="snackbar_password_cannot_be_blank">Password cannot be blank</string>
+    <string name="remove">Remove</string>
+
+    <string name="snackbar_error_getCropped">Error on getting cropped images</string>
+    <string name="snackbar_imagecropped">Images cropped</string>
+    <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snackbar_viewAction">View</string>
+    <string name="more_options_text">More Enhancement Options</string>
+    <string name="delete">delete</string>
+
+    <!-- Share strings -->
+    <string name="share_chooser">Select app to send message…</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_us_text">Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .It converts images to PDF so smoothly. :)</string>
+    <string name="snackbar_no_share_app">No application to share.</string>
+    <string name="playstore_not_installed">Play services not installed!</string>
+    <string name="rate_positive">Rate now</string>
+    <string name="rate_negative">No, thanks</string>
+    <string name="rate_title">Rate us!</string>
+    <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
+
+
+    <!-- Feedback Strings -->
+    <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
+    <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
+    <string name="snackbar_no_email_clients">There are no email clients installed.</string>
+    <string name="feedback_chooser">"Send mail…"</string>
+
+
 </resources>

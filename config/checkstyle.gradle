@@ -4,7 +4,7 @@ dependencies {
     checkstyle 'com.puppycrawl.tools:checkstyle:7.6.1'
 }
 
-def qualityConfigDir = "$project.rootDir/config/";
+def qualityConfigDir = "$project.rootDir/config/"
 def reportsDir = "$project.buildDir/reports"
 
 check.dependsOn 'checkstyle'
@@ -17,7 +17,7 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     reports {
         xml.enabled = true
         xml {
-            destination "$reportsDir/checkstyle/checkstyle.xml"
+            destination file("$reportsDir/checkstyle/checkstyle.xml")
         }
     }
 
