@@ -28,14 +28,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 public class ViewFilesFragment extends Fragment
@@ -54,6 +53,8 @@ public class ViewFilesFragment extends Fragment
     @BindView(R.id.emptyStatusTextView)
     public TextView emptyStatusTextView;
     private int mCurrentSortingIndex = -1;
+    private FileUtils mFileUtils;
+
 
     @Override
     public void onAttach(Context context) {
@@ -66,6 +67,7 @@ public class ViewFilesFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mFileUtils = new FileUtils(mActivity);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class ViewFilesFragment extends Fragment
         ButterKnife.bind(this, root);
 
         //Create/Open folder
-        File folder = getOrCreatePdfDirectory();
+        File folder = mFileUtils.getOrCreatePdfDirectory();
 
         // Initialize variables
         final ArrayList<File> pdfFiles = new ArrayList<>();
@@ -159,29 +161,30 @@ public class ViewFilesFragment extends Fragment
     }
 
     private void displaySortDialog() {
+        final File folder = mFileUtils.getOrCreatePdfDirectory();
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle("Sort by")
                 .setItems(R.array.sort_options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        ArrayList<File> pdfsFromFolder = getPdfsFromPdfFolder();
+                        ArrayList<File> pdfsFromFolder = mFileUtils.getPdfsFromPdfFolder(folder.listFiles());
                         switch (which) {
                             case DATE_INDEX:
-                                sortFilesByDateNewestToOldest(pdfsFromFolder);
+                                mFileUtils.sortFilesByDateNewestToOldest(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = DATE_INDEX;
                                 break;
                             case NAME_INDEX:
-                                sortByNameAlphabetical(pdfsFromFolder);
+                                mFileUtils.sortByNameAlphabetical(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = NAME_INDEX;
                                 break;
                             case SIZE_INCREASING_ORDER_INDEX:
-                                sortFilesBySizeIncreasingOrder(pdfsFromFolder);
+                                mFileUtils.sortFilesBySizeIncreasingOrder(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = SIZE_INCREASING_ORDER_INDEX;
                                 break;
                             case SIZE_DECREASING_ORDER_INDEX:
-                                sortFilesBySizeDecreasingOrder(pdfsFromFolder);
+                                mFileUtils.sortFilesBySizeDecreasingOrder(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = SIZE_DECREASING_ORDER_INDEX;
                                 break;
@@ -191,61 +194,6 @@ public class ViewFilesFragment extends Fragment
                     }
                 });
         builder.create().show();
-    }
-
-    private void sortByNameAlphabetical(ArrayList<File> pdfsFromFolder) {
-        Collections.sort(pdfsFromFolder);
-    }
-
-    private void sortFilesByDateNewestToOldest(ArrayList<File> pdfsFromFolder) {
-        Collections.sort(pdfsFromFolder, new Comparator<File>() {
-            @Override
-            public int compare(File file, File file2) {
-                return Long.compare(file2.lastModified(), file.lastModified());
-            }
-        });
-    }
-
-    private void sortFilesBySizeIncreasingOrder(ArrayList<File> pdfsFromFolder) {
-        Collections.sort(pdfsFromFolder, new Comparator<File>() {
-            @Override
-            public int compare(File file1, File file2) {
-                return Long.compare(file1.length(), file2.length());
-            }
-        });
-    }
-
-    private void sortFilesBySizeDecreasingOrder(ArrayList<File> pdfsFromFolder) {
-        Collections.sort(pdfsFromFolder, new Comparator<File>() {
-            @Override
-            public int compare(File file1, File file2) {
-                return Long.compare(file2.length(), file1.length());
-            }
-        });
-    }
-
-    private ArrayList<File> getPdfsFromPdfFolder() {
-        return getPdfsFromFolder(getOrCreatePdfDirectory().listFiles());
-    }
-
-    private File getOrCreatePdfDirectory() {
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + mActivity.getResources().getString(R.string.pdf_dir));
-        if (!folder.exists()) {
-            boolean isCreated = folder.mkdir();
-        }
-        return folder;
-    }
-
-    private ArrayList<File> getPdfsFromFolder(File[] files) {
-        final ArrayList<File> pdfFiles = new ArrayList<>();
-        for (File file : files) {
-            if (!file.isDirectory() && file.getName().endsWith(getString(R.string.pdf_ext))) {
-                pdfFiles.add(file);
-                Log.v("adding", file.getName());
-            }
-        }
-        return pdfFiles;
     }
 
     @Override
@@ -301,28 +249,28 @@ public class ViewFilesFragment extends Fragment
          */
         private void populateListView() {
             ArrayList<File> pdfFiles = new ArrayList<>();
-            final File[] files = getOrCreatePdfDirectory().listFiles();
+            final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
             if (files.length == 0 || files == null) {
                 setEmptyStateVisible();
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
                         Snackbar.LENGTH_LONG).show();
             } else {
-                pdfFiles = getPdfsFromPdfFolder();
+                pdfFiles = mFileUtils.getPdfsFromPdfFolder(files);
             }
             Log.v("done", "adding");
             switch (mCurrentSortingIndex) {
                 case NAME_INDEX:
-                    sortByNameAlphabetical(pdfFiles);
+                    mFileUtils.sortByNameAlphabetical(pdfFiles);
                     break;
                 case DATE_INDEX:
-                    sortFilesByDateNewestToOldest(pdfFiles);
+                    mFileUtils.sortFilesByDateNewestToOldest(pdfFiles);
                     break;
                 case SIZE_INCREASING_ORDER_INDEX:
-                    sortFilesBySizeIncreasingOrder(pdfFiles);
+                    mFileUtils.sortFilesBySizeIncreasingOrder(pdfFiles);
                     break;
                 case SIZE_DECREASING_ORDER_INDEX:
-                    sortFilesBySizeDecreasingOrder(pdfFiles);
+                    mFileUtils.sortFilesBySizeDecreasingOrder(pdfFiles);
                     break;
             }
             mViewFilesAdapter.setData(pdfFiles);
