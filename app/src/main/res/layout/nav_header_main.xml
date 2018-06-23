@@ -11,6 +11,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <ImageView
+        android:id="@+id/drawer_image"
+        android:src="@drawable/icon"
+        android:layout_width="@dimen/img_width"
+        android:layout_height="@dimen/img_width" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
