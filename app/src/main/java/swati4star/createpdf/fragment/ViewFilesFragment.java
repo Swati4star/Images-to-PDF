@@ -46,6 +46,7 @@ public class ViewFilesFragment extends Fragment
     private static final int SIZE_INCREASING_ORDER_INDEX = 2;
     private static final int SIZE_DECREASING_ORDER_INDEX = 3;
     private Activity mActivity;
+    private Menu pdfmenu;
     private ViewFilesAdapter mViewFilesAdapter;
     @BindView(R.id.filesRecyclerView)
     RecyclerView mViewFilesListRecyclerView;
@@ -98,6 +99,7 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        pdfmenu = menu;
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_view_files_actions, menu);
     }
@@ -304,10 +306,15 @@ public class ViewFilesFragment extends Fragment
             final File[] files = getOrCreatePdfDirectory().listFiles();
             if (files.length == 0 || files == null) {
                 setEmptyStateVisible();
+                if (pdfmenu != null) {
+                    pdfmenu.findItem(R.id.item_delete).setEnabled(false);
+                    pdfmenu.findItem(R.id.item_sort).setVisible(false);
+                }
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
                         Snackbar.LENGTH_LONG).show();
             } else {
+
                 pdfFiles = getPdfsFromPdfFolder();
             }
             Log.v("done", "adding");
