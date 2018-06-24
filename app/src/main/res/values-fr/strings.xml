@@ -77,8 +77,4 @@
     <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
     <string name="rate_title">Rate us!</string>
     <string name="feedback_chooser">Send mail…</string>
-    <string name="no_pdf">No PDFs to show</string>
-    <string name="get_started">Get Started Now</string>
-    <string name="view_files_text">View all your converted files here!</string>
-    <string name="empty_image_description">NoPdfs</string>
 </resources>
