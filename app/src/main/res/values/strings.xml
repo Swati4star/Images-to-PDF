@@ -64,6 +64,9 @@
     <string name="snackbar_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
     <string name="sort">Sort</string>
+    <string name="file_already_exists">Files with the same name already exists. Do you want to overwrite the existing file?\nPress No, to change the name.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="set_password">Set Password</string>
     <string name="enter_password">Enter Password</string>
