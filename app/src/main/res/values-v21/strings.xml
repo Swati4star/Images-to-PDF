@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="NoPdf">No PDFs to show</string>
-    <string name="getStarted">Get Started Now</string>
-    <string name="viewFilesEmpty">View all your converted files here!</string>
-    <string name="ImgDescriptor">NoPdfs</string>
+    <string name="no_pdf">No PDFs to show</string>
+    <string name="get_started">Get Started Now</string>
+    <string name="view_files_text">View all your converted files here!</string>
+    <string name="empty_image_description">NoPdfs</string>
 </resources>

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -51,20 +50,14 @@ public class ViewFilesFragment extends Fragment
     RecyclerView mViewFilesListRecyclerView;
     @BindView(R.id.swipe)
     SwipeRefreshLayout mSwipeView;
-
-
-    @BindView(R.id.backView)
+    @BindView(R.id.emptyBackgroundImage)
     public ImageView backView;
-
-    @BindView(R.id.TextOver)
+    @BindView(R.id.emptyTextOverBgImage)
     public TextView TextOver;
-
     @BindView(R.id.getStarted)
     public TextView getStarted;
-
-    @BindView(R.id.tagLine)
+    @BindView(R.id.emptyTagLine)
     public TextView tagLine;
-
     private int mCurrentSortingIndex = -1;
     private FileUtils mFileUtils;
 
@@ -96,11 +89,7 @@ public class ViewFilesFragment extends Fragment
         final ArrayList<File> pdfFiles = new ArrayList<>();
         final File[] files = folder.listFiles();
         if (files.length == 0) {
-
-            backView.setVisibility(View.VISIBLE);
-            TextOver.setVisibility(View.VISIBLE);
-            getStarted.setVisibility(View.VISIBLE);
-            tagLine.setVisibility(View.VISIBLE);
+            setEmptyStateVisible();
         }
         mViewFilesAdapter = new ViewFilesAdapter(mActivity, pdfFiles, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());

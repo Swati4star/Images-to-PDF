@@ -21,17 +21,17 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/emptyStatusView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
 
         <ImageView
-            android:id="@+id/backView"
+            android:id="@+id/emptyBackgroundImage"
             android:layout_width="0dp"
             android:layout_height="401dp"
-            android:contentDescription="@string/ImgDescriptor"
+            android:contentDescription="@string/empty_image_description"
             android:src="@drawable/circle"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,21 +39,20 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/TextOver"
+            android:id="@+id/emptyTextOverBgImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="245dp"
-
             android:textColor="@color/cardview_light_background"
             android:textSize="22sp"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/backView"
-            app:layout_constraintStart_toStartOf="@+id/backView"
-            app:layout_constraintTop_toTopOf="@+id/backView"
-            tools:text="@string/NoPdf"/>
+            app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
+            app:layout_constraintStart_toStartOf="@+id/emptyBackgroundImage"
+            app:layout_constraintTop_toTopOf="@+id/emptyBackgroundImage"
+            tools:text="@string/no_pdf"/>
 
         <TextView
             android:id="@+id/getStarted"
@@ -63,31 +62,29 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="45dp"
-
-            android:textColor="#690339"
+            android:textColor="@color/dark_purple"
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/backView"
-            app:layout_constraintTop_toBottomOf="@+id/TextOver"
-            tools:text="@string/getStarted"/>
+            app:layout_constraintStart_toStartOf="@+id/emptyBackgroundImage"
+            app:layout_constraintTop_toBottomOf="@+id/emptyTextOverBgImage"
+            tools:text="@string/get_started"/>
 
         <TextView
-            android:id="@+id/tagLine"
+            android:id="@+id/emptyTagLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="140dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-
-            android:textColor="#690339"
+            android:textColor="@color/dark_purple"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/backView"
+            app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/getStarted"
-            tools:text="@string/viewFilesEmpty"/>
+            tools:text="@string/view_files_text"/>
 
     </android.support.constraint.ConstraintLayout>
 

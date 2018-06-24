@@ -97,10 +97,10 @@
     <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
     <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="feedback_chooser">"Send mail…"</string>
-    <string name="NoPdf">No PDFs to show</string>
-    <string name="getStarted">Get Started Now</string>
-    <string name="viewFilesEmpty">View all your converted files here!</string>
-    <string name="ImgDescriptor">NoPdfs</string>
+    <string name="no_pdf">No PDFs to show</string>
+    <string name="get_started">Get Started Now</string>
+    <string name="view_files_text">View all your converted files here!</string>
+    <string name="empty_image_description">NoPdfs</string>
 
 
 </resources>
