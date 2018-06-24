@@ -8,6 +8,7 @@ android {
         applicationId "swati4star.createpdf"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 19
+        multiDexEnabled true
         targetSdkVersion 27
         versionCode 8
         versionName "2.5"
@@ -33,6 +34,7 @@ repositories {
 
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:27.1.1'
