@@ -69,10 +69,10 @@ Finally, go to GitHub and [make a Pull Request][] :D
 Travis CI and Circle CI will run our test suite. We care about quality, so 
 your PR won't be merged until all tests pass. 
 
-### 8. Stash the changes after review is done
+### 8. Squash the changes after review is done
 
 We want one commit to represent one feature fix. So, the commits need to
-be stashed before getting merge to master. You can check how to stash [here](https://stackoverflow.com/a/26885183/3623128)
+be squashed before getting merge to master. You can check how to squash [here](https://github.com/todotxt/todo.txt-android/wiki/Squash-All-Commits-Related-to-a-Single-Issue-into-a-Single-Commit)
 
 
 ### Our Responsibilities
