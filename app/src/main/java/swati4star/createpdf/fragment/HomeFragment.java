@@ -201,7 +201,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             mPath = mPath + mFilename + HomeFragment.this.getString(R.string.pdf_ext);
 
                             File tempFile = new File(mPath);
-                            if(tempFile.exists()){
+                            if (tempFile.exists()) {
                                 new MaterialDialog.Builder(mActivity)
                                         .title(R.string.creating_pdf)
                                         .content(R.string.file_already_exists)

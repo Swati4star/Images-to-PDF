@@ -49,6 +49,10 @@
     <string name="snackbar_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
     <string name="sort">Ordenar</string>
+    <string name="file_already_exists">Los archivos con el mismo nombre ya existe. ¿Desea sobrescribir el archivo existente?\nPresione No, para cambiar el nombre.
+</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
 
     <string name="set_password">Configurar la clave</string>
     <string name="enter_password">Introducir la contraseña</string>
