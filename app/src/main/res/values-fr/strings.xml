@@ -48,6 +48,9 @@
     <string name="snackbar_no_pdf_app">Il  n\'y a pas d\'app pour lire fichiers PDF</string>
     <string name="open_file">Ouvrir Fichier</string>
     <string name="sort">Trier</string>
+    <string name="file_already_exists">Des fichiers portant le même nom existent déjà. Voulez-vous remplacer le fichier existant?\nAppuyez sur Non pour changer le nom.</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 
     <string name="set_password">Définir le mot</string>
     <string name="enter_password">Entrer le mot de passe</string>

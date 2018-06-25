@@ -22,7 +22,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -196,7 +195,34 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         } else {
                             mFilename = input.toString();
 
-                            new CreatingPdf().execute();
+                            mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                                    HomeFragment.this.getString(R.string.pdf_dir);
+
+                            mPath = mPath + mFilename + HomeFragment.this.getString(R.string.pdf_ext);
+
+                            File tempFile = new File(mPath);
+                            if (tempFile.exists()) {
+                                new MaterialDialog.Builder(mActivity)
+                                        .title(R.string.creating_pdf)
+                                        .content(R.string.file_already_exists)
+                                        .positiveText(R.string.yes)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                                new CreatingPdf().execute();
+                                            }
+                                        })
+                                        .negativeText(R.string.no)
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                                createPdf();
+                                            }
+                                        })
+                                        .show();
+                            } else {
+                                new CreatingPdf().execute();
+                            }
 
                             if (mMorphCounter1 == 0)
                                 mMorphCounter1++;
