@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
+import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -230,6 +231,10 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
      * Opens ImagePickerActivity to select Images
      */
     private void selectImages() {
+        Config config = new Config();
+        config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
+
+        ImagePickerActivity.setConfig(config);
         Intent intent = new Intent(mActivity, ImagePickerActivity.class);
 
         //add to intent the URIs of the already selected images

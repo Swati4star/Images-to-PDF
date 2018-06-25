@@ -98,5 +98,6 @@
     <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="feedback_chooser">"Send mail…"</string>
 
-
+    <!--ImagePickerActivity Strings-->
+    <string name="image_picker_activity_toolbar_title">Select Image</string>
 </resources>
