@@ -553,7 +553,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     }
 
     private void passwordProtectPDF() {
-        Log.e(LOG_TAG,"Password : "+mPassword);
         if (mTempUris.size() == 0) {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.snackbar_no_images,
@@ -561,19 +560,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             return;
         }
 
-
-//
-//        int widgetColor = ThemeSingleton.get().widgetColor;
-//        MDTintHelper.setTint(
-//                checkbox, widgetColor == 0 ? ContextCompat.getColor(this, R.color.accent) : widgetColor);
-//
-//        MDTintHelper.setTint(
-//                passwordInput,
-//                widgetColor == 0 ? ContextCompat.getColor(this, R.color.accent) : widgetColor);
-//
-//        dialog.show();
-//        positiveAction.setEnabled(false); // disabled by default
-//    }
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.set_password)
                 .customView(R.layout.custom_dialog, true)
