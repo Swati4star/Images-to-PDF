@@ -22,11 +22,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -72,6 +75,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private String mPath;
     private String mFilename;
     private String mPassword;
+    private View positiveAction;
+    private View neutralAction;
+    private EditText passwordInput;
     private boolean mOpenSelectImages = false;
     @BindView(R.id.addImages)
     MorphingButton addImages;
@@ -110,8 +116,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             != PackageManager.PERMISSION_GRANTED)) {
                 mOpenSelectImages = false; // We don't want next activity to open after getting permissions
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             }
         }
@@ -138,8 +144,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     != PackageManager.PERMISSION_GRANTED) {
                 mOpenSelectImages = true; // We want next activity to open after getting permissions
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             } else {
                 selectImages();
@@ -299,7 +305,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             switch (resultCode) {
-                case Activity.RESULT_OK :
+                case Activity.RESULT_OK:
                     Uri resultUri = result.getUri();
                     mImagesUri.add(resultUri.getPath());
                     Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
@@ -553,12 +559,31 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         }
 
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.set_password)
-                .content(R.string.enter_password)
-                .input(getString(R.string.example_password), mPassword, new MaterialDialog.InputCallback() {
+                .customView(R.layout.custom_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .neutralText(R.string.remove_dialog)//Apply on positive
+                .build();
+
+        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
+        passwordInput = dialog.getCustomView().findViewById(R.id.password);
+        passwordInput.setText(mPassword);
+        passwordInput.addTextChangedListener(
+                new TextWatcher() {
                     @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
                         if (StringUtils.isEmpty(input)) {
                             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                     R.string.snackbar_password_cannot_be_blank,
@@ -568,21 +593,22 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             onPasswordAdded();
                         }
                     }
-                })
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel);
-
+                });
         if (StringUtils.isNotEmpty(mPassword)) {
-            builder.neutralText(R.string.remove).onNeutral(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+            neutralAction.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
                     mPassword = null;
                     onPasswordRemoved();
+                    dialog.dismiss();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.password_remove,
+                            Snackbar.LENGTH_LONG).show();
                 }
             });
         }
-
-        builder.show();
+        dialog.show();
+        positiveAction.setEnabled(false);
     }
 
     private void onPasswordAdded() {
