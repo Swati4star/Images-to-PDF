@@ -77,4 +77,7 @@
     <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
     <string name="rate_title">Rate us!</string>
     <string name="feedback_chooser">Send mail…</string>
+    <string name="remove_dialog">REMOVE</string>
+    <string name="enter_password_custom">Enter Password</string>
+    <string name="password_remove">Password Removed</string>
 </resources>

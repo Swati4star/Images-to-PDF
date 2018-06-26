@@ -69,7 +69,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private static int mImageCounter = 0;
-    private static final String LOG_TAG = "!";
     private Activity mActivity;
 
     private EditText passwordInput;
@@ -583,13 +582,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     }
 
                     @Override
-                    public void afterTextChanged(Editable s) {
-                        if (StringUtils.isEmpty(s)) {
+                    public void afterTextChanged(Editable input) {
+                        if (StringUtils.isEmpty(input)) {
                             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                     R.string.snackbar_password_cannot_be_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            mPassword = s.toString();
+                            mPassword = input.toString();
                             onPasswordAdded();
                         }
                     }
