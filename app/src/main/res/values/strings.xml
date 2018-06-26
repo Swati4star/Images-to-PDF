@@ -97,16 +97,14 @@
     <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
     <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="feedback_chooser">"Send mail…"</string>
-
-    <string name="example_pass_123">Example: pass@123</string>
-    <string name="remove_dialog">REMOVE</string>
-    <string name="enter_password_custom">Enter Password</string>
-    <string name="password_remove">Password Removed</string>
-
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
     <string name="view_files_text">View all your converted files here!</string>
     <string name="empty_image_description">NoPdfs</string>
 
+    <string name="example_pass_123">Example: pass@123</string>
+    <string name="remove_dialog">REMOVE</string>
+    <string name="enter_password_custom">Enter Password</string>
+    <string name="password_remove">Password Removed</string>
 
 </resources>
