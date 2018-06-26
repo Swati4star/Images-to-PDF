@@ -49,6 +49,9 @@
     <string name="snackbar_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
     <string name="sort">Ordenar</string>
+    <string name="file_already_exists">El archivo con el mismo nombre ya existe. ¿Desea sobrescribir el archivo existente?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
 
     <string name="set_password">Configurar la clave</string>
     <string name="enter_password">Introducir la contraseña</string>
@@ -79,5 +82,5 @@
     <string name="rate_title">Rate us!</string>
     <string name="feedback_chooser">Send mail…</string>
 
-    <string name="image_picker_activity_toolbar_title">Select Image</string>
+    <string name="image_picker_activity_toolbar_title">Select Images</string>
 </resources>

@@ -49,6 +49,9 @@
     <string name="snackbar_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
     <string name="sort">Sort</string>
+    <string name="file_already_exists">同じ名前のファイルが既に存在します。既存のファイルを上書きしますか？</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
 
     <string name="set_password">パスワードを設定してください</string>
     <string name="enter_password">パスワードを入力する</string>
@@ -79,5 +82,5 @@
     <string name="rate_title">Rate us!</string>
     <string name="feedback_chooser">Send mail…</string>
 
-    <string name="image_picker_activity_toolbar_title">Select Image</string>
+    <string name="image_picker_activity_toolbar_title">Select Images</string>
 </resources>

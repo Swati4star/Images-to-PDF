@@ -48,6 +48,9 @@
     <string name="snackbar_no_pdf_app">Il  n\'y a pas d\'app pour lire fichiers PDF</string>
     <string name="open_file">Ouvrir Fichier</string>
     <string name="sort">Trier</string>
+    <string name="file_already_exists">Le fichier portant le même nom existe déjà. Voulez-vous remplacer le fichier existant?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 
     <string name="set_password">Définir le mot</string>
     <string name="enter_password">Entrer le mot de passe</string>
@@ -78,5 +81,5 @@
     <string name="rate_title">Rate us!</string>
     <string name="feedback_chooser">Send mail…</string>
 
-    <string name="image_picker_activity_toolbar_title">Select Image</string>
+    <string name="image_picker_activity_toolbar_title">Select Images</string>
 </resources>
