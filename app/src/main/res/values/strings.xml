@@ -13,6 +13,7 @@
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
     <string name="mb_button">Create PDF</string>
+    <string name="details"><b>Details</b></string>
 
     <array name="items">
         <item>Open File</item>
@@ -20,6 +21,7 @@
         <item>Rename File</item>
         <item>Print File</item>
         <item>Share File</item>
+        <item>Show Details</item>
     </array>
 
     <array name="itemIds" translatable="false">
@@ -28,6 +30,7 @@
         <item>rename</item>
         <item>print</item>
         <item>e-mail</item>
+        <item>details</item>
     </array>
 
     <string name="pdf_ext" translatable="false">.pdf</string>
