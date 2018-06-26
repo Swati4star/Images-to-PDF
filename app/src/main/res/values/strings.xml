@@ -102,5 +102,6 @@
     <string name="view_files_text">View all your converted files here!</string>
     <string name="empty_image_description">NoPdfs</string>
 
-
+    <!--ImagePickerActivity Strings-->
+    <string name="image_picker_activity_toolbar_title">Select Image</string>
 </resources>
