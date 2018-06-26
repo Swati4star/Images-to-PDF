@@ -82,5 +82,8 @@
     <string name="get_started">Get Started Now</string>
     <string name="view_files_text">View all your converted files here!</string>
     <string name="empty_image_description">NoPdfs</string>
-
+    <string name="enter_password_custom">Enter Password</string>
+    <string name="example_pass_123">pass@123</string>
+    <string name="remove_dialog">REMOVE</string>
+    <string name="password_remove">Password Removed</string>
 </resources>
