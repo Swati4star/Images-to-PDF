@@ -22,11 +22,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -66,11 +69,16 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private static int mImageCounter = 0;
+    private static final String LOG_TAG = "!";
     private Activity mActivity;
+
+    private EditText passwordInput;
     private ArrayList<String> mImagesUri = new ArrayList<>();
     private ArrayList<String> mTempUris = new ArrayList<>();
     private String mPath;
     private String mFilename;
+    private View positiveAction;
+    private View neutralAction;
     private String mPassword;
     private boolean mOpenSelectImages = false;
     @BindView(R.id.addImages)
@@ -545,6 +553,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     }
 
     private void passwordProtectPDF() {
+        Log.e(LOG_TAG,"Password : "+mPassword);
         if (mTempUris.size() == 0) {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.snackbar_no_images,
@@ -553,36 +562,67 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         }
 
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
+//
+//        int widgetColor = ThemeSingleton.get().widgetColor;
+//        MDTintHelper.setTint(
+//                checkbox, widgetColor == 0 ? ContextCompat.getColor(this, R.color.accent) : widgetColor);
+//
+//        MDTintHelper.setTint(
+//                passwordInput,
+//                widgetColor == 0 ? ContextCompat.getColor(this, R.color.accent) : widgetColor);
+//
+//        dialog.show();
+//        positiveAction.setEnabled(false); // disabled by default
+//    }
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.set_password)
-                .content(R.string.enter_password)
-                .input(getString(R.string.example_password), mPassword, new MaterialDialog.InputCallback() {
+                .customView(R.layout.custom_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .neutralText(R.string.remove_dialog)//Apply on positive
+                .build();
+
+        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
+        passwordInput = dialog.getCustomView().findViewById(R.id.password);
+        passwordInput.setText(mPassword);
+        passwordInput.addTextChangedListener(
+                new TextWatcher() {
                     @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (StringUtils.isEmpty(input)) {
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (StringUtils.isEmpty(s)) {
                             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                     R.string.snackbar_password_cannot_be_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            mPassword = input.toString();
+                            mPassword = s.toString();
                             onPasswordAdded();
                         }
                     }
-                })
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel);
+                });
+        if(StringUtils.isNotEmpty(mPassword)){
 
-        if (StringUtils.isNotEmpty(mPassword)) {
-            builder.neutralText(R.string.remove).onNeutral(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    mPassword = null;
+            neutralAction.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    mPassword=null;
                     onPasswordRemoved();
+                    dialog.dismiss();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.password_remove,
+                            Snackbar.LENGTH_LONG).show();
                 }
             });
         }
-
-        builder.show();
+        dialog.show();
+        positiveAction.setEnabled(false);
     }
 
     private void onPasswordAdded() {
