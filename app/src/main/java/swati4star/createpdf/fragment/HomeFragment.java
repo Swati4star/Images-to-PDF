@@ -75,9 +75,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private String mPath;
     private String mFilename;
     private String mPassword;
-    private View positiveAction;
-    private View neutralAction;
-    private EditText passwordInput;
+    private View mPositiveAction;
+    private View mNeutralAction;
+    private EditText mPasswordInput;
     private boolean mOpenSelectImages = false;
     @BindView(R.id.addImages)
     MorphingButton addImages;
@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         morphToSquare(mCreatePdf, integer());
         mOpenPdf.setVisibility(View.GONE);
 
+
         // Get runtime permissions if build version >= Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -116,8 +117,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             != PackageManager.PERMISSION_GRANTED)) {
                 mOpenSelectImages = false; // We don't want next activity to open after getting permissions
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             }
         }
@@ -144,8 +145,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     != PackageManager.PERMISSION_GRANTED) {
                 mOpenSelectImages = true; // We want next activity to open after getting permissions
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             } else {
                 selectImages();
@@ -567,11 +568,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 .neutralText(R.string.remove_dialog)//Apply on positive
                 .build();
 
-        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
-        passwordInput = dialog.getCustomView().findViewById(R.id.password);
-        passwordInput.setText(mPassword);
-        passwordInput.addTextChangedListener(
+        mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        mNeutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
+        mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
+        mPasswordInput.setText(mPassword);
+        mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -579,7 +580,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                        mPositiveAction.setEnabled(s.toString().trim().length() > 0);
                     }
 
                     @Override
@@ -596,7 +597,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 });
         if (StringUtils.isNotEmpty(mPassword)) {
 
-            neutralAction.setOnClickListener(new View.OnClickListener() {
+            mNeutralAction.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mPassword = null;
                     onPasswordRemoved();
@@ -608,7 +609,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             });
         }
         dialog.show();
-        positiveAction.setEnabled(false);
+        mPositiveAction.setEnabled(false);
     }
 
     private void onPasswordAdded() {
