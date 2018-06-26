@@ -80,4 +80,9 @@
     <string name="feedback_chooser">Send mail…</string>
 
     <string name="image_picker_activity_toolbar_title">Select Image</string>
+
+    <string name="no_pdf">No PDFs to show</string>
+    <string name="get_started">Get Started Now</string>
+    <string name="view_files_text">View all your converted files here!</string>
+    <string name="empty_image_description">NoPdfs</string>
 </resources>
