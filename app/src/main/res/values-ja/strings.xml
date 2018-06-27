@@ -14,6 +14,7 @@
     <string name="create_pdf_text">Create PDF</string>
 
     <string name="mb_button">PDF を作成</string>
+    <string name="details"><b>詳細</b></string>
 
     <array name="items">
         <item>ファイルを開く</item>
@@ -21,6 +22,7 @@
         <item>ファイルの名前を変更</item>
         <item>ファイルを印刷</item>
         <item>Share File</item>
+        <item>詳細を表示</item>
     </array>
 
     <string name="please_wait">Please Wait</string>
