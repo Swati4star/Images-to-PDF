@@ -36,11 +36,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.FileUtils;
 
 
 /**
@@ -149,6 +151,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         String[] name = fileName.split("/");
 
         holder.mFilename.setText(name[name.length - 1]);
+
+        holder.mFilesize.setText(FileUtils.getFormattedSize(mFileList.get(position)));
+        holder.mFiledate.setText(FileUtils.getFormattedDate(mFileList.get(position)));
 
         if (mDeleteNames.contains(position))
             holder.checkBox.setChecked(true);
@@ -372,6 +377,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         TextView mFilename;
         @BindView(R.id.checkbox)
         CheckBox checkBox;
+        @BindView(R.id.fileDate)
+        TextView mFiledate;
+        @BindView(R.id.fileSize)
+        TextView mFilesize;
 
         ViewFilesHolder(View itemView) {
             super(itemView);
