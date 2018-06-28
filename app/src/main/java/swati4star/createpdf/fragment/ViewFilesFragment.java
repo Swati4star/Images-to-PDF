@@ -308,7 +308,7 @@ public class ViewFilesFragment extends Fragment
                 setEmptyStateVisible();
                 if (pdfmenu != null) {
                     pdfmenu.findItem(R.id.item_delete).setEnabled(false);
-                    pdfmenu.findItem(R.id.item_sort).setVisible(false);
+                    pdfmenu.findItem(R.id.item_sort).setEnabled(false);
                 }
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
