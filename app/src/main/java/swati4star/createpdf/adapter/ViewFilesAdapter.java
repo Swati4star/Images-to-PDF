@@ -5,14 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.os.ParcelFileDescriptor;
-import android.print.PageRange;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintDocumentInfo;
-import android.print.PrintManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
@@ -30,13 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -58,64 +44,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final Activity mActivity;
     private final EmptyStateChangeListener mEmptyStateChangeListener;
     private ArrayList<File> mFileList;
-    private String mFileName;
+    private FileUtils mFileUtils;
     private final ArrayList<Integer> mDeleteNames;
-    private final PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
-
-        @Override
-        public void onWrite(PageRange[] pages,
-                            ParcelFileDescriptor destination,
-                            CancellationSignal cancellationSignal,
-                            WriteResultCallback callback) {
-            InputStream input = null;
-            OutputStream output = null;
-            try {
-                input = new FileInputStream(mFileName);
-                output = new FileOutputStream(destination.getFileDescriptor());
-
-                byte[] buf = new byte[1024];
-                int bytesRead;
-
-                while ((bytesRead = input.read(buf)) > 0) {
-                    output.write(buf, 0, bytesRead);
-                }
-
-                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
-
-            } catch (Exception e) {
-                //Catch exception
-            } finally {
-                try {
-                    if (input != null) {
-                        input.close();
-                    }
-                    if (output != null) {
-                        output.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        @Override
-        public void onLayout(PrintAttributes oldAttributes,
-                             PrintAttributes newAttributes,
-                             CancellationSignal cancellationSignal,
-                             LayoutResultCallback callback,
-                             Bundle extras) {
-
-            if (cancellationSignal.isCanceled()) {
-                callback.onLayoutCancelled();
-                return;
-            }
-            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
-                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                    .build();
-
-            callback.onLayoutFinished(pdi, true);
-        }
-    };
 
     /**
      * Returns adapter instance
@@ -132,6 +62,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         this.mEmptyStateChangeListener = emptyStateChangeListener;
         this.mFileList = feedItems;
         mDeleteNames = new ArrayList<>();
+        mFileUtils = new FileUtils(activity);
     }
 
     @NonNull
@@ -143,11 +74,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewFilesHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int position) {
         Log.d("logs", "getItemCount: " + mFileList.size());
         // Extract file name from path
         final String fileName = mFileList.get(position).getPath();
-        final int filePosition = position;
         String[] name = fileName.split("/");
 
         holder.mFilename.setText(name[name.length - 1]);
@@ -164,9 +94,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mDeleteNames.add(filePosition);
+                    mDeleteNames.add(position);
                 } else {
-                    mDeleteNames.remove(Integer.valueOf(filePosition));
+                    mDeleteNames.remove(Integer.valueOf(position));
                 }
             }
         });
@@ -188,19 +118,19 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         break;
 
                                     case 1: //delete
-                                        deleteFile(fileName, filePosition);
+                                        deleteFile(fileName, position);
                                         break;
 
                                     case 2: //rename
-                                        renameFile(filePosition);
+                                        renameFile(position);
                                         break;
 
                                     case 3: //Print
-                                        doPrint(fileName);
+                                        mFileUtils.printFile(mFileList.get(position));
                                         break;
 
                                     case 4: //Email
-                                        shareFile(fileName);
+                                        mFileUtils.shareFile(mFileList.get(position));
                                         break;
                                 }
                             }
@@ -334,36 +264,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 }).show();
     }
 
-    /**
-     * Prints a file
-     *
-     * @param fileName Path of file to be printed
-     */
-    private void doPrint(String fileName) {
-        PrintManager printManager = (PrintManager) mContext
-                .getSystemService(Context.PRINT_SERVICE);
-
-        mFileName = fileName;
-        String jobName = mContext.getString(R.string.app_name) + " Document";
-        if (printManager != null)
-            printManager.print(jobName, mPrintDocumentAdapter, null);
-    }
-
-    /**
-     * Emails the desired PDF using application of choice by user
-     *
-     * @author RakiRoad
-     */
-    private void shareFile(String name) {
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", new File(name));
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("application/pdf");
-        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
-    }
 
     public String string(@StringRes int resId) {
         return mContext.getString(resId);

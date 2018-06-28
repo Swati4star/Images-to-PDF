@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -264,7 +263,7 @@ public class ViewFilesFragment extends Fragment
         private void populateListView() {
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
-            if (files.length == 0 || files == null) {
+            if (files == null || files.length == 0) {
                 setEmptyStateVisible();
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
