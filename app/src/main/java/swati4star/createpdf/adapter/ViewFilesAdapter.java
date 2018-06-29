@@ -1,8 +1,11 @@
 package swati4star.createpdf.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -23,6 +26,7 @@ import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -78,7 +82,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         Log.d("logs", "getItemCount: " + mFileList.size());
         // Extract file name from path
         final String fileName = mFileList.get(position).getPath();
-        String[] name = fileName.split("/");
+        final String[] name = fileName.split("/");
+        File file = mFileList.get(position);
+        final String lastModDate = mFileUtils.getFormattedDate(file);
+        final String file_size = mFileUtils.getFormattedSize(file);
 
         holder.mFilename.setText(name[name.length - 1]);
 
@@ -131,6 +138,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
                                     case 4: //Email
                                         mFileUtils.shareFile(mFileList.get(position));
+                                        break;
+
+                                    case 5: //Details
+                                        showDetails(name[name.length - 1], fileName, file_size, lastModDate);
                                         break;
                                 }
                             }
@@ -264,6 +275,32 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 }).show();
     }
 
+    @SuppressLint("ResourceAsColor")
+    private void showDetails(String name, String path, String size, String lastModDate) {
+        TextView message = new TextView(mContext);
+        TextView title = new TextView(mContext);
+        message.setText("\n  File Name : " + name
+                + "\n\n  Path : " + path
+                + "\n\n  Size : " + size
+                + " \n\n  Date Modified : " + lastModDate);
+        message.setTextIsSelectable(true);
+        title.setText(R.string.details);
+        title.setPadding(20, 10, 10, 10);
+        title.setTextSize(30);
+        title.setTextColor(R.color.black_54);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        final AlertDialog dialog = builder.create();
+        builder.setView(message);
+        builder.setCustomTitle(title);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
+    }
 
     public String string(@StringRes int resId) {
         return mContext.getString(resId);

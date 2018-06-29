@@ -14,6 +14,7 @@
     <string name="open_pdf_text">Abrir PDF</string>
     <string name="create_pdf_text">Crear PDF</string>
     <string name="mb_button">Crear PDF</string>
+    <string name="details"><b>Detalles</b></string>
 
     <array name="items">
         <item>Abrir Fichero</item>
@@ -21,6 +22,7 @@
         <item>Renombrar Fichero</item>
         <item>Imprimir Fichero</item>
         <item>Share File</item>
+        <item>mostrar detalles</item>
     </array>
 
     <string name="please_wait">Por favor espere</string>
