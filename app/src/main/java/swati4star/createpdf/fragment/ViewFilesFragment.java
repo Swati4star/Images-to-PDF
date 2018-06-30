@@ -22,7 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -36,6 +38,8 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
+
+import static swati4star.createpdf.R.string.search_hint;
 
 public class ViewFilesFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener, ViewFilesAdapter.EmptyStateChangeListener {
@@ -61,7 +65,7 @@ public class ViewFilesFragment extends Fragment
 
     private int mCurrentSortingIndex = -1;
     private FileUtils mFileUtils;
-
+    private SearchView mSearchView;
 
     @Override
     public void onAttach(Context context) {
@@ -109,10 +113,44 @@ public class ViewFilesFragment extends Fragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_view_files_actions, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) item.getActionView();
+        mSearchView.setQueryHint(getString(R.string.search_hint));
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                ArrayList searchResult = mFileUtils.searchPDF(s);
+                if (searchResult.isEmpty()) {
+                    Toast.makeText(mActivity , R.string.no_result , Toast.LENGTH_LONG).show();
+                } else {
+                    mViewFilesAdapter.setData(searchResult);
+                    mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+                    mSearchView.clearFocus();
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                ArrayList searchResult = mFileUtils.searchPDF(s);
+                mViewFilesAdapter.setData(searchResult);
+                mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+                return true;
+            }
+        });
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                populatePdfList();
+                return false;
+            }
+        });
+        mSearchView.setIconifiedByDefault(true);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_sort:
                 displaySortDialog();
@@ -125,7 +163,6 @@ public class ViewFilesFragment extends Fragment
                             R.string.snackbar_no_images,
                             Snackbar.LENGTH_LONG).show();
                 }
-                break;
             default:
                 break;
         }

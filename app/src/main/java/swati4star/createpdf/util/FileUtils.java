@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import swati4star.createpdf.R;
 
@@ -263,5 +265,48 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Used in searchPDF to give the closest result to search query
+     * @param query - Query from search bar
+     * @param fileName - name of PDF file
+     * @return 1 if the search query and filename has same characters , otherwise 0
+     */
+    private int checkChar(String query , String fileName) {
+        query = query.toLowerCase();
+        fileName = fileName.toLowerCase();
+        Set<Character> q = new HashSet<>();
+        Set<Character> f = new HashSet<>();
+        for ( char c : query.toCharArray() ) {
+            q.add(c);
+        }
+        for ( char c : fileName.toCharArray() ) {
+            f.add(c);
+        }
+
+        if ( q.containsAll(f) || f.containsAll(q) ) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * Used to search for PDF matching the search query
+     * @param query - Query from search bar
+     * @return ArrayList containg all the pdf files matching the search query
+     */
+    public ArrayList<File> searchPDF(String query) {
+        ArrayList<File> searchResult = new ArrayList<>();
+        final File[] files = getOrCreatePdfDirectory().listFiles();
+        ArrayList<File> pdfs = getPdfsFromPdfFolder(files);
+        for (File pdf : pdfs) {
+            String path = pdf.getPath();
+            String[] fileName = path.split("/");
+            String pdfName = fileName[fileName.length - 1].replace("pdf" , "");
+            if (checkChar(query , pdfName) == 1) {
+                searchResult.add(pdf);
+            }
+        }
+        return searchResult;
+    }
 
 }

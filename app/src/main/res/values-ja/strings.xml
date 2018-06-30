@@ -12,6 +12,9 @@
     <string name="edit_images_text">Edit Images</string>
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
+    <string name="search_hint">Name of file</string>
+    <string name="no_result">Couldn\'t find anything</string>
+    <string name="search">search</string>
 
     <string name="mb_button">PDF を作成</string>
     <string name="details"><b>詳細</b></string>
