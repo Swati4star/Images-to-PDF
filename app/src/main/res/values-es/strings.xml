@@ -15,6 +15,9 @@
     <string name="create_pdf_text">Crear PDF</string>
     <string name="mb_button">Crear PDF</string>
     <string name="details"><b>Detalles</b></string>
+    <string name="search_hint">Name of file</string>
+    <string name="no_result">Couldn\'t find anything</string>
+    <string name="search">search</string>
 
     <array name="items">
         <item>Abrir Fichero</item>
