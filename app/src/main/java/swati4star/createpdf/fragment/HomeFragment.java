@@ -562,7 +562,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 .customView(R.layout.custom_dialog, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
-                .neutralText(R.string.remove_dialog)//Apply on positive
+                .neutralText(R.string.remove_dialog)
                 .build();
 
         mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);

@@ -13,26 +13,33 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
-
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
-
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.StringUtils;
 
 
 /**
@@ -50,6 +57,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private ArrayList<File> mFileList;
     private FileUtils mFileUtils;
     private final ArrayList<Integer> mDeleteNames;
+    private String mPassword;
+    private View mPositiveAction;
+    private EditText mPasswordInput;
 
     /**
      * Returns adapter instance
@@ -142,6 +152,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
                                     case 5: //Details
                                         showDetails(name[name.length - 1], fileName, file_size, lastModDate);
+                                        break;
+                                    case 6://Password Set
+                                        setPassword(fileName);
                                         break;
                                 }
                             }
@@ -323,6 +336,79 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+    /**
+     * Opens the password dialog to set Password for an existing PDF file.
+     *
+     * @param filePath Path of file to be encrypted
+     */
+    private void setPassword(final String filePath) {
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.set_password)
+                .customView(R.layout.custom_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
+
+        mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
+        mPasswordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mPositiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        if (StringUtils.isEmpty(input)) {
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                    R.string.snackbar_password_cannot_be_blank,
+                                    Snackbar.LENGTH_LONG).show();
+                        } else {
+                            mPassword = input.toString();
+
+                        }
+                    }
+                });
+        dialog.show();
+        mPositiveAction.setEnabled(false);
+        mPositiveAction.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    doEncryption(filePath);
+                } catch (IOException | DocumentException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+                notifyDataSetChanged();
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.password_added,
+                        Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    /**
+     * Uses PDF Reader to set encryption in pdf file.
+     *
+     * @param path Path of pdf file to be encrypted
+     */
+    private void doEncryption(String path) throws IOException, DocumentException {
+        String finalOutputFile = path.replace(".pdf", mActivity.getString(R.string.encrypted_file));
+        Log.e("Log", finalOutputFile);
+        PdfReader reader = new PdfReader(path);
+        PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
+        stamper.setEncryption(mPassword.getBytes(), mActivity.getString(R.string.app_name).getBytes(),
+                PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_256);
+        stamper.close();
+        reader.close();
+        mFileList.add(new File(finalOutputFile));
     }
 
     public interface EmptyStateChangeListener {

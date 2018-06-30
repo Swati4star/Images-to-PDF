@@ -23,6 +23,7 @@
         <item>Imprimer Fichier</item>
         <item>Share File</item>
         <item>afficher les détails</item>
+        <item>Ajouter mot de passe</item>
     </array>
 
     <string name="please_wait">Patientez</string>
@@ -89,4 +90,6 @@
     <string name="password_remove">Password Removed</string>
     <string name="file_date_text">File Date</string>
     <string name="file_size_text">File Size</string>
+    <string name="password_added">Password Added</string>
+    <string name="encrypted_file">_encrypted.pdf</string>
 </resources>
