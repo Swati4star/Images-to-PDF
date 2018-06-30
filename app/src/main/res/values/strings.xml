@@ -54,6 +54,7 @@
 
     <!--Snackbar strings -->
     <string name="snackbar_no_images">No Images selected</string>
+    <string name="snackbar_no_pdfs_selected">No PDFs selected</string>
     <string name="snackbar_name_not_blank">Name cannot be blank</string>
     <string name="snackbar_permissions_given">Permissions Given!</string>
     <string name="snackbar_insufficient_permissions">Insufficient Permissions!</string>
@@ -117,6 +118,7 @@
     <string name="file_size_text">File Size</string>
     <string name="password_added">Password Added</string>
     <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
 
 
 </resources>

@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -237,6 +238,27 @@ public class FileUtils {
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("application/pdf");
+        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
+    }
+
+    /**
+     * Share the desired PDFs using application of choice by user
+     *
+     * @param  files - the list of files to be shared
+     */
+    public void shareMultipleFiles(List<File> files) {
+        ArrayList<Uri> uris = new ArrayList<>();
+        for (File file: files) {
+            Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+            uris.add(uri);
+        }
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        intent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.i_have_attached_pdfs_to_this_message));
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("application/pdf");
         mContext.startActivity(Intent.createChooser(intent, "Sharing"));

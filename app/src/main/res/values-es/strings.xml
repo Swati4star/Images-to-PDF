@@ -38,6 +38,7 @@
 
 
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
+    <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
     <string name="snackbar_permissions_given">Permisos concedidos!</string>
     <string name="snackbar_insufficient_permissions">Permisos insuficientes!</string>
@@ -96,5 +97,6 @@
     <string name="file_size_text">File Size</string>
     <string name="password_added">Password Added</string>
     <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
 
 </resources>

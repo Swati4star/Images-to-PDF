@@ -156,13 +156,23 @@ public class ViewFilesFragment extends Fragment
                 displaySortDialog();
                 break;
             case R.id.item_delete:
-                if (mViewFilesAdapter.areItemsForDeleteSelected()) {
+                if (mViewFilesAdapter.areItemsSelected()) {
                     deleteFiles();
                 } else {
                     Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                            R.string.snackbar_no_images,
+                            R.string.snackbar_no_pdfs_selected,
                             Snackbar.LENGTH_LONG).show();
                 }
+                break;
+            case R.id.item_share:
+                if (mViewFilesAdapter.areItemsSelected()) {
+                    mViewFilesAdapter.shareFiles();
+                } else {
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.snackbar_no_pdfs_selected,
+                            Snackbar.LENGTH_LONG).show();
+                }
+                break;
             default:
                 break;
         }

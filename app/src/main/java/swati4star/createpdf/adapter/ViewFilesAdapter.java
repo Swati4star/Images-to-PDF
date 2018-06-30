@@ -205,7 +205,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         }
     }
 
-    public boolean areItemsForDeleteSelected() {
+    public boolean areItemsSelected() {
         return mDeleteNames.size() > 0;
     }
 
@@ -251,6 +251,14 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             mEmptyStateChangeListener.setEmptyStateVisible();
         }
         setData(newList);
+    }
+
+    public void shareFiles() {
+        ArrayList<File> files = new ArrayList<>();
+        for (int position: mDeleteNames) {
+            files.add(mFileList.get(position));
+        }
+        mFileUtils.shareMultipleFiles(files);
     }
 
     private void renameFile(final int position) {
