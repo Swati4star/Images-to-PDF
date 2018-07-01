@@ -50,7 +50,7 @@ public class ViewFilesFragment extends Fragment
     private static final int SIZE_INCREASING_ORDER_INDEX = 2;
     private static final int SIZE_DECREASING_ORDER_INDEX = 3;
 
-    private  Menu menu_icons;
+    private  Menu mMenuIcons;
     private Activity mActivity;
     private ViewFilesAdapter mViewFilesAdapter;
     @BindView(R.id.filesRecyclerView)
@@ -99,8 +99,7 @@ public class ViewFilesFragment extends Fragment
         final File[] files = folder.listFiles();
         if (files.length == 0) {
             setEmptyStateVisible();
-
-        }
+            }
         mViewFilesAdapter = new ViewFilesAdapter(mActivity, pdfFiles, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
         mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
@@ -110,7 +109,6 @@ public class ViewFilesFragment extends Fragment
 
         // Populate data into listView
         populatePdfList();
-
         return root;
     }
 
@@ -118,8 +116,7 @@ public class ViewFilesFragment extends Fragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_view_files_actions, menu);
-        menu_icons= menu;
-
+        mMenuIcons = menu;
         MenuItem item = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) item.getActionView();
         mSearchView.setQueryHint(getString(R.string.search_hint));
@@ -182,24 +179,17 @@ public class ViewFilesFragment extends Fragment
                 .setNegativeButton("No", mDialogClickListener)
                 .setPositiveButton("Yes", mDialogClickListener);
         builder.create().show();
-        
-
-
-    }
+        }
 
     private void checkIfListEmpty() {
         onRefresh();
-
         final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
         Log.d ("after refresh", "yes");
         if (files == null || files.length == 0) {
             Log.d("after if", "done");
-
             setIconsInvisible();
         }
     }
-
-
 
     private final DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
         @Override
@@ -219,7 +209,6 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void onRefresh() {
-
         Log.v("refresh", "refreshing dta");
         populatePdfList();
         mSwipeView.setRefreshing(false);
@@ -271,9 +260,7 @@ public class ViewFilesFragment extends Fragment
         TextOver.setVisibility(View.VISIBLE);
         getStarted.setVisibility(View.VISIBLE);
         tagLine.setVisibility(View.VISIBLE);
-
-
-    }
+        }
 
     @Override
     public void setEmptyStateGone() {
@@ -281,16 +268,14 @@ public class ViewFilesFragment extends Fragment
         TextOver.setVisibility(View.GONE);
         getStarted.setVisibility(View.GONE);
         tagLine.setVisibility(View.GONE);
-
-    }
+        }
 
     private void setIconsInvisible() {
 
-        menu_icons.findItem(R.id.item_delete).setVisible(false);
-        menu_icons.findItem(R.id.item_sort).setVisible(false);
+        mMenuIcons.findItem(R.id.item_delete).setVisible(false);
+        mMenuIcons.findItem(R.id.item_sort).setVisible(false);
         mSearchView.setVisibility(View.GONE);
-
-    }
+        }
 
     /**
      * AsyncTask used to populate the list of elements in the background
@@ -337,13 +322,13 @@ public class ViewFilesFragment extends Fragment
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
             if (files == null || files.length == 0) {
-
                 setEmptyStateVisible();
                 setIconsInvisible();
                   Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
                         Snackbar.LENGTH_LONG).show();
             } else {
+
                 pdfFiles = mFileUtils.getPdfsFromPdfFolder(files);
             }
             Log.v("done", "adding");
@@ -365,6 +350,4 @@ public class ViewFilesFragment extends Fragment
             mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
         }
     }
-
-
 }
