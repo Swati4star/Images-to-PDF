@@ -2,7 +2,7 @@
 <resources>
     <string name="view_files_text">View all your converted files here!</string>
     <string name="merge_pdf">Merge PDF</string>
-    <string name="file_one">SELECT PDF FILE ONE</string>
+    <string name="file_one">Select first PDF</string>
     <string name="File_hint_one">File Path for PDF one</string>
     <string name="File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>

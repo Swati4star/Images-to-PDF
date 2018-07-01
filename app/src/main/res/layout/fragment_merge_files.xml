@@ -8,87 +8,78 @@
                                              android:stretchColumns="*"
                                              tools:context=".fragment.MergeFilesFragment">
 
-
-    <EditText
+    <TextView
         android:id="@+id/txtfirstpdf"
-        android:inputType="text"
-        android:hint="@string/File_hint_one"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:hint="@string/File_hint_one"
         android:padding="5dip"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fileonebtn"
-        tools:text="@string/file_path"/>
+        app:layout_constraintTop_toBottomOf="@+id/fileonebtn"/>
 
     <Button
         android:id="@+id/fileonebtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="155dp"
+        android:layout_height="127dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="44dp"
         android:background="@color/colorGray"
         android:maxWidth="30dp"
         android:padding="5dip"
         android:tag="fbt"
         android:text="@string/file_one"
         android:textColor="@color/mb_white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-
-    <EditText
-        android:inputType="text"
+    <TextView
         android:id="@+id/txtsecondpdf"
         android:layout_width="0dp"
-        android:hint="@string/File_hint_two"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/File_hint_two"
         android:padding="5dip"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filetwobtn"
-        tools:text="@string/file_path"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtfirstpdf"/>
 
     <Button
         android:id="@+id/filetwobtn"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="126dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="44dp"
         android:background="@color/colorGray"
         android:padding="5dip"
         android:tag="sbt"
         android:text="@string/file_two"
         android:textColor="@color/mb_white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtfirstpdf"/>
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="180dp"
+        android:layout_height="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mergebtn"/>
+        app:layout_constraintTop_toBottomOf="@+id/mergebtn"
+        />
 
     <Button
         android:id="@+id/mergebtn"
@@ -109,7 +100,7 @@
         android:id="@+id/note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="150dp"

@@ -45,17 +45,17 @@ import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 
-
 public class MergeFilesFragment extends Fragment {
     private Activity mActivity;
     private final Context mContext;
     private String mPath;
-    public String val1, val2;
+    public String filepath1, filepath2;
     boolean success;
     String mFilename;
-    public String btTag = "";
+    public String checkbtClickTag = "";
     public static final int INTENT_REQUEST_PICKFILE_CODE = 10;
-    String ret;
+    String retfoldername;
+    String realPath , displayName;
     @BindView(R.id.textView)
     TextView nosupport;
     @BindView(R.id.fileonebtn)
@@ -65,9 +65,9 @@ public class MergeFilesFragment extends Fragment {
     @BindView(R.id.mergebtn)
     Button mergeBtn;
     @BindView(R.id.txtfirstpdf)
-    EditText txt1;
+    TextView filepathtv1;
     @BindView(R.id.txtsecondpdf)
-    EditText txt2;
+    TextView filepathtv2;
 
 
     public MergeFilesFragment() {
@@ -88,14 +88,14 @@ public class MergeFilesFragment extends Fragment {
     @OnClick(R.id.fileonebtn)
     void startAddingPDF(View v) {
         Log.d("img", "startAddingPDF: ");
-        btTag = (v).getTag().toString();
+        checkbtClickTag = (v).getTag().toString();
         showFileChooser();
     }
 
     @OnClick(R.id.filetwobtn)
     void startAddingPDF2(View v) {
         Log.d("img", "startAddingPDF: ");
-        btTag = (v).getTag().toString();
+        checkbtClickTag = (v).getTag().toString();
         showFileChooser();
     }
 
@@ -123,17 +123,16 @@ public class MergeFilesFragment extends Fragment {
     public void mergePdfFiles(View view) {
         try {
 
-            val1 = txt1.getText().toString();
-            val2 = txt2.getText().toString();
-            String[] srcs = { val1 , val2 };
+            filepath1 = filepathtv1.getText().toString();
+            filepath2 = filepathtv2.getText().toString();
+            String[] pdfpaths = { filepath1 , filepath2 };
 
-            if (val1.isEmpty() || val2.isEmpty() || !success) {
+            if (filepath1.isEmpty() || filepath2.isEmpty() || !success) {
                 mergeBtn.setEnabled(false);
                 Toast.makeText(this.getContext(), getString(R.string.pdf_merge_error), Toast.LENGTH_SHORT).show();
-                noSupport();
             } else {
                 mergeBtn.setEnabled(true);
-                mergePdf(srcs);
+                mergePdf(pdfpaths);
                 Toast.makeText(this.getContext(), getString(R.string.pdf_merge), Toast.LENGTH_SHORT).show();
             }
 
@@ -142,7 +141,7 @@ public class MergeFilesFragment extends Fragment {
         }
     }
 
-    public void mergePdf(String[] srcs) {
+    public void mergePdf(String[] pdfpaths) {
         try {
             // Create document object
             Document document = new Document();
@@ -154,16 +153,16 @@ public class MergeFilesFragment extends Fragment {
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(finPath));
             // Open the document
             document.open();
-            PdfReader pr;
-            int n;
-            for (int i = 0; i < srcs.length; i++) {
+            PdfReader pdfreader;
+            int numopages;
+            for (int i = 0; i < pdfpaths.length; i++) {
                 // Create pdf reader object to read each input pdf file
-                pr = new PdfReader(srcs[i]);
+                pdfreader = new PdfReader(pdfpaths[i]);
                 // Get the number of pages of the pdf file
-                n = pr.getNumberOfPages();
-                for (int page = 1; page <= n; page++) {
+                numopages = pdfreader.getNumberOfPages();
+                for (int page = 1; page <= numopages; page++) {
                     // Import all pages from the file to PdfCopy
-                    copy.addPage( copy.getImportedPage(pr , page));
+                    copy.addPage( copy.getImportedPage(pdfreader , page));
                 }
             }
             document.close(); // close the document
@@ -183,7 +182,6 @@ public class MergeFilesFragment extends Fragment {
         startActivityForResult(intentChooser , INTENT_REQUEST_PICKFILE_CODE);
     }
 
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data != null) {
 
@@ -193,73 +191,40 @@ public class MergeFilesFragment extends Fragment {
                     String uriString = uri.toString();
                     File myFile = new File(uri.toString());
                     String path = myFile.getPath();
-                    String realPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-                    String displayName = null;
-                    if (addFileOne.getTag().toString().equals(btTag)) {
-                        if (uriString.startsWith("content://")) {
-
-                            Cursor cursor;
-                            try {
-                                cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-                                if (cursor != null && cursor.moveToFirst()) {
-                                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                                }
-                                cursor.close();
-                                success = true;
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
-                            }
+                    realPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    //Check if First button is clicked from checkbtClickTag
+                    if (addFileOne.getTag().toString().equals(checkbtClickTag)) {
+                        if (uriString.startsWith("content://")) {        //If file path is of content:// type
+                            displayName = getFileName(uri);
+                            success = true;
                         } else if (uriString.startsWith("file://")) {
+                            //If file path is of file:// type
                             displayName = myFile.getName();
+                            Log.d("img", displayName);
                             success = true;
                         } else if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
+                            //If file path is of content:// type and is a google drive document
                             success = false;
                         }
-
+                        //If success is true, get full path
                         if (success) {
                             String folname = getParentFolder(path);
-                            if (folname == null) {
-                                realPath = realPath + getString(R.string.path_seperator) + displayName;
-                                txt1.setText(realPath);
-                            } else {
-                                String c = getString(R.string.path_seperator);
-                                realPath = realPath + c + folname + c + displayName;
-                                txt1.setText(realPath);
-                            }
-                        } else
-                            noSupport();
+                            setPathontextview(folname , filepathtv1);
+                        }
                     } else {
                         if (uriString.startsWith("content://")) {
-                            Cursor cursor;
-                            try {
-                                cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-                                if (cursor != null && cursor.moveToFirst()) {
-                                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                                    Log.d("img", displayName);
+                            displayName = getFileName(uri);
+                            success = true;
 
-                                }
-                                cursor.close();
-                                success = true;
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
-                            }
                         } else if (uriString.startsWith("file://")) {
                             displayName = myFile.getName();
                             success = true;
-
                         } else if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
                             success = false;
-                            noSupport();
                         }
                         if (success) {
                             String folname = getParentFolder(path);
-                            if (folname == null) {
-                                txt2.setText(R.string.pdf_merge_error);
-                            } else {
-                                String c = getString(R.string.path_seperator);
-                                realPath = realPath + c + folname + c + displayName;
-                                txt2.setText(realPath);
-                            }
+                            setPathontextview(folname , filepathtv2);
                         }
 
                     }
@@ -269,37 +234,62 @@ public class MergeFilesFragment extends Fragment {
         }
     }
 
-    public void noSupport() {
-        nosupport.setText(getString(R.string.note));
-    }
+
     public String  getParentFolder(String p) {
         try {
+            //Get Name of Parent Folder of File
+            // Folder Name found between first occurance of string %3A and %2F from path
+            // of content://...
             if (p.contains("%3A")) {
                 int beg = p.indexOf("%3A") + 3;
-                ret = p.substring(beg, p.indexOf("%2F"));
-                Log.d("img", ret);
+                retfoldername = p.substring(beg, p.indexOf("%2F"));
+                Log.d("img", retfoldername);
             } else {
-                ret = null;
+                retfoldername = null;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ret;
+        return retfoldername;
+    }
+
+    public String getFileName(Uri uri) {
+        Cursor cursor;
+        try {
+            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+            }
+            cursor.close();
+            success = true;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return displayName;
+    }
+
+    public void setPathontextview(String folname , TextView t1) {
+        if (folname != null) {
+            String c = getString(R.string.path_seperator);
+            realPath = realPath + c + folname + c + displayName;
+            //Set value to textview2
+            t1.setText(realPath);
+        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            btTag = savedInstanceState.getString("savText");
+            checkbtClickTag = savedInstanceState.getString("savText");
         }
     }
 
     @Override
     public void onSaveInstanceState(@NonNull  Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("savText", btTag);
+        outState.putString(getString(R.string.btn_sav_text), checkbtClickTag);
     }
 
     @Override
@@ -307,5 +297,4 @@ public class MergeFilesFragment extends Fragment {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
-
 }
