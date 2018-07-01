@@ -25,7 +25,7 @@
 
     <string name="please_wait">Patientez</string>
     <string name="populating_list">Recherche des fichiers. Cela peut prendre un peu de temps</string>
-    <string name="main">Accueil</string>
+    <string name="create_pdf">Accueil</string>
     <string name="viewFiles">Voir Fichiers</string>
     <string name="feedback">Feedback</string>
 
@@ -85,4 +85,15 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
+    <string name="merge_pdf">Merge PDF</string>
+    <string name="merge_file_select">Select a file</string>
+    <string name="pdf_merge_error">Unable to Merge</string>
+    <string name="file_one">SELECT PDF FILE ONE</string>
+    <string name="file_two">SELECT PDF FILE TWO</string>
+    <string name="pdf_merge" >Merging File</string>
+    <string name="File_hint_one">File Path for PDF one</string>
+    <string name="File_hint_two">File Path for PDF two</string>
+    <string name="merge_files">MERGE FILES</string>
+    <string name="note">PDF Files from Google Drive and Files outside any folders are not supported currently.</string>
+    <string name="file_path">PDF File Path</string>
 </resources>

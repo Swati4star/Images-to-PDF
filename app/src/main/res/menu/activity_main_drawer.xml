@@ -5,11 +5,15 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/main" />
+            android:title="@string/create_pdf" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/viewFiles" />
+        <item
+            android:id="@+id/nav_merge"
+            android:icon="@drawable/ic_merge_type_black_24dp"
+            android:title="@string/merge_pdf"/>
 
     </group>
 

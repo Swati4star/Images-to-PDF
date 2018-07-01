@@ -32,13 +32,14 @@
 
     <string name="pdf_ext" translatable="false">.pdf</string>
     <string name="pdf_dir" translatable="false">/PDFfiles/</string>
+    <string name="path_seperator" translatable="false">/</string>
     <string name="pdf_type" translatable="false">application/pdf</string>
 
     <string name="please_wait">Please Wait</string>
     <string name="populating_list">Fetching files. This may take a while</string>
 
     <!-- Navigation drawer strings -->
-    <string name="main">Main</string>
+    <string name="create_pdf">Create PDF</string>
     <string name="viewFiles">View Files</string>
     <string name="extras">Extras</string>
     <string name="feedback">Feedback</string>
@@ -57,6 +58,12 @@
     <string name="snackbar_file_deleted">File deleted.</string>
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
+    <string name="pdf_merge">Merging File</string>
+    <string name="pdf_merge_error">Unable to Merge</string>
+    <string name="file_path">PDF File Path</string>
+
+
+
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>
@@ -106,6 +113,16 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
+    <string name="merge_pdf">Merge PDF</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="merge_file_select">Select a file</string>
+    <string name="file_one">SELECT PDF FILE ONE</string>
+    <string name="file_two">SELECT PDF FILE TWO</string>
+    <string name="File_hint_one">File Path for PDF one</string>
+    <string name="File_hint_two">File Path for PDF two</string>
+    <string name="merge_files">MERGE FILES</string>
+    <string name="note">PDF Files from Google Drive and Files outside any folders are not supported currently.</string>
 
 
 </resources>
