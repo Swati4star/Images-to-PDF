@@ -99,7 +99,7 @@ public class ViewFilesFragment extends Fragment
         final File[] files = folder.listFiles();
         if (files.length == 0) {
             setEmptyStateVisible();
-            }
+        }
         mViewFilesAdapter = new ViewFilesAdapter(mActivity, pdfFiles, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
         mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
