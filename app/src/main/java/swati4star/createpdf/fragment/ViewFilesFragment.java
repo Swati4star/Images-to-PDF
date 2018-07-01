@@ -179,12 +179,12 @@ public class ViewFilesFragment extends Fragment
                 .setNegativeButton("No", mDialogClickListener)
                 .setPositiveButton("Yes", mDialogClickListener);
         builder.create().show();
-        }
+    }
 
     private void checkIfListEmpty() {
         onRefresh();
         final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
-        Log.d ("after refresh", "yes");
+        Log.d("after refresh", "yes");
         if (files == null || files.length == 0) {
             Log.d("after if", "done");
             setIconsInvisible();
@@ -260,7 +260,7 @@ public class ViewFilesFragment extends Fragment
         TextOver.setVisibility(View.VISIBLE);
         getStarted.setVisibility(View.VISIBLE);
         tagLine.setVisibility(View.VISIBLE);
-        }
+    }
 
     @Override
     public void setEmptyStateGone() {
@@ -268,18 +268,17 @@ public class ViewFilesFragment extends Fragment
         TextOver.setVisibility(View.GONE);
         getStarted.setVisibility(View.GONE);
         tagLine.setVisibility(View.GONE);
-        }
+    }
 
     private void setIconsInvisible() {
-
         mMenuIcons.findItem(R.id.item_delete).setVisible(false);
         mMenuIcons.findItem(R.id.item_sort).setVisible(false);
         mSearchView.setVisibility(View.GONE);
-        }
+    }
 
     /**
-     * AsyncTask used to populate the list of elements in the background
-     */
+    * AsyncTask used to populate the list of elements in the background
+    */
     @SuppressLint("StaticFieldLeak")
     private class PopulateList extends AsyncTask<Void, Void, Void> {
 
@@ -324,7 +323,7 @@ public class ViewFilesFragment extends Fragment
             if (files == null || files.length == 0) {
                 setEmptyStateVisible();
                 setIconsInvisible();
-                  Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,
                         Snackbar.LENGTH_LONG).show();
             } else {
