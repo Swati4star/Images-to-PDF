@@ -23,7 +23,6 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -563,7 +562,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 .customView(R.layout.custom_dialog, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
-                .neutralText(R.string.remove_dialog)//Apply on positive
+                .neutralText(R.string.remove_dialog)
                 .build();
 
         mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -23,7 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -37,6 +38,8 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
+
+import static swati4star.createpdf.R.string.search_hint;
 
 public class ViewFilesFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener, ViewFilesAdapter.EmptyStateChangeListener {
@@ -62,7 +65,7 @@ public class ViewFilesFragment extends Fragment
 
     private int mCurrentSortingIndex = -1;
     private FileUtils mFileUtils;
-
+    private SearchView mSearchView;
 
     @Override
     public void onAttach(Context context) {
@@ -110,20 +113,63 @@ public class ViewFilesFragment extends Fragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_view_files_actions, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) item.getActionView();
+        mSearchView.setQueryHint(getString(R.string.search_hint));
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                ArrayList searchResult = mFileUtils.searchPDF(s);
+                if (searchResult.isEmpty()) {
+                    Toast.makeText(mActivity , R.string.no_result , Toast.LENGTH_LONG).show();
+                } else {
+                    mViewFilesAdapter.setData(searchResult);
+                    mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+                    mSearchView.clearFocus();
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                ArrayList searchResult = mFileUtils.searchPDF(s);
+                mViewFilesAdapter.setData(searchResult);
+                mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+                return true;
+            }
+        });
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                populatePdfList();
+                return false;
+            }
+        });
+        mSearchView.setIconifiedByDefault(true);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_sort:
                 displaySortDialog();
                 break;
             case R.id.item_delete:
-                if (mViewFilesAdapter.areItemsForDeleteSelected()) {
+                if (mViewFilesAdapter.areItemsSelected()) {
                     deleteFiles();
                 } else {
                     Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                            R.string.snackbar_no_images,
+                            R.string.snackbar_no_pdfs_selected,
+                            Snackbar.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.item_share:
+                if (mViewFilesAdapter.areItemsSelected()) {
+                    mViewFilesAdapter.shareFiles();
+                } else {
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.snackbar_no_pdfs_selected,
                             Snackbar.LENGTH_LONG).show();
                 }
                 break;
@@ -264,7 +310,7 @@ public class ViewFilesFragment extends Fragment
         private void populateListView() {
             ArrayList<File> pdfFiles = new ArrayList<>();
             final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
-            if (files.length == 0 || files == null) {
+            if (files == null || files.length == 0) {
                 setEmptyStateVisible();
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_no_pdfs,

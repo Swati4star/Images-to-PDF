@@ -14,6 +14,10 @@
     <string name="open_pdf_text">Abrir PDF</string>
     <string name="create_pdf_text">Crear PDF</string>
     <string name="mb_button">Crear PDF</string>
+    <string name="details"><b>Detalles</b></string>
+    <string name="search_hint">Name of file</string>
+    <string name="no_result">Couldn\'t find anything</string>
+    <string name="search">search</string>
 
     <array name="items">
         <item>Abrir Fichero</item>
@@ -21,6 +25,8 @@
         <item>Renombrar Fichero</item>
         <item>Imprimir Fichero</item>
         <item>Share File</item>
+        <item>mostrar detalles</item>
+        <item>Agregar contraseña</item>
     </array>
 
     <string name="please_wait">Por favor espere</string>
@@ -32,6 +38,7 @@
 
 
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
+    <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
     <string name="snackbar_permissions_given">Permisos concedidos!</string>
     <string name="snackbar_insufficient_permissions">Permisos insuficientes!</string>
@@ -86,6 +93,7 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
+
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
     <string name="pdf_merge">Merging File</string>
@@ -97,6 +105,11 @@
     <string name="merge_files">MERGE FILES</string>
     <string name="note">PDF Files from Google Drive and Files outside any folders are not supported currently.</string>
     <string name="file_path">PDF File Path</string>
+    <string name="file_date_text">File Date</string>
+    <string name="file_size_text">File Size</string>
+    <string name="password_added">Password Added</string>
+    <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
 
 
 </resources>

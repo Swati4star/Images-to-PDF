@@ -12,8 +12,12 @@
     <string name="edit_images_text">Edit Images</string>
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
+    <string name="search_hint">Name of file</string>
+    <string name="no_result">Couldn\'t find anything</string>
+    <string name="search">search</string>
 
     <string name="mb_button">PDF を作成</string>
+    <string name="details"><b>詳細</b></string>
 
     <array name="items">
         <item>ファイルを開く</item>
@@ -21,6 +25,8 @@
         <item>ファイルの名前を変更</item>
         <item>ファイルを印刷</item>
         <item>Share File</item>
+        <item>詳細を表示</item>
+        <item>パスワードを追加</item>
     </array>
 
     <string name="please_wait">Please Wait</string>
@@ -32,6 +38,7 @@
 
 
     <string name="snackbar_no_images">No Images selected</string>
+    <string name="snackbar_no_pdfs_selected">選択されたPDFはありません</string>
     <string name="snackbar_name_not_blank">Name cannot be blank</string>
     <string name="snackbar_permissions_given">Permissions Given!</string>
     <string name="snackbar_insufficient_permissions">Insufficient Permissions!</string>
@@ -86,6 +93,7 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
+
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
     <string name="pdf_merge" >Merging File</string>
@@ -97,4 +105,10 @@
     <string name="merge_files">MERGE FILES</string>
     <string name="note">PDF Files from Google Drive and Files outside any folders are not supported currently.</string>
     <string name="file_path">PDF File Path</string>
+    <string name="file_date_text">File Date</string>
+    <string name="file_size_text">File Size</string>
+    <string name="password_added">Password Added</string>
+    <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
+
 </resources>

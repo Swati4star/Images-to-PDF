@@ -1,46 +1,45 @@
 package swati4star.createpdf.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.os.ParcelFileDescriptor;
-import android.print.PageRange;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintDocumentInfo;
-import android.print.PrintManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
-
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
-
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.StringUtils;
 
 
 /**
@@ -56,64 +55,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final Activity mActivity;
     private final EmptyStateChangeListener mEmptyStateChangeListener;
     private ArrayList<File> mFileList;
-    private String mFileName;
+    private FileUtils mFileUtils;
     private final ArrayList<Integer> mDeleteNames;
-    private final PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
-
-        @Override
-        public void onWrite(PageRange[] pages,
-                            ParcelFileDescriptor destination,
-                            CancellationSignal cancellationSignal,
-                            WriteResultCallback callback) {
-            InputStream input = null;
-            OutputStream output = null;
-            try {
-                input = new FileInputStream(mFileName);
-                output = new FileOutputStream(destination.getFileDescriptor());
-
-                byte[] buf = new byte[1024];
-                int bytesRead;
-
-                while ((bytesRead = input.read(buf)) > 0) {
-                    output.write(buf, 0, bytesRead);
-                }
-
-                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
-
-            } catch (Exception e) {
-                //Catch exception
-            } finally {
-                try {
-                    if (input != null) {
-                        input.close();
-                    }
-                    if (output != null) {
-                        output.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        @Override
-        public void onLayout(PrintAttributes oldAttributes,
-                             PrintAttributes newAttributes,
-                             CancellationSignal cancellationSignal,
-                             LayoutResultCallback callback,
-                             Bundle extras) {
-
-            if (cancellationSignal.isCanceled()) {
-                callback.onLayoutCancelled();
-                return;
-            }
-            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
-                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                    .build();
-
-            callback.onLayoutFinished(pdi, true);
-        }
-    };
+    private String mPassword;
+    private View mPositiveAction;
+    private EditText mPasswordInput;
 
     /**
      * Returns adapter instance
@@ -130,6 +76,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         this.mEmptyStateChangeListener = emptyStateChangeListener;
         this.mFileList = feedItems;
         mDeleteNames = new ArrayList<>();
+        mFileUtils = new FileUtils(activity);
     }
 
     @NonNull
@@ -141,14 +88,19 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewFilesHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int position) {
         Log.d("logs", "getItemCount: " + mFileList.size());
         // Extract file name from path
         final String fileName = mFileList.get(position).getPath();
-        final int filePosition = position;
-        String[] name = fileName.split("/");
+        final String[] name = fileName.split("/");
+        File file = mFileList.get(position);
+        final String lastModDate = mFileUtils.getFormattedDate(file);
+        final String file_size = mFileUtils.getFormattedSize(file);
 
         holder.mFilename.setText(name[name.length - 1]);
+
+        holder.mFilesize.setText(FileUtils.getFormattedSize(mFileList.get(position)));
+        holder.mFiledate.setText(FileUtils.getFormattedDate(mFileList.get(position)));
 
         if (mDeleteNames.contains(position))
             holder.checkBox.setChecked(true);
@@ -159,9 +111,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mDeleteNames.add(filePosition);
+                    mDeleteNames.add(position);
                 } else {
-                    mDeleteNames.remove(Integer.valueOf(filePosition));
+                    mDeleteNames.remove(Integer.valueOf(position));
                 }
             }
         });
@@ -183,19 +135,26 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         break;
 
                                     case 1: //delete
-                                        deleteFile(fileName, filePosition);
+                                        deleteFile(fileName, position);
                                         break;
 
                                     case 2: //rename
-                                        renameFile(filePosition);
+                                        renameFile(position);
                                         break;
 
                                     case 3: //Print
-                                        doPrint(fileName);
+                                        mFileUtils.printFile(mFileList.get(position));
                                         break;
 
                                     case 4: //Email
-                                        shareFile(fileName);
+                                        mFileUtils.shareFile(mFileList.get(position));
+                                        break;
+
+                                    case 5: //Details
+                                        showDetails(name[name.length - 1], fileName, file_size, lastModDate);
+                                        break;
+                                    case 6://Password Set
+                                        setPassword(fileName);
                                         break;
                                 }
                             }
@@ -246,7 +205,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         }
     }
 
-    public boolean areItemsForDeleteSelected() {
+    public boolean areItemsSelected() {
         return mDeleteNames.size() > 0;
     }
 
@@ -294,6 +253,14 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         setData(newList);
     }
 
+    public void shareFiles() {
+        ArrayList<File> files = new ArrayList<>();
+        for (int position: mDeleteNames) {
+            files.add(mFileList.get(position));
+        }
+        mFileUtils.shareMultipleFiles(files);
+    }
+
     private void renameFile(final int position) {
         new MaterialDialog.Builder(mContext)
                 .title(R.string.creating_pdf)
@@ -329,35 +296,31 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 }).show();
     }
 
-    /**
-     * Prints a file
-     *
-     * @param fileName Path of file to be printed
-     */
-    private void doPrint(String fileName) {
-        PrintManager printManager = (PrintManager) mContext
-                .getSystemService(Context.PRINT_SERVICE);
-
-        mFileName = fileName;
-        String jobName = mContext.getString(R.string.app_name) + " Document";
-        if (printManager != null)
-            printManager.print(jobName, mPrintDocumentAdapter, null);
-    }
-
-    /**
-     * Emails the desired PDF using application of choice by user
-     *
-     * @author RakiRoad
-     */
-    private void shareFile(String name) {
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", new File(name));
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("application/pdf");
-        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
+    @SuppressLint("ResourceAsColor")
+    private void showDetails(String name, String path, String size, String lastModDate) {
+        TextView message = new TextView(mContext);
+        TextView title = new TextView(mContext);
+        message.setText("\n  File Name : " + name
+                + "\n\n  Path : " + path
+                + "\n\n  Size : " + size
+                + " \n\n  Date Modified : " + lastModDate);
+        message.setTextIsSelectable(true);
+        title.setText(R.string.details);
+        title.setPadding(20, 10, 10, 10);
+        title.setTextSize(30);
+        title.setTextColor(R.color.black_54);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        final AlertDialog dialog = builder.create();
+        builder.setView(message);
+        builder.setCustomTitle(title);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
     public String string(@StringRes int resId) {
@@ -372,11 +335,88 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         TextView mFilename;
         @BindView(R.id.checkbox)
         CheckBox checkBox;
+        @BindView(R.id.fileDate)
+        TextView mFiledate;
+        @BindView(R.id.fileSize)
+        TextView mFilesize;
 
         ViewFilesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+    /**
+     * Opens the password dialog to set Password for an existing PDF file.
+     *
+     * @param filePath Path of file to be encrypted
+     */
+    private void setPassword(final String filePath) {
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.set_password)
+                .customView(R.layout.custom_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
+
+        mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
+        mPasswordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mPositiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        if (StringUtils.isEmpty(input)) {
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                    R.string.snackbar_password_cannot_be_blank,
+                                    Snackbar.LENGTH_LONG).show();
+                        } else {
+                            mPassword = input.toString();
+
+                        }
+                    }
+                });
+        dialog.show();
+        mPositiveAction.setEnabled(false);
+        mPositiveAction.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    doEncryption(filePath);
+                } catch (IOException | DocumentException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+                notifyDataSetChanged();
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.password_added,
+                        Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    /**
+     * Uses PDF Reader to set encryption in pdf file.
+     *
+     * @param path Path of pdf file to be encrypted
+     */
+    private void doEncryption(String path) throws IOException, DocumentException {
+        String finalOutputFile = path.replace(".pdf", mActivity.getString(R.string.encrypted_file));
+        Log.e("Log", finalOutputFile);
+        PdfReader reader = new PdfReader(path);
+        PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
+        stamper.setEncryption(mPassword.getBytes(), mActivity.getString(R.string.app_name).getBytes(),
+                PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_256);
+        stamper.close();
+        reader.close();
+        mFileList.add(new File(finalOutputFile));
     }
 
     public interface EmptyStateChangeListener {
