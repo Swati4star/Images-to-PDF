@@ -194,46 +194,33 @@ public class MergeFilesFragment extends Fragment {
                     realPath = Environment.getExternalStorageDirectory().getAbsolutePath();
                     //Check if First button is clicked from checkbtClickTag
                     if (addFileOne.getTag().toString().equals(checkbtClickTag)) {
-                        if (uriString.startsWith("content://")) {        //If file path is of content:// type
-                            displayName = getFileName(uri);
-                            success = true;
-                        } else if (uriString.startsWith("file://")) {
-                            //If file path is of file:// type
-                            displayName = myFile.getName();
-                            Log.d("img", displayName);
-                            success = true;
-                        } else if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
-                            //If file path is of content:// type and is a google drive document
-                            success = false;
-                        }
-                        //If success is true, get full path
-                        if (success) {
-                            String folname = getParentFolder(path);
-                            setPathontextview(folname , filepathtv1);
-                        }
+                        getFilePath(uriString, uri, myFile, path, filepathtv1);
                     } else {
-                        if (uriString.startsWith("content://")) {
-                            displayName = getFileName(uri);
-                            success = true;
-
-                        } else if (uriString.startsWith("file://")) {
-                            displayName = myFile.getName();
-                            success = true;
-                        } else if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
-                            success = false;
-                        }
-                        if (success) {
-                            String folname = getParentFolder(path);
-                            setPathontextview(folname , filepathtv2);
-                        }
-
+                        getFilePath(uriString, uri, myFile, path, filepathtv2);
                     }
 
                 }
             }
         }
     }
+    public void getFilePath(String uriString, Uri uri, File myFile, String path, TextView filepathv) {
 
+        if (uriString.startsWith("content://")) {
+            displayName = getFileName(uri);
+            success = true;
+
+        } else if (uriString.startsWith("file://")) {
+            displayName = myFile.getName();
+            success = true;
+        } else if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
+            success = false;
+        }
+        if (success) {
+            String folname = getParentFolder(path);
+            setPathontextview(folname , filepathv);
+        }
+
+    }
 
     public String  getParentFolder(String p) {
         try {

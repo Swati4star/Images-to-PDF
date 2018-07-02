@@ -39,7 +39,7 @@
 
     <string name="pdf_ext" translatable="false">.pdf</string>
     <string name="pdf_dir" translatable="false">/PDFfiles/</string>
-    <string name="path_seperator" translatable="false">/</string>
+    <string name="path_seperator">/</string>
     <string name="pdf_type" translatable="false">application/pdf</string>
 
     <string name="please_wait">Please Wait</string>
