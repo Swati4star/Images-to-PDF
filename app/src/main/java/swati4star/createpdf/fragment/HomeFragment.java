@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import com.gun0912.tedpicker.Config;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -235,6 +236,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
      * Opens ImagePickerActivity to select Images
      */
     private void selectImages() {
+
+        Config config = new Config();
+        config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
+        ImagePickerActivity.setConfig(config);
+
         Intent intent = new Intent(mActivity, ImagePickerActivity.class);
 
         //add to intent the URIs of the already selected images
