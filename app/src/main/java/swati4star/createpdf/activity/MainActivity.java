@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.HomeFragment;
+import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();
+                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+                break;
+            case R.id.nav_merge:
+                fragment = new MergeFilesFragment();
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
                 break;
             case R.id.nav_feedback:
