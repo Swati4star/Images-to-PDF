@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="24dp"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/black_87"
+        android:text="@string/quality_image"/>
+ <LinearLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="20dp"
+     android:orientation="horizontal">
+     <EditText
+         android:layout_width="wrap_content"
+         android:textSize="20sp"
+         android:id="@+id/quality"
+         android:textColor="@color/black_87"
+         android:layout_height="wrap_content"
+         android:hint="Enter here" />
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text=" %"
+         android:textSize="20sp"
+         android:textColor="@color/black_87"/>
+ </LinearLayout>
+</LinearLayout>

@@ -35,14 +35,24 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PRStream;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfObject;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfStream;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.PdfImageObject;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -74,6 +84,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private String mPath;
     private String mFilename;
     private String mPassword;
+    private String mQuality;
     private View mPositiveAction;
     private View mNeutralAction;
     private EditText mPasswordInput;
@@ -438,10 +449,16 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 Log.v("Stage 4", "Document opened");
 
                 for (int i = 0; i < mImagesUri.size(); i++) {
+                    int quality = 70;
 
+                    if(StringUtils.isNotEmpty(mQuality)) {
+                        Log.e("log","Quality Changed");
+                        quality= Integer.parseInt(mQuality);
+                    }
+                    Log.e("log","Quality " + quality);
                     Bitmap bmp = new Compressor(mActivity)
-                            .setQuality(70)
-                            .setCompressFormat(Bitmap.CompressFormat.PNG)
+                            .setQuality(quality)
+                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
                             .compressToBitmap(new File(mImagesUri.get(i)));
 
                     Image image = Image.getInstance(mImagesUri.get(i));
@@ -532,6 +549,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_crop_rotate_24),
                         getResources().getString(R.string.edit_images_text)));
 
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
+                        getString(R.string.compress_image)));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -544,9 +564,61 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             case 1:
                 cropImages();
                 break;
+            case 2:
+                    compressImage();
+                    break;
             default:
                 break;
         }
+    }
+
+    private void compressImage()  {
+
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.compress_image)
+                .customView(R.layout.compress_image_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
+
+        mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        mPasswordInput = dialog.getCustomView().findViewById(R.id.quality);
+        mPasswordInput.setText(mQuality);
+        mPasswordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mPositiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        int x = Integer.parseInt(input.toString());
+                        if (x > 100 || x<1 ) {
+                            Log.e("log","BOOM");
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                    R.string.invalid_quality,
+                                    Snackbar.LENGTH_LONG).show();
+                        } else {
+                            mQuality = input.toString();
+                            Log.e("log","Imput : "+mQuality);
+                            onPasswordAdded();
+                        }
+                    }
+                });
+        dialog.show();
+        mPositiveAction.setEnabled(false);
     }
 
     private void passwordProtectPDF() {
