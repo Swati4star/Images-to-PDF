@@ -448,13 +448,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 Log.v("Stage 4", "Document opened");
 
                 for (int i = 0; i < mImagesUri.size(); i++) {
-                    int quality = 70;
+                    int quality = 30;
 
                     if (StringUtils.isNotEmpty(mQuality)) {
                         quality = Integer.parseInt(mQuality);
                     }
                     Image image = Image.getInstance(mImagesUri.get(i));
-                    image.setCompressionLevel(quality);
+                    image.setCompressionLevel(100-quality);
 
                     Log.v("Stage 6", "Image path adding");
 
@@ -573,7 +573,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
         mPasswordInput = dialog.getCustomView().findViewById(R.id.quality);
-        mPasswordInput.setText(mQuality);
         mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -590,7 +589,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         int check;
                         try {
                             check = Integer.parseInt(String.valueOf(input));
-                            if (check > 100 || check <= 0) {
+                            if (check > 100 || check < 0) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.invalid_quality,
                                         Snackbar.LENGTH_LONG).show();
