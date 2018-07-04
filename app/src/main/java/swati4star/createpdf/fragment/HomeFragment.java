@@ -591,22 +591,19 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         try
                         {
                             check = Integer.parseInt(String.valueOf(input));
-                            if(check>100 || check<=0) {
+                            if (check > 100 || check <= 0) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.invalid_quality,
                                         Snackbar.LENGTH_LONG).show();
-                            }
-                            else {
+                            } else {
                                 mQuality = String.valueOf(check);
                                 showCompression();
                             }
-                        }
-                        catch (NumberFormatException e) {
+                        } catch (NumberFormatException e) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.invalid_quality,
                                         Snackbar.LENGTH_LONG).show();
-                        }
-                    }
+                        } }
                 });
         dialog.show();
         mPositiveAction.setEnabled(false);
