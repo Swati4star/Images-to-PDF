@@ -450,11 +450,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 for (int i = 0; i < mImagesUri.size(); i++) {
                     int quality = 70;
 
-                    if(StringUtils.isNotEmpty(mQuality)) {
-                        Log.e("log","Quality Changed");
-                        quality= Integer.parseInt(mQuality);
+                    if (StringUtils.isNotEmpty(mQuality)) {
+                        quality = Integer.parseInt(mQuality);
                     }
-                    Log.e("log","Quality " + quality);
                     Image image = Image.getInstance(mImagesUri.get(i));
                     image.setCompressionLevel(quality);
 
@@ -550,8 +548,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 cropImages();
                 break;
             case 2:
-                    compressImage();
-                    break;
+                compressImage();
+                break;
             default:
                 break;
         }
@@ -589,9 +587,25 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                            mQuality = input.toString();
-                            Log.e("log","Imput : "+mQuality);
-                            showCompression();
+                        int check;
+                        try
+                        {
+                            check = Integer.parseInt(String.valueOf(input));
+                            if(check>100 || check<=0) {
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                        R.string.invalid_quality,
+                                        Snackbar.LENGTH_LONG).show();
+                            }
+                            else {
+                                mQuality = String.valueOf(check);
+                                showCompression();
+                            }
+                        }
+                        catch (NumberFormatException e) {
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                        R.string.invalid_quality,
+                                        Snackbar.LENGTH_LONG).show();
+                        }
                     }
                 });
         dialog.show();
