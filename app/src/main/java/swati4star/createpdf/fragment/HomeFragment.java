@@ -9,8 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -42,9 +40,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
-import swati4star.createpdf.util.OnPDFCreatedInterface;
+import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
 
@@ -54,15 +53,15 @@ import swati4star.createpdf.util.StringUtils;
 public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner,
         OnPDFCreatedInterface {
 
-    private static final int INTENT_REQUEST_GET_IMAGES = 13;
+    public static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
 
     private static int mImageCounter = 0;
-    private int mMorphCounter1 = 1;
 
+    private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     private ArrayList<String> mImagesUri = new ArrayList<>();
-    private ArrayList<String> mTempUris = new ArrayList<>();
+    private final ArrayList<String> mTempUris = new ArrayList<>();
     private String mPath;
     private String mPassword;
     private String mQuality;
@@ -78,7 +77,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     RecyclerView mEnhancementOptionsRecycleView;
 
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
-    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
+    private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
@@ -92,24 +91,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, root);
 
-        morphToSquare(mCreatePdf, integer());
+        mMorphButtonUtility = new MorphButtonUtility(mActivity);
+
+        mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
         mOpenPdf.setVisibility(View.GONE);
 
         // Get runtime permissions if build version >= Android M
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                mOpenSelectImages = false; // We don't want next activity to open after getting permissions
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-            }
-        }
+        getRuntimePermissions(false);
 
         showEnhancementOptions();
 
@@ -126,43 +114,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     // Adding Images to PDF
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        // Check if permissions are granted
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(mActivity,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                mOpenSelectImages = true; // We want next activity to open after getting permissions
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-            } else {
-                selectImages();
-            }
-        } else {
+        if (getRuntimePermissions(true))
             selectImages();
-        }
-    }
-
-    void cropImages() {
-        if (mTempUris.size() == 0) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        next();
-    }
-
-    private void next() {
-        if (mImageCounter != mTempUris.size() && mImageCounter < mTempUris.size()) {
-            CropImage.activity(Uri.fromFile(new File(mTempUris.get(mImageCounter))))
-                    .setActivityMenuIconColor(color(R.color.colorPrimary))
-                    .setInitialCropWindowPaddingRatio(0)
-                    .setAllowRotation(true)
-                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
-                    .start(mActivity, this);
-        }
     }
 
     // Create Pdf of selected images
@@ -178,6 +131,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             } else
                 mImagesUri = (ArrayList<String>) mTempUris.clone();
         }
+
+        if (mImagesUri.size() < mTempUris.size()) {
+            for (int i = mImagesUri.size(); i < mTempUris.size(); i++) {
+                mImagesUri.add(mTempUris.get(i));
+            }
+        }
+
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -193,9 +153,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
                             new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
                                     HomeFragment.this).execute();
-
-                            if (mMorphCounter1 == 0)
-                                mMorphCounter1++;
                         }
                     }
                 })
@@ -220,29 +177,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     R.string.snackbar_no_pdf_app,
                     Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    /**
-     * Opens ImagePickerActivity to select Images
-     */
-    private void selectImages() {
-
-        Config config = new Config();
-        config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
-        ImagePickerActivity.setConfig(config);
-
-        Intent intent = new Intent(mActivity, ImagePickerActivity.class);
-
-        //add to intent the URIs of the already selected images
-        //first they are converted to Uri objects
-        ArrayList<Uri> uris = new ArrayList<>(mTempUris.size());
-        for (String stringUri : mTempUris) {
-            uris.add(Uri.fromFile(new File(stringUri)));
-        }
-        // add them to the intent
-        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
-
-        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 
     /**
@@ -288,6 +222,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             return;
 
         if (requestCode == INTENT_REQUEST_GET_IMAGES) {
+
             mTempUris.clear();
             ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (Uri uri : imageUris)
@@ -295,9 +230,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.snackbar_images_added,
                     Snackbar.LENGTH_LONG).show();
-            morphToSquare(mCreatePdf, integer());
+            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mOpenPdf.setVisibility(View.GONE);
+
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             switch (resultCode) {
                 case Activity.RESULT_OK:
@@ -316,64 +253,10 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 default:
                     mImagesUri.add(mTempUris.get(mImageCounter));
             }
-            morphToSquare(mCreatePdf, integer());
+            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mImageCounter++;
             next();
         }
-    }
-
-    /**
-     * Converts morph button ot square shape
-     *
-     * @param btnMorph the button to be converted
-     * @param duration time period of transition
-     */
-    private void morphToSquare(final MorphingButton btnMorph, int duration) {
-        MorphingButton.Params square = MorphingButton.Params.create()
-                .duration(duration)
-                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
-                .width(dimen(R.dimen.mb_width_328))
-                .height(dimen(R.dimen.mb_height_48))
-                .color(color(R.color.mb_blue))
-                .colorPressed(color(R.color.mb_blue_dark))
-                .text(getString(R.string.mb_button));
-        btnMorph.morph(square);
-    }
-
-    /**
-     * Converts morph button into success shape
-     *
-     * @param btnMorph the button to be converted
-     */
-    private void morphToSuccess(final MorphingButton btnMorph) {
-        MorphingButton.Params circle = MorphingButton.Params.create()
-                .duration(integer())
-                .cornerRadius(dimen(R.dimen.mb_height_56))
-                .width(dimen(R.dimen.mb_height_56))
-                .height(dimen(R.dimen.mb_height_56))
-                .color(color(R.color.mb_green))
-                .colorPressed(color(R.color.mb_green_dark))
-                .icon(R.drawable.ic_done);
-        btnMorph.morph(circle);
-    }
-
-    private int integer() {
-        return getResources().getInteger(R.integer.mb_animation);
-    }
-
-    private int dimen(@DimenRes int resId) {
-        return (int) getResources().getDimension(resId);
-    }
-
-    private int color(@ColorRes int resId) {
-        return getResources().getColor(resId);
-    }
-
-    private void resetValues() {
-        mImagesUri.clear();
-        mTempUris.clear();
-        mImageCounter = 0;
-        mPassword = null;
     }
 
     public List<EnhancementOptionsEntity> getEnhancementOptions() {
@@ -463,12 +346,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         positiveAction.setEnabled(false);
     }
 
-    private void showCompression() {
-        mEnhancementOptionsEntityArrayList.get(2)
-                .setName(mQuality + "% Compressed");
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
-    }
-
     private void passwordProtectPDF() {
         if (mTempUris.size() == 0) {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
@@ -528,6 +405,12 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         positiveAction.setEnabled(false);
     }
 
+    private void showCompression() {
+        mEnhancementOptionsEntityArrayList.get(2)
+                .setName(mQuality + "% Compressed");
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
     private void onPasswordAdded() {
         mEnhancementOptionsEntityArrayList.get(0)
                 .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
@@ -542,11 +425,80 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
     @Override
     public void onPDFCreated(boolean success, String path) {
-        resetValues();
+        mImagesUri.clear();
+        mTempUris.clear();
+        mImageCounter = 0;
+        mPassword = null;
         if (success) {
             mOpenPdf.setVisibility(View.VISIBLE);
-            morphToSuccess(mCreatePdf);
+            mMorphButtonUtility.morphToSuccess(mCreatePdf);
             mPath = path;
         }
+    }
+
+    void cropImages() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        next();
+    }
+
+    private void next() {
+        if (mImageCounter != mTempUris.size() && mImageCounter < mTempUris.size()) {
+            CropImage.activity(Uri.fromFile(new File(mTempUris.get(mImageCounter))))
+                    .setActivityMenuIconColor(mMorphButtonUtility.color(R.color.colorPrimary))
+                    .setInitialCropWindowPaddingRatio(0)
+                    .setAllowRotation(true)
+                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
+                    .start(mActivity, this);
+        }
+    }
+
+    boolean getRuntimePermissions(boolean openImagesActivity) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
+                requestPermissions( new String[] {
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},
+                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Opens ImagePickerActivity to select Images
+     */
+    private void selectImages() {
+
+        Config config = new Config();
+        config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
+        ImagePickerActivity.setConfig(config);
+
+        Intent intent = new Intent(mActivity, ImagePickerActivity.class);
+
+        //add to intent the URIs of the already selected images
+        //first they are converted to Uri objects
+        ArrayList<Uri> uris = new ArrayList<>(mTempUris.size());
+        for (String stringUri : mTempUris) {
+            uris.add(Uri.fromFile(new File(stringUri)));
+        }
+        // add them to the intent
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
+
+        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 }

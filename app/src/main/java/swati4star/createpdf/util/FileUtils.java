@@ -40,7 +40,7 @@ import swati4star.createpdf.R;
 
 public class FileUtils {
 
-    private Activity mContext;
+    private final Activity mContext;
 
     public FileUtils(Activity context) {
         this.mContext = context;
@@ -97,7 +97,7 @@ public class FileUtils {
         });
     }
     
-    public ArrayList<File> getPdfsFromFolder(File[] files) {
+    private ArrayList<File> getPdfsFromFolder(File[] files) {
         final ArrayList<File> pdfFiles = new ArrayList<>();
         for (File file : files) {
             if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {

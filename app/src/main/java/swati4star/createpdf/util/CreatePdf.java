@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 
 /**
  * An async task that converts selected images to Pdf
@@ -31,10 +32,13 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     // Progress mDialog
     private MaterialDialog mDialog;
     private boolean mSuccess;
-    private String mPath, mFileName, mPassword, mQualityString;
-    private ArrayList<String> mImagesUri;
-    protected Activity mContext;
-    private OnPDFCreatedInterface mOnPDFCreatedInterface;
+    private String mPath;
+    private final String mFileName;
+    private final String mPassword;
+    private final String mQualityString;
+    private final ArrayList<String> mImagesUri;
+    private final Activity mContext;
+    private final OnPDFCreatedInterface mOnPDFCreatedInterface;
 
     public CreatePdf(Activity context, ArrayList<String> imagesUri, String fileName, String password,
                      String qualityString, OnPDFCreatedInterface onPDFCreated) {

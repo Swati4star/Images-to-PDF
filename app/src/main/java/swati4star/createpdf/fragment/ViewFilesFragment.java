@@ -36,11 +36,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
+import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 public class ViewFilesFragment extends Fragment
-        implements SwipeRefreshLayout.OnRefreshListener, ViewFilesAdapter.EmptyStateChangeListener {
+        implements SwipeRefreshLayout.OnRefreshListener, EmptyStateChangeListener {
 
     private static final int NAME_INDEX = 0;
     private static final int DATE_INDEX = 1;

@@ -21,7 +21,7 @@ import swati4star.createpdf.util.FeedbackUtils;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FeedbackUtils mFeedbackUtils;
+    private FeedbackUtils mFeedbackUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

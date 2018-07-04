@@ -22,8 +22,8 @@ import swati4star.createpdf.util.EnhancementOptionsEntity;
 public class EnhancementOptionsAdapter
         extends RecyclerView.Adapter<EnhancementOptionsAdapter.EnhancementOptionsViewHolder> {
 
-    private OnItemClickListner mOnItemClickListner;
-    private List<EnhancementOptionsEntity> mEnhancementOptionsEntityList;
+    private final OnItemClickListner mOnItemClickListner;
+    private final List<EnhancementOptionsEntity> mEnhancementOptionsEntityList;
 
     public EnhancementOptionsAdapter(OnItemClickListner mOnItemClickListner,
                                      List<EnhancementOptionsEntity> mEnhancementOptionsEntityList) {

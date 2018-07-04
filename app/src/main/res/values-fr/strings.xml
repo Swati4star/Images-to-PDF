@@ -116,5 +116,7 @@
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
+    <string name="compress_dialog_enter_prompt">Enter here</string>
+    <string name="compress_dialog_percentage">%</string>
 
 </resources>

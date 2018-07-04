@@ -13,7 +13,7 @@ import swati4star.createpdf.R;
 
 public class FeedbackUtils {
 
-    private Activity mContext;
+    private final Activity mContext;
 
     public FeedbackUtils(Activity context) {
         this.mContext = context;

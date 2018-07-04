@@ -23,12 +23,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.interfaces.DataSetChanged;
 
 public class PDFUtils {
 
-    private Activity mContext;
-    String mPassword;
-    String outputfile;
+    private final Activity mContext;
+    private String mPassword;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
@@ -39,9 +39,8 @@ public class PDFUtils {
      * Opens the password dialog to set Password for an existing PDF file.
      *
      * @param filePath Path of file to be encrypted
-     * @return String - path of output file
      */
-    public String setPassword(final String filePath) {
+    public void setPassword(final String filePath, final DataSetChanged dataSetChanged) {
         final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.set_password)
                 .customView(R.layout.custom_dialog, true)
@@ -80,7 +79,8 @@ public class PDFUtils {
         mPositiveAction.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    outputfile = doEncryption(filePath, mPassword);
+                    doEncryption(filePath, mPassword);
+                    dataSetChanged.updateDataset();
                 } catch (IOException | DocumentException e) {
                     e.printStackTrace();
                 }
@@ -90,7 +90,6 @@ public class PDFUtils {
                         Snackbar.LENGTH_LONG).show();
             }
         });
-        return outputfile;
     }
 
     /**
@@ -100,7 +99,7 @@ public class PDFUtils {
      * @param password - password to be encrypted with
      * @return string - path of output file
      */
-    public String  doEncryption(String path, String password) throws IOException, DocumentException {
+    private String  doEncryption(String path, String password) throws IOException, DocumentException {
         String finalOutputFile = path.replace(".pdf", mContext.getString(R.string.encrypted_file));
         Log.e("Log", finalOutputFile);
         PdfReader reader = new PdfReader(path);

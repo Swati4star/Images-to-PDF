@@ -1,9 +1,7 @@
 package swati4star.createpdf.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +22,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.interfaces.DataSetChanged;
+import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
 
@@ -35,16 +35,16 @@ import swati4star.createpdf.util.PDFUtils;
  */
 
 
-public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder> {
+public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder>
+        implements DataSetChanged {
 
-    private final Context mContext;
     private final Activity mActivity;
     private final EmptyStateChangeListener mEmptyStateChangeListener;
     private ArrayList<File> mFileList;
-    private FileUtils mFileUtils;
     private final ArrayList<Integer> mDeleteNames;
-    private PDFUtils mPDFUtils;
-    private String mPassword;
+
+    private final FileUtils mFileUtils;
+    private final PDFUtils mPDFUtils;
 
     /**
      * Returns adapter instance
@@ -57,7 +57,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                             ArrayList<File> feedItems,
                             EmptyStateChangeListener emptyStateChangeListener) {
         this.mActivity = activity;
-        this.mContext = activity;
         this.mEmptyStateChangeListener = emptyStateChangeListener;
         this.mFileList = feedItems;
         mDeleteNames = new ArrayList<>();
@@ -74,19 +73,19 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int pos) {
         Log.d("logs", "getItemCount: " + mFileList.size());
         // Extract file name from path
-        final String fileName = mFileList.get(position).getPath();
-        final String[] name = fileName.split("/");
+        final int position = holder.getAdapterPosition();
+        final String filePath = mFileList.get(position).getPath();
+        final String[] fileName = filePath.split("/");
         File file = mFileList.get(position);
-        final String lastModDate = mFileUtils.getFormattedDate(file);
-        final String file_size = mFileUtils.getFormattedSize(file);
+        final String lastModDate = FileUtils.getFormattedDate(file);
+        final String fileSize = FileUtils.getFormattedSize(file);
 
-        holder.mFilename.setText(name[name.length - 1]);
-
-        holder.mFilesize.setText(FileUtils.getFormattedSize(mFileList.get(position)));
-        holder.mFiledate.setText(FileUtils.getFormattedDate(mFileList.get(position)));
+        holder.mFilename.setText(fileName[fileName.length - 1]);
+        holder.mFilesize.setText(fileSize);
+        holder.mFiledate.setText(lastModDate);
 
         if (mDeleteNames.contains(position))
             holder.checkBox.setChecked(true);
@@ -107,7 +106,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         holder.mRipple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(mContext)
+                new MaterialDialog.Builder(mActivity)
                         .title(R.string.title)
                         .items(R.array.items)
                         .itemsIds(R.array.itemIds)
@@ -117,11 +116,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
                                 switch (which) {
                                     case 0: //Open
-                                        mFileUtils.openFile(fileName);
+                                        mFileUtils.openFile(filePath);
                                         break;
 
                                     case 1: //delete
-                                        deleteFile(fileName, position);
+                                        deleteFile(filePath, position);
                                         break;
 
                                     case 2: //rename
@@ -137,12 +136,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         break;
 
                                     case 5: //Details
-                                        mPDFUtils.showDetails(name[name.length - 1], fileName, file_size, lastModDate);
+                                        mPDFUtils.showDetails(fileName[fileName.length - 1],
+                                                filePath, fileSize, lastModDate);
                                         break;
                                     case 6://Password Set
-                                        String outputFile = mPDFUtils.setPassword(fileName);
-                                        mFileList.add(new File(outputFile));
-                                        notifyDataSetChanged();
+                                        mPDFUtils.setPassword(filePath, ViewFilesAdapter.this);
                                         break;
                                 }
                             }
@@ -230,10 +228,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     private void renameFile(final int position) {
-        new MaterialDialog.Builder(mContext)
+        new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(mContext.getString(R.string.example), null, new MaterialDialog.InputCallback() {
+                .input(mActivity.getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         if (input == null || input.toString().trim().isEmpty()) {
@@ -245,7 +243,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                             String oldPath =   mFileList.get(position).getPath();
                             int index = oldPath.lastIndexOf('/');
                             String newfilename = oldPath.substring(0, index) + "/" + input.toString() +
-                                    mContext.getString(R.string.pdf_ext);
+                                    mActivity.getString(R.string.pdf_ext);
 
                             File newfile = new File(newfilename);
                             if (oldfile.renameTo(newfile)) {
@@ -264,8 +262,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 }).show();
     }
 
-    public String string(@StringRes int resId) {
-        return mContext.getString(resId);
+    @Override
+    public void updateDataset() {
+        File folder = mFileUtils.getOrCreatePdfDirectory();
+        ArrayList<File> pdfsFromFolder = mFileUtils.getPdfsFromPdfFolder(folder.listFiles());
+        setData(pdfsFromFolder);
     }
 
     public class ViewFilesHolder extends RecyclerView.ViewHolder {
@@ -285,10 +286,5 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    public interface EmptyStateChangeListener {
-        void setEmptyStateVisible();
-        void setEmptyStateGone();
     }
 }
