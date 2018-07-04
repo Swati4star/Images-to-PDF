@@ -588,8 +588,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     @Override
                     public void afterTextChanged(Editable input) {
                         int check;
-                        try
-                        {
+                        try {
                             check = Integer.parseInt(String.valueOf(input));
                             if (check > 100 || check <= 0) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
@@ -603,7 +602,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.invalid_quality,
                                         Snackbar.LENGTH_LONG).show();
-                        } }
+                        }
+                    }
                 });
         dialog.show();
         mPositiveAction.setEnabled(false);
