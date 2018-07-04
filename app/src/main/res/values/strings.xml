@@ -138,5 +138,5 @@
     <string name="btn_sav_text">savText</string>
     <string name="compress_image">Compress the Image</string>
     <string name="quality_image">Enter % quality of image :</string>
-    <string name="invalid_quality">Invaid Entry</string>\
+    <string name="invalid_quality">Invaid Entry</string>
 </resources>

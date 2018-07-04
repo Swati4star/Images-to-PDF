@@ -60,7 +60,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import id.zelory.compressor.Compressor;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
@@ -456,22 +455,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         quality= Integer.parseInt(mQuality);
                     }
                     Log.e("log","Quality " + quality);
-                    Bitmap bmp = new Compressor(mActivity)
-                            .setQuality(quality)
-                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                            .compressToBitmap(new File(mImagesUri.get(i)));
-
                     Image image = Image.getInstance(mImagesUri.get(i));
-
-
-                    if (bmp.getWidth() > documentRect.getWidth()
-                            || bmp.getHeight() > documentRect.getHeight()) {
-                        //bitmap is larger than page,so set bitmap's size similar to the whole page
-                        image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                    } else {
-                        //bitmap is smaller than page, so add bitmap simply.
-                        image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
-                    }
+                    image.setCompressionLevel(quality);
 
                     Log.v("Stage 6", "Image path adding");
 
@@ -604,21 +589,19 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        int x = Integer.parseInt(input.toString());
-                        if (x > 100 || x<1 ) {
-                            Log.e("log","BOOM");
-                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.invalid_quality,
-                                    Snackbar.LENGTH_LONG).show();
-                        } else {
                             mQuality = input.toString();
                             Log.e("log","Imput : "+mQuality);
-                            onPasswordAdded();
-                        }
+                            showCompression();
                     }
                 });
         dialog.show();
         mPositiveAction.setEnabled(false);
+    }
+
+    private void showCompression() {
+        mEnhancementOptionsEntityArrayList.get(2)
+                .setName(mQuality + "% Compressed");
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
     private void passwordProtectPDF() {
