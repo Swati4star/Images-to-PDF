@@ -138,6 +138,7 @@
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
     <string name="btn_sav_text">savText</string>
-
-
+    <string name="compress_image">Compress the Image(Default : 30%)</string>
+    <string name="quality_image">Enter % compression of image :</string>
+    <string name="invalid_quality">Invaid Entry</string>
 </resources>
