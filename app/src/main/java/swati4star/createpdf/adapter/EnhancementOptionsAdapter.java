@@ -58,7 +58,7 @@ public class EnhancementOptionsAdapter
         @BindView(R.id.option_name)
         TextView optionName;
 
-        public EnhancementOptionsViewHolder(View itemView) {
+        EnhancementOptionsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
