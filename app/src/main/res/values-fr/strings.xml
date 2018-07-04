@@ -111,4 +111,7 @@
     <string name="btn_sav_text">savText</string>
     <string name="path_seperator">/</string>
 
+    <!-- Select Images string -->
+    <string name="image_picker_activity_toolbar_title">Select Images</string>
+
 </resources>
