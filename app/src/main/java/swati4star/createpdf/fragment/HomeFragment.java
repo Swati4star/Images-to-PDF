@@ -454,7 +454,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         quality = Integer.parseInt(mQuality);
                     }
                     Image image = Image.getInstance(mImagesUri.get(i));
-                    image.setCompressionLevel(100-quality);
+                    image.setCompressionLevel(100 - quality);
 
                     Log.v("Stage 6", "Image path adding");
 
