@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,11 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import io.github.tonnyl.whatsnew.WhatsNew;
+import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
+
+import static swati4star.createpdf.util.Constants.WHATS_NEW1_ICON;
+import static swati4star.createpdf.util.Constants.WHATS_NEW1_TEXT;
+import static swati4star.createpdf.util.Constants.WHATS_NEW1_TITLE;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,9 +42,18 @@ public class MainActivity extends AppCompatActivity
         // Set navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
         //Replaced setDrawerListener with addDrawerListener because it was deprecated.
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        // To show what's new in our application
+        WhatsNew whatsNew = WhatsNew.newInstance(
+                new WhatsNewItem(WHATS_NEW1_TITLE, WHATS_NEW1_TEXT, WHATS_NEW1_ICON)
+        );
+        whatsNew.setButtonBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        whatsNew.setButtonTextColor(ContextCompat.getColor(this, R.color.mb_white));
+        whatsNew.presentAutomatically(this);
 
         // Set HomeFragment fragment
         Fragment fragment = new HomeFragment();
