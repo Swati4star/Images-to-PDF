@@ -8,8 +8,8 @@
         android:orderInCategory="1"
         android:title="@string/search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/item_sort"
         android:icon="@drawable/ic_sort_white_24px"
@@ -24,5 +24,10 @@
         android:orderInCategory="3"
         app:showAsAction="ifRoom" />
 
-
+    <item
+        android:id="@+id/item_share"
+        android:icon="@drawable/baseline_share_24"
+        android:title="@string/share"
+        android:orderInCategory="4"
+        app:showAsAction="never" />
 </menu>

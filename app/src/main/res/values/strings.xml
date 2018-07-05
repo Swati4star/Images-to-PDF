@@ -39,13 +39,14 @@
 
     <string name="pdf_ext" translatable="false">.pdf</string>
     <string name="pdf_dir" translatable="false">/PDFfiles/</string>
+    <string name="path_seperator">/</string>
     <string name="pdf_type" translatable="false">application/pdf</string>
 
     <string name="please_wait">Please Wait</string>
     <string name="populating_list">Fetching files. This may take a while</string>
 
     <!-- Navigation drawer strings -->
-    <string name="main">Main</string>
+    <string name="create_pdf">Create PDF</string>
     <string name="viewFiles">View Files</string>
     <string name="extras">Extras</string>
     <string name="feedback">Feedback</string>
@@ -54,6 +55,7 @@
 
     <!--Snackbar strings -->
     <string name="snackbar_no_images">No Images selected</string>
+    <string name="snackbar_no_pdfs_selected">No PDFs selected</string>
     <string name="snackbar_name_not_blank">Name cannot be blank</string>
     <string name="snackbar_permissions_given">Permissions Given!</string>
     <string name="snackbar_insufficient_permissions">Insufficient Permissions!</string>
@@ -64,6 +66,12 @@
     <string name="snackbar_file_deleted">File deleted.</string>
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
+    <string name="pdf_merge">Merging File</string>
+    <string name="pdf_merge_error">Unable to Merge</string>
+    <string name="file_path">PDF File Path</string>
+
+
+
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>
@@ -98,10 +106,12 @@
     <string name="rate_title">Rate us!</string>
     <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
 
+    <!-- Select Images string -->
+    <string name="image_picker_activity_toolbar_title">Select Images</string>
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
-    <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
+    <string name="feedback_text">Kindly write your precious feeback, or just drop a Hi! :)</string>
     <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="feedback_chooser">"Send mail…"</string>
     <string name="no_pdf">No PDFs to show</string>
@@ -113,10 +123,24 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
+
+    <string name="merge_pdf">Merge PDF</string>
+    <string name="merge_file_select">Select a file</string>
+    <string name="file_one">Select first PDF</string>
+    <string name="file_two">Select second PDF</string>
+    <string name="File_hint_one">File Path for PDF one</string>
+    <string name="File_hint_two">File Path for PDF two</string>
+    <string name="merge_files">MERGE FILES</string>
+    <string name="note">Files present on SD Card are supported</string>
     <string name="file_date_text">File Date</string>
     <string name="file_size_text">File Size</string>
     <string name="password_added">Password Added</string>
     <string name="encrypted_file">_encrypted.pdf</string>
-
-
+    <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
+    <string name="btn_sav_text">savText</string>
+    <string name="compress_image">Compress the Image(Default : 30%)</string>
+    <string name="quality_image">Enter % compression of image :</string>
+    <string name="invalid_quality">Invaid Entry</string>
+    <string name="compress_dialog_enter_prompt">Enter here</string>
+    <string name="compress_dialog_percentage">%</string>
 </resources>

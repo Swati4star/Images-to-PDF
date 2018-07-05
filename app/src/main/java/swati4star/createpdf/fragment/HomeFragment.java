@@ -1,20 +1,14 @@
 package swati4star.createpdf.fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -24,7 +18,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,16 +26,11 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
+import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -50,34 +38,35 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import id.zelory.compressor.Compressor;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
-import swati4star.createpdf.adapter.ViewFilesAdapter;
+import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
+import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
-
-import static java.util.Collections.singletonList;
 
 
 /**
  * HomeFragment fragment to start with creating PDF
  */
-public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner {
+public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner,
+        OnPDFCreatedInterface {
 
-    private static final int INTENT_REQUEST_GET_IMAGES = 13;
+    public static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+
     private static int mImageCounter = 0;
+
+    private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     private ArrayList<String> mImagesUri = new ArrayList<>();
-    private ArrayList<String> mTempUris = new ArrayList<>();
+    private final ArrayList<String> mTempUris = new ArrayList<>();
     private String mPath;
-    private String mFilename;
     private String mPassword;
-    private View mPositiveAction;
-    private View mNeutralAction;
-    private EditText mPasswordInput;
+    private String mQuality;
     private boolean mOpenSelectImages = false;
+
     @BindView(R.id.addImages)
     MorphingButton addImages;
     @BindView(R.id.pdfCreate)
@@ -86,9 +75,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     MorphingButton mOpenPdf;
     @BindView(R.id.enhancement_options_recycle_view)
     RecyclerView mEnhancementOptionsRecycleView;
-    private int mMorphCounter1 = 1;
+
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
-    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
+    private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
@@ -102,25 +91,14 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, root);
 
-        morphToSquare(mCreatePdf, integer());
+        mMorphButtonUtility = new MorphButtonUtility(mActivity);
+
+        mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
         mOpenPdf.setVisibility(View.GONE);
         mCreatePdf.setEnabled(false);
 
         // Get runtime permissions if build version >= Android M
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                mOpenSelectImages = false; // We don't want next activity to open after getting permissions
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-            }
-        }
+        getRuntimePermissions(false);
 
         showEnhancementOptions();
 
@@ -137,43 +115,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     // Adding Images to PDF
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        // Check if permissions are granted
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(mActivity,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                mOpenSelectImages = true; // We want next activity to open after getting permissions
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                Manifest.permission.CAMERA},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-            } else {
-                selectImages();
-            }
-        } else {
+        if (getRuntimePermissions(true))
             selectImages();
-        }
-    }
-
-    void cropImages() {
-        if (mTempUris.size() == 0) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        next();
-    }
-
-    private void next() {
-        if (mImageCounter != mTempUris.size() && mImageCounter < mTempUris.size()) {
-            CropImage.activity(Uri.fromFile(new File(mTempUris.get(mImageCounter))))
-                    .setActivityMenuIconColor(color(R.color.colorPrimary))
-                    .setInitialCropWindowPaddingRatio(0)
-                    .setAllowRotation(true)
-                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
-                    .start(mActivity, this);
-        }
     }
 
     // Create Pdf of selected images
@@ -189,6 +132,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             } else
                 mImagesUri = (ArrayList<String>) mTempUris.clone();
         }
+
+        if (mImagesUri.size() < mTempUris.size()) {
+            for (int i = mImagesUri.size(); i < mTempUris.size(); i++) {
+                mImagesUri.add(mTempUris.get(i));
+            }
+        }
+
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -200,12 +150,10 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            mFilename = input.toString();
+                            String filename = input.toString();
 
-                            new CreatingPdf().execute();
-
-                            if (mMorphCounter1 == 0)
-                                mMorphCounter1++;
+                            new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
+                                    HomeFragment.this).execute();
                         }
                     }
                 })
@@ -233,6 +181,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     }
 
     /**
+
      * Opens ImagePickerActivity to select Images
      */
     private void selectImages() {
@@ -294,6 +243,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             return;
 
         if (requestCode == INTENT_REQUEST_GET_IMAGES) {
+
             mTempUris.clear();
             ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (Uri uri : imageUris)
@@ -301,9 +251,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.snackbar_images_added,
                     Snackbar.LENGTH_LONG).show();
-            morphToSquare(mCreatePdf, integer());
+            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mOpenPdf.setVisibility(View.GONE);
+
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             switch (resultCode) {
                 case Activity.RESULT_OK:
@@ -322,205 +274,10 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 default:
                     mImagesUri.add(mTempUris.get(mImageCounter));
             }
-            morphToSquare(mCreatePdf, integer());
+            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mImageCounter++;
             next();
         }
-    }
-
-    /**
-     * Converts morph button ot square shape
-     *
-     * @param btnMorph the button to be converted
-     * @param duration time period of transition
-     */
-    private void morphToSquare(final MorphingButton btnMorph, int duration) {
-        MorphingButton.Params square = MorphingButton.Params.create()
-                .duration(duration)
-                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
-                .width(dimen(R.dimen.mb_width_328))
-                .height(dimen(R.dimen.mb_height_48))
-                .color(color(R.color.mb_blue))
-                .colorPressed(color(R.color.mb_blue_dark))
-                .text(getString(R.string.mb_button));
-        btnMorph.morph(square);
-    }
-
-    /**
-     * Converts morph button into success shape
-     *
-     * @param btnMorph the button to be converted
-     */
-    private void morphToSuccess(final MorphingButton btnMorph) {
-        MorphingButton.Params circle = MorphingButton.Params.create()
-                .duration(integer())
-                .cornerRadius(dimen(R.dimen.mb_height_56))
-                .width(dimen(R.dimen.mb_height_56))
-                .height(dimen(R.dimen.mb_height_56))
-                .color(color(R.color.mb_green))
-                .colorPressed(color(R.color.mb_green_dark))
-                .icon(R.drawable.ic_done);
-        btnMorph.morph(circle);
-    }
-
-    private int integer() {
-        return getResources().getInteger(R.integer.mb_animation);
-    }
-
-    private int dimen(@DimenRes int resId) {
-        return (int) getResources().getDimension(resId);
-    }
-
-    private int color(@ColorRes int resId) {
-        return getResources().getColor(resId);
-    }
-
-    /**
-     * An async task that converts selected images to Pdf
-     */
-    @SuppressLint("StaticFieldLeak")
-    class CreatingPdf extends AsyncTask<String, String, String> {
-
-        // Progress dialog
-        MaterialDialog dialog;
-        boolean success;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            final MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
-                    .title(R.string.please_wait)
-                    .content(R.string.populating_list)
-                    .cancelable(false)
-                    .progress(true, 0);
-            dialog = builder.build();
-            success = true;
-            dialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    HomeFragment.this.getString(R.string.pdf_dir);
-
-            File folder = new File(mPath);
-            if (!folder.exists()) {
-                success = folder.mkdir();
-                if (!success) {
-                    return null;
-                }
-            }
-
-            mPath = mPath + mFilename + HomeFragment.this.getString(R.string.pdf_ext);
-
-            Log.v("stage 1", "store the pdf in sd card");
-
-            Document document = new Document(PageSize.A4, 38, 38, 50, 38);
-
-            Log.v("stage 2", "Document Created");
-
-            Rectangle documentRect = document.getPageSize();
-
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(mPath));
-
-                Log.v("Stage 3", "Pdf writer");
-
-                if (StringUtils.isNotEmpty(mPassword)) {
-                    writer.setEncryption(mPassword.getBytes(),
-                            getString(R.string.app_name).getBytes(),
-                            PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
-                            PdfWriter.ENCRYPTION_AES_128);
-
-                    Log.v("Stage 3.1", "Set Encryption");
-                }
-
-                document.open();
-
-                Log.v("Stage 4", "Document opened");
-
-                for (int i = 0; i < mImagesUri.size(); i++) {
-
-                    Bitmap bmp = new Compressor(mActivity)
-                            .setQuality(70)
-                            .setCompressFormat(Bitmap.CompressFormat.PNG)
-                            .compressToBitmap(new File(mImagesUri.get(i)));
-
-                    Image image = Image.getInstance(mImagesUri.get(i));
-
-
-                    if (bmp.getWidth() > documentRect.getWidth()
-                            || bmp.getHeight() > documentRect.getHeight()) {
-                        //bitmap is larger than page,so set bitmap's size similar to the whole page
-                        image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                    } else {
-                        //bitmap is smaller than page, so add bitmap simply.
-                        image.scaleAbsolute(bmp.getWidth(), bmp.getHeight());
-                    }
-
-                    Log.v("Stage 6", "Image path adding");
-
-                    image.setAbsolutePosition(
-                            (documentRect.getWidth() - image.getScaledWidth()) / 2,
-                            (documentRect.getHeight() - image.getScaledHeight()) / 2);
-                    Log.v("Stage 7", "Image Alignments");
-
-                    image.setBorder(Image.BOX);
-
-                    image.setBorderWidth(15);
-
-                    document.add(image);
-
-                    document.newPage();
-                }
-
-                Log.v("Stage 8", "Image adding");
-
-                document.close();
-
-                Log.v("Stage 7", "Document Closed" + mPath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            document.close();
-            resetValues();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            dialog.dismiss();
-
-            if (!success) {
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.snackbar_folder_not_created,
-                        Snackbar.LENGTH_LONG).show();
-                return;
-            }
-
-            mOpenPdf.setVisibility(View.VISIBLE);
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                    , R.string.snackbar_pdfCreated
-                    , Snackbar.LENGTH_LONG)
-                    .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ArrayList<File> list = new ArrayList<>(singletonList(new File(mPath)));
-                            ViewFilesAdapter filesAdapter = new ViewFilesAdapter(mActivity, list, null);
-                            filesAdapter.openFile(mPath);
-                        }
-                    }).show();
-            morphToSuccess(mCreatePdf);
-        }
-    }
-
-    private void resetValues() {
-        mImagesUri.clear();
-        mTempUris.clear();
-        mImageCounter = 0;
-        mPassword = null;
     }
 
     public List<EnhancementOptionsEntity> getEnhancementOptions() {
@@ -534,6 +291,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_crop_rotate_24),
                         getResources().getString(R.string.edit_images_text)));
 
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
+                        getString(R.string.compress_image)));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -546,9 +306,65 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             case 1:
                 cropImages();
                 break;
+            case 2:
+                compressImage();
+                break;
             default:
                 break;
         }
+    }
+
+    private void compressImage()  {
+
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.compress_image)
+                .customView(R.layout.compress_image_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
+
+        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        final EditText passwordInput = dialog.getCustomView().findViewById(R.id.quality);
+        passwordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        int check;
+                        try {
+                            check = Integer.parseInt(String.valueOf(input));
+                            if (check > 100 || check < 0) {
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                        R.string.invalid_quality,
+                                        Snackbar.LENGTH_LONG).show();
+                            } else {
+                                mQuality = String.valueOf(check);
+                                showCompression();
+                            }
+                        } catch (NumberFormatException e) {
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                        R.string.invalid_quality,
+                                        Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                });
+        dialog.show();
+        positiveAction.setEnabled(false);
     }
 
     private void passwordProtectPDF() {
@@ -567,11 +383,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 .neutralText(R.string.remove_dialog)
                 .build();
 
-        mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        mNeutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
-        mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
-        mPasswordInput.setText(mPassword);
-        mPasswordInput.addTextChangedListener(
+        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        final View neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
+        final EditText passwordInput = dialog.getCustomView().findViewById(R.id.password);
+        passwordInput.setText(mPassword);
+        passwordInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -579,7 +395,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        mPositiveAction.setEnabled(s.toString().trim().length() > 0);
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
                     }
 
                     @Override
@@ -595,8 +411,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     }
                 });
         if (StringUtils.isNotEmpty(mPassword)) {
-
-            mNeutralAction.setOnClickListener(new View.OnClickListener() {
+            neutralAction.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mPassword = null;
                     onPasswordRemoved();
@@ -608,7 +423,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             });
         }
         dialog.show();
-        mPositiveAction.setEnabled(false);
+        positiveAction.setEnabled(false);
+    }
+
+    private void showCompression() {
+        mEnhancementOptionsEntityArrayList.get(2)
+                .setName(mQuality + "% Compressed");
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
     private void onPasswordAdded() {
@@ -621,5 +442,84 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mEnhancementOptionsEntityArrayList.get(0)
                 .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPDFCreated(boolean success, String path) {
+        mImagesUri.clear();
+        mTempUris.clear();
+        mImageCounter = 0;
+        mPassword = null;
+        if (success) {
+            mOpenPdf.setVisibility(View.VISIBLE);
+            mMorphButtonUtility.morphToSuccess(mCreatePdf);
+            mPath = path;
+        }
+    }
+
+    void cropImages() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        next();
+    }
+
+    private void next() {
+        if (mImageCounter != mTempUris.size() && mImageCounter < mTempUris.size()) {
+            CropImage.activity(Uri.fromFile(new File(mTempUris.get(mImageCounter))))
+                    .setActivityMenuIconColor(mMorphButtonUtility.color(R.color.colorPrimary))
+                    .setInitialCropWindowPaddingRatio(0)
+                    .setAllowRotation(true)
+                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
+                    .start(mActivity, this);
+        }
+    }
+
+    boolean getRuntimePermissions(boolean openImagesActivity) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
+                requestPermissions( new String[] {
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},
+                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Opens ImagePickerActivity to select Images
+     */
+    private void selectImages() {
+
+        Config config = new Config();
+        config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
+        ImagePickerActivity.setConfig(config);
+
+        Intent intent = new Intent(mActivity, ImagePickerActivity.class);
+
+        //add to intent the URIs of the already selected images
+        //first they are converted to Uri objects
+        ArrayList<Uri> uris = new ArrayList<>(mTempUris.size());
+        for (String stringUri : mTempUris) {
+            uris.add(Uri.fromFile(new File(stringUri)));
+        }
+        // add them to the intent
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
+
+        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 }
