@@ -120,6 +120,7 @@
     <string name="invalid_quality">Invaid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">Establecer por defecto</string>
 
 
 </resources>
