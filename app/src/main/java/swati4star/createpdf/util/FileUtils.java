@@ -1,5 +1,6 @@
 package swati4star.createpdf.util;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -38,9 +40,9 @@ import swati4star.createpdf.R;
 
 public class FileUtils {
 
-    private Context mContext;
+    private final Activity mContext;
 
-    public FileUtils(Context context) {
+    public FileUtils(Activity context) {
         this.mContext = context;
     }
 
@@ -95,7 +97,7 @@ public class FileUtils {
         });
     }
     
-    public ArrayList<File> getPdfsFromFolder(File[] files) {
+    private ArrayList<File> getPdfsFromFolder(File[] files) {
         final ArrayList<File> pdfFiles = new ArrayList<>();
         for (File file : files) {
             if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
@@ -243,6 +245,27 @@ public class FileUtils {
     }
 
     /**
+     * Share the desired PDFs using application of choice by user
+     *
+     * @param  files - the list of files to be shared
+     */
+    public void shareMultipleFiles(List<File> files) {
+        ArrayList<Uri> uris = new ArrayList<>();
+        for (File file: files) {
+            Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+            uris.add(uri);
+        }
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        intent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.i_have_attached_pdfs_to_this_message));
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("application/pdf");
+        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
+    }
+
+    /**
      * Opens the given PDF file in appropriate Intent
      * @param file - the file to be opened
      */
@@ -307,6 +330,30 @@ public class FileUtils {
             }
         }
         return searchResult;
+    }
+
+    /**
+     * opens a file in appropriate application
+     * @param path - path of the file to be opened
+     */
+    public void openFile(String path) {
+        File file = new File(path);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+
+        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
+        try {
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
+                    R.string.snackbar_no_pdf_app,
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 
 }
