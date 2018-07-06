@@ -277,7 +277,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
-                        getString(R.string.compress_image) + " " + preferences.getInt("DefaultCompression", 30) + ")"));
+                        getString(R.string.compress_image) + " " + preferences.getInt("DefaultCompression", 30) + "%)"));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -307,7 +307,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             return;
         }
 
-        String title = getString(R.string.compress_image) + " " + preferences.getInt("DefaultCompression", 30) + ")";
+        String title = getString(R.string.compress_image) + " " + preferences.getInt("DefaultCompression", 30) + "%)";
 
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(title)
