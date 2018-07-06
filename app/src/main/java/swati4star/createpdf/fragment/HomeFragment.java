@@ -343,7 +343,26 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         }
                     }
                 }).build();
+
+        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        final EditText passwordInput = dialog.getCustomView().findViewById(R.id.quality);
+        passwordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                    }
+                });
         dialog.show();
+        positiveAction.setEnabled(false);
     }
 
     private void passwordProtectPDF() {
