@@ -18,7 +18,6 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -67,9 +66,7 @@ public class PDFUtils {
                     @Override
                     public void afterTextChanged(Editable input) {
                         if (StringUtils.isEmpty(input)) {
-                            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                                    R.string.snackbar_password_cannot_be_blank,
-                                    Snackbar.LENGTH_LONG).show();
+                            showSnackbar(R.string.snackbar_password_cannot_be_blank);
                         } else {
                             mPassword = input.toString();
 
@@ -87,9 +84,7 @@ public class PDFUtils {
                     e.printStackTrace();
                 }
                 dialog.dismiss();
-                Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                        R.string.password_added,
-                        Snackbar.LENGTH_LONG).show();
+                showSnackbar(R.string.password_added);
             }
         });
     }
@@ -103,11 +98,10 @@ public class PDFUtils {
      */
     private String  doEncryption(String path, String password) throws IOException, DocumentException {
         String finalOutputFile = path.replace(".pdf", mContext.getString(R.string.encrypted_file));
-        Log.e("Log", finalOutputFile);
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
         stamper.setEncryption(password.getBytes(), mContext.getString(R.string.app_name).getBytes(),
-                PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_256);
+                PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_128);
         stamper.close();
         reader.close();
         return finalOutputFile;
@@ -150,9 +144,8 @@ public class PDFUtils {
      *
      * @param file Path of pdf file to be decrypted
      */
-    public void removePassword(final String file, final DataSetChanged dataSetChanged){
+    public void removePassword(final String file, final DataSetChanged dataSetChanged) {
 
-        Log.e("log","file - "+file);
         PdfReader reader = null;
         try {
             reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
@@ -160,10 +153,8 @@ public class PDFUtils {
             e.printStackTrace();
         }
         //Check if PDF is encrypted or not.
-        if(!reader.isEncrypted()) {
-            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                    R.string.not_encrypted,
-                    Snackbar.LENGTH_LONG).show();
+        if (!reader.isEncrypted()) {
+            showSnackbar(R.string.not_encrypted);
             return;
         }
         final String[] input_password = new String[1];
@@ -206,15 +197,12 @@ public class PDFUtils {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                byte[] password = new byte[0];
+                byte[] password;
                 finalOutputFile = file.replace(".pdf", mContext.getString(R.string.decrypted_file));
                 password = reader.computeUserPassword();
                 byte[] input = input_password[0].getBytes();
-                Log.e("log", "INPUT : " + Arrays.toString(input));
-                Log.e("Log", "PAS : " + Arrays.toString(password));
-                Log.e("log", "Error new  "+finalOutputFile);
                 if (Arrays.equals(input, password)) {
-                    Log.e("log","File : "+file);
+                    Log.v("log", "File : " + file);
                     PdfStamper stamper = null;
                     try {
                         stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
@@ -226,20 +214,21 @@ public class PDFUtils {
                     } catch (DocumentException | IOException e) {
                         e.printStackTrace();
                     }
-                    Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                            R.string.password_remove,
-                            Snackbar.LENGTH_LONG).show();
+                    showSnackbar(R.string.password_remove);
                     reader.close();
                     dialog.dismiss();
                     dataSetChanged.updateDataset();
                 } else {
-                    Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                            R.string.incorrect_passowrd,
-                            Snackbar.LENGTH_LONG).show();
+                    showSnackbar(R.string.incorrect_passowrd);
                     dialog.dismiss();
                 }
 
             }
         });
+    }
+    private void showSnackbar(int input) {
+        Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
+                input,
+                Snackbar.LENGTH_LONG).show();
     }
 }
