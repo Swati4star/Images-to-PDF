@@ -359,22 +359,22 @@ public class FileUtils {
      * Checks if the new file already exists.
      *
      * @param finalOutputFile Path of pdf file to check
-     * @param File File List of all PDFs
+     * @param mFile File List of all PDFs
      * @return Number to be added finally in the name
      */
-    public static int checkRepeat(String finalOutputFile, final ArrayList<File> File) {
+    public static int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
         int flag = 1;
         int append = 1;
-        while(flag == 1) {
-            for (int i = 0; i < File.size(); i++) {
+        while (flag == 1) {
+            for (int i = 0; i < mFile.size(); i++) {
                 flag = 0;
-                if(finalOutputFile.equals(File.get(i).getPath())) {
+                if (finalOutputFile.equals(mFile.get(i).getPath())) {
                     flag = 1;
                     append++;
                     break;
                 }
             }
-            finalOutputFile = finalOutputFile.replace(".pdf",append+".pdf");
+            finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
         }
         return append;
     }

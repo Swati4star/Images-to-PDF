@@ -146,7 +146,7 @@ public class PDFUtils {
      *
      * @param file Path of pdf file to be decrypted
      */
-    public void removePassword(final String file, final DataSetChanged dataSetChanged, final ArrayList<File> FileList) {
+    public void removePassword(final String file, final DataSetChanged dataSetChanged, final ArrayList<File> mFileList) {
 
         PdfReader reader = null;
         try {
@@ -200,11 +200,11 @@ public class PDFUtils {
                 }
                 byte[] password;
                 finalOutputFile = file.replace(".pdf", mContext.getString(R.string.decrypted_file));
-                for (int i = 0; i < FileList.size(); i++) {
+                for (int i = 0; i < mFileList.size(); i++) {
 
-                    if(finalOutputFile.equals(FileList.get(i).getPath())) {
-                        int append = FileUtils.checkRepeat(finalOutputFile, FileList);
-                        finalOutputFile = finalOutputFile.replace(".pdf",append+".pdf");
+                    if (finalOutputFile.equals(mFileList.get(i).getPath())) {
+                        int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
+                        finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
                         break;
                     }
                 }
