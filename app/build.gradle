@@ -38,6 +38,7 @@ dependencies {
     implementation 'junit:junit:4.12'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'ja.burhanrashid52:photoeditor:0.2.1'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.itextpdf:itextg:5.5.9'

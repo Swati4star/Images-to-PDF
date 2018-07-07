@@ -110,5 +110,11 @@
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
     <string name="btn_sav_text">savText</string>
     <string name="path_seperator">/</string>
+    <string name="grayscale_filter">Gray Scale</string>
+    <string name="sepia_filter">SEPIA</string>
+    <string name="save_current_imagefilter">Save Current</string>
+    <string name="done_filter">Done</string>
+    <string name="filter_images_Text">Filter Images</string>
+    <string name="nextimage_contentdesc">Next Image</string>
 
 </resources>

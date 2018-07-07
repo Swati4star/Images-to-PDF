@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
@@ -29,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -52,6 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.PhotoEditor;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
@@ -67,10 +70,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static int mImageCounter = 0;
     private Activity mActivity;
     private ArrayList<String> mImagesUri = new ArrayList<>();
     private ArrayList<String> mTempUris = new ArrayList<>();
+    private ArrayList<String> mFilterUris = new ArrayList<>();
+    ArrayList<Uri> imageUris;
     private String mPath;
     private String mFilename;
     private String mPassword;
@@ -164,6 +170,18 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         next();
     }
 
+    void filterImages() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        } else {
+            applyfilters();
+        }
+
+    }
+
     private void next() {
         if (mImageCounter != mTempUris.size() && mImageCounter < mTempUris.size()) {
             CropImage.activity(Uri.fromFile(new File(mTempUris.get(mImageCounter))))
@@ -174,6 +192,22 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     .start(mActivity, this);
         }
     }
+
+    private void applyfilters() {
+        mImageCounter = 0;
+        try {
+            mImagesUri.add(mTempUris.get(mImageCounter));
+            mImageCounter = mImagesUri.size();
+            Intent intent = new Intent(getContext(), PhotoEditor.class);
+            intent.putStringArrayListExtra("first", mTempUris);
+            startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
+            mImagesUri.add(mTempUris.get(mImageCounter));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     // Create Pdf of selected images
     @SuppressWarnings("unchecked")
@@ -201,7 +235,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         } else {
                             mFilename = input.toString();
 
-                            new CreatingPdf().execute();
+                                new CreatingPdf().execute();
 
                             if (mMorphCounter1 == 0)
                                 mMorphCounter1++;
@@ -245,7 +279,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         }
         // add them to the intent
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
-
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 
@@ -323,6 +356,22 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             morphToSquare(mCreatePdf, integer());
             mImageCounter++;
             next();
+        } else if (requestCode == INTENT_REQUEST_APPLY_FILTER) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    try {
+                        mImagesUri.clear();
+                        mTempUris.clear();
+                        mFilterUris = data.getStringArrayListExtra("result");
+                        int size = mFilterUris.size() - 1;
+                        for (int k = 0; k <= size; k++) {
+                            mTempUris.add(mFilterUris.get(k));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    mImageCounter++;
+            }
         }
     }
 
@@ -485,7 +534,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             resetValues();
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -532,6 +580,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_crop_rotate_24),
                         getResources().getString(R.string.edit_images_text)));
 
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp),
+                        getResources().getString(R.string.filter_images_Text)));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -543,6 +594,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 break;
             case 1:
                 cropImages();
+                break;
+            case 2:
+                filterImages();
                 break;
             default:
                 break;
