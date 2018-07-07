@@ -26,7 +26,7 @@ import java.util.Objects;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 
-import static swati4star.createpdf.util.Constants.default_compression;
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 
 /**
  * An async task that converts selected images to Pdf
@@ -111,7 +111,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             for (int i = 0; i < mImagesUri.size(); i++) {
                 int quality;
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.mContext);
-                quality = preferences.getInt(default_compression, 30);
+                quality = preferences.getInt(DEFAULT_COMPRESSION, 30);
 
                 if (StringUtils.isNotEmpty(mQualityString)) {
                     quality = Integer.parseInt(mQualityString);

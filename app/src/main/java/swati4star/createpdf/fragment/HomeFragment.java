@@ -49,7 +49,7 @@ import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
-import static swati4star.createpdf.util.Constants.default_compression;
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 
 
 /**
@@ -280,7 +280,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
                         getString(R.string.compress_image) + " " +
-                                mSharedPreferences.getInt(default_compression, 30) + "%)"));
+                                mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)"));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -311,7 +311,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         }
 
         String title = getString(R.string.compress_image) + " " +
-                mSharedPreferences.getInt(default_compression, 30) + "%)";
+                mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)";
 
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(title)
@@ -321,12 +321,12 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        final EditText passwordInput = dialog.getCustomView().findViewById(R.id.quality);
+                        final EditText qualityInput = dialog.getCustomView().findViewById(R.id.quality);
                         final CheckBox cbSetDefault = dialog.getCustomView().findViewById(R.id.cbSetDefault);
 
                         int check;
                         try {
-                            check = Integer.parseInt(String.valueOf(passwordInput.getText()));
+                            check = Integer.parseInt(String.valueOf(qualityInput.getText()));
                             if (check > 100 || check < 0) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.invalid_quality,
@@ -335,7 +335,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                 mQuality = String.valueOf(check);
                                 if (cbSetDefault.isChecked()) {
                                     SharedPreferences.Editor editor = mSharedPreferences.edit();
-                                    editor.putInt(default_compression, check);
+                                    editor.putInt(DEFAULT_COMPRESSION, check);
                                     editor.apply();
                                 }
                                 showCompression();
