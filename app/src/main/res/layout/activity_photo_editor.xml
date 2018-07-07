@@ -22,10 +22,10 @@
     <Button
         android:id="@+id/sepiafilter"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/sepia_filter"
@@ -48,7 +48,6 @@
         app:layout_constraintBottom_toTopOf="@+id/photoEditorView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_navigate_next_black_24dp"/>
 
     <ja.burhanrashid52.photoeditor.PhotoEditorView
@@ -66,34 +65,33 @@
 
     </ja.burhanrashid52.photoeditor.PhotoEditorView>
 
-    <Button
-        android:id="@+id/savecurrentfilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/save_current_imagefilter"
-        app:layout_constraintBottom_toTopOf="@+id/photoEditorView"
-        app:layout_constraintEnd_toStartOf="@+id/nextimageButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
-
     <TextView
-        android:id="@+id/notefilter"
+        android:id="@+id/imagecount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:text="@string/note_filter"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/img_Count_filter"
         app:layout_constraintBottom_toTopOf="@+id/photoEditorView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextimageButton"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toEndOf="@+id/savecurrent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.462"/>
+
+    <Button
+        android:id="@+id/savecurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/save_current"
+        app:layout_constraintBottom_toTopOf="@+id/photoEditorView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47"/>
 
 </android.support.constraint.ConstraintLayout>

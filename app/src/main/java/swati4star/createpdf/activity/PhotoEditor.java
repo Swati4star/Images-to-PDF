@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -31,17 +32,20 @@ import swati4star.createpdf.R;
 public class PhotoEditor extends AppCompatActivity {
     private ArrayList<String> mFilterUris = new ArrayList<>();
     private ArrayList<String> mImagepaths = new ArrayList<>();
-    int size, i = 1;
+    int size, dispsize, i = 1;
     @BindView(R.id.nextimageButton)
     ImageButton mNextButton;
     @BindView(R.id.grayscalefilter)
     Button mgrayscaleButton;
     @BindView(R.id.sepiafilter)
     Button mSepiaFilterButton;
-    @BindView(R.id.savecurrentfilter)
-    Button msavecurrent;
+    @BindView(R.id.imagecount)
+    TextView mImgcount;
+    @BindView(R.id.savecurrent)
+    Button savecurr;
     PhotoEditorView mPhotoEditorView;
     Bitmap bitmap;
+    boolean isClicked = false, isClickedFilter = false;
     File outFile;
     FileOutputStream outStream = null;
     ja.burhanrashid52.photoeditor.PhotoEditor mPhotoEditor;
@@ -71,10 +75,13 @@ public class PhotoEditor extends AppCompatActivity {
         String data = getIntent().getExtras().getString("Images");
         mPhotoEditorView = findViewById(R.id.photoEditorView);
         mFilterUris = getIntent().getExtras().getStringArrayList("first");
+        dispsize = mFilterUris.size();
         size = mFilterUris.size() - 1;
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
         mPhotoEditorView.getSource().setImageBitmap(bitmap);
+        String sTextbeg = "Showing " + String.valueOf(1) + " of " + dispsize;
+        mImgcount.setText(sTextbeg);
     }
 
     @OnClick(R.id.grayscalefilter)
@@ -88,12 +95,37 @@ public class PhotoEditor extends AppCompatActivity {
 
     @OnClick(R.id.nextimageButton)
     void nextImg() {
-        next();
+        try {
+            if (isClicked) {
+                next();
+                incimgCount();
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    @OnClick(R.id.savecurrentfilter)
-    void savcurr() {
-        saveimgcurent();
+    @OnClick(R.id.savecurrent)
+    void saveC() {
+        isClicked = true;
+        if (isClicked && isClickedFilter) {
+            saveimgcurent();
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.choose_filter, Toast.LENGTH_SHORT).show();
+            isClicked = false;
+        }
+    }
+    void incimgCount() {
+        if (i <= dispsize) {
+            String sText = "Showing " + String.valueOf(i) + " of " + dispsize;
+            mImgcount.setText(sText);
+        } else
+            mNextButton.setEnabled(false);
+
     }
 
     private void saveimgcurent() {
@@ -101,7 +133,6 @@ public class PhotoEditor extends AppCompatActivity {
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
             dir.mkdirs();
-
             String fileName = String.format("%d.jpg", System.currentTimeMillis());
             File outFile = new File(dir, fileName);
             String imagePath = outFile.getAbsolutePath();
@@ -110,6 +141,9 @@ public class PhotoEditor extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull String imagePath) {
                         mImagepaths.add(imagePath);
+                        Log.e("imgFilter", "Saved Successfully");
+                        Toast.makeText(getApplicationContext(), R.string.saving_dialog, Toast.LENGTH_SHORT).show();
+
                     }
                     @Override
                     public void onFailure(@NonNull Exception exception) {
@@ -122,6 +156,7 @@ public class PhotoEditor extends AppCompatActivity {
     }
     private void grayscaleFilter() {
         try {
+            isClickedFilter = true;
             mPhotoEditor = new ja.burhanrashid52.photoeditor.PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
@@ -131,9 +166,9 @@ public class PhotoEditor extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
     private void sepiaFilter() {
         try {
+            isClickedFilter = true;
             mPhotoEditor = new ja.burhanrashid52.photoeditor.PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
@@ -159,6 +194,8 @@ public class PhotoEditor extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 }
 

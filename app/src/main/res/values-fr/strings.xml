@@ -131,5 +131,10 @@
     <string name="not_encrypted">PDF is not Encrypted</string>
     <string name="incorrect_passowrd">Incorrect Password</string>
     <string name="note_filter">Save Current Image before Proceeding</string>
+    <string name="img_Count_filter">Showing X of X</string>
+    <string name="save_current">Save Current</string>
+    <string name="choose_filter">Choose a Filter First</string>
+    <string name="saving_dialog">Saving..</string>
+    <string name="save_first">Save Current Image First</string>
 
 </resources>
