@@ -145,9 +145,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                     case 7://Password  Remove
                                         mPDFUtils.removePassword(filePath, ViewFilesAdapter.this, mFileList);
                                         break;
-                                    case 7://Password  Remove
-                                        mPDFUtils.removePassword(filePath, ViewFilesAdapter.this, mFileList);
-                                        break;
                                 }
                             }
                         })
