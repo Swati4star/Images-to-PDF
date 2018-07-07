@@ -1,5 +1,7 @@
 package swati4star.createpdf.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,6 +14,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
 
 import io.github.tonnyl.whatsnew.WhatsNew;
 import io.github.tonnyl.whatsnew.item.WhatsNewItem;
@@ -64,6 +68,39 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                handleSendMultipleImages(intent,fragment); // Handle multiple images
+            }
+        } else if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                handleSendImage(intent,fragment); // Handle single image
+            }
+        }
+    }
+
+    private void handleSendImage(Intent intent, Fragment fragment) {
+        Uri uri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        ArrayList<Uri> imageUris = new ArrayList<>();
+        imageUris.add(uri);
+        if (imageUris != null) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(getString(R.string.bundleKey),imageUris);
+            fragment.setArguments(bundle);
+        }
+    }
+
+    private void handleSendMultipleImages(Intent intent, Fragment fragment) {
+        ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+        if (imageUris != null) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(getString(R.string.bundleKey),imageUris);
+            fragment.setArguments(bundle);
+        }
     }
 
     @Override

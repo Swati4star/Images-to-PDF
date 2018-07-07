@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -46,6 +48,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
@@ -107,6 +110,21 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         getRuntimePermissions(false);
 
         showEnhancementOptions();
+
+        FileUtils fileUtils = new FileUtils(mActivity);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
+            for (Parcelable p :uris) {
+                Uri uri = (Uri)p;
+                if(fileUtils.getUriRealPath(mActivity,uri) == null) {
+                    Toast.makeText(mActivity,R.string.whatsappToast, Toast.LENGTH_LONG).show();
+                }else {
+                    mTempUris.add(fileUtils.getUriRealPath(mActivity,uri));
+                    Toast.makeText(mActivity,R.string.successToast, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
 
         return root;
     }

@@ -2,9 +2,13 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Environment;
@@ -14,6 +18,8 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
@@ -41,9 +47,11 @@ import swati4star.createpdf.R;
 public class FileUtils {
 
     private final Activity mContext;
+    ContentResolver mContentResolver;
 
     public FileUtils(Activity context) {
         this.mContext = context;
+        mContentResolver = mContext.getContentResolver();
     }
 
     /**
@@ -377,5 +385,269 @@ public class FileUtils {
             finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
         }
         return append;
+    }
+
+    /**
+     * Get uri related content real local file path.
+     * @param ctx - context of the activity/fragment
+     * @param uri - uri of the image
+     * @return  - real path of the image file on device
+     */
+    public String getUriRealPath(Context ctx, Uri uri)
+    {
+        String ret = "";
+
+        if (isWhatsappImage(uri.getAuthority())) {
+            ret = null;
+        } else {
+
+            if (isAboveKitKat()) {
+                // Android OS above sdk version 19.
+                ret = getUriRealPathAboveKitkat(ctx, uri);
+
+            } else {
+                // Android OS below sdk version 19
+                ret = getImageRealPath(mContentResolver, uri, null);
+            }
+        }
+
+        return ret;
+    }
+
+    private String getUriRealPathAboveKitkat(Context ctx, Uri uri)
+    {
+        String ret = "";
+
+        if(ctx != null && uri != null) {
+
+            if(isContentUri(uri))
+            {
+                if(isGooglePhotoDoc(uri.getAuthority()))
+                {
+                    ret = uri.getLastPathSegment();
+                }else {
+                    ret = getImageRealPath(mContext.getContentResolver(), uri, null);
+                }
+            }else if(isFileUri(uri)) {
+                ret = uri.getPath();
+            }else if(isDocumentUri(ctx, uri)){
+
+                // Get uri related document id.
+                String documentId = DocumentsContract.getDocumentId(uri);
+
+                // Get uri authority.
+                String uriAuthority = uri.getAuthority();
+
+                if(isMediaDoc(uriAuthority))
+                {
+                    String idArr[] = documentId.split(":");
+                    if(idArr.length == 2)
+                    {
+                        // First item is document type.
+                        String docType = idArr[0];
+
+                        // Second item is document real id.
+                        String realDocId = idArr[1];
+
+                        // Get content uri by document type.
+                        Uri mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                        if("image".equals(docType))
+                        {
+                            mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                        }else if("video".equals(docType))
+                        {
+                            mediaContentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                        }else if("audio".equals(docType))
+                        {
+                            mediaContentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                        }
+
+                        // Get where clause with real document id.
+                        String whereClause = MediaStore.Images.Media._ID + " = " + realDocId;
+
+                        ret = getImageRealPath(mContentResolver, mediaContentUri, whereClause);
+                    }
+
+                }else if(isDownloadDoc(uriAuthority))
+                {
+                    // Build download uri.
+                    Uri downloadUri = Uri.parse("content://downloads/public_downloads");
+
+                    // Append download document id at uri end.
+                    Uri downloadUriAppendId = ContentUris.withAppendedId(downloadUri, Long.valueOf(documentId));
+
+                    ret = getImageRealPath(mContentResolver, downloadUriAppendId, null);
+
+                }else if(isExternalStoreDoc(uriAuthority))
+                {
+                    String idArr[] = documentId.split(":");
+                    if(idArr.length == 2)
+                    {
+                        String type = idArr[0];
+                        String realDocId = idArr[1];
+
+                        if("primary".equalsIgnoreCase(type))
+                        {
+                            ret = Environment.getExternalStorageDirectory() + "/" + realDocId;
+                        }
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /* Check whether current android os version is bigger than kitkat or not. */
+    private boolean isAboveKitKat()
+    {
+        boolean ret = false;
+        ret = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        return ret;
+    }
+
+    /* Check whether this uri represent a document or not. */
+    private boolean isDocumentUri(Context ctx, Uri uri)
+    {
+        boolean ret = false;
+        if(ctx != null && uri != null) {
+            ret = DocumentsContract.isDocumentUri(ctx, uri);
+        }
+        return ret;
+    }
+
+    /* Check whether this uri is a content uri or not.
+     *  content uri like content://media/external/images/media/1302716
+     *  */
+    private boolean isContentUri(Uri uri)
+    {
+        boolean ret = false;
+        if(uri != null) {
+            String uriSchema = uri.getScheme();
+            if("content".equalsIgnoreCase(uriSchema))
+            {
+                ret = true;
+            }
+        }
+        return ret;
+    }
+
+    /* Check whether this uri is a file uri or not.
+     *  file uri like file:///storage/41B7-12F1/DCIM/Camera/IMG_20180211_095139.jpg
+     * */
+    private boolean isFileUri(Uri uri)
+    {
+        boolean ret = false;
+        if(uri != null) {
+            String uriSchema = uri.getScheme();
+            if("file".equalsIgnoreCase(uriSchema))
+            {
+                ret = true;
+            }
+        }
+        return ret;
+    }
+
+
+    /* Check whether this document is provided by ExternalStorageProvider. */
+    private boolean isExternalStoreDoc(String uriAuthority)
+    {
+        boolean ret = false;
+
+        if("com.android.externalstorage.documents".equals(uriAuthority))
+        {
+            ret = true;
+        }
+
+        return ret;
+    }
+
+    /* Check whether this document is provided by DownloadsProvider. */
+    private boolean isDownloadDoc(String uriAuthority)
+    {
+        boolean ret = false;
+
+        if("com.android.providers.downloads.documents".equals(uriAuthority))
+        {
+            ret = true;
+        }
+
+        return ret;
+    }
+
+    /* Check whether this document is provided by MediaProvider. */
+    private boolean isMediaDoc(String uriAuthority)
+    {
+        boolean ret = false;
+
+        if("com.android.providers.media.documents".equals(uriAuthority))
+        {
+            ret = true;
+        }
+
+        return ret;
+    }
+
+    /* Check whether this document is provided by google photos. */
+    private boolean isGooglePhotoDoc(String uriAuthority)
+    {
+        boolean ret = false;
+
+        if("com.google.android.apps.photos.content".equals(uriAuthority))
+        {
+            ret = true;
+        }
+
+        return ret;
+    }
+    private boolean isWhatsappImage(String uriAuthority)
+    {
+        boolean ret = false;
+
+        if("com.whatsapp.provider.media".equals(uriAuthority))
+        {
+            ret = true;
+        }
+
+        return ret;
+    }
+
+    /* Return uri represented document file real local path.*/
+    private String getImageRealPath(ContentResolver contentResolver, Uri uri, String whereClause)
+    {
+        String ret = "";
+
+        // Query the uri with condition.
+        Cursor cursor = contentResolver.query(uri, null, whereClause, null, null);
+
+        if(cursor!=null)
+        {
+            boolean moveToFirst = cursor.moveToFirst();
+            if(moveToFirst)
+            {
+
+                // Get columns name by uri type.
+                String columnName = MediaStore.Images.Media.DATA;
+
+                if( uri==MediaStore.Images.Media.EXTERNAL_CONTENT_URI )
+                {
+                    columnName = MediaStore.Images.Media.DATA;
+                }else if( uri==MediaStore.Audio.Media.EXTERNAL_CONTENT_URI )
+                {
+                    columnName = MediaStore.Audio.Media.DATA;
+                }else if( uri==MediaStore.Video.Media.EXTERNAL_CONTENT_URI )
+                {
+                    columnName = MediaStore.Video.Media.DATA;
+                }
+
+                // Get column index.
+                int imageColumnIndex = cursor.getColumnIndex(columnName);
+
+                // Get column value which is the uri related file local path.
+                ret = cursor.getString(imageColumnIndex);
+            }
+        }
+
+        return ret;
     }
 }
