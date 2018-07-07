@@ -49,6 +49,8 @@ import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
+import static swati4star.createpdf.util.Constants.default_compression;
+
 
 /**
  * HomeFragment fragment to start with creating PDF
@@ -69,7 +71,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private String mPassword;
     private String mQuality;
     private boolean mOpenSelectImages = false;
-    SharedPreferences preferences;
+    private SharedPreferences mSharedPreferences;
 
     @BindView(R.id.addImages)
     MorphingButton addImages;
@@ -95,7 +97,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, root);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
 
         mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
@@ -278,7 +280,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
                         getString(R.string.compress_image) + " " +
-                                preferences.getInt("DefaultCompression", 30) + "%)"));
+                                mSharedPreferences.getInt(default_compression, 30) + "%)"));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -308,7 +310,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             return;
         }
 
-        String title = getString(R.string.compress_image) + " " + preferences.getInt("DefaultCompression", 30) + "%)";
+        String title = getString(R.string.compress_image) + " " + mSharedPreferences.getInt(default_compression, 30) + "%)";
 
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(title)
@@ -331,8 +333,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             } else {
                                 mQuality = String.valueOf(check);
                                 if (cbSetDefault.isChecked()) {
-                                    SharedPreferences.Editor editor = preferences.edit();
-                                    editor.putInt("DefaultCompression", check);
+                                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                    editor.putInt(default_compression, check);
                                     editor.apply();
                                 }
                                 showCompression();
@@ -346,8 +348,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 }).build();
 
         final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        final EditText passwordInput = dialog.getCustomView().findViewById(R.id.quality);
-        passwordInput.addTextChangedListener(
+        final EditText qualityValueInput = dialog.getCustomView().findViewById(R.id.quality);
+        qualityValueInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -116,7 +116,7 @@
     <string name="btn_sav_text">savText</string>
     <string name="path_seperator">/</string>
     <string name="compress_image">Compress the Image</string>
-    <string name="quality_image">Compress the Image(Default : 30%)</string>
+    <string name="quality_image">Compress the Image (Default : 30%)</string>
     <string name="invalid_quality">Invaid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
