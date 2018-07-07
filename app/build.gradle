@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'com.android.support:design:27.1.1'
-    implementation 'com.itextpdf:itextg:5.5.9'
+    implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'com.balysv:material-ripple:1.0.2'
     implementation 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'
     implementation 'com.android.support:cardview-v7:27.1.1'
