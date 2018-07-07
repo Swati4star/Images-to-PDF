@@ -234,9 +234,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (Uri uri : imageUris)
                 mTempUris.add(uri.getPath());
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+            if (imageUris.size() > 0) {
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.snackbar_images_added,
                     Snackbar.LENGTH_LONG).show();
+            }
             mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mOpenPdf.setVisibility(View.GONE);
 
