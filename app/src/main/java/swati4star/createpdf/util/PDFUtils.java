@@ -42,7 +42,8 @@ public class PDFUtils {
      *
      * @param filePath Path of file to be encrypted
      */
-    public void setPassword(final String filePath, final DataSetChanged dataSetChanged) {
+    public void setPassword(final String filePath, final DataSetChanged dataSetChanged,
+                            final ArrayList<File> mFileList) {
         final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.set_password)
                 .customView(R.layout.custom_dialog, true)
@@ -79,7 +80,7 @@ public class PDFUtils {
         mPositiveAction.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    doEncryption(filePath, mPassword);
+                    doEncryption(filePath, mPassword, mFileList);
                     dataSetChanged.updateDataset();
                 } catch (IOException | DocumentException e) {
                     e.printStackTrace();
@@ -97,8 +98,17 @@ public class PDFUtils {
      * @param password - password to be encrypted with
      * @return string - path of output file
      */
-    private String  doEncryption(String path, String password) throws IOException, DocumentException {
+    private String  doEncryption(String path, String password,
+                                 final ArrayList<File> mFileList) throws IOException, DocumentException {
         String finalOutputFile = path.replace(".pdf", mContext.getString(R.string.encrypted_file));
+
+        for (int i = 0; i < mFileList.size(); i++) {
+            if (finalOutputFile.equals(mFileList.get(i).getPath())) {
+                int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
+                finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
+                break;
+            }
+        }
         Log.e("Log", finalOutputFile);
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
@@ -149,7 +159,6 @@ public class PDFUtils {
     public void removePassword(final String file,
                                final DataSetChanged dataSetChanged,
                                final ArrayList<File> mFileList) {
-
         PdfReader reader = null;
         try {
             reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
@@ -168,7 +177,6 @@ public class PDFUtils {
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .build();
-
         final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
         final EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
         TextView text = dialog.getCustomView().findViewById(R.id.enter_password);
