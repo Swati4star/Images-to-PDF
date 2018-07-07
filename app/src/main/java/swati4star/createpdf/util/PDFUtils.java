@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,8 +17,10 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -144,7 +145,7 @@ public class PDFUtils {
      *
      * @param file Path of pdf file to be decrypted
      */
-    public void removePassword(final String file, final DataSetChanged dataSetChanged) {
+    public void removePassword(final String file, final DataSetChanged dataSetChanged, final ArrayList<File> FileList) {
 
         PdfReader reader = null;
         try {
@@ -190,7 +191,6 @@ public class PDFUtils {
         mPositiveAction.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String finalOutputFile;
-
                 PdfReader reader = null;
                 try {
                     reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
@@ -199,10 +199,17 @@ public class PDFUtils {
                 }
                 byte[] password;
                 finalOutputFile = file.replace(".pdf", mContext.getString(R.string.decrypted_file));
+                for (int i = 0; i < FileList.size(); i++) {
+
+                    if(finalOutputFile.equals(FileList.get(i).getPath())) {
+                        int append = checkRepeat(finalOutputFile, FileList);
+                        finalOutputFile = finalOutputFile.replace(".pdf",append+".pdf");
+                        break;
+                    }
+                }
                 password = reader.computeUserPassword();
                 byte[] input = input_password[0].getBytes();
                 if (Arrays.equals(input, password)) {
-                    Log.v("log", "File : " + file);
                     PdfStamper stamper = null;
                     try {
                         stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
@@ -226,6 +233,32 @@ public class PDFUtils {
             }
         });
     }
+    /**
+     * Checks if the new decrypted file already exists.
+     *
+     * @param finalOutputFile Path of pdf file to check
+     * @param File File List of all PDFs
+     * @return Number to be added finally in the name
+     */
+    private int checkRepeat(String finalOutputFile, final ArrayList<File> File) {
+        int flag =1;
+        int append = 1;
+        while(flag == 1) {
+            for (int i=0; i < File.size(); i++) {
+                flag =0;
+                if(finalOutputFile.equals(File.get(i).getPath())) {
+                    flag = 1;
+                    append++;
+                    break;
+                }
+            }
+            finalOutputFile = finalOutputFile.replace(".pdf",append+".pdf");
+        }
+        return append;
+    }
+    /**
+     * Creates Snackbar
+     */
     private void showSnackbar(int input) {
         Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
                 input,
