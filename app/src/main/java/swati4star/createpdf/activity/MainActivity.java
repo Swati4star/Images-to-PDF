@@ -74,31 +74,39 @@ public class MainActivity extends AppCompatActivity
         String type = intent.getType();
         if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
             if (type.startsWith("image/")) {
-                handleSendMultipleImages(intent,fragment); // Handle multiple images
+                handleSendMultipleImages(intent , fragment); // Handle multiple images
             }
         } else if (Intent.ACTION_SEND.equals(action) && type != null) {
             if (type.startsWith("image/")) {
-                handleSendImage(intent,fragment); // Handle single image
+                handleSendImage(intent , fragment); // Handle single image
             }
         }
     }
 
+    /** Get image uri from intent and send the image to homeFragment
+     * @param intent - intent containing image uris
+     * @param fragment - instance of homeFragment
+     */
     private void handleSendImage(Intent intent, Fragment fragment) {
         Uri uri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
         ArrayList<Uri> imageUris = new ArrayList<>();
         imageUris.add(uri);
         if (imageUris != null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(getString(R.string.bundleKey),imageUris);
+            bundle.putParcelableArrayList(getString(R.string.bundleKey) , imageUris);
             fragment.setArguments(bundle);
         }
     }
 
+    /** Get ArrayList of image uris from intent and send the image to homeFragment
+     * @param intent - intent containing image uris
+     * @param fragment - instance of homeFragment
+     */
     private void handleSendMultipleImages(Intent intent, Fragment fragment) {
         ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         if (imageUris != null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(getString(R.string.bundleKey),imageUris);
+            bundle.putParcelableArrayList(getString(R.string.bundleKey) , imageUris);
             fragment.setArguments(bundle);
         }
     }

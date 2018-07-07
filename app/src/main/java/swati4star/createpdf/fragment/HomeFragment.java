@@ -116,12 +116,12 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         if (bundle != null) {
             ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
             for (Parcelable p :uris) {
-                Uri uri = (Uri)p;
-                if(fileUtils.getUriRealPath(mActivity,uri) == null) {
-                    Toast.makeText(mActivity,R.string.whatsappToast, Toast.LENGTH_LONG).show();
-                }else {
-                    mTempUris.add(fileUtils.getUriRealPath(mActivity,uri));
-                    Toast.makeText(mActivity,R.string.successToast, Toast.LENGTH_LONG).show();
+                Uri uri = (Uri) p;
+                if (fileUtils.getUriRealPath(mActivity, uri) == null) {
+                    Toast.makeText(mActivity, R.string.whatsappToast, Toast.LENGTH_LONG).show();
+                } else {
+                    mTempUris.add(fileUtils.getUriRealPath(mActivity, uri));
+                    Toast.makeText(mActivity, R.string.successToast, Toast.LENGTH_LONG).show();
                 }
             }
         }
