@@ -146,7 +146,9 @@ public class PDFUtils {
      *
      * @param file Path of pdf file to be decrypted
      */
-    public void removePassword(final String file, final DataSetChanged dataSetChanged, final ArrayList<File> mFileList) {
+    public void removePassword(final String file,
+                               final DataSetChanged dataSetChanged,
+                               final ArrayList<File> mFileList) {
 
         PdfReader reader = null;
         try {
