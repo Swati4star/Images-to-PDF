@@ -27,6 +27,7 @@
         <item>Share File</item>
         <item>詳細を表示</item>
         <item>パスワードを追加</item>
+        <item>パスワードを削除します</item>
     </array>
 
     <string name="please_wait">Please Wait</string>
@@ -94,6 +95,9 @@
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
 
+    <!-- Select Images string -->
+    <string name="image_picker_activity_toolbar_title">Select Images</string>
+
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
     <string name="pdf_merge" >Merging File</string>
@@ -118,5 +122,16 @@
     <string name="done_filter">Done</string>
     <string name="filter_images_Text">Filter Images</string>
     <string name="nextimage_contentdesc">Next Image</string>
+    <string name="compress_image">Compress the Image</string>
+    <string name="quality_image">Compress the Image (Default : 30%)</string>
+    <string name="invalid_quality">Invaid Entry</string>
+    <string name="compress_dialog_enter_prompt">Enter here</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">デフォルトとして設定</string>
+    <string name="decrypted_file">_unencrypted.pdf</string>
+    <string name="decrypt_message">Enter the password to continue</string>
+    <string name="not_encrypted">PDF is not Encrypted</string>
+    <string name="incorrect_passowrd">Incorrect Password</string>
+    <string name="note_filter">Save Current Image before Proceeding</string>
 
 </resources>

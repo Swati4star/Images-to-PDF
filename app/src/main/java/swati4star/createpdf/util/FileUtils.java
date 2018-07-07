@@ -1,5 +1,6 @@
 package swati4star.createpdf.util;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -39,9 +40,9 @@ import swati4star.createpdf.R;
 
 public class FileUtils {
 
-    private Context mContext;
+    private final Activity mContext;
 
-    public FileUtils(Context context) {
+    public FileUtils(Activity context) {
         this.mContext = context;
     }
 
@@ -96,7 +97,7 @@ public class FileUtils {
         });
     }
     
-    public ArrayList<File> getPdfsFromFolder(File[] files) {
+    private ArrayList<File> getPdfsFromFolder(File[] files) {
         final ArrayList<File> pdfFiles = new ArrayList<>();
         for (File file : files) {
             if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
@@ -331,4 +332,50 @@ public class FileUtils {
         return searchResult;
     }
 
+    /**
+     * opens a file in appropriate application
+     * @param path - path of the file to be opened
+     */
+    public void openFile(String path) {
+        File file = new File(path);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+
+        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
+        try {
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
+                    R.string.snackbar_no_pdf_app,
+                    Snackbar.LENGTH_LONG).show();
+        }
+    }
+    /**
+     * Checks if the new file already exists.
+     *
+     * @param finalOutputFile Path of pdf file to check
+     * @param mFile File List of all PDFs
+     * @return Number to be added finally in the name
+     */
+    public static int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
+        int flag = 1;
+        int append = 1;
+        while (flag == 1) {
+            for (int i = 0; i < mFile.size(); i++) {
+                flag = 0;
+                if (finalOutputFile.equals(mFile.get(i).getPath())) {
+                    flag = 1;
+                    append++;
+                    break;
+                }
+            }
+            finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
+        }
+        return append;
+    }
 }
