@@ -46,6 +46,10 @@
     <string name="please_wait">Please Wait</string>
     <string name="populating_list">Fetching files. This may take a while</string>
 
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
+    <string name="successToast">Images successfully added.</string>
+
     <!-- Navigation drawer strings -->
     <string name="create_pdf">Create PDF</string>
     <string name="viewFiles">View Files</string>
