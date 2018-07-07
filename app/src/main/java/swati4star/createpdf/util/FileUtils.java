@@ -420,7 +420,7 @@ public class FileUtils {
     private String getUriRealPathAboveKitkat(Uri uri) {
         String ret = "";
 
-        if(mContext != null && uri != null) {
+        if (mContext != null && uri != null) {
 
             if (isContentUri(uri)) {
                 if (isGooglePhotoDoc(uri.getAuthority())) {
@@ -503,7 +503,7 @@ public class FileUtils {
      */
     private boolean isDocumentUri(Uri uri) {
         boolean ret = false;
-        if(mContext != null && uri != null) {
+        if (mContext != null && uri != null) {
             ret = DocumentsContract.isDocumentUri(mContext, uri);
         }
         return ret;
@@ -515,10 +515,9 @@ public class FileUtils {
      *  */
     private boolean isContentUri(Uri uri) {
         boolean ret = false;
-        if(uri != null) {
+        if (uri != null) {
             String uriSchema = uri.getScheme();
-            if("content".equalsIgnoreCase(uriSchema))
-            {
+            if ("content".equalsIgnoreCase(uriSchema)) {
                 ret = true;
             }
         }
@@ -531,10 +530,9 @@ public class FileUtils {
      * */
     private boolean isFileUri(Uri uri) {
         boolean ret = false;
-        if(uri != null) {
+        if (uri != null) {
             String uriSchema = uri.getScheme();
-            if("file".equalsIgnoreCase(uriSchema))
-            {
+            if ("file".equalsIgnoreCase(uriSchema)) {
                 ret = true;
             }
         }
@@ -619,7 +617,7 @@ public class FileUtils {
         // Query the uri with condition.
         Cursor cursor = contentResolver.query(uri, null, whereClause, null, null);
 
-        if (cursor!=null) {
+        if (cursor != null) {
             boolean moveToFirst = cursor.moveToFirst();
             if (moveToFirst) {
 
