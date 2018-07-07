@@ -158,7 +158,6 @@ public class PDFUtils {
     public void removePassword(final String file,
                                final DataSetChanged dataSetChanged,
                                final ArrayList<File> mFileList) {
-
         PdfReader reader = null;
         try {
             reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
@@ -177,7 +176,6 @@ public class PDFUtils {
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .build();
-
         final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
         final EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
         TextView text = dialog.getCustomView().findViewById(R.id.enter_password);
