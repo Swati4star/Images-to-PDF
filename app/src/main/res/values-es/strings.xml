@@ -37,6 +37,10 @@
     <string name="viewFiles">Ver Ficheros</string>
     <string name="feedback">Feedback</string>
 
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
+    <string name="successToast">Images successfully added.</string>
+
 
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
     <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>

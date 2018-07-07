@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.provider.ContactsContract;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -63,6 +64,7 @@ import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
@@ -127,6 +129,21 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         getRuntimePermissions(false);
 
         showEnhancementOptions();
+
+        FileUtils fileUtils = new FileUtils(mActivity);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
+            for (Parcelable p :uris) {
+                Uri uri = (Uri) p;
+                if (fileUtils.getUriRealPath(uri) == null) {
+                    Toast.makeText(mActivity, R.string.whatsappToast, Toast.LENGTH_LONG).show();
+                } else {
+                    mTempUris.add(fileUtils.getUriRealPath(uri));
+                    Toast.makeText(mActivity, R.string.successToast, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
 
         return root;
     }
