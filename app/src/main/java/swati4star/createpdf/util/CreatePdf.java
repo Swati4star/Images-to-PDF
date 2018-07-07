@@ -1,10 +1,12 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,8 @@ import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 
 /**
  * An async task that converts selected images to Pdf
@@ -105,7 +109,9 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             Log.v("Stage 4", "Document opened");
 
             for (int i = 0; i < mImagesUri.size(); i++) {
-                int quality = 30;
+                int quality;
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.mContext);
+                quality = preferences.getInt(DEFAULT_COMPRESSION, 30);
 
                 if (StringUtils.isNotEmpty(mQualityString)) {
                     quality = Integer.parseInt(mQualityString);
