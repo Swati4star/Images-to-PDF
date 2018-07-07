@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     void startAddingImages() {
         if (getRuntimePermissions(true))
             selectImages();
-        }
+    }
 
 
     void filterImages() {
