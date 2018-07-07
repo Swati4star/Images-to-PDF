@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -46,6 +49,8 @@ import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+
 
 /**
  * HomeFragment fragment to start with creating PDF
@@ -66,6 +71,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private String mPassword;
     private String mQuality;
     private boolean mOpenSelectImages = false;
+    private SharedPreferences mSharedPreferences;
 
     @BindView(R.id.addImages)
     MorphingButton addImages;
@@ -91,6 +97,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, root);
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
 
         mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
@@ -227,9 +234,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
             for (Uri uri : imageUris)
                 mTempUris.add(uri.getPath());
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+            if (imageUris.size() > 0) {
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.snackbar_images_added,
                     Snackbar.LENGTH_LONG).show();
+            }
             mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mOpenPdf.setVisibility(View.GONE);
 
@@ -272,7 +281,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
-                        getString(R.string.compress_image)));
+                        getString(R.string.compress_image) + " " +
+                                mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)"));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -302,16 +312,47 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             return;
         }
 
+        String title = getString(R.string.compress_image) + " " +
+                mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)";
+
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
-                .title(R.string.compress_image)
+                .title(title)
                 .customView(R.layout.compress_image_dialog, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
-                .build();
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        final EditText qualityInput = dialog.getCustomView().findViewById(R.id.quality);
+                        final CheckBox cbSetDefault = dialog.getCustomView().findViewById(R.id.cbSetDefault);
+
+                        int check;
+                        try {
+                            check = Integer.parseInt(String.valueOf(qualityInput.getText()));
+                            if (check > 100 || check < 0) {
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                        R.string.invalid_quality,
+                                        Snackbar.LENGTH_LONG).show();
+                            } else {
+                                mQuality = String.valueOf(check);
+                                if (cbSetDefault.isChecked()) {
+                                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                    editor.putInt(DEFAULT_COMPRESSION, check);
+                                    editor.apply();
+                                }
+                                showCompression();
+                            }
+                        } catch (NumberFormatException e) {
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                    R.string.invalid_quality,
+                                    Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                }).build();
 
         final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        final EditText passwordInput = dialog.getCustomView().findViewById(R.id.quality);
-        passwordInput.addTextChangedListener(
+        final EditText qualityValueInput = dialog.getCustomView().findViewById(R.id.quality);
+        qualityValueInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -324,22 +365,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        int check;
-                        try {
-                            check = Integer.parseInt(String.valueOf(input));
-                            if (check > 100 || check < 0) {
-                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.invalid_quality,
-                                        Snackbar.LENGTH_LONG).show();
-                            } else {
-                                mQuality = String.valueOf(check);
-                                showCompression();
-                            }
-                        } catch (NumberFormatException e) {
-                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.invalid_quality,
-                                        Snackbar.LENGTH_LONG).show();
-                        }
                     }
                 });
         dialog.show();

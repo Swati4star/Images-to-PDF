@@ -139,7 +139,7 @@
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
     <string name="btn_sav_text">savText</string>
-    <string name="compress_image">Compress the Image(Default : 30%)</string>
+    <string name="compress_image">Compress the Image (Default : </string>
     <string name="quality_image">Enter % compression of image :</string>
     <string name="invalid_quality">Invaid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
@@ -148,4 +148,5 @@
     <string name="decrypt_message">Enter the password to continue</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
     <string name="incorrect_passowrd">Incorrect Password</string>
+    <string name="set_as_default">Set as default</string>
 </resources>

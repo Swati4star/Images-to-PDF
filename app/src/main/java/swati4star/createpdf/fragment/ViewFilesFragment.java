@@ -106,6 +106,7 @@ public class ViewFilesFragment extends Fragment
         mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
         mViewFilesListRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
         mSwipeView.setOnRefreshListener(this);
+        mSwipeView.bringToFront();
 
         // Populate data into listView
         populatePdfList();
