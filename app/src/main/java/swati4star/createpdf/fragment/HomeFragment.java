@@ -310,7 +310,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             return;
         }
 
-        String title = getString(R.string.compress_image) + " " + mSharedPreferences.getInt(default_compression, 30) + "%)";
+        String title = getString(R.string.compress_image) + " " +
+                mSharedPreferences.getInt(default_compression, 30) + "%)";
 
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(title)
