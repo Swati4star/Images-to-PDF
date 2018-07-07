@@ -355,5 +355,27 @@ public class FileUtils {
                     Snackbar.LENGTH_LONG).show();
         }
     }
-
+    /**
+     * Checks if the new file already exists.
+     *
+     * @param finalOutputFile Path of pdf file to check
+     * @param File File List of all PDFs
+     * @return Number to be added finally in the name
+     */
+    public static int checkRepeat(String finalOutputFile, final ArrayList<File> File) {
+        int flag = 1;
+        int append = 1;
+        while(flag == 1) {
+            for (int i = 0; i < File.size(); i++) {
+                flag = 0;
+                if(finalOutputFile.equals(File.get(i).getPath())) {
+                    flag = 1;
+                    append++;
+                    break;
+                }
+            }
+            finalOutputFile = finalOutputFile.replace(".pdf",append+".pdf");
+        }
+        return append;
+    }
 }

@@ -26,6 +26,7 @@
         <item>Share File</item>
         <item>Show Details</item>
         <item>Add Password</item>
+        <item>Remove Password</item>
     </array>
 
     <array name="itemIds" translatable="false">
@@ -144,4 +145,8 @@
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Set as default</string>
+    <string name="decrypted_file">_unencrypted.pdf</string>
+    <string name="decrypt_message">Enter the password to continue</string>
+    <string name="not_encrypted">PDF is not Encrypted</string>
+    <string name="incorrect_passowrd">Incorrect Password</string>
 </resources>

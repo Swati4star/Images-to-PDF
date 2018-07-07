@@ -17,9 +17,11 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
-
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
@@ -65,9 +67,7 @@ public class PDFUtils {
                     @Override
                     public void afterTextChanged(Editable input) {
                         if (StringUtils.isEmpty(input)) {
-                            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                                    R.string.snackbar_password_cannot_be_blank,
-                                    Snackbar.LENGTH_LONG).show();
+                            showSnackbar(R.string.snackbar_password_cannot_be_blank);
                         } else {
                             mPassword = input.toString();
 
@@ -85,9 +85,7 @@ public class PDFUtils {
                     e.printStackTrace();
                 }
                 dialog.dismiss();
-                Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                        R.string.password_added,
-                        Snackbar.LENGTH_LONG).show();
+                showSnackbar(R.string.password_added);
             }
         });
     }
@@ -105,7 +103,7 @@ public class PDFUtils {
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
         stamper.setEncryption(password.getBytes(), mContext.getString(R.string.app_name).getBytes(),
-                PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_256);
+                PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_128);
         stamper.close();
         reader.close();
         return finalOutputFile;
@@ -143,5 +141,105 @@ public class PDFUtils {
         builder.create();
         builder.show();
     }
+    /**
+     * Uses PDF Reader to decrypt the PDF.
+     *
+     * @param file Path of pdf file to be decrypted
+     */
+    public void removePassword(final String file, final DataSetChanged dataSetChanged, final ArrayList<File> FileList) {
 
+        PdfReader reader = null;
+        try {
+            reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Check if PDF is encrypted or not.
+        if (!reader.isEncrypted()) {
+            showSnackbar(R.string.not_encrypted);
+            return;
+        }
+        final String[] input_password = new String[1];
+        final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                .title(R.string.enter_password)
+                .customView(R.layout.custom_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
+
+        final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        final EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
+        TextView text = dialog.getCustomView().findViewById(R.id.enter_password);
+        text.setText(R.string.decrypt_message);
+        mPasswordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mPositiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        input_password[0] = input.toString();
+                    }
+                });
+        dialog.show();
+        mPositiveAction.setEnabled(false);
+        mPositiveAction.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String finalOutputFile;
+                PdfReader reader = null;
+                try {
+                    reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                byte[] password;
+                finalOutputFile = file.replace(".pdf", mContext.getString(R.string.decrypted_file));
+                for (int i = 0; i < FileList.size(); i++) {
+
+                    if(finalOutputFile.equals(FileList.get(i).getPath())) {
+                        int append = FileUtils.checkRepeat(finalOutputFile, FileList);
+                        finalOutputFile = finalOutputFile.replace(".pdf",append+".pdf");
+                        break;
+                    }
+                }
+                password = reader.computeUserPassword();
+                byte[] input = input_password[0].getBytes();
+                if (Arrays.equals(input, password)) {
+                    PdfStamper stamper = null;
+                    try {
+                        stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
+                    } catch (DocumentException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        stamper.close();
+                    } catch (DocumentException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    showSnackbar(R.string.password_remove);
+                    reader.close();
+                    dialog.dismiss();
+                    dataSetChanged.updateDataset();
+                } else {
+                    showSnackbar(R.string.incorrect_passowrd);
+                    dialog.dismiss();
+                }
+
+            }
+        });
+    }
+    /**
+     * Creates Snackbar
+     */
+    private void showSnackbar(int input) {
+        Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
+                input,
+                Snackbar.LENGTH_LONG).show();
+    }
 }
