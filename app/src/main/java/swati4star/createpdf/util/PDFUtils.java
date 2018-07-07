@@ -42,7 +42,8 @@ public class PDFUtils {
      *
      * @param filePath Path of file to be encrypted
      */
-    public void setPassword(final String filePath, final DataSetChanged dataSetChanged, final ArrayList<File> mFileList) {
+    public void setPassword(final String filePath, final DataSetChanged dataSetChanged,
+                            final ArrayList<File> mFileList) {
         final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.set_password)
                 .customView(R.layout.custom_dialog, true)
