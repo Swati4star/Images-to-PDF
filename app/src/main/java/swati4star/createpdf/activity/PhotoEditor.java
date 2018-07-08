@@ -34,7 +34,7 @@ import swati4star.createpdf.R;
 public class PhotoEditor extends AppCompatActivity {
     private ArrayList<String> mFilterUris = new ArrayList<>();
     private ArrayList<String> mImagepaths = new ArrayList<>();
-    int size, dispsize, i = 1;
+    int size, dispsize, i = 1, j = 1;
     @BindView(R.id.nonefilter)
     Button mNoneButton;
     @BindView(R.id.nextimageButton)
@@ -49,7 +49,7 @@ public class PhotoEditor extends AppCompatActivity {
     Button savecurr;
     PhotoEditorView mPhotoEditorView;
     Bitmap bitmap;
-    boolean isClicked = false, isClickedFilter = false;
+    boolean isClicked = false, isClickedFilter = false, isLast = false;
     File outFile;
 
     FileOutputStream outStream = null;
@@ -143,6 +143,7 @@ public class PhotoEditor extends AppCompatActivity {
             String sText = "Showing " + String.valueOf(i) + " of " + dispsize;
             mImgcount.setText(sText);
             mNextButton.setVisibility(View.INVISIBLE);
+            isLast = true;
         } else {
             mNextButton.setEnabled(false);
         }
@@ -216,17 +217,31 @@ public class PhotoEditor extends AppCompatActivity {
     //Store imagepaths for creation of PDF when Done
     public void done() {
         if (!isClicked) {
-            Intent returnIntent = new Intent();
-            returnIntent.putStringArrayListExtra("result", mFilterUris);
-            setResult(Activity.RESULT_OK, returnIntent);
-            finish();
+            passUris(mFilterUris);
+        } else if (i <= dispsize) {
+            for (j = i + 1; j <= mFilterUris.size(); j++) {
+                savelastfew();
+            }
+            if (!isClicked || isLast) {
+                i++;
+            }
+            passUris(mImagepaths);
+
         } else {
-            Intent returnIntent = new Intent();
-            returnIntent.putStringArrayListExtra("result", mImagepaths);
-            setResult(Activity.RESULT_OK, returnIntent);
-            finish();
+            passUris(mImagepaths);
         }
 
+    }
+
+    public void savelastfew() {
+        mImagepaths.add(mFilterUris.get(j - 1));
+    }
+    //Intent to Pass Back URIs
+    public void passUris(ArrayList<String> mImagepaths) {
+        Intent returnIntent = new Intent();
+        returnIntent.putStringArrayListExtra("result", mImagepaths);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
     //Display next image on nextImage button click
     private void next() {
