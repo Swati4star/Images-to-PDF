@@ -139,5 +139,6 @@
     <string name="choose_filter">Choose a Filter First</string>
     <string name="saving_dialog">Saving..</string>
     <string name="save_first">Save Current Image First</string>
+    <string name="none_filter">None</string>
 
 </resources>

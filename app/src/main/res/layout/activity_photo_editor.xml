@@ -9,15 +9,18 @@
 
     <Button
         android:id="@+id/grayscalefilter"
-        android:layout_width="106dp"
+        android:layout_width="108dp"
         android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/grayscale_filter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toEndOf="@+id/nonefilter"
+        app:layout_constraintTop_toBottomOf="@+id/photoEditorView"
+        app:layout_constraintVertical_bias="0.0"/>
 
     <Button
         android:id="@+id/sepiafilter"
@@ -25,14 +28,17 @@
         android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/sepia_filter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toEndOf="@+id/grayscalefilter"/>
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toEndOf="@+id/grayscalefilter"
+        app:layout_constraintTop_toBottomOf="@+id/photoEditorView"
+        app:layout_constraintVertical_bias="0.0"/>
 
 
     <ImageButton
@@ -52,7 +58,7 @@
 
     <ja.burhanrashid52.photoeditor.PhotoEditorView
         android:id="@+id/photoEditorView"
-        android:layout_width="379dp"
+        android:layout_width="wrap_content"
         android:layout_height="350dp"
         android:layout_marginBottom="64dp"
         android:layout_marginEnd="8dp"
@@ -76,10 +82,10 @@
         android:text="@string/img_Count_filter"
         app:layout_constraintBottom_toTopOf="@+id/photoEditorView"
         app:layout_constraintEnd_toStartOf="@+id/nextimageButton"
-        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/savecurrent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.462"/>
+        app:layout_constraintVertical_bias="0.421"/>
 
     <Button
         android:id="@+id/savecurrent"
@@ -93,5 +99,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.47"/>
+
+    <Button
+        android:id="@+id/nonefilter"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/none_filter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/grayscalefilter"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photoEditorView"
+        app:layout_constraintVertical_bias="0.0"/>
 
 </android.support.constraint.ConstraintLayout>
