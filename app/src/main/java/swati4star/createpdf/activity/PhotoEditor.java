@@ -1,5 +1,6 @@
 package swati4star.createpdf.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class PhotoEditor extends AppCompatActivity {
     Bitmap bitmap;
     boolean isClicked = false, isClickedFilter = false;
     File outFile;
+
     FileOutputStream outStream = null;
     ja.burhanrashid52.photoeditor.PhotoEditor mPhotoEditor;
     @Override
@@ -64,6 +67,9 @@ public class PhotoEditor extends AppCompatActivity {
             case R.id.finish:
                 done();
                 return true;
+            case android.R.id.home:
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -74,6 +80,8 @@ public class PhotoEditor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_editor);
         ButterKnife.bind(this);
+        ActionBar actionBar = getActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String data = getIntent().getExtras().getString("Images");
         mPhotoEditorView = findViewById(R.id.photoEditorView);
         mFilterUris = getIntent().getExtras().getStringArrayList("first");
@@ -85,6 +93,7 @@ public class PhotoEditor extends AppCompatActivity {
         String sTextbeg = "Showing " + String.valueOf(1) + " of " + dispsize;
         mImgcount.setText(sTextbeg);
     }
+
 
     @OnClick(R.id.nonefilter)
     void nonefil() {
@@ -120,17 +129,23 @@ public class PhotoEditor extends AppCompatActivity {
         if (isClicked && isClickedFilter) {
             saveimgcurent();
         } else {
-            Toast.makeText(getApplicationContext(), R.string.choose_filter, Toast.LENGTH_SHORT).show();
-            isClicked = false;
+            nonefilter();
+            saveimgcurent();
+
         }
     }
     //Increment image count to display in textView
     void incimgCount() {
-        if (i <= dispsize) {
+        if (i < dispsize) {
             String sText = "Showing " + String.valueOf(i) + " of " + dispsize;
             mImgcount.setText(sText);
-        } else
+        } else if (i == dispsize) {
+            String sText = "Showing " + String.valueOf(i) + " of " + dispsize;
+            mImgcount.setText(sText);
+            mNextButton.setVisibility(View.INVISIBLE);
+        } else {
             mNextButton.setEnabled(false);
+        }
 
     }
     //Saves Current Image
@@ -200,10 +215,18 @@ public class PhotoEditor extends AppCompatActivity {
     }
     //Store imagepaths for creation of PDF when Done
     public void done() {
-        Intent returnIntent = new Intent();
-        returnIntent.putStringArrayListExtra("result", mImagepaths);
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
+        if (!isClicked) {
+            Intent returnIntent = new Intent();
+            returnIntent.putStringArrayListExtra("result", mFilterUris);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        } else {
+            Intent returnIntent = new Intent();
+            returnIntent.putStringArrayListExtra("result", mImagepaths);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        }
+
     }
     //Display next image on nextImage button click
     private void next() {
