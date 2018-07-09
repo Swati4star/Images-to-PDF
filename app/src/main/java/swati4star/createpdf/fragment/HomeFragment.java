@@ -124,6 +124,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
         mOpenPdf.setVisibility(View.GONE);
+        mCreatePdf.setEnabled(false);
 
         // Get runtime permissions if build version >= Android M
         getRuntimePermissions(false);
@@ -249,6 +250,25 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     R.string.snackbar_no_pdf_app,
                     Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Opens ImagePickerActivity to select Images
+     */
+    private void selectImages() {
+        Intent intent = new Intent(mActivity, ImagePickerActivity.class);
+
+        //add to intent the URIs of the already selected images
+        //first they are converted to Uri objects
+        ArrayList<Uri> uris = new ArrayList<>(mTempUris.size());
+        for (String stringUri : mTempUris) {
+            uris.add(Uri.fromFile(new File(stringUri)));
+        }
+        // add them to the intent
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
+
+        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+        mCreatePdf.setEnabled(true);
     }
 
     /**
@@ -590,29 +610,5 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             }
         }
         return true;
-    }
-
-
-    /**
-     * Opens ImagePickerActivity to select Images
-     */
-    private void selectImages() {
-
-        Config config = new Config();
-        config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
-        ImagePickerActivity.setConfig(config);
-
-        Intent intent = new Intent(mActivity, ImagePickerActivity.class);
-
-        //add to intent the URIs of the already selected images
-        //first they are converted to Uri objects
-        ArrayList<Uri> uris = new ArrayList<>(mTempUris.size());
-        for (String stringUri : mTempUris) {
-            uris.add(Uri.fromFile(new File(stringUri)));
-        }
-        // add them to the intent
-        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
-
-        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 }
