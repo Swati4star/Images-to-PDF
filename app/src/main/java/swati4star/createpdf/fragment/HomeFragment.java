@@ -1,15 +1,22 @@
 package swati4star.createpdf.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.ContactsContract;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -21,6 +28,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +41,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +58,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.PhotoEditor;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
@@ -63,13 +79,16 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
     public static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private static final int INTENT_REQUEST_APPLY_FILTER = 10;
 
     private static int mImageCounter = 0;
 
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     private ArrayList<String> mImagesUri = new ArrayList<>();
-    private final ArrayList<String> mTempUris = new ArrayList<>();
+    private ArrayList<String> mTempUris = new ArrayList<>();
+    private ArrayList<String> mFilterUris = new ArrayList<>();
+    ArrayList<Uri> imageUris;
     private String mPath;
     private String mPassword;
     private String mQuality;
@@ -143,6 +162,35 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             selectImages();
     }
 
+
+    void filterImages() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        } else {
+            applyfilters();
+        }
+
+    }
+
+    private void applyfilters() {
+        mImageCounter = 0;
+        try {
+            mImagesUri.add(mTempUris.get(mImageCounter));
+            mImageCounter = mImagesUri.size();
+            Intent intent = new Intent(getContext(), PhotoEditor.class);
+            intent.putStringArrayListExtra("first", mTempUris);
+            startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
+            mImagesUri.add(mTempUris.get(mImageCounter));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     // Create Pdf of selected images
     @SuppressWarnings("unchecked")
     @OnClick({R.id.pdfCreate})
@@ -175,7 +223,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     Snackbar.LENGTH_LONG).show();
                         } else {
                             String filename = input.toString();
-
                             new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
                                     HomeFragment.this).execute();
                         }
@@ -283,8 +330,25 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mImageCounter++;
             next();
+        } else if (requestCode == INTENT_REQUEST_APPLY_FILTER) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    try {
+                        mImagesUri.clear();
+                        mTempUris.clear();
+                        mFilterUris = data.getStringArrayListExtra("result");
+                        int size = mFilterUris.size() - 1;
+                        for (int k = 0; k <= size; k++) {
+                            mTempUris.add(mFilterUris.get(k));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    mImageCounter++;
+            }
         }
     }
+
 
     public List<EnhancementOptionsEntity> getEnhancementOptions() {
         mEnhancementOptionsEntityArrayList.clear();
@@ -301,6 +365,11 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
                         getString(R.string.compress_image) + " " +
                                 mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)"));
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp),
+                        getResources().getString(R.string.filter_images_Text)));
+
+
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -316,6 +385,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             case 2:
                 compressImage();
                 break;
+            case 3:
+                filterImages();
             default:
                 break;
         }
