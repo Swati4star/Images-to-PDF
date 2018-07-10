@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         morphToSquare(mCreatePdf, integer());
         mOpenPdf.setVisibility(View.GONE);
+        mCreatePdf.setEnabled(false);
 
         // Get runtime permissions if build version >= Android M
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -247,6 +248,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+        mCreatePdf.setEnabled(true);
     }
 
     /**
