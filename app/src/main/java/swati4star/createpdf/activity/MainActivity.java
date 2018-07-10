@@ -19,6 +19,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
+import swati4star.createpdf.fragment.WebpageFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
 import static swati4star.createpdf.util.Constants.WHATS_NEW1_ICON;
@@ -101,6 +102,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_rate_us:
                 mFeedbackUtils.rateUs();
+                break;
+            case R.id.web_to_PDF:
+                fragment = new WebpageFragment();
                 break;
         }
 

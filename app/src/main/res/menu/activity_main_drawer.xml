@@ -14,6 +14,10 @@
             android:id="@+id/nav_merge"
             android:icon="@drawable/ic_merge_type_black_24dp"
             android:title="@string/merge_pdf"/>
+        <item
+            android:id="@+id/web_to_PDF"
+            android:icon="@drawable/ic_camera"
+            android:title="@string/webpage_to_pdf"/>
 
     </group>
 

@@ -44,6 +44,7 @@ public class PDFUtils {
      */
     public void setPassword(final String filePath, final DataSetChanged dataSetChanged,
                             final ArrayList<File> mFileList) {
+        Log.e("log",filePath);
         final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.set_password)
                 .customView(R.layout.custom_dialog, true)
