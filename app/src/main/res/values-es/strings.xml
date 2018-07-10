@@ -27,17 +27,23 @@
         <item>Share File</item>
         <item>mostrar detalles</item>
         <item>Agregar contraseña</item>
+        <item>Quitar contraseña</item>
     </array>
 
     <string name="please_wait">Por favor espere</string>
     <string name="populating_list">Recuperando los ficheros. Esto puede tomar un tiempo</string>
 
-    <string name="main">Inicio</string>
+    <string name="create_pdf">Inicio</string>
     <string name="viewFiles">Ver Ficheros</string>
     <string name="feedback">Feedback</string>
 
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
+    <string name="successToast">Images successfully added.</string>
+
 
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
+    <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
     <string name="snackbar_permissions_given">Permisos concedidos!</string>
     <string name="snackbar_insufficient_permissions">Permisos insuficientes!</string>
@@ -92,9 +98,51 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
+
+    <!-- Select Images string -->
+    <string name="image_picker_activity_toolbar_title">Select Images</string>
+
+    <string name="merge_pdf">Merge PDF</string>
+    <string name="merge_file_select">Select a file</string>
+    <string name="pdf_merge">Merging File</string>
+    <string name="pdf_merge_error">Unable to Merge</string>
+    <string name="file_one">Select first PDF</string>
+    <string name="file_two">Select second PDF</string>
+    <string name="File_hint_one">File Path for PDF one</string>
+    <string name="File_hint_two">File Path for PDF two</string>
+    <string name="merge_files">MERGE FILES</string>
+    <string name="note">Files present on SD Card are supported</string>
+    <string name="file_path">PDF File Path</string>
     <string name="file_date_text">File Date</string>
     <string name="file_size_text">File Size</string>
     <string name="password_added">Password Added</string>
     <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
+    <string name="btn_sav_text">savText</string>
+    <string name="path_seperator">/</string>
+    <string name="grayscale_filter">Gray Scale</string>
+    <string name="sepia_filter">SEPIA</string>
+    <string name="save_current_imagefilter">Save Current</string>
+    <string name="done_filter">Done</string>
+    <string name="filter_images_Text">Filter Images</string>
+    <string name="nextimage_contentdesc">Next Image</string>
+    <string name="compress_image">Compress the Image</string>
+    <string name="quality_image">Compress the Image (Default : 30%)</string>
+    <string name="invalid_quality">Invaid Entry</string>
+    <string name="compress_dialog_enter_prompt">Enter here</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">Establecer por defecto</string>
+    <string name="decrypted_file">_unencrypted.pdf</string>
+    <string name="decrypt_message">Enter the password to continue</string>
+    <string name="not_encrypted">PDF is not Encrypted</string>
+    <string name="incorrect_passowrd">Incorrect Password</string>
+    <string name="note_filter">Save Current Image before Proceeding</string>
+    <string name="img_Count_filter">Showing X of X</string>
+    <string name="save_current">Save Current</string>
+    <string name="choose_filter">Choose a Filter First</string>
+    <string name="saving_dialog">Saving..</string>
+    <string name="save_first">Save Current Image First</string>
+    <string name="none_filter">None</string>
+
 
 </resources>

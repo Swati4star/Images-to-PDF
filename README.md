@@ -51,7 +51,8 @@ Hurray! PDF files of selected images are created.
 + [Morphing Button](https://github.com/dmytrodanylyk/android-morphing-button)
 + [TedPicker](https://github.com/ParkSangGwon/TedPicker)
 + [Material Dialogs](https://github.com/afollestad/material-dialogs)
-+ [Compressor](https://github.com/zetbaitsu/Compressor)
++ [What's new](https://github.com/TonnyL/WhatsNew)
++ [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
 
 #### Code & Issues
 If you are a developer and you wish to contribute to the app please fork the project
