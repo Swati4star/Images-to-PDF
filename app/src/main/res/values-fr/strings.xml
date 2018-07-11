@@ -27,6 +27,7 @@
         <item>Share File</item>
         <item>afficher les détails</item>
         <item>Ajouter mot de passe</item>
+        <item>Supprimer le mot de</item>
     </array>
 
     <string name="please_wait">Patientez</string>
@@ -35,6 +36,9 @@
     <string name="viewFiles">Voir Fichiers</string>
     <string name="feedback">Feedback</string>
 
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
+    <string name="successToast">Images successfully added.</string>
 
     <string name="snackbar_no_images">Pas d\'images choisies</string>
     <string name="snackbar_no_pdfs_selected">Aucun fichier PDF sélectionné</string>
@@ -110,6 +114,12 @@
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
     <string name="btn_sav_text">savText</string>
     <string name="path_seperator">/</string>
+    <string name="grayscale_filter">Gray Scale</string>
+    <string name="sepia_filter">SEPIA</string>
+    <string name="save_current_imagefilter">Save Current</string>
+    <string name="done_filter">Done</string>
+    <string name="filter_images_Text">Filter Images</string>
+    <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Compress the Image</string>
     <string name="quality_image">Compress the Image (Default : 30%)</string>
     <string name="invalid_quality">Invaid Entry</string>
@@ -119,6 +129,16 @@
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Définir par défaut</string>
-
+    <string name="decrypted_file">_unencrypted.pdf</string>
+    <string name="decrypt_message">Enter the password to continue</string>
+    <string name="not_encrypted">PDF is not Encrypted</string>
+    <string name="incorrect_passowrd">Incorrect Password</string>
+    <string name="note_filter">Save Current Image before Proceeding</string>
+    <string name="img_Count_filter">Showing X of X</string>
+    <string name="save_current">Save Current</string>
+    <string name="choose_filter">Choose a Filter First</string>
+    <string name="saving_dialog">Saving..</string>
+    <string name="save_first">Save Current Image First</string>
+    <string name="none_filter">None</string>
 
 </resources>
