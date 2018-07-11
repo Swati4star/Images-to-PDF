@@ -65,6 +65,7 @@
     <string name="enter_password">パスワードを入力する</string>
     <string name="example_password">例: pass@123</string>
     <string name="snackbar_password_cannot_be_blank">パスワードは空白にできません</string>
+    <string name="cannot_add_password">パスワードをPDFに適用できませんでした。 PDFをもう一度チェックしてください。</string>
     <string name="remove">削除する</string>
 
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
