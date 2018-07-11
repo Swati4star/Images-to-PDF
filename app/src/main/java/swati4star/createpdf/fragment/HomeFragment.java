@@ -576,9 +576,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             != PackageManager.PERMISSION_GRANTED)) {
                 mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
                 requestPermissions(new String[]{
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA},
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
                 return false;
             }
