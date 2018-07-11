@@ -125,14 +125,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);
 
-                if (bitmap.getWidth() > documentRect.getWidth()
-                        || bitmap.getHeight() > documentRect.getHeight()) {
-                    //bitmap is larger than page,so set bitmap's size similar to the whole page
-                    image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                } else {
-                    //bitmap is smaller than page, so add bitmap simply.
-                    image.scaleAbsolute(bitmap.getWidth(), bitmap.getHeight());
-                }
+                Rectangle imageSize = ImageUtils.calculateFitSize(bitmap.getWidth(), bitmap.getHeight(), documentRect);
+                image.scaleAbsolute(imageSize);
 
                 Log.v("Stage 6", "Image mPath adding");
 

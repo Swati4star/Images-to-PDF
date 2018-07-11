@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -82,19 +83,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
 
     private static int mImageCounter = 0;
-
-    private MorphButtonUtility mMorphButtonUtility;
-    private Activity mActivity;
-    private ArrayList<String> mImagesUri = new ArrayList<>();
-    private ArrayList<String> mTempUris = new ArrayList<>();
-    private ArrayList<String> mFilterUris = new ArrayList<>();
+    private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
     ArrayList<Uri> imageUris;
-    private String mPath;
-    private String mPassword;
-    private String mQuality;
-    private boolean mOpenSelectImages = false;
-    private SharedPreferences mSharedPreferences;
-
     @BindView(R.id.addImages)
     MorphingButton addImages;
     @BindView(R.id.pdfCreate)
@@ -103,9 +93,19 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     MorphingButton mOpenPdf;
     @BindView(R.id.enhancement_options_recycle_view)
     RecyclerView mEnhancementOptionsRecycleView;
-
+    @BindView(R.id.tvNoOfImages)
+    TextView mNoOfImages;
+    private MorphButtonUtility mMorphButtonUtility;
+    private Activity mActivity;
+    private ArrayList<String> mImagesUri = new ArrayList<>();
+    private ArrayList<String> mTempUris = new ArrayList<>();
+    private ArrayList<String> mFilterUris = new ArrayList<>();
+    private String mPath;
+    private String mPassword;
+    private String mQuality;
+    private boolean mOpenSelectImages = false;
+    private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
-    private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
@@ -134,12 +134,18 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         Bundle bundle = getArguments();
         if (bundle != null) {
             ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
-            for (Parcelable p :uris) {
+            for (Parcelable p : uris) {
                 Uri uri = (Uri) p;
                 if (fileUtils.getUriRealPath(uri) == null) {
                     Toast.makeText(mActivity, R.string.whatsappToast, Toast.LENGTH_LONG).show();
                 } else {
                     mTempUris.add(fileUtils.getUriRealPath(uri));
+                    if (mTempUris.size() > 0) {
+                        mNoOfImages.setText(mTempUris.size() + getString(R.string.images_selected));
+                        mNoOfImages.setVisibility(View.VISIBLE);
+                    } else {
+                        mNoOfImages.setVisibility(View.GONE);
+                    }
                     Toast.makeText(mActivity, R.string.successToast, Toast.LENGTH_LONG).show();
                 }
             }
@@ -188,8 +194,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             e.printStackTrace();
         }
     }
-
-
 
     // Create Pdf of selected images
     @SuppressWarnings("unchecked")
@@ -300,9 +304,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             for (Uri uri : imageUris)
                 mTempUris.add(uri.getPath());
             if (imageUris.size() > 0) {
+                mNoOfImages.setText(imageUris.size() + getString(R.string.images_selected));
+                mNoOfImages.setVisibility(View.VISIBLE);
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_images_added,
-                    Snackbar.LENGTH_LONG).show();
+                        R.string.snackbar_images_added,
+                        Snackbar.LENGTH_LONG).show();
+            } else {
+                mNoOfImages.setVisibility(View.GONE);
             }
             mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mOpenPdf.setVisibility(View.GONE);
@@ -392,7 +400,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         }
     }
 
-    private void compressImage()  {
+    private void compressImage() {
 
         if (mTempUris.size() == 0) {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
@@ -581,7 +589,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED)) {
                 mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
-                requestPermissions( new String[] {
+                requestPermissions(new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.CAMERA},

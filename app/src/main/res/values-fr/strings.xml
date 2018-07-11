@@ -64,6 +64,7 @@
     <string name="enter_password">Entrer le mot de passe</string>
     <string name="example_password">Exemple: pass@123</string>
     <string name="snackbar_password_cannot_be_blank">Le mot de passe ne peut pas être vide</string>
+    <string name="cannot_add_password">Le mot de passe n\'a pas pu être appliqué au fichier PDF. Veuillez vérifier le PDF à nouveau.</string>
     <string name="remove">Retirer</string>
 
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
@@ -126,6 +127,9 @@
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
+    <string name="images_selected">" image(s) selected."</string>
+
+
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Définir par défaut</string>
