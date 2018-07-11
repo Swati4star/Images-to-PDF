@@ -113,6 +113,7 @@
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
+    <string name="images_selected">" image(s) selected."</string>
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>

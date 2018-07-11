@@ -127,6 +127,9 @@
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
+    <string name="images_selected">" image(s) selected."</string>
+
+
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Définir par défaut</string>
