@@ -102,6 +102,7 @@
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
+    <string name="images_selected">" image(s) selected."</string>
 
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
