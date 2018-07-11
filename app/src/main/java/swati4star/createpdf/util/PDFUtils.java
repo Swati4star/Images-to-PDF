@@ -14,9 +14,11 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.exceptions.BadPasswordException;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -82,11 +84,14 @@ public class PDFUtils {
                 try {
                     doEncryption(filePath, mPassword, mFileList);
                     dataSetChanged.updateDataset();
+                    showSnackbar(R.string.password_added);
+                } catch (BadPasswordException e) {
+                    e.printStackTrace();
+                    showSnackbar(R.string.cannot_add_password);
                 } catch (IOException | DocumentException e) {
                     e.printStackTrace();
                 }
                 dialog.dismiss();
-                showSnackbar(R.string.password_added);
             }
         });
     }
@@ -94,12 +99,12 @@ public class PDFUtils {
     /**
      * Uses PDF Reader to set encryption in pdf file.
      *
-     * @param path - Path of pdf file to be encrypted
+     * @param path     - Path of pdf file to be encrypted
      * @param password - password to be encrypted with
      * @return string - path of output file
      */
-    private String  doEncryption(String path, String password,
-                                 final ArrayList<File> mFileList) throws IOException, DocumentException {
+    private String doEncryption(String path, String password,
+                                final ArrayList<File> mFileList) throws IOException, DocumentException {
         String finalOutputFile = path.replace(".pdf", mContext.getString(R.string.encrypted_file));
 
         for (int i = 0; i < mFileList.size(); i++) {
@@ -121,9 +126,10 @@ public class PDFUtils {
 
     /**
      * Creates a dialog with details of given PDF file
-     * @param name - file name
-     * @param path - file path
-     * @param size - file size
+     *
+     * @param name        - file name
+     * @param path        - file path
+     * @param size        - file size
      * @param lastModDate - file's last modified date
      */
     public void showDetails(String name, String path, String size, String lastModDate) {
@@ -151,6 +157,7 @@ public class PDFUtils {
         builder.create();
         builder.show();
     }
+
     /**
      * Uses PDF Reader to decrypt the PDF.
      *
@@ -244,6 +251,7 @@ public class PDFUtils {
             }
         });
     }
+
     /**
      * Creates Snackbar
      */
