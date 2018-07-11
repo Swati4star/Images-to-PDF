@@ -88,6 +88,7 @@
     <string name="enter_password">Enter Password</string>
     <string name="example_password">Example: pass@123</string>
     <string name="snackbar_password_cannot_be_blank">Password cannot be blank</string>
+    <string name="cannot_add_password">Password could not be applied to the PDF. Please check the PDF again.</string>
     <string name="remove">Remove</string>
 
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
