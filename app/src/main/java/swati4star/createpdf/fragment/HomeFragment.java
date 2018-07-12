@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -200,7 +201,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 mImagesUri.add(mTempUris.get(i));
             }
         }
-
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -212,9 +212,33 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            String filename = input.toString();
-                            new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                    HomeFragment.this).execute();
+                            final String filename = input.toString();
+                            if (!isFileExist(filename + getString(R.string.pdf_ext))) {
+                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
+                                        HomeFragment.this).execute();
+                            } else {
+                                new MaterialDialog.Builder(mActivity)
+                                        .title(R.string.warning)
+                                        .content(R.string.overwrite_message)
+                                        .positiveText(android.R.string.ok)
+                                        .negativeText(android.R.string.cancel)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
+                                                        HomeFragment.this).execute();
+                                            }
+                                        })
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                createPdf();
+                                            }
+                                        })
+                                        .show();
+                            }
                         }
                     }
                 })
@@ -608,5 +632,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+    }
+
+    private boolean isFileExist(String mFilePath) {
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                getString(R.string.pdf_dir) + mFilePath;
+
+        File file = new File(path);
+        return file.exists();
     }
 }
