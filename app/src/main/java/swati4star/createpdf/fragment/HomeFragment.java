@@ -219,8 +219,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             final String filename = input.toString();
                             FileUtils utils = new FileUtils(mActivity);
                             if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
-                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                        HomeFragment.this, mPageSize).execute();
+                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality, mPageSize,
+                                        HomeFragment.this).execute();
                             } else {
                                 new MaterialDialog.Builder(mActivity)
                                         .title(R.string.warning)
@@ -232,7 +232,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                             public void onClick(@NonNull MaterialDialog dialog,
                                                                 @NonNull DialogAction which) {
                                                 new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                                        HomeFragment.this, mPageSize).execute();
+                                                        mPageSize, HomeFragment.this).execute();
                                             }
                                         })
                                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -440,12 +440,12 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
                         int selectedId = radioGroup.getCheckedRadioButtonId();
 
-                        String s;
+                        String stringPageSize;
                         switch (selectedId) {
                             case R.id.page_size_default:
                                 mPageSize = PageSize.A4;
                                 break;
-                            case R.id.page_size_legel:
+                            case R.id.page_size_legal:
                                 mPageSize = PageSize.LEGAL;
                                 break;
                             case R.id.page_size_executive:
@@ -462,15 +462,15 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                 break;
                             case R.id.page_size_a0_a10:
                                 Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
-                                s = spinnerA.getSelectedItem().toString();
-                                s = s.substring(0, s.indexOf(" "));
-                                mPageSize = PageSize.getRectangle(s);
+                                stringPageSize = spinnerA.getSelectedItem().toString();
+                                stringPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(stringPageSize);
                                 break;
                             case R.id.page_size_b0_b10:
                                 Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
-                                s = spinnerB.getSelectedItem().toString();
-                                s = s.substring(0, s.indexOf(" "));
-                                mPageSize = PageSize.getRectangle(s);
+                                stringPageSize = spinnerB.getSelectedItem().toString();
+                                stringPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(stringPageSize);
                                 break;
                         }
                     }

@@ -45,7 +45,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private Rectangle mPageSize;
 
     public CreatePdf(Activity context, ArrayList<String> imagesUri, String fileName, String password,
-                     String qualityString, OnPDFCreatedInterface onPDFCreated, Rectangle pageSize) {
+                     String qualityString, Rectangle pageSize, OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = imagesUri;
         this.mFileName = fileName;
         this.mPassword = password;
