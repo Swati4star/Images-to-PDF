@@ -147,4 +147,18 @@
     <string name="warning">Warning</string>
     <string name="overwrite_message">同じ名前のファイルがすでに存在します。上書きしますか？</string>
 
+    <!-- Directory Strings -->
+    <string name="directory">New Directory</string>
+    <string name="moving_files">Moving your files</string>
+    <string name="success_move">Successfully moved your files</string>
+    <string name="delete_directory">Delete Directory</string>
+    <string name="dir_does_not_exists">Directory does not exists</string>
+    <string name="move_files_delete_dir">Moving files and deleting the directory</string>
+    <string name="directory_deleted">Directory deleted</string>
+    <string name="success_delete_directory">Successfully deleted the directory</string>
+    <string name="delete_dialog">This directory is not empty. Are you sure you want to delete it ?</string>
+    <string name="move_files">Move Files</string>
+    <string name="moved_files">Files successfully moved</string>
+    <string name="move_to_home">Move to home directory</string>
+
 </resources>
