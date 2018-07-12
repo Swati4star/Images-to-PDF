@@ -200,7 +200,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 mImagesUri.add(mTempUris.get(i));
             }
         }
-
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -212,9 +211,34 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            String filename = input.toString();
-                            new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                    HomeFragment.this).execute();
+                            final String filename = input.toString();
+                            FileUtils utils = new FileUtils(mActivity);
+                            if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
+                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
+                                        HomeFragment.this).execute();
+                            } else {
+                                new MaterialDialog.Builder(mActivity)
+                                        .title(R.string.warning)
+                                        .content(R.string.overwrite_message)
+                                        .positiveText(android.R.string.ok)
+                                        .negativeText(android.R.string.cancel)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
+                                                        HomeFragment.this).execute();
+                                            }
+                                        })
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                createPdf();
+                                            }
+                                        })
+                                        .show();
+                            }
                         }
                     }
                 })
@@ -609,4 +633,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
+
+
 }

@@ -144,5 +144,7 @@
     <string name="saving_dialog">Saving..</string>
     <string name="save_first">Save Current Image First</string>
     <string name="none_filter">None</string>
+    <string name="warning">Warning</string>
+    <string name="overwrite_message">同じ名前のファイルがすでに存在します。上書きしますか？</string>
 
 </resources>

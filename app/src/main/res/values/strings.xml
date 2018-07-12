@@ -167,4 +167,6 @@
     <string name="saving_dialog">Saving..</string>
     <string name="choose_filter">Choose a Filter First</string>
     <string name="none_filter">None</string>
+    <string name="warning">Warning</string>
+    <string name="overwrite_message">There already exists a file with the same name. Do you want to overwrite?</string>
 </resources>
