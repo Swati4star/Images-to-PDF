@@ -145,6 +145,6 @@
     <string name="save_first">Save Current Image First</string>
     <string name="none_filter">None</string>
     <string name="warning">Warning</string>
-    <string name="overwrite_message">File with same name exist, would you like to overwrite?</string>
+    <string name="overwrite_message">Il existe déjà un fichier avec le même nom. Voulez-vous remplacer?</string>
 
 </resources>

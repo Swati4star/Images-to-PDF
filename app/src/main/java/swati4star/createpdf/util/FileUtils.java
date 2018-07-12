@@ -642,4 +642,18 @@ public class FileUtils {
 
         return ret;
     }
+
+    /***
+     * Check if file already exists in pdf_dir
+     * @param mFileName - Name of the file
+     * @return true if file exists else false
+     */
+
+    public boolean isFileExist(String mFileName) {
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                mContext.getString(R.string.pdf_dir) + mFileName;
+
+        File file = new File(path);
+        return file.exists();
+    }
 }

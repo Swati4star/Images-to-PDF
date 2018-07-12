@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -213,7 +212,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     Snackbar.LENGTH_LONG).show();
                         } else {
                             final String filename = input.toString();
-                            if (!isFileExist(filename + getString(R.string.pdf_ext))) {
+                            FileUtils utils = new FileUtils(mActivity);
+                            if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                                 new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
                                         HomeFragment.this).execute();
                             } else {
@@ -634,11 +634,5 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 
-    private boolean isFileExist(String mFilePath) {
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                getString(R.string.pdf_dir) + mFilePath;
 
-        File file = new File(path);
-        return file.exists();
-    }
 }
