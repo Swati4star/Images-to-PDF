@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -88,6 +92,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private String mPath;
     private String mPassword;
     private String mQuality;
+    private Rectangle mPageSize = PageSize.A4;
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
@@ -215,7 +220,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             FileUtils utils = new FileUtils(mActivity);
                             if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                                 new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                        HomeFragment.this).execute();
+                                        HomeFragment.this, mPageSize).execute();
                             } else {
                                 new MaterialDialog.Builder(mActivity)
                                         .title(R.string.warning)
@@ -227,7 +232,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                             public void onClick(@NonNull MaterialDialog dialog,
                                                                 @NonNull DialogAction which) {
                                                 new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                                        HomeFragment.this).execute();
+                                                        HomeFragment.this, mPageSize).execute();
                                             }
                                         })
                                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -386,6 +391,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp),
                         getResources().getString(R.string.filter_images_Text)));
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_page_size_24dp),
+                        getResources().getString(R.string.set_page_size_text)));
 
 
         return mEnhancementOptionsEntityArrayList;
@@ -405,9 +413,69 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 break;
             case 3:
                 filterImages();
+            case 4:
+                setPageSize();
             default:
                 break;
         }
+    }
+
+    private void setPageSize() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.set_page_size_text)
+                .customView(R.layout.set_page_size_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        View view = dialog.getCustomView();
+                        RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
+                        int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                        String s;
+                        switch (selectedId) {
+                            case R.id.page_size_default:
+                                mPageSize = PageSize.A4;
+                                break;
+                            case R.id.page_size_legel:
+                                mPageSize = PageSize.LEGAL;
+                                break;
+                            case R.id.page_size_executive:
+                                mPageSize = PageSize.EXECUTIVE;
+                                break;
+                            case R.id.page_size_ledger:
+                                mPageSize = PageSize.LEDGER;
+                                break;
+                            case R.id.page_size_tabloid:
+                                mPageSize = PageSize.TABLOID;
+                                break;
+                            case R.id.page_size_letter:
+                                mPageSize = PageSize.LETTER;
+                                break;
+                            case R.id.page_size_a0_a10:
+                                Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
+                                s = spinnerA.getSelectedItem().toString();
+                                s = s.substring(0, s.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(s);
+                                break;
+                            case R.id.page_size_b0_b10:
+                                Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
+                                s = spinnerB.getSelectedItem().toString();
+                                s = s.substring(0, s.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(s);
+                                break;
+                        }
+                    }
+                }).build();
+        dialog.show();
     }
 
     private void compressImage() {

@@ -147,6 +147,15 @@
     <string name="none_filter">None</string>
     <string name="warning">Warning</string>
     <string name="overwrite_message">Ya existe un archivo con el mismo nombre. ¿Quieres sobrescribir?</string>
+    <string name="set_page_size_text">Establecer tamaño de página</string>
+    <string name="b0_to_b10">B0 to B10</string>
+    <string name="a0_to_a10">A0 to A10</string>
+    <string name="tabloid">TABLOID</string>
+    <string name="executive">EXECUTIVE</string>
+    <string name="ledger">LEDGER</string>
+    <string name="letter">LETTER</string>
+    <string name="legal">LEGAL</string>
+    <string name="default_a4">DEFAULT (A4)</string>
 
 
 </resources>

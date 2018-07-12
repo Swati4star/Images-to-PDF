@@ -14,7 +14,6 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -43,15 +42,17 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final ArrayList<String> mImagesUri;
     private final Activity mContext;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
+    private Rectangle mPageSize;
 
     public CreatePdf(Activity context, ArrayList<String> imagesUri, String fileName, String password,
-                     String qualityString, OnPDFCreatedInterface onPDFCreated) {
+                     String qualityString, OnPDFCreatedInterface onPDFCreated, Rectangle pageSize) {
         this.mImagesUri = imagesUri;
         this.mFileName = fileName;
         this.mPassword = password;
         this.mQualityString = qualityString;
         this.mContext = context;
         this.mOnPDFCreatedInterface = onPDFCreated;
+        this.mPageSize = pageSize;
     }
 
     @Override
@@ -84,7 +85,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Document document = new Document(PageSize.A4, 38, 38, 50, 38);
+        Document document = new Document(mPageSize, 38, 38, 50, 38);
 
         Log.v("stage 2", "Document Created");
 
