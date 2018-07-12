@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PhotoEditor">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="353dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nextimageButton"
+        android:layout_marginTop="18dp">
+
+        <ja.burhanrashid52.photoeditor.PhotoEditorView
+            android:id="@+id/photoEditorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ja.burhanrashid52.photoeditor.PhotoEditorView>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/sepiafilter"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_alignEnd="@+id/nextimageButton"
+        android:layout_alignTop="@+id/nonefilter"
+        android:text="@string/sepia_filter"/>
+
+    <ImageButton
+        android:id="@+id/nextimageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/nextimage_contentdesc"
+        app:srcCompat="@drawable/ic_navigate_next_black_24dp"/>
+
+    <TextView
+        android:id="@+id/imagecount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/savecurrent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="121dp"
+        android:text="@string/img_Count_filter"
+        android:textColor="@android:color/background_dark"/>
+
+    <Button
+        android:id="@+id/savecurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/save_current"
+        />
+
+    <Button
+        android:id="@+id/grayscalefilter"
+        android:layout_width="108dp"
+        android:layout_height="53dp"
+        android:layout_alignTop="@+id/sepiafilter"
+        android:layout_centerHorizontal="true"
+        android:text="@string/grayscale_filter"/>
+
+    <Button
+        android:id="@+id/nonefilter"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp"
+        android:layout_marginStart="28dp"
+        android:text="@string/none_filter"/>
+</RelativeLayout>

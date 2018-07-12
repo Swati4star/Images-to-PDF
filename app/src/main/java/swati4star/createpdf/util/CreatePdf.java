@@ -1,10 +1,12 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +14,6 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -23,6 +24,8 @@ import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 
 /**
  * An async task that converts selected images to Pdf
@@ -39,15 +42,17 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final ArrayList<String> mImagesUri;
     private final Activity mContext;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
+    private Rectangle mPageSize;
 
     public CreatePdf(Activity context, ArrayList<String> imagesUri, String fileName, String password,
-                     String qualityString, OnPDFCreatedInterface onPDFCreated) {
+                     String qualityString, Rectangle pageSize, OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = imagesUri;
         this.mFileName = fileName;
         this.mPassword = password;
         this.mQualityString = qualityString;
         this.mContext = context;
         this.mOnPDFCreatedInterface = onPDFCreated;
+        this.mPageSize = pageSize;
     }
 
     @Override
@@ -80,7 +85,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Document document = new Document(PageSize.A4, 38, 38, 50, 38);
+        Document document = new Document(mPageSize, 38, 38, 50, 38);
 
         Log.v("stage 2", "Document Created");
 
@@ -105,7 +110,9 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             Log.v("Stage 4", "Document opened");
 
             for (int i = 0; i < mImagesUri.size(); i++) {
-                int quality = 30;
+                int quality;
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.mContext);
+                quality = preferences.getInt(DEFAULT_COMPRESSION, 30);
 
                 if (StringUtils.isNotEmpty(mQualityString)) {
                     quality = Integer.parseInt(mQualityString);
@@ -119,14 +126,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);
 
-                if (bitmap.getWidth() > documentRect.getWidth()
-                        || bitmap.getHeight() > documentRect.getHeight()) {
-                    //bitmap is larger than page,so set bitmap's size similar to the whole page
-                    image.scaleAbsolute(documentRect.getWidth(), documentRect.getHeight());
-                } else {
-                    //bitmap is smaller than page, so add bitmap simply.
-                    image.scaleAbsolute(bitmap.getWidth(), bitmap.getHeight());
-                }
+                Rectangle imageSize = ImageUtils.calculateFitSize(bitmap.getWidth(), bitmap.getHeight(), documentRect);
+                image.scaleAbsolute(imageSize);
 
                 Log.v("Stage 6", "Image mPath adding");
 
