@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -39,9 +38,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final ArrayList<String> mImagesUri;
     private final Activity mContext;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
-    private LottieAnimationView animationView;
-    // Progress mDialog
-    private MaterialDialog mDialog;
+    private LottieAnimationView mAnimationView;
     private boolean mSuccess;
     private String mPath;
     private Rectangle mPageSize;
@@ -60,18 +57,11 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-       /* final MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
-                .title(R.string.please_wait)
-                .content(R.string.populating_list)
-                .cancelable(false)
-                .progress(true, 0);
-        mDialog = builder.build();*/
         mSuccess = true;
-        // mDialog.show();
-        animationView = mContext.findViewById(R.id.animation_view);
-        animationView.setAnimation(R.raw.image_icon_tadah);
-        animationView.setVisibility(View.VISIBLE);
-        animationView.playAnimation();
+        mAnimationView = mContext.findViewById(R.id.animation_view);
+        mAnimationView.setAnimation(R.raw.image_icon_tadah);
+        mAnimationView.setVisibility(View.VISIBLE);
+        mAnimationView.playAnimation();
     }
 
     @Override
@@ -171,9 +161,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        // mDialog.dismiss();
-        animationView.cancelAnimation();
-        animationView.setVisibility(View.GONE);
+        mAnimationView.cancelAnimation();
+        mAnimationView.setVisibility(View.GONE);
         if (!mSuccess) {
             Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
                     R.string.snackbar_folder_not_created,
