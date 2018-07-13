@@ -627,6 +627,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     public void onPDFCreated(boolean success, String path) {
         mImagesUri.clear();
         mTempUris.clear();
+        mNoOfImages.setVisibility(View.GONE);
         mImageCounter = 0;
         mPassword = null;
         if (success) {
