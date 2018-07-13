@@ -155,7 +155,6 @@
     <string name="letter">LETTER</string>
     <string name="legal">LEGAL</string>
     <string name="default_a4">DEFAULT (A4)</string>
-
     <!-- Directory Strings -->
     <string name="directory">Directory</string>
     <string name="moving_files">Moving your files</string>
@@ -178,4 +177,11 @@
     <string name="no">No</string>
     <string name="new_dir">New Directory</string>
 
+    <string name="homefragment_short">Create PDF</string>
+    <string name="homefragment_long">Create a PDF</string>
+    <string name="viewfilesfragment_short">View Files</string>
+    <string name="viewfilesfragment_long">View existing Files</string>
+    <string name="mergefilesfragment_short">Merge Files</string>
+    <string name="mergefilesfragment_long">Merge two Files</string>
+    <string name="shortcut_disabled">Shortcut is Disabled</string>
 </resources>

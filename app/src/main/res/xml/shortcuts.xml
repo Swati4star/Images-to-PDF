@@ -1,0 +1,42 @@
+<shortcuts xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="homeFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_camera"
+        android:shortcutShortLabel="@string/homefragment_short"
+        android:shortcutLongLabel="@string/homefragment_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage=" swati4star.createpdf.fragment"
+            android:targetClass="swati4star.createpdf.activity.HomeFragment" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="viewfilesFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_gallery"
+        android:shortcutShortLabel="@string/viewfilesfragment_short"
+        android:shortcutLongLabel="@string/viewfilesfragment_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage=" swati4star.createpdf.fragment"
+            android:targetClass="swati4star.createpdf.activity.ViewFilesFragment" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="mergefilesFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_merge_type_black_24dp"
+        android:shortcutShortLabel="@string/mergefilesfragment_short"
+        android:shortcutLongLabel="@string/mergefilesfragment_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage=" swati4star.createpdf.fragment"
+            android:targetClass="swati4star.createpdf.activity.MergeFilesFragment" />
+    </shortcut>
+</shortcuts>
