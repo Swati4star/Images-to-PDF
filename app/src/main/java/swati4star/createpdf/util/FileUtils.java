@@ -136,6 +136,40 @@ public class FileUtils {
         }
         return folder;
     }
+    /**
+     * get the PDF files stored in other directories
+     * @return ArrayList of PDF files
+     */
+    public ArrayList<File> getPdfFromOtherDirectories() {
+        ArrayList<File> pdfFiles = new ArrayList<>();
+        File folder = getOrCreatePdfDirectory();
+        File[] files = folder.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                for (File pdf : file.listFiles()) {
+                    pdfFiles.add(pdf);
+                }
+            }
+        }
+        if (pdfFiles.isEmpty()) {
+            return null;
+        }
+        return pdfFiles;
+    }
+
+    /**
+     * get the PDF Directory from directory name
+     * @return pdf directory if it exists , else null
+     */
+    public File getDirectory(String dirName) {
+        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                + mContext.getResources().getString(R.string.pdf_dir)
+                + dirName);
+        if (!folder.exists()) {
+            return null;
+        }
+        return folder;
+    }
 
     /**
      * Gives a formatted last modified date for pdf ListView
