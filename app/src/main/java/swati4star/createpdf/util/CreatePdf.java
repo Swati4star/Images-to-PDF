@@ -68,11 +68,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
         mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
                 mContext.getString(R.string.pdf_dir);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         File folder = new File(mPath);
         if (!folder.exists()) {
             mSuccess = folder.mkdir();
