@@ -30,4 +30,24 @@
         android:title="@string/share"
         android:orderInCategory="4"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/directory"
+        android:title="@string/new_dir"
+        android:orderInCategory="5"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/move_files"
+        android:title="@string/move_files"
+        android:orderInCategory="6"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/home_dir"
+        android:title="@string/move_to_home"
+        android:orderInCategory="7"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_directory"
+        android:title="@string/delete_directory"
+        android:orderInCategory="8"
+        app:showAsAction="never" />
 </menu>
