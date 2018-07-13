@@ -112,7 +112,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
 
-        mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+        mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
 
         // Get runtime permissions if build version >= Android M
@@ -703,6 +704,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+        mCreatePdf.setEnabled(true);
     }
 
 
