@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -40,6 +42,8 @@ import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
+import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+
 public class ViewFilesFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener, EmptyStateChangeListener {
 
@@ -47,14 +51,6 @@ public class ViewFilesFragment extends Fragment
     private static final int DATE_INDEX = 1;
     private static final int SIZE_INCREASING_ORDER_INDEX = 2;
     private static final int SIZE_DECREASING_ORDER_INDEX = 3;
-
-    private  Menu mMenuIcons;
-    private Activity mActivity;
-    private ViewFilesAdapter mViewFilesAdapter;
-    @BindView(R.id.filesRecyclerView)
-    RecyclerView mViewFilesListRecyclerView;
-    @BindView(R.id.swipe)
-    SwipeRefreshLayout mSwipeView;
     @BindView(R.id.emptyBackgroundImage)
     public ImageView backView;
     @BindView(R.id.emptyTextOverBgImage)
@@ -63,17 +59,37 @@ public class ViewFilesFragment extends Fragment
     public TextView getStarted;
     @BindView(R.id.emptyTagLine)
     public TextView tagLine;
+    @BindView(R.id.filesRecyclerView)
+    RecyclerView mViewFilesListRecyclerView;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout mSwipeView;
+    private Menu mMenuIcons;
+    private Activity mActivity;
+    private ViewFilesAdapter mViewFilesAdapter;
+    private final DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    mViewFilesAdapter.deleteFiles();
+                    checkIfListEmpty();
+                    break;
 
-    private int mCurrentSortingIndex = -1;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        }
+    };
     private FileUtils mFileUtils;
     private SearchView mSearchView;
+    private int mCurrentSortingIndex;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +109,8 @@ public class ViewFilesFragment extends Fragment
         File folder = mFileUtils.getOrCreatePdfDirectory();
 
         // Initialize variables
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mCurrentSortingIndex = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
         final ArrayList<File> pdfFiles = new ArrayList<>();
         final File[] files = folder.listFiles();
         if (files.length == 0) {
@@ -127,7 +145,7 @@ public class ViewFilesFragment extends Fragment
             public boolean onQueryTextSubmit(String s) {
                 ArrayList searchResult = mFileUtils.searchPDF(s);
                 if (searchResult.isEmpty()) {
-                    Toast.makeText(mActivity , R.string.no_result , Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, R.string.no_result, Toast.LENGTH_LONG).show();
                 } else {
                     mViewFilesAdapter.setData(searchResult);
                     mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
@@ -203,22 +221,6 @@ public class ViewFilesFragment extends Fragment
         }
     }
 
-    private final DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                case DialogInterface.BUTTON_POSITIVE:
-                    mViewFilesAdapter.deleteFiles();
-                    checkIfListEmpty();
-                    break;
-
-                case DialogInterface.BUTTON_NEGATIVE:
-                    break;
-            }
-        }
-    };
-
-
     @Override
     public void onRefresh() {
         Log.v("refresh", "refreshing dta");
@@ -237,30 +239,36 @@ public class ViewFilesFragment extends Fragment
                 .setItems(R.array.sort_options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ArrayList<File> pdfsFromFolder = mFileUtils.getPdfsFromPdfFolder(folder.listFiles());
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
                         switch (which) {
                             case DATE_INDEX:
                                 mFileUtils.sortFilesByDateNewestToOldest(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = DATE_INDEX;
+                                editor.putInt(SORTING_INDEX, DATE_INDEX);
                                 break;
                             case NAME_INDEX:
                                 mFileUtils.sortByNameAlphabetical(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = NAME_INDEX;
+                                editor.putInt(SORTING_INDEX, NAME_INDEX);
                                 break;
                             case SIZE_INCREASING_ORDER_INDEX:
                                 mFileUtils.sortFilesBySizeIncreasingOrder(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = SIZE_INCREASING_ORDER_INDEX;
+                                editor.putInt(SORTING_INDEX, SIZE_INCREASING_ORDER_INDEX);
                                 break;
                             case SIZE_DECREASING_ORDER_INDEX:
                                 mFileUtils.sortFilesBySizeDecreasingOrder(pdfsFromFolder);
                                 mViewFilesAdapter.setData(pdfsFromFolder);
                                 mCurrentSortingIndex = SIZE_DECREASING_ORDER_INDEX;
+                                editor.putInt(SORTING_INDEX, SIZE_DECREASING_ORDER_INDEX);
                                 break;
                             default:
                                 break;
                         }
+                        editor.apply();
                     }
                 });
         builder.create().show();
@@ -289,8 +297,8 @@ public class ViewFilesFragment extends Fragment
     }
 
     /**
-    * AsyncTask used to populate the list of elements in the background
-    */
+     * AsyncTask used to populate the list of elements in the background
+     */
     @SuppressLint("StaticFieldLeak")
     private class PopulateList extends AsyncTask<Void, Void, Void> {
 
