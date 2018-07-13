@@ -206,6 +206,27 @@
     <string name="letter">LETTER</string>
     <string name="legal">LEGAL</string>
     <string name="default_a4">DEFAULT (A4)</string>
+    <!-- Directory Strings -->
+    <string name="directory">Directory</string>
+    <string name="moving_files">Moving your files</string>
+    <string name="success_move">Successfully moved your files</string>
+    <string name="delete_directory">Delete Directory</string>
+    <string name="dir_does_not_exists">Directory does not exists</string>
+    <string name="move_files_delete_dir">Moving files and deleting the directory</string>
+    <string name="directory_deleted">Directory deleted</string>
+    <string name="success_delete_directory">Successfully deleted the directory</string>
+    <string name="delete_dialog">This directory is not empty. Are you sure you want to delete it ?</string>
+    <string name="move_files">Move Files</string>
+    <string name="moved_files">Files successfully moved</string>
+    <string name="move_to_home">Move to home directory</string>
+    <string name="dialog_delete_dir">Enter the name of directory to delete</string>
+    <string name="dialog_new_dir">Enter new directory name</string>
+    <string name="dialog_dir">Enter the directory name</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="new_dir">New Directory</string>
     <string name="homefragment_short">Create PDF</string>
     <string name="homefragment_long">Create a PDF</string>
     <string name="viewfilesfragment_short">View Files</string>

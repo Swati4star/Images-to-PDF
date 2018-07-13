@@ -112,7 +112,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
 
-        mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+        mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
 
         // Get runtime permissions if build version >= Android M
@@ -413,8 +414,10 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 break;
             case 3:
                 filterImages();
+                break;
             case 4:
                 setPageSize();
+                break;
             default:
                 break;
         }
@@ -627,6 +630,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     public void onPDFCreated(boolean success, String path) {
         mImagesUri.clear();
         mTempUris.clear();
+        mNoOfImages.setVisibility(View.GONE);
         mImageCounter = 0;
         mPassword = null;
         if (success) {
@@ -700,6 +704,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+        mCreatePdf.setEnabled(true);
     }
 
 

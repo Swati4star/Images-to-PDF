@@ -154,6 +154,14 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         });
     }
 
+    public ArrayList<String> getSelectedFilePath() {
+        ArrayList<String> filePathList = new ArrayList<>();
+        for (int position : mDeleteNames) {
+            filePathList.add(mFileList.get(position).getPath());
+        }
+        return filePathList;
+    }
+
     @Override
     public int getItemCount() {
         return mFileList == null ? 0 : mFileList.size();
