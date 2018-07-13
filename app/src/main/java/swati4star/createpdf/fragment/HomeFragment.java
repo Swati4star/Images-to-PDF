@@ -413,8 +413,10 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 break;
             case 3:
                 filterImages();
+                break;
             case 4:
                 setPageSize();
+                break;
             default:
                 break;
         }
