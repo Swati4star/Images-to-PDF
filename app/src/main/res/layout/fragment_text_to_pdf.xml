@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.TextToPdfFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="40dp"
+    android:orientation="vertical">
+    <com.dd.morphingbutton.MorphingButton
+        android:id="@+id/selectFile"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/select_text_file"
+        android:textColor="@color/mb_white" />
+    <com.dd.morphingbutton.MorphingButton
+        android:id="@+id/createtextpdf"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/create_pdf"
+        android:textColor="@color/mb_white" />
+</LinearLayout>
+
+</FrameLayout>
