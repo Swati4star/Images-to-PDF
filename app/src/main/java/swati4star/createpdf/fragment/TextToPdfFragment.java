@@ -45,7 +45,7 @@ public class TextToPdfFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                textFileSelect();
+                selectTextFile();
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.text_file_selected,
                         Snackbar.LENGTH_LONG).show();
@@ -75,7 +75,8 @@ public class TextToPdfFragment extends Fragment {
                         } else {
                             String mFilename = input.toString();
                             try {
-                                PDFUtils.createPdf(mTextFileUri, mFilename);
+                                PDFUtils fileUtil = new PDFUtils(mActivity);
+                                fileUtil.createPdf(mTextFileUri, mFilename);
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.snackbar_pdfCreated,
                                         Snackbar.LENGTH_LONG).show();
@@ -90,10 +91,10 @@ public class TextToPdfFragment extends Fragment {
     /**
      * Create a file picker to get text file.
      */
-    private void textFileSelect() {
+    private void selectTextFile() {
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        intent.setType(getString(R.string.text_type));
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         try {
@@ -111,8 +112,7 @@ public class TextToPdfFragment extends Fragment {
         switch (requestCode) {
             case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    mTextFileUri = uri;
+                    mTextFileUri = data.getData();
                 }
                 break;
         }

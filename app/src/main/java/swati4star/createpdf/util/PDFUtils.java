@@ -40,7 +40,7 @@ import swati4star.createpdf.interfaces.DataSetChanged;
 
 public class PDFUtils {
 
-    private static Activity mContext = null;
+    private Activity mContext;
     private String mPassword;
 
     public PDFUtils(Activity context) {
@@ -265,7 +265,7 @@ public class PDFUtils {
      * @param fileURI URL to create PDF
      * @param outputFile File name to be created
      */
-    public static void createPdf(Uri fileURI, String outputFile)
+    public void createPdf(Uri fileURI, String outputFile)
             throws DocumentException, IOException {
 
         Document document = new Document();
@@ -288,7 +288,7 @@ public class PDFUtils {
      * @param document PDF Document
      * @param myfont Font style in PDF
      */
-    private static void readTextFile(Uri uri, Document document, Font myfont) {
+    private void readTextFile(Uri uri, Document document, Font myfont) {
         InputStream inputStream;
         try {
             inputStream = mContext.getContentResolver().openInputStream(uri);
