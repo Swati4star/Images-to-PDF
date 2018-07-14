@@ -42,7 +42,6 @@ public class TextToPdfFragment extends Fragment {
 
         Button selectButton = rootview.findViewById(R.id.selectFile);
         selectButton.setOnClickListener( new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 selectTextFile();
