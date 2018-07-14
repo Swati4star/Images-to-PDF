@@ -21,26 +21,13 @@
     <com.dd.morphingbutton.MorphingButton
         android:id="@+id/createtextpdf"
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/create_pdf"
         android:textColor="@color/mb_white" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/black_87"
-        android:textSize="20sp"
-        android:text="@string/selected_file_name"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/text_filename"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="18sp"
-        android:textColor="@color/mb_blue"
-        android:text="@string/no_text_file_selected"/>
 </LinearLayout>
 
 </FrameLayout>

@@ -2,20 +2,16 @@ package swati4star.createpdf.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Document;
@@ -26,21 +22,20 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static android.provider.Telephony.Mms.Part.TEXT;
 
 public class TextToPdfFragment extends Fragment {
     private static final int FILE_SELECT_CODE = 0;
-    private static String TEXT_FILE_NAME = null;
+    private static Uri TEXT_FILE_URI = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +53,9 @@ public class TextToPdfFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 textFileSelect();
+                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                        R.string.text_file_selected,
+                        Snackbar.LENGTH_LONG).show();
             }
         });
         Button createButton = (Button) rootview.findViewById(R.id.createtextpdf);
@@ -84,8 +82,10 @@ public class TextToPdfFragment extends Fragment {
                         } else {
                             String mFilename = input.toString();
                             try {
-                                Log.e("log","Filename final: "+TEXT_FILE_NAME);
-                                createPdf(TEXT_FILE_NAME, mFilename);
+                                createPdf(TEXT_FILE_URI, mFilename);
+                                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                                        R.string.snackbar_pdfCreated,
+                                        Snackbar.LENGTH_LONG).show();
                             } catch (DocumentException | IOException e) {
                                 e.printStackTrace();
                             }
@@ -94,36 +94,40 @@ public class TextToPdfFragment extends Fragment {
                 })
                 .show();
     }
-    public void createPdf(String fileName, String outputFile)
+    public void createPdf(Uri fileURI, String outputFile)
             throws DocumentException, IOException {
-        Log.e("log","File : "+fileName);
-        Log.e("log","Target : "+outputFile);
-        File file = new File(fileName);
-        Log.e("log","FileCheck : "+file);
-        if(!file.exists())
-        {
-            Log.e("j","File doesnt exist");
-        }
+
         Document document = new Document();
         String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" + outputFile + ".pdf";
-        Log.e("log","fianl : "+finalOutput);
         PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
-        Log.e("log","hh : "+ new FileReader(fileName));
+
         document.open();
         Font myfont = new Font();
         myfont.setStyle(Font.NORMAL);
         myfont.setSize(11);
 
         document.add(new Paragraph("\n"));
-        String strLine;
+        readTextFile(fileURI, document, myfont);
+        document.close();
+    }
+    private void readTextFile(Uri uri, Document document, Font myfont) {
+        InputStream inputStream;
+        try {
+            inputStream = getActivity().getContentResolver().openInputStream(uri);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    inputStream));
 
-        while ((strLine = br.readLine()) != null) {
-                Paragraph para = new Paragraph(strLine + "\n", myfont);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Paragraph para = new Paragraph(line + "\n", myfont);
                 para.setAlignment(Element.ALIGN_JUSTIFIED);
                 document.add(para);
             }
-        document.close();
+            reader.close();
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private void textFileSelect() {
 
@@ -147,11 +151,7 @@ public class TextToPdfFragment extends Fragment {
             case FILE_SELECT_CODE:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
-                    String path = uri.getPath();
-                    Log.e("log","auth"+uri.getAuthority());
-                    Log.e("log","encpath : "+uri.getEncodedPath());
-                    Log.e("log","Path : "+uri.getPath());
-                    TEXT_FILE_NAME = path;
+                    TEXT_FILE_URI = uri;
                 }
                 break;
         }
@@ -161,7 +161,6 @@ public class TextToPdfFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
     @Override
     public void onDetach() {
         super.onDetach();

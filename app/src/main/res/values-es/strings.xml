@@ -182,5 +182,6 @@
     <string name="select_text_file">Select Text File</string>
     <string name="install_file_manager">Please install a File Manager</string>
     <string name="text_to_pdf">Text To PDF</string>
+    <string name="text_file_selected">TextFile Selected</string>
 
 </resources>
