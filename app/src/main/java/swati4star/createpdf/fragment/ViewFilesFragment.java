@@ -405,7 +405,6 @@ public class ViewFilesFragment extends Fragment
     private void checkIfListEmpty() {
         onRefresh();
         final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
-        Log.e("log","hshs : "+ Arrays.toString(files));
         Log.d("after refresh", "yes");
         if (files == null || files.length == 0) {
             Log.d("after if", "done");

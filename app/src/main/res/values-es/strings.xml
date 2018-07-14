@@ -177,13 +177,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="new_dir">New Directory</string>
-    <string name="homefragment_short">Create PDF</string>
-    <string name="homefragment_long">Create a PDF</string>
-    <string name="viewfilesfragment_short">View Files</string>
-    <string name="viewfilesfragment_long">View existing Files</string>
-    <string name="mergefilesfragment_short">Merge Files</string>
-    <string name="mergefilesfragment_long">Merge two Files</string>
-    <string name="shortcut_disabled">Shortcut is Disabled</string>
+    <string name="select_all">Select All</string>
 
 
 </resources>

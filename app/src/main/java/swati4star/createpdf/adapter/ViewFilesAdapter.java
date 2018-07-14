@@ -64,9 +64,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mPDFUtils = new PDFUtils(activity);
     }
     public void checkAll() {
-        for(int i = 0; i < mFileList.size(); i++) {
+        for (int i = 0; i < mFileList.size(); i++) {
             if (!mDeleteNames.contains(i)) {
-                Log.e("LOG","Adding : "+i);
                 mDeleteNames.add(i);
             }
             notifyDataSetChanged();
@@ -75,8 +74,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     @NonNull
     @Override
     public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.e("log","Files : " + mFileList.size());
-        Log.e("log","Delete : " + mDeleteNames);
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_file, parent, false);
         return new ViewFilesHolder(itemView);
@@ -166,7 +163,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         });
     }
     public void selectAll() {
-        for(int i = 0; i <= mFileList.size(); i++) {
+        for (int i = 0; i <= mFileList.size(); i++) {
             mDeleteNames.add(i);
         }
     }
