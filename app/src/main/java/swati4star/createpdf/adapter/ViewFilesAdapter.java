@@ -63,14 +63,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
     }
-    public void checkAll() {
-        for (int i = 0; i < mFileList.size(); i++) {
-            if (!mDeleteNames.contains(i)) {
-                mDeleteNames.add(i);
-            }
-            notifyDataSetChanged();
-        }
-    }
     @NonNull
     @Override
     public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -162,9 +154,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             }
         });
     }
-    public void selectAll() {
-        for (int i = 0; i <= mFileList.size(); i++) {
-            mDeleteNames.add(i);
+    public void checkAll() {
+        for (int i = 0; i < mFileList.size(); i++) {
+            if (!mDeleteNames.contains(i)) {
+                mDeleteNames.add(i);
+            }
+            notifyDataSetChanged();
         }
     }
     public ArrayList<String> getSelectedFilePath() {
