@@ -49,8 +49,6 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Rectangle;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
