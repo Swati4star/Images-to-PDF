@@ -179,4 +179,5 @@
     <string name="no">No</string>
     <string name="new_dir">New Directory</string>
     <string name="select_all">Select All</string>
+    <string name="converting_file_message">Converting your files to PDF.</string>
 </resources>
