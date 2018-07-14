@@ -111,6 +111,7 @@ public class PDFUtils {
             if (finalOutputFile.equals(mFileList.get(i).getPath())) {
                 int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
                 finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
+                Log.e("log","Vaha : " +finalOutputFile );
                 break;
             }
         }

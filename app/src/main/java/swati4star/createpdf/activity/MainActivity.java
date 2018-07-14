@@ -22,6 +22,7 @@ import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
+import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
@@ -137,6 +138,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_merge:
                 fragment = new MergeFilesFragment();
+                break;
+            case R.id.nav_text_to_pdf:
+                fragment = new TextToPdfFragment();
                 break;
             case R.id.nav_feedback:
                 mFeedbackUtils.getFeedback();
