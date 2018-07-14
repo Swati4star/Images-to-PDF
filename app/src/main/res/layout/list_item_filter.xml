@@ -15,7 +15,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:contentDescription="@string/Filter_image_preview"
-        android:src="@drawable/d"/>
+        android:src="@drawable/sepia"/>
 
     <TextView
         android:id="@+id/filter_Name"

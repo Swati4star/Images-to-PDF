@@ -25,9 +25,18 @@ import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
-import static swati4star.createpdf.util.Constants.WHATS_NEW1_ICON;
 import static swati4star.createpdf.util.Constants.WHATS_NEW1_TEXT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW1_TITLE;
+import static swati4star.createpdf.util.Constants.WHATS_NEW2_TEXT;
+import static swati4star.createpdf.util.Constants.WHATS_NEW2_TITLE;
+import static swati4star.createpdf.util.Constants.WHATS_NEW3_TEXT;
+import static swati4star.createpdf.util.Constants.WHATS_NEW3_TITLE;
+import static swati4star.createpdf.util.Constants.WHATS_NEW4_TEXT;
+import static swati4star.createpdf.util.Constants.WHATS_NEW4_TITLE;
+import static swati4star.createpdf.util.Constants.WHATS_NEW5_TEXT;
+import static swati4star.createpdf.util.Constants.WHATS_NEW5_TITLE;
+import static swati4star.createpdf.util.Constants.WHATS_NEW6_TEXT;
+import static swati4star.createpdf.util.Constants.WHATS_NEW6_TITLE;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,61 +61,92 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         // To show what's new in our application
-        WhatsNew whatsNew = WhatsNew.newInstance(
-                new WhatsNewItem(WHATS_NEW1_TITLE, WHATS_NEW1_TEXT, WHATS_NEW1_ICON)
-        );
-        whatsNew.setButtonBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        whatsNew.setButtonTextColor(ContextCompat.getColor(this, R.color.mb_white));
-        whatsNew.presentAutomatically(this);
+        setWhatsNew();
 
         // Set HomeFragment fragment
         Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
 
-        mFeedbackUtils = new FeedbackUtils(this);
+        // Check if  images are received
+        handleReceivedImagesIntent(fragment);
 
+        // initialize values
+        initializeValues();
+    }
+
+    /**
+     * Ininitializes default values
+     */
+    private void initializeValues() {
+        mFeedbackUtils = new FeedbackUtils(this);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
+    /**
+     * To show the new features in the update
+     */
+    private void setWhatsNew() {
+        WhatsNew whatsNew = WhatsNew.newInstance(
+                new WhatsNewItem(WHATS_NEW1_TITLE, WHATS_NEW1_TEXT),
+                new WhatsNewItem(WHATS_NEW2_TITLE, WHATS_NEW2_TEXT),
+                new WhatsNewItem(WHATS_NEW3_TITLE, WHATS_NEW3_TEXT),
+                new WhatsNewItem(WHATS_NEW4_TITLE, WHATS_NEW4_TEXT),
+                new WhatsNewItem(WHATS_NEW5_TITLE, WHATS_NEW5_TEXT),
+                new WhatsNewItem(WHATS_NEW6_TITLE, WHATS_NEW6_TEXT)
+        );
+        whatsNew.setButtonBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        whatsNew.setButtonTextColor(ContextCompat.getColor(this, R.color.mb_white));
+        whatsNew.presentAutomatically(this);
+    }
+
+    /**
+     * Checks if images are received in the intent
+     *
+     * @param fragment - instance of current fragment
+     */
+    private void handleReceivedImagesIntent(Fragment fragment) {
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
         if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
             if (type.startsWith("image/")) {
-                handleSendMultipleImages(intent , fragment); // Handle multiple images
+                handleSendMultipleImages(intent, fragment); // Handle multiple images
             }
         } else if (Intent.ACTION_SEND.equals(action) && type != null) {
             if (type.startsWith("image/")) {
-                handleSendImage(intent , fragment); // Handle single image
+                handleSendImage(intent, fragment); // Handle single image
             }
         }
     }
 
-    /** Get image uri from intent and send the image to homeFragment
-     * @param intent - intent containing image uris
+    /**
+     * Get image uri from intent and send the image to homeFragment
+     *
+     * @param intent   - intent containing image uris
      * @param fragment - instance of homeFragment
      */
     private void handleSendImage(Intent intent, Fragment fragment) {
-        Uri uri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
         ArrayList<Uri> imageUris = new ArrayList<>();
         imageUris.add(uri);
-        if (imageUris != null) {
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(getString(R.string.bundleKey) , imageUris);
-            fragment.setArguments(bundle);
-        }
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
+        fragment.setArguments(bundle);
     }
 
-    /** Get ArrayList of image uris from intent and send the image to homeFragment
-     * @param intent - intent containing image uris
+    /**
+     * Get ArrayList of image uris from intent and send the image to homeFragment
+     *
+     * @param intent   - intent containing image uris
      * @param fragment - instance of homeFragment
      */
     private void handleSendMultipleImages(Intent intent, Fragment fragment) {
         ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         if (imageUris != null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(getString(R.string.bundleKey) , imageUris);
+            bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
             fragment.setArguments(bundle);
         }
     }
@@ -157,6 +197,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 }

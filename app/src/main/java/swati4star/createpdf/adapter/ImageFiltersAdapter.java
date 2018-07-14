@@ -3,31 +3,30 @@ package swati4star.createpdf.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
+import swati4star.createpdf.model.FilterItem;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapter.ViewHolder> {
 
-    private ArrayList<String> mNames = new ArrayList<>();
+    private ArrayList<FilterItem> mFilterItem;
     private Context mContext;
     private final OnFilterItemClickedListener mOnFilterItemClickedListener;
-    private int[] mImages;
     private int mAdapterp;
 
-    public RecyclerViewAdapter(ArrayList<String> names, Context context, int[] images,
+    public ImageFiltersAdapter(ArrayList<FilterItem> filterItems, Context context,
                                OnFilterItemClickedListener listener) {
-        mNames = names;
+        mFilterItem = filterItems;
         mContext = context;
-        this.mImages = images;
         mOnFilterItemClickedListener = listener;
     }
 
@@ -40,22 +39,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int imageid = mImages[position];
+        int imageid = mFilterItem.get(position).getImageId();
         holder.img.setImageResource(imageid);
-        holder.Filter_name.setText(mNames.get(position));
+        holder.Filter_name.setText(mFilterItem.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return mImages.length;
+        return mFilterItem.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView img;
-        RelativeLayout parentLayout;
         TextView Filter_name;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.filter_preview);
             Filter_name = itemView.findViewById(R.id.filter_Name);
@@ -67,7 +65,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void onClick(View view) {
             mAdapterp = getAdapterPosition();
             mOnFilterItemClickedListener.onItemClick(view, mAdapterp);
-
         }
     }
 }
