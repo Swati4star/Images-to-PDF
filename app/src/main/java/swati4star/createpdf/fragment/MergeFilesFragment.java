@@ -32,7 +32,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import shortbread.Shortcut;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.StringUtils;
 

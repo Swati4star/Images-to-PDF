@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -220,6 +221,9 @@ public class ViewFilesFragment extends Fragment
             case R.id.delete_directory:
                 deleteDirectory();
                 break;
+            case R.id.select_all:
+                mViewFilesAdapter.checkAll();
+                break;
             default:
                 break;
         }
@@ -401,6 +405,7 @@ public class ViewFilesFragment extends Fragment
     private void checkIfListEmpty() {
         onRefresh();
         final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
+        Log.e("log","hshs : "+ Arrays.toString(files));
         Log.d("after refresh", "yes");
         if (files == null || files.length == 0) {
             Log.d("after if", "done");

@@ -63,10 +63,20 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
     }
-
+    public void checkAll() {
+        for(int i = 0; i < mFileList.size(); i++) {
+            if (!mDeleteNames.contains(i)) {
+                Log.e("LOG","Adding : "+i);
+                mDeleteNames.add(i);
+            }
+            notifyDataSetChanged();
+        }
+    }
     @NonNull
     @Override
     public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.e("log","Files : " + mFileList.size());
+        Log.e("log","Delete : " + mDeleteNames);
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_file, parent, false);
         return new ViewFilesHolder(itemView);
@@ -96,7 +106,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mDeleteNames.add(position);
+                    if (!mDeleteNames.contains(position)) {
+                        mDeleteNames.add(position);
+                    }
                 } else {
                     mDeleteNames.remove(Integer.valueOf(position));
                 }
@@ -153,7 +165,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             }
         });
     }
-
+    public void selectAll() {
+        for(int i = 0; i <= mFileList.size(); i++) {
+            mDeleteNames.add(i);
+        }
+    }
     public ArrayList<String> getSelectedFilePath() {
         ArrayList<String> filePathList = new ArrayList<>();
         for (int position : mDeleteNames) {
