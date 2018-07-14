@@ -1,10 +1,10 @@
 package swati4star.createpdf.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,28 +14,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 
 public class TextToPdfFragment extends Fragment {
-    private static final int FILE_SELECT_CODE = 0;
-    private static Uri TEXT_FILE_URI = null;
+
+    private  final int mFileSelectCode = 0;
+    private  Uri mTextFileUri = null;
+    private Activity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,18 +40,18 @@ public class TextToPdfFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootview =  inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
 
-        Button selectButton = (Button) rootview.findViewById(R.id.selectFile);
+        Button selectButton = rootview.findViewById(R.id.selectFile);
         selectButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 textFileSelect();
-                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.text_file_selected,
                         Snackbar.LENGTH_LONG).show();
             }
         });
-        Button createButton = (Button) rootview.findViewById(R.id.createtextpdf);
+        Button createButton = rootview.findViewById(R.id.createtextpdf);
         createButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
@@ -69,21 +62,21 @@ public class TextToPdfFragment extends Fragment {
         return rootview;
     }
     public void openCreateTextPdf() {
-        new MaterialDialog.Builder(getActivity())
+        new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         if (StringUtils.isEmpty(input)) {
-                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
                             String mFilename = input.toString();
                             try {
-                                createPdf(TEXT_FILE_URI, mFilename);
-                                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                                PDFUtils.createPdf(mTextFileUri, mFilename);
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.snackbar_pdfCreated,
                                         Snackbar.LENGTH_LONG).show();
                             } catch (DocumentException | IOException e) {
@@ -94,41 +87,9 @@ public class TextToPdfFragment extends Fragment {
                 })
                 .show();
     }
-    public void createPdf(Uri fileURI, String outputFile)
-            throws DocumentException, IOException {
-
-        Document document = new Document();
-        String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" + outputFile + ".pdf";
-        PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);
-
-        document.open();
-        Font myfont = new Font();
-        myfont.setStyle(Font.NORMAL);
-        myfont.setSize(11);
-
-        document.add(new Paragraph("\n"));
-        readTextFile(fileURI, document, myfont);
-        document.close();
-    }
-    private void readTextFile(Uri uri, Document document, Font myfont) {
-        InputStream inputStream;
-        try {
-            inputStream = getActivity().getContentResolver().openInputStream(uri);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                Paragraph para = new Paragraph(line + "\n", myfont);
-                para.setAlignment(Element.ALIGN_JUSTIFIED);
-                document.add(para);
-            }
-            reader.close();
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    /**
+     * Create a file picker to get text file.
+     */
     private void textFileSelect() {
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -137,10 +98,10 @@ public class TextToPdfFragment extends Fragment {
 
         try {
             startActivityForResult(
-                    Intent.createChooser(intent, "Select a File to Upload"),
-                    FILE_SELECT_CODE);
+                    Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                    mFileSelectCode);
         } catch (android.content.ActivityNotFoundException ex) {
-            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.install_file_manager,
                     Snackbar.LENGTH_LONG).show();
         }
@@ -148,10 +109,10 @@ public class TextToPdfFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case FILE_SELECT_CODE:
+            case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
-                    TEXT_FILE_URI = uri;
+                    mTextFileUri = uri;
                 }
                 break;
         }
@@ -160,6 +121,7 @@ public class TextToPdfFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mActivity = (Activity) context;
     }
     @Override
     public void onDetach() {

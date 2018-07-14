@@ -3,6 +3,8 @@ package swati4star.createpdf.util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,15 +15,22 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.exceptions.BadPasswordException;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -31,7 +40,7 @@ import swati4star.createpdf.interfaces.DataSetChanged;
 
 public class PDFUtils {
 
-    private final Activity mContext;
+    private static Activity mContext = null;
     private String mPassword;
 
     public PDFUtils(Activity context) {
@@ -249,6 +258,54 @@ public class PDFUtils {
 
             }
         });
+    }
+    /**
+     * Create a PDF from a Text File
+     *
+     * @param fileURI URL to create PDF
+     * @param outputFile File name to be created
+     */
+    public static void createPdf(Uri fileURI, String outputFile)
+            throws DocumentException, IOException {
+
+        Document document = new Document();
+        String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" + outputFile + ".pdf";
+        PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);
+
+        document.open();
+        Font myfont = new Font();
+        myfont.setStyle(Font.NORMAL);
+        myfont.setSize(11);
+
+        document.add(new Paragraph("\n"));
+        readTextFile(fileURI, document, myfont);
+        document.close();
+    }
+    /**
+     * Read the Text File and put it in document
+     *
+     * @param uri URL to create PDF
+     * @param document PDF Document
+     * @param myfont Font style in PDF
+     */
+    private static void readTextFile(Uri uri, Document document, Font myfont) {
+        InputStream inputStream;
+        try {
+            inputStream = mContext.getContentResolver().openInputStream(uri);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Paragraph para = new Paragraph(line + "\n", myfont);
+                para.setAlignment(Element.ALIGN_JUSTIFIED);
+                document.add(para);
+            }
+            reader.close();
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
