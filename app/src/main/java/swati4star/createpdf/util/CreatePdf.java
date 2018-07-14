@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -42,6 +43,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private boolean mSuccess;
     private String mPath;
     private Rectangle mPageSize;
+    private MaterialDialog mMaterialDialog;
 
     public CreatePdf(Activity context, ArrayList<String> imagesUri, String fileName, String password,
                      String qualityString, Rectangle pageSize, OnPDFCreatedInterface onPDFCreated) {
@@ -58,10 +60,12 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         mSuccess = true;
-        mAnimationView = mContext.findViewById(R.id.animation_view);
-        mAnimationView.setAnimation(R.raw.image_icon_tadah);
-        mAnimationView.setVisibility(View.VISIBLE);
+        mMaterialDialog = new MaterialDialog.Builder(mContext)
+                .customView(R.layout.lottie_anim_dialog, false)
+                .build();
+        mAnimationView = mMaterialDialog.getCustomView().findViewById(R.id.animation_view);
         mAnimationView.playAnimation();
+        mMaterialDialog.show();
     }
 
     @Override
@@ -157,7 +161,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         mAnimationView.cancelAnimation();
-        mAnimationView.setVisibility(View.GONE);
+        //mAnimationView.setVisibility(View.GONE);
+        mMaterialDialog.dismiss();
         if (!mSuccess) {
             Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
                     R.string.snackbar_folder_not_created,
