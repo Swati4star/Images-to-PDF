@@ -84,7 +84,7 @@ public class TextToPdfFragment extends Fragment {
                         } else {
                             String mFilename = input.toString();
                             try {
-                                Log.e("log","hdhd : "+TEXT_FILE_NAME);
+                                Log.e("log","Filename final: "+TEXT_FILE_NAME);
                                 createPdf(TEXT_FILE_NAME, mFilename);
                             } catch (DocumentException | IOException e) {
                                 e.printStackTrace();
@@ -102,7 +102,7 @@ public class TextToPdfFragment extends Fragment {
         Log.e("log","FileCheck : "+file);
         if(!file.exists())
         {
-            Log.e("j","Bhailog sab sahi h");
+            Log.e("j","File doesnt exist");
         }
         Document document = new Document();
         String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" + outputFile + ".pdf";
