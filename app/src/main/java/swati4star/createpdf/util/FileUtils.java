@@ -138,6 +138,42 @@ public class FileUtils {
     }
 
     /**
+     * get the PDF files stored in directories other than home directory
+     * @return ArrayList of PDF files
+     */
+    public ArrayList<File> getPdfFromOtherDirectories() {
+        ArrayList<File> pdfFiles = new ArrayList<>();
+        File folder = getOrCreatePdfDirectory();
+        File[] files = folder.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                for (File pdf : file.listFiles()) {
+                    pdfFiles.add(pdf);
+                }
+            }
+        }
+        if (pdfFiles.isEmpty()) {
+            return null;
+        }
+        return pdfFiles;
+    }
+
+    /**
+     * get the PDF Directory from directory name
+     * @param dirName - name of the directory to be searched for
+     * @return pdf directory if it exists , else null
+     */
+    public File getDirectory(String dirName) {
+        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                + mContext.getResources().getString(R.string.pdf_dir)
+                + dirName);
+        if (!folder.exists()) {
+            return null;
+        }
+        return folder;
+    }
+
+    /**
      * Gives a formatted last modified date for pdf ListView
      * @param file file object whose last modified date is to be returned
      *
@@ -641,5 +677,19 @@ public class FileUtils {
         }
 
         return ret;
+    }
+
+    /***
+     * Check if file already exists in pdf_dir
+     * @param mFileName - Name of the file
+     * @return true if file exists else false
+     */
+
+    public boolean isFileExist(String mFileName) {
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                mContext.getString(R.string.pdf_dir) + mFileName;
+
+        File file = new File(path);
+        return file.exists();
     }
 }

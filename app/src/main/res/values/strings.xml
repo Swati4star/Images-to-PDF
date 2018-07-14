@@ -17,6 +17,7 @@
     <string name="search_hint">Name of file</string>
     <string name="no_result">Couldn\'t find anything</string>
     <string name="search">search</string>
+    <string name="set_page_size_text">Set Page Size</string>
 
 
     <array name="items">
@@ -38,6 +39,34 @@
         <item>e-mail</item>
         <item>details</item>
     </array>
+
+    <string-array name="array_page_sizes_b0_b10" translatable="false">
+        <item>B0 (2834 x 4008)</item>
+        <item>B1 (2004 x 2834)</item>
+        <item>B2 (1417 x 2004)</item>
+        <item>B3 (1000 x 1417)</item>
+        <item>B4 (708 x 1000)</item>
+        <item>B5 (498 x 708)</item>
+        <item>B6 (354 x 498)</item>
+        <item>B7 (249 x 354)</item>
+        <item>B8 (175 x 249)</item>
+        <item>B9 (124 x 175)</item>
+        <item>B10 (87 x 124)</item>
+    </string-array>
+
+    <string-array name="array_page_sizes_a0_b10" translatable="false">
+        <item>A0 (2384 x 3370)</item>
+        <item>A1 (1684 x 2384)</item>
+        <item>A2 (1191 x 1684)</item>
+        <item>A3 (842 x 1191)</item>
+        <item>A4 (595 x 842)</item>
+        <item>A5 (420 x 595)</item>
+        <item>A6 (297 x 420)</item>
+        <item>A7 (210 x 297)</item>
+        <item>A8 (148 x 210)</item>
+        <item>A9 (105 x 148)</item>
+        <item>A10 (73 x 105)</item>
+    </string-array>
 
     <string name="pdf_ext" translatable="false">.pdf</string>
     <string name="pdf_dir" translatable="false">/PDFfiles/</string>
@@ -169,4 +198,37 @@
     <string name="none_filter">None</string>
     <string name="Filter_name">Filter</string>
     <string name="Filter_image_preview">Filter Image Preview</string>
+    <string name="warning">Warning</string>
+    <string name="overwrite_message">There already exists a file with the same name. Do you want to overwrite?</string>
+    <string name="b0_to_b10">B0 to B10</string>
+    <string name="a0_to_a10">A0 to A10</string>
+    <string name="tabloid">TABLOID</string>
+    <string name="executive">EXECUTIVE</string>
+    <string name="ledger">LEDGER</string>
+    <string name="letter">LETTER</string>
+    <string name="legal">LEGAL</string>
+    <string name="default_a4">DEFAULT (A4)</string>
+    <!-- Directory Strings -->
+    <string name="directory">Directory</string>
+    <string name="moving_files">Moving your files</string>
+    <string name="success_move">Successfully moved your files</string>
+    <string name="delete_directory">Delete Directory</string>
+    <string name="dir_does_not_exists">Directory does not exists</string>
+    <string name="move_files_delete_dir">Moving files and deleting the directory</string>
+    <string name="directory_deleted">Directory deleted</string>
+    <string name="success_delete_directory">Successfully deleted the directory</string>
+    <string name="delete_dialog">This directory is not empty. Are you sure you want to delete it ?</string>
+    <string name="move_files">Move Files</string>
+    <string name="moved_files">Files successfully moved</string>
+    <string name="move_to_home">Move to home directory</string>
+    <string name="dialog_delete_dir">Enter the name of directory to delete</string>
+    <string name="dialog_new_dir">Enter new directory name</string>
+    <string name="dialog_dir">Enter the directory name</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="new_dir">New Directory</string>
+    <string name="select_all">Select All</string>
+    <string name="converting_file_message">Converting your files to PDF.</string>
 </resources>

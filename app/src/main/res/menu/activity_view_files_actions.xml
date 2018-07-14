@@ -16,6 +16,12 @@
         android:title="@string/sort"
         android:orderInCategory="2"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/select_all"
+        android:icon="@drawable/ic_done"
+        android:title="@string/select_all"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/item_delete"
@@ -29,5 +35,25 @@
         android:icon="@drawable/baseline_share_24"
         android:title="@string/share"
         android:orderInCategory="4"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/directory"
+        android:title="@string/new_dir"
+        android:orderInCategory="5"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/move_files"
+        android:title="@string/move_files"
+        android:orderInCategory="6"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/home_dir"
+        android:title="@string/move_to_home"
+        android:orderInCategory="7"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_directory"
+        android:title="@string/delete_directory"
+        android:orderInCategory="8"
         app:showAsAction="never" />
 </menu>

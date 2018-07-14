@@ -9,4 +9,5 @@ public class Constants {
     public static final String WHATS_NEW1_TEXT = "";
     public static final int WHATS_NEW1_ICON = R.drawable.ic_merge_type_black_24dp;
     public static final String DEFAULT_COMPRESSION = "DefaultCompression";
+    public static final String SORTING_INDEX = "SORTING_INDEX";
 }

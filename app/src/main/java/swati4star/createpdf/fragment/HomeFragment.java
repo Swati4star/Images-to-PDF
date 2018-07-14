@@ -34,6 +34,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,8 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -103,6 +107,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private String mPath;
     private String mPassword;
     private String mQuality;
+    private Rectangle mPageSize = PageSize.A4;
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
@@ -122,7 +127,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
 
-        mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+        mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
 
         // Get runtime permissions if build version >= Android M
@@ -214,7 +220,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 mImagesUri.add(mTempUris.get(i));
             }
         }
-
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -226,9 +231,34 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            String filename = input.toString();
-                            new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                    HomeFragment.this).execute();
+                            final String filename = input.toString();
+                            FileUtils utils = new FileUtils(mActivity);
+                            if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
+                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality, mPageSize,
+                                        HomeFragment.this).execute();
+                            } else {
+                                new MaterialDialog.Builder(mActivity)
+                                        .title(R.string.warning)
+                                        .content(R.string.overwrite_message)
+                                        .positiveText(android.R.string.ok)
+                                        .negativeText(android.R.string.cancel)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
+                                                        mPageSize, HomeFragment.this).execute();
+                                            }
+                                        })
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                createPdf();
+                                            }
+                                        })
+                                        .show();
+                            }
                         }
                     }
                 })
@@ -376,6 +406,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp),
                         getResources().getString(R.string.filter_images_Text)));
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_page_size_24dp),
+                        getResources().getString(R.string.set_page_size_text)));
 
 
         return mEnhancementOptionsEntityArrayList;
@@ -395,9 +428,71 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 break;
             case 3:
                 filterImages();
+                break;
+            case 4:
+                setPageSize();
+                break;
             default:
                 break;
         }
+    }
+
+    private void setPageSize() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.set_page_size_text)
+                .customView(R.layout.set_page_size_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        View view = dialog.getCustomView();
+                        RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
+                        int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                        String stringPageSize;
+                        switch (selectedId) {
+                            case R.id.page_size_default:
+                                mPageSize = PageSize.A4;
+                                break;
+                            case R.id.page_size_legal:
+                                mPageSize = PageSize.LEGAL;
+                                break;
+                            case R.id.page_size_executive:
+                                mPageSize = PageSize.EXECUTIVE;
+                                break;
+                            case R.id.page_size_ledger:
+                                mPageSize = PageSize.LEDGER;
+                                break;
+                            case R.id.page_size_tabloid:
+                                mPageSize = PageSize.TABLOID;
+                                break;
+                            case R.id.page_size_letter:
+                                mPageSize = PageSize.LETTER;
+                                break;
+                            case R.id.page_size_a0_a10:
+                                Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
+                                stringPageSize = spinnerA.getSelectedItem().toString();
+                                stringPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(stringPageSize);
+                                break;
+                            case R.id.page_size_b0_b10:
+                                Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
+                                stringPageSize = spinnerB.getSelectedItem().toString();
+                                stringPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(stringPageSize);
+                                break;
+                        }
+                    }
+                }).build();
+        dialog.show();
     }
 
     private void compressImage() {
@@ -549,6 +644,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     public void onPDFCreated(boolean success, String path) {
         mImagesUri.clear();
         mTempUris.clear();
+        mNoOfImages.setVisibility(View.GONE);
         mImageCounter = 0;
         mPassword = null;
         if (success) {
@@ -622,5 +718,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+        mCreatePdf.setEnabled(true);
     }
+
+
 }
