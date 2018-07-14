@@ -206,7 +206,6 @@
     <string name="letter">LETTER</string>
     <string name="legal">LEGAL</string>
     <string name="default_a4">DEFAULT (A4)</string>
-
     <!-- Directory Strings -->
     <string name="directory">Directory</string>
     <string name="moving_files">Moving your files</string>
@@ -228,5 +227,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="new_dir">New Directory</string>
+    <string name="select_all">Select All</string>
     <string name="converting_file_message">Converting your files to PDF.</string>
 </resources>

@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -219,6 +220,9 @@ public class ViewFilesFragment extends Fragment
                 break;
             case R.id.delete_directory:
                 deleteDirectory();
+                break;
+            case R.id.select_all:
+                mViewFilesAdapter.checkAll();
                 break;
             default:
                 break;

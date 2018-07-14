@@ -16,6 +16,12 @@
         android:title="@string/sort"
         android:orderInCategory="2"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/select_all"
+        android:icon="@drawable/ic_done"
+        android:title="@string/select_all"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/item_delete"
