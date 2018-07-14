@@ -10,7 +10,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="353dp"
+        android:layout_height="378dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nextimageButton"
         android:layout_marginTop="18dp">
@@ -31,23 +31,16 @@
     </ScrollView>
 
 
-    <Button
-        android:id="@+id/sepiafilter"
-        android:layout_width="wrap_content"
-        android:layout_height="53dp"
-        android:layout_alignEnd="@+id/nextimageButton"
-        android:layout_alignTop="@+id/nonefilter"
-        android:text="@string/sepia_filter"/>
-
     <ImageButton
         android:id="@+id/nextimageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="49dp"
+        android:layout_width="46dp"
+        android:layout_height="44dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginTop="13dp"
+        android:background="@android:color/holo_orange_dark"
         android:contentDescription="@string/nextimage_contentdesc"
         app:srcCompat="@drawable/ic_navigate_next_black_24dp"/>
 
@@ -57,35 +50,30 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/savecurrent"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="121dp"
+        android:layout_marginEnd="108dp"
         android:text="@string/img_Count_filter"
         android:textColor="@android:color/background_dark"/>
 
     <Button
         android:id="@+id/savecurrent"
-        android:layout_width="wrap_content"
+        android:layout_width="123dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/nextimageButton"
+        android:layout_marginStart="13dp"
+        android:background="@android:color/holo_orange_dark"
         android:text="@string/save_current"
-        />
+        android:textColor="@android:color/white"/>
 
-    <Button
-        android:id="@+id/grayscalefilter"
-        android:layout_width="108dp"
-        android:layout_height="53dp"
-        android:layout_alignTop="@+id/sepiafilter"
-        android:layout_centerHorizontal="true"
-        android:text="@string/grayscale_filter"/>
-
-    <Button
-        android:id="@+id/nonefilter"
-        android:layout_width="wrap_content"
-        android:layout_height="53dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="13dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/none_filter"/>
+        android:background="#e6e4e4"
+        android:orientation="horizontal"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+
 </RelativeLayout>

@@ -144,6 +144,8 @@
     <string name="saving_dialog">Saving..</string>
     <string name="save_first">Save Current Image First</string>
     <string name="none_filter">None</string>
+    <string name="Filter_name">Filter</string>
+    <string name="Filter_image_preview">Filter Image Preview</string>
     <string name="warning">Warning</string>
     <string name="overwrite_message">Il existe déjà un fichier avec le même nom. Voulez-vous remplacer?</string>
     <string name="set_page_size_text">Définir la taille de page</string>
