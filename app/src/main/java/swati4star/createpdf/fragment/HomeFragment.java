@@ -49,7 +49,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-import swati4star.createpdf.activity.PhotoEditor;
+import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.CreatePdf;
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         try {
             mImagesUri.add(mTempUris.get(mImageCounter));
             mImageCounter = mImagesUri.size();
-            Intent intent = new Intent(getContext(), PhotoEditor.class);
+            Intent intent = new Intent(getContext(), ImageEditor.class);
             intent.putStringArrayListExtra("first", mTempUris);
             startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
             mImagesUri.add(mTempUris.get(mImageCounter));
@@ -185,7 +185,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             e.printStackTrace();
         }
     }
-
 
     // Create Pdf of selected images
     @SuppressWarnings("unchecked")

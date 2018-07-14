@@ -11,7 +11,7 @@ android {
         multiDexEnabled true
         targetSdkVersion 27
         versionCode 14
-        versionName "3.3.1"
+        versionName "4.0.0"
     }
     buildTypes {
         release {
