@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class ViewFilesFragment extends Fragment
     private static final int SIZE_DECREASING_ORDER_INDEX = 3;
     private static final int NEW_DIR = 1;
     private static final int EXISTING_DIR = 2;
+    @BindView(R.id.layout_main)
+    public LinearLayout mainLayout;
     @BindView(R.id.emptyBackgroundImage)
     public ImageView backView;
     @BindView(R.id.emptyTextOverBgImage)
@@ -117,7 +120,7 @@ public class ViewFilesFragment extends Fragment
         mCurrentSortingIndex = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
         final ArrayList<File> pdfFiles = new ArrayList<>();
         final File[] files = folder.listFiles();
-        if (files.length == 0) {
+        if (files.length == 1) {
             setEmptyStateVisible();
 
         }
@@ -132,6 +135,46 @@ public class ViewFilesFragment extends Fragment
 
         // Populate data into listView
         populatePdfList();
+        LinearLayout newdir = root.findViewById (R.id.layout_new);
+        newdir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewFilesAdapter.areItemsSelected()) {
+                    moveFilesToDirectory(NEW_DIR);
+                } else {
+                    showSnack(R.string.snackbar_no_pdfs_selected);
+                }
+            }
+        });
+        LinearLayout movefiles = root.findViewById (R.id.layout_move);
+        movefiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewFilesAdapter.areItemsSelected()) {
+                    moveFilesToDirectory(EXISTING_DIR);
+                } else {
+                    showSnack(R.string.snackbar_no_pdfs_selected);
+                }
+            }
+        });
+        LinearLayout movehome = root.findViewById (R.id.layout_home);
+        movehome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewFilesAdapter.areItemsSelected()) {
+                    moveFilesToHomeDirectory();
+                } else {
+                    showSnack(R.string.snackbar_no_pdfs_selected);
+                }
+            }
+        });
+        LinearLayout delete = root.findViewById (R.id.layout_delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDirectory();
+            }
+        });
         return root;
     }
 
@@ -195,30 +238,6 @@ public class ViewFilesFragment extends Fragment
                 } else {
                     showSnack(R.string.snackbar_no_pdfs_selected);
                 }
-                break;
-            case R.id.directory:
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToDirectory(NEW_DIR);
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-                break;
-            case R.id.move_files:
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToDirectory(EXISTING_DIR);
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-                break;
-            case R.id.home_dir:
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToHomeDirectory();
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-                break;
-            case R.id.delete_directory:
-                deleteDirectory();
                 break;
             case R.id.select_all:
                 mViewFilesAdapter.checkAll();
@@ -474,6 +493,7 @@ public class ViewFilesFragment extends Fragment
         TextOver.setVisibility(View.VISIBLE);
         getStarted.setVisibility(View.VISIBLE);
         tagLine.setVisibility(View.VISIBLE);
+        mainLayout.setVisibility(View.GONE);
     }
 
     @Override
