@@ -111,9 +111,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-
-        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
-        mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
 
         // Get runtime permissions if build version >= Android M
@@ -140,6 +137,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     Toast.makeText(mActivity, R.string.successToast, Toast.LENGTH_LONG).show();
                 }
             }
+        } else {
+            mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+            mCreatePdf.setEnabled(false);
         }
 
         return root;
