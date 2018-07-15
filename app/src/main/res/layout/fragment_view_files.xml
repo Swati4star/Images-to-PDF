@@ -60,7 +60,7 @@
                        android:layout_width="30dp"
                        android:layout_height="30dp"
                        android:layout_gravity="center"
-                       app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
+                       app:srcCompat="@drawable/ic_arrow_forward_white_24dp" />
                    <TextView
                        android:textSize="12sp"
                        android:layout_width="100dp"
@@ -83,7 +83,7 @@
                        android:layout_width="30dp"
                        android:layout_height="30dp"
                        android:layout_gravity="center"
-                       app:srcCompat="@drawable/ic_home_black_24dp" />
+                       app:srcCompat="@drawable/ic_home_white_24dp" />
                    <TextView
                        android:textSize="12sp"
                        android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
                        android:layout_width="30dp"
                        android:layout_height="30dp"
                        android:layout_gravity="center"
-                       app:srcCompat="@drawable/ic_delete_black_24dp" />
+                       app:srcCompat="@drawable/ic_delete_white_24dp" />
                    <TextView
                        android:textSize="12sp"
                        android:layout_width="wrap_content"
