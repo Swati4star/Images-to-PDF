@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
@@ -55,6 +57,8 @@ public class ViewFilesFragment extends Fragment
     private static final int SIZE_DECREASING_ORDER_INDEX = 3;
     private static final int NEW_DIR = 1;
     private static final int EXISTING_DIR = 2;
+    @BindView(R.id.layout_main)
+    public LinearLayout mainLayout;
     @BindView(R.id.emptyBackgroundImage)
     public ImageView backView;
     @BindView(R.id.emptyTextOverBgImage)
@@ -134,7 +138,22 @@ public class ViewFilesFragment extends Fragment
         populatePdfList();
         return root;
     }
-
+    @OnClick(R.id.new_dir)
+    void moveToNewDirectory() {
+        if (mViewFilesAdapter.areItemsSelected()) {
+            moveFilesToDirectory(NEW_DIR);
+        } else {
+            showSnack(R.string.snackbar_no_pdfs_selected);
+        }
+    }
+    @OnClick(R.id.move_to_dir)
+    void moveToDirectory() {
+        if (mViewFilesAdapter.areItemsSelected()) {
+            moveFilesToDirectory(EXISTING_DIR);
+        } else {
+            showSnack(R.string.snackbar_no_pdfs_selected);
+        }
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -196,30 +215,6 @@ public class ViewFilesFragment extends Fragment
                     showSnack(R.string.snackbar_no_pdfs_selected);
                 }
                 break;
-            case R.id.directory:
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToDirectory(NEW_DIR);
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-                break;
-            case R.id.move_files:
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToDirectory(EXISTING_DIR);
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-                break;
-            case R.id.home_dir:
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToHomeDirectory();
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-                break;
-            case R.id.delete_directory:
-                deleteDirectory();
-                break;
             case R.id.select_all:
                 mViewFilesAdapter.checkAll();
                 break;
@@ -238,7 +233,12 @@ public class ViewFilesFragment extends Fragment
     /**
      * Moves selected files to home directory
      */
-    private void moveFilesToHomeDirectory() {
+    @OnClick(R.id.move_to_home_dir)
+    void moveFilesToHomeDirectory() {
+        if (!mViewFilesAdapter.areItemsSelected()) {
+            showSnack(R.string.snackbar_no_pdfs_selected);
+            return;
+        }
         final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
         if (filePath == null) {
             showSnack(R.string.snackbar_no_pdfs_selected);
@@ -262,7 +262,8 @@ public class ViewFilesFragment extends Fragment
     /**
      * Deletes the directory specified
      */
-    private void deleteDirectory() {
+    @OnClick(R.id.delete_dir)
+    void deleteDirectory() {
         LayoutInflater inflater = getLayoutInflater();
         View alertView = inflater.inflate(R.layout.directory_dialog, null);
         final ArrayList<String> pdfFiles = new ArrayList<>();
@@ -336,7 +337,7 @@ public class ViewFilesFragment extends Fragment
             final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
             if (operation == NEW_DIR) {
                 message.setText(R.string.dialog_new_dir);
-                builder.setTitle(R.string.new_dir)
+                builder.setTitle(R.string.new_directory)
                         .setView(alertView)
                         .setCancelable(true)
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -474,6 +475,7 @@ public class ViewFilesFragment extends Fragment
         TextOver.setVisibility(View.VISIBLE);
         getStarted.setVisibility(View.VISIBLE);
         tagLine.setVisibility(View.VISIBLE);
+        mainLayout.setVisibility(View.GONE);
     }
 
     @Override

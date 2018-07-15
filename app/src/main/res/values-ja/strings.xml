@@ -167,9 +167,7 @@
     <string name="directory_deleted">Directory deleted</string>
     <string name="success_delete_directory">Successfully deleted the directory</string>
     <string name="delete_dialog">This directory is not empty. Are you sure you want to delete it ?</string>
-    <string name="move_files">Move Files</string>
     <string name="moved_files">Files successfully moved</string>
-    <string name="move_to_home">Move to home directory</string>
     <string name="dialog_delete_dir">Enter the name of directory to delete</string>
     <string name="dialog_new_dir">Enter new directory name</string>
     <string name="dialog_dir">Enter the directory name</string>
@@ -177,7 +175,6 @@
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="new_dir">New Directory</string>
     <string name="select_all">Select All</string>
     <string name="converting_file_message">Converting your files to PDF.</string>
     <string name="select_text_file">Select Text File</string>
@@ -188,4 +185,7 @@
     <string name="no_text_file_selected">No Text File Selected</string>
     <string name="select_file">Select a File to Upload</string>
     <string name="text_type">text/plain</string>
+    <string name="new_directory">New Directory</string>
+    <string name="move_n_files">Move Files</string>
+    <string name="move_to_n_home_directory">Move to  Home Directory</string>
 </resources>
