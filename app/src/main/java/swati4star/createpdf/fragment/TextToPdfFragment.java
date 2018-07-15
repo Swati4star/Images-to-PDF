@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
 
@@ -73,12 +75,23 @@ public class TextToPdfFragment extends Fragment {
                                     Snackbar.LENGTH_LONG).show();
                         } else {
                             String mFilename = input.toString();
+                            String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                                    mActivity.getString(R.string.pdf_dir);
+                            mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
                             try {
                                 PDFUtils fileUtil = new PDFUtils(mActivity);
                                 fileUtil.createPdf(mTextFileUri, mFilename);
-                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.snackbar_pdfCreated,
-                                        Snackbar.LENGTH_LONG).show();
+                                final String finalMPath = mPath;
+                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
+                                        , R.string.snackbar_pdfCreated
+                                        , Snackbar.LENGTH_LONG)
+                                        .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                FileUtils fileUtils = new FileUtils(mActivity);
+                                                fileUtils.openFile(finalMPath);
+                                            }
+                                        }).show();
                             } catch (DocumentException | IOException e) {
                                 e.printStackTrace();
                             }
