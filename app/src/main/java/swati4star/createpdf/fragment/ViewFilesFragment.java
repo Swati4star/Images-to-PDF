@@ -38,6 +38,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
@@ -120,7 +121,7 @@ public class ViewFilesFragment extends Fragment
         mCurrentSortingIndex = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
         final ArrayList<File> pdfFiles = new ArrayList<>();
         final File[] files = folder.listFiles();
-        if (files.length == 1) {
+        if (files.length == 0) {
             setEmptyStateVisible();
 
         }
@@ -135,49 +136,24 @@ public class ViewFilesFragment extends Fragment
 
         // Populate data into listView
         populatePdfList();
-        LinearLayout newdir = root.findViewById (R.id.layout_new);
-        newdir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToDirectory(NEW_DIR);
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-            }
-        });
-        LinearLayout movefiles = root.findViewById (R.id.layout_move);
-        movefiles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToDirectory(EXISTING_DIR);
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-            }
-        });
-        LinearLayout movehome = root.findViewById (R.id.layout_home);
-        movehome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mViewFilesAdapter.areItemsSelected()) {
-                    moveFilesToHomeDirectory();
-                } else {
-                    showSnack(R.string.snackbar_no_pdfs_selected);
-                }
-            }
-        });
-        LinearLayout delete = root.findViewById (R.id.layout_delete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteDirectory();
-            }
-        });
         return root;
     }
-
+    @OnClick(R.id.new_dir)
+    void moveToNewDirectory() {
+        if (mViewFilesAdapter.areItemsSelected()) {
+            moveFilesToDirectory(NEW_DIR);
+        } else {
+            showSnack(R.string.snackbar_no_pdfs_selected);
+        }
+    }
+    @OnClick(R.id.move_to_dir)
+    void moveToDirectory() {
+        if (mViewFilesAdapter.areItemsSelected()) {
+            moveFilesToDirectory(EXISTING_DIR);
+        } else {
+            showSnack(R.string.snackbar_no_pdfs_selected);
+        }
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -257,7 +233,12 @@ public class ViewFilesFragment extends Fragment
     /**
      * Moves selected files to home directory
      */
-    private void moveFilesToHomeDirectory() {
+    @OnClick(R.id.move_to_home_dir)
+    void moveFilesToHomeDirectory() {
+        if (!mViewFilesAdapter.areItemsSelected()) {
+            showSnack(R.string.snackbar_no_pdfs_selected);
+            return;
+        }
         final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
         if (filePath == null) {
             showSnack(R.string.snackbar_no_pdfs_selected);
@@ -281,7 +262,8 @@ public class ViewFilesFragment extends Fragment
     /**
      * Deletes the directory specified
      */
-    private void deleteDirectory() {
+    @OnClick(R.id.delete_dir)
+    void deleteDirectory() {
         LayoutInflater inflater = getLayoutInflater();
         View alertView = inflater.inflate(R.layout.directory_dialog, null);
         final ArrayList<String> pdfFiles = new ArrayList<>();
@@ -355,7 +337,7 @@ public class ViewFilesFragment extends Fragment
             final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
             if (operation == NEW_DIR) {
                 message.setText(R.string.dialog_new_dir);
-                builder.setTitle(R.string.new_dir)
+                builder.setTitle(R.string.new_directory)
                         .setView(alertView)
                         .setCancelable(true)
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

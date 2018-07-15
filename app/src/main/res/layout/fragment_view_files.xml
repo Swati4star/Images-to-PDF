@@ -26,10 +26,10 @@
                <LinearLayout
                    android:layout_width="100dp"
                    android:layout_height="match_parent"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginBottom="5dp"
-                   android:id="@+id/layout_new"
-                   android:layout_marginStart="5dp"
+                   android:layout_marginTop="3dp"
+                   android:layout_marginBottom="3dp"
+                   android:id="@+id/new_dir"
+                   android:layout_marginStart="3dp"
                    android:background="@color/colorPrimary"
                    android:layout_weight="1"
                    android:orientation="vertical">
@@ -39,9 +39,11 @@
                        android:layout_gravity="center"
                        app:srcCompat="@drawable/ic_add_black_24dp" />
                    <TextView
-                       android:textSize="15sp"
+                       android:textSize="12sp"
+                       android:layout_marginLeft="7dp"
                        android:layout_width="wrap_content"
                        android:gravity="center"
+                       android:textColor="@color/mb_white"
                        android:layout_height="wrap_content"
                        android:text="@string/new_directory"/>
                </LinearLayout>
@@ -49,9 +51,9 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
-                   android:id="@+id/layout_move"
+                   android:id="@+id/move_to_dir"
                    android:layout_weight="1"
-                   android:layout_margin="5dp"
+                   android:layout_margin="3dp"
                    android:background="@color/colorPrimary"
                    android:orientation="vertical">
                    <ImageView
@@ -60,8 +62,9 @@
                        android:layout_gravity="center"
                        app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
                    <TextView
-                       android:textSize="15sp"
+                       android:textSize="12sp"
                        android:layout_width="100dp"
+                       android:textColor="@color/mb_white"
                        android:gravity="center"
                        android:layout_marginRight="3dp"
                        android:layout_height="wrap_content"
@@ -70,9 +73,9 @@
                <LinearLayout
                    android:layout_width="100dp"
                    android:layout_height="match_parent"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginBottom="5dp"
-                   android:id="@+id/layout_home"
+                   android:layout_marginTop="3dp"
+                   android:layout_marginBottom="3dp"
+                   android:id="@+id/move_to_home_dir"
                    android:background="@color/colorPrimary"
                    android:layout_weight="1"
                    android:orientation="vertical">
@@ -82,8 +85,9 @@
                        android:layout_gravity="center"
                        app:srcCompat="@drawable/ic_home_black_24dp" />
                    <TextView
-                       android:textSize="15sp"
+                       android:textSize="12sp"
                        android:layout_width="wrap_content"
+                       android:textColor="@color/mb_white"
                        android:gravity="center"
                        android:layout_height="wrap_content"
                        android:text="@string/move_to_n_home_directory"/>
@@ -91,8 +95,8 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
-                   android:id="@+id/layout_delete"
-                   android:layout_margin="5dp"
+                   android:id="@+id/delete_dir"
+                   android:layout_margin="3dp"
                    android:background="@color/colorPrimary"
                    android:layout_weight="1"
                    android:orientation="vertical">
@@ -102,8 +106,9 @@
                        android:layout_gravity="center"
                        app:srcCompat="@drawable/ic_delete_black_24dp" />
                    <TextView
-                       android:textSize="15sp"
+                       android:textSize="12sp"
                        android:layout_width="wrap_content"
+                       android:textColor="@color/mb_white"
                        android:gravity="center"
                        android:layout_height="wrap_content"
                        android:text="@string/delete_directory"/>
