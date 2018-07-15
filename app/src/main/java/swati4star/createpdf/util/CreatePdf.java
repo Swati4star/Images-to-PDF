@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -33,45 +33,45 @@ import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
  */
 public class CreatePdf extends AsyncTask<String, String, String> {
 
-    // Progress mDialog
-    private MaterialDialog mDialog;
-    private boolean mSuccess;
-    private String mPath;
     private final String mFileName;
     private final String mPassword;
     private final String mQualityString;
     private final ArrayList<String> mImagesUri;
     private final Activity mContext;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
+    private LottieAnimationView mAnimationView;
+    private boolean mSuccess;
+    private String mPath;
+    private Rectangle mPageSize;
+    private MaterialDialog mMaterialDialog;
 
     public CreatePdf(Activity context, ArrayList<String> imagesUri, String fileName, String password,
-                     String qualityString, OnPDFCreatedInterface onPDFCreated) {
+                     String qualityString, Rectangle pageSize, OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = imagesUri;
         this.mFileName = fileName;
         this.mPassword = password;
         this.mQualityString = qualityString;
         this.mContext = context;
         this.mOnPDFCreatedInterface = onPDFCreated;
+        this.mPageSize = pageSize;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
-                .title(R.string.please_wait)
-                .content(R.string.populating_list)
-                .cancelable(false)
-                .progress(true, 0);
-        mDialog = builder.build();
         mSuccess = true;
-        mDialog.show();
+        mMaterialDialog = new MaterialDialog.Builder(mContext)
+                .customView(R.layout.lottie_anim_dialog, false)
+                .build();
+        mAnimationView = mMaterialDialog.getCustomView().findViewById(R.id.animation_view);
+        mAnimationView.playAnimation();
+        mMaterialDialog.show();
     }
 
     @Override
     protected String doInBackground(String... params) {
         mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
                 mContext.getString(R.string.pdf_dir);
-
         File folder = new File(mPath);
         if (!folder.exists()) {
             mSuccess = folder.mkdir();
@@ -84,7 +84,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Document document = new Document(PageSize.A4, 38, 38, 50, 38);
+        Document document = new Document(mPageSize, 38, 38, 50, 38);
 
         Log.v("stage 2", "Document Created");
 
@@ -160,7 +160,9 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        mDialog.dismiss();
+        mAnimationView.cancelAnimation();
+        //mAnimationView.setVisibility(View.GONE);
+        mMaterialDialog.dismiss();
         if (!mSuccess) {
             Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
                     R.string.snackbar_folder_not_created,

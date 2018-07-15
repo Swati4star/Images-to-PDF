@@ -1,22 +1,15 @@
 package swati4star.createpdf.fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.ContactsContract;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -28,12 +21,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -41,15 +36,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,9 +49,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-import swati4star.createpdf.activity.PhotoEditor;
+import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
-import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
@@ -82,19 +72,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
 
     private static int mImageCounter = 0;
-
-    private MorphButtonUtility mMorphButtonUtility;
-    private Activity mActivity;
-    private ArrayList<String> mImagesUri = new ArrayList<>();
-    private ArrayList<String> mTempUris = new ArrayList<>();
-    private ArrayList<String> mFilterUris = new ArrayList<>();
+    private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
     ArrayList<Uri> imageUris;
-    private String mPath;
-    private String mPassword;
-    private String mQuality;
-    private boolean mOpenSelectImages = false;
-    private SharedPreferences mSharedPreferences;
-
     @BindView(R.id.addImages)
     MorphingButton addImages;
     @BindView(R.id.pdfCreate)
@@ -103,9 +82,20 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     MorphingButton mOpenPdf;
     @BindView(R.id.enhancement_options_recycle_view)
     RecyclerView mEnhancementOptionsRecycleView;
-
+    @BindView(R.id.tvNoOfImages)
+    TextView mNoOfImages;
+    private MorphButtonUtility mMorphButtonUtility;
+    private Activity mActivity;
+    private ArrayList<String> mImagesUri = new ArrayList<>();
+    private ArrayList<String> mTempUris = new ArrayList<>();
+    private ArrayList<String> mFilterUris = new ArrayList<>();
+    private String mPath;
+    private String mPassword;
+    private String mQuality;
+    private Rectangle mPageSize = PageSize.A4;
+    private boolean mOpenSelectImages = false;
+    private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
-    private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
@@ -122,7 +112,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
 
-        mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+        mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
 
         // Get runtime permissions if build version >= Android M
@@ -134,12 +125,18 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         Bundle bundle = getArguments();
         if (bundle != null) {
             ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
-            for (Parcelable p :uris) {
+            for (Parcelable p : uris) {
                 Uri uri = (Uri) p;
                 if (fileUtils.getUriRealPath(uri) == null) {
                     Toast.makeText(mActivity, R.string.whatsappToast, Toast.LENGTH_LONG).show();
                 } else {
                     mTempUris.add(fileUtils.getUriRealPath(uri));
+                    if (mTempUris.size() > 0) {
+                        mNoOfImages.setText(mTempUris.size() + getString(R.string.images_selected));
+                        mNoOfImages.setVisibility(View.VISIBLE);
+                    } else {
+                        mNoOfImages.setVisibility(View.GONE);
+                    }
                     Toast.makeText(mActivity, R.string.successToast, Toast.LENGTH_LONG).show();
                 }
             }
@@ -180,7 +177,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         try {
             mImagesUri.add(mTempUris.get(mImageCounter));
             mImageCounter = mImagesUri.size();
-            Intent intent = new Intent(getContext(), PhotoEditor.class);
+            Intent intent = new Intent(getContext(), ImageEditor.class);
             intent.putStringArrayListExtra("first", mTempUris);
             startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
             mImagesUri.add(mTempUris.get(mImageCounter));
@@ -188,8 +185,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             e.printStackTrace();
         }
     }
-
-
 
     // Create Pdf of selected images
     @SuppressWarnings("unchecked")
@@ -210,7 +205,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 mImagesUri.add(mTempUris.get(i));
             }
         }
-
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -222,9 +216,34 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            String filename = input.toString();
-                            new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                    HomeFragment.this).execute();
+                            final String filename = input.toString();
+                            FileUtils utils = new FileUtils(mActivity);
+                            if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
+                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality, mPageSize,
+                                        HomeFragment.this).execute();
+                            } else {
+                                new MaterialDialog.Builder(mActivity)
+                                        .title(R.string.warning)
+                                        .content(R.string.overwrite_message)
+                                        .positiveText(android.R.string.ok)
+                                        .negativeText(android.R.string.cancel)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
+                                                        mPageSize, HomeFragment.this).execute();
+                                            }
+                                        })
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                createPdf();
+                                            }
+                                        })
+                                        .show();
+                            }
                         }
                     }
                 })
@@ -300,9 +319,13 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             for (Uri uri : imageUris)
                 mTempUris.add(uri.getPath());
             if (imageUris.size() > 0) {
+                mNoOfImages.setText(imageUris.size() + getString(R.string.images_selected));
+                mNoOfImages.setVisibility(View.VISIBLE);
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_images_added,
-                    Snackbar.LENGTH_LONG).show();
+                        R.string.snackbar_images_added,
+                        Snackbar.LENGTH_LONG).show();
+            } else {
+                mNoOfImages.setVisibility(View.GONE);
             }
             mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
             mOpenPdf.setVisibility(View.GONE);
@@ -368,6 +391,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp),
                         getResources().getString(R.string.filter_images_Text)));
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_page_size_24dp),
+                        getResources().getString(R.string.set_page_size_text)));
 
 
         return mEnhancementOptionsEntityArrayList;
@@ -387,12 +413,74 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 break;
             case 3:
                 filterImages();
+                break;
+            case 4:
+                setPageSize();
+                break;
             default:
                 break;
         }
     }
 
-    private void compressImage()  {
+    private void setPageSize() {
+        if (mTempUris.size() == 0) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.set_page_size_text)
+                .customView(R.layout.set_page_size_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        View view = dialog.getCustomView();
+                        RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
+                        int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                        String stringPageSize;
+                        switch (selectedId) {
+                            case R.id.page_size_default:
+                                mPageSize = PageSize.A4;
+                                break;
+                            case R.id.page_size_legal:
+                                mPageSize = PageSize.LEGAL;
+                                break;
+                            case R.id.page_size_executive:
+                                mPageSize = PageSize.EXECUTIVE;
+                                break;
+                            case R.id.page_size_ledger:
+                                mPageSize = PageSize.LEDGER;
+                                break;
+                            case R.id.page_size_tabloid:
+                                mPageSize = PageSize.TABLOID;
+                                break;
+                            case R.id.page_size_letter:
+                                mPageSize = PageSize.LETTER;
+                                break;
+                            case R.id.page_size_a0_a10:
+                                Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
+                                stringPageSize = spinnerA.getSelectedItem().toString();
+                                stringPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(stringPageSize);
+                                break;
+                            case R.id.page_size_b0_b10:
+                                Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
+                                stringPageSize = spinnerB.getSelectedItem().toString();
+                                stringPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                                mPageSize = PageSize.getRectangle(stringPageSize);
+                                break;
+                        }
+                    }
+                }).build();
+        dialog.show();
+    }
+
+    private void compressImage() {
 
         if (mTempUris.size() == 0) {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
@@ -541,6 +629,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     public void onPDFCreated(boolean success, String path) {
         mImagesUri.clear();
         mTempUris.clear();
+        mNoOfImages.setVisibility(View.GONE);
         mImageCounter = 0;
         mPassword = null;
         if (success) {
@@ -581,7 +670,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED)) {
                 mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
-                requestPermissions( new String[] {
+                requestPermissions(new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.CAMERA},
@@ -614,5 +703,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+        mCreatePdf.setEnabled(true);
     }
+
+
 }

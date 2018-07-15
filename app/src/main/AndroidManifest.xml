@@ -53,7 +53,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="image/*" />
             </intent-filter>
-
         </activity>
 
         <provider
@@ -66,7 +65,7 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
 
-        <activity android:name=".activity.PhotoEditor">
+        <activity android:name=".activity.ImageEditor">
         </activity>
     </application>
 
