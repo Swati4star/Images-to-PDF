@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ImageEditor">
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,6 +28,17 @@
         </ja.burhanrashid52.photoeditor.PhotoEditorView>
     </ScrollView>
 
+    <ImageButton
+        android:id="@+id/previousImageButton"
+        android:layout_width="46dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_toEndOf="@id/savecurrent"
+        android:background="@android:color/holo_orange_dark"
+        android:contentDescription="@string/previous_image_content_desc"
+        app:srcCompat="@drawable/ic_navigate_before_white_24dp" />
 
     <ImageButton
         android:id="@+id/nextimageButton"
@@ -38,21 +47,22 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="29dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="13dp"
         android:background="@android:color/holo_orange_dark"
         android:contentDescription="@string/nextimage_contentdesc"
-        app:srcCompat="@drawable/ic_navigate_next_black_24dp"/>
+        app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
 
     <TextView
         android:id="@+id/imagecount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/savecurrent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="108dp"
+        android:layout_toEndOf="@id/previousImageButton"
+        android:layout_toStartOf="@id/nextimageButton"
+        android:gravity="center_horizontal"
         android:text="@string/img_Count_filter"
-        android:textColor="@android:color/background_dark"/>
+        android:textColor="@android:color/background_dark" />
 
     <Button
         android:id="@+id/savecurrent"
@@ -63,7 +73,7 @@
         android:layout_marginStart="13dp"
         android:background="@android:color/holo_orange_dark"
         android:text="@string/save_current"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -73,7 +83,6 @@
         android:layout_alignParentStart="true"
         android:background="#e6e4e4"
         android:orientation="horizontal"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
-
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 </RelativeLayout>
