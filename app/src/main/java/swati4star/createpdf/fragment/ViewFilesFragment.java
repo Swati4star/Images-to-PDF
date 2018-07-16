@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
@@ -60,7 +63,7 @@ public class ViewFilesFragment extends Fragment
     @BindView(R.id.emptyTextOverBgImage)
     public TextView TextOver;
     @BindView(R.id.getStarted)
-    public TextView getStarted;
+    public Button getStarted;
     @BindView(R.id.emptyTagLine)
     public TextView tagLine;
     @BindView(R.id.filesRecyclerView)
@@ -88,6 +91,14 @@ public class ViewFilesFragment extends Fragment
     private SearchView mSearchView;
     private int mCurrentSortingIndex;
     private SharedPreferences mSharedPreferences;
+
+    //When the "GET STARTED" button is clicked, the user is taken to home
+    @OnClick(R.id.getStarted)
+    public void loadHome(){
+        Fragment fragment = new HomeFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -128,7 +139,8 @@ public class ViewFilesFragment extends Fragment
         mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
         mViewFilesListRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
         mSwipeView.setOnRefreshListener(this);
-        mSwipeView.bringToFront();
+        //Prevents clicking of other buttons on screen
+        //mSwipeView.bringToFront();
 
         // Populate data into listView
         populatePdfList();
