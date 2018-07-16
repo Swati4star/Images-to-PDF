@@ -13,12 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
@@ -28,9 +33,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class TextToPdfFragment extends Fragment {
 
-    private  final int mFileSelectCode = 0;
-    private  Uri mTextFileUri = null;
+    private final int mFileSelectCode = 0;
+    @BindView(R.id.tv_file_name)
+    TextView mTextView;
     private Activity mActivity;
+    private Uri mTextFileUri = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,10 +47,11 @@ public class TextToPdfFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview =  inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
+        View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
+        ButterKnife.bind(this, rootview);
 
         Button selectButton = rootview.findViewById(R.id.selectFile);
-        selectButton.setOnClickListener( new View.OnClickListener() {
+        selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectTextFile();
@@ -53,7 +61,7 @@ public class TextToPdfFragment extends Fragment {
             }
         });
         Button createButton = rootview.findViewById(R.id.createtextpdf);
-        createButton.setOnClickListener( new View.OnClickListener() {
+        createButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -62,6 +70,7 @@ public class TextToPdfFragment extends Fragment {
         });
         return rootview;
     }
+
     public void openCreateTextPdf() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
@@ -92,6 +101,7 @@ public class TextToPdfFragment extends Fragment {
                                                 fileUtils.openFile(finalMPath);
                                             }
                                         }).show();
+                                mTextView.setVisibility(View.GONE);
                             } catch (DocumentException | IOException e) {
                                 e.printStackTrace();
                             }
@@ -100,6 +110,7 @@ public class TextToPdfFragment extends Fragment {
                 })
                 .show();
     }
+
     /**
      * Create a file picker to get text file.
      */
@@ -119,22 +130,29 @@ public class TextToPdfFragment extends Fragment {
                     Snackbar.LENGTH_LONG).show();
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
                     mTextFileUri = data.getData();
+                    String fileName = new File(mTextFileUri.getPath()).getName();
+                    fileName = getString(R.string.text_file_name) + fileName;
+                    mTextView.setText(fileName);
+                    mTextView.setVisibility(View.VISIBLE);
                 }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
