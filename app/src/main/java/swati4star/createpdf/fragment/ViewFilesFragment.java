@@ -550,7 +550,8 @@ public class ViewFilesFragment extends Fragment
             if ((files == null || files.length == 0) && pdfFromOtherDir == null) {
                 setEmptyStateVisible();
                 setIconsInvisible();
-                showSnack(R.string.snackbar_no_pdfs);
+                //NoPDFs right now snackbar is not shown
+                //showSnack(R.string.snackbar_no_pdfs);
             } else {
 
                 pdfFiles = mFileUtils.getPdfsFromPdfFolder(files);
