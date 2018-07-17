@@ -3,7 +3,6 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,14 +11,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +30,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
-import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 
 public class TextToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner {
 
@@ -48,6 +47,8 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
+    @BindView(R.id.tv_file_name)
+    TextView mTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         View rootview =  inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
         ButterKnife.bind(this, rootview);
         Button selectButton = rootview.findViewById(R.id.selectFile);
-        selectButton.setOnClickListener( new View.OnClickListener() {
+        selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectTextFile();
@@ -71,7 +72,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         });
         showEnhancementOptions();
         Button createButton = rootview.findViewById(R.id.createtextpdf);
-        createButton.setOnClickListener( new View.OnClickListener() {
+        createButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -165,6 +166,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                                                 fileUtils.openFile(finalMPath);
                                             }
                                         }).show();
+                                mTextView.setVisibility(View.GONE);
                             } catch (DocumentException | IOException e) {
                                 e.printStackTrace();
                             }
@@ -173,6 +175,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 })
                 .show();
     }
+
     /**
      * Create a file picker to get text file.
      */
@@ -192,22 +195,29 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                     Snackbar.LENGTH_LONG).show();
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
                     mTextFileUri = data.getData();
+                    String fileName = new File(mTextFileUri.getPath()).getName();
+                    fileName = getString(R.string.text_file_name) + fileName;
+                    mTextView.setText(fileName);
+                    mTextView.setVisibility(View.VISIBLE);
                 }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
+
     @Override
     public void onDetach() {
         super.onDetach();

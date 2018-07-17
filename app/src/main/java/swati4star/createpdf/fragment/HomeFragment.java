@@ -111,9 +111,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-
-        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
-        mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
 
         // Get runtime permissions if build version >= Android M
@@ -140,6 +137,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                     Toast.makeText(mActivity, R.string.successToast, Toast.LENGTH_LONG).show();
                 }
             }
+        } else {
+            mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+            mCreatePdf.setEnabled(false);
         }
 
         return root;
@@ -324,6 +324,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_images_added,
                         Snackbar.LENGTH_LONG).show();
+                mCreatePdf.setEnabled(true);
             } else {
                 mNoOfImages.setVisibility(View.GONE);
             }
@@ -703,7 +704,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
-        mCreatePdf.setEnabled(true);
     }
 
 

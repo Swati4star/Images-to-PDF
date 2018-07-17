@@ -193,4 +193,6 @@
     <string name="example_font">Example : 10</string>
     <string name="snackbar_font_not_blank">Font can\'t be null</string>
     <string name="font_size_changed">Font Size Changed</string>
+    <string name="previous_image_content_desc">Previous Image</string>
+    <string name="text_file_name">"Text File : "</string>
 </resources>

@@ -40,7 +40,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private ArrayList<String> mImagepaths = new ArrayList<>();
     private ArrayList<FilterItem> mFilterItems = new ArrayList<>();
 
-    int imagesCount, dispsize, currentImage = 1, j = 1;
+    int imagesCount, dispsize, currentImage = 0, j = 1;
 
     @BindView(R.id.nextimageButton)
     ImageButton mNextButton;
@@ -48,6 +48,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     TextView mImgcount;
     @BindView(R.id.savecurrent)
     Button saveCurrent;
+    @BindView(R.id.previousImageButton)
+    ImageButton mPreviousButton;
 
     Bitmap bitmap;
     PhotoEditorView mPhotoEditorView;
@@ -69,7 +71,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mPhotoEditorView.getSource().setImageBitmap(bitmap);
         String showingText = "Showing " + String.valueOf(1) + " of " + dispsize;
         mImgcount.setText(showingText);
-
+        mPreviousButton.setVisibility(View.INVISIBLE);
         showFilters();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,6 +84,21 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             if (isClicked) {
                 next();
                 incrementImageCount();
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @OnClick(R.id.previousImageButton)
+    void previousImg() {
+        try {
+            //Proceed if Save Current has been clicked
+            if (isClicked) {
+                previous();
+                decrementImageCount();
             } else {
                 Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
             }
@@ -103,16 +120,36 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     //Increment image count to display in textView
     void incrementImageCount() {
-        if (currentImage < dispsize) {
-            String sText = "Showing " + String.valueOf(currentImage) + " of " + dispsize;
+        if (currentImage < imagesCount) {
+            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
             mImgcount.setText(sText);
-        } else if (currentImage == dispsize) {
-            String sText = "Showing " + String.valueOf(currentImage) + " of " + dispsize;
+            if (mPreviousButton.getVisibility() == View.INVISIBLE)
+                mPreviousButton.setVisibility(View.VISIBLE);
+        } else if (currentImage == imagesCount) {
+            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
             mImgcount.setText(sText);
             mNextButton.setVisibility(View.INVISIBLE);
+            mPreviousButton.setVisibility(View.VISIBLE);
             isLast = true;
         } else {
             mNextButton.setEnabled(false);
+        }
+    }
+
+    //Decrement image count to display in textView
+    void decrementImageCount() {
+        if (currentImage > 0) {
+            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
+            mImgcount.setText(sText);
+            if (mNextButton.getVisibility() == View.INVISIBLE)
+                mNextButton.setVisibility(View.VISIBLE);
+        } else if (currentImage == 0) {
+            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
+            mImgcount.setText(sText);
+            mPreviousButton.setVisibility(View.INVISIBLE);
+            mNextButton.setVisibility(View.VISIBLE);
+        } else {
+            mPreviousButton.setEnabled(false);
         }
     }
 
@@ -167,6 +204,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     /**
      * Intent to Send Back final edited URIs
+     *
      * @param mImagepaths - the images array to be send pack
      */
     public void passUris(ArrayList<String> mImagepaths) {
@@ -181,11 +219,26 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void next() {
         try {
-            if (currentImage <= imagesCount) {
-                bitmap = BitmapFactory.decodeFile(mFilterUris.get(currentImage));
+            if (currentImage + 1 <= imagesCount) {
+                bitmap = BitmapFactory.decodeFile(mFilterUris.get(currentImage + 1));
                 mPhotoEditorView.getSource().setImageBitmap(bitmap);
+                currentImage++;
             }
-            currentImage++;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Display Previous image on previousImage button click
+     */
+    private void previous() {
+        try {
+            if (currentImage - 1 >= 0) {
+                bitmap = BitmapFactory.decodeFile(mFilterUris.get((currentImage - 1)));
+                mPhotoEditorView.getSource().setImageBitmap(bitmap);
+                currentImage--;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
