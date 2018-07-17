@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<!-- drawable/format-size.xml -->
+
+    <vector android:viewportHeight="24" android:viewportWidth="24" android:width="24dp" android:height="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <path android:pathData="M3,12H6V19H9V12H12V9H3M9,4V7H14V19H17V7H22V4H9Z" android:fillColor="#000"/>
+
+</vector>

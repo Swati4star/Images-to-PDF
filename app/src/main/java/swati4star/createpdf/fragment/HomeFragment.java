@@ -509,7 +509,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             check = Integer.parseInt(String.valueOf(qualityInput.getText()));
                             if (check > 100 || check < 0) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.invalid_quality,
+                                        R.string.invalid_entry,
                                         Snackbar.LENGTH_LONG).show();
                             } else {
                                 mQuality = String.valueOf(check);
@@ -522,7 +522,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             }
                         } catch (NumberFormatException e) {
                             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.invalid_quality,
+                                    R.string.invalid_entry,
                                     Snackbar.LENGTH_LONG).show();
                         }
                     }

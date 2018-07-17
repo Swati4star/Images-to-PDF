@@ -265,7 +265,7 @@ public class PDFUtils {
      * @param fileURI URL to create PDF
      * @param outputFile File name to be created
      */
-    public void createPdf(Uri fileURI, String outputFile)
+    public void createPdf(Uri fileURI, String outputFile, int fontSize)
             throws DocumentException, IOException {
 
         Document document = new Document();
@@ -275,7 +275,7 @@ public class PDFUtils {
         document.open();
         Font myfont = new Font();
         myfont.setStyle(Font.NORMAL);
-        myfont.setSize(11);
+        myfont.setSize(fontSize);
 
         document.add(new Paragraph("\n"));
         readTextFile(fileURI, document, myfont);
