@@ -49,8 +49,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     /**
      * Returns adapter instance
      *
-     * @param activity the activity calling this adapter
-     * @param feedItems array list containing path of files
+     * @param activity                 the activity calling this adapter
+     * @param feedItems                array list containing path of files
      * @param emptyStateChangeListener interface for empty state change
      */
     public ViewFilesAdapter(Activity activity,
@@ -63,6 +63,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
     }
+
     @NonNull
     @Override
     public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -154,6 +155,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             }
         });
     }
+
     public void checkAll() {
         for (int i = 0; i < mFileList.size(); i++) {
             if (!mDeleteNames.contains(i)) {
@@ -162,6 +164,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             notifyDataSetChanged();
         }
     }
+
+    public void unCheckAll() {
+        mDeleteNames.clear();
+        notifyDataSetChanged();
+    }
+
     public ArrayList<String> getSelectedFilePath() {
         ArrayList<String> filePathList = new ArrayList<>();
         for (int position : mDeleteNames) {
@@ -240,7 +248,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     public void shareFiles() {
         ArrayList<File> files = new ArrayList<>();
-        for (int position: mDeleteNames) {
+        for (int position : mDeleteNames) {
             files.add(mFileList.get(position));
         }
         mFileUtils.shareMultipleFiles(files);
@@ -259,7 +267,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                     Snackbar.LENGTH_LONG).show();
                         } else {
                             File oldfile = mFileList.get(position);
-                            String oldPath =   mFileList.get(position).getPath();
+                            String oldPath = mFileList.get(position).getPath();
                             int index = oldPath.lastIndexOf('/');
                             String newfilename = oldPath.substring(0, index) + "/" + input.toString() +
                                     mActivity.getString(R.string.pdf_ext);
