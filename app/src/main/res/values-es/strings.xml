@@ -191,5 +191,9 @@
     <string name="move_to_n_home_directory">Move to  Home Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
+    <string name="edit_font_size">Edit Font Size (Default : 11)</string>
+    <string name="enter_font_size">Enter font size</string>
+    <string name="example_font">Example : 10</string>
+    <string name="font_size_changed">Font Size Changed</string>
 
 </resources>
