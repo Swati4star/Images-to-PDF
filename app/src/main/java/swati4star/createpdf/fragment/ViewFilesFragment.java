@@ -74,6 +74,7 @@ public class ViewFilesFragment extends Fragment
     @BindView(R.id.swipe)
     SwipeRefreshLayout mSwipeView;
     private Menu mMenuIcons;
+    private MenuItem mMenuItem;
     private Activity mActivity;
     private ViewFilesAdapter mViewFilesAdapter;
     private final DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
@@ -94,6 +95,7 @@ public class ViewFilesFragment extends Fragment
     private SearchView mSearchView;
     private int mCurrentSortingIndex;
     private SharedPreferences mSharedPreferences;
+    private boolean mIsChecked = false;
 
     //When the "GET STARTED" button is clicked, the user is taken to home
     @OnClick(R.id.getStarted)
@@ -149,6 +151,7 @@ public class ViewFilesFragment extends Fragment
         populatePdfList();
         return root;
     }
+
     @OnClick(R.id.new_dir)
     void moveToNewDirectory() {
         if (mViewFilesAdapter.areItemsSelected()) {
@@ -157,6 +160,7 @@ public class ViewFilesFragment extends Fragment
             showSnack(R.string.snackbar_no_pdfs_selected);
         }
     }
+
     @OnClick(R.id.move_to_dir)
     void moveToDirectory() {
         if (mViewFilesAdapter.areItemsSelected()) {
@@ -165,12 +169,14 @@ public class ViewFilesFragment extends Fragment
             showSnack(R.string.snackbar_no_pdfs_selected);
         }
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_view_files_actions, menu);
         mMenuIcons = menu;
         MenuItem item = menu.findItem(R.id.action_search);
+        mMenuItem = menu.findItem(R.id.select_all);
         mSearchView = (SearchView) item.getActionView();
         mSearchView.setQueryHint(getString(R.string.search_hint));
         mSearchView.setSubmitButtonEnabled(true);
@@ -227,7 +233,15 @@ public class ViewFilesFragment extends Fragment
                 }
                 break;
             case R.id.select_all:
-                mViewFilesAdapter.checkAll();
+                if (mIsChecked) {
+                    mViewFilesAdapter.unCheckAll();
+                    mMenuItem.setIcon(R.drawable.ic_check_box_outline_blank_24dp);
+                    mIsChecked = false;
+                } else {
+                    mViewFilesAdapter.checkAll();
+                    mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
+                    mIsChecked = true;
+                }
                 break;
             default:
                 break;
@@ -333,6 +347,7 @@ public class ViewFilesFragment extends Fragment
 
     /**
      * Moves files from one directory to another
+     *
      * @param operation - type of operation to be performed
      *                  (create new Directory or move to an existing directory)
      */
