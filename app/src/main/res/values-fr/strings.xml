@@ -123,7 +123,7 @@
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Compress the Image</string>
     <string name="quality_image">Compress the Image (Default : 30%)</string>
-    <string name="invalid_quality">Invaid Entry</string>
+    <string name="invalid_entry">Invaid Entry</string>
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
@@ -192,8 +192,9 @@
     <string name="move_to_n_home_directory">Move to  Home Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
-    <string name="edit_font_size">Edit Font Size (Default : 11)</string>
+    <string name="edit_font_size">Font Size \n (Default : 11)</string>
     <string name="enter_font_size">Enter font size</string>
     <string name="example_font">Example : 10</string>
     <string name="font_size_changed">Font Size Changed</string>
+    <string name="font_size">Font Size : %1$s</string>
 </resources>

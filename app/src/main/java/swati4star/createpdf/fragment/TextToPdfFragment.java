@@ -89,12 +89,16 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                         getResources().getString(R.string.edit_font_size)));
         return mTextEnhancementOptionsEntityArrayList;
     }
+    /**
+     * Function to show the enhancement options.
+     */
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, getEnhancementOptions());
         mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
     }
+
     @Override
     public void onItemClick(int position) {
         switch (position) {
@@ -103,6 +107,9 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 break;
         }
     }
+    /**
+     * Function to take the font size of pdf as user input
+     */
     private void editFontSize() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.edit_font_size)
@@ -114,7 +121,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                             mFontSize = Integer.parseInt(String.valueOf(input));
                             if (mFontSize > 1000 || mFontSize < 0) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.invalid_quality,
+                                        R.string.invalid_entry,
                                         Snackbar.LENGTH_LONG).show();
                             } else {
                                 showFontSize();
@@ -124,18 +131,22 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                             }
                         } catch (NumberFormatException e) {
                             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.invalid_quality,
+                                    R.string.invalid_entry,
                                     Snackbar.LENGTH_LONG).show();
                         }
                     }
                 })
                 .show();
     }
+    /**
+     * Displays font size in UI
+     */
     private void showFontSize() {
         mTextEnhancementOptionsEntityArrayList.get(0)
-                .setName("Font Size : " + mFontSize);
+                .setName(String.format(getString(R.string.font_size), String.valueOf(mFontSize)));
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
+
     public void openCreateTextPdf() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
