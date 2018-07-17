@@ -386,7 +386,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                         getResources().getString(R.string.edit_images_text)));
 
         mEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.pdf_compress),
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_compress_image),
                         getString(R.string.compress_image) + " " +
                                 mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)"));
         mEnhancementOptionsEntityArrayList.add(
