@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
 
@@ -37,7 +38,7 @@ import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 
-public class TextToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner  {
+public class TextToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner {
 
     private final int mFileSelectCode = 0;
     private final ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList = new ArrayList<>();
@@ -81,6 +82,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         });
         return rootview;
     }
+
     public List<EnhancementOptionsEntity> getEnhancementOptions() {
         mTextEnhancementOptionsEntityArrayList.clear();
 
@@ -89,6 +91,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                         getResources().getString(R.string.edit_font_size)));
         return mTextEnhancementOptionsEntityArrayList;
     }
+
     /**
      * Function to show the enhancement options.
      */
@@ -107,6 +110,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 break;
         }
     }
+
     /**
      * Function to take the font size of pdf as user input
      */
@@ -138,6 +142,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 })
                 .show();
     }
+
     /**
      * Displays font size in UI
      */
@@ -159,33 +164,68 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                                     R.string.snackbar_name_not_blank,
                                     Snackbar.LENGTH_LONG).show();
                         } else {
-                            String mFilename = input.toString();
-                            String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                                    mActivity.getString(R.string.pdf_dir);
-                            mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
-                            try {
-                                PDFUtils fileUtil = new PDFUtils(mActivity);
-                                fileUtil.createPdf(mTextFileUri, mFilename, mFontSize);
-                                final String finalMPath = mPath;
-                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                                        , R.string.snackbar_pdfCreated
-                                        , Snackbar.LENGTH_LONG)
-                                        .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
+                            final String mFilename = input.toString();
+                            FileUtils utils = new FileUtils(mActivity);
+                            if (!utils.isFileExist(mFilename + getString(R.string.pdf_ext))) {
+                                createPdf(mFilename);
+                            } else {
+                                new MaterialDialog.Builder(mActivity)
+                                        .title(R.string.warning)
+                                        .content(R.string.overwrite_message)
+                                        .positiveText(android.R.string.ok)
+                                        .negativeText(android.R.string.cancel)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
                                             @Override
-                                            public void onClick(View v) {
-                                                FileUtils fileUtils = new FileUtils(mActivity);
-                                                fileUtils.openFile(finalMPath);
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                createPdf(mFilename);
+
                                             }
-                                        }).show();
-                                mTextView.setVisibility(View.GONE);
-                            } catch (DocumentException | IOException e) {
-                                e.printStackTrace();
+                                        })
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog,
+                                                                @NonNull DialogAction which) {
+                                                openCreateTextPdf();
+                                            }
+                                        })
+                                        .show();
                             }
                         }
                     }
                 })
                 .show();
     }
+
+    /**
+     * function to create PDF
+     *
+     * @param mFilename name of file to be created.
+     */
+    private void createPdf(String mFilename) {
+        String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                mActivity.getString(R.string.pdf_dir);
+        mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
+        try {
+            PDFUtils fileUtil = new PDFUtils(mActivity);
+            fileUtil.createPdf(mTextFileUri, mFilename, mFontSize);
+            final String finalMPath = mPath;
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
+                    , R.string.snackbar_pdfCreated
+                    , Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FileUtils fileUtils = new FileUtils(mActivity);
+                            fileUtils.openFile(finalMPath);
+                        }
+                    }).show();
+            mTextView.setVisibility(View.GONE);
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Create a file picker to get text file.
