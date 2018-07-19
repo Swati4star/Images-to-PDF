@@ -46,7 +46,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     TextView mTextView;
     private Activity mActivity;
     private Uri mTextFileUri = null;
-    private int mFontSize;
+    private int mFontSize = 11;
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
