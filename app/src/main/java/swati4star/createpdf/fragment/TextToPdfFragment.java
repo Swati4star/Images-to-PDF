@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +116,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.edit_font_size)
                 .content(R.string.enter_font_size)
+                .inputType(InputType.TYPE_CLASS_NUMBER)
                 .input(getString(R.string.example_font), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
