@@ -36,6 +36,7 @@ import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.DataSetChanged;
+import swati4star.createpdf.model.TextToPDFOptions;
 
 public class PDFUtils {
 
@@ -258,34 +259,36 @@ public class PDFUtils {
             }
         });
     }
+
     /**
      * Create a PDF from a Text File
      *
-     * @param fileURI URL to create PDF
-     * @param outputFile File name to be created
+     * @param mTextToPDFOptions TextToPDFOptions Object
      */
-    public void createPdf(Uri fileURI, String outputFile, int fontSize)
+    public void createPdf(TextToPDFOptions mTextToPDFOptions)
             throws DocumentException, IOException {
 
         Document document = new Document();
-        String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" + outputFile + ".pdf";
+        String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" +
+                mTextToPDFOptions.getOutFileName() + ".pdf";
         PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);
 
         document.open();
         Font myfont = new Font();
         myfont.setStyle(Font.NORMAL);
-        myfont.setSize(fontSize);
+        myfont.setSize(mTextToPDFOptions.getFontSize());
 
         document.add(new Paragraph("\n"));
-        readTextFile(fileURI, document, myfont);
+        readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
         document.close();
     }
+
     /**
      * Read the Text File and put it in document
      *
-     * @param uri URL to create PDF
+     * @param uri      URL to create PDF
      * @param document PDF Document
-     * @param myfont Font style in PDF
+     * @param myfont   Font style in PDF
      */
     private void readTextFile(Uri uri, Document document, Font myfont) {
         InputStream inputStream;

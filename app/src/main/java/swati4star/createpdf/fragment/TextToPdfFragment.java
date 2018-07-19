@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
@@ -207,7 +208,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
-            fileUtil.createPdf(mTextFileUri, mFilename, mFontSize);
+            fileUtil.createPdf(new TextToPDFOptions(mFilename, mTextFileUri, mFontSize));
             final String finalMPath = mPath;
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
                     , R.string.snackbar_pdfCreated

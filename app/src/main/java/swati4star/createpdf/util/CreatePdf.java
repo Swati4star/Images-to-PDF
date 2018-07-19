@@ -25,6 +25,7 @@ import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+import swati4star.createpdf.model.ImageToPDFOptions;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 
@@ -44,16 +45,17 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private String mPath;
     private Rectangle mPageSize;
     private MaterialDialog mMaterialDialog;
+    private boolean mPasswordProtected;
 
-    public CreatePdf(Activity context, ArrayList<String> imagesUri, String fileName, String password,
-                     String qualityString, Rectangle pageSize, OnPDFCreatedInterface onPDFCreated) {
-        this.mImagesUri = imagesUri;
-        this.mFileName = fileName;
-        this.mPassword = password;
-        this.mQualityString = qualityString;
+    public CreatePdf(Activity context, ImageToPDFOptions mImageToPDFOptions, OnPDFCreatedInterface onPDFCreated) {
+        this.mImagesUri = mImageToPDFOptions.getImagesUri();
+        this.mFileName = mImageToPDFOptions.getOutFileName();
+        this.mPassword = mImageToPDFOptions.getPassword();
+        this.mQualityString = mImageToPDFOptions.getQualityString();
         this.mContext = context;
         this.mOnPDFCreatedInterface = onPDFCreated;
-        this.mPageSize = pageSize;
+        this.mPageSize = mImageToPDFOptions.getPageSize();
+        this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
     }
 
     @Override
@@ -95,7 +97,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
             Log.v("Stage 3", "Pdf writer");
 
-            if (StringUtils.isNotEmpty(mPassword)) {
+            if (mPasswordProtected) {
                 writer.setEncryption(mPassword.getBytes(),
                         mContext.getString(R.string.app_name).getBytes(),
                         PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
