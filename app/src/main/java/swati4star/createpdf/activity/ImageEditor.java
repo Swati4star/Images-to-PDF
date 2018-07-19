@@ -34,6 +34,8 @@ import swati4star.createpdf.adapter.ImageFiltersAdapter;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
 
+import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener {
 
     private ArrayList<String> mFilterUris = new ArrayList<>();
@@ -64,7 +66,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         ButterKnife.bind(this);
 
         mPhotoEditorView = findViewById(R.id.photoEditorView);
-        mFilterUris = getIntent().getExtras().getStringArrayList("first");
+        mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
         dispsize = mFilterUris.size();
         imagesCount = mFilterUris.size() - 1;
         bitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
@@ -118,7 +120,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
-    //Increment image count to display in textView
+    /**
+     * Increment image count to display in textView
+     */
     void incrementImageCount() {
         if (currentImage < imagesCount) {
             String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
@@ -136,7 +140,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
-    //Decrement image count to display in textView
+    /**
+     * Decrement image count to display in textView
+     */
     void decrementImageCount() {
         if (currentImage > 0) {
             String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;

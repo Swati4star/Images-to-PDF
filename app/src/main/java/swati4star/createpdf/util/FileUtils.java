@@ -47,7 +47,7 @@ import swati4star.createpdf.R;
 public class FileUtils {
 
     private final Activity mContext;
-    ContentResolver mContentResolver;
+    private ContentResolver mContentResolver;
 
     public FileUtils(Activity context) {
         this.mContext = context;
@@ -671,8 +671,12 @@ public class FileUtils {
                 // Get column index.
                 int imageColumnIndex = cursor.getColumnIndex(columnName);
 
+                if (imageColumnIndex == -1)
+                    return ret;
+
                 // Get column value which is the uri related file local path.
                 ret = cursor.getString(imageColumnIndex);
+                cursor.close();
             }
         }
 

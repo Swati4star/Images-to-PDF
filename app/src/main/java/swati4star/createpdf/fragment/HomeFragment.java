@@ -52,6 +52,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.FileUtils;
@@ -59,6 +60,7 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 
 
 /**
@@ -96,6 +98,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
+    private boolean mPasswordProtected = false;
 
     @Override
     public void onAttach(Context context) {
@@ -178,7 +181,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             mImagesUri.add(mTempUris.get(mImageCounter));
             mImageCounter = mImagesUri.size();
             Intent intent = new Intent(getContext(), ImageEditor.class);
-            intent.putStringArrayListExtra("first", mTempUris);
+            intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mTempUris);
             startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
             mImagesUri.add(mTempUris.get(mImageCounter));
         } catch (Exception e) {
@@ -219,8 +222,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             final String filename = input.toString();
                             FileUtils utils = new FileUtils(mActivity);
                             if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
-                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality, mPageSize,
-                                        HomeFragment.this).execute();
+                                new CreatePdf(mActivity, new ImageToPDFOptions(filename, mPasswordProtected,
+                                        mPassword, mQuality, mImagesUri, mPageSize), HomeFragment.this).execute();
                             } else {
                                 new MaterialDialog.Builder(mActivity)
                                         .title(R.string.warning)
@@ -231,8 +234,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                             @Override
                                             public void onClick(@NonNull MaterialDialog dialog,
                                                                 @NonNull DialogAction which) {
-                                                new CreatePdf(mActivity, mImagesUri, filename, mPassword, mQuality,
-                                                        mPageSize, HomeFragment.this).execute();
+                                                new CreatePdf(mActivity, new ImageToPDFOptions(filename,
+                                                        mPasswordProtected, mPassword, mQuality, mImagesUri,
+                                                        mPageSize), HomeFragment.this).execute();
                                             }
                                         })
                                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -588,6 +592,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                     Snackbar.LENGTH_LONG).show();
                         } else {
                             mPassword = input.toString();
+                            mPasswordProtected = true;
                             onPasswordAdded();
                         }
                     }
@@ -597,6 +602,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 public void onClick(View v) {
                     mPassword = null;
                     onPasswordRemoved();
+                    mPasswordProtected = false;
                     dialog.dismiss();
                     Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                             R.string.password_remove,

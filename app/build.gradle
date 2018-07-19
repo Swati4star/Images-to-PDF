@@ -10,8 +10,8 @@ android {
         minSdkVersion 19
         multiDexEnabled true
         targetSdkVersion 27
-        versionCode 14
-        versionName "4.0.0"
+        versionCode 15
+        versionName "4.1.0"
     }
     buildTypes {
         release {
