@@ -1,125 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:background="@color/mb_white"
-             android:orientation="vertical"
-             tools:context=".fragment.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mb_white"
+    android:orientation="vertical"
+    tools:context=".fragment.HomeFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-           <LinearLayout
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/layout_main"
-               android:layout_margin="5dp"
-               android:background="@color/mb_white"
-               android:baselineAligned="false"
-               android:orientation="horizontal">
-               <LinearLayout
-                   android:layout_width="100dp"
-                   android:layout_height="match_parent"
-                   android:layout_marginTop="3dp"
-                   android:layout_marginBottom="3dp"
-                   android:id="@+id/new_dir"
-                   android:layout_marginStart="3dp"
-                   android:background="@color/colorPrimary"
-                   android:layout_weight="1"
-                   android:orientation="vertical">
-                   <ImageView
-                       android:layout_width="30dp"
-                       android:layout_height="30dp"
-                       android:layout_gravity="center"
-                       app:srcCompat="@drawable/ic_add_black_24dp" />
-                   <TextView
-                       android:textSize="12sp"
-                       android:layout_marginStart="7dp"
-                       android:layout_width="wrap_content"
-                       android:gravity="center"
-                       android:textColor="@color/mb_white"
-                       android:layout_height="wrap_content"
-                       android:text="@string/new_directory"/>
-               </LinearLayout>
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:id="@+id/move_to_dir"
-                   android:layout_weight="1"
-                   android:layout_margin="3dp"
-                   android:background="@color/colorPrimary"
-                   android:orientation="vertical">
-                   <ImageView
-                       android:layout_width="30dp"
-                       android:layout_height="30dp"
-                       android:layout_gravity="center"
-                       app:srcCompat="@drawable/ic_arrow_forward_white_24dp" />
-                   <TextView
-                       android:textSize="12sp"
-                       android:layout_width="100dp"
-                       android:textColor="@color/mb_white"
-                       android:gravity="center"
-                       android:layout_marginEnd="3dp"
-                       android:layout_height="wrap_content"
-                       android:text="@string/move_n_files"/>
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_width="100dp"
-                   android:layout_height="match_parent"
-                   android:layout_marginTop="3dp"
-                   android:layout_marginBottom="3dp"
-                   android:id="@+id/move_to_home_dir"
-                   android:background="@color/colorPrimary"
-                   android:layout_weight="1"
-                   android:orientation="vertical">
-                   <ImageView
-                       android:layout_width="30dp"
-                       android:layout_height="30dp"
-                       android:layout_gravity="center"
-                       app:srcCompat="@drawable/ic_home_white_24dp" />
-                   <TextView
-                       android:textSize="12sp"
-                       android:layout_width="wrap_content"
-                       android:textColor="@color/mb_white"
-                       android:gravity="center"
-                       android:layout_height="wrap_content"
-                       android:text="@string/move_to_n_home_directory"/>
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:id="@+id/delete_dir"
-                   android:layout_margin="3dp"
-                   android:background="@color/colorPrimary"
-                   android:layout_weight="1"
-                   android:orientation="vertical">
-                   <ImageView
-                       android:layout_width="30dp"
-                       android:layout_height="30dp"
-                       android:layout_gravity="center"
-                       app:srcCompat="@drawable/ic_delete_white_24dp" />
-                   <TextView
-                       android:textSize="12sp"
-                       android:layout_width="wrap_content"
-                       android:textColor="@color/mb_white"
-                       android:gravity="center"
-                       android:layout_height="wrap_content"
-                       android:text="@string/delete_directory"/>
-               </LinearLayout>
-           </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/mb_white"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/new_dir"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:gravity="center"
+                        android:text="@string/new_directory"
+                        android:textColor="@color/mb_white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/move_to_dir"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_arrow_forward_white_24dp" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:gravity="center"
+                        android:text="@string/move_n_files"
+                        android:textColor="@color/mb_white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/move_to_home_dir"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_white_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/move_to_n_home_directory"
+                        android:textColor="@color/mb_white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/delete_dir"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_delete_white_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/delete_directory"
+                        android:textColor="@color/mb_white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/filesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"/>
+                android:visibility="visible" />
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -127,6 +141,7 @@
         android:id="@+id/emptyStatusView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/emptyBackgroundImage"
             android:layout_width="0dp"
@@ -136,7 +151,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/emptyTextOverBgImage"
@@ -152,26 +167,26 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
             app:layout_constraintStart_toStartOf="@+id/emptyBackgroundImage"
-            app:layout_constraintTop_toTopOf="@+id/emptyBackgroundImage"/>
+            app:layout_constraintTop_toTopOf="@+id/emptyBackgroundImage" />
 
         <Button
             android:id="@+id/getStarted"
-            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="150dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="45dp"
+            android:background="@color/mb_blue"
+            android:padding="10dp"
             android:text="@string/get_started"
             android:textColor="@color/mb_white"
-            android:background="@color/mb_blue"
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/emptyBackgroundImage"
-            app:layout_constraintTop_toBottomOf="@+id/emptyTextOverBgImage"/>
+            app:layout_constraintTop_toBottomOf="@+id/emptyTextOverBgImage" />
 
         <TextView
             android:id="@+id/emptyTagLine"
@@ -186,8 +201,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/getStarted"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/getStarted" />
 
     </android.support.constraint.ConstraintLayout>
 
