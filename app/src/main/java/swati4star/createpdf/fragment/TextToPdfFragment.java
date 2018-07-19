@@ -67,9 +67,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
             @Override
             public void onClick(View v) {
                 selectTextFile();
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.text_file_selected,
-                        Snackbar.LENGTH_LONG).show();
             }
         });
         Button createButton = rootview.findViewById(R.id.createtextpdf);
@@ -253,6 +250,9 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
             case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
                     mTextFileUri = data.getData();
+                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                            R.string.text_file_selected,
+                            Snackbar.LENGTH_LONG).show();
                     String fileName = new File(mTextFileUri.getPath()).getName();
                     fileName = getString(R.string.text_file_name) + fileName;
                     mTextView.setText(fileName);
