@@ -59,6 +59,7 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 
 
 /**
@@ -178,7 +179,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             mImagesUri.add(mTempUris.get(mImageCounter));
             mImageCounter = mImagesUri.size();
             Intent intent = new Intent(getContext(), ImageEditor.class);
-            intent.putStringArrayListExtra("first", mTempUris);
+            intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mTempUris);
             startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
             mImagesUri.add(mTempUris.get(mImageCounter));
         } catch (Exception e) {

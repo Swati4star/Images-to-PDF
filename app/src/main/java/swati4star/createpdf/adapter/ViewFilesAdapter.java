@@ -34,14 +34,14 @@ import swati4star.createpdf.util.PDFUtils;
  * An adapter to view the existing PDF files
  */
 
-
 public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder>
         implements DataSetChanged {
 
     private final Activity mActivity;
     private final EmptyStateChangeListener mEmptyStateChangeListener;
+
     private ArrayList<File> mFileList;
-    private final ArrayList<Integer> mDeleteNames;
+    private ArrayList<Integer> mSelectedFiles;
 
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
@@ -59,7 +59,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         this.mActivity = activity;
         this.mEmptyStateChangeListener = emptyStateChangeListener;
         this.mFileList = feedItems;
-        mDeleteNames = new ArrayList<>();
+        mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
     }
@@ -75,19 +75,18 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int pos) {
         Log.d("logs", "getItemCount: " + mFileList.size());
-        // Extract file name from path
-        final int position = holder.getAdapterPosition();
-        final String filePath = mFileList.get(position).getPath();
-        final String[] fileName = filePath.split("/");
-        File file = mFileList.get(position);
-        final String lastModDate = FileUtils.getFormattedDate(file);
-        final String fileSize = FileUtils.getFormattedSize(file);
 
-        holder.mFilename.setText(fileName[fileName.length - 1]);
+        final int position          = holder.getAdapterPosition();
+        final String filePath       = mFileList.get(position).getPath();
+        final File file             = mFileList.get(position);
+        final String lastModDate    = FileUtils.getFormattedDate(file);
+        final String fileSize       = FileUtils.getFormattedSize(file);
+
+        holder.mFilename.setText(file.getName());
         holder.mFilesize.setText(fileSize);
         holder.mFiledate.setText(lastModDate);
 
-        if (mDeleteNames.contains(position))
+        if (mSelectedFiles.contains(position))
             holder.checkBox.setChecked(true);
         else
             holder.checkBox.setChecked(false);
@@ -96,11 +95,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!mDeleteNames.contains(position)) {
-                        mDeleteNames.add(position);
+                    if (!mSelectedFiles.contains(position)) {
+                        mSelectedFiles.add(position);
                     }
                 } else {
-                    mDeleteNames.remove(Integer.valueOf(position));
+                    mSelectedFiles.remove(Integer.valueOf(position));
                 }
             }
         });
@@ -138,12 +137,14 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         break;
 
                                     case 5: //Details
-                                        mPDFUtils.showDetails(fileName[fileName.length - 1],
+                                        mPDFUtils.showDetails(mFileList.get(position).getName(),
                                                 filePath, fileSize, lastModDate);
                                         break;
+
                                     case 6://Password Set
                                         mPDFUtils.setPassword(filePath, ViewFilesAdapter.this, mFileList);
                                         break;
+
                                     case 7://Password  Remove
                                         mPDFUtils.removePassword(filePath, ViewFilesAdapter.this, mFileList);
                                         break;
@@ -156,23 +157,31 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         });
     }
 
+    /**
+     * Checks all the PDFs list
+     */
     public void checkAll() {
-        for (int i = 0; i < mFileList.size(); i++) {
-            if (!mDeleteNames.contains(i)) {
-                mDeleteNames.add(i);
-            }
-            notifyDataSetChanged();
-        }
-    }
-
-    public void unCheckAll() {
-        mDeleteNames.clear();
+        mSelectedFiles.clear();
+        for (int i = 0; i < mFileList.size(); i++)
+            mSelectedFiles.add(i);
         notifyDataSetChanged();
     }
 
+    /**
+     * Unchecks every item in the item
+     */
+    public void unCheckAll() {
+        mSelectedFiles.clear();
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Returns path of selected files
+     * @return paths of files
+     */
     public ArrayList<String> getSelectedFilePath() {
         ArrayList<String> filePathList = new ArrayList<>();
-        for (int position : mDeleteNames) {
+        for (int position : mSelectedFiles) {
             filePathList.add(mFileList.get(position).getPath());
         }
         return filePathList;
@@ -190,7 +199,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Sets pdf files
-     *
      * @param pdfFiles array list containing path of files
      */
     public void setData(ArrayList<File> pdfFiles) {
@@ -198,10 +206,19 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         notifyDataSetChanged();
     }
 
+    /**
+     * Checks if any item is selected
+     * @return tru, if atleast one item is checked
+     */
     public boolean areItemsSelected() {
-        return mDeleteNames.size() > 0;
+        return mSelectedFiles.size() > 0;
     }
 
+    /**
+     * Delete the file
+     * @param name - name of the file
+     * @param position - position of file in arraylist
+     */
     private void deleteFile(String name, int position) {
         File fdelete = new File(name);
         if (fdelete.exists()) {
@@ -222,9 +239,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         }
     }
 
-    // iterate through filelist and remove all elements
+    /**
+     * iterate through filelist and remove all elements
+     */
     public void deleteFiles() {
-        for (int position : mDeleteNames) {
+        for (int position : mSelectedFiles) {
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
             if (fdelete.exists() && !fdelete.delete()) {
@@ -236,24 +255,31 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
         ArrayList<File> newList = new ArrayList<>();
         for (int position = 0; position < mFileList.size(); position++)
-            if (!mDeleteNames.contains(position))
+            if (!mSelectedFiles.contains(position))
                 newList.add(mFileList.get(position));
 
-        mDeleteNames.clear();
+        mSelectedFiles.clear();
         if (newList.size() == 0) {
             mEmptyStateChangeListener.setEmptyStateVisible();
         }
         setData(newList);
     }
 
+    /**
+     * Opens file sharer for selected files
+     */
     public void shareFiles() {
         ArrayList<File> files = new ArrayList<>();
-        for (int position : mDeleteNames) {
+        for (int position : mSelectedFiles) {
             files.add(mFileList.get(position));
         }
         mFileUtils.shareMultipleFiles(files);
     }
 
+    /**
+     * Renames the selected file
+     * @param position - position of file to be renamed
+     */
     private void renameFile(final int position) {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
