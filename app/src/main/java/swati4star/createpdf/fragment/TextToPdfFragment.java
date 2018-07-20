@@ -3,19 +3,22 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -33,6 +36,7 @@ import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.model.TextToPDFOptions;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
@@ -48,10 +52,12 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     TextView mTextView;
     private Activity mActivity;
     private Uri mTextFileUri = null;
-    private int mFontSize = 11;
+    String mFontTitle;
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
+    private int mFontSize = 0;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,9 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mFontTitle = String.format(getString(R.string.edit_font_size),
+                mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
         Button selectButton = rootview.findViewById(R.id.selectFile);
@@ -87,7 +96,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
 
         mTextEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_font_black_24dp),
-                        getResources().getString(R.string.edit_font_size)));
+                        mFontTitle));
         return mTextEnhancementOptionsEntityArrayList;
     }
 
@@ -115,23 +124,32 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
      */
     private void editFontSize() {
         new MaterialDialog.Builder(mActivity)
-                .title(R.string.edit_font_size)
-                .content(R.string.enter_font_size)
-                .inputType(InputType.TYPE_CLASS_NUMBER)
-                .input(getString(R.string.example_font), null, new MaterialDialog.InputCallback() {
+                .title(mFontTitle)
+                .customView(R.layout.dialog_font_size, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        final EditText fontInput = dialog.getCustomView().findViewById(R.id.fontInput);
+                        final CheckBox cbSetDefault = dialog.getCustomView().findViewById(R.id.cbSetFontDefault);
                         try {
-                            mFontSize = Integer.parseInt(String.valueOf(input));
-                            if (mFontSize > 1000 || mFontSize < 0) {
+                            int check = Integer.parseInt(String.valueOf(fontInput.getText()));
+                            if (check > 1000 || check < 0) {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.invalid_entry,
                                         Snackbar.LENGTH_LONG).show();
                             } else {
+                                mFontSize = check;
                                 showFontSize();
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.font_size_changed,
                                         Snackbar.LENGTH_LONG).show();
+                                if (cbSetDefault.isChecked()) {
+                                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                    editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
+                                    editor.apply();
+                                }
                             }
                         } catch (NumberFormatException e) {
                             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
@@ -208,6 +226,9 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
+            if (mFontSize == 0) {
+                mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+            }
             fileUtil.createPdf(new TextToPDFOptions(mFilename, mTextFileUri, mFontSize));
             final String finalMPath = mPath;
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)

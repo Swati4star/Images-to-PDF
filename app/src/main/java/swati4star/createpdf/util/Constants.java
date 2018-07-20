@@ -20,4 +20,6 @@ public class Constants {
     public static final String SORTING_INDEX = "SORTING_INDEX";
 
     public static final String IMAGE_EDITOR_KEY = "first";
+    public static final String DEFAULT_FONT_SIZE_TEXT = "DefaultFontSize";
+    public static final int DEFAULT_FONT_SIZE = 11;
 }
