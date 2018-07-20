@@ -248,8 +248,6 @@
     <string name="font_size_changed">Font Size Changed</string>
     <string name="font_size">Font Size : %1$s</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="about_us">About Us</string>
     <string name="version_text">VERSION</string>
     <string name="version_value">2.5.1</string>
