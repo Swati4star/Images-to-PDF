@@ -249,19 +249,17 @@
     <string name="font_size">Font Size : %1$s</string>
 
     <string name="about_us">About Us</string>
-    <string name="version_text">VERSION</string>
-    <string name="version_value">2.5.1</string>
-    <string name="developer_text">Developer</string>
-    <string name="developer_value">Swati Garg</string>
-    <string name="mail_text">Send a Mail</string>
-    <string name="mail_value">at swati4star@gmail.com</string>
-    <string name="visit_us_on_web_text">Visit us on Web</string>
-    <string name="slack_text">Join us on Slack</string>
-    <string name="github_repository_text">Github Repository</string>
-    <string name="libraries_used_text">Libraries Used</string>
-    <string name="contributors_list_text">Contributors List</string>
-    <string name="report_an_issue_text">Report an Issue</string>
-    <string name="visit_us_on_play_store_text">Visit Us on Play Store</string>
-    <string name="privacy_policy_text">Privacy Policy</string>
-    <string name="license_text">License</string>
+    <string name="app_description">An easy to use Android application to convert your files to PDF.</string>
+    <string name="version">Version : </string>
+    <string name="version_code">Version :</string>
+    <string name="developer">Developer : Swati Garg</string>
+    <string name="github_repo">Github Repository</string>
+    <string name="view_contributors">View Contributors</string>
+    <string name="report_a_bug">Report a Bug</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="mail">Send a Mail</string>
+    <string name="join_slack">Join us on Slack</string>
+    <string name="website">Visit our Website</string>
+    <string name="license">License</string>
+    <string name="playstore">Visit us on Playstore</string>
 </resources>

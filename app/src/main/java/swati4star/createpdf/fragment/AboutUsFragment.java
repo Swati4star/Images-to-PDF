@@ -3,6 +3,8 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.Objects;
 
@@ -32,6 +35,13 @@ public class AboutUsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_about_us, container, false);
         ButterKnife.bind(this, rootview);
+        try {
+            PackageInfo packageInfo = mActivity.getPackageManager().getPackageInfo(mActivity.getPackageName(), 0);
+            TextView versionText = rootview.findViewById(R.id.version_value);
+            versionText.setText(packageInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         return rootview;
     }
     @OnClick(R.id.layout_email)
@@ -47,47 +57,53 @@ public class AboutUsFragment extends Fragment {
                     Snackbar.LENGTH_LONG).show();
         }
     }
+
     @OnClick(R.id.layout_website)
     void openWeb() {
         openWebPage("http://swati4star.github.io/Images-to-PDF/");
     }
+
     @OnClick(R.id.layout_slack)
     void joinSlack() {
         openWebPage("https://goo.gl/J6Hrd4");
     }
-    @OnClick(R.id.text_github)
+
+    @OnClick(R.id.layout_github)
     void githubRepo() {
         openWebPage("https://github.com/Swati4star/Images-to-PDF");
     }
-    @OnClick(R.id.text_libraries)
-    void librariesUsed() {
-        openWebPage("https://github.com/Swati4star/Images-to-PDF#dependencies");
-    }
-    @OnClick(R.id.text_contri)
+
+    @OnClick(R.id.layout_contri)
     void contributorsList() {
         openWebPage("https://github.com/Swati4star/Images-to-PDF/graphs/contributors");
     }
-    @OnClick(R.id.text_issue)
+
+    @OnClick(R.id.layout_bug)
     void reportIssue() {
         openWebPage("https://github.com/Swati4star/Images-to-PDF/issues");
     }
+
     @OnClick(R.id.layout_playstore)
     void openPlaystore() {
         openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
     }
+
     @OnClick(R.id.layout_privacy)
     void privacyPolicy() {
         openWebPage("https://sites.google.com/view/privacy-policy-image-to-pdf/home");
     }
+
     @OnClick(R.id.layout_license)
     void license() {
         openWebPage("https://github.com/Swati4star/Images-to-PDF/blob/master/LICENSE.md");
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
+
     public void openWebPage(String url) {
         Uri uri = Uri.parse(url);
 
