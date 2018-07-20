@@ -24,18 +24,13 @@
     <item android:title="@string/extras">
         <menu>
             <item
-                android:id="@+id/nav_feedback"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/feedback" />
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about_us_24dp"
+                android:title="@string/about_us" />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/baseline_share_24"
                 android:title="@string/share" />
-            <item
-                android:id="@+id/nav_rate_us"
-                android:icon="@drawable/baseline_star_rate_black_24"
-                android:title="@string/rate_us" />
-
         </menu>
     </item>
 </menu>
