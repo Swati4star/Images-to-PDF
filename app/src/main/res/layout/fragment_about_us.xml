@@ -29,6 +29,8 @@
 
         <TextView
             android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Small"
             android:padding="8dp"
@@ -187,37 +189,6 @@
                     android:layout_gravity="center_vertical"
                     android:padding="8dp"
                     android:text="@string/view_contributors" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_report_bug"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:id="@+id/layout_bug"
-                android:layout_height="50dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="8dp"
-                    android:tint="@color/colorGray"
-                    app:srcCompat="@drawable/ic_bug_report_black_24dp" />
-
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="8dp"
-                    android:text="@string/report_a_bug" />
 
             </LinearLayout>
 

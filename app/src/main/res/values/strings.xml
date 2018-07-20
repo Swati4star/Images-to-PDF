@@ -254,11 +254,10 @@
     <string name="developer">Developer : Swati Garg</string>
     <string name="github_repo">Github Repository</string>
     <string name="view_contributors">View Contributors</string>
-    <string name="report_a_bug">Report a Bug</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="mail">Send a Mail</string>
     <string name="join_slack">Join us on Slack</string>
     <string name="website">Visit our Website</string>
     <string name="license">License</string>
-    <string name="playstore">Visit us on Playstore</string>
+    <string name="playstore">Rate us on Playstore</string>
 </resources>

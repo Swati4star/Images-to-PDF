@@ -183,14 +183,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_text_to_pdf:
                 fragment = new TextToPdfFragment();
                 break;
-            case R.id.nav_feedback:
-                mFeedbackUtils.getFeedback();
-                break;
             case R.id.nav_share:
                 mFeedbackUtils.shareApplication();
-                break;
-            case R.id.nav_rate_us:
-                mFeedbackUtils.rateUs();
                 break;
             case R.id.nav_about:
                 fragment = new AboutUsFragment();

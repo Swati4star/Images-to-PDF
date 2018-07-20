@@ -78,11 +78,6 @@ public class AboutUsFragment extends Fragment {
         openWebPage("https://github.com/Swati4star/Images-to-PDF/graphs/contributors");
     }
 
-    @OnClick(R.id.layout_bug)
-    void reportIssue() {
-        openWebPage("https://github.com/Swati4star/Images-to-PDF/issues");
-    }
-
     @OnClick(R.id.layout_playstore)
     void openPlaystore() {
         openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
