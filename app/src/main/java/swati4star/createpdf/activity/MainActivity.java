@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import io.github.tonnyl.whatsnew.WhatsNew;
 import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 import swati4star.createpdf.R;
+import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
@@ -190,6 +191,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_rate_us:
                 mFeedbackUtils.rateUs();
+                break;
+            case R.id.nav_about:
+                fragment = new AboutUsFragment();
                 break;
         }
 
