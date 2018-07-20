@@ -26,11 +26,6 @@ public class AboutUsFragment extends Fragment {
     private Activity mActivity;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_about_us, container, false);
@@ -99,7 +94,7 @@ public class AboutUsFragment extends Fragment {
         mActivity = (Activity) context;
     }
 
-    public void openWebPage(String url) {
+    private void openWebPage(String url) {
         Uri uri = Uri.parse(url);
 
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);

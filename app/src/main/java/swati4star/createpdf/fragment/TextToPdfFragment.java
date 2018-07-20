@@ -52,17 +52,12 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     TextView mTextView;
     private Activity mActivity;
     private Uri mTextFileUri = null;
-    String mFontTitle;
+    private String mFontTitle;
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private int mFontSize = 0;
     private SharedPreferences mSharedPreferences;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +86,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         return rootview;
     }
 
-    public List<EnhancementOptionsEntity> getEnhancementOptions() {
+    private List<EnhancementOptionsEntity> getEnhancementOptions() {
         mTextEnhancementOptionsEntityArrayList.clear();
 
         mTextEnhancementOptionsEntityArrayList.add(
@@ -170,7 +165,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
-    public void openCreateTextPdf() {
+    private void openCreateTextPdf() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -293,8 +288,4 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         mActivity = (Activity) context;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 }
