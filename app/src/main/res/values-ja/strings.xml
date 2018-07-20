@@ -207,4 +207,6 @@
     <string name="playstore">Rate us on Playstore</string>
     <string name="mail">Send a Mail</string>
     <string name="website">Visit our Website</string>
+    <string name="preview_image_to_pdf">Preview PDF</string>
+    <string name="swipe_to_view_next">Swipe right to view next image</string>
 </resources>

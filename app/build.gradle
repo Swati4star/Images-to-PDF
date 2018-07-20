@@ -57,4 +57,5 @@ dependencies {
     // To show what's new in the application
     implementation 'io.github.tonnyl:whatsnew:0.1.1'
     implementation 'com.airbnb.android:lottie:2.5.5'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }

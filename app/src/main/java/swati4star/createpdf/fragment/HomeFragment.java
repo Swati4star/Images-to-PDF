@@ -50,6 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.ImageEditor;
+import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
@@ -61,6 +62,7 @@ import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 
 
 /**
@@ -75,7 +77,6 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
     private static int mImageCounter = 0;
     private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
-    ArrayList<Uri> imageUris;
     @BindView(R.id.addImages)
     MorphingButton addImages;
     @BindView(R.id.pdfCreate)
@@ -380,15 +381,12 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
 
     public List<EnhancementOptionsEntity> getEnhancementOptions() {
         mEnhancementOptionsEntityArrayList.clear();
-
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24),
                         getResources().getString(R.string.password_protect_pdf_text)));
-
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_crop_rotate_24),
                         getResources().getString(R.string.edit_images_text)));
-
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_compress_image),
                         getString(R.string.compress_image) + " " +
@@ -399,8 +397,9 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
         mEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_page_size_24dp),
                         getResources().getString(R.string.set_page_size_text)));
-
-
+        mEnhancementOptionsEntityArrayList.add(
+                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_play_circle_outline_black_24dp),
+                        getResources().getString(R.string.preview_image_to_pdf)));
         return mEnhancementOptionsEntityArrayList;
     }
 
@@ -422,9 +421,34 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
             case 4:
                 setPageSize();
                 break;
+            case 5:
+                previewPDF();
+                break;
             default:
                 break;
         }
+    }
+
+    private void previewPDF() {
+        if (mImagesUri.size() == 0) {
+            if (mTempUris.size() == 0) {
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_no_images,
+                        Snackbar.LENGTH_LONG).show();
+                return;
+            } else
+                mImagesUri = (ArrayList<String>) mTempUris.clone();
+        }
+
+        if (mImagesUri.size() < mTempUris.size()) {
+            for (int i = mImagesUri.size(); i < mTempUris.size(); i++) {
+                mImagesUri.add(mTempUris.get(i));
+            }
+        }
+
+        Intent intent = new Intent(mActivity, PreviewActivity.class);
+        intent.putExtra(PREVIEW_IMAGES, mImagesUri);
+        startActivity(intent);
     }
 
     private void setPageSize() {
