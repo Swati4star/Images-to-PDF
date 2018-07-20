@@ -251,7 +251,6 @@
     <string name="about_us">About Us</string>
     <string name="app_description">An easy to use Android application to convert your files to PDF.</string>
     <string name="version">Version : </string>
-    <string name="version_code">Version :</string>
     <string name="developer">Developer : Swati Garg</string>
     <string name="github_repo">Github Repository</string>
     <string name="view_contributors">View Contributors</string>
