@@ -23,7 +23,7 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
 
     private final ArrayList<FilterItem> mFilterItem;
     private final OnFilterItemClickedListener mOnFilterItemClickedListener;
-    private final Context  mContext;
+    private final Context mContext;
 
     public ImageFiltersAdapter(ArrayList<FilterItem> filterItems, Context context,
                                OnFilterItemClickedListener listener) {

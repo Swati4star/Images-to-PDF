@@ -39,6 +39,7 @@ public class AboutUsFragment extends Fragment {
         }
         return rootview;
     }
+
     @OnClick(R.id.layout_email)
     public void sendmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO);

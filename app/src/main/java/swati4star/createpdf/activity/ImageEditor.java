@@ -289,7 +289,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     /**
      * Get Item Position and call Filter Function
-     * @param view - view which is clicked
+     *
+     * @param view     - view which is clicked
      * @param position - position of item clicked
      */
     @Override

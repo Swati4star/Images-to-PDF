@@ -22,6 +22,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.FileUtils;
@@ -45,6 +46,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
+    private DatabaseHelper mDatabaseHelper;
 
     /**
      * Returns adapter instance
@@ -62,6 +64,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
+        mDatabaseHelper = new DatabaseHelper(activity);
     }
 
     @NonNull
@@ -76,11 +79,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int pos) {
         Log.d("logs", "getItemCount: " + mFileList.size());
 
-        final int position          = holder.getAdapterPosition();
-        final String filePath       = mFileList.get(position).getPath();
-        final File file             = mFileList.get(position);
-        final String lastModDate    = FileUtils.getFormattedDate(file);
-        final String fileSize       = FileUtils.getFormattedSize(file);
+        final int position = holder.getAdapterPosition();
+        final String filePath = mFileList.get(position).getPath();
+        final File file = mFileList.get(position);
+        final String lastModDate = FileUtils.getFormattedDate(file);
+        final String fileSize = FileUtils.getFormattedSize(file);
 
         holder.mFilename.setText(file.getName());
         holder.mFilesize.setText(fileSize);
@@ -177,6 +180,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Returns path of selected files
+     *
      * @return paths of files
      */
     public ArrayList<String> getSelectedFilePath() {
@@ -199,6 +203,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Sets pdf files
+     *
      * @param pdfFiles array list containing path of files
      */
     public void setData(ArrayList<File> pdfFiles) {
@@ -208,6 +213,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Checks if any item is selected
+     *
      * @return tru, if atleast one item is checked
      */
     public boolean areItemsSelected() {
@@ -216,7 +222,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Delete the file
-     * @param name - name of the file
+     *
+     * @param name     - name of the file
      * @param position - position of file in arraylist
      */
     private void deleteFile(String name, int position) {
@@ -237,6 +244,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         if (mFileList.size() == 0) {
             mEmptyStateChangeListener.setEmptyStateVisible();
         }
+        mDatabaseHelper.insertRecord(fdelete.getName(), mActivity.getString(R.string.deleted));
     }
 
     /**
@@ -246,6 +254,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         for (int position : mSelectedFiles) {
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
+            mDatabaseHelper.insertRecord(fdelete.getName(), mActivity.getString(R.string.deleted));
             if (fdelete.exists() && !fdelete.delete()) {
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_file_not_deleted,
@@ -278,6 +287,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Renames the selected file
+     *
      * @param position - position of file to be renamed
      */
     private void renameFile(final int position) {
@@ -305,6 +315,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         Snackbar.LENGTH_LONG).show();
                                 mFileList.set(position, newfile);
                                 notifyDataSetChanged();
+                                mDatabaseHelper.insertRecord(oldfile.getName(), mActivity.getString(R.string.renamed));
                             } else {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.snackbar_file_not_renamed,

@@ -20,10 +20,14 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.AppDatabase;
+import swati4star.createpdf.database.History;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 
@@ -147,6 +151,14 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             document.close();
 
             Log.v("Stage 7", "Document Closed" + mPath);
+
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            AppDatabase db = AppDatabase.getDatabase(mContext.getApplicationContext());
+            db.historyDao().insertAll(new History(mFileName + mContext.getString(R.string.pdf_ext),
+                    date, mContext.getString(R.string.created)));
+
+            Log.v("Stage 8", "Record inserted in database");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
