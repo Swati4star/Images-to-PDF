@@ -37,8 +37,6 @@ import static swati4star.createpdf.util.Constants.WHATS_NEW4_TEXT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW4_TITLE;
 import static swati4star.createpdf.util.Constants.WHATS_NEW5_TEXT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW5_TITLE;
-import static swati4star.createpdf.util.Constants.WHATS_NEW6_TEXT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW6_TITLE;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -95,8 +93,7 @@ public class MainActivity extends AppCompatActivity
                 new WhatsNewItem(WHATS_NEW2_TITLE, WHATS_NEW2_TEXT),
                 new WhatsNewItem(WHATS_NEW3_TITLE, WHATS_NEW3_TEXT),
                 new WhatsNewItem(WHATS_NEW4_TITLE, WHATS_NEW4_TEXT),
-                new WhatsNewItem(WHATS_NEW5_TITLE, WHATS_NEW5_TEXT),
-                new WhatsNewItem(WHATS_NEW6_TITLE, WHATS_NEW6_TEXT)
+                new WhatsNewItem(WHATS_NEW5_TITLE, WHATS_NEW5_TEXT)
         );
         whatsNew.setButtonBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         whatsNew.setButtonTextColor(ContextCompat.getColor(this, R.color.mb_white));

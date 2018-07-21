@@ -25,7 +25,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +57,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private int mFontSize = 0;
     private SharedPreferences mSharedPreferences;
+    private FileUtils mFileUtils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +83,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 openCreateTextPdf();
             }
         });
+        mFileUtils = new FileUtils(mActivity);
         return rootview;
     }
 
@@ -144,6 +145,9 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                                     editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
                                     editor.apply();
+                                    mFontTitle = String.format(getString(R.string.edit_font_size),
+                                            mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT,
+                                                    Constants.DEFAULT_FONT_SIZE));
                                 }
                             }
                         } catch (NumberFormatException e) {
@@ -272,7 +276,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                     Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                             R.string.text_file_selected,
                             Snackbar.LENGTH_LONG).show();
-                    String fileName = new File(mTextFileUri.getPath()).getName();
+                    String fileName = mFileUtils.getFileName(mTextFileUri);
                     fileName = getString(R.string.text_file_name) + fileName;
                     mTextView.setText(fileName);
                     mTextView.setVisibility(View.VISIBLE);

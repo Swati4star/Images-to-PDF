@@ -3,19 +3,16 @@ package swati4star.createpdf.util;
 public class Constants {
 
     // Version 17
-    public static final String WHATS_NEW1_TITLE = "Preview images";
+    public static final String WHATS_NEW1_TITLE = "Preview PDF";
     public static final String WHATS_NEW1_TEXT = "You can now preview sequence of images before the PDF is created.";
     public static final String WHATS_NEW2_TITLE = "Text to PDF";
     public static final String WHATS_NEW2_TEXT = "You can convert text to PDF also now!";
-
-    public static final String WHATS_NEW3_TITLE = "Set Page Size";
-    public static final String WHATS_NEW3_TEXT = "More customization to the PDF. You can now set PDF page size.";
-    public static final String WHATS_NEW4_TITLE = "Improved User interface";
-    public static final String WHATS_NEW4_TEXT = "Same font style throughtout the app. Integrated animations.";
-    public static final String WHATS_NEW5_TITLE = "No more distorted images";
-    public static final String WHATS_NEW5_TEXT = "The aspect ratio of images is maintained.";
-    public static final String WHATS_NEW6_TITLE = "Remove Password";
-    public static final String WHATS_NEW6_TEXT = "You can remove password from existing PDFs.";
+    public static final String WHATS_NEW3_TITLE = "More Filters";
+    public static final String WHATS_NEW3_TEXT = "A range of filters is now available to be applied to images.";
+    public static final String WHATS_NEW4_TITLE = "Border around the images";
+    public static final String WHATS_NEW4_TEXT = "No border is applied by default to the images now.";
+    public static final String WHATS_NEW5_TITLE = "Font size in text to PDF";
+    public static final String WHATS_NEW5_TEXT = "Apply default font size to text in text to PDF.";
 
     public static final String DEFAULT_COMPRESSION = "DefaultCompression";
     public static final String SORTING_INDEX = "SORTING_INDEX";

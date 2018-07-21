@@ -698,4 +698,27 @@ public class FileUtils {
         File file = new File(path);
         return file.exists();
     }
+
+    /**
+     * Extracts file name from the URI
+     * @param uri - file uri
+     * @return - extracted filename
+     */
+    public String getFileName(Uri uri) {
+        String fileName = null;
+        String scheme = uri.getScheme();
+        if (scheme.equals("file"))
+            fileName = uri.getLastPathSegment();
+        else if (scheme.equals("content")) {
+            Cursor cursor = mContext.getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null && cursor.getCount() != 0) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
+                cursor.moveToFirst();
+                fileName = cursor.getString(columnIndex);
+            }
+            if (cursor != null)
+                cursor.close();
+        }
+        return fileName;
+    }
 }

@@ -137,10 +137,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                         (documentRect.getHeight() - image.getScaledHeight()) / 2);
                 Log.v("Stage 7", "Image Alignments");
 
-                image.setBorder(Image.BOX);
-
-                image.setBorderWidth(15);
-
                 document.add(image);
 
                 document.newPage();
