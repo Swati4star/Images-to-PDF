@@ -119,7 +119,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         if (mClickedFilter) {
             saveimgcurent();
         } else {
-            nonefilter();
+            applyFilter(PhotoFilter.NONE);
             saveimgcurent();
         }
     }
@@ -260,8 +260,27 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void showFilters() {
         mFilterItems.add(new FilterItem(R.drawable.none, "None"));
+        mFilterItems.add(new FilterItem(R.drawable.auto_fix, "Auto Fix"));
         mFilterItems.add(new FilterItem(R.drawable.black, "GrayScale"));
+        mFilterItems.add(new FilterItem(R.drawable.brightness, "Brightness"));
+        mFilterItems.add(new FilterItem(R.drawable.contrast, "Contrast"));
+        mFilterItems.add(new FilterItem(R.drawable.cross_process, "Cross Process"));
+        mFilterItems.add(new FilterItem(R.drawable.documentary, "Documentary"));
+        mFilterItems.add(new FilterItem(R.drawable.due_tone, "Due Tone"));
+        mFilterItems.add(new FilterItem(R.drawable.fill_light, "Fill Light"));
+        mFilterItems.add(new FilterItem(R.drawable.flip_vertical, "Flip Vertical"));
+        mFilterItems.add(new FilterItem(R.drawable.flip_horizontal, "Flip Horizontal"));
+        mFilterItems.add(new FilterItem(R.drawable.grain, "Grain"));
+        mFilterItems.add(new FilterItem(R.drawable.lomish, "Lomish"));
+        mFilterItems.add(new FilterItem(R.drawable.negative, "Negative"));
+        mFilterItems.add(new FilterItem(R.drawable.poster, "Posterize"));
+        mFilterItems.add(new FilterItem(R.drawable.rotate, "Rotate"));
+        mFilterItems.add(new FilterItem(R.drawable.saturate, "Saturate"));
         mFilterItems.add(new FilterItem(R.drawable.sepia, "Sepia"));
+        mFilterItems.add(new FilterItem(R.drawable.sharpen, "Sharpen"));
+        mFilterItems.add(new FilterItem(R.drawable.temp, "Temperature"));
+        mFilterItems.add(new FilterItem(R.drawable.tint, "Tint"));
+        mFilterItems.add(new FilterItem(R.drawable.vignette, "Vignette"));
         initRecyclerView();
     }
 
@@ -281,13 +300,70 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public void onItemClick(View view, int position) {
         switch (position) {
             case 0:
-                nonefilter();
+                applyFilter(PhotoFilter.NONE);
                 break;
             case 1:
-                grayscaleFilter();
+                applyFilter(PhotoFilter.AUTO_FIX);
                 break;
             case 2:
-                sepiaFilter();
+                applyFilter(PhotoFilter.GRAY_SCALE);
+                break;
+            case 3:
+                applyFilter(PhotoFilter.BRIGHTNESS);
+                break;
+            case 4:
+                applyFilter(PhotoFilter.CONTRAST);
+                break;
+            case 5:
+                applyFilter(PhotoFilter.CROSS_PROCESS);
+                break;
+            case 6:
+                applyFilter(PhotoFilter.DOCUMENTARY);
+                break;
+            case 7:
+                applyFilter(PhotoFilter.DUE_TONE);
+                break;
+            case 8:
+                applyFilter(PhotoFilter.FILL_LIGHT);
+                break;
+            case 9:
+                applyFilter(PhotoFilter.FLIP_VERTICAL);
+                break;
+            case 10:
+                applyFilter(PhotoFilter.FLIP_HORIZONTAL);
+                break;
+            case 11:
+                applyFilter(PhotoFilter.GRAIN);
+                break;
+            case 12:
+                applyFilter(PhotoFilter.LOMISH);
+                break;
+            case 13:
+                applyFilter(PhotoFilter.NEGATIVE);
+                break;
+            case 14:
+                applyFilter(PhotoFilter.POSTERIZE);
+                break;
+            case 15:
+                applyFilter(PhotoFilter.ROTATE);
+                break;
+            case 16:
+                applyFilter(PhotoFilter.SATURATE);
+                break;
+            case 17:
+                applyFilter(PhotoFilter.SEPIA);
+                break;
+            case 18:
+                applyFilter(PhotoFilter.SHARPEN);
+                break;
+            case 19:
+                applyFilter(PhotoFilter.TEMPERATURE);
+                break;
+            case 20:
+                applyFilter(PhotoFilter.TINT);
+                break;
+            case 21:
+                applyFilter(PhotoFilter.VIGNETTE);
                 break;
         }
     }
@@ -295,44 +371,13 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     /**
      * Apply GrayScale Filter to Image
      */
-    private void grayscaleFilter() {
+    private void applyFilter(PhotoFilter filterType) {
         try {
             mClickedFilter = true;
             mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
-            mPhotoEditor.setFilterEffect(PhotoFilter.GRAY_SCALE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Apply Sepia Filter to Image
-     */
-    private void sepiaFilter() {
-        try {
-            mClickedFilter = true;
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                    .setPinchTextScalable(true)
-                    .build();
-
-            mPhotoEditor.setFilterEffect(PhotoFilter.SEPIA);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Apply No Filter to Image
-     */
-    private void nonefilter() {
-        try {
-            mClickedFilter = true;
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                    .setPinchTextScalable(true)
-                    .build();
-            mPhotoEditor.setFilterEffect(PhotoFilter.NONE);
+            mPhotoEditor.setFilterEffect(filterType);
         } catch (Exception e) {
             e.printStackTrace();
         }
