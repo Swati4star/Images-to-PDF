@@ -197,4 +197,9 @@
     <string name="example_font">Example : 10</string>
     <string name="font_size_changed">Font Size Changed</string>
     <string name="font_size">Font Size : %1$s</string>
+    <string name="history">History</string>
+    <string name="created">Created</string>
+    <string name="printed">Printed</string>
+    <string name="renamed">Renamed</string>
+    <string name="deleted">Deleted</string>
 </resources>

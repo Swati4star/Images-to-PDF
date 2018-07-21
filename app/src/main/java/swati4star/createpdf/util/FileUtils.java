@@ -41,7 +41,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import swati4star.createpdf.R;
-
+import swati4star.createpdf.database.DatabaseHelper;
 
 
 public class FileUtils {
@@ -104,7 +104,7 @@ public class FileUtils {
             }
         });
     }
-    
+
     private ArrayList<File> getPdfsFromFolder(File[] files) {
         final ArrayList<File> pdfFiles = new ArrayList<>();
         for (File file : files) {
@@ -138,7 +138,60 @@ public class FileUtils {
     }
 
     /**
+     * Gives a formatted last modified date for pdf ListView
+     *
+     * @param file file object whose last modified date is to be returned
+     * @return String date modified in formatted form
+     **/
+    public static String getFormattedDate(File file) {
+
+        Date lastModDate = new Date(file.lastModified());
+        String[] formatdate = lastModDate.toString().split(" ");
+        String time = formatdate[3];
+
+        String[] formattime = time.split(":");
+        String date = formattime[0] + ":" + formattime[1];
+        return formatdate[0] + ", " + formatdate[1] + " " + formatdate[2] + " at " + date;
+    }
+
+    /**
+     * Gives a formatted size in MB for every pdf in pdf ListView
+     *
+     * @param file file object whose size is to be returned
+     * @return String Size of pdf in formatted form
+     */
+    public static String getFormattedSize(File file) {
+
+        return String.format("%.2f MB", (double) file.length() / (1024 * 1024));
+    }
+
+    /**
+     * Checks if the new file already exists.
+     *
+     * @param finalOutputFile Path of pdf file to check
+     * @param mFile           File List of all PDFs
+     * @return Number to be added finally in the name
+     */
+    public static int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
+        int flag = 1;
+        int append = 1;
+        while (flag == 1) {
+            for (int i = 0; i < mFile.size(); i++) {
+                flag = 0;
+                if (finalOutputFile.equals(mFile.get(i).getPath())) {
+                    flag = 1;
+                    append++;
+                    break;
+                }
+            }
+            finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
+        }
+        return append;
+    }
+
+    /**
      * get the PDF files stored in directories other than home directory
+     *
      * @return ArrayList of PDF files
      */
     public ArrayList<File> getPdfFromOtherDirectories() {
@@ -160,6 +213,7 @@ public class FileUtils {
 
     /**
      * get the PDF Directory from directory name
+     *
      * @param dirName - name of the directory to be searched for
      * @return pdf directory if it exists , else null
      */
@@ -174,35 +228,8 @@ public class FileUtils {
     }
 
     /**
-     * Gives a formatted last modified date for pdf ListView
-     * @param file file object whose last modified date is to be returned
-     *
-     * @return String date modified in formatted form
-     **/
-    public static String getFormattedDate(File file) {
-
-        Date lastModDate = new Date(file.lastModified());
-        String[] formatdate = lastModDate.toString().split(" ");
-        String time = formatdate[3];
-
-        String[] formattime =  time.split(":");
-        String date = formattime[0] + ":" + formattime[1];
-        return formatdate[0] + ", " + formatdate[1] + " " + formatdate[2] + " at " + date;
-    }
-
-    /**
-     * Gives a formatted size in MB for every pdf in pdf ListView
-     * @param file file object whose size is to be returned
-     *
-     * @return String Size of pdf in formatted form
-     */
-    public static String getFormattedSize(File file) {
-
-        return String.format("%.2f MB", (double) file.length() / (1024 * 1024));
-    }
-
-    /**
      * Prints a file
+     *
      * @param file the file to be printed
      */
     public void printFile(final File file) {
@@ -268,14 +295,16 @@ public class FileUtils {
                 .getSystemService(Context.PRINT_SERVICE);
 
         String jobName = mContext.getString(R.string.app_name) + " Document";
-        if (printManager != null)
+        if (printManager != null) {
             printManager.print(jobName, mPrintDocumentAdapter, null);
+            new DatabaseHelper(mContext).insertRecord(file.getName(), mContext.getString(R.string.printed));
+        }
     }
 
     /**
      * Emails the desired PDF using application of choice by user
      *
-     * @param  file - the file to be shared
+     * @param file - the file to be shared
      */
     public void shareFile(File file) {
         Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
@@ -291,11 +320,11 @@ public class FileUtils {
     /**
      * Share the desired PDFs using application of choice by user
      *
-     * @param  files - the list of files to be shared
+     * @param files - the list of files to be shared
      */
     public void shareMultipleFiles(List<File> files) {
         ArrayList<Uri> uris = new ArrayList<>();
-        for (File file: files) {
+        for (File file : files) {
             Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
             uris.add(uri);
         }
@@ -311,6 +340,7 @@ public class FileUtils {
 
     /**
      * Opens the given PDF file in appropriate Intent
+     *
      * @param file - the file to be opened
      */
     public void openFile(File file) {
@@ -319,7 +349,7 @@ public class FileUtils {
 
         Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
 
-        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
+        target.setDataAndType(uri, mContext.getString(R.string.pdf_type));
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
@@ -334,23 +364,24 @@ public class FileUtils {
 
     /**
      * Used in searchPDF to give the closest result to search query
-     * @param query - Query from search bar
+     *
+     * @param query    - Query from search bar
      * @param fileName - name of PDF file
      * @return 1 if the search query and filename has same characters , otherwise 0
      */
-    private int checkChar(String query , String fileName) {
+    private int checkChar(String query, String fileName) {
         query = query.toLowerCase();
         fileName = fileName.toLowerCase();
         Set<Character> q = new HashSet<>();
         Set<Character> f = new HashSet<>();
-        for ( char c : query.toCharArray() ) {
+        for (char c : query.toCharArray()) {
             q.add(c);
         }
-        for ( char c : fileName.toCharArray() ) {
+        for (char c : fileName.toCharArray()) {
             f.add(c);
         }
 
-        if ( q.containsAll(f) || f.containsAll(q) ) {
+        if (q.containsAll(f) || f.containsAll(q)) {
             return 1;
         }
         return 0;
@@ -358,6 +389,7 @@ public class FileUtils {
 
     /**
      * Used to search for PDF matching the search query
+     *
      * @param query - Query from search bar
      * @return ArrayList containg all the pdf files matching the search query
      */
@@ -368,8 +400,8 @@ public class FileUtils {
         for (File pdf : pdfs) {
             String path = pdf.getPath();
             String[] fileName = path.split("/");
-            String pdfName = fileName[fileName.length - 1].replace("pdf" , "");
-            if (checkChar(query , pdfName) == 1) {
+            String pdfName = fileName[fileName.length - 1].replace("pdf", "");
+            if (checkChar(query, pdfName) == 1) {
                 searchResult.add(pdf);
             }
         }
@@ -378,6 +410,7 @@ public class FileUtils {
 
     /**
      * opens a file in appropriate application
+     *
      * @param path - path of the file to be opened
      */
     public void openFile(String path) {
@@ -387,7 +420,7 @@ public class FileUtils {
 
         Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
 
-        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
+        target.setDataAndType(uri, mContext.getString(R.string.pdf_type));
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
@@ -399,34 +432,12 @@ public class FileUtils {
                     Snackbar.LENGTH_LONG).show();
         }
     }
-    /**
-     * Checks if the new file already exists.
-     *
-     * @param finalOutputFile Path of pdf file to check
-     * @param mFile File List of all PDFs
-     * @return Number to be added finally in the name
-     */
-    public static int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
-        int flag = 1;
-        int append = 1;
-        while (flag == 1) {
-            for (int i = 0; i < mFile.size(); i++) {
-                flag = 0;
-                if (finalOutputFile.equals(mFile.get(i).getPath())) {
-                    flag = 1;
-                    append++;
-                    break;
-                }
-            }
-            finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
-        }
-        return append;
-    }
 
     /**
      * Get real image path from uri.
+     *
      * @param uri - uri of the image
-     * @return  - real path of the image file on device
+     * @return - real path of the image file on device
      */
     public String getUriRealPath(Uri uri) {
         String ret = "";
@@ -450,8 +461,9 @@ public class FileUtils {
 
     /**
      * Get real path for Android Kitkat and above
+     *
      * @param uri - uri of the image
-     * @return  - real path of the image file on device
+     * @return - real path of the image file on device
      */
     private String getUriRealPathAboveKitkat(Uri uri) {
         String ret = "";
@@ -525,8 +537,10 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether current android os version is bigger than kitkat or not.
-     * @return  - true if os version bigger than kitkat , else false
+    /**
+     * Check whether current android os version is bigger than kitkat or not.
+     *
+     * @return - true if os version bigger than kitkat , else false
      */
     private boolean isAboveKitKat() {
         boolean ret = false;
@@ -534,8 +548,10 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether this uri represent a document or not.
-     * @return  - true if document , else false
+    /**
+     * Check whether this uri represent a document or not.
+     *
+     * @return - true if document , else false
      */
     private boolean isDocumentUri(Uri uri) {
         boolean ret = false;
@@ -545,10 +561,12 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether this uri is a content uri or not.
-     *  content uri like content://media/external/images/media/1302716
-     *  @return - true if content uri, else false
-     *  */
+    /**
+     * Check whether this uri is a content uri or not.
+     * content uri like content://media/external/images/media/1302716
+     *
+     * @return - true if content uri, else false
+     */
     private boolean isContentUri(Uri uri) {
         boolean ret = false;
         if (uri != null) {
@@ -560,10 +578,12 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether this uri is a file uri or not.
-     *  file uri like file:///storage/41B7-12F1/DCIM/Camera/IMG_20180211_095139.jpg
-     *  @return - true if file uri, else false
-     * */
+    /**
+     * Check whether this uri is a file uri or not.
+     * file uri like file:///storage/41B7-12F1/DCIM/Camera/IMG_20180211_095139.jpg
+     *
+     * @return - true if file uri, else false
+     */
     private boolean isFileUri(Uri uri) {
         boolean ret = false;
         if (uri != null) {
@@ -576,7 +596,9 @@ public class FileUtils {
     }
 
 
-    /** Check whether this document is provided by ExternalStorageProvider.
+    /**
+     * Check whether this document is provided by ExternalStorageProvider.
+     *
      * @return true if document is provided by ExternalStorageProvider, else false
      */
     private boolean isExternalStoreDoc(String uriAuthority) {
@@ -589,7 +611,9 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether this document is provided by DownloadsProvider.
+    /**
+     * Check whether this document is provided by DownloadsProvider.
+     *
      * @return true if document is provided by DownloadsProvider, else false
      */
     private boolean isDownloadDoc(String uriAuthority) {
@@ -602,7 +626,9 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether this document is provided by MediaProvider.
+    /**
+     * Check whether this document is provided by MediaProvider.
+     *
      * @return true if media document, else false
      */
     private boolean isMediaDoc(String uriAuthority) {
@@ -615,7 +641,9 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether this document is provided by google photos.
+    /**
+     * Check whether this document is provided by google photos.
+     *
      * @return true if google photo, else false
      */
     private boolean isGooglePhotoDoc(String uriAuthority) {
@@ -628,7 +656,9 @@ public class FileUtils {
         return ret;
     }
 
-    /** Check whether the image is whatsapp image
+    /**
+     * Check whether the image is whatsapp image
+     *
      * @return true if whatsapp image, else false
      */
     private boolean isWhatsappImage(String uriAuthority) {
@@ -641,10 +671,12 @@ public class FileUtils {
         return ret;
     }
 
-    /** Get real path of image from uri
+    /**
+     * Get real path of image from uri
+     *
      * @param contentResolver - to access meta data from MediaStore
-     * @param uri - uri of image
-     * @param whereClause - add constraint on content resolver
+     * @param uri             - uri of image
+     * @param whereClause     - add constraint on content resolver
      * @return true if google photo, else false
      */
     private String getImageRealPath(ContentResolver contentResolver, Uri uri, String whereClause) {
@@ -660,11 +692,11 @@ public class FileUtils {
                 // Get columns name by uri type.
                 String columnName = MediaStore.Images.Media.DATA;
 
-                if ( uri == MediaStore.Images.Media.EXTERNAL_CONTENT_URI ) {
+                if (uri == MediaStore.Images.Media.EXTERNAL_CONTENT_URI) {
                     columnName = MediaStore.Images.Media.DATA;
-                } else if ( uri == MediaStore.Audio.Media.EXTERNAL_CONTENT_URI ) {
+                } else if (uri == MediaStore.Audio.Media.EXTERNAL_CONTENT_URI) {
                     columnName = MediaStore.Audio.Media.DATA;
-                } else if ( uri == MediaStore.Video.Media.EXTERNAL_CONTENT_URI ) {
+                } else if (uri == MediaStore.Video.Media.EXTERNAL_CONTENT_URI) {
                     columnName = MediaStore.Video.Media.DATA;
                 }
 
