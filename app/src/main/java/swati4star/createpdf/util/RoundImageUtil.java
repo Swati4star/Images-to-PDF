@@ -13,7 +13,8 @@ public class RoundImageUtil {
 
     /**
      * Creates a rounded bitmap from any bitmap
-     * @param bmp - input bitmap
+     *
+     * @param bmp    - input bitmap
      * @param radius - radius of output bitmap
      * @return - output bitmap
      */

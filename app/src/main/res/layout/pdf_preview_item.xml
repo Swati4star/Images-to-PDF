@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/preview_image_to_pdf"
         android:background="@color/light_gray"
+        android:contentDescription="@string/preview_image_to_pdf"
         android:padding="1dp" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="21dp"
-        android:textColor="@color/black"
-        android:text="@string/swipe_to_view_next" />
+        android:text="@string/swipe_to_view_next"
+        android:textColor="@color/black" />
 
 </RelativeLayout>
