@@ -42,12 +42,13 @@ import swati4star.createpdf.model.TextToPDFOptions;
 public class PDFUtils {
 
     private final Activity mContext;
+    private final FileUtils mFileUtils;
     private String mPassword;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
+        this.mFileUtils = new FileUtils(context);
     }
-
 
     /**
      * Opens the password dialog to set Password for an existing PDF file.
@@ -63,8 +64,8 @@ public class PDFUtils {
                 .negativeText(android.R.string.cancel)
                 .build();
 
-
         final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        assert dialog.getCustomView() != null;
         EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
         mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
@@ -117,13 +118,11 @@ public class PDFUtils {
                                 final ArrayList<File> mFileList) throws IOException, DocumentException {
         String finalOutputFile = path.replace(".pdf", mContext.getString(R.string.encrypted_file));
 
-        for (int i = 0; i < mFileList.size(); i++) {
-            if (finalOutputFile.equals(mFileList.get(i).getPath())) {
-                int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
-                finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
-                break;
-            }
+        if (mFileUtils.isFileExist(finalOutputFile)) {
+            int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
+            finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
         }
+
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
         stamper.setEncryption(password.getBytes(), mContext.getString(R.string.app_name).getBytes(),
@@ -144,10 +143,8 @@ public class PDFUtils {
     public void showDetails(String name, String path, String size, String lastModDate) {
         TextView message = new TextView(mContext);
         TextView title = new TextView(mContext);
-        message.setText("\n  File Name : " + name
-                + "\n\n  Path : " + path
-                + "\n\n  Size : " + size
-                + " \n\n  Date Modified : " + lastModDate);
+        message.setText(String.format
+                (mContext.getResources().getString(R.string.file_info), name, path, size, lastModDate));
         message.setTextIsSelectable(true);
         title.setText(R.string.details);
         title.setPadding(20, 10, 10, 10);
@@ -157,12 +154,13 @@ public class PDFUtils {
         final AlertDialog dialog = builder.create();
         builder.setView(message);
         builder.setCustomTitle(title);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton(mContext.getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.dismiss();
+                    }
+                });
         builder.create();
         builder.show();
     }
@@ -226,14 +224,12 @@ public class PDFUtils {
                 }
                 byte[] password;
                 finalOutputFile = file.replace(".pdf", mContext.getString(R.string.decrypted_file));
-                for (int i = 0; i < mFileList.size(); i++) {
 
-                    if (finalOutputFile.equals(mFileList.get(i).getPath())) {
-                        int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
-                        finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
-                        break;
-                    }
+                if (mFileUtils.isFileExist(finalOutputFile)) {
+                    int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
+                    finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
                 }
+
                 password = reader.computeUserPassword();
                 byte[] input = input_password[0].getBytes();
                 if (Arrays.equals(input, password)) {
@@ -297,6 +293,8 @@ public class PDFUtils {
         InputStream inputStream;
         try {
             inputStream = mContext.getContentResolver().openInputStream(uri);
+            if (inputStream == null)
+                return;
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     inputStream));
 

@@ -73,6 +73,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         ButterKnife.bind(this);
 
         mPhotoEditorView = findViewById(R.id.photoEditorView);
+
         mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
 
         if (mFilterUris == null || mFilterUris.size() < 1) {

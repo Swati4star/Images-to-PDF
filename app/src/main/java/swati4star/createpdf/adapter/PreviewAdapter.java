@@ -18,9 +18,9 @@ import swati4star.createpdf.R;
 
 public class PreviewAdapter extends PagerAdapter {
 
-    private Context mContext;
-    private ArrayList<String> mPreviewItems;
-    private LayoutInflater mInflater;
+    private final Context mContext;
+    private final ArrayList<String> mPreviewItems;
+    private final LayoutInflater mInflater;
 
     public PreviewAdapter(Context context, ArrayList<String> previewItems) {
         mContext = context;
