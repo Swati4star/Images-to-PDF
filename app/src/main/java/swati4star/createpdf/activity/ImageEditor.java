@@ -259,28 +259,28 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      * Add Items in Recycler View & intialize adapter
      */
     private void showFilters() {
-        mFilterItems.add(new FilterItem(R.drawable.none, "None"));
-        mFilterItems.add(new FilterItem(R.drawable.auto_fix, "Auto Fix"));
-        mFilterItems.add(new FilterItem(R.drawable.black, "GrayScale"));
-        mFilterItems.add(new FilterItem(R.drawable.brightness, "Brightness"));
-        mFilterItems.add(new FilterItem(R.drawable.contrast, "Contrast"));
-        mFilterItems.add(new FilterItem(R.drawable.cross_process, "Cross Process"));
-        mFilterItems.add(new FilterItem(R.drawable.documentary, "Documentary"));
-        mFilterItems.add(new FilterItem(R.drawable.due_tone, "Due Tone"));
-        mFilterItems.add(new FilterItem(R.drawable.fill_light, "Fill Light"));
-        mFilterItems.add(new FilterItem(R.drawable.flip_vertical, "Flip Vertical"));
-        mFilterItems.add(new FilterItem(R.drawable.flip_horizontal, "Flip Horizontal"));
-        mFilterItems.add(new FilterItem(R.drawable.grain, "Grain"));
-        mFilterItems.add(new FilterItem(R.drawable.lomish, "Lomish"));
-        mFilterItems.add(new FilterItem(R.drawable.negative, "Negative"));
-        mFilterItems.add(new FilterItem(R.drawable.poster, "Posterize"));
-        mFilterItems.add(new FilterItem(R.drawable.rotate, "Rotate"));
-        mFilterItems.add(new FilterItem(R.drawable.saturate, "Saturate"));
-        mFilterItems.add(new FilterItem(R.drawable.sepia, "Sepia"));
-        mFilterItems.add(new FilterItem(R.drawable.sharpen, "Sharpen"));
-        mFilterItems.add(new FilterItem(R.drawable.temp, "Temperature"));
-        mFilterItems.add(new FilterItem(R.drawable.tint, "Tint"));
-        mFilterItems.add(new FilterItem(R.drawable.vignette, "Vignette"));
+        mFilterItems.add(new FilterItem(R.drawable.none, getString(R.string.filter_none)));
+        mFilterItems.add(new FilterItem(R.drawable.auto_fix, getString(R.string.filter_autofix)));
+        mFilterItems.add(new FilterItem(R.drawable.black, getString(R.string.filter_grayscale)));
+        mFilterItems.add(new FilterItem(R.drawable.brightness, getString(R.string.filter_brightness)));
+        mFilterItems.add(new FilterItem(R.drawable.contrast, getString(R.string.filter_contrast)));
+        mFilterItems.add(new FilterItem(R.drawable.cross_process, getString(R.string.filter_cross)));
+        mFilterItems.add(new FilterItem(R.drawable.documentary, getString(R.string.filter_documentary)));
+        mFilterItems.add(new FilterItem(R.drawable.due_tone, getString(R.string.filter_duetone)));
+        mFilterItems.add(new FilterItem(R.drawable.fill_light, getString(R.string.filter_filllight)));
+        mFilterItems.add(new FilterItem(R.drawable.flip_vertical, getString(R.string.filter_filpver)));
+        mFilterItems.add(new FilterItem(R.drawable.flip_horizontal, getString(R.string.filter_fliphor)));
+        mFilterItems.add(new FilterItem(R.drawable.grain, getString(R.string.filter_grain)));
+        mFilterItems.add(new FilterItem(R.drawable.lomish, getString(R.string.filter_lomish)));
+        mFilterItems.add(new FilterItem(R.drawable.negative, getString(R.string.filter_negative)));
+        mFilterItems.add(new FilterItem(R.drawable.poster, getString(R.string.filter_poster)));
+        mFilterItems.add(new FilterItem(R.drawable.rotate, getString(R.string.filter_rotate)));
+        mFilterItems.add(new FilterItem(R.drawable.saturate, getString(R.string.filter_saturate)));
+        mFilterItems.add(new FilterItem(R.drawable.sepia, getString(R.string.filter_sepia)));
+        mFilterItems.add(new FilterItem(R.drawable.sharpen, getString(R.string.filter_sharpen)));
+        mFilterItems.add(new FilterItem(R.drawable.temp, getString(R.string.filter_temp)));
+        mFilterItems.add(new FilterItem(R.drawable.tint, getString(R.string.filter_tint)));
+        mFilterItems.add(new FilterItem(R.drawable.vignette, getString(R.string.filter_vig)));
         initRecyclerView();
     }
 

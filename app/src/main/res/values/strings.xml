@@ -263,4 +263,26 @@
     <!-- Preview strings -->
     <string name="swipe_to_view_next">Swipe right to view next image</string>
     <string name="showing_image">Showing %1$d of %2$d image(s)</string>
+    <string name="filter_none">None</string>
+    <string name="filter_autofix">Auto Fix</string>
+    <string name="filter_grayscale">GrayScale</string>
+    <string name="filter_brightness">Brightness</string>
+    <string name="filter_contrast">Contrast</string>
+    <string name="filter_cross">Cross Process</string>
+    <string name="filter_documentary">Documentary</string>
+    <string name="filter_duetone">Due Tone</string>
+    <string name="filter_filllight">Fill Light</string>
+    <string name="filter_filpver">Flip Vertical</string>
+    <string name="filter_fliphor">Flip Horizontal</string>
+    <string name="filter_grain">Grain</string>
+    <string name="filter_lomish">Lomish</string>
+    <string name="filter_negative">Negative</string>
+    <string name="filter_poster">Posterize</string>
+    <string name="filter_rotate">Rotate</string>
+    <string name="filter_saturate">Saturate</string>
+    <string name="filter_sepia">Sepia</string>
+    <string name="filter_sharpen">Sharpen</string>
+    <string name="filter_temp">Temperature</string>
+    <string name="filter_tint">Tint</string>
+    <string name="filter_vig">Vignette</string>
 </resources>
