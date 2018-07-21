@@ -145,7 +145,8 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                                     editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
                                     editor.apply();
                                     mFontTitle = String.format(getString(R.string.edit_font_size),
-                                            mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
+                                            mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT,
+                                                    Constants.DEFAULT_FONT_SIZE));
                                 }
                             }
                         } catch (NumberFormatException e) {
