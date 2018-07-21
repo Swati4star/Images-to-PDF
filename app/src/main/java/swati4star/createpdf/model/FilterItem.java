@@ -2,35 +2,34 @@ package swati4star.createpdf.model;
 
 public class FilterItem {
 
-    int imageId;
-    String name;
+    private int mImageId;
+    private String mName;
 
     /**
      * Filter item model
      *
      * @param imageId - id of image to be set
-     * @param name - filter name
+     * @param name - filter mName
      */
     public FilterItem(int imageId, String name) {
-        this.imageId = imageId;
-        this.name = name;
+        this.mImageId = imageId;
+        this.mName = name;
     }
 
     public int getImageId() {
-        return imageId;
+        return mImageId;
     }
 
     public void setImageId(int imageId) {
-        this.imageId = imageId;
+        this.mImageId = imageId;
     }
 
-
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
 }

@@ -18,6 +18,7 @@
     <string name="no_result">Couldn\'t find anything</string>
     <string name="search">search</string>
     <string name="set_page_size_text">Set Page Size</string>
+    <string name="preview_image_to_pdf">Preview PDF</string>
 
 
     <array name="items">
@@ -242,12 +243,11 @@
     <string name="move_to_n_home_directory">Move to  Home Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
-    <string name="edit_font_size">Font Size (Default : 11)</string>
+    <string name="edit_font_size">Font Size (Default : %d)</string>
     <string name="enter_font_size">Enter font size</string>
     <string name="example_font">Example : 10</string>
     <string name="font_size_changed">Font Size Changed</string>
     <string name="font_size">Font Size : %1$s</string>
-
     <string name="about_us">About Us</string>
     <string name="app_description">An easy to use Android application to convert your files to PDF.</string>
     <string name="version">Version : </string>
@@ -260,4 +260,7 @@
     <string name="website">Visit our Website</string>
     <string name="license">License</string>
     <string name="playstore">Rate us on Playstore</string>
+    <!-- Preview strings -->
+    <string name="swipe_to_view_next">Swipe right to view next image</string>
+    <string name="showing_image">Showing %1$d of %2$d image(s)</string>
 </resources>

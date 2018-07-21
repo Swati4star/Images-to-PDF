@@ -2,11 +2,12 @@ package swati4star.createpdf.util;
 
 public class Constants {
 
-    // Version 14
-    public static final String WHATS_NEW1_TITLE = "Filter images";
-    public static final String WHATS_NEW1_TEXT = "You can now apply various standard filter to the images";
-    public static final String WHATS_NEW2_TITLE = "Directory structure";
-    public static final String WHATS_NEW2_TEXT = "You can now create directory & organize your PDFs easily";
+    // Version 17
+    public static final String WHATS_NEW1_TITLE = "Preview images";
+    public static final String WHATS_NEW1_TEXT = "You can now preview sequence of images before the PDF is created.";
+    public static final String WHATS_NEW2_TITLE = "Text to PDF";
+    public static final String WHATS_NEW2_TEXT = "You can convert text to PDF also now!";
+
     public static final String WHATS_NEW3_TITLE = "Set Page Size";
     public static final String WHATS_NEW3_TEXT = "More customization to the PDF. You can now set PDF page size.";
     public static final String WHATS_NEW4_TITLE = "Improved User interface";
@@ -20,4 +21,7 @@ public class Constants {
     public static final String SORTING_INDEX = "SORTING_INDEX";
 
     public static final String IMAGE_EDITOR_KEY = "first";
+    public static final String DEFAULT_FONT_SIZE_TEXT = "DefaultFontSize";
+    public static final int DEFAULT_FONT_SIZE = 11;
+    public static final String PREVIEW_IMAGES = "preview_images";
 }

@@ -101,14 +101,14 @@ public class MergeFilesFragment extends Fragment {
                                     Snackbar.LENGTH_LONG).show();
                         } else {
                             mFilename = input.toString();
-                            mergePdfFiles(v);
+                            mergePdfFiles();
                         }
                     }
                 })
                 .show();
     }
 
-    private void mergePdfFiles(View view) {
+    private void mergePdfFiles() {
         try {
 
             String filepath1 = filepathtv1.getText().toString();

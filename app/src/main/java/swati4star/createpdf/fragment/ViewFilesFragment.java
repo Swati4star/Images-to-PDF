@@ -249,7 +249,7 @@ public class ViewFilesFragment extends Fragment
         return true;
     }
 
-    public void showSnack(int resID) {
+    private void showSnack(int resID) {
         Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                 resID,
                 Snackbar.LENGTH_LONG).show();

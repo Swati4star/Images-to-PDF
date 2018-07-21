@@ -18,15 +18,13 @@ import swati4star.createpdf.model.FilterItem;
 
 public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapter.ViewHolder> {
 
-    private ArrayList<FilterItem> mFilterItem;
-    private Context mContext;
+    private final ArrayList<FilterItem> mFilterItem;
     private final OnFilterItemClickedListener mOnFilterItemClickedListener;
-    private int mAdapterp;
 
     public ImageFiltersAdapter(ArrayList<FilterItem> filterItems, Context context,
                                OnFilterItemClickedListener listener) {
         mFilterItem = filterItems;
-        mContext = context;
+        Context mContext = context;
         mOnFilterItemClickedListener = listener;
     }
 
@@ -50,8 +48,8 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView img;
-        TextView Filter_name;
+        final ImageView img;
+        final TextView Filter_name;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -63,7 +61,7 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
 
         @Override
         public void onClick(View view) {
-            mAdapterp = getAdapterPosition();
+            int mAdapterp = getAdapterPosition();
             mOnFilterItemClickedListener.onItemClick(view, mAdapterp);
         }
     }

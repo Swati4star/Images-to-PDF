@@ -43,9 +43,9 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private LottieAnimationView mAnimationView;
     private boolean mSuccess;
     private String mPath;
-    private Rectangle mPageSize;
+    private final Rectangle mPageSize;
     private MaterialDialog mMaterialDialog;
-    private boolean mPasswordProtected;
+    private final boolean mPasswordProtected;
 
     public CreatePdf(Activity context, ImageToPDFOptions mImageToPDFOptions, OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = mImageToPDFOptions.getImagesUri();

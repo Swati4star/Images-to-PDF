@@ -41,7 +41,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final EmptyStateChangeListener mEmptyStateChangeListener;
 
     private ArrayList<File> mFileList;
-    private ArrayList<Integer> mSelectedFiles;
+    private final ArrayList<Integer> mSelectedFiles;
 
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;

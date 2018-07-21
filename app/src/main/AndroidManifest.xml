@@ -65,8 +65,9 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
 
-        <activity android:name=".activity.ImageEditor">
-        </activity>
+        <activity android:name=".activity.ImageEditor"/>
+        <activity android:name=".activity.PreviewActivity"/>
+
     </application>
 
 </manifest>

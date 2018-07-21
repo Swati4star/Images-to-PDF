@@ -47,7 +47,7 @@ import swati4star.createpdf.R;
 public class FileUtils {
 
     private final Activity mContext;
-    private ContentResolver mContentResolver;
+    private final ContentResolver mContentResolver;
 
     public FileUtils(Activity context) {
         this.mContext = context;
@@ -147,9 +147,7 @@ public class FileUtils {
         File[] files = folder.listFiles();
         for (File file : files) {
             if (file.isDirectory()) {
-                for (File pdf : file.listFiles()) {
-                    pdfFiles.add(pdf);
-                }
+                Collections.addAll(pdfFiles, file.listFiles());
             }
         }
         if (pdfFiles.isEmpty()) {
@@ -485,12 +483,16 @@ public class FileUtils {
 
                         // Get content uri by document type.
                         Uri mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                        if ("image".equals(docType)) {
-                            mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                        } else if ("video".equals(docType)) {
-                            mediaContentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                        } else if ("audio".equals(docType)) {
-                            mediaContentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                        switch (docType) {
+                            case "image":
+                                mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                                break;
+                            case "video":
+                                mediaContentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                                break;
+                            case "audio":
+                                mediaContentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                                break;
                         }
 
                         // Get where clause with real document id.
