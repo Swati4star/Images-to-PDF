@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,12 +37,13 @@ import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
 
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener {
 
     private ArrayList<String> mFilterUris = new ArrayList<>();
     private final ArrayList<String> mImagepaths = new ArrayList<>();
-    private final ArrayList<FilterItem> mFilterItems = new ArrayList<>();
+    private ArrayList<FilterItem> mFilterItems;
 
     private int mImagesCount;
     private int mDisplaySize;
@@ -71,6 +74,14 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
         mPhotoEditorView = findViewById(R.id.photoEditorView);
         mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
+
+        if (mFilterUris == null || mFilterUris.size() < 1) {
+            Snackbar.make(Objects.requireNonNull(this).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            finish();
+        }
+
         mDisplaySize = mFilterUris.size();
         mImagesCount = mFilterUris.size() - 1;
         mBitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
@@ -80,7 +91,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mPreviousButton.setVisibility(View.INVISIBLE);
         showFilters();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @OnClick(R.id.nextimageButton)
@@ -163,7 +174,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
-    //Saves Current Image
+    /**
+     * Saves Current Image with applied filter
+     */
     private void saveimgcurent() {
         try {
             File sdCard = Environment.getExternalStorageDirectory();
@@ -259,28 +272,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      * Add Items in Recycler View & intialize adapter
      */
     private void showFilters() {
-        mFilterItems.add(new FilterItem(R.drawable.none, getString(R.string.filter_none)));
-        mFilterItems.add(new FilterItem(R.drawable.auto_fix, getString(R.string.filter_autofix)));
-        mFilterItems.add(new FilterItem(R.drawable.black, getString(R.string.filter_grayscale)));
-        mFilterItems.add(new FilterItem(R.drawable.brightness, getString(R.string.filter_brightness)));
-        mFilterItems.add(new FilterItem(R.drawable.contrast, getString(R.string.filter_contrast)));
-        mFilterItems.add(new FilterItem(R.drawable.cross_process, getString(R.string.filter_cross)));
-        mFilterItems.add(new FilterItem(R.drawable.documentary, getString(R.string.filter_documentary)));
-        mFilterItems.add(new FilterItem(R.drawable.due_tone, getString(R.string.filter_duetone)));
-        mFilterItems.add(new FilterItem(R.drawable.fill_light, getString(R.string.filter_filllight)));
-        mFilterItems.add(new FilterItem(R.drawable.flip_vertical, getString(R.string.filter_filpver)));
-        mFilterItems.add(new FilterItem(R.drawable.flip_horizontal, getString(R.string.filter_fliphor)));
-        mFilterItems.add(new FilterItem(R.drawable.grain, getString(R.string.filter_grain)));
-        mFilterItems.add(new FilterItem(R.drawable.lomish, getString(R.string.filter_lomish)));
-        mFilterItems.add(new FilterItem(R.drawable.negative, getString(R.string.filter_negative)));
-        mFilterItems.add(new FilterItem(R.drawable.poster, getString(R.string.filter_poster)));
-        mFilterItems.add(new FilterItem(R.drawable.rotate, getString(R.string.filter_rotate)));
-        mFilterItems.add(new FilterItem(R.drawable.saturate, getString(R.string.filter_saturate)));
-        mFilterItems.add(new FilterItem(R.drawable.sepia, getString(R.string.filter_sepia)));
-        mFilterItems.add(new FilterItem(R.drawable.sharpen, getString(R.string.filter_sharpen)));
-        mFilterItems.add(new FilterItem(R.drawable.temp, getString(R.string.filter_temp)));
-        mFilterItems.add(new FilterItem(R.drawable.tint, getString(R.string.filter_tint)));
-        mFilterItems.add(new FilterItem(R.drawable.vignette, getString(R.string.filter_vig)));
+        mFilterItems = getFiltersList(this);
         initRecyclerView();
     }
 
@@ -295,77 +287,15 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         recyclerView.setAdapter(adapter);
     }
 
-    //Get Item Position and call Filter Function
+    /**
+     * Get Item Position and call Filter Function
+     * @param view - view which is clicked
+     * @param position - position of item clicked
+     */
     @Override
     public void onItemClick(View view, int position) {
-        switch (position) {
-            case 0:
-                applyFilter(PhotoFilter.NONE);
-                break;
-            case 1:
-                applyFilter(PhotoFilter.AUTO_FIX);
-                break;
-            case 2:
-                applyFilter(PhotoFilter.GRAY_SCALE);
-                break;
-            case 3:
-                applyFilter(PhotoFilter.BRIGHTNESS);
-                break;
-            case 4:
-                applyFilter(PhotoFilter.CONTRAST);
-                break;
-            case 5:
-                applyFilter(PhotoFilter.CROSS_PROCESS);
-                break;
-            case 6:
-                applyFilter(PhotoFilter.DOCUMENTARY);
-                break;
-            case 7:
-                applyFilter(PhotoFilter.DUE_TONE);
-                break;
-            case 8:
-                applyFilter(PhotoFilter.FILL_LIGHT);
-                break;
-            case 9:
-                applyFilter(PhotoFilter.FLIP_VERTICAL);
-                break;
-            case 10:
-                applyFilter(PhotoFilter.FLIP_HORIZONTAL);
-                break;
-            case 11:
-                applyFilter(PhotoFilter.GRAIN);
-                break;
-            case 12:
-                applyFilter(PhotoFilter.LOMISH);
-                break;
-            case 13:
-                applyFilter(PhotoFilter.NEGATIVE);
-                break;
-            case 14:
-                applyFilter(PhotoFilter.POSTERIZE);
-                break;
-            case 15:
-                applyFilter(PhotoFilter.ROTATE);
-                break;
-            case 16:
-                applyFilter(PhotoFilter.SATURATE);
-                break;
-            case 17:
-                applyFilter(PhotoFilter.SEPIA);
-                break;
-            case 18:
-                applyFilter(PhotoFilter.SHARPEN);
-                break;
-            case 19:
-                applyFilter(PhotoFilter.TEMPERATURE);
-                break;
-            case 20:
-                applyFilter(PhotoFilter.TINT);
-                break;
-            case 21:
-                applyFilter(PhotoFilter.VIGNETTE);
-                break;
-        }
+        PhotoFilter filter = mFilterItems.get(position).getFilter();
+        applyFilter(filter);
     }
 
     /**
