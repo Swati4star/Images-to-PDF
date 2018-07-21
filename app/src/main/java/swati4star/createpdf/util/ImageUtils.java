@@ -2,7 +2,7 @@ package swati4star.createpdf.util;
 
 import com.itextpdf.text.Rectangle;
 
-public class ImageUtils {
+class ImageUtils {
 
     /**
      * Calculates the optimum size for an image, such that it scales to fit whilst retaining its aspect ratio

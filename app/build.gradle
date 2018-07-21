@@ -10,8 +10,8 @@ android {
         minSdkVersion 19
         multiDexEnabled true
         targetSdkVersion 27
-        versionCode 15
-        versionName "4.1.0"
+        versionCode 17
+        versionName "5.0.0"
     }
     buildTypes {
         release {
@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.github.ParkSangGwon:TedPicker:v1.0.10'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.jakewharton:butterknife:8.5.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation 'com.madgag.spongycastle:core:1.58.0.0'
@@ -59,4 +60,6 @@ dependencies {
     // To show what's new in the application
     implementation 'io.github.tonnyl:whatsnew:0.1.1'
     implementation 'com.airbnb.android:lottie:2.5.5'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 }

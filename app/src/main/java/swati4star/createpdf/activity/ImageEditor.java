@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,14 +37,17 @@ import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
 
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener {
 
     private ArrayList<String> mFilterUris = new ArrayList<>();
-    private ArrayList<String> mImagepaths = new ArrayList<>();
-    private ArrayList<FilterItem> mFilterItems = new ArrayList<>();
+    private final ArrayList<String> mImagepaths = new ArrayList<>();
+    private ArrayList<FilterItem> mFilterItems;
 
-    int imagesCount, dispsize, currentImage = 0, j = 1;
+    private int mImagesCount;
+    private int mDisplaySize;
+    private int mCurrentImage = 0;
 
     @BindView(R.id.nextimageButton)
     ImageButton mNextButton;
@@ -53,11 +58,13 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @BindView(R.id.previousImageButton)
     ImageButton mPreviousButton;
 
-    Bitmap bitmap;
-    PhotoEditorView mPhotoEditorView;
-    boolean isClicked = false, isClickedFilter = false, isLast = false;
+    private Bitmap mBitmap;
+    private PhotoEditorView mPhotoEditorView;
+    private boolean mClicked = false;
+    private boolean mClickedFilter = false;
+    private boolean mIsLast = false;
 
-    PhotoEditor mPhotoEditor;
+    private PhotoEditor mPhotoEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,23 +74,31 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
         mPhotoEditorView = findViewById(R.id.photoEditorView);
         mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
-        dispsize = mFilterUris.size();
-        imagesCount = mFilterUris.size() - 1;
-        bitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
-        mPhotoEditorView.getSource().setImageBitmap(bitmap);
-        String showingText = "Showing " + String.valueOf(1) + " of " + dispsize;
+
+        if (mFilterUris == null || mFilterUris.size() < 1) {
+            Snackbar.make(Objects.requireNonNull(this).findViewById(android.R.id.content),
+                    R.string.snackbar_no_images,
+                    Snackbar.LENGTH_LONG).show();
+            finish();
+        }
+
+        mDisplaySize = mFilterUris.size();
+        mImagesCount = mFilterUris.size() - 1;
+        mBitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
+        mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+        String showingText = "Showing " + String.valueOf(1) + " of " + mDisplaySize;
         mImgcount.setText(showingText);
         mPreviousButton.setVisibility(View.INVISIBLE);
         showFilters();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @OnClick(R.id.nextimageButton)
     void nextImg() {
         try {
             //Proceed if Save Current has been clicked
-            if (isClicked) {
+            if (mClicked) {
                 next();
                 incrementImageCount();
             } else {
@@ -98,7 +113,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     void previousImg() {
         try {
             //Proceed if Save Current has been clicked
-            if (isClicked) {
+            if (mClicked) {
                 previous();
                 decrementImageCount();
             } else {
@@ -111,11 +126,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     @OnClick(R.id.savecurrent)
     void saveC() {
-        isClicked = true;
-        if (isClickedFilter) {
+        mClicked = true;
+        if (mClickedFilter) {
             saveimgcurent();
         } else {
-            nonefilter();
+            applyFilter(PhotoFilter.NONE);
             saveimgcurent();
         }
     }
@@ -123,18 +138,18 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     /**
      * Increment image count to display in textView
      */
-    void incrementImageCount() {
-        if (currentImage < imagesCount) {
-            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
+    private void incrementImageCount() {
+        if (mCurrentImage < mImagesCount) {
+            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
             mImgcount.setText(sText);
             if (mPreviousButton.getVisibility() == View.INVISIBLE)
                 mPreviousButton.setVisibility(View.VISIBLE);
-        } else if (currentImage == imagesCount) {
-            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
+        } else if (mCurrentImage == mImagesCount) {
+            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
             mImgcount.setText(sText);
             mNextButton.setVisibility(View.INVISIBLE);
             mPreviousButton.setVisibility(View.VISIBLE);
-            isLast = true;
+            mIsLast = true;
         } else {
             mNextButton.setEnabled(false);
         }
@@ -143,14 +158,14 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     /**
      * Decrement image count to display in textView
      */
-    void decrementImageCount() {
-        if (currentImage > 0) {
-            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
+    private void decrementImageCount() {
+        if (mCurrentImage > 0) {
+            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
             mImgcount.setText(sText);
             if (mNextButton.getVisibility() == View.INVISIBLE)
                 mNextButton.setVisibility(View.VISIBLE);
-        } else if (currentImage == 0) {
-            String sText = "Showing " + String.valueOf(currentImage + 1) + " of " + dispsize;
+        } else if (mCurrentImage == 0) {
+            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
             mImgcount.setText(sText);
             mPreviousButton.setVisibility(View.INVISIBLE);
             mNextButton.setVisibility(View.VISIBLE);
@@ -159,7 +174,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
-    //Saves Current Image
+    /**
+     * Saves Current Image with applied filter
+     */
     private void saveimgcurent() {
         try {
             File sdCard = Environment.getExternalStorageDirectory();
@@ -190,16 +207,17 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     /**
      * Store imagepaths for creation of PDF when Done
      */
-    public void done() {
-        if (!isClicked) {
+    private void done() {
+        if (!mClicked) {
             passUris(mFilterUris);
-        } else if (currentImage <= dispsize) {
-            for (j = currentImage + 1; j <= mFilterUris.size(); j++) {
+        } else if (mCurrentImage <= mDisplaySize) {
+            int mCounter = 1;
+            for (mCounter = mCurrentImage + 1; mCounter <= mFilterUris.size(); mCounter++) {
                 // Append the images which are not edited
-                mImagepaths.add(mFilterUris.get(j - 1));
+                mImagepaths.add(mFilterUris.get(mCounter - 1));
             }
-            if (!isClicked || isLast) {
-                currentImage++;
+            if (!mClicked || mIsLast) {
+                mCurrentImage++;
             }
             passUris(mImagepaths);
 
@@ -213,7 +231,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      *
      * @param mImagepaths - the images array to be send pack
      */
-    public void passUris(ArrayList<String> mImagepaths) {
+    private void passUris(ArrayList<String> mImagepaths) {
         Intent returnIntent = new Intent();
         returnIntent.putStringArrayListExtra("result", mImagepaths);
         setResult(Activity.RESULT_OK, returnIntent);
@@ -225,10 +243,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void next() {
         try {
-            if (currentImage + 1 <= imagesCount) {
-                bitmap = BitmapFactory.decodeFile(mFilterUris.get(currentImage + 1));
-                mPhotoEditorView.getSource().setImageBitmap(bitmap);
-                currentImage++;
+            if (mCurrentImage + 1 <= mImagesCount) {
+                mBitmap = BitmapFactory.decodeFile(mFilterUris.get(mCurrentImage + 1));
+                mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+                mCurrentImage++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -240,10 +258,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void previous() {
         try {
-            if (currentImage - 1 >= 0) {
-                bitmap = BitmapFactory.decodeFile(mFilterUris.get((currentImage - 1)));
-                mPhotoEditorView.getSource().setImageBitmap(bitmap);
-                currentImage--;
+            if (mCurrentImage - 1 >= 0) {
+                mBitmap = BitmapFactory.decodeFile(mFilterUris.get((mCurrentImage - 1)));
+                mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+                mCurrentImage--;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -254,9 +272,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      * Add Items in Recycler View & intialize adapter
      */
     private void showFilters() {
-        mFilterItems.add(new FilterItem(R.drawable.none, "None"));
-        mFilterItems.add(new FilterItem(R.drawable.black, "GrayScale"));
-        mFilterItems.add(new FilterItem(R.drawable.sepia, "Sepia"));
+        mFilterItems = getFiltersList(this);
         initRecyclerView();
     }
 
@@ -271,59 +287,27 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         recyclerView.setAdapter(adapter);
     }
 
-    //Get Item Position and call Filter Function
+    /**
+     * Get Item Position and call Filter Function
+     * @param view - view which is clicked
+     * @param position - position of item clicked
+     */
     @Override
     public void onItemClick(View view, int position) {
-        if (position == 0) {
-            nonefilter();
-        } else if (position == 1) {
-            grayscaleFilter();
-        } else if (position == 2) {
-            sepiaFilter();
-        }
+        PhotoFilter filter = mFilterItems.get(position).getFilter();
+        applyFilter(filter);
     }
 
     /**
      * Apply GrayScale Filter to Image
      */
-    public void grayscaleFilter() {
+    private void applyFilter(PhotoFilter filterType) {
         try {
-            isClickedFilter = true;
+            mClickedFilter = true;
             mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
-            mPhotoEditor.setFilterEffect(PhotoFilter.GRAY_SCALE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Apply Sepia Filter to Image
-     */
-    public void sepiaFilter() {
-        try {
-            isClickedFilter = true;
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                    .setPinchTextScalable(true)
-                    .build();
-
-            mPhotoEditor.setFilterEffect(PhotoFilter.SEPIA);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Apply No Filter to Image
-     */
-    public void nonefilter() {
-        try {
-            isClickedFilter = true;
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                    .setPinchTextScalable(true)
-                    .build();
-            mPhotoEditor.setFilterEffect(PhotoFilter.NONE);
+            mPhotoEditor.setFilterEffect(filterType);
         } catch (Exception e) {
             e.printStackTrace();
         }

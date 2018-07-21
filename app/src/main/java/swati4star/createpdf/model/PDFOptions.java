@@ -2,9 +2,9 @@ package swati4star.createpdf.model;
 
 public class PDFOptions {
 
-    protected final String mOutFileName;
+    private final String mOutFileName;
 
-    public PDFOptions(String mFileName) {
+    PDFOptions(String mFileName) {
         this.mOutFileName = mFileName;
     }
 

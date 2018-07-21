@@ -1,36 +1,46 @@
 package swati4star.createpdf.model;
 
+import ja.burhanrashid52.photoeditor.PhotoFilter;
+
 public class FilterItem {
 
-    int imageId;
-    String name;
+    private int mImageId;
+    private String mName;
+    private PhotoFilter mFilter;
 
     /**
      * Filter item model
      *
      * @param imageId - id of image to be set
-     * @param name - filter name
+     * @param name - filter mName
      */
-    public FilterItem(int imageId, String name) {
-        this.imageId = imageId;
-        this.name = name;
+    public FilterItem(int imageId, String name, PhotoFilter filter) {
+        this.mImageId = imageId;
+        this.mName = name;
+        this.mFilter = filter;
     }
 
     public int getImageId() {
-        return imageId;
+        return mImageId;
     }
 
     public void setImageId(int imageId) {
-        this.imageId = imageId;
+        this.mImageId = imageId;
     }
 
-
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
+    public PhotoFilter getFilter() {
+        return mFilter;
+    }
+
+    public void setFilter(PhotoFilter filter) {
+        this.mFilter = filter;
+    }
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import io.github.tonnyl.whatsnew.WhatsNew;
 import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 import swati4star.createpdf.R;
+import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
@@ -37,8 +38,6 @@ import static swati4star.createpdf.util.Constants.WHATS_NEW4_TEXT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW4_TITLE;
 import static swati4star.createpdf.util.Constants.WHATS_NEW5_TEXT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW5_TITLE;
-import static swati4star.createpdf.util.Constants.WHATS_NEW6_TEXT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW6_TITLE;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -95,8 +94,7 @@ public class MainActivity extends AppCompatActivity
                 new WhatsNewItem(WHATS_NEW2_TITLE, WHATS_NEW2_TEXT),
                 new WhatsNewItem(WHATS_NEW3_TITLE, WHATS_NEW3_TEXT),
                 new WhatsNewItem(WHATS_NEW4_TITLE, WHATS_NEW4_TEXT),
-                new WhatsNewItem(WHATS_NEW5_TITLE, WHATS_NEW5_TEXT),
-                new WhatsNewItem(WHATS_NEW6_TITLE, WHATS_NEW6_TEXT)
+                new WhatsNewItem(WHATS_NEW5_TITLE, WHATS_NEW5_TEXT)
         );
         whatsNew.setButtonBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         whatsNew.setButtonTextColor(ContextCompat.getColor(this, R.color.mb_white));
@@ -186,14 +184,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_history:
                 fragment = new HistoryFragment();
                 break;
-            case R.id.nav_feedback:
-                mFeedbackUtils.getFeedback();
-                break;
             case R.id.nav_share:
                 mFeedbackUtils.shareApplication();
                 break;
-            case R.id.nav_rate_us:
-                mFeedbackUtils.rateUs();
+            case R.id.nav_about:
+                fragment = new AboutUsFragment();
                 break;
         }
 

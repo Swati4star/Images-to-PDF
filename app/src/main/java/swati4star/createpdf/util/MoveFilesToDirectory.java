@@ -11,7 +11,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,10 +21,10 @@ import swati4star.createpdf.R;
 public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
 
     private MaterialDialog mDialog;
-    private ArrayList<String> mFilePath;
-    private String mDirectoryName;
-    private Context mContext;
-    private int mOperationID;
+    private final ArrayList<String> mFilePath;
+    private final String mDirectoryName;
+    private final Context mContext;
+    private final int mOperationID;
 
     public static final int MOVE_FILES = 1;
     public static final int DELETE_DIRECTORY = 2;
@@ -63,35 +62,41 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... strings) {
 
-        if (mOperationID == MOVE_FILES) {
-            String destination;
-            for (String path : mFilePath) {
-                String[] fileName = path.split("/");
-                destination = Environment.getExternalStorageDirectory().getAbsolutePath()
-                        + mContext.getResources().getString(R.string.pdf_dir)
-                        + mDirectoryName
-                        + "/"
-                        + fileName[fileName.length - 1];
-                if (!path.equalsIgnoreCase(destination)) {
-                    moveFile(mDirectoryName + "/", path, destination);
+        switch (mOperationID) {
+            case MOVE_FILES: {
+                String destination;
+                for (String path : mFilePath) {
+                    String[] fileName = path.split("/");
+                    destination = Environment.getExternalStorageDirectory().getAbsolutePath()
+                            + mContext.getResources().getString(R.string.pdf_dir)
+                            + mDirectoryName
+                            + "/"
+                            + fileName[fileName.length - 1];
+                    if (!path.equalsIgnoreCase(destination)) {
+                        moveFile(mDirectoryName + "/", path, destination);
+                    }
                 }
+                break;
             }
-        } else if (mOperationID == DELETE_DIRECTORY) {
-            for (String path : mFilePath) {
-                new File(path).delete();
-            }
-            new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + mContext.getResources().getString(R.string.pdf_dir)
-                    + mDirectoryName).delete();
-
-        } else if (mOperationID == HOME_DIRECTORY) {
-            String destination;
-            for (String path : mFilePath) {
-                String[] fileName = path.split("/");
-                destination = Environment.getExternalStorageDirectory().getAbsolutePath()
+            case DELETE_DIRECTORY:
+                for (String path : mFilePath) {
+                    new File(path).delete();
+                }
+                new File(Environment.getExternalStorageDirectory().getAbsolutePath()
                         + mContext.getResources().getString(R.string.pdf_dir)
-                        + fileName[fileName.length - 1];
-                moveFile(null , path , destination);
+                        + mDirectoryName).delete();
+
+                break;
+            case HOME_DIRECTORY: {
+                String destination;
+                for (String path : mFilePath) {
+                    String[] fileName = path.split("/");
+                    destination = Environment.getExternalStorageDirectory().getAbsolutePath()
+                            + mContext.getResources().getString(R.string.pdf_dir)
+                            + fileName[fileName.length - 1];
+                    moveFile(null, path, destination);
+                }
+                break;
             }
         }
 
@@ -130,8 +135,6 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
             // delete the original file
             new File(source).delete();
 
-        } catch (FileNotFoundException fnfe1) {
-            Log.e("tag", fnfe1.getMessage());
         } catch (Exception e) {
             Log.e("tag", e.getMessage());
         }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/parentLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/filter_preview"
@@ -11,11 +11,11 @@
         android:layout_height="70dp"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="0dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="5dp"
         android:contentDescription="@string/Filter_image_preview"
-        android:src="@drawable/sepia"/>
+        android:src="@drawable/sepia" />
 
     <TextView
         android:id="@+id/filter_Name"
@@ -26,8 +26,7 @@
         android:layout_marginBottom="3dp"
         android:textAlignment="center"
         android:textColor="@color/black_87"
-        android:textSize="15sp"
+        android:textSize="10sp"
         tools:text="@string/Filter_name"/>
-
 
 </RelativeLayout>

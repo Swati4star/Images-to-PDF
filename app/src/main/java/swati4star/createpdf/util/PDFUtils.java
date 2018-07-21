@@ -41,7 +41,7 @@ import swati4star.createpdf.model.TextToPDFOptions;
 
 public class PDFUtils {
 
-    private Activity mContext;
+    private final Activity mContext;
     private String mPassword;
 
     public PDFUtils(Activity context) {

@@ -1,6 +1,8 @@
 package swati4star.createpdf.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,13 +17,13 @@ import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
+import swati4star.createpdf.util.RoundImageUtil;
 
 public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapter.ViewHolder> {
 
-    private ArrayList<FilterItem> mFilterItem;
-    private Context mContext;
+    private final ArrayList<FilterItem> mFilterItem;
     private final OnFilterItemClickedListener mOnFilterItemClickedListener;
-    private int mAdapterp;
+    private final Context  mContext;
 
     public ImageFiltersAdapter(ArrayList<FilterItem> filterItems, Context context,
                                OnFilterItemClickedListener listener) {
@@ -40,7 +42,12 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int imageid = mFilterItem.get(position).getImageId();
-        holder.img.setImageResource(imageid);
+
+        Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageid);
+        int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
+        int radius = width > height ? height : width; // set the smallest edge as radius.
+        roundBitmap = RoundImageUtil.getCroppedBitmap(roundBitmap, radius);
+        holder.img.setImageBitmap(roundBitmap);
         holder.Filter_name.setText(mFilterItem.get(position).getName());
     }
 
@@ -50,8 +57,8 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView img;
-        TextView Filter_name;
+        final ImageView img;
+        final TextView Filter_name;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -63,7 +70,7 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
 
         @Override
         public void onClick(View view) {
-            mAdapterp = getAdapterPosition();
+            int mAdapterp = getAdapterPosition();
             mOnFilterItemClickedListener.onItemClick(view, mAdapterp);
         }
     }
