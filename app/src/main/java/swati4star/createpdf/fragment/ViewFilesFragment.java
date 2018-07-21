@@ -127,17 +127,21 @@ public class ViewFilesFragment extends Fragment
 
         //Create/Open folder
         File folder = mFileUtils.getOrCreatePdfDirectory();
-
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mCurrentSortingIndex = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
         final ArrayList<File> pdfFiles = new ArrayList<>();
         final File[] files = folder.listFiles();
-        if (files.length == 0) {
-            setEmptyStateVisible();
 
+        int count = 0;
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory() && files[i].list().length == 0) {
+                count++;
+            }
         }
-
+        if ((files.length - count) == 0) {
+            setEmptyStateVisible();
+        }
         mViewFilesAdapter = new ViewFilesAdapter(mActivity, pdfFiles, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
         mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
@@ -146,7 +150,6 @@ public class ViewFilesFragment extends Fragment
         mSwipeView.setOnRefreshListener(this);
         //Prevents clicking of other buttons on screen
         //mSwipeView.bringToFront();
-
         // Populate data into listView
         populatePdfList();
         return root;
