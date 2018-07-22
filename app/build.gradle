@@ -59,6 +59,7 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     // To show what's new in the application
     implementation 'io.github.tonnyl:whatsnew:0.1.1'
+    testCompile 'org.mockito:mockito-core:2.7.22'
     implementation 'com.airbnb.android:lottie:2.5.5'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
