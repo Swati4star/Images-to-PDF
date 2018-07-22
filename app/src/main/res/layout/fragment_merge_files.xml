@@ -8,21 +8,6 @@
                                              android:stretchColumns="*"
                                              tools:context=".fragment.MergeFilesFragment">
 
-    <TextView
-        android:id="@+id/txtfirstpdf"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
-        android:hint="@string/File_hint_one"
-        android:padding="5dip"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fileonebtn"/>
-
     <Button
         android:id="@+id/fileonebtn"
         android:layout_width="155dp"
@@ -39,20 +24,6 @@
         app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/txtsecondpdf"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:hint="@string/File_hint_two"
-        android:padding="5dip"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtfirstpdf"/>
 
     <Button
         android:id="@+id/filetwobtn"
@@ -78,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mergebtn"
+        app:layout_constraintTop_toBottomOf="@+id/filetwobtn"
         />
 
     <Button
@@ -87,27 +58,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
         android:background="@color/mb_blue"
         android:padding="5dip"
         android:text="@string/merge_files"
         android:textColor="@color/mb_white"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtsecondpdf"/>
+        tools:layout_editor_absoluteY="326dp" />
 
-    <TextView
-        android:id="@+id/note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="150dp"
-        android:text="@string/note"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
 </android.support.constraint.ConstraintLayout>

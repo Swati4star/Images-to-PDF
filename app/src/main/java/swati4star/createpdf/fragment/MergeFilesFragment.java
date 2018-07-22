@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -53,10 +54,8 @@ public class MergeFilesFragment extends Fragment {
     Button addFileTwo;
     @BindView(R.id.mergebtn)
     Button mergeBtn;
-    @BindView(R.id.txtfirstpdf)
-    TextView filepathtv1;
-    @BindView(R.id.txtsecondpdf)
-    TextView filepathtv2;
+    String filepathtv1;
+    String filepathtv2;
 
 
     public MergeFilesFragment() {
@@ -111,14 +110,15 @@ public class MergeFilesFragment extends Fragment {
     private void mergePdfFiles() {
         try {
 
-            String filepath1 = filepathtv1.getText().toString();
-            String filepath2 = filepathtv2.getText().toString();
+            String filepath1 = filepathtv1;
+            String filepath2 = filepathtv2;
             String[] pdfpaths = {filepath1, filepath2};
 
             if (filepath1.isEmpty() || filepath2.isEmpty() || !mSuccess) {
                 mergeBtn.setEnabled(false);
                 Toast.makeText(this.getContext(), getString(R.string.pdf_merge_error), Toast.LENGTH_SHORT).show();
             } else {
+
                 mergeBtn.setEnabled(true);
                 mergePdf(pdfpaths);
                 Toast.makeText(this.getContext(), getString(R.string.pdf_merge), Toast.LENGTH_SHORT).show();
@@ -182,17 +182,21 @@ public class MergeFilesFragment extends Fragment {
                     mRealPath = Environment.getExternalStorageDirectory().getAbsolutePath();
                     //Check if First button is clicked from mCheckbtClickTag
                     if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
-                        getFilePath(uriString, uri, myFile, path, filepathtv1);
+                        filepathtv1 = getFilePath(uriString, uri, myFile, path);
+                        addFileOne.setText(filepathtv1);
+                        addFileOne.setBackgroundColor(Color.GREEN);
                     } else {
-                        getFilePath(uriString, uri, myFile, path, filepathtv2);
+                        filepathtv2 = getFilePath(uriString, uri, myFile, path);
+                        addFileTwo.setText(filepathtv2);
+                        addFileTwo.setBackgroundColor(Color.GREEN);
                     }
 
                 }
             }
         }
     }
-    private void getFilePath(String uriString, Uri uri, File myFile, String path, TextView filepathv) {
-
+    private String getFilePath(String uriString, Uri uri, File myFile, String path) {
+        String filepathv = null;
         if (uriString.startsWith("content://")) {
             mDisplayName = getFileName(uri);
             mSuccess = true;
@@ -205,9 +209,9 @@ public class MergeFilesFragment extends Fragment {
         }
         if (mSuccess) {
             String folname = getParentFolder(path);
-            setPathontextview(folname , filepathv);
+            filepathv = setPathontextview(folname);
         }
-
+        return filepathv;
     }
 
     private String  getParentFolder(String p) {
@@ -244,13 +248,12 @@ public class MergeFilesFragment extends Fragment {
         return mDisplayName;
     }
 
-    private void setPathontextview(String folname, TextView t1) {
+    private String setPathontextview(String folname) {
         if (folname != null) {
             String c = getString(R.string.path_seperator);
             mRealPath = mRealPath + c + folname + c + mDisplayName;
-            //Set value to textview2
-            t1.setText(mRealPath);
         }
+        return mRealPath;
     }
 
     @Override
