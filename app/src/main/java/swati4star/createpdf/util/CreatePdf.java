@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 
@@ -147,6 +148,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             document.close();
 
             Log.v("Stage 7", "Document Closed" + mPath);
+
+            new DatabaseHelper(mContext).insertRecord(mPath, mContext.getString(R.string.created));
+            Log.v("Stage 8", "Record inserted in database");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

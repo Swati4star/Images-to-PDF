@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.model.TextToPDFOptions;
 
@@ -281,6 +282,8 @@ public class PDFUtils {
         document.add(new Paragraph("\n"));
         readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
         document.close();
+
+        new DatabaseHelper(mContext).insertRecord(finalOutput, mContext.getString(R.string.created));
     }
 
     /**

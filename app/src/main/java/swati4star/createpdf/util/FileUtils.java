@@ -41,7 +41,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import swati4star.createpdf.R;
-
+import swati4star.createpdf.database.DatabaseHelper;
 
 
 public class FileUtils {
@@ -266,8 +266,10 @@ public class FileUtils {
                 .getSystemService(Context.PRINT_SERVICE);
 
         String jobName = mContext.getString(R.string.app_name) + " Document";
-        if (printManager != null)
+        if (printManager != null) {
             printManager.print(jobName, mPrintDocumentAdapter, null);
+            new DatabaseHelper(mContext).insertRecord(file.getAbsolutePath(), mContext.getString(R.string.printed));
+        }
     }
 
     /**

@@ -18,6 +18,10 @@
             android:id="@+id/nav_text_to_pdf"
             android:icon="@drawable/ic_text_format_black_24dp"
             android:title="@string/text_to_pdf"/>
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/history" />
 
     </group>
 
