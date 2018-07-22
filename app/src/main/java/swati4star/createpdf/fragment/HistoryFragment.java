@@ -39,7 +39,7 @@ public class HistoryFragment extends Fragment {
     @BindView(R.id.getStarted)
     Button getStarted;
     @BindView(R.id.emptyStatusView)
-    ConstraintLayout mConstraintLayout;
+    ConstraintLayout mEmptyStatusLayout;
     @BindView(R.id.historyRecyclerView)
     RecyclerView mHistoryRecyclerView;
     private Activity mActivity;
@@ -89,7 +89,7 @@ public class HistoryFragment extends Fragment {
     private void deleteHistory() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.warning)
-                .content("Are you sure you want to delete history ?")
+                .content(R.string.delete_history_message)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -128,7 +128,7 @@ public class HistoryFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             if (mHistoryList != null && !mHistoryList.isEmpty()) {
-                mConstraintLayout.setVisibility(View.GONE);
+                mEmptyStatusLayout.setVisibility(View.GONE);
                 mHistoryAdapter = new HistoryAdapter(mActivity, mHistoryList);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
                 mHistoryRecyclerView.setLayoutManager(mLayoutManager);
@@ -154,7 +154,7 @@ public class HistoryFragment extends Fragment {
             if (mHistoryAdapter != null) {
                 mHistoryAdapter.deleteHistory();
             }
-            mConstraintLayout.setVisibility(View.VISIBLE);
+            mEmptyStatusLayout.setVisibility(View.VISIBLE);
         }
     }
 }
