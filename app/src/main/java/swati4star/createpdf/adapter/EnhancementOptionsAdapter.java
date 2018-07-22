@@ -13,7 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.util.EnhancementOptionsEntity;
+import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 /**
  * Created by anandparmar on 08/06/18.

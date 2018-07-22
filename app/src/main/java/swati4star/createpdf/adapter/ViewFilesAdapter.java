@@ -26,6 +26,7 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 
 
@@ -46,6 +47,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
+    private final PDFEncryptionUtility mPDFEncryptionUtils;
     private final DatabaseHelper mDatabaseHelper;
 
     /**
@@ -64,6 +66,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
+        mPDFEncryptionUtils = new PDFEncryptionUtility(activity);
         mDatabaseHelper = new DatabaseHelper(mActivity);
     }
 
@@ -140,16 +143,15 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         break;
 
                                     case 5: //Details
-                                        mPDFUtils.showDetails(mFileList.get(position).getName(),
-                                                filePath, fileSize, lastModDate);
+                                        mPDFUtils.showDetails(mFileList.get(position));
                                         break;
 
                                     case 6://Password Set
-                                        mPDFUtils.setPassword(filePath, ViewFilesAdapter.this, mFileList);
+                                        mPDFEncryptionUtils.setPassword(filePath, ViewFilesAdapter.this, mFileList);
                                         break;
 
                                     case 7://Password  Remove
-                                        mPDFUtils.removePassword(filePath, ViewFilesAdapter.this, mFileList);
+                                        mPDFEncryptionUtils.removePassword(filePath, ViewFilesAdapter.this, mFileList);
                                         break;
                                 }
                             }
