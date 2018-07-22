@@ -22,6 +22,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.FileUtils;
@@ -45,6 +46,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
+    private DatabaseHelper mDatabaseHelper;
 
     /**
      * Returns adapter instance
@@ -62,6 +64,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
+        mDatabaseHelper = new DatabaseHelper(mActivity);
     }
 
     @NonNull
@@ -228,6 +231,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         Snackbar.LENGTH_LONG).show();
                 mFileList.remove(position);
                 notifyDataSetChanged();
+                mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
             } else {
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_file_not_deleted,
@@ -246,6 +250,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         for (int position : mSelectedFiles) {
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
+            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
             if (fdelete.exists() && !fdelete.delete()) {
                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                         R.string.snackbar_file_not_deleted,
@@ -305,6 +310,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                         Snackbar.LENGTH_LONG).show();
                                 mFileList.set(position, newfile);
                                 notifyDataSetChanged();
+                                mDatabaseHelper.insertRecord(oldPath, mActivity.getString(R.string.renamed));
                             } else {
                                 Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                                         R.string.snackbar_file_not_renamed,
