@@ -46,7 +46,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
-    private DatabaseHelper mDatabaseHelper;
+    private final DatabaseHelper mDatabaseHelper;
 
     /**
      * Returns adapter instance

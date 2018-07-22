@@ -36,8 +36,6 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 public class HistoryFragment extends Fragment {
 
-    @BindView(R.id.getStarted)
-    Button getStarted;
     @BindView(R.id.emptyStatusView)
     ConstraintLayout mEmptyStatusLayout;
     @BindView(R.id.historyRecyclerView)
@@ -111,7 +109,7 @@ public class HistoryFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     private class LoadHistory extends AsyncTask<Void, Void, Void> {
-        private Context mContext;
+        private final Context mContext;
 
         LoadHistory(Context mContext) {
             this.mContext = mContext;

@@ -17,8 +17,8 @@ import swati4star.createpdf.database.History;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHistoryHolder> {
 
-    private List<History> mHistoryList;
-    private Activity mActivity;
+    private final List<History> mHistoryList;
+    private final Activity mActivity;
 
     public HistoryAdapter(Activity mActivity, List<History> mHistoryList) {
         this.mHistoryList = mHistoryList;

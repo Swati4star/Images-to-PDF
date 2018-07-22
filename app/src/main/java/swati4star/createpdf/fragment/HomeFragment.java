@@ -132,7 +132,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 } else {
                     mTempUris.add(fileUtils.getUriRealPath(uri));
                     if (mTempUris.size() > 0) {
-                        mNoOfImages.setText(mTempUris.size() + getString(R.string.images_selected));
+                        mNoOfImages.setText(String.format(mActivity.getResources()
+                                .getString(R.string.images_selected), mTempUris.size()));
                         mNoOfImages.setVisibility(View.VISIBLE);
                     } else {
                         mNoOfImages.setVisibility(View.GONE);
@@ -324,7 +325,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 for (Uri uri : imageUris)
                     mTempUris.add(uri.getPath());
                 if (imageUris.size() > 0) {
-                    mNoOfImages.setText(imageUris.size() + getString(R.string.images_selected));
+                    mNoOfImages.setText(String.format(mActivity.getResources()
+                            .getString(R.string.images_selected), imageUris.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
                     Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                             R.string.snackbar_images_added,

@@ -85,9 +85,7 @@
     <string name="create_pdf">Create PDF</string>
     <string name="viewFiles">View Files</string>
     <string name="extras">Extras</string>
-    <string name="feedback">Feedback</string>
     <string name="share">Share</string>
-    <string name="rate_us">Rate us</string>
 
     <!--Snackbar strings -->
     <string name="snackbar_no_images">No Images selected</string>
@@ -98,14 +96,11 @@
     <string name="snackbar_images_added">Images added</string>
     <string name="snackbar_file_renamed">File renamed.</string>
     <string name="snackbar_file_not_renamed">File can\'t be renamed.</string>
-    <string name="snackbar_no_pdfs">No PDFs right now</string>
     <string name="snackbar_file_deleted">File deleted.</string>
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
     <string name="pdf_merge">Merging File</string>
     <string name="pdf_merge_error">Unable to Merge</string>
-    <string name="file_path">PDF File Path</string>
-
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>
@@ -116,10 +111,8 @@
 
     <string name="set_password">Set Password</string>
     <string name="enter_password">Enter Password</string>
-    <string name="example_password">Example: pass@123</string>
     <string name="snackbar_password_cannot_be_blank">Password cannot be blank</string>
     <string name="cannot_add_password">Password could not be applied to the PDF. Please check the PDF again.</string>
-    <string name="remove">Remove</string>
 
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
@@ -135,15 +128,10 @@
     <!-- Rate us strings -->
     <string name="rate_us_text">Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .It converts images to PDF so smoothly. :)</string>
     <string name="snackbar_no_share_app">No application to share.</string>
-    <string name="playstore_not_installed">Play services not installed!</string>
-    <string name="rate_positive">Rate now</string>
-    <string name="rate_negative">No, thanks</string>
-    <string name="rate_title">Rate us!</string>
-    <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
-    <string name="images_selected">" image(s) selected."</string>
+    <string name="images_selected"> %1$d image(s) selected.</string>
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
@@ -175,8 +163,6 @@
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
     <string name="btn_sav_text">savText</string>
     <string name="grayscale_filter">Gray Scale</string>
-    <string name="sepia_filter">SEPIA</string>
-    <string name="save_current_imagefilter">Save Current</string>
     <string name="done_filter">Done</string>
     <string name="filter_images_Text">Filter Images \n</string>
     <string name="nextimage_contentdesc">Next Image</string>
@@ -190,13 +176,10 @@
     <string name="decrypt_message">Enter the password to continue</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
     <string name="incorrect_passowrd">Incorrect Password</string>
-    <string name="note_filter">Save Current Image before Proceeding</string>
     <string name="img_Count_filter">Showing X of X</string>
     <string name="save_current">Save Current</string>
     <string name="save_first">Save Current Image First</string>
     <string name="saving_dialog">Saving..</string>
-    <string name="choose_filter">Choose a Filter First</string>
-    <string name="none_filter">None</string>
     <string name="Filter_name">Filter</string>
     <string name="Filter_image_preview">Filter Image Preview</string>
     <string name="warning">Warning</string>
@@ -231,8 +214,6 @@
     <string name="converting_file_message">Converting your files to PDF.</string>
 
     <string name="select_text_file">Select Text File</string>
-    <string name="selected_file_name">Selected File :</string>
-    <string name="no_text_file_selected">No Text File Selected</string>
     <string name="install_file_manager">Please install a File Manager</string>
     <string name="text_to_pdf">Text To PDF</string>
     <string name="text_file_selected">Text File Selected</string>
@@ -298,6 +279,5 @@
     <string name="delete_history_message">Are you sure you want to delete history ?</string>
 
     <string name="file_info">\n  File Name : %1$s \n\n  Path : %2$s \n\n  Size : %3$s \n\n  Date Modified %4$s</string>
-
 
 </resources>

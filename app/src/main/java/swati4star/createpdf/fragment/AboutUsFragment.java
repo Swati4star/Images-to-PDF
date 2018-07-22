@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,7 +27,7 @@ public class AboutUsFragment extends Fragment {
     private Activity mActivity;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_about_us, container, false);
         ButterKnife.bind(this, rootview);
@@ -39,11 +40,14 @@ public class AboutUsFragment extends Fragment {
         }
         return rootview;
     }
+
     @OnClick(R.id.layout_email)
     public void sendmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"swati4star@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, mActivity.getResources().getString(R.string.feedback_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, mActivity.getResources().getString(R.string.feedback_text));
         try {
             mActivity.startActivity(Intent.createChooser(intent, mActivity.getString(R.string.feedback_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
