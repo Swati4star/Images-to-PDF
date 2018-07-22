@@ -184,11 +184,11 @@ public class MergeFilesFragment extends Fragment {
                     if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
                         filepathtv1 = getFilePath(uriString, uri, myFile, path);
                         addFileOne.setText(filepathtv1);
-                        addFileOne.setBackgroundColor(Color.GREEN);
+                        addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                     } else {
                         filepathtv2 = getFilePath(uriString, uri, myFile, path);
                         addFileTwo.setText(filepathtv2);
-                        addFileTwo.setBackgroundColor(Color.GREEN);
+                        addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                     }
 
                 }
