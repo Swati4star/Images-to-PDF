@@ -66,9 +66,9 @@ import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 
 
 /**
- * HomeFragment fragment to start with creating PDF
+ * ImageToPdfFragment fragment to start with creating PDF
  */
-public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner,
+public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner,
         OnPDFCreatedInterface {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
@@ -224,7 +224,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             FileUtils utils = new FileUtils(mActivity);
                             if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                                 new CreatePdf(mActivity, new ImageToPDFOptions(filename, mPasswordProtected,
-                                        mPassword, mQuality, mImagesUri, mPageSize), HomeFragment.this).execute();
+                                        mPassword, mQuality, mImagesUri, mPageSize), ImageToPdfFragment.this).execute();
                             } else {
                                 new MaterialDialog.Builder(mActivity)
                                         .title(R.string.warning)
@@ -237,7 +237,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                                                 @NonNull DialogAction which) {
                                                 new CreatePdf(mActivity, new ImageToPDFOptions(filename,
                                                         mPasswordProtected, mPassword, mQuality, mImagesUri,
-                                                        mPageSize), HomeFragment.this).execute();
+                                                        mPageSize), ImageToPdfFragment.this).execute();
                                             }
                                         })
                                         .onNegative(new MaterialDialog.SingleButtonCallback() {

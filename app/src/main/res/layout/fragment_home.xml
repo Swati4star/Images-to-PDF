@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#eceff1"
     android:orientation="vertical"
-    tools:context=".fragment.HomeFragment"
+    tools:context=".fragment.ImageToPdfFragment"
     tools:ignore="Overdraw">
 
     <android.support.v4.widget.NestedScrollView

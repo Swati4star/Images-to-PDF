@@ -18,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -102,7 +101,7 @@ public class HistoryFragment extends Fragment {
 
     @OnClick(R.id.getStarted)
     public void loadHome() {
-        Fragment fragment = new HomeFragment();
+        Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
     }

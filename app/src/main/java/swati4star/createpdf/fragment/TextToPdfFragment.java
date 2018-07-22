@@ -60,7 +60,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     private FileUtils mFileUtils;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);

@@ -58,7 +58,6 @@ public class MergeFilesFragment extends Fragment {
     @BindView(R.id.txtsecondpdf)
     TextView filepathtv2;
 
-
     public MergeFilesFragment() {
         // Required empty public constructor
     }
