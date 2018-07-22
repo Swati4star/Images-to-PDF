@@ -143,6 +143,7 @@
     <string name="legal">LEGAL</string>
     <string name="default_a4">DEFAULT (A4)</string>
     <!-- Directory Strings -->
+    <string name="text_file_selected">Text File Selected</string>
     <string name="directory">Directory</string>
     <string name="moving_files">Moving your files</string>
     <string name="success_move">Successfully moved your files</string>
