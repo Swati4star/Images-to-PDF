@@ -32,9 +32,16 @@ public class PDFEncryptionUtility {
     private final FileUtils mFileUtils;
     private String mPassword;
 
+    final MaterialDialog dialog;
+
     public PDFEncryptionUtility(Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(context);
+        dialog = new MaterialDialog.Builder(mContext)
+                .customView(R.layout.custom_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
     }
 
     /**
@@ -44,13 +51,8 @@ public class PDFEncryptionUtility {
      */
     public void setPassword(final String filePath, final DataSetChanged dataSetChanged,
                             final ArrayList<File> mFileList) {
-        final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                .title(R.string.set_password)
-                .customView(R.layout.custom_dialog, true)
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
-                .build();
 
+        dialog.setTitle(R.string.set_password);
         final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
         assert dialog.getCustomView() != null;
         EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
@@ -106,7 +108,7 @@ public class PDFEncryptionUtility {
         if (mFileUtils.isFileExist(finalOutputFile)) {
             int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
             finalOutputFile = finalOutputFile.replace(mContext.getString(R.string.pdf_ext),
-                    append + ".pdf");
+                    append + mContext.getResources().getString(R.string.pdf_ext));
         }
 
         PdfReader reader = new PdfReader(path);
@@ -118,15 +120,12 @@ public class PDFEncryptionUtility {
         return finalOutputFile;
     }
 
-
     /**
-     * Uses PDF Reader to decrypt the PDF.
-     *
-     * @param file Path of pdf file to be decrypted
+     * Checks if PDf is encrpyted
+     * @param file - path of PDF file
+     * @return true, if PDF is encrypted, otherwise false
      */
-    public void removePassword(final String file,
-                               final DataSetChanged dataSetChanged,
-                               final ArrayList<File> mFileList) {
+    private boolean isPDFEncrypted(final String file) {
         PdfReader reader = null;
         try {
             reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
@@ -136,15 +135,25 @@ public class PDFEncryptionUtility {
         //Check if PDF is encrypted or not.
         if (!reader.isEncrypted()) {
             showSnackbar(R.string.not_encrypted);
-            return;
+            return false;
         }
+        return true;
+    }
+
+    /**
+     * Uses PDF Reader to decrypt the PDF.
+     *
+     * @param file Path of pdf file to be decrypted
+     */
+    public void removePassword(final String file,
+                               final DataSetChanged dataSetChanged,
+                               final ArrayList<File> mFileList) {
+
+        if (!isPDFEncrypted(file))
+            return;
+
         final String[] input_password = new String[1];
-        final MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                .title(R.string.enter_password)
-                .customView(R.layout.custom_dialog, true)
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
-                .build();
+        dialog.setTitle(R.string.enter_password);
         final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
         final EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
         TextView text = dialog.getCustomView().findViewById(R.id.enter_password);
@@ -177,36 +186,31 @@ public class PDFEncryptionUtility {
                     e.printStackTrace();
                 }
                 byte[] password;
-                finalOutputFile = file.replace(".pdf", mContext.getString(R.string.decrypted_file));
+                finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
+                        mContext.getString(R.string.decrypted_file));
 
                 if (mFileUtils.isFileExist(finalOutputFile)) {
                     int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
-                    finalOutputFile = finalOutputFile.replace(".pdf", append + ".pdf");
+                    finalOutputFile = finalOutputFile.replace(mContext.getResources().getString(R.string.pdf_ext),
+                            append + mContext.getResources().getString(R.string.pdf_ext));
                 }
 
                 password = reader.computeUserPassword();
                 byte[] input = input_password[0].getBytes();
                 if (Arrays.equals(input, password)) {
-                    PdfStamper stamper = null;
                     try {
-                        stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
-                    } catch (DocumentException | IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
+                        PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
                         stamper.close();
                     } catch (DocumentException | IOException e) {
                         e.printStackTrace();
                     }
                     showSnackbar(R.string.password_remove);
                     reader.close();
-                    dialog.dismiss();
                     dataSetChanged.updateDataset();
                 } else {
                     showSnackbar(R.string.incorrect_passowrd);
-                    dialog.dismiss();
                 }
-
+                dialog.dismiss();
             }
         });
     }

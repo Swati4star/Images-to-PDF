@@ -54,6 +54,8 @@ public class FileUtils {
         mContentResolver = mContext.getContentResolver();
     }
 
+    // SORTING FUNCTIONS
+
     /**
      * Sorts the given file list in increasing alphabetical  order
      *
@@ -104,8 +106,16 @@ public class FileUtils {
             }
         });
     }
-    
-    private ArrayList<File> getPdfsFromFolder(File[] files) {
+
+
+    // RETURING LIST OF FILES OR DIRECTORIES
+
+    /**
+     * Returns pdf files from folder
+     *
+     * @param files list of files (folder)
+     */
+    public ArrayList<File> getPdfsFromPdfFolder(File[] files) {
         final ArrayList<File> pdfFiles = new ArrayList<>();
         for (File file : files) {
             if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
@@ -117,22 +127,13 @@ public class FileUtils {
     }
 
     /**
-     * Returns pdf files from folder
-     *
-     * @param files list of files (folder)
-     */
-    public ArrayList<File> getPdfsFromPdfFolder(File[] files) {
-        return getPdfsFromFolder(files);
-    }
-
-    /**
      * create PDF directory if directory does not exists
      */
     public File getOrCreatePdfDirectory() {
         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
                 + mContext.getResources().getString(R.string.pdf_dir));
         if (!folder.exists()) {
-            boolean isCreated = folder.mkdir();
+            folder.mkdir();
         }
         return folder;
     }
@@ -146,13 +147,11 @@ public class FileUtils {
         File folder = getOrCreatePdfDirectory();
         File[] files = folder.listFiles();
         for (File file : files) {
-            if (file.isDirectory()) {
+            if (file.isDirectory())
                 Collections.addAll(pdfFiles, file.listFiles());
-            }
         }
-        if (pdfFiles.isEmpty()) {
+        if (pdfFiles.isEmpty())
             return null;
-        }
         return pdfFiles;
     }
 
@@ -163,13 +162,14 @@ public class FileUtils {
      */
     public File getDirectory(String dirName) {
         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + mContext.getResources().getString(R.string.pdf_dir)
-                + dirName);
+                + mContext.getResources().getString(R.string.pdf_dir) + dirName);
         if (!folder.exists()) {
             return null;
         }
         return folder;
     }
+
+    // GET PDF DETAILS
 
     /**
      * Gives a formatted last modified date for pdf ListView
@@ -195,7 +195,6 @@ public class FileUtils {
      * @return String Size of pdf in formatted form
      */
     public static String getFormattedSize(File file) {
-
         return String.format("%.2f MB", (double) file.length() / (1024 * 1024));
     }
 
@@ -212,34 +211,23 @@ public class FileUtils {
                                 ParcelFileDescriptor destination,
                                 CancellationSignal cancellationSignal,
                                 WriteResultCallback callback) {
-                InputStream input = null;
-                OutputStream output = null;
                 try {
-                    input = new FileInputStream(file.getName());
-                    output = new FileOutputStream(destination.getFileDescriptor());
+                    InputStream input = new FileInputStream(file.getName());
+                    OutputStream output = new FileOutputStream(destination.getFileDescriptor());
 
                     byte[] buf = new byte[1024];
                     int bytesRead;
 
-                    while ((bytesRead = input.read(buf)) > 0) {
+                    while ((bytesRead = input.read(buf)) > 0)
                         output.write(buf, 0, bytesRead);
-                    }
 
                     callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
 
+                    input.close();
+                    output.close();
+
                 } catch (Exception e) {
                     //Catch exception
-                } finally {
-                    try {
-                        if (input != null) {
-                            input.close();
-                        }
-                        if (output != null) {
-                            output.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
 
@@ -279,13 +267,9 @@ public class FileUtils {
      */
     public void shareFile(File file) {
         Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("application/pdf");
-        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
+        ArrayList<Uri> uris = new ArrayList<>();
+        uris.add(uri);
+        shareFile(uris);
     }
 
     /**
@@ -299,7 +283,14 @@ public class FileUtils {
             Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
             uris.add(uri);
         }
+        shareFile(uris);
+    }
 
+    /**
+     * Emails the desired PDF using application of choice by user
+     * @param uris - list of uris to be shared
+     */
+    private void shareFile(ArrayList<Uri> uris) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND_MULTIPLE);
         intent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.i_have_attached_pdfs_to_this_message));
@@ -307,29 +298,6 @@ public class FileUtils {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("application/pdf");
         mContext.startActivity(Intent.createChooser(intent, "Sharing"));
-    }
-
-    /**
-     * Opens the given PDF file in appropriate Intent
-     * @param file - the file to be opened
-     */
-    public void openFile(File file) {
-        Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
-
-        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
-        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
-        try {
-            mContext.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(Objects.requireNonNull(mContext),
-                    R.string.snackbar_no_pdf_app,
-                    Snackbar.LENGTH_LONG).show();
-        }
     }
 
     /**
@@ -350,9 +318,9 @@ public class FileUtils {
             f.add(c);
         }
 
-        if ( q.containsAll(f) || f.containsAll(q) ) {
+        if ( q.containsAll(f) || f.containsAll(q) )
             return 1;
-        }
+
         return 0;
     }
 
@@ -395,8 +363,7 @@ public class FileUtils {
             mContext.startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                    R.string.snackbar_no_pdf_app,
-                    Snackbar.LENGTH_LONG).show();
+                    R.string.snackbar_no_pdf_app, Snackbar.LENGTH_LONG).show();
         }
     }
     /**
@@ -430,11 +397,9 @@ public class FileUtils {
      */
     public String getUriRealPath(Uri uri) {
         String ret = "";
-
         if (isWhatsappImage(uri.getAuthority())) {
             ret = null;
         } else {
-
             if (isAboveKitKat()) {
                 // Android OS above sdk version 19.
                 ret = getUriRealPathAboveKitkat(uri);
@@ -444,7 +409,6 @@ public class FileUtils {
                 ret = getImageRealPath(mContentResolver, uri, null);
             }
         }
-
         return ret;
     }
 
@@ -525,7 +489,6 @@ public class FileUtils {
                 }
             }
         }
-
         return ret;
     }
 
@@ -533,9 +496,7 @@ public class FileUtils {
      * @return  - true if os version bigger than kitkat , else false
      */
     private boolean isAboveKitKat() {
-        boolean ret = false;
-        ret = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        return ret;
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     }
 
     /** Check whether this uri represent a document or not.
@@ -579,70 +540,39 @@ public class FileUtils {
         return ret;
     }
 
-
     /** Check whether this document is provided by ExternalStorageProvider.
      * @return true if document is provided by ExternalStorageProvider, else false
      */
     private boolean isExternalStoreDoc(String uriAuthority) {
-        boolean ret = false;
-
-        if ("com.android.externalstorage.documents".equals(uriAuthority)) {
-            ret = true;
-        }
-
-        return ret;
+        return "com.android.externalstorage.documents".equals(uriAuthority);
     }
 
     /** Check whether this document is provided by DownloadsProvider.
      * @return true if document is provided by DownloadsProvider, else false
      */
     private boolean isDownloadDoc(String uriAuthority) {
-        boolean ret = false;
-
-        if ("com.android.providers.downloads.documents".equals(uriAuthority)) {
-            ret = true;
-        }
-
-        return ret;
+        return "com.android.providers.downloads.documents".equals(uriAuthority);
     }
 
     /** Check whether this document is provided by MediaProvider.
      * @return true if media document, else false
      */
     private boolean isMediaDoc(String uriAuthority) {
-        boolean ret = false;
-
-        if ("com.android.providers.media.documents".equals(uriAuthority)) {
-            ret = true;
-        }
-
-        return ret;
+        return "com.android.providers.media.documents".equals(uriAuthority);
     }
 
     /** Check whether this document is provided by google photos.
      * @return true if google photo, else false
      */
     private boolean isGooglePhotoDoc(String uriAuthority) {
-        boolean ret = false;
-
-        if ("com.google.android.apps.photos.content".equals(uriAuthority)) {
-            ret = true;
-        }
-
-        return ret;
+        return "com.google.android.apps.photos.content".equals(uriAuthority);
     }
 
     /** Check whether the image is whatsapp image
      * @return true if whatsapp image, else false
      */
     private boolean isWhatsappImage(String uriAuthority) {
-        boolean ret = false;
-
-        if ("com.whatsapp.provider.media".equals(uriAuthority)) {
-            ret = true;
-        }
-
-        return ret;
+        return "com.whatsapp.provider.media".equals(uriAuthority);
     }
 
     /** Get real path of image from uri
@@ -696,7 +626,6 @@ public class FileUtils {
     public boolean isFileExist(String mFileName) {
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
                 mContext.getString(R.string.pdf_dir) + mFileName;
-
         File file = new File(path);
         return file.exists();
     }

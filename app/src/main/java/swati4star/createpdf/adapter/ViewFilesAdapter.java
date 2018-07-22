@@ -29,6 +29,8 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 
+import static swati4star.createpdf.util.FileUtils.getFormattedDate;
+
 
 /**
  * Created by swati on 9/10/15.
@@ -83,19 +85,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         Log.d("logs", "getItemCount: " + mFileList.size());
 
         final int position          = holder.getAdapterPosition();
-        final String filePath       = mFileList.get(position).getPath();
         final File file             = mFileList.get(position);
-        final String lastModDate    = FileUtils.getFormattedDate(file);
-        final String fileSize       = FileUtils.getFormattedSize(file);
 
         holder.mFilename.setText(file.getName());
-        holder.mFilesize.setText(fileSize);
-        holder.mFiledate.setText(lastModDate);
-
-        if (mSelectedFiles.contains(position))
-            holder.checkBox.setChecked(true);
-        else
-            holder.checkBox.setChecked(false);
+        holder.mFilesize.setText(FileUtils.getFormattedSize(file));
+        holder.mFiledate.setText(getFormattedDate(file));
+        holder.checkBox.setChecked(mSelectedFiles.contains(position));
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -104,9 +99,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     if (!mSelectedFiles.contains(position)) {
                         mSelectedFiles.add(position);
                     }
-                } else {
+                } else
                     mSelectedFiles.remove(Integer.valueOf(position));
-                }
             }
         });
 
@@ -120,46 +114,57 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-
-                                switch (which) {
-                                    case 0: //Open
-                                        mFileUtils.openFile(filePath);
-                                        break;
-
-                                    case 1: //delete
-                                        deleteFile(filePath, position);
-                                        break;
-
-                                    case 2: //rename
-                                        renameFile(position);
-                                        break;
-
-                                    case 3: //Print
-                                        mFileUtils.printFile(mFileList.get(position));
-                                        break;
-
-                                    case 4: //Email
-                                        mFileUtils.shareFile(mFileList.get(position));
-                                        break;
-
-                                    case 5: //Details
-                                        mPDFUtils.showDetails(mFileList.get(position));
-                                        break;
-
-                                    case 6://Password Set
-                                        mPDFEncryptionUtils.setPassword(filePath, ViewFilesAdapter.this, mFileList);
-                                        break;
-
-                                    case 7://Password  Remove
-                                        mPDFEncryptionUtils.removePassword(filePath, ViewFilesAdapter.this, mFileList);
-                                        break;
-                                }
+                                performOperation(which, position, file);
                             }
                         })
                         .show();
                 notifyDataSetChanged();
             }
         });
+    }
+
+    /**
+     * Performs the required option on file
+     * as per user selction
+     *
+     * @param index - index of operation performed
+     * @param position - position of item clicked
+     * @param file - file object clicked
+     */
+    private void performOperation(int index, int position, File file) {
+        switch (index) {
+            case 0: //Open
+                mFileUtils.openFile(file.getPath());
+                break;
+
+            case 1: //delete
+                deleteFile(file.getPath(), position);
+                break;
+
+            case 2: //rename
+                renameFile(position);
+                break;
+
+            case 3: //Print
+                mFileUtils.printFile(file);
+                break;
+
+            case 4: //Email
+                mFileUtils.shareFile(file);
+                break;
+
+            case 5: //Details
+                mPDFUtils.showDetails(file);
+                break;
+
+            case 6://Password Set
+                mPDFEncryptionUtils.setPassword(file.getPath(), ViewFilesAdapter.this, mFileList);
+                break;
+
+            case 7://Password  Remove
+                mPDFEncryptionUtils.removePassword(file.getPath(), ViewFilesAdapter.this, mFileList);
+                break;
+        }
     }
 
     /**
@@ -228,17 +233,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         File fdelete = new File(name);
         if (fdelete.exists()) {
             if (fdelete.delete()) {
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.snackbar_file_deleted,
-                        Snackbar.LENGTH_LONG).show();
+                showSnackbar(R.string.snackbar_file_deleted);
                 mFileList.remove(position);
                 notifyDataSetChanged();
                 mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
-            } else {
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.snackbar_file_not_deleted,
-                        Snackbar.LENGTH_LONG).show();
-            }
+            } else
+                showSnackbar(R.string.snackbar_file_not_deleted);
         }
         if (mFileList.size() == 0) {
             mEmptyStateChangeListener.setEmptyStateVisible();
@@ -249,15 +249,13 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * iterate through filelist and remove all elements
      */
     public void deleteFiles() {
+
         for (int position : mSelectedFiles) {
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
             mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
-            if (fdelete.exists() && !fdelete.delete()) {
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.snackbar_file_not_deleted,
-                        Snackbar.LENGTH_LONG).show();
-            }
+            if (fdelete.exists() && !fdelete.delete())
+                showSnackbar(R.string.snackbar_file_not_deleted);
         }
 
         ArrayList<File> newList = new ArrayList<>();
@@ -266,9 +264,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 newList.add(mFileList.get(position));
 
         mSelectedFiles.clear();
-        if (newList.size() == 0) {
+        if (newList.size() == 0)
             mEmptyStateChangeListener.setEmptyStateVisible();
-        }
+
         setData(newList);
     }
 
@@ -294,30 +292,21 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .input(mActivity.getString(R.string.example), null, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input == null || input.toString().trim().isEmpty()) {
-                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.snackbar_name_not_blank,
-                                    Snackbar.LENGTH_LONG).show();
-                        } else {
+                        if (input == null || input.toString().trim().isEmpty())
+                            showSnackbar(R.string.snackbar_name_not_blank);
+                        else {
                             File oldfile = mFileList.get(position);
-                            String oldPath = mFileList.get(position).getPath();
-                            int index = oldPath.lastIndexOf('/');
-                            String newfilename = oldPath.substring(0, index) + "/" + input.toString() +
-                                    mActivity.getString(R.string.pdf_ext);
-
+                            String oldPath = oldfile.getPath();
+                            String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
+                                    + "/" + input.toString() + mActivity.getString(R.string.pdf_ext);
                             File newfile = new File(newfilename);
                             if (oldfile.renameTo(newfile)) {
-                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.snackbar_file_renamed,
-                                        Snackbar.LENGTH_LONG).show();
+                                showSnackbar(R.string.snackbar_file_renamed);
                                 mFileList.set(position, newfile);
                                 notifyDataSetChanged();
                                 mDatabaseHelper.insertRecord(oldPath, mActivity.getString(R.string.renamed));
-                            } else {
-                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.snackbar_file_not_renamed,
-                                        Snackbar.LENGTH_LONG).show();
-                            }
+                            } else
+                                showSnackbar(R.string.snackbar_file_not_renamed);
                         }
                     }
                 }).show();
@@ -328,6 +317,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         File folder = mFileUtils.getOrCreatePdfDirectory();
         ArrayList<File> pdfsFromFolder = mFileUtils.getPdfsFromPdfFolder(folder.listFiles());
         setData(pdfsFromFolder);
+    }
+
+    private void showSnackbar(int resID) {
+        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                resID, Snackbar.LENGTH_LONG).show();
     }
 
     public class ViewFilesHolder extends RecyclerView.ViewHolder {
