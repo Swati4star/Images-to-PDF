@@ -232,4 +232,11 @@
     <string name="filter_temp">Temperature</string>
     <string name="filter_tint">Tint</string>
     <string name="filter_vig">Vignette</string>
+    <string name="history">History</string>
+    <string name="created">Created</string>
+    <string name="printed">Printed</string>
+    <string name="renamed">Renamed</string>
+    <string name="deleted">Deleted</string>
+    <string name="no_history_message">No history to show</string>
+    <string name="view_history_here_message">View all your converted files history here!</string>
 </resources>
