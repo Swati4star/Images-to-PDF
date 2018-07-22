@@ -100,7 +100,7 @@ public class ViewFilesFragment extends Fragment
     //When the "GET STARTED" button is clicked, the user is taken to home
     @OnClick(R.id.getStarted)
     public void loadHome() {
-        Fragment fragment = new HomeFragment();
+        Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
     }
@@ -134,8 +134,8 @@ public class ViewFilesFragment extends Fragment
         final File[] files = folder.listFiles();
 
         int count = 0;
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory() && files[i].list().length == 0) {
+        for (File file : files) {
+            if (file.isDirectory() && file.list().length == 0) {
                 count++;
             }
         }

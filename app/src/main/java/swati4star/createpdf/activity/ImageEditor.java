@@ -73,8 +73,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         ButterKnife.bind(this);
 
         mPhotoEditorView = findViewById(R.id.photoEditorView);
-        mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
 
+        // Extract images
+        mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
         if (mFilterUris == null || mFilterUris.size() < 1) {
             Snackbar.make(Objects.requireNonNull(this).findViewById(android.R.id.content),
                     R.string.snackbar_no_images,
@@ -97,7 +98,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.nextimageButton)
     void nextImg() {
         try {
-            //Proceed if Save Current has been clicked
+            //Proceed to next if Save Current has been clicked
             if (mClicked) {
                 next();
                 incrementImageCount();
@@ -112,7 +113,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.previousImageButton)
     void previousImg() {
         try {
-            //Proceed if Save Current has been clicked
+            //move to previous if Save Current has been clicked
             if (mClicked) {
                 previous();
                 decrementImageCount();
@@ -128,10 +129,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     void saveC() {
         mClicked = true;
         if (mClickedFilter) {
-            saveimgcurent();
+            saveCurrentImage();
         } else {
             applyFilter(PhotoFilter.NONE);
-            saveimgcurent();
+            saveCurrentImage();
         }
     }
 
@@ -177,7 +178,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     /**
      * Saves Current Image with applied filter
      */
-    private void saveimgcurent() {
+    private void saveCurrentImage() {
         try {
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");

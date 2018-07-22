@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DatabaseHelper {
-    private Context mContext;
+    private final Context mContext;
 
     public DatabaseHelper(Context mContext) {
         this.mContext = mContext;

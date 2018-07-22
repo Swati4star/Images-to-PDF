@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mb_white"
     android:orientation="vertical"
-    tools:context=".fragment.HomeFragment">
+    tools:context=".fragment.ImageToPdfFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"

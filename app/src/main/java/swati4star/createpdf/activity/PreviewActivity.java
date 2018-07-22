@@ -22,6 +22,7 @@ public class PreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
 
+        // Extract images uri array from the intent
         Intent intent = getIntent();
         ArrayList<String> images = intent.getStringArrayListExtra(PREVIEW_IMAGES);
 
