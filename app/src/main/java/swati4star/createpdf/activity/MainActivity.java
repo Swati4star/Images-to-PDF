@@ -22,7 +22,7 @@ import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
-import swati4star.createpdf.fragment.HomeFragment;
+import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity
         // To show what's new in our application
         setWhatsNew();
 
-        // Set HomeFragment fragment
-        Fragment fragment = new HomeFragment();
+        // Set ImageToPdfFragment fragment
+        Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_camera:
-                fragment = new HomeFragment();
+                fragment = new ImageToPdfFragment();
                 break;
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();

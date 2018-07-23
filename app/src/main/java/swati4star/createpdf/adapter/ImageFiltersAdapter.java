@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
-import swati4star.createpdf.util.RoundImageUtil;
+import swati4star.createpdf.util.ImageUtils;
 
 public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapter.ViewHolder> {
 
@@ -46,7 +46,7 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
         Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageid);
         int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
         int radius = width > height ? height : width; // set the smallest edge as radius.
-        roundBitmap = RoundImageUtil.getCroppedBitmap(roundBitmap, radius);
+        roundBitmap = ImageUtils.getRoundBitmap(roundBitmap, radius);
         holder.img.setImageBitmap(roundBitmap);
         holder.Filter_name.setText(mFilterItem.get(position).getName());
     }

@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,15 +72,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         ButterKnife.bind(this);
 
         mPhotoEditorView = findViewById(R.id.photoEditorView);
+
+        // Extract images
         mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
-
-        if (mFilterUris == null || mFilterUris.size() < 1) {
-            Snackbar.make(Objects.requireNonNull(this).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
-            finish();
-        }
-
         mDisplaySize = mFilterUris.size();
         mImagesCount = mFilterUris.size() - 1;
         mBitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
@@ -96,42 +89,32 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     @OnClick(R.id.nextimageButton)
     void nextImg() {
-        try {
-            //Proceed if Save Current has been clicked
-            if (mClicked) {
-                next();
-                incrementImageCount();
-            } else {
-                Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //Proceed to next if Save Current has been clicked
+        if (mClicked) {
+            next();
+            incrementImageCount();
+        } else
+            Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.previousImageButton)
     void previousImg() {
-        try {
-            //Proceed if Save Current has been clicked
-            if (mClicked) {
-                previous();
-                decrementImageCount();
-            } else {
-                Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //move to previous if Save Current has been clicked
+        if (mClicked) {
+            previous();
+            decrementImageCount();
+        } else
+            Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.savecurrent)
     void saveC() {
         mClicked = true;
         if (mClickedFilter) {
-            saveimgcurent();
+            saveCurrentImage();
         } else {
             applyFilter(PhotoFilter.NONE);
-            saveimgcurent();
+            saveCurrentImage();
         }
     }
 
@@ -140,13 +123,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void incrementImageCount() {
         if (mCurrentImage < mImagesCount) {
-            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
-            mImgcount.setText(sText);
-            if (mPreviousButton.getVisibility() == View.INVISIBLE)
-                mPreviousButton.setVisibility(View.VISIBLE);
+            setImageCount();
+            mPreviousButton.setVisibility(View.VISIBLE);
         } else if (mCurrentImage == mImagesCount) {
-            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
-            mImgcount.setText(sText);
+            setImageCount();
             mNextButton.setVisibility(View.INVISIBLE);
             mPreviousButton.setVisibility(View.VISIBLE);
             mIsLast = true;
@@ -160,13 +140,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void decrementImageCount() {
         if (mCurrentImage > 0) {
-            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
-            mImgcount.setText(sText);
-            if (mNextButton.getVisibility() == View.INVISIBLE)
-                mNextButton.setVisibility(View.VISIBLE);
+            setImageCount();
+            mNextButton.setVisibility(View.VISIBLE);
         } else if (mCurrentImage == 0) {
-            String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
-            mImgcount.setText(sText);
+            setImageCount();
             mPreviousButton.setVisibility(View.INVISIBLE);
             mNextButton.setVisibility(View.VISIBLE);
         } else {
@@ -174,10 +151,15 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
+    private void setImageCount() {
+        String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
+        mImgcount.setText(sText);
+    }
+
     /**
      * Saves Current Image with applied filter
      */
-    private void saveimgcurent() {
+    private void saveCurrentImage() {
         try {
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
@@ -211,19 +193,14 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         if (!mClicked) {
             passUris(mFilterUris);
         } else if (mCurrentImage <= mDisplaySize) {
-            int mCounter = 1;
-            for (mCounter = mCurrentImage + 1; mCounter <= mFilterUris.size(); mCounter++) {
-                // Append the images which are not edited
-                mImagepaths.add(mFilterUris.get(mCounter - 1));
-            }
-            if (!mClicked || mIsLast) {
-                mCurrentImage++;
-            }
-            passUris(mImagepaths);
+            // Append the images which are not edited
+            for (int i = mCurrentImage + 1; i <= mFilterUris.size(); i++)
+                mImagepaths.add(mFilterUris.get(i - 1));
 
-        } else {
-            passUris(mImagepaths);
+            if (!mClicked || mIsLast)
+                mCurrentImage++;
         }
+        passUris(mImagepaths);
     }
 
     /**
@@ -334,7 +311,3 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 }
-
-
-
-

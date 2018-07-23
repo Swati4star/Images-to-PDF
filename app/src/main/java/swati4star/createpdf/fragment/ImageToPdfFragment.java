@@ -53,9 +53,9 @@ import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.util.CreatePdf;
-import swati4star.createpdf.util.EnhancementOptionsEntity;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
@@ -66,9 +66,9 @@ import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 
 
 /**
- * HomeFragment fragment to start with creating PDF
+ * ImageToPdfFragment fragment to start with creating PDF
  */
-public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner,
+public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner,
         OnPDFCreatedInterface {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
@@ -132,7 +132,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 } else {
                     mTempUris.add(fileUtils.getUriRealPath(uri));
                     if (mTempUris.size() > 0) {
-                        mNoOfImages.setText(mTempUris.size() + getString(R.string.images_selected));
+                        mNoOfImages.setText(String.format(mActivity.getResources()
+                                .getString(R.string.images_selected), mTempUris.size()));
                         mNoOfImages.setVisibility(View.VISIBLE);
                     } else {
                         mNoOfImages.setVisibility(View.GONE);
@@ -223,7 +224,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                             FileUtils utils = new FileUtils(mActivity);
                             if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                                 new CreatePdf(mActivity, new ImageToPDFOptions(filename, mPasswordProtected,
-                                        mPassword, mQuality, mImagesUri, mPageSize), HomeFragment.this).execute();
+                                        mPassword, mQuality, mImagesUri, mPageSize), ImageToPdfFragment.this).execute();
                             } else {
                                 new MaterialDialog.Builder(mActivity)
                                         .title(R.string.warning)
@@ -236,7 +237,7 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                                                                 @NonNull DialogAction which) {
                                                 new CreatePdf(mActivity, new ImageToPDFOptions(filename,
                                                         mPasswordProtected, mPassword, mQuality, mImagesUri,
-                                                        mPageSize), HomeFragment.this).execute();
+                                                        mPageSize), ImageToPdfFragment.this).execute();
                                             }
                                         })
                                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -324,7 +325,8 @@ public class HomeFragment extends Fragment implements EnhancementOptionsAdapter.
                 for (Uri uri : imageUris)
                     mTempUris.add(uri.getPath());
                 if (imageUris.size() > 0) {
-                    mNoOfImages.setText(imageUris.size() + getString(R.string.images_selected));
+                    mNoOfImages.setText(String.format(mActivity.getResources()
+                            .getString(R.string.images_selected), imageUris.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
                     Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                             R.string.snackbar_images_added,

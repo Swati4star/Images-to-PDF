@@ -164,7 +164,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         mAnimationView.cancelAnimation();
-        //mAnimationView.setVisibility(View.GONE);
         mMaterialDialog.dismiss();
         if (!mSuccess) {
             Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),

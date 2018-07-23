@@ -1,4 +1,4 @@
-package swati4star.createpdf.util;
+package swati4star.createpdf.model;
 
 import android.graphics.drawable.Drawable;
 

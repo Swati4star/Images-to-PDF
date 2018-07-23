@@ -35,7 +35,6 @@
 
     <string name="create_pdf">Inicio</string>
     <string name="viewFiles">Ver Ficheros</string>
-    <string name="feedback">Feedback</string>
 
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
@@ -50,7 +49,6 @@
     <string name="snackbar_images_added">Imágenes añadidas</string>
     <string name="snackbar_file_renamed">Fichero renombrado.</string>
     <string name="snackbar_file_not_renamed">El fichero no puede ser renombrado.</string>
-    <string name="snackbar_no_pdfs">Sin PDFs por ahora</string>
     <string name="snackbar_file_deleted">Fichero borrado.</string>
     <string name="snackbar_file_not_deleted">El fichero no puede ser borrado.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
@@ -64,10 +62,8 @@
 
     <string name="set_password">Configurar la clave</string>
     <string name="enter_password">Introducir la contraseña</string>
-    <string name="example_password">Ejemplo: pass@123</string>
     <string name="snackbar_password_cannot_be_blank">La contraseña no puede estar en blanco</string>
     <string name="cannot_add_password">La contraseña no se pudo aplicar al PDF. Por favor revise el PDF nuevamente.</string>
-    <string name="remove">Retirar</string>
 
     <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
@@ -83,13 +79,7 @@
     <string name="rate_us_text">"Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .     It converts images to PDF so smmothly. :) "</string>
     <string name="snackbar_no_share_app">No application to share.</string>
     <string name="extras">Extras</string>
-    <string name="rate_us">Rate us</string>
     <string name="share_chooser">Select app to send message…</string>
-    <string name="playstore_not_installed">Play services not installed!</string>
-    <string name="rate_positive">Rate now</string>
-    <string name="rate_negative">No, thanks</string>
-    <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
-    <string name="rate_title">Rate us!</string>
     <string name="feedback_chooser">Send mail…</string>
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
@@ -102,7 +92,7 @@
 
     <!-- Select Images string -->
     <string name="image_picker_activity_toolbar_title">Select Images</string>
-    <string name="images_selected">" image(s) selected."</string>
+    <string name="images_selected">%1$d image(s) selected.</string>
 
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
@@ -114,7 +104,6 @@
     <string name="File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>
     <string name="note">Files present on SD Card are supported</string>
-    <string name="file_path">PDF File Path</string>
     <string name="file_date_text">File Date</string>
     <string name="file_size_text">File Size</string>
     <string name="password_added">Password Added</string>
@@ -123,8 +112,6 @@
     <string name="btn_sav_text">savText</string>
     <string name="path_seperator">/</string>
     <string name="grayscale_filter">Gray Scale</string>
-    <string name="sepia_filter">SEPIA</string>
-    <string name="save_current_imagefilter">Save Current</string>
     <string name="done_filter">Done</string>
     <string name="filter_images_Text">Filter Images</string>
     <string name="nextimage_contentdesc">Next Image</string>
@@ -138,13 +125,10 @@
     <string name="decrypt_message">Enter the password to continue</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
     <string name="incorrect_passowrd">Incorrect Password</string>
-    <string name="note_filter">Save Current Image before Proceeding</string>
     <string name="img_Count_filter">Showing X of X</string>
     <string name="save_current">Save Current</string>
-    <string name="choose_filter">Choose a Filter First</string>
     <string name="saving_dialog">Saving..</string>
     <string name="save_first">Save Current Image First</string>
-    <string name="none_filter">None</string>
     <string name="Filter_name">Filter</string>
     <string name="Filter_image_preview">Filter Image Preview</string>
     <string name="warning">Warning</string>
@@ -159,6 +143,7 @@
     <string name="legal">LEGAL</string>
     <string name="default_a4">DEFAULT (A4)</string>
     <!-- Directory Strings -->
+    <string name="text_file_selected">Text File Selected</string>
     <string name="directory">Directory</string>
     <string name="moving_files">Moving your files</string>
     <string name="success_move">Successfully moved your files</string>
@@ -181,9 +166,6 @@
     <string name="select_text_file">Select Text File</string>
     <string name="install_file_manager">Please install a File Manager</string>
     <string name="text_to_pdf">Text To PDF</string>
-    <string name="text_file_selected">Text File Selected</string>
-    <string name="selected_file_name">Selected File :</string>
-    <string name="no_text_file_selected">No Text File Selected</string>
     <string name="select_file">Select a File to Upload</string>
     <string name="text_type">text/plain</string>
     <string name="new_directory">New Directory</string>
@@ -241,4 +223,5 @@
     <string name="no_history_message">No history to show</string>
     <string name="view_history_here_message">View all your converted files history here!</string>
     <string name="delete_history_message">Are you sure you want to delete history ?</string>
+    <string name="file_info">"  File Name : %1$s    Path : %2$s    Size : %3$s    Date Modified %4$s"</string>
 </resources>

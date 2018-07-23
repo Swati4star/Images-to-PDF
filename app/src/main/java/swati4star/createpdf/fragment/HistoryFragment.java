@@ -18,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -36,8 +35,6 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 public class HistoryFragment extends Fragment {
 
-    @BindView(R.id.getStarted)
-    Button getStarted;
     @BindView(R.id.emptyStatusView)
     ConstraintLayout mEmptyStatusLayout;
     @BindView(R.id.historyRecyclerView)
@@ -104,14 +101,14 @@ public class HistoryFragment extends Fragment {
 
     @OnClick(R.id.getStarted)
     public void loadHome() {
-        Fragment fragment = new HomeFragment();
+        Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
     }
 
     @SuppressLint("StaticFieldLeak")
     private class LoadHistory extends AsyncTask<Void, Void, Void> {
-        private Context mContext;
+        private final Context mContext;
 
         LoadHistory(Context mContext) {
             this.mContext = mContext;
