@@ -71,19 +71,21 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         mMaterialDialog.show();
     }
 
-    @Override
-    protected String doInBackground(String... params) {
+    private void setFilePath() {
+
         mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
                 mContext.getString(R.string.pdf_dir);
         File folder = new File(mPath);
-        if (!folder.exists()) {
-            mSuccess = folder.mkdir();
-            if (!mSuccess) {
-                return null;
-            }
-        }
+        if (!folder.exists())
+            folder.mkdir();
 
         mPath = mPath + mFileName + mContext.getString(R.string.pdf_ext);
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+
+        setFilePath();
 
         Log.v("stage 1", "store the pdf in sd card");
 
