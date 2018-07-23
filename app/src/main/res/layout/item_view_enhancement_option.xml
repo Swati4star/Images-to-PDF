@@ -8,7 +8,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/container_card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="4dp">
 
         <LinearLayout
@@ -36,8 +36,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:gravity="center_horizontal"
-                tools:text="@string/password_protect_pdf_text"
-                android:textColor="@color/colorGray" />
+                android:textColor="@color/colorGray"
+                tools:text="@string/password_protect_pdf_text" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
