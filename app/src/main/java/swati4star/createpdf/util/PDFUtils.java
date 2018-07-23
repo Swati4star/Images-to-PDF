@@ -84,7 +84,7 @@ public class PDFUtils {
         PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);
 
         document.open();
-        Font myfont = new Font();
+        Font myfont = new Font(mTextToPDFOptions.getFontFamily());
         myfont.setStyle(Font.NORMAL);
         myfont.setSize(mTextToPDFOptions.getFontSize());
 

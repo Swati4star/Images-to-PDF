@@ -279,5 +279,13 @@
     <string name="delete_history_message">Are you sure you want to delete history ?</string>
 
     <string name="file_info">\n  File Name : %1$s \n\n  Path : %2$s \n\n  Size : %3$s \n\n  Date Modified %4$s</string>
+    <string name="default_font_family_text">Font Family (Default : %s)</string>
+    <string name="font_family_text">"Font Family : "</string>
+    <string name="courier">COURIER</string>
+    <string name="helvetica">HELVETICA</string>
+    <string name="times_roman">TIMES_ROMAN</string>
+    <string name="symbol">SYMBOL</string>
+    <string name="zapfdingbats">ZAPFDINGBATS</string>
+    <string name="undefined">UNDEFINED</string>
 
 </resources>

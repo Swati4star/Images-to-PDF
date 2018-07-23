@@ -223,4 +223,12 @@
     <string name="view_history_here_message">View all your converted files history here!</string>
     <string name="delete_history_message">Are you sure you want to delete history ?</string>
     <string name="file_info">"  File Name : %1$s    Path : %2$s    Size : %3$s    Date Modified %4$s"</string>
+    <string name="default_font_family_text">Font Family (Default : %s)</string>
+    <string name="font_family_text">"Font Family : "</string>
+    <string name="courier">COURIER</string>
+    <string name="helvetica">HELVETICA</string>
+    <string name="times_roman">TIMES_ROMAN</string>
+    <string name="symbol">SYMBOL</string>
+    <string name="zapfdingbats">ZAPFDINGBATS</string>
+    <string name="undefined">UNDEFINED</string>
 </resources>

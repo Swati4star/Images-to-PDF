@@ -22,4 +22,6 @@ public class Constants {
     public static final int DEFAULT_FONT_SIZE = 11;
     public static final String PREVIEW_IMAGES = "preview_images";
     public static final String DATABASE_NAME = "ImagesToPdfDB.db";
+    public static final String DEFAULT_FONT_FAMILY_TEXT = "DefaultFontFamily";
+    public static final String DEFAULT_FONT_FAMILY = "TIMES_ROMAN";
 }
