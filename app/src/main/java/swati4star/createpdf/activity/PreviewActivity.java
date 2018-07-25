@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.eftimoff.viewpagertransformers.DepthPageTransformer;
 
@@ -27,7 +28,7 @@ public class PreviewActivity extends AppCompatActivity {
         ArrayList<String> images = intent.getStringArrayListExtra(PREVIEW_IMAGES);
 
         ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new PreviewAdapter(this, images));
+        viewPager.setAdapter(new PreviewAdapter(this, images ));
         viewPager.setPageTransformer(true, new DepthPageTransformer());
 
         Objects.requireNonNull(getSupportActionBar()).hide();
