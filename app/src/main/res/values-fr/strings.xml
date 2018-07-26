@@ -233,4 +233,6 @@
     <string name="symbol">SYMBOL</string>
     <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
+    <string name="filter_cancel_question">Êtes-vous sûr de vouloir supprimer les filtres de toutes vos images?</string>
+    <string name="filter_cancel_description">Appuyez sur OK pour supprimer tous vos filtres</string>
 </resources>
