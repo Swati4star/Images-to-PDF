@@ -235,6 +235,8 @@
     <string name="undefined">UNDEFINED</string>
     <string name="delete_alert">Do you want to delete all selected files?</string>
     <string name="sort_by_title">Sort by</string>
+    <string name="filter_cancel_question">Êtes-vous sûr de vouloir supprimer les filtres de toutes vos images?</string>
+    <string name="filter_cancel_description">Appuyez sur OK pour supprimer tous vos filtres</string>
     <string name="selected_image">Selected Image</string>
     <string name="arrow_up">Arrow Up</string>
     <string name="arrow_down">Arrow Down</string>

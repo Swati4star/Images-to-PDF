@@ -233,6 +233,8 @@
     <string name="undefined">UNDEFINED</string>
     <string name="delete_alert">Do you want to delete all selected files?</string>
     <string name="sort_by_title">Sort by</string>
+    <string name="filter_cancel_question">すべての画像からフィルタを削除してもよろしいですか？</string>
+    <string name="filter_cancel_description">OKを押すとすべてのフィルタが削除されます</string>
     <string name="selected_image">Selected Image</string>
     <string name="arrow_up">Arrow Up</string>
     <string name="arrow_down">Arrow Down</string>
