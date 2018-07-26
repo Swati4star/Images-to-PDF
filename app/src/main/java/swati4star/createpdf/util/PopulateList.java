@@ -13,10 +13,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 
-import static swati4star.createpdf.fragment.ViewFilesFragment.DATE_INDEX;
-import static swati4star.createpdf.fragment.ViewFilesFragment.NAME_INDEX;
-import static swati4star.createpdf.fragment.ViewFilesFragment.SIZE_DECREASING_ORDER_INDEX;
-import static swati4star.createpdf.fragment.ViewFilesFragment.SIZE_INCREASING_ORDER_INDEX;
 
 /**
  * AsyncTask used to populate the list of elements in the background
@@ -27,7 +23,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
     private Activity mActivity;
     private int mCurrentSortingIndex;
     private EmptyStateChangeListener mEmptyStateChangeListener;
-    private FileUtils mFileUtils;
+    private DirectoryUtils mDirectoryUtils;
     ViewFilesAdapter adapter;
 
     /**
@@ -44,7 +40,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
         this.adapter = adapter;
         mCurrentSortingIndex = index;
         mEmptyStateChangeListener = emptyStateChangeListener;
-        mFileUtils = new FileUtils(mActivity);
+        mDirectoryUtils = new DirectoryUtils(mActivity);
     }
 
     @Override
@@ -81,33 +77,19 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
      */
     private void populateListView() {
         ArrayList<File> pdfFiles = new ArrayList<>();
-        ArrayList<File> pdfFromOtherDir = mFileUtils.getPdfFromOtherDirectories();
-        final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
+        ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
+        final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
         if ((files == null || files.length == 0) && pdfFromOtherDir == null) {
             mEmptyStateChangeListener.setEmptyStateVisible();
         } else {
 
-            pdfFiles = mFileUtils.getPdfsFromPdfFolder(files);
+            pdfFiles = mDirectoryUtils.getPdfsFromPdfFolder(files);
             if (pdfFromOtherDir != null) {
                 pdfFiles.addAll(pdfFromOtherDir);
-                mFileUtils.sortFilesByDateNewestToOldest(pdfFiles);
             }
         }
         Log.v("done", "adding");
-        switch (mCurrentSortingIndex) {
-            case NAME_INDEX:
-                mFileUtils.sortByNameAlphabetical(pdfFiles);
-                break;
-            case DATE_INDEX:
-                mFileUtils.sortFilesByDateNewestToOldest(pdfFiles);
-                break;
-            case SIZE_INCREASING_ORDER_INDEX:
-                mFileUtils.sortFilesBySizeIncreasingOrder(pdfFiles);
-                break;
-            case SIZE_DECREASING_ORDER_INDEX:
-                mFileUtils.sortFilesBySizeDecreasingOrder(pdfFiles);
-                break;
-        }
+        FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
         adapter.setData(pdfFiles);
     }
 

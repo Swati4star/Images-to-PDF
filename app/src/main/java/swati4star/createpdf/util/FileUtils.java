@@ -23,17 +23,14 @@ import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -52,121 +49,6 @@ public class FileUtils {
     public FileUtils(Activity context) {
         this.mContext = context;
         mContentResolver = mContext.getContentResolver();
-    }
-
-    // SORTING FUNCTIONS
-
-    /**
-     * Sorts the given file list in increasing alphabetical  order
-     *
-     * @param filesList list of files to be sorted
-     */
-    public void sortByNameAlphabetical(ArrayList<File> filesList) {
-        Collections.sort(filesList);
-    }
-
-    /**
-     * Sorts the given file list by date from newest to oldest
-     *
-     * @param filesList list of files to be sorted
-     */
-    public void sortFilesByDateNewestToOldest(ArrayList<File> filesList) {
-        Collections.sort(filesList, new Comparator<File>() {
-            @Override
-            public int compare(File file, File file2) {
-                return Long.compare(file2.lastModified(), file.lastModified());
-            }
-        });
-    }
-
-    /**
-     * Sorts the given file list in increasing order of file size
-     *
-     * @param filesList list of files to be sorted
-     */
-    public void sortFilesBySizeIncreasingOrder(ArrayList<File> filesList) {
-        Collections.sort(filesList, new Comparator<File>() {
-            @Override
-            public int compare(File file1, File file2) {
-                return Long.compare(file1.length(), file2.length());
-            }
-        });
-    }
-
-    /**
-     * Sorts the given file list in decreasing order of file size
-     *
-     * @param filesList list of files to be sorted
-     */
-    public void sortFilesBySizeDecreasingOrder(ArrayList<File> filesList) {
-        Collections.sort(filesList, new Comparator<File>() {
-            @Override
-            public int compare(File file1, File file2) {
-                return Long.compare(file2.length(), file1.length());
-            }
-        });
-    }
-
-
-    // RETURING LIST OF FILES OR DIRECTORIES
-
-    /**
-     * Returns pdf files from folder
-     *
-     * @param files list of files (folder)
-     */
-    public ArrayList<File> getPdfsFromPdfFolder(File[] files) {
-        final ArrayList<File> pdfFiles = new ArrayList<>();
-        for (File file : files) {
-            if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
-                pdfFiles.add(file);
-                Log.v("adding", file.getName());
-            }
-        }
-        return pdfFiles;
-    }
-
-    /**
-     * create PDF directory if directory does not exists
-     */
-    public File getOrCreatePdfDirectory() {
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + mContext.getResources().getString(R.string.pdf_dir));
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        return folder;
-    }
-
-    /**
-     * get the PDF files stored in directories other than home directory
-     * @return ArrayList of PDF files
-     */
-    public ArrayList<File> getPdfFromOtherDirectories() {
-        ArrayList<File> pdfFiles = new ArrayList<>();
-        File folder = getOrCreatePdfDirectory();
-        File[] files = folder.listFiles();
-        for (File file : files) {
-            if (file.isDirectory())
-                Collections.addAll(pdfFiles, file.listFiles());
-        }
-        if (pdfFiles.isEmpty())
-            return null;
-        return pdfFiles;
-    }
-
-    /**
-     * get the PDF Directory from directory name
-     * @param dirName - name of the directory to be searched for
-     * @return pdf directory if it exists , else null
-     */
-    public File getDirectory(String dirName) {
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + mContext.getResources().getString(R.string.pdf_dir) + dirName);
-        if (!folder.exists()) {
-            return null;
-        }
-        return folder;
     }
 
     // GET PDF DETAILS
@@ -298,50 +180,6 @@ public class FileUtils {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("application/pdf");
         mContext.startActivity(Intent.createChooser(intent, "Sharing"));
-    }
-
-    /**
-     * Used in searchPDF to give the closest result to search query
-     * @param query - Query from search bar
-     * @param fileName - name of PDF file
-     * @return 1 if the search query and filename has same characters , otherwise 0
-     */
-    private int checkChar(String query , String fileName) {
-        query = query.toLowerCase();
-        fileName = fileName.toLowerCase();
-        Set<Character> q = new HashSet<>();
-        Set<Character> f = new HashSet<>();
-        for ( char c : query.toCharArray() ) {
-            q.add(c);
-        }
-        for ( char c : fileName.toCharArray() ) {
-            f.add(c);
-        }
-
-        if ( q.containsAll(f) || f.containsAll(q) )
-            return 1;
-
-        return 0;
-    }
-
-    /**
-     * Used to search for PDF matching the search query
-     * @param query - Query from search bar
-     * @return ArrayList containg all the pdf files matching the search query
-     */
-    public ArrayList<File> searchPDF(String query) {
-        ArrayList<File> searchResult = new ArrayList<>();
-        final File[] files = getOrCreatePdfDirectory().listFiles();
-        ArrayList<File> pdfs = getPdfsFromPdfFolder(files);
-        for (File pdf : pdfs) {
-            String path = pdf.getPath();
-            String[] fileName = path.split("/");
-            String pdfName = fileName[fileName.length - 1].replace("pdf" , "");
-            if (checkChar(query , pdfName) == 1) {
-                searchResult.add(pdf);
-            }
-        }
-        return searchResult;
     }
 
     /**

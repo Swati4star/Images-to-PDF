@@ -27,7 +27,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,21 +38,18 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
+import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FileSortUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MoveFilesToDirectory;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 
 public class ViewFilesFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener, EmptyStateChangeListener {
-
-    // Sorting order constants
-    public static final int NAME_INDEX = 0;
-    public static final int DATE_INDEX = 1;
-    public static final int SIZE_INCREASING_ORDER_INDEX = 2;
-    public static final int SIZE_DECREASING_ORDER_INDEX = 3;
 
     // Directory operations constants
     public static final int NEW_DIR = 1;
@@ -78,11 +74,12 @@ public class ViewFilesFragment extends Fragment
     private Activity mActivity;
     private ViewFilesAdapter mViewFilesAdapter;
 
-    private FileUtils mFileUtils;
+    private DirectoryUtils mDirectoryUtils;
     private SearchView mSearchView;
     private int mCurrentSortingIndex;
     private SharedPreferences mSharedPreferences;
     private boolean mIsChecked = false;
+    private AlertDialog.Builder mAlertDialogBuilder;
 
     //When the "GET STARTED" button is clicked, the user is taken to home
     @OnClick(R.id.getStarted)
@@ -96,7 +93,7 @@ public class ViewFilesFragment extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
-        mFileUtils = new FileUtils(mActivity);
+        mDirectoryUtils = new DirectoryUtils(mActivity);
     }
 
     @Override
@@ -115,6 +112,14 @@ public class ViewFilesFragment extends Fragment
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mCurrentSortingIndex = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
         mViewFilesAdapter = new ViewFilesAdapter(mActivity, null, this);
+        mAlertDialogBuilder = new AlertDialog.Builder(mActivity)
+                .setCancelable(true)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
         mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
@@ -138,20 +143,16 @@ public class ViewFilesFragment extends Fragment
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                ArrayList<File> searchResult = mFileUtils.searchPDF(s);
-                if (searchResult.isEmpty()) {
-                    Toast.makeText(mActivity, R.string.no_result, Toast.LENGTH_LONG).show();
-                } else {
-                    mViewFilesAdapter.setData(searchResult);
-                    mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
-                    mSearchView.clearFocus();
-                }
+                ArrayList<File> searchResult = mDirectoryUtils.searchPDF(s);
+                mViewFilesAdapter.setData(searchResult);
+                mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+                mSearchView.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                ArrayList<File> searchResult = mFileUtils.searchPDF(s);
+                ArrayList<File> searchResult = mDirectoryUtils.searchPDF(s);
                 mViewFilesAdapter.setData(searchResult);
                 mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
                 return true;
@@ -189,20 +190,14 @@ public class ViewFilesFragment extends Fragment
                 if (mIsChecked) {
                     mViewFilesAdapter.unCheckAll();
                     mMenuItem.setIcon(R.drawable.ic_check_box_outline_blank_24dp);
-                    mIsChecked = false;
                 } else {
                     mViewFilesAdapter.checkAll();
                     mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
-                    mIsChecked = true;
                 }
+                mIsChecked = !mIsChecked;
                 break;
         }
         return true;
-    }
-
-    private void showSnack(int resID) {
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                resID, Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -220,18 +215,10 @@ public class ViewFilesFragment extends Fragment
         } else {
             final EditText input = alertView.findViewById(R.id.directory_editText);
             TextView message = alertView.findViewById(R.id.directory_textView);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
             if (operation == NEW_DIR) {
                 message.setText(R.string.dialog_new_dir);
-                builder.setTitle(R.string.new_directory)
+                mAlertDialogBuilder.setTitle(R.string.new_directory)
                         .setView(alertView)
-                        .setCancelable(true)
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        })
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -246,20 +233,13 @@ public class ViewFilesFragment extends Fragment
                         });
             } else if (operation == EXISTING_DIR) {
                 message.setText(R.string.dialog_dir);
-                builder.setTitle(R.string.directory)
+                mAlertDialogBuilder.setTitle(R.string.directory)
                         .setView(alertView)
-                        .setCancelable(true)
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        })
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String fileName = input.getText().toString();
-                                File directory = mFileUtils.getDirectory(fileName);
+                                File directory = mDirectoryUtils.getDirectory(fileName);
                                 if (directory != null) {
                                     new MoveFilesToDirectory(mActivity
                                             , filePath
@@ -275,7 +255,7 @@ public class ViewFilesFragment extends Fragment
                             }
                         });
             }
-            builder.create().show();
+            mAlertDialogBuilder.create().show();
         }
     }
 
@@ -284,24 +264,15 @@ public class ViewFilesFragment extends Fragment
      * and delete files on positive response
      */
     private void deleteFiles() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
+        mAlertDialogBuilder.setTitle(R.string.delete_alert)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                         mViewFilesAdapter.deleteFiles();
                         checkIfListEmpty();
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
-            }
-        };
-        builder.setTitle("Do you want to delete all selected files?")
-                .setNegativeButton(R.string.no, mDialogClickListener)
-                .setPositiveButton(R.string.yes, mDialogClickListener);
-        builder.create().show();
+                    }
+                });
+        mAlertDialogBuilder.create().show();
     }
 
     /**
@@ -310,7 +281,7 @@ public class ViewFilesFragment extends Fragment
      */
     private void checkIfListEmpty() {
         onRefresh();
-        final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
+        final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
         int count = 0;
         for (File file : files)
             if (!file.isDirectory()) {
@@ -331,39 +302,25 @@ public class ViewFilesFragment extends Fragment
     }
 
     private void displaySortDialog() {
-        final File folder = mFileUtils.getOrCreatePdfDirectory();
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        builder.setTitle("Sort by")
+        final File folder = mDirectoryUtils.getOrCreatePdfDirectory();
+        mAlertDialogBuilder.setTitle(R.string.sort_by_title)
                 .setItems(R.array.sort_options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        ArrayList<File> pdfsFromFolder = mFileUtils.getPdfsFromPdfFolder(folder.listFiles());
-                        ArrayList<File> pdfFromOtherDir = mFileUtils.getPdfFromOtherDirectories();
+                        ArrayList<File> pdfsFromFolder = mDirectoryUtils.getPdfsFromPdfFolder(folder.listFiles());
+                        ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
                         if (pdfFromOtherDir != null) {
                             pdfsFromFolder.addAll(pdfFromOtherDir);
-                        }
-                        switch (which) {
-                            case DATE_INDEX:
-                                mFileUtils.sortFilesByDateNewestToOldest(pdfsFromFolder);
-                                break;
-                            case NAME_INDEX:
-                                mFileUtils.sortByNameAlphabetical(pdfsFromFolder);
-                                break;
-                            case SIZE_INCREASING_ORDER_INDEX:
-                                mFileUtils.sortFilesBySizeIncreasingOrder(pdfsFromFolder);
-                                break;
-                            case SIZE_DECREASING_ORDER_INDEX:
-                                mFileUtils.sortFilesBySizeDecreasingOrder(pdfsFromFolder);
-                                break;
-                            default:
-                                break;
-                        }
+                        } else
+                            FileSortUtils.performSortOperation(which, pdfsFromFolder);
+
                         mViewFilesAdapter.setData(pdfsFromFolder);
                         mCurrentSortingIndex = which;
                         mSharedPreferences.edit().putInt(SORTING_INDEX, which).apply();
                     }
                 });
-        builder.create().show();
+        mAlertDialogBuilder.create().show();
     }
+
 
     @Override
     public void setEmptyStateVisible() {
@@ -402,8 +359,8 @@ public class ViewFilesFragment extends Fragment
         if (filePath == null) {
             showSnack(R.string.snackbar_no_pdfs_selected);
         } else {
-            final File[] files = mFileUtils.getOrCreatePdfDirectory().listFiles();
-            for (File pdf : mFileUtils.getPdfsFromPdfFolder(files)) {
+            final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
+            for (File pdf : mDirectoryUtils.getPdfsFromPdfFolder(files)) {
                 if (filePath.contains(pdf.getPath())) {
                     //remove the files already present in home directory
                     filePath.remove(filePath.indexOf(pdf.getPath()));
@@ -426,21 +383,13 @@ public class ViewFilesFragment extends Fragment
         final EditText input = alertView.findViewById(R.id.directory_editText);
         TextView message = alertView.findViewById(R.id.directory_textView);
         message.setText(R.string.dialog_delete_dir);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        builder.setTitle(R.string.delete_directory)
+        mAlertDialogBuilder.setTitle(R.string.delete_directory)
                 .setView(alertView)
-                .setCancelable(true)
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialogInterface, int i) {
                         final String dirName = input.getText().toString();
-                        final File directory = mFileUtils.getDirectory(dirName);
+                        final File directory = mDirectoryUtils.getDirectory(dirName);
                         if (directory == null) {
                             showSnack(R.string.dir_does_not_exists);
                         } else {
@@ -454,10 +403,8 @@ public class ViewFilesFragment extends Fragment
                                             for (File pdf : directory.listFiles()) {
                                                 pdfFiles.add(pdf.getPath());
                                             }
-                                            new MoveFilesToDirectory(mActivity
-                                                    , pdfFiles
-                                                    , dirName
-                                                    , MoveFilesToDirectory.DELETE_DIRECTORY)
+                                            new MoveFilesToDirectory(mActivity, pdfFiles,
+                                                    dirName, MoveFilesToDirectory.DELETE_DIRECTORY)
                                                     .execute();
                                             populatePdfList();
                                         }
@@ -473,6 +420,13 @@ public class ViewFilesFragment extends Fragment
                         }
                     }
                 });
-        builder.create().show();
+        mAlertDialogBuilder.create().show();
     }
+
+
+    private void showSnack(int resID) {
+        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                resID, Snackbar.LENGTH_LONG).show();
+    }
+
 }

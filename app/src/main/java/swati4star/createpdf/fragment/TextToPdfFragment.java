@@ -88,7 +88,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         mTextEnhancementOptionsEntityArrayList.add(
                 new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_font_family_24dp),
                         String.format(getString(R.string.default_font_family_text), mFontFamily.name())));
-
         return mTextEnhancementOptionsEntityArrayList;
     }
 
@@ -110,15 +109,19 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 break;
             case 1:
                 changeFontFamily();
+                break;
         }
     }
 
+    /**
+     * Shows dialog to change font size
+     */
     private void changeFontFamily() {
-        String fontFamilyDefault = mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
+        String fontFamily = mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY);
-        int ordinal = Font.FontFamily.valueOf(fontFamilyDefault).ordinal();
+        int ordinal = Font.FontFamily.valueOf(fontFamily).ordinal();
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
-                .title(String.format(getString(R.string.default_font_family_text), fontFamilyDefault))
+                .title(String.format(getString(R.string.default_font_family_text), fontFamily))
                 .customView(R.layout.dialog_font_family, true)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
@@ -260,9 +263,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
-            if (mFontSize == 0) {
-                mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
-            }
+            mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
             fileUtil.createPdf(new TextToPDFOptions(mFilename, mTextFileUri, mFontSize, mFontFamily));
             final String finalMPath = mPath;
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
@@ -289,7 +290,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType(getString(R.string.text_type));
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-
         try {
             startActivityForResult(
                     Intent.createChooser(intent, String.valueOf(R.string.select_file)),
@@ -325,7 +325,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
 
     private void showSnackbar(int resID) {
         Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                resID,
-                Snackbar.LENGTH_LONG).show();
+                resID, Snackbar.LENGTH_LONG).show();
     }
 }

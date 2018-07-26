@@ -25,6 +25,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
+import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
@@ -48,6 +49,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final ArrayList<Integer> mSelectedFiles;
 
     private final FileUtils mFileUtils;
+    private DirectoryUtils mDirectoryUtils;
     private final PDFUtils mPDFUtils;
     private final PDFEncryptionUtility mPDFEncryptionUtils;
     private final DatabaseHelper mDatabaseHelper;
@@ -68,6 +70,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
+        mDirectoryUtils = new DirectoryUtils(activity);
         mPDFEncryptionUtils = new PDFEncryptionUtility(activity);
         mDatabaseHelper = new DatabaseHelper(mActivity);
     }
@@ -314,8 +317,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void updateDataset() {
-        File folder = mFileUtils.getOrCreatePdfDirectory();
-        ArrayList<File> pdfsFromFolder = mFileUtils.getPdfsFromPdfFolder(folder.listFiles());
+        File folder = mDirectoryUtils.getOrCreatePdfDirectory();
+        ArrayList<File> pdfsFromFolder = mDirectoryUtils.getPdfsFromPdfFolder(folder.listFiles());
         setData(pdfsFromFolder);
     }
 
