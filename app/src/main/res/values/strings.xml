@@ -269,6 +269,8 @@
     <string name="filter_temp">Temperature</string>
     <string name="filter_tint">Tint</string>
     <string name="filter_vig">Vignette</string>
+    <string name="filter_cancel_question">Are you sure you want to remove filters from all your images?</string>
+    <string name="filter_cancel_description">Pressing OK will remove all your filters</string>
     <string name="history">History</string>
     <string name="created">Created</string>
     <string name="printed">Printed</string>
