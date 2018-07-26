@@ -68,6 +68,7 @@
 
         <activity android:name=".activity.ImageEditor"/>
         <activity android:name=".activity.PreviewActivity"/>
+        <activity android:name=".activity.ReArrangeImages"/>
 
     </application>
 

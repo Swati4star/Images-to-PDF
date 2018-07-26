@@ -74,6 +74,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
+    private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
 
     private static int mImageCounter = 0;
     private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
@@ -380,6 +381,24 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         mImageCounter++;
                 }
                 break;
+
+            case INTENT_REQUEST_PREVIEW_IMAGE:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        try {
+                            mImagesUri.clear();
+                            mTempUris.clear();
+                            ArrayList<String> uris = data.getStringArrayListExtra("result");
+                            mImagesUri = uris;
+                            int size = uris.size() - 1;
+                            for (int k = 0; k <= size; k++) {
+                                mTempUris.add(uris.get(k));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }
+                break;
         }
     }
 
@@ -453,7 +472,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
 
         Intent intent = new Intent(mActivity, PreviewActivity.class);
         intent.putExtra(PREVIEW_IMAGES, mImagesUri);
-        startActivity(intent);
+        startActivityForResult(intent, INTENT_REQUEST_PREVIEW_IMAGE);
     }
 
     private void setPageSize() {

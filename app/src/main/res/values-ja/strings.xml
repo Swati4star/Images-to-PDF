@@ -231,4 +231,8 @@
     <string name="symbol">SYMBOL</string>
     <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
+    <string name="selected_image">Selected Image</string>
+    <string name="arrow_up">Arrow Up</string>
+    <string name="arrow_down">Arrow Down</string>
+    <string name="rearrange_images">Rearrange Images</string>
 </resources>
