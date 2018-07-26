@@ -58,7 +58,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
 
     private ArrayList<PreviewImageOptionItem> getOptions() {
         ArrayList<PreviewImageOptionItem> mOptions = new ArrayList<>();
-        mOptions.add(new PreviewImageOptionItem(R.drawable.ic_rearrange, "Rearrange"));
+        mOptions.add(new PreviewImageOptionItem(R.drawable.ic_rearrange, getString(R.string.rearrange_text)));
         return mOptions;
     }
 

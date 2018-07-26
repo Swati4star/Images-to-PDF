@@ -296,5 +296,6 @@
     <string name="arrow_up">Arrow Up</string>
     <string name="arrow_down">Arrow Down</string>
     <string name="rearrange_images">Rearrange Images</string>
+    <string name="rearrange_text">Rearrange</string>
 
 </resources>
