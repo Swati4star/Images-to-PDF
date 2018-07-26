@@ -40,13 +40,8 @@ public class PreviewImageOptionsAdapter extends RecyclerView.Adapter<PreviewImag
     @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(@NonNull PreviewImageOptionsAdapter.ViewHolder holder, int position) {
-        int imageid = mOptions.get(position).getOptionImageId();
-
-       /* Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageid);
-        int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
-        int radius = width > height ? height : width; // set the smallest edge as radius.
-        roundBitmap = ImageUtils.getRoundBitmap(roundBitmap, radius);*/
-        holder.imageView.setImageDrawable(mContext.getDrawable(imageid));
+        int imageId = mOptions.get(position).getOptionImageId();
+        holder.imageView.setImageDrawable(mContext.getDrawable(imageId));
         holder.textView.setText(mOptions.get(position).getOptionName());
     }
 

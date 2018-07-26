@@ -15,16 +15,18 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 
 
-public class ReArrangeImagesAdapter extends RecyclerView.Adapter<ReArrangeImagesAdapter.ViewHolder> {
+public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImagesAdapter.ViewHolder> {
     private ArrayList<String> mImagesUri;
     private final Context mContext;
     private final OnClickListener mOnClickListener;
 
 
-    public ReArrangeImagesAdapter(OnClickListener onClickListener,
+    public RearrangeImagesAdapter(OnClickListener onClickListener,
                                   ArrayList<String> uris, Context context) {
         mOnClickListener = onClickListener;
         mImagesUri = uris;
@@ -33,16 +35,16 @@ public class ReArrangeImagesAdapter extends RecyclerView.Adapter<ReArrangeImages
 
     @NonNull
     @Override
-    public ReArrangeImagesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RearrangeImagesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_rearrange_images, parent, false);
-        return new ReArrangeImagesAdapter.ViewHolder(view);
+        return new RearrangeImagesAdapter.ViewHolder(view);
 
     }
 
     @SuppressLint("NewApi")
     @Override
-    public void onBindViewHolder(@NonNull ReArrangeImagesAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RearrangeImagesAdapter.ViewHolder holder, int position) {
         File imageFile = new File(mImagesUri.get(position));
         if (position == 0) {
             holder.buttonUp.setVisibility(View.GONE);
@@ -63,16 +65,16 @@ public class ReArrangeImagesAdapter extends RecyclerView.Adapter<ReArrangeImages
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final ImageView imageView;
-        final ImageButton buttonUp;
-        final ImageButton buttonDown;
+        @BindView(R.id.image)
+        ImageView imageView;
+        @BindView(R.id.buttonUp)
+        ImageButton buttonUp;
+        @BindView(R.id.buttonDown)
+        ImageButton buttonDown;
 
         ViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.image);
-            buttonUp = itemView.findViewById(R.id.buttonUp);
-            buttonDown = itemView.findViewById(R.id.buttonDown);
-
+            ButterKnife.bind(this, itemView);
             buttonDown.setOnClickListener(this);
             buttonUp.setOnClickListener(this);
         }

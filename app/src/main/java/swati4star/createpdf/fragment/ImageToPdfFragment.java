@@ -55,6 +55,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.ImageToPDFOptions;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -388,12 +389,9 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         try {
                             mImagesUri.clear();
                             mTempUris.clear();
-                            ArrayList<String> uris = data.getStringArrayListExtra("result");
+                            ArrayList<String> uris = data.getStringArrayListExtra(Constants.RESULT);
                             mImagesUri = uris;
-                            int size = uris.size() - 1;
-                            for (int k = 0; k <= size; k++) {
-                                mTempUris.add(uris.get(k));
-                            }
+                            mTempUris.addAll(uris);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

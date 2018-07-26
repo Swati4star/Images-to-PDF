@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -20,6 +19,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.PreviewAdapter;
 import swati4star.createpdf.adapter.PreviewImageOptionsAdapter;
 import swati4star.createpdf.model.PreviewImageOptionItem;
+import swati4star.createpdf.util.Constants;
 
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 
@@ -73,14 +73,14 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     }
 
     private void reArrangeImages() {
-        Intent intent = new Intent(this, ReArrangeImages.class);
+        Intent intent = new Intent(this, RearrangeImages.class);
         intent.putStringArrayListExtra(PREVIEW_IMAGES, mImagesArrayList);
         startActivityForResult(intent, INTENT_REQUEST_REARRANGE_IMAGE);
     }
 
     private void passUris() {
         Intent returnIntent = new Intent();
-        returnIntent.putStringArrayListExtra("result", mImagesArrayList);
+        returnIntent.putStringArrayListExtra(Constants.RESULT, mImagesArrayList);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -93,7 +93,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         try {
-                            mImagesArrayList = data.getStringArrayListExtra("result");
+                            mImagesArrayList = data.getStringArrayListExtra(Constants.RESULT);
 
                         } catch (Exception e) {
                             e.printStackTrace();
