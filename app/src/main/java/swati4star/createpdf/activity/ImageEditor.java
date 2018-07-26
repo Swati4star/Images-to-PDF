@@ -310,4 +310,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        done();
+    }
 }
