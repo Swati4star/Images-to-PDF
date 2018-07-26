@@ -1,38 +1,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.PreviewActivity">
 
     <android.support.v4.view.ViewPager
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/recyclerView"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.v4.view.PagerTabStrip
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/mb_white"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
+        <android.support.v4.view.PagerTabStrip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/mb_white" />
 
     </android.support.v4.view.ViewPager>
 
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/info"
+        android:background="@color/gray_background"
+        android:orientation="horizontal" />
 
     <TextView
         android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="21dp"
-        android:textColor="@color/black"
-        android:text="@string/swipe_to_view_next" />
+        android:gravity="center"
+        android:text="@string/swipe_to_view_next"
+        android:textColor="@color/black" />
 
 </RelativeLayout>

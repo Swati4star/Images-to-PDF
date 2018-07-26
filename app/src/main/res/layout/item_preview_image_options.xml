@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="5dp"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/option_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_rearrange"
+        android:contentDescription="@string/rearrange_images"/>
+
+    <TextView
+        android:id="@+id/option_name"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="2dp"
+        android:textAlignment="center"
+        android:textColor="@color/black_87"
+
+        android:textSize="12sp"
+        tools:text="@string/Filter_name" />
+
+</LinearLayout>
