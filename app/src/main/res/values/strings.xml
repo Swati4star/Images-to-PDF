@@ -192,6 +192,11 @@
     <string name="letter">LETTER</string>
     <string name="legal">LEGAL</string>
     <string name="default_a4">DEFAULT (A4)</string>
+
+
+    <string name="delete_alert">Do you want to delete all selected files?</string>
+    <string name="sort_by_title">Sort by</string>
+
     <!-- Directory Strings -->
     <string name="directory">Directory</string>
     <string name="moving_files">Moving your files</string>
@@ -243,7 +248,7 @@
     <string name="playstore">Rate us on Playstore</string>
 
     <!-- Preview strings -->
-    <string name="swipe_to_view_next">Swipe right to view next image</string>
+    <string name="swipe_to_view_next">Swipe left to view next image</string>
     <string name="showing_image">Showing %1$d of %2$d image(s)</string>
 
     <!-- Filter strings -->
@@ -269,6 +274,8 @@
     <string name="filter_temp">Temperature</string>
     <string name="filter_tint">Tint</string>
     <string name="filter_vig">Vignette</string>
+    <string name="filter_cancel_question">Are you sure you want to remove filters from all your images?</string>
+    <string name="filter_cancel_description">Pressing OK will remove all your filters</string>
     <string name="history">History</string>
     <string name="created">Created</string>
     <string name="printed">Printed</string>
@@ -279,5 +286,18 @@
     <string name="delete_history_message">Are you sure you want to delete history ?</string>
 
     <string name="file_info">\n  File Name : %1$s \n\n  Path : %2$s \n\n  Size : %3$s \n\n  Date Modified %4$s</string>
+    <string name="default_font_family_text">Font Family (Default : %s)</string>
+    <string name="font_family_text">"Font Family : "</string>
+    <string name="courier">COURIER</string>
+    <string name="helvetica">HELVETICA</string>
+    <string name="times_roman">TIMES_ROMAN</string>
+    <string name="symbol">SYMBOL</string>
+    <string name="zapfdingbats">ZAPFDINGBATS</string>
+    <string name="undefined">UNDEFINED</string>
+    <string name="selected_image">Selected Image</string>
+    <string name="arrow_up">Arrow Up</string>
+    <string name="arrow_down">Arrow Down</string>
+    <string name="rearrange_images">Rearrange Images</string>
+    <string name="rearrange_text">Rearrange</string>
 
 </resources>

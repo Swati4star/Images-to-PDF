@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,23 +21,23 @@ public class PreviewAdapter extends PagerAdapter {
     private final ArrayList<String> mPreviewItems;
     private final LayoutInflater mInflater;
 
+
     public PreviewAdapter(Context context, ArrayList<String> previewItems) {
         mContext = context;
         mPreviewItems = previewItems;
         mInflater = LayoutInflater.from(context);
+
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup view, int position) {
         View layout = mInflater.inflate(R.layout.pdf_preview_item, view, false);
-        final TextView textView = layout.findViewById(R.id.textView);
+
         final ImageView imageView = layout.findViewById(R.id.image);
 
         File fileLocation = new File(mPreviewItems.get(position));
-        textView.setText(
-                String.format(mContext.getResources().getString(R.string.showing_image),
-                        position + 1, mPreviewItems.size()));
+
         Picasso.with(mContext).load(fileLocation).into(imageView);
         view.addView(layout, 0);
         return layout;
@@ -58,5 +57,14 @@ public class PreviewAdapter extends PagerAdapter {
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        String pageTitle = String.format(mContext.getResources().getString(R.string.showing_image),
+                position + 1, mPreviewItems.size());
+
+        return pageTitle;
+    }
+
 
 }
