@@ -2,14 +2,19 @@ package swati4star.createpdf.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +27,9 @@ import android.view.ViewGroup;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +40,7 @@ import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
-public class HistoryFragment extends Fragment {
+public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickListener {
 
     @BindView(R.id.emptyStatusView)
     ConstraintLayout mEmptyStatusLayout;
@@ -106,6 +113,32 @@ public class HistoryFragment extends Fragment {
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
     }
 
+    @Override
+    public void onItemClick(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            Intent target = new Intent(Intent.ACTION_VIEW);
+            Uri uri = FileProvider.getUriForFile(mActivity, "com.swati4star.shareFile", file);
+
+            target.setDataAndType(uri, getString(R.string.pdf_type));
+            target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            Intent intent = Intent.createChooser(target, getString(R.string.open_file));
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                        R.string.snackbar_no_pdf_app,
+                        Snackbar.LENGTH_LONG).show();
+            }
+        } else {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.pdf_does_not_exist_message,
+                    Snackbar.LENGTH_LONG).show();
+        }
+    }
+
     @SuppressLint("StaticFieldLeak")
     private class LoadHistory extends AsyncTask<Void, Void, Void> {
         private final Context mContext;
@@ -126,7 +159,7 @@ public class HistoryFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             if (mHistoryList != null && !mHistoryList.isEmpty()) {
                 mEmptyStatusLayout.setVisibility(View.GONE);
-                mHistoryAdapter = new HistoryAdapter(mActivity, mHistoryList);
+                mHistoryAdapter = new HistoryAdapter(mActivity, mHistoryList, HistoryFragment.this);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
                 mHistoryRecyclerView.setLayoutManager(mLayoutManager);
                 mHistoryRecyclerView.setAdapter(mHistoryAdapter);
