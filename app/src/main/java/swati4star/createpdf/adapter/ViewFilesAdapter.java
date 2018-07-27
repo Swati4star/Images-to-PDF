@@ -253,14 +253,15 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         }
                     }).addCallback(new Snackbar.Callback() {
 
-                @Override
-                public void onDismissed(Snackbar snackbar, int event) {
-                    if (flag == 0) {
-                        fdelete.delete();
-                        mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
-                    }
-                }
-            }).show();
+                        @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            if (flag == 0) {
+                                fdelete.delete();
+                                mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                        mActivity.getString(R.string.deleted));
+                            }
+                        }
+                    }).show();
         }
         if (mFileList.size() == 0) {
             mEmptyStateChangeListener.setEmptyStateVisible();
