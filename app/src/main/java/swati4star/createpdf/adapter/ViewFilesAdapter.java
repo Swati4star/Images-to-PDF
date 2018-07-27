@@ -47,7 +47,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final EmptyStateChangeListener mEmptyStateChangeListener;
 
     private ArrayList<File> mFileList;
-    int flag = 0;
+    int isFileDeleteUndoClicked = 0;
     private final ArrayList<Integer> mSelectedFiles;
 
     private final FileUtils mFileUtils;
@@ -235,7 +235,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * @param position - position of file in arraylist
      */
     private void deleteFile(String name, int position) {
-        flag = 0;
+        isFileDeleteUndoClicked = 0;
         final File fdelete = new File(name);
         final File fcreate = new File(name);
         if (fdelete.exists()) {
@@ -249,13 +249,13 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         public void onClick(View v) {
                             mFileList.add(fcreate);
                             notifyDataSetChanged();
-                            flag = 1;
+                            isFileDeleteUndoClicked = 1;
                         }
                     }).addCallback(new Snackbar.Callback() {
 
                         @Override
                         public void onDismissed(Snackbar snackbar, int event) {
-                            if (flag == 0) {
+                            if (isFileDeleteUndoClicked == 0) {
                                 fdelete.delete();
                                 mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
                                         mActivity.getString(R.string.deleted));
