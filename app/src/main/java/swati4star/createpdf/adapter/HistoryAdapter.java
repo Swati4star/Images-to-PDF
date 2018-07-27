@@ -19,10 +19,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
 
     private final List<History> mHistoryList;
     private final Activity mActivity;
+    private final OnClickListener mOnClickListener;
 
-    public HistoryAdapter(Activity mActivity, List<History> mHistoryList) {
+
+    public HistoryAdapter(Activity mActivity, List<History> mHistoryList, OnClickListener mOnClickListener) {
         this.mHistoryList = mHistoryList;
         this.mActivity = mActivity;
+        this.mOnClickListener = mOnClickListener;
     }
 
     @NonNull
@@ -56,7 +59,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         return mHistoryList == null ? 0 : mHistoryList.size();
     }
 
-    public class ViewHistoryHolder extends RecyclerView.ViewHolder {
+    public class ViewHistoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.fileName)
         TextView mFilename;
@@ -68,6 +71,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         ViewHistoryHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            mOnClickListener.onItemClick(mHistoryList.get(getAdapterPosition()).getFilePath());
+        }
+    }
+
+    public interface OnClickListener {
+        void onItemClick(String path);
     }
 }
