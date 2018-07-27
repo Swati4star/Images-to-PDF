@@ -299,5 +299,6 @@
     <string name="arrow_down">Arrow Down</string>
     <string name="rearrange_images">Rearrange Images</string>
     <string name="rearrange_text">Rearrange</string>
+    <string name="snackbar_undoAction">Undo</string>
 
 </resources>
