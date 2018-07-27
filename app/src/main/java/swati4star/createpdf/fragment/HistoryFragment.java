@@ -112,10 +112,10 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
 
     @Override
     public void onItemClick(String path) {
-        FileUtils fileUtils=new FileUtils(mActivity);
+        FileUtils fileUtils = new FileUtils(mActivity);
         File file = new File(path);
         if (file.exists()) {
-           fileUtils.openFile(path);
+            fileUtils.openFile(path);
         } else {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.pdf_does_not_exist_message,
