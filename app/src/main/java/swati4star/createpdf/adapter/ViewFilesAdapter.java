@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -46,6 +47,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final EmptyStateChangeListener mEmptyStateChangeListener;
 
     private ArrayList<File> mFileList;
+    int isFileDeleteUndoClicked = 0;
     private final ArrayList<Integer> mSelectedFiles;
 
     private final FileUtils mFileUtils;
@@ -233,15 +235,33 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * @param position - position of file in arraylist
      */
     private void deleteFile(String name, int position) {
-        File fdelete = new File(name);
+        isFileDeleteUndoClicked = 0;
+        final File fdelete = new File(name);
+        final File fcreate = new File(name);
         if (fdelete.exists()) {
-            if (fdelete.delete()) {
-                showSnackbar(R.string.snackbar_file_deleted);
-                mFileList.remove(position);
-                notifyDataSetChanged();
-                mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
-            } else
-                showSnackbar(R.string.snackbar_file_not_deleted);
+            mFileList.remove(position);
+            notifyDataSetChanged();
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
+                    , R.string.snackbar_file_deleted
+                    , Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_undoAction, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mFileList.add(fcreate);
+                            notifyDataSetChanged();
+                            isFileDeleteUndoClicked = 1;
+                        }
+                    }).addCallback(new Snackbar.Callback() {
+
+                        @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            if (isFileDeleteUndoClicked == 0) {
+                                fdelete.delete();
+                                mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                        mActivity.getString(R.string.deleted));
+                            }
+                        }
+                    }).show();
         }
         if (mFileList.size() == 0) {
             mEmptyStateChangeListener.setEmptyStateVisible();
