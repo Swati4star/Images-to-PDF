@@ -8,27 +8,35 @@
     android:layout_marginEnd="15dp"
     android:layout_marginStart="15dp"
     android:layout_marginTop="5dp"
-    android:background="@android:color/background_light"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/option_image"
+    <android.support.v7.widget.CardView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:tint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_rearrange"
-        android:contentDescription="@string/rearrange_images"/>
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="35dp">
+
+        <ImageView
+            android:id="@+id/option_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/rearrange_images"
+            android:tint="@color/mb_white"
+            app:srcCompat="@drawable/ic_rearrange" />
+    </android.support.v7.widget.CardView>
+
 
     <TextView
         android:id="@+id/option_name"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
         android:gravity="center"
         android:padding="2dp"
         android:textAlignment="center"
         android:textColor="@color/black_87"
-
         android:textSize="12sp"
-        tools:text="@string/Filter_name" />
+        tools:text="@string/rearrange_text" />
 
 </LinearLayout>
