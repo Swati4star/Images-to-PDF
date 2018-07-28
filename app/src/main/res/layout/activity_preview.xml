@@ -23,6 +23,24 @@
 
     </android.support.v4.view.ViewPager>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/textView"
+        android:background="@color/colorGray" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/recyclerView"
+        android:background="@color/gray_background"
+        android:gravity="center"
+        android:paddingTop="3dp"
+        android:text="@string/image_rearranging_options"
+        android:textColor="@color/colorGray"
+        android:textStyle="bold" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
