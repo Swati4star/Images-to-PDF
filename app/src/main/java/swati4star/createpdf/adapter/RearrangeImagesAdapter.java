@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -57,6 +58,7 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
             holder.buttonDown.setVisibility(View.VISIBLE);
         }
         Picasso.with(mContext).load(imageFile).into(holder.imageView);
+        holder.pageNumber.setText(String.valueOf(position + 1));
     }
 
     @Override
@@ -71,6 +73,8 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
         ImageButton buttonUp;
         @BindView(R.id.buttonDown)
         ImageButton buttonDown;
+        @BindView(R.id.pageNumber)
+        TextView pageNumber;
 
         ViewHolder(View itemView) {
             super(itemView);

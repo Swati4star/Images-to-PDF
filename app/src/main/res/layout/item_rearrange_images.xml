@@ -15,8 +15,20 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_toStartOf="@id/linearLayout"
-        android:src="@drawable/circle"
-        android:contentDescription="@string/selected_image"/>
+        android:contentDescription="@string/selected_image"
+        android:src="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/pageNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:background="@drawable/circle_white"
+        android:backgroundTint="@color/colorGray"
+        android:gravity="center"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -33,16 +45,22 @@
             android:id="@+id/buttonUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_arrow_up_black_24dp"
-            android:contentDescription="@string/arrow_up"/>
+            android:layout_margin="8dp"
+            android:background="@drawable/circle_white"
+            android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@string/arrow_up"
+            android:tint="@android:color/background_light"
+            app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
 
         <ImageButton
             android:id="@+id/buttonDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorPrimary"
+            android:layout_margin="8dp"
+            android:background="@drawable/circle_white"
+            android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/arrow_down"
+            android:tint="@android:color/background_light"
             app:srcCompat="@drawable/ic_arrow_down_black_24dp" />
 
     </LinearLayout>
