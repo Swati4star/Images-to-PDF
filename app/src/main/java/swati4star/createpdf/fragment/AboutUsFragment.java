@@ -64,7 +64,9 @@ public class AboutUsFragment extends Fragment {
 
     @OnClick(R.id.layout_slack)
     void joinSlack() {
-        openWebPage("https://goo.gl/J6Hrd4");
+        openWebPage("https://join.slack.com/t/imagestopdf/shared_invite/" +
+                "enQtNDA2ODk1NDE3Mzk3LTUwNjllYzY5YWZkZDliY2FmNDhkNmM1NjIwZTc1Y" +
+                "jU4NTgxNWI0ZDczMWQxMTEyZjA0M2Y5N2RlN2NiMWRjZGI");
     }
 
     @OnClick(R.id.layout_github)
@@ -100,10 +102,8 @@ public class AboutUsFragment extends Fragment {
 
     private void openWebPage(String url) {
         Uri uri = Uri.parse(url);
-
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         if (intent.resolveActivity(mActivity.getPackageManager()) != null)
             startActivity(intent);
     }
-
 }
