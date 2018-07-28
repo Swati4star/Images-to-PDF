@@ -28,7 +28,7 @@ public class DirectoryUtils {
     public ArrayList<File> searchPDF(String query) {
         ArrayList<File> searchResult = new ArrayList<>();
         final File[] files = getOrCreatePdfDirectory().listFiles();
-        ArrayList<File> pdfs = getPdfsFromPdfFolder(files);
+        ArrayList<File> pdfs = searchPdfsFromPdfFolder(files);
         for (File pdf : pdfs) {
             String path = pdf.getPath();
             String[] fileName = path.split("/");
@@ -77,6 +77,25 @@ public class DirectoryUtils {
             if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
                 pdfFiles.add(file);
                 Log.v("adding", file.getName());
+            }
+        }
+        return pdfFiles;
+    }
+
+    private ArrayList<File> searchPdfsFromPdfFolder(File[] files) {
+        final ArrayList<File> pdfFiles = new ArrayList<>();
+        for (File file : files) {
+            if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
+                pdfFiles.add(file);
+                Log.v("adding", file.getName());
+            }
+            if (file.isDirectory()) {
+                for (File dirFiles : file.listFiles()) {
+                    if (!dirFiles.isDirectory() && dirFiles.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
+                        pdfFiles.add(dirFiles);
+                        Log.v("adding", dirFiles.getName());
+                    }
+                }
             }
         }
         return pdfFiles;
