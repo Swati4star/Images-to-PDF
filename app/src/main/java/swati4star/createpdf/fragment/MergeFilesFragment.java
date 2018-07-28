@@ -90,17 +90,14 @@ public class MergeFilesFragment extends Fragment {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (StringUtils.isEmpty(input)) {
-                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.snackbar_name_not_blank,
-                                    Snackbar.LENGTH_LONG).show();
-                        } else {
-                            mFilename = input.toString();
-                            mergePdfFiles();
-                        }
+                .input(getString(R.string.example), null, (dialog, input) -> {
+                    if (StringUtils.isEmpty(input)) {
+                        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                                R.string.snackbar_name_not_blank,
+                                Snackbar.LENGTH_LONG).show();
+                    } else {
+                        mFilename = input.toString();
+                        mergePdfFiles();
                     }
                 })
                 .show();
@@ -237,8 +234,8 @@ public class MergeFilesFragment extends Fragment {
             cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 mDisplayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                cursor.close();
             }
-            cursor.close();
             mSuccess = true;
         } catch (NullPointerException e) {
             e.printStackTrace();

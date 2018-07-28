@@ -230,7 +230,7 @@ public class FileUtils {
      * @return  - real path of the image file on device
      */
     public String getUriRealPath(Uri uri) {
-        String ret = "";
+        String ret;
         if (isWhatsappImage(uri.getAuthority())) {
             ret = null;
         } else {

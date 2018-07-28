@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
@@ -93,13 +92,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                 .content(R.string.delete_history_message)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog,
-                                        @NonNull DialogAction which) {
-                        new DeleteHistory().execute();
-                    }
-                })
+                .onPositive((dialog, which) -> new DeleteHistory().execute())
                 .show();
     }
 

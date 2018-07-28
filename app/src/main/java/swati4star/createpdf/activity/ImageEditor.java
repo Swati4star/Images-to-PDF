@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
@@ -318,12 +317,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     private void cancelFilter() {
         MaterialDialog materialDialog = new MaterialDialog.Builder(this)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        finish();
-                    }
-                })
+                .onPositive((dialog, which) -> finish())
                 .title(R.string.filter_cancel_question)
                 .content(R.string.filter_cancel_description)
                 .positiveText(R.string.ok)

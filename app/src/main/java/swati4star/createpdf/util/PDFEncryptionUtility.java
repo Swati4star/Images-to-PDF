@@ -76,20 +76,18 @@ public class PDFEncryptionUtility {
                 });
         dialog.show();
         mPositiveAction.setEnabled(false);
-        mPositiveAction.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    doEncryption(filePath, mPassword, mFileList);
-                    dataSetChanged.updateDataset();
-                    showSnackbar(R.string.password_added);
-                } catch (BadPasswordException e) {
-                    e.printStackTrace();
-                    showSnackbar(R.string.cannot_add_password);
-                } catch (IOException | DocumentException e) {
-                    e.printStackTrace();
-                }
-                dialog.dismiss();
+        mPositiveAction.setOnClickListener(v -> {
+            try {
+                doEncryption(filePath, mPassword, mFileList);
+                dataSetChanged.updateDataset();
+                showSnackbar(R.string.password_added);
+            } catch (BadPasswordException e) {
+                e.printStackTrace();
+                showSnackbar(R.string.cannot_add_password);
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
             }
+            dialog.dismiss();
         });
     }
 
@@ -176,42 +174,40 @@ public class PDFEncryptionUtility {
                 });
         dialog.show();
         mPositiveAction.setEnabled(false);
-        mPositiveAction.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String finalOutputFile;
-                PdfReader reader = null;
+        mPositiveAction.setOnClickListener(v -> {
+            String finalOutputFile;
+            PdfReader reader = null;
+            try {
+                reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte[] password;
+            finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
+                    mContext.getString(R.string.decrypted_file));
+
+            if (mFileUtils.isFileExist(finalOutputFile)) {
+                int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
+                finalOutputFile = finalOutputFile.replace(mContext.getResources().getString(R.string.pdf_ext),
+                        append + mContext.getResources().getString(R.string.pdf_ext));
+            }
+
+            password = reader.computeUserPassword();
+            byte[] input = input_password[0].getBytes();
+            if (Arrays.equals(input, password)) {
                 try {
-                    reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
-                } catch (IOException e) {
+                    PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
+                    stamper.close();
+                } catch (DocumentException | IOException e) {
                     e.printStackTrace();
                 }
-                byte[] password;
-                finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
-                        mContext.getString(R.string.decrypted_file));
-
-                if (mFileUtils.isFileExist(finalOutputFile)) {
-                    int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
-                    finalOutputFile = finalOutputFile.replace(mContext.getResources().getString(R.string.pdf_ext),
-                            append + mContext.getResources().getString(R.string.pdf_ext));
-                }
-
-                password = reader.computeUserPassword();
-                byte[] input = input_password[0].getBytes();
-                if (Arrays.equals(input, password)) {
-                    try {
-                        PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
-                        stamper.close();
-                    } catch (DocumentException | IOException e) {
-                        e.printStackTrace();
-                    }
-                    showSnackbar(R.string.password_remove);
-                    reader.close();
-                    dataSetChanged.updateDataset();
-                } else {
-                    showSnackbar(R.string.incorrect_passowrd);
-                }
-                dialog.dismiss();
+                showSnackbar(R.string.password_remove);
+                reader.close();
+                dataSetChanged.updateDataset();
+            } else {
+                showSnackbar(R.string.incorrect_passowrd);
             }
+            dialog.dismiss();
         });
     }
 

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.model.EnhancementOptionsEntity;

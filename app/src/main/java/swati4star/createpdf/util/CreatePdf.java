@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
@@ -179,12 +178,9 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content)
                 , R.string.snackbar_pdfCreated
                 , Snackbar.LENGTH_LONG)
-                .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FileUtils fileUtils = new FileUtils(mContext);
-                        fileUtils.openFile(mPath);
-                    }
+                .setAction(R.string.snackbar_viewAction, v -> {
+                    FileUtils fileUtils = new FileUtils(mContext);
+                    fileUtils.openFile(mPath);
                 }).show();
     }
 }

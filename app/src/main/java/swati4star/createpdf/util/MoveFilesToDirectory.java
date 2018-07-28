@@ -2,7 +2,6 @@ package swati4star.createpdf.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -138,12 +137,7 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
         mDialog.dismiss();
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setCancelable(true)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss());
 
         if (mOperationID == MOVE_FILES || mOperationID == HOME_DIRECTORY) {
             builder.setTitle(R.string.moved_files)
