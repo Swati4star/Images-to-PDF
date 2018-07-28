@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -55,18 +56,14 @@ public class ViewFilesFragment extends Fragment
 
     @BindView(R.id.layout_main)
     public LinearLayout mainLayout;
-    @BindView(R.id.emptyBackgroundImage)
-    public ImageView backView;
-    @BindView(R.id.emptyTextOverBgImage)
-    public TextView TextOver;
     @BindView(R.id.getStarted)
     public Button getStarted;
-    @BindView(R.id.emptyTagLine)
-    public TextView tagLine;
     @BindView(R.id.filesRecyclerView)
     RecyclerView mViewFilesListRecyclerView;
     @BindView(R.id.swipe)
     SwipeRefreshLayout mSwipeView;
+    @BindView(R.id.emptyStatusView)
+    ConstraintLayout emptyView;
 
     private MenuItem mMenuItem;
     private Activity mActivity;
@@ -226,17 +223,13 @@ public class ViewFilesFragment extends Fragment
                             String fileName = input.getText().toString();
                             File directory = mDirectoryUtils.getDirectory(fileName);
                             if (directory != null) {
-                                new MoveFilesToDirectory(mActivity
-                                        , filePath
-                                        , fileName
-                                        , MoveFilesToDirectory.MOVE_FILES)
+                                new MoveFilesToDirectory(mActivity, filePath, fileName, MoveFilesToDirectory.MOVE_FILES)
                                         .execute();
                                 populatePdfList();
                             } else {
                                 showSnack(R.string.dir_does_not_exists);
                                 dialogInterface.dismiss();
                             }
-
                         });
             }
             mAlertDialogBuilder.create().show();
@@ -248,12 +241,15 @@ public class ViewFilesFragment extends Fragment
      * and delete files on positive response
      */
     private void deleteFiles() {
-        mAlertDialogBuilder.setTitle(R.string.delete_alert)
+        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(mActivity)
+                .setCancelable(true)
+                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+                .setTitle(R.string.delete_alert)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
                     mViewFilesAdapter.deleteFiles();
                     checkIfListEmpty();
                 });
-        mAlertDialogBuilder.create().show();
+        dialogAlert.create().show();
     }
 
     /**
@@ -303,10 +299,7 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void setEmptyStateVisible() {
-        backView.setVisibility(View.VISIBLE);
-        TextOver.setVisibility(View.VISIBLE);
-        getStarted.setVisibility(View.VISIBLE);
-        tagLine.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.GONE);
     }
 

@@ -28,7 +28,6 @@ import com.itextpdf.text.Font;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -44,6 +43,7 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
 public class TextToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner {
 
@@ -60,7 +60,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     @BindView(R.id.tv_file_name)
     TextView mTextView;
 
-    private final ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList = new ArrayList<>();
+    private ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private SharedPreferences mSharedPreferences;
     private Font.FontFamily mFontFamily;
@@ -79,24 +79,14 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         return rootview;
     }
 
-    private List<EnhancementOptionsEntity> getEnhancementOptions() {
-        mTextEnhancementOptionsEntityArrayList.clear();
-        mTextEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_font_black_24dp),
-                        mFontTitle));
-        mTextEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_font_family_24dp),
-                        String.format(getString(R.string.default_font_family_text), mFontFamily.name())));
-        return mTextEnhancementOptionsEntityArrayList;
-    }
-
     /**
      * Function to show the enhancement options.
      */
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, getEnhancementOptions());
+        mTextEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
+        mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);
         mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
     }
 
@@ -125,15 +115,13 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
                 .onPositive((dialog, which) -> {
-                    String fontFamily1;
                     View view = dialog.getCustomView();
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_font_family);
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     RadioButton radioButton = view.findViewById(selectedId);
-                    fontFamily1 = radioButton.getText().toString();
+                    String fontFamily1 = radioButton.getText().toString();
                     mFontFamily = Font.FontFamily.valueOf(fontFamily1);
                     final CheckBox cbSetDefault = view.findViewById(R.id.cbSetDefault);
-
                     if (cbSetDefault.isChecked()) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
                         editor.putString(Constants.DEFAULT_FONT_FAMILY_TEXT, fontFamily1);
@@ -245,8 +233,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
             fileUtil.createPdf(new TextToPDFOptions(mFilename, mTextFileUri, mFontSize, mFontFamily));
             final String finalMPath = mPath;
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                    , R.string.snackbar_pdfCreated
-                    , Snackbar.LENGTH_LONG)
+                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
             mTextView.setVisibility(View.GONE);
         } catch (DocumentException | IOException e) {
@@ -259,7 +246,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
      */
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
-
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType(getString(R.string.text_type));
         intent.addCategory(Intent.CATEGORY_OPENABLE);

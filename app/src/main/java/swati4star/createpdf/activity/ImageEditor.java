@@ -85,7 +85,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         String showingText = "Showing " + String.valueOf(1) + " of " + mDisplaySize;
         mImgcount.setText(showingText);
         mPreviousButton.setVisibility(View.INVISIBLE);
-        showFilters();
+        mFilterItems = getFiltersList(this);
+        initRecyclerView();
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -175,7 +176,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 @Override
                 public void onSuccess(@NonNull String imagePath) {
                     mImagepaths.add(imagePath);
-                    Log.e("imgFilter", "Saved Successfully");
                     Toast.makeText(getApplicationContext(), R.string.saving_dialog, Toast.LENGTH_SHORT).show();
                 }
 
@@ -249,14 +249,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     /**
-     * Add Items in Recycler View & intialize adapter
-     */
-    private void showFilters() {
-        mFilterItems = getFiltersList(this);
-        initRecyclerView();
-    }
-
-    /**
      * Initialize Recycler View
      */
     private void initRecyclerView() {
@@ -279,7 +271,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     /**
-     * Apply GrayScale Filter to Image
+     * Apply Filter to Image
      */
     private void applyFilter(PhotoFilter filterType) {
         try {
@@ -308,7 +300,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 return true;
             case android.R.id.home:
                 cancelFilter();
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -316,7 +307,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     private void cancelFilter() {
-        MaterialDialog materialDialog = new MaterialDialog.Builder(this)
+        new MaterialDialog.Builder(this)
                 .onPositive((dialog, which) -> finish())
                 .title(R.string.filter_cancel_question)
                 .content(R.string.filter_cancel_description)

@@ -139,6 +139,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/emptyStatusView"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -148,7 +149,6 @@
             android:layout_height="401dp"
             android:contentDescription="@string/empty_image_description"
             android:src="@drawable/circle"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -164,7 +164,6 @@
             android:textColor="@color/cardview_light_background"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
             app:layout_constraintStart_toStartOf="@+id/emptyBackgroundImage"
             app:layout_constraintTop_toTopOf="@+id/emptyBackgroundImage" />
@@ -182,7 +181,6 @@
             android:text="@string/get_started"
             android:textColor="@color/mb_white"
             android:textSize="18sp"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/emptyBackgroundImage"
@@ -197,7 +195,6 @@
             android:layout_marginStart="8dp"
             android:text="@string/view_files_text"
             android:textColor="@color/dark_purple"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
             app:layout_constraintStart_toStartOf="parent"
