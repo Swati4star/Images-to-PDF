@@ -179,7 +179,7 @@ public class MergeFilesFragment extends Fragment {
                     mRealPath = Environment.getExternalStorageDirectory().getAbsolutePath();
                     //Check if First button is clicked from mCheckbtClickTag
                     if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
-                        firstFilePath = getFilePath(uriString , uri , myFile, path);
+                        firstFilePath = getFilePath(uriString, uri, myFile, path);
                         addFileOne.setText(firstFilePath);
                         if (firstFilePath.length() > 15) {
                             addFileOne.setTextSize(10);
@@ -187,7 +187,7 @@ public class MergeFilesFragment extends Fragment {
 
                         addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                     } else {
-                        secondFilePath = getFilePath(uriString , uri, myFile, path);
+                        secondFilePath = getFilePath(uriString, uri, myFile, path);
                         addFileTwo.setText(secondFilePath);
                         if (secondFilePath.length() > 15) {
                             addFileTwo.setTextSize(10);
