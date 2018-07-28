@@ -181,7 +181,7 @@ public class MergeFilesFragment extends Fragment {
                     if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
                         firstFilePath = getFilePath(uriString , uri , myFile, path);
                         addFileOne.setText(firstFilePath);
-                        if (firstFilePath.length()>15) {
+                        if (firstFilePath.length() > 15) {
                             addFileOne.setTextSize(10);
                         }
 
@@ -189,7 +189,7 @@ public class MergeFilesFragment extends Fragment {
                     } else {
                         secondFilePath = getFilePath(uriString , uri, myFile, path);
                         addFileTwo.setText(secondFilePath);
-                        if (secondFilePath.length()>15) {
+                        if (secondFilePath.length() > 15) {
                             addFileTwo.setTextSize(10);
                         }
 
