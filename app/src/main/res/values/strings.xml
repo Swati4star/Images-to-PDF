@@ -300,5 +300,5 @@
     <string name="rearrange_images">Rearrange Images</string>
     <string name="rearrange_text">Rearrange</string>
     <string name="snackbar_undoAction">Undo</string>
-
+    <string name="pdf_does_not_exist_message">The PDF doesn\'t exist.</string>
 </resources>
