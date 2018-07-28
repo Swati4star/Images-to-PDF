@@ -59,6 +59,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     RecyclerView mTextEnhancementOptionsRecycleView;
     @BindView(R.id.tv_file_name)
     TextView mTextView;
+    private int isButtonClicked = 0;
 
     private ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
@@ -246,20 +247,24 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
      */
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(getString(R.string.text_type));
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        try {
-            startActivityForResult(
-                    Intent.createChooser(intent, String.valueOf(R.string.select_file)),
-                    mFileSelectCode);
-        } catch (android.content.ActivityNotFoundException ex) {
-            showSnackbar(R.string.install_file_manager);
+        if (isButtonClicked == 0) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType(getString(R.string.text_type));
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            try {
+                startActivityForResult(
+                        Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                        mFileSelectCode);
+            } catch (android.content.ActivityNotFoundException ex) {
+                showSnackbar(R.string.install_file_manager);
+            }
+            isButtonClicked = 1;
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        isButtonClicked = 0;
         switch (requestCode) {
             case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
