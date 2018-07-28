@@ -30,6 +30,8 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
 
     private ArrayList<String> mImagesArrayList;
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 1;
+    private PreviewAdapter mPreviewAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,10 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         Intent intent = getIntent();
         mImagesArrayList = intent.getStringArrayListExtra(PREVIEW_IMAGES);
 
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new PreviewAdapter(this, mImagesArrayList));
-        viewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager = findViewById(R.id.viewpager);
+        mPreviewAdapter = new PreviewAdapter(this, mImagesArrayList);
+        mViewPager.setAdapter(mPreviewAdapter);
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
 
         Objects.requireNonNull(getSupportActionBar()).hide();
         showOptions();
@@ -94,7 +97,8 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
                     case Activity.RESULT_OK:
                         try {
                             mImagesArrayList = data.getStringArrayListExtra(Constants.RESULT);
-
+                            mPreviewAdapter.setData(mImagesArrayList);
+                            mViewPager.setAdapter(mPreviewAdapter);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
