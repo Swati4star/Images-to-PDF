@@ -66,5 +66,9 @@ public class PreviewAdapter extends PagerAdapter {
         return pageTitle;
     }
 
+    public void setData(ArrayList<String> images) {
+        mPreviewItems.clear();
+        mPreviewItems.addAll(images);
+    }
 
 }
