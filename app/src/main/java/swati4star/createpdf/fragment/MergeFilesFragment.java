@@ -180,15 +180,19 @@ public class MergeFilesFragment extends Fragment {
                     //Check if First button is clicked from mCheckbtClickTag
                     if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
                         firstFilePath = getFilePath(uriString , uri , myFile, path);
-                        addFileOne.setText(firstFilePath
-                                .substring(firstFilePath
-                                        .lastIndexOf('/') + 1 , firstFilePath.length()));
+                        addFileOne.setText(firstFilePath);
+                        if (firstFilePath.length()>15) {
+                            addFileOne.setTextSize(10);
+                        }
+
                         addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                     } else {
                         secondFilePath = getFilePath(uriString , uri, myFile, path);
-                        addFileTwo.setText(firstFilePath
-                                .substring(firstFilePath
-                                        .lastIndexOf('/') + 1 , firstFilePath.length()));
+                        addFileTwo.setText(secondFilePath);
+                        if (secondFilePath.length()>15) {
+                            addFileTwo.setTextSize(10);
+                        }
+
                         addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                     }
 
