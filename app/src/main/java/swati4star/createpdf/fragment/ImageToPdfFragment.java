@@ -99,7 +99,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private boolean mPasswordProtected = false;
     private  FileUtils mFileUtils;
-    private int isButtonClicked = 0;
+    private int mButtonClicked = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -165,10 +165,10 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (isButtonClicked == 0) {
+        if (mButtonClicked == 0) {
             if (getRuntimePermissions(true))
                 selectImages();
-            isButtonClicked = 1;
+            mButtonClicked = 1;
         }
     }
 
@@ -276,7 +276,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        isButtonClicked = 0;
+        mButtonClicked = 0;
         if (resultCode != Activity.RESULT_OK)
             return;
 
