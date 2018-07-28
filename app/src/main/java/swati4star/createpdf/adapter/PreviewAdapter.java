@@ -60,10 +60,8 @@ public class PreviewAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        String pageTitle = String.format(mContext.getResources().getString(R.string.showing_image),
+        return String.format(mContext.getResources().getString(R.string.showing_image),
                 position + 1, mPreviewItems.size());
-
-        return pageTitle;
     }
 
     public void setData(ArrayList<String> images) {
