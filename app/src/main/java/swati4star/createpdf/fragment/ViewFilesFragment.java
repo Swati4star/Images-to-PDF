@@ -40,7 +40,6 @@ import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileSortUtils;
-import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MoveFilesToDirectory;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;

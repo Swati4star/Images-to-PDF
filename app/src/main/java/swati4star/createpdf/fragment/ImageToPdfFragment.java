@@ -2,7 +2,6 @@ package swati4star.createpdf.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +15,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -29,7 +27,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -58,12 +55,15 @@ import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.ImageEnhancementOptionsUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
+import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
 
 
 /**
@@ -78,7 +78,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
 
     private static int mImageCounter = 0;
-    private final ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
+    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
     @BindView(R.id.addImages)
     MorphingButton addImages;
     @BindView(R.id.pdfCreate)
@@ -101,6 +101,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private boolean mPasswordProtected = false;
+    private  FileUtils mFileUtils;
 
     @Override
     public void onAttach(Context context) {
@@ -123,16 +124,18 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
 
         showEnhancementOptions();
 
-        FileUtils fileUtils = new FileUtils(mActivity);
+        mFileUtils = new FileUtils(mActivity);
+
+        // Check for the images received
         Bundle bundle = getArguments();
         if (bundle != null) {
             ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
             for (Parcelable p : uris) {
                 Uri uri = (Uri) p;
-                if (fileUtils.getUriRealPath(uri) == null) {
-                    Toast.makeText(mActivity, R.string.whatsappToast, Toast.LENGTH_LONG).show();
+                if (mFileUtils.getUriRealPath(uri) == null) {
+                    showSnackbar(R.string.whatsappToast);
                 } else {
-                    mTempUris.add(fileUtils.getUriRealPath(uri));
+                    mTempUris.add(mFileUtils.getUriRealPath(uri));
                     if (mTempUris.size() > 0) {
                         mNoOfImages.setText(String.format(mActivity.getResources()
                                 .getString(R.string.images_selected), mTempUris.size()));
@@ -140,7 +143,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     } else {
                         mNoOfImages.setVisibility(View.GONE);
                     }
-                    Toast.makeText(mActivity, R.string.successToast, Toast.LENGTH_LONG).show();
+                    showSnackbar(R.string.successToast);
                 }
             }
         } else {
@@ -154,7 +157,8 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, getEnhancementOptions());
+        mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
+        mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
         mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }
 
@@ -167,28 +171,22 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
             selectImages();
     }
 
-
     private void filterImages() {
-        if (mTempUris.size() == 0) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
-        } else {
-            applyfilters();
-        }
-    }
-
-    private void applyfilters() {
-        mImageCounter = 0;
-        try {
-            mImagesUri.add(mTempUris.get(mImageCounter));
-            mImageCounter = mImagesUri.size();
-            Intent intent = new Intent(getContext(), ImageEditor.class);
-            intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mTempUris);
-            startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
-            mImagesUri.add(mTempUris.get(mImageCounter));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (mTempUris.size() == 0)
+            showSnackbar(R.string.snackbar_no_images);
+        else {
+            // Apply filters
+            mImageCounter = 0;
+            try {
+                mImagesUri.add(mTempUris.get(mImageCounter));
+                mImageCounter = mImagesUri.size();
+                Intent intent = new Intent(getContext(), ImageEditor.class);
+                intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mTempUris);
+                startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
+                mImagesUri.add(mTempUris.get(mImageCounter));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -198,9 +196,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     void createPdf() {
         if (mImagesUri.size() == 0) {
             if (mTempUris.size() == 0) {
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.snackbar_no_images,
-                        Snackbar.LENGTH_LONG).show();
+                showSnackbar(R.string.snackbar_no_images);
                 return;
             } else
                 mImagesUri = (ArrayList<String>) mTempUris.clone();
@@ -218,9 +214,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         if (StringUtils.isEmpty(input)) {
-                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.snackbar_name_not_blank,
-                                    Snackbar.LENGTH_LONG).show();
+                            showSnackbar(R.string.snackbar_name_not_blank);
                         } else {
                             final String filename = input.toString();
                             FileUtils utils = new FileUtils(mActivity);
@@ -259,22 +253,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
 
     @OnClick(R.id.pdfOpen)
     void openPdf() {
-        File file = new File(mPath);
-        Intent target = new Intent(Intent.ACTION_VIEW);
-        Uri uri = FileProvider.getUriForFile(mActivity, "com.swati4star.shareFile", file);
-
-        target.setDataAndType(uri, getString(R.string.pdf_type));
-        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        Intent intent = Intent.createChooser(target, getString(R.string.open_file));
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_pdf_app,
-                    Snackbar.LENGTH_LONG).show();
-        }
+        mFileUtils.openFile(mPath);
     }
 
     /**
@@ -293,14 +272,9 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (mOpenSelectImages)
                         selectImages();
-                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                            R.string.snackbar_permissions_given,
-                            Snackbar.LENGTH_LONG).show();
-                } else {
-                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                            R.string.snackbar_insufficient_permissions,
-                            Snackbar.LENGTH_LONG).show();
-                }
+                    showSnackbar(R.string.snackbar_permissions_given);
+                } else
+                    showSnackbar(R.string.snackbar_insufficient_permissions);
             }
         }
     }
@@ -330,9 +304,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), imageUris.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
-                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                            R.string.snackbar_images_added,
-                            Snackbar.LENGTH_LONG).show();
+                    showSnackbar(R.string.snackbar_images_added);
                     mCreatePdf.setEnabled(true);
                 } else {
                     mNoOfImages.setVisibility(View.GONE);
@@ -348,15 +320,11 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     case Activity.RESULT_OK:
                         Uri resultUri = result.getUri();
                         mImagesUri.add(resultUri.getPath());
-                        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                R.string.snackbar_imagecropped,
-                                Snackbar.LENGTH_LONG).show();
+                        showSnackbar(R.string.snackbar_imagecropped);
                         break;
                     case CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE:
                         Exception error = result.getError();
-                        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                R.string.snackbar_error_getCropped,
-                                Snackbar.LENGTH_LONG).show();
+                        showSnackbar(R.string.snackbar_error_getCropped);
                         error.printStackTrace();
                     default:
                         mImagesUri.add(mTempUris.get(mImageCounter));
@@ -371,7 +339,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         try {
                             mImagesUri.clear();
                             mTempUris.clear();
-                            ArrayList<String> mFilterUris = data.getStringArrayListExtra("result");
+                            ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
                             int size = mFilterUris.size() - 1;
                             for (int k = 0; k <= size; k++) {
                                 mTempUris.add(mFilterUris.get(k));
@@ -389,7 +357,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         try {
                             mImagesUri.clear();
                             mTempUris.clear();
-                            ArrayList<String> uris = data.getStringArrayListExtra(Constants.RESULT);
+                            ArrayList<String> uris = data.getStringArrayListExtra(RESULT);
                             mImagesUri = uris;
                             mTempUris.addAll(uris);
                         } catch (Exception e) {
@@ -400,30 +368,6 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
         }
     }
 
-
-    private List<EnhancementOptionsEntity> getEnhancementOptions() {
-        mEnhancementOptionsEntityArrayList.clear();
-        mEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24),
-                        getResources().getString(R.string.password_protect_pdf_text)));
-        mEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.baseline_crop_rotate_24),
-                        getResources().getString(R.string.edit_images_text)));
-        mEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_compress_image),
-                        getString(R.string.compress_image) + " " +
-                                mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)"));
-        mEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp),
-                        getResources().getString(R.string.filter_images_Text)));
-        mEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_page_size_24dp),
-                        getResources().getString(R.string.set_page_size_text)));
-        mEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_play_circle_outline_black_24dp),
-                        getResources().getString(R.string.preview_image_to_pdf)));
-        return mEnhancementOptionsEntityArrayList;
-    }
 
     @Override
     public void onItemClick(int position) {
@@ -454,9 +398,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private void previewPDF() {
         if (mImagesUri.size() == 0) {
             if (mTempUris.size() == 0) {
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.snackbar_no_images,
-                        Snackbar.LENGTH_LONG).show();
+                showSnackbar(R.string.snackbar_no_images);
                 return;
             } else
                 mImagesUri = (ArrayList<String>) mTempUris.clone();
@@ -475,9 +417,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
 
     private void setPageSize() {
         if (mTempUris.size() == 0) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
+            showSnackbar(R.string.snackbar_no_images);
             return;
         }
 
@@ -534,9 +474,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private void compressImage() {
 
         if (mTempUris.size() == 0) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
+            showSnackbar(R.string.snackbar_no_images);
             return;
         }
 
@@ -558,9 +496,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         try {
                             check = Integer.parseInt(String.valueOf(qualityInput.getText()));
                             if (check > 100 || check < 0) {
-                                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                        R.string.invalid_entry,
-                                        Snackbar.LENGTH_LONG).show();
+                                showSnackbar(R.string.invalid_entry);
                             } else {
                                 mQuality = String.valueOf(check);
                                 if (cbSetDefault.isChecked()) {
@@ -571,9 +507,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                                 showCompression();
                             }
                         } catch (NumberFormatException e) {
-                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.invalid_entry,
-                                    Snackbar.LENGTH_LONG).show();
+                            showSnackbar(R.string.invalid_entry);
                         }
                     }
                 }).build();
@@ -601,9 +535,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
 
     private void passwordProtectPDF() {
         if (mTempUris.size() == 0) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
+            showSnackbar(R.string.snackbar_no_images);
             return;
         }
 
@@ -633,9 +565,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     @Override
                     public void afterTextChanged(Editable input) {
                         if (StringUtils.isEmpty(input)) {
-                            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                    R.string.snackbar_password_cannot_be_blank,
-                                    Snackbar.LENGTH_LONG).show();
+                            showSnackbar(R.string.snackbar_password_cannot_be_blank);
                         } else {
                             mPassword = input.toString();
                             mPasswordProtected = true;
@@ -650,9 +580,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     onPasswordRemoved();
                     mPasswordProtected = false;
                     dialog.dismiss();
-                    Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                            R.string.password_remove,
-                            Snackbar.LENGTH_LONG).show();
+                    showSnackbar(R.string.password_remove);
                 }
             });
         }
@@ -694,9 +622,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
 
     void cropImages() {
         if (mTempUris.size() == 0) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_images,
-                    Snackbar.LENGTH_LONG).show();
+            showSnackbar(R.string.snackbar_no_images);
             return;
         }
         next();
@@ -739,7 +665,6 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
      * Opens ImagePickerActivity to select Images
      */
     private void selectImages() {
-
         Config config = new Config();
         config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
         ImagePickerActivity.setConfig(config);
@@ -758,5 +683,9 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
 
+    private void showSnackbar(int resID) {
+        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                resID, Snackbar.LENGTH_LONG).show();
+    }
 
 }

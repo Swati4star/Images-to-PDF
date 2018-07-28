@@ -39,6 +39,7 @@ import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
 
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener {
@@ -213,7 +214,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void passUris(ArrayList<String> mImagepaths) {
         Intent returnIntent = new Intent();
-        returnIntent.putStringArrayListExtra("result", mImagepaths);
+        returnIntent.putStringArrayListExtra(RESULT, mImagepaths);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
