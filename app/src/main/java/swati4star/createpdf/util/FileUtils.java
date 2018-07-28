@@ -22,7 +22,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,12 +29,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -234,7 +230,7 @@ public class FileUtils {
      * @return  - real path of the image file on device
      */
     public String getUriRealPath(Uri uri) {
-        String ret = "";
+        String ret;
         if (isWhatsappImage(uri.getAuthority())) {
             ret = null;
         } else {

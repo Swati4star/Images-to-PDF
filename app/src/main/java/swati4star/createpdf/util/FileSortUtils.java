@@ -3,7 +3,6 @@ package swati4star.createpdf.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class FileSortUtils {
 
@@ -47,12 +46,7 @@ public class FileSortUtils {
      * @param filesList list of files to be sorted
      */
     private static void sortFilesByDateNewestToOldest(ArrayList<File> filesList) {
-        Collections.sort(filesList, new Comparator<File>() {
-            @Override
-            public int compare(File file, File file2) {
-                return Long.compare(file2.lastModified(), file.lastModified());
-            }
-        });
+        Collections.sort(filesList, (file, file2) -> Long.compare(file2.lastModified(), file.lastModified()));
     }
 
     /**
@@ -61,12 +55,7 @@ public class FileSortUtils {
      * @param filesList list of files to be sorted
      */
     private static void sortFilesBySizeIncreasingOrder(ArrayList<File> filesList) {
-        Collections.sort(filesList, new Comparator<File>() {
-            @Override
-            public int compare(File file1, File file2) {
-                return Long.compare(file1.length(), file2.length());
-            }
-        });
+        Collections.sort(filesList, (file1, file2) -> Long.compare(file1.length(), file2.length()));
     }
 
     /**
@@ -75,12 +64,7 @@ public class FileSortUtils {
      * @param filesList list of files to be sorted
      */
     private static void sortFilesBySizeDecreasingOrder(ArrayList<File> filesList) {
-        Collections.sort(filesList, new Comparator<File>() {
-            @Override
-            public int compare(File file1, File file2) {
-                return Long.compare(file2.length(), file1.length());
-            }
-        });
+        Collections.sort(filesList, (file1, file2) -> Long.compare(file2.length(), file1.length()));
     }
 
 

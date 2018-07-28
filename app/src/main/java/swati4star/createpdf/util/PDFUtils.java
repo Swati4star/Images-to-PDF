@@ -2,7 +2,6 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.TextView;
@@ -59,12 +58,7 @@ public class PDFUtils {
         builder.setView(message);
         builder.setCustomTitle(title);
         builder.setPositiveButton(mContext.getResources().getString(R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialog.dismiss();
-                    }
-                });
+                (dialogInterface, i) -> dialog.dismiss());
         builder.create();
         builder.show();
     }

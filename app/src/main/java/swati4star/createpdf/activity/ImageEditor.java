@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
@@ -39,6 +38,7 @@ import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
 
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener {
@@ -85,7 +85,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         String showingText = "Showing " + String.valueOf(1) + " of " + mDisplaySize;
         mImgcount.setText(showingText);
         mPreviousButton.setVisibility(View.INVISIBLE);
-        showFilters();
+        mFilterItems = getFiltersList(this);
+        initRecyclerView();
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -175,7 +176,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 @Override
                 public void onSuccess(@NonNull String imagePath) {
                     mImagepaths.add(imagePath);
-                    Log.e("imgFilter", "Saved Successfully");
                     Toast.makeText(getApplicationContext(), R.string.saving_dialog, Toast.LENGTH_SHORT).show();
                 }
 
@@ -213,7 +213,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void passUris(ArrayList<String> mImagepaths) {
         Intent returnIntent = new Intent();
-        returnIntent.putStringArrayListExtra("result", mImagepaths);
+        returnIntent.putStringArrayListExtra(RESULT, mImagepaths);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -249,14 +249,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     /**
-     * Add Items in Recycler View & intialize adapter
-     */
-    private void showFilters() {
-        mFilterItems = getFiltersList(this);
-        initRecyclerView();
-    }
-
-    /**
      * Initialize Recycler View
      */
     private void initRecyclerView() {
@@ -279,7 +271,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     /**
-     * Apply GrayScale Filter to Image
+     * Apply Filter to Image
      */
     private void applyFilter(PhotoFilter filterType) {
         try {
@@ -308,7 +300,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 return true;
             case android.R.id.home:
                 cancelFilter();
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -316,13 +307,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     private void cancelFilter() {
-        MaterialDialog materialDialog = new MaterialDialog.Builder(this)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        finish();
-                    }
-                })
+        new MaterialDialog.Builder(this)
+                .onPositive((dialog, which) -> finish())
                 .title(R.string.filter_cancel_question)
                 .content(R.string.filter_cancel_description)
                 .positiveText(R.string.ok)

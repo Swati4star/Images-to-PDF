@@ -9,14 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -97,34 +95,23 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         holder.mFiledate.setText(getFormattedDate(file));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if (!mSelectedFiles.contains(position)) {
-                        mSelectedFiles.add(position);
-                    }
-                } else
-                    mSelectedFiles.remove(Integer.valueOf(position));
-            }
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (!mSelectedFiles.contains(position)) {
+                    mSelectedFiles.add(position);
+                }
+            } else
+                mSelectedFiles.remove(Integer.valueOf(position));
         });
 
-        holder.mRipple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialDialog.Builder(mActivity)
-                        .title(R.string.title)
-                        .items(R.array.items)
-                        .itemsIds(R.array.itemIds)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                performOperation(which, position, file);
-                            }
-                        })
-                        .show();
-                notifyDataSetChanged();
-            }
+        holder.mRipple.setOnClickListener(view -> {
+            new MaterialDialog.Builder(mActivity)
+                    .title(R.string.title)
+                    .items(R.array.items)
+                    .itemsIds(R.array.itemIds)
+                    .itemsCallback((dialog, view1, which, text) -> performOperation(which, position, file))
+                    .show();
+            notifyDataSetChanged();
         });
     }
 
@@ -244,13 +231,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
                     , R.string.snackbar_file_deleted
                     , Snackbar.LENGTH_LONG)
-                    .setAction(R.string.snackbar_undoAction, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mFileList.add(fcreate);
-                            notifyDataSetChanged();
-                            isFileDeleteUndoClicked = 1;
-                        }
+                    .setAction(R.string.snackbar_undoAction, v -> {
+                        mFileList.add(fcreate);
+                        notifyDataSetChanged();
+                        isFileDeleteUndoClicked = 1;
                     }).addCallback(new Snackbar.Callback() {
 
                         @Override
@@ -312,25 +296,22 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(mActivity.getString(R.string.example), null, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input == null || input.toString().trim().isEmpty())
-                            showSnackbar(R.string.snackbar_name_not_blank);
-                        else {
-                            File oldfile = mFileList.get(position);
-                            String oldPath = oldfile.getPath();
-                            String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
-                                    + "/" + input.toString() + mActivity.getString(R.string.pdf_ext);
-                            File newfile = new File(newfilename);
-                            if (oldfile.renameTo(newfile)) {
-                                showSnackbar(R.string.snackbar_file_renamed);
-                                mFileList.set(position, newfile);
-                                notifyDataSetChanged();
-                                mDatabaseHelper.insertRecord(oldPath, mActivity.getString(R.string.renamed));
-                            } else
-                                showSnackbar(R.string.snackbar_file_not_renamed);
-                        }
+                .input(mActivity.getString(R.string.example), null, (dialog, input) -> {
+                    if (input == null || input.toString().trim().isEmpty())
+                        showSnackbar(R.string.snackbar_name_not_blank);
+                    else {
+                        File oldfile = mFileList.get(position);
+                        String oldPath = oldfile.getPath();
+                        String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
+                                + "/" + input.toString() + mActivity.getString(R.string.pdf_ext);
+                        File newfile = new File(newfilename);
+                        if (oldfile.renameTo(newfile)) {
+                            showSnackbar(R.string.snackbar_file_renamed);
+                            mFileList.set(position, newfile);
+                            notifyDataSetChanged();
+                            mDatabaseHelper.insertRecord(oldPath, mActivity.getString(R.string.renamed));
+                        } else
+                            showSnackbar(R.string.snackbar_file_not_renamed);
                     }
                 }).show();
     }

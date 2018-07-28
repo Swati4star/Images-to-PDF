@@ -45,12 +45,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                populateListView();
-            }
-        });
+        mActivity.runOnUiThread(this::populateListView);
         return null;
     }
 

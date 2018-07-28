@@ -22,14 +22,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -45,6 +43,7 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
 public class TextToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner {
 
@@ -61,7 +60,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     @BindView(R.id.tv_file_name)
     TextView mTextView;
 
-    private final ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList = new ArrayList<>();
+    private ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private SharedPreferences mSharedPreferences;
     private Font.FontFamily mFontFamily;
@@ -80,24 +79,14 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         return rootview;
     }
 
-    private List<EnhancementOptionsEntity> getEnhancementOptions() {
-        mTextEnhancementOptionsEntityArrayList.clear();
-        mTextEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_font_black_24dp),
-                        mFontTitle));
-        mTextEnhancementOptionsEntityArrayList.add(
-                new EnhancementOptionsEntity(getResources().getDrawable(R.drawable.ic_font_family_24dp),
-                        String.format(getString(R.string.default_font_family_text), mFontFamily.name())));
-        return mTextEnhancementOptionsEntityArrayList;
-    }
-
     /**
      * Function to show the enhancement options.
      */
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, getEnhancementOptions());
+        mTextEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
+        mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);
         mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
     }
 
@@ -125,25 +114,20 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 .customView(R.layout.dialog_font_family, true)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        String fontFamily;
-                        View view = dialog.getCustomView();
-                        RadioGroup radioGroup = view.findViewById(R.id.radio_group_font_family);
-                        int selectedId = radioGroup.getCheckedRadioButtonId();
-                        RadioButton radioButton = view.findViewById(selectedId);
-                        fontFamily = radioButton.getText().toString();
-                        mFontFamily = Font.FontFamily.valueOf(fontFamily);
-                        final CheckBox cbSetDefault = view.findViewById(R.id.cbSetDefault);
-
-                        if (cbSetDefault.isChecked()) {
-                            SharedPreferences.Editor editor = mSharedPreferences.edit();
-                            editor.putString(Constants.DEFAULT_FONT_FAMILY_TEXT, fontFamily);
-                            editor.apply();
-                        }
-                        showFontFamily();
+                .onPositive((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    RadioGroup radioGroup = view.findViewById(R.id.radio_group_font_family);
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    RadioButton radioButton = view.findViewById(selectedId);
+                    String fontFamily1 = radioButton.getText().toString();
+                    mFontFamily = Font.FontFamily.valueOf(fontFamily1);
+                    final CheckBox cbSetDefault = view.findViewById(R.id.cbSetDefault);
+                    if (cbSetDefault.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putString(Constants.DEFAULT_FONT_FAMILY_TEXT, fontFamily1);
+                        editor.apply();
                     }
+                    showFontFamily();
                 })
                 .build();
         RadioGroup radioGroup = materialDialog.getCustomView().findViewById(R.id.radio_group_font_family);
@@ -162,31 +146,28 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 .customView(R.layout.dialog_font_size, true)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        final EditText fontInput = dialog.getCustomView().findViewById(R.id.fontInput);
-                        final CheckBox cbSetDefault = dialog.getCustomView().findViewById(R.id.cbSetFontDefault);
-                        try {
-                            int check = Integer.parseInt(String.valueOf(fontInput.getText()));
-                            if (check > 1000 || check < 0) {
-                                showSnackbar(R.string.invalid_entry);
-                            } else {
-                                mFontSize = check;
-                                showFontSize();
-                                showSnackbar(R.string.font_size_changed);
-                                if (cbSetDefault.isChecked()) {
-                                    SharedPreferences.Editor editor = mSharedPreferences.edit();
-                                    editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
-                                    editor.apply();
-                                    mFontTitle = String.format(getString(R.string.edit_font_size),
-                                            mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT,
-                                                    Constants.DEFAULT_FONT_SIZE));
-                                }
-                            }
-                        } catch (NumberFormatException e) {
+                .onPositive((dialog, which) -> {
+                    final EditText fontInput = dialog.getCustomView().findViewById(R.id.fontInput);
+                    final CheckBox cbSetDefault = dialog.getCustomView().findViewById(R.id.cbSetFontDefault);
+                    try {
+                        int check = Integer.parseInt(String.valueOf(fontInput.getText()));
+                        if (check > 1000 || check < 0) {
                             showSnackbar(R.string.invalid_entry);
+                        } else {
+                            mFontSize = check;
+                            showFontSize();
+                            showSnackbar(R.string.font_size_changed);
+                            if (cbSetDefault.isChecked()) {
+                                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
+                                editor.apply();
+                                mFontTitle = String.format(getString(R.string.edit_font_size),
+                                        mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT,
+                                                Constants.DEFAULT_FONT_SIZE));
+                            }
                         }
+                    } catch (NumberFormatException e) {
+                        showSnackbar(R.string.invalid_entry);
                     }
                 })
                 .show();
@@ -215,37 +196,22 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(getString(R.string.example), null, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (StringUtils.isEmpty(input)) {
-                            showSnackbar(R.string.snackbar_name_not_blank);
+                .input(getString(R.string.example), null, (dialog, input) -> {
+                    if (StringUtils.isEmpty(input)) {
+                        showSnackbar(R.string.snackbar_name_not_blank);
+                    } else {
+                        final String inputName = input.toString();
+                        if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
+                            createPdf(inputName);
                         } else {
-                            final String inputName = input.toString();
-                            if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
-                                createPdf(inputName);
-                            } else {
-                                new MaterialDialog.Builder(mActivity)
-                                        .title(R.string.warning)
-                                        .content(R.string.overwrite_message)
-                                        .positiveText(android.R.string.ok)
-                                        .negativeText(android.R.string.cancel)
-                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                            @Override
-                                            public void onClick(@NonNull MaterialDialog dialog,
-                                                                @NonNull DialogAction which) {
-                                                createPdf(inputName);
-                                            }
-                                        })
-                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                            @Override
-                                            public void onClick(@NonNull MaterialDialog dialog,
-                                                                @NonNull DialogAction which) {
-                                                openCreateTextPdf();
-                                            }
-                                        })
-                                        .show();
-                            }
+                            new MaterialDialog.Builder(mActivity)
+                                    .title(R.string.warning)
+                                    .content(R.string.overwrite_message)
+                                    .positiveText(android.R.string.ok)
+                                    .negativeText(android.R.string.cancel)
+                                    .onPositive((dialog12, which) -> createPdf(inputName))
+                                    .onNegative((dialog1, which) -> openCreateTextPdf())
+                                    .show();
                         }
                     }
                 })
@@ -267,14 +233,8 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
             fileUtil.createPdf(new TextToPDFOptions(mFilename, mTextFileUri, mFontSize, mFontFamily));
             final String finalMPath = mPath;
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                    , R.string.snackbar_pdfCreated
-                    , Snackbar.LENGTH_LONG)
-                    .setAction(R.string.snackbar_viewAction, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mFileUtils.openFile(finalMPath);
-                        }
-                    }).show();
+                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
             mTextView.setVisibility(View.GONE);
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
@@ -286,7 +246,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
      */
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
-
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType(getString(R.string.text_type));
         intent.addCategory(Intent.CATEGORY_OPENABLE);

@@ -2,12 +2,12 @@ package swati4star.createpdf.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,7 +40,6 @@ import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileSortUtils;
-import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MoveFilesToDirectory;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
@@ -57,18 +56,14 @@ public class ViewFilesFragment extends Fragment
 
     @BindView(R.id.layout_main)
     public LinearLayout mainLayout;
-    @BindView(R.id.emptyBackgroundImage)
-    public ImageView backView;
-    @BindView(R.id.emptyTextOverBgImage)
-    public TextView TextOver;
     @BindView(R.id.getStarted)
     public Button getStarted;
-    @BindView(R.id.emptyTagLine)
-    public TextView tagLine;
     @BindView(R.id.filesRecyclerView)
     RecyclerView mViewFilesListRecyclerView;
     @BindView(R.id.swipe)
     SwipeRefreshLayout mSwipeView;
+    @BindView(R.id.emptyStatusView)
+    ConstraintLayout emptyView;
 
     private MenuItem mMenuItem;
     private Activity mActivity;
@@ -114,12 +109,7 @@ public class ViewFilesFragment extends Fragment
         mViewFilesAdapter = new ViewFilesAdapter(mActivity, null, this);
         mAlertDialogBuilder = new AlertDialog.Builder(mActivity)
                 .setCancelable(true)
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
+                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss());
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
         mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
@@ -158,12 +148,9 @@ public class ViewFilesFragment extends Fragment
                 return true;
             }
         });
-        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                populatePdfList();
-                return false;
-            }
+        mSearchView.setOnCloseListener(() -> {
+            populatePdfList();
+            return false;
         });
         mSearchView.setIconifiedByDefault(true);
     }
@@ -219,39 +206,29 @@ public class ViewFilesFragment extends Fragment
                 message.setText(R.string.dialog_new_dir);
                 mAlertDialogBuilder.setTitle(R.string.new_directory)
                         .setView(alertView)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String fileName = input.getText().toString();
-                                new MoveFilesToDirectory(mActivity
-                                        , filePath
-                                        , fileName
-                                        , MoveFilesToDirectory.MOVE_FILES)
-                                        .execute();
-                                populatePdfList();
-                            }
+                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                            String fileName = input.getText().toString();
+                            new MoveFilesToDirectory(mActivity
+                                    , filePath
+                                    , fileName
+                                    , MoveFilesToDirectory.MOVE_FILES)
+                                    .execute();
+                            populatePdfList();
                         });
             } else if (operation == EXISTING_DIR) {
                 message.setText(R.string.dialog_dir);
                 mAlertDialogBuilder.setTitle(R.string.directory)
                         .setView(alertView)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String fileName = input.getText().toString();
-                                File directory = mDirectoryUtils.getDirectory(fileName);
-                                if (directory != null) {
-                                    new MoveFilesToDirectory(mActivity
-                                            , filePath
-                                            , fileName
-                                            , MoveFilesToDirectory.MOVE_FILES)
-                                            .execute();
-                                    populatePdfList();
-                                } else {
-                                    showSnack(R.string.dir_does_not_exists);
-                                    dialogInterface.dismiss();
-                                }
-
+                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                            String fileName = input.getText().toString();
+                            File directory = mDirectoryUtils.getDirectory(fileName);
+                            if (directory != null) {
+                                new MoveFilesToDirectory(mActivity, filePath, fileName, MoveFilesToDirectory.MOVE_FILES)
+                                        .execute();
+                                populatePdfList();
+                            } else {
+                                showSnack(R.string.dir_does_not_exists);
+                                dialogInterface.dismiss();
                             }
                         });
             }
@@ -264,15 +241,15 @@ public class ViewFilesFragment extends Fragment
      * and delete files on positive response
      */
     private void deleteFiles() {
-        mAlertDialogBuilder.setTitle(R.string.delete_alert)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mViewFilesAdapter.deleteFiles();
-                        checkIfListEmpty();
-                    }
+        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(mActivity)
+                .setCancelable(true)
+                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+                .setTitle(R.string.delete_alert)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    mViewFilesAdapter.deleteFiles();
+                    checkIfListEmpty();
                 });
-        mAlertDialogBuilder.create().show();
+        dialogAlert.create().show();
     }
 
     /**
@@ -304,19 +281,17 @@ public class ViewFilesFragment extends Fragment
     private void displaySortDialog() {
         final File folder = mDirectoryUtils.getOrCreatePdfDirectory();
         mAlertDialogBuilder.setTitle(R.string.sort_by_title)
-                .setItems(R.array.sort_options, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        ArrayList<File> pdfsFromFolder = mDirectoryUtils.getPdfsFromPdfFolder(folder.listFiles());
-                        ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
-                        if (pdfFromOtherDir != null) {
-                            pdfsFromFolder.addAll(pdfFromOtherDir);
-                        } else
-                            FileSortUtils.performSortOperation(which, pdfsFromFolder);
+                .setItems(R.array.sort_options, (dialog, which) -> {
+                    ArrayList<File> pdfsFromFolder = mDirectoryUtils.getPdfsFromPdfFolder(folder.listFiles());
+                    ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
+                    if (pdfFromOtherDir != null) {
+                        pdfsFromFolder.addAll(pdfFromOtherDir);
+                    } else
+                        FileSortUtils.performSortOperation(which, pdfsFromFolder);
 
-                        mViewFilesAdapter.setData(pdfsFromFolder);
-                        mCurrentSortingIndex = which;
-                        mSharedPreferences.edit().putInt(SORTING_INDEX, which).apply();
-                    }
+                    mViewFilesAdapter.setData(pdfsFromFolder);
+                    mCurrentSortingIndex = which;
+                    mSharedPreferences.edit().putInt(SORTING_INDEX, which).apply();
                 });
         mAlertDialogBuilder.create().show();
     }
@@ -324,10 +299,7 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void setEmptyStateVisible() {
-        backView.setVisibility(View.VISIBLE);
-        TextOver.setVisibility(View.VISIBLE);
-        getStarted.setVisibility(View.VISIBLE);
-        tagLine.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.GONE);
     }
 
@@ -385,39 +357,30 @@ public class ViewFilesFragment extends Fragment
         message.setText(R.string.dialog_delete_dir);
         mAlertDialogBuilder.setTitle(R.string.delete_directory)
                 .setView(alertView)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialogInterface, int i) {
-                        final String dirName = input.getText().toString();
-                        final File directory = mDirectoryUtils.getDirectory(dirName);
-                        if (directory == null) {
-                            showSnack(R.string.dir_does_not_exists);
-                        } else {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                            builder.setTitle(R.string.delete)
-                                    .setMessage(R.string.delete_dialog)
-                                    .setCancelable(true)
-                                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            for (File pdf : directory.listFiles()) {
-                                                pdfFiles.add(pdf.getPath());
-                                            }
-                                            new MoveFilesToDirectory(mActivity, pdfFiles,
-                                                    dirName, MoveFilesToDirectory.DELETE_DIRECTORY)
-                                                    .execute();
-                                            populatePdfList();
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int i) {
-                                            dialog.dismiss();
-                                            dialogInterface.dismiss();
-                                        }
-                                    });
-                            builder.create().show();
-                        }
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                    final String dirName = input.getText().toString();
+                    final File directory = mDirectoryUtils.getDirectory(dirName);
+                    if (directory == null) {
+                        showSnack(R.string.dir_does_not_exists);
+                    } else {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                        builder.setTitle(R.string.delete)
+                                .setMessage(R.string.delete_dialog)
+                                .setCancelable(true)
+                                .setPositiveButton(R.string.yes, (dialogInterface1, i12) -> {
+                                    for (File pdf : directory.listFiles()) {
+                                        pdfFiles.add(pdf.getPath());
+                                    }
+                                    new MoveFilesToDirectory(mActivity, pdfFiles,
+                                            dirName, MoveFilesToDirectory.DELETE_DIRECTORY)
+                                            .execute();
+                                    populatePdfList();
+                                })
+                                .setNegativeButton(R.string.no, (dialog, i1) -> {
+                                    dialog.dismiss();
+                                    dialogInterface.dismiss();
+                                });
+                        builder.create().show();
                     }
                 });
         mAlertDialogBuilder.create().show();
