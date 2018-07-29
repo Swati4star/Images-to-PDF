@@ -243,12 +243,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                 fdelete.delete();
                                 mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
                                         mActivity.getString(R.string.deleted));
+                                if (mFileList.size() == 0) {
+                                    mEmptyStateChangeListener.setEmptyStateVisible();
+                                }
                             }
                         }
                     }).show();
-        }
-        if (mFileList.size() == 0) {
-            mEmptyStateChangeListener.setEmptyStateVisible();
         }
     }
 
