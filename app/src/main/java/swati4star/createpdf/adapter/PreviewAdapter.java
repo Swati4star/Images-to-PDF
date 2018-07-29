@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,12 +22,10 @@ public class PreviewAdapter extends PagerAdapter {
     private final ArrayList<String> mPreviewItems;
     private final LayoutInflater mInflater;
 
-
     public PreviewAdapter(Context context, ArrayList<String> previewItems) {
         mContext = context;
         mPreviewItems = previewItems;
         mInflater = LayoutInflater.from(context);
-
     }
 
     @NonNull
@@ -35,11 +34,15 @@ public class PreviewAdapter extends PagerAdapter {
         View layout = mInflater.inflate(R.layout.pdf_preview_item, view, false);
 
         final ImageView imageView = layout.findViewById(R.id.image);
-
-        File fileLocation = new File(mPreviewItems.get(position));
+        String path = mPreviewItems.get(position);
+        File fileLocation = new File(path);
 
         Picasso.with(mContext).load(fileLocation).into(imageView);
+        TextView fileName = layout.findViewById(R.id.tvFileName);
+        String fileNameString = fileLocation.getName();
+        fileName.setText(fileNameString);
         view.addView(layout, 0);
+
         return layout;
     }
 
@@ -68,5 +71,4 @@ public class PreviewAdapter extends PagerAdapter {
         mPreviewItems.clear();
         mPreviewItems.addAll(images);
     }
-
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,9 +41,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
     public void onBindViewHolder(@NonNull ViewHistoryHolder holder, int position) {
 
         final String filePath = mHistoryList.get(position).getFilePath();
+        File file = new File(filePath);
         final String operationDate = mHistoryList.get(position).getDate();
         final String operationType = mHistoryList.get(position).getOperationType();
-        final String fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
+        final String fileName = file.getName();
 
         holder.mFilename.setText(fileName);
         holder.mOperationDate.setText(operationDate);
