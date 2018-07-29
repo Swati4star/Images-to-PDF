@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -68,6 +69,15 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         ButterKnife.bind(this, root);
 
         new LoadHistory(mActivity).execute();
+        root.setFocusableInTouchMode(true);
+        root.requestFocus();
+        root.setOnKeyListener((v, keyCode, event) -> {
+            if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                getFragmentManager().beginTransaction().replace(R.id.content, new ImageToPdfFragment()).commit();
+                return true;
+            }
+            return false;
+        });
         return root;
     }
 
