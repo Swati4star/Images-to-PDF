@@ -30,13 +30,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/operationDate"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:textSize="10sp"
                 android:layout_weight="1"
                 android:padding="8dp" />
 
