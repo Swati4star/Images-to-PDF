@@ -232,6 +232,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     , R.string.snackbar_file_deleted
                     , Snackbar.LENGTH_LONG)
                     .setAction(R.string.snackbar_undoAction, v -> {
+                        if (mFileList.size() == 0) {
+                            mEmptyStateChangeListener.setEmptyStateInvisible();
+                        }
                         mFileList.add(fcreate);
                         notifyDataSetChanged();
                         isFileDeleteUndoClicked = 1;
@@ -243,12 +246,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                                 fdelete.delete();
                                 mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
                                         mActivity.getString(R.string.deleted));
-                                if (mFileList.size() == 0) {
-                                    mEmptyStateChangeListener.setEmptyStateVisible();
-                                }
                             }
                         }
                     }).show();
+        }
+        if (mFileList.size() == 0) {
+            mEmptyStateChangeListener.setEmptyStateVisible();
         }
     }
 

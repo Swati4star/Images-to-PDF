@@ -302,6 +302,12 @@ public class ViewFilesFragment extends Fragment
         mainLayout.setVisibility(View.GONE);
     }
 
+    @Override
+    public void setEmptyStateInvisible() {
+        emptyView.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.VISIBLE);
+    }
+
     // DIRECTORY OPERATIONS
 
     @OnClick(R.id.new_dir)
