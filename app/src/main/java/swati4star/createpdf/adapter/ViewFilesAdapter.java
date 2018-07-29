@@ -232,6 +232,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     , R.string.snackbar_file_deleted
                     , Snackbar.LENGTH_LONG)
                     .setAction(R.string.snackbar_undoAction, v -> {
+                        if (mFileList.size() == 0) {
+                            mEmptyStateChangeListener.setEmptyStateInvisible();
+                        }
                         mFileList.add(fcreate);
                         notifyDataSetChanged();
                         isFileDeleteUndoClicked = 1;
