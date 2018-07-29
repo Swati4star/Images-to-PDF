@@ -22,12 +22,10 @@ public class PreviewAdapter extends PagerAdapter {
     private final ArrayList<String> mPreviewItems;
     private final LayoutInflater mInflater;
 
-
     public PreviewAdapter(Context context, ArrayList<String> previewItems) {
         mContext = context;
         mPreviewItems = previewItems;
         mInflater = LayoutInflater.from(context);
-
     }
 
     @NonNull
@@ -41,7 +39,7 @@ public class PreviewAdapter extends PagerAdapter {
 
         Picasso.with(mContext).load(fileLocation).into(imageView);
         TextView fileName = layout.findViewById(R.id.tvFileName);
-        String fileNameString = path.substring(path.lastIndexOf('/') + 1);
+        String fileNameString = fileLocation.getName();
         fileName.setText(fileNameString);
         view.addView(layout, 0);
 
@@ -73,5 +71,4 @@ public class PreviewAdapter extends PagerAdapter {
         mPreviewItems.clear();
         mPreviewItems.addAll(images);
     }
-
 }
