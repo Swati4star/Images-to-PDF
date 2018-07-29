@@ -44,7 +44,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         final String filePath = mHistoryList.get(position).getFilePath();
         File file = new File(filePath);
         final String operationDate = mHistoryList.get(position).getDate();
-        Log.e("log","hh : "+operationDate);
         String[] formatdate = operationDate.toString().split(" ");
         String time = formatdate[3];
 
