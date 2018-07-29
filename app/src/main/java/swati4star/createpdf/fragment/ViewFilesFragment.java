@@ -118,15 +118,6 @@ public class ViewFilesFragment extends Fragment
         mSwipeView.setOnRefreshListener(this);
 
         checkIfListEmpty();
-        root.setFocusableInTouchMode(true);
-        root.requestFocus();
-        root.setOnKeyListener((v, keyCode, event) -> {
-            if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-                getFragmentManager().beginTransaction().replace(R.id.content, new ImageToPdfFragment()).commit();
-                return true;
-            }
-            return false;
-        });
         return root;
     }
 

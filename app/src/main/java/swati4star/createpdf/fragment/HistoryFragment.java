@@ -69,15 +69,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         ButterKnife.bind(this, root);
 
         new LoadHistory(mActivity).execute();
-        root.setFocusableInTouchMode(true);
-        root.requestFocus();
-        root.setOnKeyListener((v, keyCode, event) -> {
-            if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-                getFragmentManager().beginTransaction().replace(R.id.content, new ImageToPdfFragment()).commit();
-                return true;
-            }
-            return false;
-        });
         return root;
     }
 

@@ -40,15 +40,6 @@ public class AboutUsFragment extends Fragment {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        rootview.setFocusableInTouchMode(true);
-        rootview.requestFocus();
-        rootview.setOnKeyListener((v, keyCode, event) -> {
-            if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-                getFragmentManager().beginTransaction().replace(R.id.content, new ImageToPdfFragment()).commit();
-                return true;
-            }
-            return false;
-        });
         return rootview;
     }
 

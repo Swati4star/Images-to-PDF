@@ -78,15 +78,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 Constants.DEFAULT_FONT_FAMILY));
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
-        rootview.setFocusableInTouchMode(true);
-        rootview.requestFocus();
-        rootview.setOnKeyListener((v, keyCode, event) -> {
-            if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-                getFragmentManager().beginTransaction().replace(R.id.content, new ImageToPdfFragment()).commit();
-                return true;
-            }
-            return false;
-        });
         return rootview;
     }
 
