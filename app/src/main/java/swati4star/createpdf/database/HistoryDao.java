@@ -8,7 +8,7 @@ import java.util.List;
 
 @Dao
 public interface HistoryDao {
-    @Query("SELECT * FROM History order by mId")
+    @Query("SELECT * FROM History order by mId desc")
     List<History> getAllHistory();
 
     @Insert
