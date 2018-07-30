@@ -2,8 +2,9 @@
 
 ### Badges
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF) [![Circle CI](https://circleci.com/gh/Swati4star/Images-to-PDF.svg?style=svg)](https://circleci.com/gh/Swati4star/Images-to-PDF)
-[![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF)
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Swati4star)
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/Swati4star/Images-to-PDF.svg?columns=all)](https://waffle.io/Swati4star/Images-to-PDF)
 
