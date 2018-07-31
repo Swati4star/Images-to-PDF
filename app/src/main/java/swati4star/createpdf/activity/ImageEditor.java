@@ -59,6 +59,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     Button saveCurrent;
     @BindView(R.id.previousImageButton)
     ImageButton mPreviousButton;
+    @BindView(R.id.resetCurrent)
+    Button resetCurrent;
 
     private Bitmap mBitmap;
     private PhotoEditorView mPhotoEditorView;
@@ -120,6 +122,17 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         } else {
             applyFilter(PhotoFilter.NONE);
             saveCurrentImage();
+        }
+    }
+
+    @OnClick(R.id.resetCurrent)
+    void resetCurrent() {
+        String originalPath = mFilterUris.get(mCurrentImage);
+        if (!mImagepaths.contains(originalPath)) {
+            mImagepaths.remove(mCurrentImage);
+            mImagepaths.add(mCurrentImage, originalPath);
+            mBitmap = BitmapFactory.decodeFile(originalPath);
+            mPhotoEditorView.getSource().setImageBitmap(mBitmap);
         }
     }
 
@@ -257,7 +270,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     /**
      * Get Item Position and call Filter Function
-     * @param view - view which is clicked
+     *
+     * @param view     - view which is clicked
      * @param position - position of item clicked
      */
     @Override
