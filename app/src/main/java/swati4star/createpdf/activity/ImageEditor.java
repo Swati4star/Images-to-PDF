@@ -87,6 +87,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mImgcount.setText(showingText);
         mPreviousButton.setVisibility(View.INVISIBLE);
         mFilterItems = getFiltersList(this);
+        mImagepaths.addAll(mFilterUris);
         initRecyclerView();
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -177,7 +178,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             mPhotoEditor.saveAsFile(imagePath, new PhotoEditor.OnSaveListener() {
                 @Override
                 public void onSuccess(@NonNull String imagePath) {
-                    mImagepaths.add(imagePath);
+                    mImagepaths.remove(mCurrentImage);
+                    mImagepaths.add(mCurrentImage, imagePath);
                     Toast.makeText(getApplicationContext(), R.string.saving_dialog, Toast.LENGTH_SHORT).show();
                 }
 
@@ -197,15 +199,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void done() {
         if (!mClicked) {
             passUris(mFilterUris);
-        } else if (mCurrentImage <= mDisplaySize) {
-            // Append the images which are not edited
-            for (int i = mCurrentImage + 1; i <= mFilterUris.size(); i++)
-                mImagepaths.add(mFilterUris.get(i - 1));
-
-            if (!mClicked || mIsLast)
-                mCurrentImage++;
+        } else {
+            passUris(mImagepaths);
         }
-        passUris(mImagepaths);
     }
 
     /**
@@ -226,7 +222,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void next() {
         try {
             if (mCurrentImage + 1 <= mImagesCount) {
-                mBitmap = BitmapFactory.decodeFile(mFilterUris.get(mCurrentImage + 1));
+                mBitmap = BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage + 1));
                 mPhotoEditorView.getSource().setImageBitmap(mBitmap);
                 mCurrentImage++;
             }
@@ -241,7 +237,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void previous() {
         try {
             if (mCurrentImage - 1 >= 0) {
-                mBitmap = BitmapFactory.decodeFile(mFilterUris.get((mCurrentImage - 1)));
+                mBitmap = BitmapFactory.decodeFile(mImagepaths.get((mCurrentImage - 1)));
                 mPhotoEditorView.getSource().setImageBitmap(mBitmap);
                 mCurrentImage--;
             }
