@@ -98,7 +98,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private boolean mPasswordProtected = false;
-    private  FileUtils mFileUtils;
+    private FileUtils mFileUtils;
     private int mButtonClicked = 0;
 
     @Override
@@ -177,14 +177,10 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
             showSnackbar(R.string.snackbar_no_images);
         else {
             // Apply filters
-            mImageCounter = 0;
             try {
-                mImagesUri.add(mTempUris.get(mImageCounter));
-                mImageCounter = mImagesUri.size();
                 Intent intent = new Intent(getContext(), ImageEditor.class);
                 intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mTempUris);
                 startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
-                mImagesUri.add(mTempUris.get(mImageCounter));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -334,7 +330,6 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        mImageCounter++;
                 }
                 break;
 
