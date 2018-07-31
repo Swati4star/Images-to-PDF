@@ -17,8 +17,6 @@
             android:id="@+id/photoEditorView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +33,10 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="13dp"
-        android:layout_toEndOf="@id/savecurrent"
-        android:background="@android:color/holo_orange_dark"
-        android:contentDescription="@string/previous_image_content_desc"
-        app:srcCompat="@drawable/ic_navigate_before_white_24dp" />
+        android:layout_toStartOf="@id/imagecount"
+        android:background="@drawable/ic_navigate_before_white_24dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/previous_image_content_desc" />
 
     <ImageButton
         android:id="@+id/nextimageButton"
@@ -47,18 +45,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="13dp"
-        android:background="@android:color/holo_orange_dark"
-        android:contentDescription="@string/nextimage_contentdesc"
-        app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
+        android:background="@drawable/ic_navigate_next_black_24dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/nextimage_contentdesc" />
 
     <TextView
         android:id="@+id/imagecount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/savecurrent"
-        android:layout_toEndOf="@id/previousImageButton"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
         android:layout_toStartOf="@id/nextimageButton"
         android:gravity="center_horizontal"
         android:text="@string/img_Count_filter"
@@ -66,13 +65,28 @@
 
     <Button
         android:id="@+id/savecurrent"
-        android:layout_width="123dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/nextimageButton"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/resetCurrent"
+        android:background="@android:color/holo_orange_dark"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:text="@string/save_current"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/resetCurrent"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/nextimageButton"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="10dp"
         android:background="@android:color/holo_orange_dark"
-        android:text="@string/save_current"
+        android:text="@string/reset"
+        android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
     <android.support.v7.widget.RecyclerView
