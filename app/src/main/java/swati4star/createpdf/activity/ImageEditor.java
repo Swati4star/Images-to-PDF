@@ -50,6 +50,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private int mImagesCount;
     private int mDisplaySize;
     private int mCurrentImage = 0;
+    private String mFilterName;
 
     @BindView(R.id.nextimageButton)
     ImageButton mNextButton;
@@ -169,7 +170,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
             dir.mkdirs();
-            String fileName = String.format("%sepia.jpg", System.currentTimeMillis());
+            String fileName = String.format(getString(R.string.filter_file_name),
+                    String.valueOf(System.currentTimeMillis()), mFilterName);
             File outFile = new File(dir, fileName);
             String imagePath = outFile.getAbsolutePath();
 
@@ -257,7 +259,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     /**
      * Get Item Position and call Filter Function
-     * @param view - view which is clicked
+     *
+     * @param view     - view which is clicked
      * @param position - position of item clicked
      */
     @Override
@@ -276,6 +279,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                     .setPinchTextScalable(true)
                     .build();
             mPhotoEditor.setFilterEffect(filterType);
+            mFilterName = filterType.name();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
