@@ -3,7 +3,6 @@ package swati4star.createpdf.adapter;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,16 +43,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         final String filePath = mHistoryList.get(position).getFilePath();
         File file = new File(filePath);
         final String operationDate = mHistoryList.get(position).getDate();
-        String[] formatdate = operationDate.toString().split(" ");
-        String time = formatdate[3];
+        String[] formatdate = operationDate.split(" ");
+        String date;
+        if (formatdate.length >= 3) {
+            String time = formatdate[3];
+            String[] formattime =  time.split(":");
+            date = formattime[0] + ":" + formattime[1];
+            date = formatdate[0] + ", " + formatdate[1] + " " + formatdate[2] + " at " + date;
+        } else {
+            date = operationDate;
+        }
 
-        String[] formattime =  time.split(":");
-        String date = formattime[0] + ":" + formattime[1];
         final String operationType = mHistoryList.get(position).getOperationType();
         final String fileName = file.getName();
 
         holder.mFilename.setText(fileName);
-        holder.mOperationDate.setText(formatdate[0] + ", " + formatdate[1] + " " + formatdate[2] + " at " + date);
+        holder.mOperationDate.setText(date);
         holder.mOperationType.setText(operationType);
     }
 
