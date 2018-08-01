@@ -244,4 +244,6 @@
     <string name="snackbar_undoAction">Undo</string>
     <string name="pdf_does_not_exist_message">The PDF doesn\'t exist.</string>
     <string name="image_rearranging_options">Image Rearranging Options</string>
+    <string name="filter_file_name">%s_%s.jpg</string>
+    <string name="reset">Reset</string>
 </resources>

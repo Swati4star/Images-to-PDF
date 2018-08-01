@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Document;
@@ -64,8 +63,6 @@ public class MergeFilesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
         return root;
@@ -73,55 +70,39 @@ public class MergeFilesFragment extends Fragment {
 
     @OnClick(R.id.fileonebtn)
     void startAddingPDF(View v) {
-        Log.d("img", "startAddingPDF: ");
         mCheckbtClickTag = (v).getTag().toString();
         showFileChooser();
     }
 
     @OnClick(R.id.filetwobtn)
     void startAddingPDF2(View v) {
-        Log.d("img", "startAddingPDF: ");
         mCheckbtClickTag = (v).getTag().toString();
         showFileChooser();
     }
 
     @OnClick(R.id.mergebtn)
     void mergeFiles(final View v) {
+
+        String[] pdfpaths = {firstFilePath, secondFilePath};
+        if (firstFilePath == null || secondFilePath == null || !mSuccess) {
+            showSnackbar(R.string.snackbar_no_pdfs_selected);
+            return;
+        }
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
                     if (StringUtils.isEmpty(input)) {
-                        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                                R.string.snackbar_name_not_blank,
-                                Snackbar.LENGTH_LONG).show();
+                        showSnackbar(R.string.snackbar_name_not_blank);
                     } else {
                         mFilename = input.toString();
-                        mergePdfFiles();
+                        mergePdf(pdfpaths);
+                        showSnackbar(R.string.pdf_merge);
                     }
                 })
                 .show();
     }
 
-    private void mergePdfFiles() {
-        try {
-
-            String[] pdfpaths = {firstFilePath, secondFilePath};
-
-            if (firstFilePath.isEmpty() || secondFilePath.isEmpty() || !mSuccess) {
-                mergeBtn.setEnabled(false);
-                Toast.makeText(this.getContext(), getString(R.string.pdf_merge_error), Toast.LENGTH_SHORT).show();
-            } else {
-
-                mergeBtn.setEnabled(true);
-                mergePdf(pdfpaths);
-                Toast.makeText(this.getContext(), getString(R.string.pdf_merge), Toast.LENGTH_SHORT).show();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void mergePdf(String[] pdfpaths) {
         try {
@@ -154,7 +135,6 @@ public class MergeFilesFragment extends Fragment {
     }
 
     private void showFileChooser() {
-
         String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();
         intent.setAction( Intent.ACTION_GET_CONTENT);
@@ -195,7 +175,6 @@ public class MergeFilesFragment extends Fragment {
         if (uriString.startsWith("content://")) {
             mDisplayName = getFileName(uri);
             mSuccess = true;
-
         } else if (uriString.startsWith("file://")) {
             mDisplayName = myFile.getName();
             mSuccess = true;
@@ -231,7 +210,7 @@ public class MergeFilesFragment extends Fragment {
     private String getFileName(Uri uri) {
         Cursor cursor;
         try {
-            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            cursor = mActivity.getContentResolver().query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 mDisplayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 cursor.close();
@@ -269,5 +248,10 @@ public class MergeFilesFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+    }
+
+    private void showSnackbar(int resID) {
+        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                resID, Snackbar.LENGTH_LONG).show();
     }
 }

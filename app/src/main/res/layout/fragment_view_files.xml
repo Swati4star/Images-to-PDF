@@ -18,10 +18,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <android.support.v7.widget.RecyclerView
+                android:layout_weight="1"
+                android:id="@+id/filesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:id="@+id/layout_main"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_margin="5dp"
                 android:background="@color/mb_white"
                 android:baselineAligned="false"
@@ -127,14 +135,11 @@
                         android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
+
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/filesRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible" />
         </LinearLayout>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.constraint.ConstraintLayout

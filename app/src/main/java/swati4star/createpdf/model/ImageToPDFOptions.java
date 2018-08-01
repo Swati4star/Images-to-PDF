@@ -9,16 +9,14 @@ public class ImageToPDFOptions extends PDFOptions {
     private final String mPassword;
     private final String mQualityString;
     private final ArrayList<String> mImagesUri;
-    private final Rectangle mPageSize;
 
-    public ImageToPDFOptions(String mFileName, boolean mPasswordProtected, String mPassword, String mQualityString,
-                             ArrayList<String> mImagesUri, Rectangle mPageSize) {
-        super(mFileName);
+    public ImageToPDFOptions(String mFileName, Rectangle mPageSize, boolean mPasswordProtected,
+                             String mPassword, String mQualityString, ArrayList<String> mImagesUri) {
+        super(mFileName, mPageSize);
         this.mPasswordProtected = mPasswordProtected;
         this.mPassword = mPassword;
         this.mQualityString = mQualityString;
         this.mImagesUri = mImagesUri;
-        this.mPageSize = mPageSize;
     }
 
     public boolean isPasswordProtected() {
@@ -37,7 +35,4 @@ public class ImageToPDFOptions extends PDFOptions {
         return mImagesUri;
     }
 
-    public Rectangle getPageSize() {
-        return mPageSize;
-    }
 }

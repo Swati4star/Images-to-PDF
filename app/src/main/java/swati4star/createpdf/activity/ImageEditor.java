@@ -50,6 +50,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private int mImagesCount;
     private int mDisplaySize;
     private int mCurrentImage = 0;
+    private String mFilterName;
 
     @BindView(R.id.nextimageButton)
     ImageButton mNextButton;
@@ -59,6 +60,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     Button saveCurrent;
     @BindView(R.id.previousImageButton)
     ImageButton mPreviousButton;
+    @BindView(R.id.resetCurrent)
+    Button resetCurrent;
 
     private Bitmap mBitmap;
     private PhotoEditorView mPhotoEditorView;
@@ -86,6 +89,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mImgcount.setText(showingText);
         mPreviousButton.setVisibility(View.INVISIBLE);
         mFilterItems = getFiltersList(this);
+        mImagepaths.addAll(mFilterUris);
         initRecyclerView();
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -119,6 +123,17 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         } else {
             applyFilter(PhotoFilter.NONE);
             saveCurrentImage();
+        }
+    }
+
+    @OnClick(R.id.resetCurrent)
+    void resetCurrent() {
+        String originalPath = mFilterUris.get(mCurrentImage);
+        if (!mImagepaths.contains(originalPath)) {
+            mImagepaths.remove(mCurrentImage);
+            mImagepaths.add(mCurrentImage, originalPath);
+            mBitmap = BitmapFactory.decodeFile(originalPath);
+            mPhotoEditorView.getSource().setImageBitmap(mBitmap);
         }
     }
 
@@ -168,14 +183,16 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
             dir.mkdirs();
-            String fileName = String.format("%sepia.jpg", System.currentTimeMillis());
+            String fileName = String.format(getString(R.string.filter_file_name),
+                    String.valueOf(System.currentTimeMillis()), mFilterName);
             File outFile = new File(dir, fileName);
             String imagePath = outFile.getAbsolutePath();
 
             mPhotoEditor.saveAsFile(imagePath, new PhotoEditor.OnSaveListener() {
                 @Override
                 public void onSuccess(@NonNull String imagePath) {
-                    mImagepaths.add(imagePath);
+                    mImagepaths.remove(mCurrentImage);
+                    mImagepaths.add(mCurrentImage, imagePath);
                     Toast.makeText(getApplicationContext(), R.string.saving_dialog, Toast.LENGTH_SHORT).show();
                 }
 
@@ -195,15 +212,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void done() {
         if (!mClicked) {
             passUris(mFilterUris);
-        } else if (mCurrentImage <= mDisplaySize) {
-            // Append the images which are not edited
-            for (int i = mCurrentImage + 1; i <= mFilterUris.size(); i++)
-                mImagepaths.add(mFilterUris.get(i - 1));
-
-            if (!mClicked || mIsLast)
-                mCurrentImage++;
+        } else {
+            passUris(mImagepaths);
         }
-        passUris(mImagepaths);
     }
 
     /**
@@ -224,7 +235,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void next() {
         try {
             if (mCurrentImage + 1 <= mImagesCount) {
-                mBitmap = BitmapFactory.decodeFile(mFilterUris.get(mCurrentImage + 1));
+                mBitmap = BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage + 1));
                 mPhotoEditorView.getSource().setImageBitmap(mBitmap);
                 mCurrentImage++;
             }
@@ -239,7 +250,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void previous() {
         try {
             if (mCurrentImage - 1 >= 0) {
-                mBitmap = BitmapFactory.decodeFile(mFilterUris.get((mCurrentImage - 1)));
+                mBitmap = BitmapFactory.decodeFile(mImagepaths.get((mCurrentImage - 1)));
                 mPhotoEditorView.getSource().setImageBitmap(mBitmap);
                 mCurrentImage--;
             }
@@ -261,7 +272,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     /**
      * Get Item Position and call Filter Function
-     * @param view - view which is clicked
+     *
+     * @param view     - view which is clicked
      * @param position - position of item clicked
      */
     @Override
@@ -280,6 +292,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                     .setPinchTextScalable(true)
                     .build();
             mPhotoEditor.setFilterEffect(filterType);
+            mFilterName = filterType.name();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -315,6 +329,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 .negativeText(R.string.cancel).show();
 
     }
+
     @Override
     public void onBackPressed() {
         done();

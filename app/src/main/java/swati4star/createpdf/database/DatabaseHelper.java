@@ -3,9 +3,7 @@ package swati4star.createpdf.database;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DatabaseHelper {
