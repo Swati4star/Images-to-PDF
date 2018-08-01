@@ -20,11 +20,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
@@ -60,6 +64,8 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     @BindView(R.id.tv_file_name)
     TextView mTextView;
     private int mButtonClicked = 0;
+    private Rectangle mPageSize = PageSize.A4;
+
 
     private ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
@@ -100,7 +106,28 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
             case 1:
                 changeFontFamily();
                 break;
+            case 2:
+                setPageSize();
+                break;
         }
+    }
+
+    private void setPageSize() {
+        new MaterialDialog.Builder(mActivity)
+                .title(R.string.set_page_size_text)
+                .customView(R.layout.set_page_size_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .onPositive((dialog1, which) -> {
+                    View view = dialog1.getCustomView();
+                    RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
+                    Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
+                    PageSizeUtils utils = new PageSizeUtils();
+                    mPageSize = utils.getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
+                            spinnerB.getSelectedItem().toString());
+                }).show();
     }
 
     /**
@@ -231,7 +258,7 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
             mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
-            fileUtil.createPdf(new TextToPDFOptions(mFilename, mTextFileUri, mFontSize, mFontFamily));
+            fileUtil.createPdf(new TextToPDFOptions(mFilename, mPageSize, mTextFileUri, mFontSize, mFontFamily));
             final String finalMPath = mPath;
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
                     , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
