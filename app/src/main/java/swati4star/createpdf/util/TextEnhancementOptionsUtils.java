@@ -21,6 +21,9 @@ public class TextEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context.getResources().getDrawable(R.drawable.ic_font_family_24dp),
                 String.format(context.getString(R.string.default_font_family_text), fontFamily.name())));
+        options.add(new EnhancementOptionsEntity(
+                context.getResources().getDrawable(R.drawable.ic_page_size_24dp),
+                context.getString(R.string.set_page_size_text)));
         return options;
     }
 }

@@ -35,7 +35,7 @@ public class PDFUtils {
     /**
      * Creates a dialog with details of given PDF file
      *
-     * @param file        - file name
+     * @param file - file name
      */
     public void showDetails(File file) {
 
@@ -72,7 +72,7 @@ public class PDFUtils {
     public void createPdf(TextToPDFOptions mTextToPDFOptions)
             throws DocumentException, IOException {
 
-        Document document = new Document();
+        Document document = new Document(mTextToPDFOptions.getPageSize());
         String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" +
                 mTextToPDFOptions.getOutFileName() + ".pdf";
         PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);
