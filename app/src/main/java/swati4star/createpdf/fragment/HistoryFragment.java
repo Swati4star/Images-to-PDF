@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.HistoryAdapter;
 import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
@@ -101,6 +102,9 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDefaultMenuSelected(0);
+        }
     }
 
     @Override
