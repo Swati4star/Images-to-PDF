@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FeedbackUtils mFeedbackUtils;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +82,15 @@ public class MainActivity extends AppCompatActivity
      */
     private void initializeValues() {
         mFeedbackUtils = new FeedbackUtils(this);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setDefaultMenuSelected(0);
+    }
+
+    public void setDefaultMenuSelected(int position) {
+        if (navigationView != null && navigationView.getMenu() != null && navigationView.getMenu().getItem(position) != null) {
+            navigationView.getMenu().getItem(position).setChecked(true);
+        }
     }
 
     /**

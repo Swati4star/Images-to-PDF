@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.util.DirectoryUtils;
@@ -81,6 +82,10 @@ public class ViewFilesFragment extends Fragment
         Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        //Set default item selected
+        if (getActivity() instanceof MainActivity){
+            ((MainActivity) getActivity()).setDefaultMenuSelected(0);;
+        }
     }
 
     @Override
