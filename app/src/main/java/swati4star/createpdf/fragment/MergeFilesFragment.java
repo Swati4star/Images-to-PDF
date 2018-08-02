@@ -1,10 +1,12 @@
 package swati4star.createpdf.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
@@ -35,6 +38,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+
 public class MergeFilesFragment extends Fragment {
     private Activity mActivity;
     private boolean mSuccess;
@@ -44,6 +48,8 @@ public class MergeFilesFragment extends Fragment {
     private String mRetfoldername;
     private String mRealPath;
     private String mDisplayName;
+    private MaterialDialog mMaterialDialog;
+    private LottieAnimationView mAnimationView;
     @BindView(R.id.textView)
     TextView nosupport;
     @BindView(R.id.fileonebtn)
@@ -96,58 +102,26 @@ public class MergeFilesFragment extends Fragment {
                         showSnackbar(R.string.snackbar_name_not_blank);
                     } else {
                         mFilename = input.toString();
-                        mergePdf(pdfpaths);
-                        showSnackbar(R.string.pdf_merge);
+                        new MergePdf().execute(pdfpaths);
                     }
                 })
                 .show();
     }
 
-
-    private void mergePdf(String[] pdfpaths) {
-        try {
-            // Create document object
-            Document document = new Document();
-            // Create pdf copy object to copy current document to the output mergedresult file
-            String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    MergeFilesFragment.this.getString(R.string.pdf_dir);
-            mFilename = mFilename + getString(R.string.pdf_ext);
-            String finPath = mPath + mFilename;
-            PdfCopy copy = new PdfCopy(document, new FileOutputStream(finPath));
-            // Open the document
-            document.open();
-            PdfReader pdfreader;
-            int numopages;
-            for (String pdfpath : pdfpaths) {
-                // Create pdf reader object to read each input pdf file
-                pdfreader = new PdfReader(pdfpath);
-                // Get the number of pages of the pdf file
-                numopages = pdfreader.getNumberOfPages();
-                for (int page = 1; page <= numopages; page++) {
-                    // Import all pages from the file to PdfCopy
-                    copy.addPage(copy.getImportedPage(pdfreader, page));
-                }
-            }
-            document.close(); // close the document
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void showFileChooser() {
         String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();
-        intent.setAction( Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         Uri myUri = Uri.parse(folderPath);
-        intent.setDataAndType( myUri , getString(R.string.pdf_type));
-        Intent intentChooser = Intent.createChooser(intent , getString(R.string.merge_file_select));
-        startActivityForResult(intentChooser , INTENT_REQUEST_PICKFILE_CODE);
+        intent.setDataAndType(myUri, getString(R.string.pdf_type));
+        Intent intentChooser = Intent.createChooser(intent, getString(R.string.merge_file_select));
+        startActivityForResult(intentChooser, INTENT_REQUEST_PICKFILE_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data != null) {
 
-            if (requestCode == INTENT_REQUEST_PICKFILE_CODE ) {
+            if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
                     String uriString = uri.toString();
@@ -169,6 +143,7 @@ public class MergeFilesFragment extends Fragment {
             }
         }
     }
+
     //Returns the complete filepath of the PDF as a string
     private String getFilePath(String uriString, Uri uri, File myFile, String path) {
         String filepath = null;
@@ -188,7 +163,7 @@ public class MergeFilesFragment extends Fragment {
         return filepath;
     }
 
-    private String  getParentFolder(String p) {
+    private String getParentFolder(String p) {
         try {
             //Get Name of Parent Folder of File
             // Folder Name found between first occurance of string %3A and %2F from path
@@ -221,6 +196,7 @@ public class MergeFilesFragment extends Fragment {
         }
         return mDisplayName;
     }
+
     //Returns the folder and file name as string
     private String setPathontextview(String folname) {
         if (folname != null) {
@@ -239,7 +215,7 @@ public class MergeFilesFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull  Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(getString(R.string.btn_sav_text), mCheckbtClickTag);
     }
@@ -253,5 +229,60 @@ public class MergeFilesFragment extends Fragment {
     private void showSnackbar(int resID) {
         Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG).show();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class MergePdf extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mMaterialDialog = new MaterialDialog.Builder(mActivity)
+                    .customView(R.layout.lottie_anim_dialog, false)
+                    .build();
+            mAnimationView = mMaterialDialog.getCustomView().findViewById(R.id.animation_view);
+            mAnimationView.playAnimation();
+            mMaterialDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... pdfpaths) {
+            try {
+                // Create document object
+                Document document = new Document();
+                // Create pdf copy object to copy current document to the output mergedresult file
+                String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                        MergeFilesFragment.this.getString(R.string.pdf_dir);
+                mFilename = mFilename + getString(R.string.pdf_ext);
+                String finPath = mPath + mFilename;
+                PdfCopy copy = new PdfCopy(document, new FileOutputStream(finPath));
+                // Open the document
+                document.open();
+                PdfReader pdfreader;
+                int numOfPages;
+                for (String pdfPath : pdfpaths) {
+                    // Create pdf reader object to read each input pdf file
+                    pdfreader = new PdfReader(pdfPath);
+                    // Get the number of pages of the pdf file
+                    numOfPages = pdfreader.getNumberOfPages();
+                    for (int page = 1; page <= numOfPages; page++) {
+                        // Import all pages from the file to PdfCopy
+                        copy.addPage(copy.getImportedPage(pdfreader, page));
+                    }
+                }
+                document.close(); // close the document
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mAnimationView.cancelAnimation();
+            mMaterialDialog.dismiss();
+            showSnackbar(R.string.pdf_merged);
+        }
     }
 }
