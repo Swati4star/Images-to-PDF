@@ -362,7 +362,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         @BindView(R.id.encryptionImage)
         ImageView mEncryptionImage;
 
-
         ViewFilesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
