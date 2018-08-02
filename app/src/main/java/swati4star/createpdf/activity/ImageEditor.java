@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +65,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     ImageButton mPreviousButton;
     @BindView(R.id.resetCurrent)
     Button resetCurrent;
+    SeekBar doodleSeekBar;
 
     private Bitmap mBitmap;
     private PhotoEditorView mPhotoEditorView;
@@ -70,6 +74,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private boolean mIsLast = false;
 
     private PhotoEditor mPhotoEditor;
+    Button mDoodleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +96,58 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mFilterItems = getFiltersList(this);
         mImagepaths.addAll(mFilterUris);
         initRecyclerView();
+        mDoodleButton = findViewById(R.id.doodleButton);
+        doodleSeekBar = findViewById(R.id.doodleSeekBar);
+        mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+                .setPinchTextScalable(true)
+                .build();
+        mPhotoEditor.setBrushSize(30);
+        doodleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mPhotoEditor.setBrushSize(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+        mPhotoEditor.setBrushDrawingMode(false);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+    }
+
+    @OnClick(R.id.doodle_color_white)
+    void setColorWhite() {
+        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.mb_white));
+        mPhotoEditor.setBrushColor(getResources().getColor(R.color.mb_white));
+    }
+
+    @OnClick(R.id.doodle_color_black)
+    void setColorBlack() {
+        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.black_87));
+        mPhotoEditor.setBrushColor(getResources().getColor(R.color.black_87));
+    }
+
+    @OnClick(R.id.doodle_color_red)
+    void setColorRed() {
+        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.red));
+        mPhotoEditor.setBrushColor(getResources().getColor(R.color.red));
+    }
+
+    @OnClick(R.id.doodle_color_blue)
+    void setColorBlue() {
+        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.mb_blue));
+        mPhotoEditor.setBrushColor(getResources().getColor(R.color.mb_blue));
+    }
+
+    @OnClick(R.id.doodle_color_green)
+    void setColorGreen() {
+        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.mb_green));
+        mPhotoEditor.setBrushColor(getResources().getColor(R.color.mb_green));
     }
 
     @OnClick(R.id.nextimageButton)
@@ -134,6 +189,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             mImagepaths.add(mCurrentImage, originalPath);
             mBitmap = BitmapFactory.decodeFile(originalPath);
             mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+            mPhotoEditor.clearAllViews();
+            mPhotoEditor.undo();
         }
     }
 
@@ -328,6 +385,27 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel).show();
 
+    }
+
+    @OnClick(R.id.doodleButton)
+    public void doodleEffect() {
+
+        mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+                .setPinchTextScalable(true)
+                .build();
+        LinearLayout colorLayout = findViewById(R.id.doodle_colors);
+        if (doodleSeekBar.getVisibility() == View.GONE && colorLayout.getVisibility() == View.GONE) {
+            mPhotoEditor.setBrushDrawingMode(true);
+            doodleSeekBar.setVisibility(View.VISIBLE);
+            mDoodleButton.setText(R.string.disable_doodle_effect);
+            colorLayout.setVisibility(View.VISIBLE);
+        }
+        else if (doodleSeekBar.getVisibility() == View.VISIBLE && colorLayout.getVisibility() == View.VISIBLE) {
+            mPhotoEditor.setBrushDrawingMode(false);
+            doodleSeekBar.setVisibility(View.GONE);
+            mDoodleButton.setText(R.string.enable_doodle_effect);
+            colorLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
