@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.eftimoff.viewpagertransformers.DepthPageTransformer;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import swati4star.createpdf.adapter.PreviewAdapter;
 import swati4star.createpdf.adapter.PreviewImageOptionsAdapter;
 import swati4star.createpdf.model.PreviewImageOptionItem;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.ImageSortUtils;
 
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 
@@ -63,6 +65,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     private ArrayList<PreviewImageOptionItem> getOptions() {
         ArrayList<PreviewImageOptionItem> mOptions = new ArrayList<>();
         mOptions.add(new PreviewImageOptionItem(R.drawable.ic_rearrange, getString(R.string.rearrange_text)));
+        mOptions.add(new PreviewImageOptionItem(R.drawable.ic_sort, getString(R.string.sort)));
         return mOptions;
     }
 
@@ -72,7 +75,23 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
             case 0:
                 reArrangeImages();
                 break;
+            case 1:
+                sortImages();
+                break;
         }
+    }
+
+    private void sortImages() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.sort_by_title)
+                .items(R.array.sort_options_images)
+                .itemsCallback((dialog, itemView, position, text) -> {
+                    ImageSortUtils.performSortOperation(position, mImagesArrayList);
+                    mPreviewAdapter.setData(new ArrayList<>(mImagesArrayList));
+                    mViewPager.setAdapter(mPreviewAdapter);
+                })
+                .negativeText(R.string.cancel)
+                .show();
     }
 
     private void reArrangeImages() {
