@@ -6,4 +6,11 @@
         <item>Size  ▲</item>
         <item>Size  ▼</item>
     </string-array>
+
+    <string-array name="sort_options_images">
+        <item>Name ▲</item>
+        <item>Name ▼</item>
+        <item>Date ▲</item>
+        <item>Date ▼</item>
+    </string-array>
 </resources>
