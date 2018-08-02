@@ -399,8 +399,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             doodleSeekBar.setVisibility(View.VISIBLE);
             mDoodleButton.setText(R.string.disable_doodle_effect);
             colorLayout.setVisibility(View.VISIBLE);
-        }
-        else if (doodleSeekBar.getVisibility() == View.VISIBLE && colorLayout.getVisibility() == View.VISIBLE) {
+        } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
+                colorLayout.getVisibility() == View.VISIBLE) {
             mPhotoEditor.setBrushDrawingMode(false);
             doodleSeekBar.setVisibility(View.GONE);
             mDoodleButton.setText(R.string.enable_doodle_effect);
