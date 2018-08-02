@@ -65,8 +65,8 @@
                         <TextView
                             android:id="@+id/fileSize"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:maxLines="1"
                             android:padding="10dp"
                             android:text="@string/file_size_text"
@@ -76,13 +76,12 @@
                         <ImageView
                             android:id="@+id/encryptionImage"
                             android:layout_width="20dp"
-                            android:layout_gravity="center_vertical"
                             android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="15dp"
                             android:layout_marginRight="10dp"
-                            android:visibility="gone"
-                            android:layout_marginLeft="15dp" />
+                            android:visibility="gone" />
                     </LinearLayout>
-
 
                     <TextView
                         android:id="@+id/fileDate"
@@ -95,7 +94,6 @@
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
-
 
         </com.balysv.materialripple.MaterialRippleLayout>
 

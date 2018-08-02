@@ -97,7 +97,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         try {
             new PdfReader(file.getPath());
         } catch (IOException e) {
-            isEncrypted=true;
+            isEncrypted = true;
         }
         holder.mFilename.setText(file.getName());
         holder.mFilesize.setText(FileUtils.getFormattedSize(file));
