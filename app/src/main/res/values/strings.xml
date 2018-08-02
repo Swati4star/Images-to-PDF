@@ -99,7 +99,7 @@
     <string name="snackbar_file_deleted">File deleted.</string>
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
-    <string name="pdf_merge">Merging File</string>
+    <string name="pdf_merged">PDFs Merged</string>
     <string name="pdf_merge_error">Unable to Merge</string>
 
     <string name="creating_pdf">Creating PDF</string>

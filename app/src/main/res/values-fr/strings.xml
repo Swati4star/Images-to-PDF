@@ -92,7 +92,7 @@
     <string name="pdf_merge_error">Unable to Merge</string>
     <string name="file_one">Select first PDF</string>
     <string name="file_two">Select second PDF</string>
-    <string name="pdf_merge" >Merging File</string>
+    <string name="pdf_merged">PDFs Merged</string>
     <string name="File_hint_one">File Path for PDF one</string>
     <string name="File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>
