@@ -95,7 +95,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
         boolean isEncrypted = false;
         try {
-            PdfReader document = new PdfReader(file.getPath());
+            new PdfReader(file.getPath());
         } catch (IOException e) {
             isEncrypted=true;
         }
