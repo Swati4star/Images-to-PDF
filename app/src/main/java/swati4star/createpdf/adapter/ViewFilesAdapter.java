@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
+import com.itextpdf.text.pdf.PdfReader;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -90,10 +93,23 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         final int position          = holder.getAdapterPosition();
         final File file             = mFileList.get(position);
 
+        boolean isEncrypted = false;
+        try {
+            new PdfReader(file.getPath());
+        } catch (IOException e) {
+            isEncrypted = true;
+        }
         holder.mFilename.setText(file.getName());
         holder.mFilesize.setText(FileUtils.getFormattedSize(file));
         holder.mFiledate.setText(getFormattedDate(file));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
+
+        if (isEncrypted) {
+            holder.mEncryptionImage.setImageResource(R.drawable.lock_closed);
+            holder.mEncryptionImage.setVisibility(View.VISIBLE);
+        } else {
+            holder.mEncryptionImage.setVisibility(View.GONE);
+        }
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -343,6 +359,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         TextView mFiledate;
         @BindView(R.id.fileSize)
         TextView mFilesize;
+        @BindView(R.id.encryptionImage)
+        ImageView mEncryptionImage;
 
         ViewFilesHolder(View itemView) {
             super(itemView);
