@@ -87,8 +87,11 @@ public class MainActivity extends AppCompatActivity
         setDefaultMenuSelected(0);
     }
 
+    /*
+    * This will set default menu item selected at the position mentioned
+    */
     public void setDefaultMenuSelected(int position) {
-        if (navigationView != null && navigationView.getMenu() != null && navigationView.getMenu().getItem(position) != null) {
+        if (navigationView != null && navigationView.getMenu() != null && position < navigationView.getMenu().size() && navigationView.getMenu().getItem(position) != null) {
             navigationView.getMenu().getItem(position).setChecked(true);
         }
     }

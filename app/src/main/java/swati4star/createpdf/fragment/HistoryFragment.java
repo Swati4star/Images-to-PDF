@@ -102,8 +102,8 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-        if (getActivity() instanceof MainActivity){
-            ((MainActivity) getActivity()).setDefaultMenuSelected(0);;
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDefaultMenuSelected(0);
         }
     }
 

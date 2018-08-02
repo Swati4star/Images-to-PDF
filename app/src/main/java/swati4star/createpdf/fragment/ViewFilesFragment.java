@@ -83,8 +83,8 @@ public class ViewFilesFragment extends Fragment
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         //Set default item selected
-        if (getActivity() instanceof MainActivity){
-            ((MainActivity) getActivity()).setDefaultMenuSelected(0);;
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDefaultMenuSelected(0);
         }
     }
 
