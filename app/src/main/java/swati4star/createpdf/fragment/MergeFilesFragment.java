@@ -81,7 +81,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     ImageView mDownArrow;
     String firstFilePath;
     String secondFilePath;
-    private boolean mFilesShowing = true;
+    private boolean mFilesShowing = false;
 
 
     public MergeFilesFragment() {
