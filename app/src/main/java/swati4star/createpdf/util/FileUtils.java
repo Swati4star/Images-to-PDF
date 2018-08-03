@@ -486,4 +486,14 @@ public class FileUtils {
         }
         return fileName;
     }
+
+    /**
+     * Extracts file name from the URI
+     *
+     * @param path - file path
+     * @return - extracted filename
+     */
+    public String getFileName(String path) {
+        return path.substring(path.lastIndexOf(mContext.getString(R.string.path_seperator)) + 1);
+    }
 }

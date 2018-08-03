@@ -398,12 +398,14 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             mPhotoEditor.setBrushDrawingMode(true);
             doodleSeekBar.setVisibility(View.VISIBLE);
             mDoodleButton.setText(R.string.disable_doodle_effect);
+            mDoodleButton.setBackgroundColor(getResources().getColor(R.color.mb_white));
             colorLayout.setVisibility(View.VISIBLE);
         } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
                 colorLayout.getVisibility() == View.VISIBLE) {
             mPhotoEditor.setBrushDrawingMode(false);
             doodleSeekBar.setVisibility(View.GONE);
             mDoodleButton.setText(R.string.enable_doodle_effect);
+            mDoodleButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_dark));
             colorLayout.setVisibility(View.GONE);
         }
     }
