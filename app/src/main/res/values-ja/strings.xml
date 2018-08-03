@@ -245,4 +245,5 @@
     <string name="image_rearranging_options">Image Rearranging Options</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reset</string>
+    <string name="select_as">Select as:</string>
 </resources>
