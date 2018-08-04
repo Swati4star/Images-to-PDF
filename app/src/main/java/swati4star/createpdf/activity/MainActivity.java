@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity
             public void run() {
                 mDoubleBackToExitPressedOnce = false;
             }
-        }, 1000);
+        }, 1500);
     }
 
     Fragment getCurrentFragment() {
