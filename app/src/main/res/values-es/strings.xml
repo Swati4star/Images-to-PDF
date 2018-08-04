@@ -246,4 +246,6 @@
     <string name="image_rearranging_options">Image Rearranging Options</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reset</string>
+
+    <string name="confirm_exit_message">Presione de nuevo para salir</string>
 </resources>
