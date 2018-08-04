@@ -3,6 +3,7 @@ package swati4star.createpdf.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity
 
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
+    private boolean mDoubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,8 +173,38 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (getCurrentFragment() instanceof ImageToPdfFragment) {
+                checkDoubleBackPress();
+            } else {
+                Fragment fragment = new ImageToPdfFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                setDefaultMenuSelected(0);
+            }
         }
+    }
+
+    private void checkDoubleBackPress() {
+        if (mDoubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.mDoubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                mDoubleBackToExitPressedOnce = false;
+            }
+        }, 1000);
+    }
+
+    Fragment getCurrentFragment() {
+        Fragment currentFragment = getSupportFragmentManager()
+                .findFragmentById(R.id.content);
+        return currentFragment;
     }
 
     @Override
