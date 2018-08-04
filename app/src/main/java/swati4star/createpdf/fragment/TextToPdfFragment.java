@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.dd.morphingbutton.MorphingButton;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
@@ -42,6 +43,7 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
@@ -63,6 +65,8 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     RecyclerView mTextEnhancementOptionsRecycleView;
     @BindView(R.id.tv_file_name)
     TextView mTextView;
+    @BindView(R.id.createtextpdf)
+    MorphingButton mCreateTextPdf;
     private int mButtonClicked = 0;
     private Rectangle mPageSize = PageSize.A4;
 
@@ -70,6 +74,8 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private SharedPreferences mSharedPreferences;
     private Font.FontFamily mFontFamily;
+    private MorphButtonUtility mMorphButtonUtility;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -80,8 +86,12 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
+        mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
+        mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
+        mCreateTextPdf.setEnabled(false);
+
         return rootview;
     }
 
@@ -299,6 +309,8 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
                     fileName = getString(R.string.text_file_name) + fileName;
                     mTextView.setText(fileName);
                     mTextView.setVisibility(View.VISIBLE);
+                    mCreateTextPdf.setEnabled(true);
+                    mMorphButtonUtility.morphToSquare(mCreateTextPdf, mMorphButtonUtility.integer());
                 }
                 break;
         }
