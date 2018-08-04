@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/tableLayout"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:stretchColumns="*"
-                                             tools:context=".fragment.MergeFilesFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="*"
+    tools:context=".fragment.MergeFilesFragment">
 
     <Button
         android:id="@+id/fileonebtn"
@@ -51,8 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filetwobtn"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/filetwobtn" />
 
     <Button
         android:id="@+id/mergebtn"
@@ -64,9 +63,53 @@
         android:padding="5dip"
         android:text="@string/merge_files"
         android:textColor="@color/mb_white"
-        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         tools:layout_editor_absoluteY="326dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewFiles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/viewFiles"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:text="@string/viewFiles"
+            android:textColor="@android:color/background_light" />
+
+        <ImageView
+            android:id="@+id/downArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/arrow_down"
+            android:tint="@android:color/background_light"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_arrow_down_black_24dp" />
+
+        <ImageView
+            android:id="@+id/upArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/arrow_down"
+            android:tint="@android:color/background_light"
+            app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

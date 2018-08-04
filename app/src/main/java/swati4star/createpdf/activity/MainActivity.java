@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity
 
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
+
     private boolean mDoubleBackToExitPressedOnce = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,7 +241,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content, fragment).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

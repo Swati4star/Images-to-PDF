@@ -66,7 +66,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
     private int mButtonClicked = 0;
     private Rectangle mPageSize = PageSize.A4;
 
-
     private ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private SharedPreferences mSharedPreferences;
@@ -163,7 +162,6 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
         rb.setChecked(true);
         materialDialog.show();
     }
-
 
     /**
      * Function to take the font size of pdf as user input

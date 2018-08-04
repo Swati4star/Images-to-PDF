@@ -95,7 +95,7 @@
 
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
-    <string name="pdf_merge" >Merging File</string>
+    <string name="pdf_merged">PDFs Merged</string>
     <string name="pdf_merge_error">Unable to Merge</string>
     <string name="file_one">Select first PDF</string>
     <string name="file_two">Select second PDF</string>
@@ -247,4 +247,8 @@
     <string name="reset">Reset</string>
 
     <string name="confirm_exit_message">Press back again to exit</string>
+    <string name="border">Add Image Border</string>
+    <string name="enable_doodle_effect">Enable Doodle Effect</string>
+    <string name="disable_doodle_effect">Disable Doodle Effect</string>
+    <string name="select_as">Select as:</string>
 </resources>
