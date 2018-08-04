@@ -99,7 +99,7 @@
     <string name="snackbar_file_deleted">File deleted.</string>
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
-    <string name="pdf_merge">Merging File</string>
+    <string name="pdf_merged">PDFs Merged</string>
     <string name="pdf_merge_error">Unable to Merge</string>
 
     <string name="creating_pdf">Creating PDF</string>
@@ -304,4 +304,8 @@
     <string name="image_rearranging_options">Image Rearranging Options</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reset</string>
+    <string name="border">Add Image Border</string>
+    <string name="enable_doodle_effect">Enable Doodle Effect</string>
+    <string name="disable_doodle_effect">Disable Doodle Effect</string>
+    <string name="select_as">Select as:</string>
 </resources>
