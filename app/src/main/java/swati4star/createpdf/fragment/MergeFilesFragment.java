@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -80,6 +81,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     ImageView mUpArrow;
     @BindView(R.id.downArrow)
     ImageView mDownArrow;
+    @BindView(R.id.layout)
+    RelativeLayout mLayout;
     String firstFilePath;
     String secondFilePath;
     private boolean mFilesShowing = false;
@@ -101,6 +104,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mRecyclerViewFiles.setLayoutManager(mLayoutManager);
         mRecyclerViewFiles.setAdapter(mMergeFilesAdapter);
         mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
+            mLayout.setVisibility(View.GONE);
+        }
 
         return root;
     }
