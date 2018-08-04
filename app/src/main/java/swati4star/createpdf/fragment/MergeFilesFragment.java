@@ -42,6 +42,7 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -329,6 +330,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     @SuppressLint("StaticFieldLeak")
     private class MergePdf extends AsyncTask<String, Void, Void> {
 
+        private String mFinPath;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -349,8 +352,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
                         MergeFilesFragment.this.getString(R.string.pdf_dir);
                 mFilename = mFilename + getString(R.string.pdf_ext);
-                String finPath = mPath + mFilename;
-                PdfCopy copy = new PdfCopy(document, new FileOutputStream(finPath));
+                mFinPath = mPath + mFilename;
+                PdfCopy copy = new PdfCopy(document, new FileOutputStream(mFinPath));
                 // Open the document
                 document.open();
                 PdfReader pdfreader;
@@ -377,7 +380,11 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             super.onPostExecute(aVoid);
             mAnimationView.cancelAnimation();
             mMaterialDialog.dismiss();
-            showSnackbar(R.string.pdf_merged);
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
+                    R.string.pdf_merged, Snackbar.LENGTH_LONG).setAction(R.string.snackbar_viewAction, v -> {
+                        FileUtils fileUtils = new FileUtils(mActivity);
+                        fileUtils.openFile(mFinPath);
+                    }).show();
         }
     }
 }
