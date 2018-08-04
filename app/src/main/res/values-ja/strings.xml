@@ -245,6 +245,8 @@
     <string name="image_rearranging_options">Image Rearranging Options</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reset</string>
+
+    <string name="confirm_exit_message">もう一度戻ると終了します。</string>
     <string name="border">Add Image Border</string>
     <string name="enable_doodle_effect">Enable Doodle Effect</string>
     <string name="disable_doodle_effect">Disable Doodle Effect</string>
