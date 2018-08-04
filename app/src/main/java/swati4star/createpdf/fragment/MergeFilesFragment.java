@@ -315,10 +315,12 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                         case 0:
                             firstFilePath = path;
                             addFileOne.setText(path);
+                            addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                             break;
                         case 1:
                             addFileTwo.setText(path);
                             secondFilePath = path;
+                            addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                             mSuccess = true;
                             break;
                     }
