@@ -328,7 +328,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                             showSnackbar(R.string.snackbar_file_renamed);
                             mFileList.set(position, newfile);
                             notifyDataSetChanged();
-                            mDatabaseHelper.insertRecord(oldPath, mActivity.getString(R.string.renamed));
+                            mDatabaseHelper.insertRecord(newfilename, mActivity.getString(R.string.renamed));
                         } else
                             showSnackbar(R.string.snackbar_file_not_renamed);
                     }
