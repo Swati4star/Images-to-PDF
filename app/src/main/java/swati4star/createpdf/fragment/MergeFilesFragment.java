@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
+import com.dd.morphingbutton.MorphingButton;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
@@ -44,6 +45,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -63,6 +65,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private MergeFilesAdapter mMergeFilesAdapter;
     private DirectoryUtils mDirectoryUtils;
     private ArrayList<String> mAllFilesPaths;
+    private MorphButtonUtility mMorphButtonUtility;
+
     @BindView(R.id.textView)
     TextView nosupport;
     @BindView(R.id.fileonebtn)
@@ -70,7 +74,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     @BindView(R.id.filetwobtn)
     Button addFileTwo;
     @BindView(R.id.mergebtn)
-    Button mergeBtn;
+    MorphingButton mergeBtn;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
     @BindView(R.id.viewFiles)
@@ -97,6 +101,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
+        mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mDirectoryUtils = new DirectoryUtils(mActivity);
         mAllFilesPaths = getAllFilePaths();
         mMergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
@@ -104,6 +109,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mRecyclerViewFiles.setLayoutManager(mLayoutManager);
         mRecyclerViewFiles.setAdapter(mMergeFilesAdapter);
         mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
+        mergeBtn.setEnabled(false);
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
             mLayout.setVisibility(View.GONE);
         }
@@ -196,7 +203,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                         addFileTwo.setText(secondFilePath);
                         addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                     }
-
+                    if (firstFilePath != null && secondFilePath != null) {
+                        mergeBtn.setEnabled(true);
+                        mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
+                    }
                 }
             }
         }
@@ -329,6 +339,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                             addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                             mSuccess = true;
                             break;
+                    }
+                    if (firstFilePath != null && secondFilePath != null) {
+                        mergeBtn.setEnabled(true);
+                        mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
                     }
                 })
                 .show();
