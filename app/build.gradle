@@ -35,7 +35,6 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-
 dependencies {
     def room_version = "1.1.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
