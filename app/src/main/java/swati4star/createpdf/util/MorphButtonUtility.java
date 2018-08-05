@@ -37,6 +37,7 @@ public class MorphButtonUtility {
         MorphingButton.Params square = defaultButton(duration);
         square.color(color(R.color.mb_blue));
         square.colorPressed(color(R.color.mb_blue_dark));
+        square.text(btnMorph.getText().toString());
         btnMorph.morph(square);
     }
 
@@ -67,6 +68,7 @@ public class MorphButtonUtility {
         MorphingButton.Params square = defaultButton(duration);
         square.color(color(R.color.mb_gray));
         square.colorPressed(color(R.color.mb_gray));
+        square.text(btnMorph.getText().toString());
         btnMorph.morph(square);
     }
 
@@ -80,7 +82,6 @@ public class MorphButtonUtility {
                 .duration(duration)
                 .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
                 .width(dimen(R.dimen.mb_width_328))
-                .height(dimen(R.dimen.mb_height_48))
-                .text(mActivity.getString(R.string.mb_button));
+                .height(dimen(R.dimen.mb_height_48));
     }
 }

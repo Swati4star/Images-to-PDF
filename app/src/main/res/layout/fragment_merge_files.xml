@@ -53,21 +53,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filetwobtn" />
 
-    <Button
+    <com.dd.morphingbutton.MorphingButton
         android:id="@+id/mergebtn"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/mb_blue"
-        android:padding="5dip"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:padding="10dp"
         android:text="@string/merge_files"
         android:textColor="@color/mb_white"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        tools:layout_editor_absoluteY="326dp" />
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewFiles"
