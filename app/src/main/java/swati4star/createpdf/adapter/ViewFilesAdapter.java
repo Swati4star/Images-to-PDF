@@ -150,7 +150,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 2: //rename
-                renameFile(position);
+                onRenameFileClick(position);
                 break;
 
             case 3: //Print
@@ -311,7 +311,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * Renames the selected file
      * @param position - position of file to be renamed
      */
-    private void renameFile(final int position) {
+    private void onRenameFileClick(final int position) {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -319,20 +319,35 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     if (input == null || input.toString().trim().isEmpty())
                         showSnackbar(R.string.snackbar_name_not_blank);
                     else {
-                        File oldfile = mFileList.get(position);
-                        String oldPath = oldfile.getPath();
-                        String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
-                                + "/" + input.toString() + mActivity.getString(R.string.pdf_ext);
-                        File newfile = new File(newfilename);
-                        if (oldfile.renameTo(newfile)) {
-                            showSnackbar(R.string.snackbar_file_renamed);
-                            mFileList.set(position, newfile);
-                            notifyDataSetChanged();
-                            mDatabaseHelper.insertRecord(newfilename, mActivity.getString(R.string.renamed));
-                        } else
-                            showSnackbar(R.string.snackbar_file_not_renamed);
+                        if (!mFileUtils.isFileExist(input + mActivity.getString(R.string.pdf_ext))) {
+                            renameFile(position, input.toString());
+                        } else {
+                            new MaterialDialog.Builder(mActivity)
+                                    .title(R.string.warning)
+                                    .content(R.string.overwrite_message)
+                                    .positiveText(android.R.string.ok)
+                                    .negativeText(android.R.string.cancel)
+                                    .onPositive((dialog12, which) -> renameFile(position, input.toString()))
+                                    .onNegative((dialog1, which) -> onRenameFileClick(position))
+                                    .show();
+                        }
                     }
                 }).show();
+    }
+
+    private void renameFile(int position, String newName) {
+        File oldfile = mFileList.get(position);
+        String oldPath = oldfile.getPath();
+        String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
+                + "/" + newName.toString() + mActivity.getString(R.string.pdf_ext);
+        File newfile = new File(newfilename);
+        if (oldfile.renameTo(newfile)) {
+            showSnackbar(R.string.snackbar_file_renamed);
+            mFileList.set(position, newfile);
+            notifyDataSetChanged();
+            mDatabaseHelper.insertRecord(newfilename, mActivity.getString(R.string.renamed));
+        } else
+            showSnackbar(R.string.snackbar_file_not_renamed);
     }
 
     @Override
