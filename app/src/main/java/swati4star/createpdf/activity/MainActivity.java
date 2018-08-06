@@ -3,7 +3,6 @@ package swati4star.createpdf.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
+    private int mPreviousFragmentId;
 
     private boolean mDoubleBackToExitPressedOnce = false;
 
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        mPreviousFragmentId = R.id.nav_camera;
 
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
@@ -186,6 +187,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void checkDoubleBackPress() {
+
         if (mDoubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
@@ -193,14 +195,6 @@ public class MainActivity extends AppCompatActivity
 
         this.mDoubleBackToExitPressedOnce = true;
         Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                mDoubleBackToExitPressedOnce = false;
-            }
-        }, 1500);
     }
 
     Fragment getCurrentFragment() {
@@ -213,6 +207,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        if (mPreviousFragmentId == id)
+            return true;
+
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -240,12 +241,11 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
+        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         if (fragment != null) {
             fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content, fragment).commit();
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
