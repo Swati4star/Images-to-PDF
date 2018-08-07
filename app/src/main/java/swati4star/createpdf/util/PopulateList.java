@@ -2,6 +2,8 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -25,6 +27,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
     private EmptyStateChangeListener mEmptyStateChangeListener;
     private DirectoryUtils mDirectoryUtils;
     ViewFilesAdapter adapter;
+    private Handler mHandler;
 
     /**
      * Instantiates populate list object
@@ -41,11 +44,12 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
         mCurrentSortingIndex = index;
         mEmptyStateChangeListener = emptyStateChangeListener;
         mDirectoryUtils = new DirectoryUtils(mActivity);
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-        mActivity.runOnUiThread(this::populateListView);
+        mHandler.post(this::populateListView);
         return null;
     }
 

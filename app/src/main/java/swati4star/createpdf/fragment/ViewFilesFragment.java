@@ -83,8 +83,8 @@ public class ViewFilesFragment extends Fragment
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         //Set default item selected
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).setDefaultMenuSelected(0);
+        if (mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).setDefaultMenuSelected(0);
         }
     }
 
@@ -137,18 +137,14 @@ public class ViewFilesFragment extends Fragment
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                ArrayList<File> searchResult = mDirectoryUtils.searchPDF(s);
-                mViewFilesAdapter.setData(searchResult);
-                mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+                setDataForQueryChange(s);
                 mSearchView.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                ArrayList<File> searchResult = mDirectoryUtils.searchPDF(s);
-                mViewFilesAdapter.setData(searchResult);
-                mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+                setDataForQueryChange(s);
                 return true;
             }
         });
@@ -157,6 +153,12 @@ public class ViewFilesFragment extends Fragment
             return false;
         });
         mSearchView.setIconifiedByDefault(true);
+    }
+
+    private void setDataForQueryChange(String s) {
+        ArrayList<File> searchResult = mDirectoryUtils.searchPDF(s);
+        mViewFilesAdapter.setData(searchResult);
+        mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
     }
 
     @Override
@@ -300,7 +302,6 @@ public class ViewFilesFragment extends Fragment
         mAlertDialogBuilder.create().show();
     }
 
-
     @Override
     public void setEmptyStateVisible() {
         emptyView.setVisibility(View.VISIBLE);
@@ -395,7 +396,6 @@ public class ViewFilesFragment extends Fragment
                 });
         mAlertDialogBuilder.create().show();
     }
-
 
     private void showSnack(int resID) {
         Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),

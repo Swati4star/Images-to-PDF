@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         if (fragment != null) {
             fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content, fragment).commit();
+            mPreviousFragmentId = id;
         }
 
         return true;
