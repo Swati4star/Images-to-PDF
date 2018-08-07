@@ -349,6 +349,20 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     }
 
+    /**
+     * resets fragment to initial stage
+     */
+    private void reset() {
+        firstFilePath = "";
+        secondFilePath = "";
+        addFileOne.setText(R.string.file_one);
+        addFileTwo.setText(R.string.file_two);
+        addFileTwo.setBackgroundColor(getResources().getColor(R.color.colorGray));
+        addFileOne.setBackgroundColor(getResources().getColor(R.color.colorGray));
+        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
+        mergeBtn.setEnabled(false);
+    }
+
     @SuppressLint("StaticFieldLeak")
     private class MergePdf extends AsyncTask<String, Void, Void> {
 
@@ -402,6 +416,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             super.onPostExecute(aVoid);
             mAnimationView.cancelAnimation();
             mMaterialDialog.dismiss();
+            reset();
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.pdf_merged, Snackbar.LENGTH_LONG).setAction(R.string.snackbar_viewAction, v -> {
                         FileUtils fileUtils = new FileUtils(mActivity);
