@@ -100,7 +100,7 @@
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
     <string name="pdf_merged">PDFs Merged</string>
-    <string name="pdf_merge_error">Unable to Merge</string>
+    <string name="pdf_merge_error">Unable to Merge. Files may be encrypted or in the external storage. Files on SD card are supported only currently.</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>

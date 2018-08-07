@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         // To show what's new in our application
-        setWhatsNew();
+        //setWhatsNew();
 
         // Set ImageToPdfFragment fragment
         Fragment fragment = new ImageToPdfFragment();

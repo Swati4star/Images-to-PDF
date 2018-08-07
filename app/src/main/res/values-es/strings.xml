@@ -97,7 +97,7 @@
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
     <string name="pdf_merged">PDFs Merged</string>
-    <string name="pdf_merge_error">Unable to Merge</string>
+    <string name="pdf_merge_error">Unable to Merge. Files may be encrypted or in the external storage. Files on SD card are supported only currently.</string>
     <string name="file_one">Select first PDF</string>
     <string name="file_two">Select second PDF</string>
     <string name="File_hint_one">File Path for PDF one</string>
