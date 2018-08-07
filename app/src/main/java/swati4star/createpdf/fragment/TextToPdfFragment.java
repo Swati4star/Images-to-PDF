@@ -274,6 +274,10 @@ public class TextToPdfFragment extends Fragment implements EnhancementOptionsAda
             mTextView.setVisibility(View.GONE);
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
+        } finally {
+            mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
+            mCreateTextPdf.setEnabled(false);
+            mTextFileUri = null;
         }
     }
 
