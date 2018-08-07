@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="40dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/viewFiles"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:text="@string/viewFiles"
+                android:textColor="@android:color/background_light" />
+
+            <ImageView
+                android:id="@+id/downArrow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/arrow_down"
+                android:tint="@android:color/background_light"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_arrow_down_black_24dp" />
+
+            <ImageView
+                android:id="@+id/upArrow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/arrow_down"
+                android:tint="@android:color/background_light"
+                app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewFiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

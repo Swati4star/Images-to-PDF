@@ -13,6 +13,7 @@ import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -90,7 +92,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     String firstFilePath;
     String secondFilePath;
     private boolean mFilesShowing = false;
-
+    BottomSheetBehavior sheetBehavior;
+    @BindView(R.id.bottom_sheet)
+    LinearLayout layoutBottomSheet;
 
     public MergeFilesFragment() {
         // Required empty public constructor
@@ -101,6 +105,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mDirectoryUtils = new DirectoryUtils(mActivity);
         mAllFilesPaths = getAllFilePaths();
@@ -109,6 +114,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mRecyclerViewFiles.setLayoutManager(mLayoutManager);
         mRecyclerViewFiles.setAdapter(mMergeFilesAdapter);
         mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback());
         mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
         mergeBtn.setEnabled(false);
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
@@ -120,22 +126,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        if (mFilesShowing) {
-            addFileOne.setVisibility(View.VISIBLE);
-            addFileTwo.setVisibility(View.VISIBLE);
-            mergeBtn.setVisibility(View.VISIBLE);
-            mRecyclerViewFiles.setVisibility(View.GONE);
-            mUpArrow.setVisibility(View.VISIBLE);
-            mDownArrow.setVisibility(View.GONE);
-            mFilesShowing = !mFilesShowing;
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {
-            addFileOne.setVisibility(View.GONE);
-            addFileTwo.setVisibility(View.GONE);
-            mergeBtn.setVisibility(View.GONE);
-            mRecyclerViewFiles.setVisibility(View.VISIBLE);
-            mUpArrow.setVisibility(View.GONE);
-            mDownArrow.setVisibility(View.VISIBLE);
-            mFilesShowing = !mFilesShowing;
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 
@@ -361,6 +355,28 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         addFileOne.setBackgroundColor(getResources().getColor(R.color.colorGray));
         mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
         mergeBtn.setEnabled(false);
+    }
+
+    private class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
+
+        @Override
+        public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            switch (newState) {
+                case BottomSheetBehavior.STATE_EXPANDED:
+                    mUpArrow.setVisibility(View.GONE);
+                    mDownArrow.setVisibility(View.VISIBLE);
+                    break;
+                case BottomSheetBehavior.STATE_COLLAPSED:
+                    mUpArrow.setVisibility(View.VISIBLE);
+                    mDownArrow.setVisibility(View.GONE);
+                    break;
+            }
+        }
+
+        @Override
+        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
