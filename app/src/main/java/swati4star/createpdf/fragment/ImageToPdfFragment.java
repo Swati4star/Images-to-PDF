@@ -314,7 +314,6 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     default:
                         mImagesUri.add(mTempUris.get(mImageCounter));
                 }
-                mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 mImageCounter++;
                 next();
                 break;
@@ -582,7 +581,13 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                     .setAllowRotation(true)
                     .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
                     .start(mActivity, this);
+        } else {
+            mImageCounter = 0;
+            mTempUris.clear();
+            mTempUris.addAll(mImagesUri);
+            mImagesUri.clear();
         }
+
     }
 
     private boolean getRuntimePermissions(boolean openImagesActivity) {
