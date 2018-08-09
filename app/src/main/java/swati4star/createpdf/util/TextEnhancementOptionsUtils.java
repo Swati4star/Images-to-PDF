@@ -24,6 +24,9 @@ public class TextEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context.getResources().getDrawable(R.drawable.ic_page_size_24dp),
                 context.getString(R.string.set_page_size_text)));
+        options.add(new EnhancementOptionsEntity(
+                context.getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24),
+                context.getString(R.string.set_password)));
         return options;
     }
 }
