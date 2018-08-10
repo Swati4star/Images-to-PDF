@@ -120,6 +120,8 @@ public class DirectoryUtils {
         ArrayList<File> pdfFiles = new ArrayList<>();
         File folder = getOrCreatePdfDirectory();
         File[] files = folder.listFiles();
+        if (files == null)
+            return null;
         for (File file : files) {
             if (file.isDirectory())
                 Collections.addAll(pdfFiles, file.listFiles());

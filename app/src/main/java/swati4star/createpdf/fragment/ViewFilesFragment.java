@@ -266,6 +266,12 @@ public class ViewFilesFragment extends Fragment
         onRefresh();
         final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
         int count = 0;
+
+        if (files == null) {
+            setEmptyStateVisible();
+            return;
+        }
+
         for (File file : files)
             if (!file.isDirectory()) {
                 count++; break;
