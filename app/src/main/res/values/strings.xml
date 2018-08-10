@@ -191,6 +191,7 @@
     <string name="ledger">LEDGER</string>
     <string name="letter">LETTER</string>
     <string name="legal">LEGAL</string>
+    <string name="a4">A4</string>
     <string name="default_a4">DEFAULT (A4)</string>
 
 

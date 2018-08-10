@@ -10,6 +10,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -72,10 +73,17 @@ public class PDFUtils {
     public void createPdf(TextToPDFOptions mTextToPDFOptions)
             throws DocumentException, IOException {
 
-        Document document = new Document(mTextToPDFOptions.getPageSize());
+        Document document = new Document(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
         String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" +
                 mTextToPDFOptions.getOutFileName() + ".pdf";
-        PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(finalOutput));
+        writer.setPdfVersion(PdfWriter.VERSION_1_7);
+        if (mTextToPDFOptions.isPasswordProtected()) {
+            writer.setEncryption(mTextToPDFOptions.getPassword().getBytes(),
+                    mContext.getString(R.string.app_name).getBytes(),
+                    PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
+                    PdfWriter.ENCRYPTION_AES_128);
+        }
 
         document.open();
         Font myfont = new Font(mTextToPDFOptions.getFontFamily());

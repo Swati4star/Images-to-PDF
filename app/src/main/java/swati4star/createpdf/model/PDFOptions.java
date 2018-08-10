@@ -1,23 +1,33 @@
 package swati4star.createpdf.model;
 
-import com.itextpdf.text.Rectangle;
-
 public class PDFOptions {
 
     private final String mOutFileName;
-    private final Rectangle mPageSize;
+    private final boolean mPasswordProtected;
+    private final String mPassword;
+    private final String mPageSize;
 
 
-    PDFOptions(String mFileName, Rectangle mPageSize) {
+    PDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected, String mPassword) {
         this.mOutFileName = mFileName;
         this.mPageSize = mPageSize;
+        this.mPasswordProtected = mPasswordProtected;
+        this.mPassword = mPassword;
     }
 
     public String getOutFileName() {
         return mOutFileName;
     }
 
-    public Rectangle getPageSize() {
+    public String getPageSize() {
         return mPageSize;
+    }
+
+    public boolean isPasswordProtected() {
+        return mPasswordProtected;
+    }
+
+    public String getPassword() {
+        return mPassword;
     }
 }

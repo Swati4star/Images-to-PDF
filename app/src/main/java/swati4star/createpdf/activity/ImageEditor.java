@@ -70,7 +70,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private PhotoEditorView mPhotoEditorView;
     private boolean mClicked = false;
     private boolean mClickedFilter = false;
-    private boolean mIsLast = false;
 
     private PhotoEditor mPhotoEditor;
     Button mDoodleButton;
@@ -152,9 +151,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.nextimageButton)
     void nextImg() {
         //Proceed to next if Save Current has been clicked
-        if (mClicked) {
+        if (mClicked == mClickedFilter) {
             next();
             incrementImageCount();
+            mClicked = false;
+            mClickedFilter = false;
         } else
             Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
     }
@@ -162,9 +163,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.previousImageButton)
     void previousImg() {
         //move to previous if Save Current has been clicked
-        if (mClicked) {
+        if (mClicked == mClickedFilter) {
             previous();
             decrementImageCount();
+            mClicked = false;
+            mClickedFilter = false;
         } else
             Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
     }
@@ -204,7 +207,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             setImageCount();
             mNextButton.setVisibility(View.INVISIBLE);
             mPreviousButton.setVisibility(View.VISIBLE);
-            mIsLast = true;
         } else {
             mNextButton.setEnabled(false);
         }
@@ -266,11 +268,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      * Store imagepaths for creation of PDF when Done
      */
     private void done() {
-        if (!mClicked) {
-            passUris(mFilterUris);
-        } else {
-            passUris(mImagepaths);
-        }
+        passUris(mImagepaths);
     }
 
     /**
@@ -343,12 +341,12 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void applyFilter(PhotoFilter filterType) {
         try {
-            mClickedFilter = true;
             mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
             mPhotoEditor.setFilterEffect(filterType);
             mFilterName = filterType.name();
+            mClickedFilter = filterType != PhotoFilter.NONE;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -383,7 +381,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 .content(R.string.filter_cancel_description)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel).show();
-
     }
 
     @OnClick(R.id.doodleButton)
