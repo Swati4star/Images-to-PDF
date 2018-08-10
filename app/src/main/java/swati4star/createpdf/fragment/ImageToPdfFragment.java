@@ -24,8 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -33,8 +31,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Rectangle;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -94,7 +90,6 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private String mPath;
     private String mPassword;
     private String mQuality;
-    private Rectangle mPageSize = PageSize.A4;
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
@@ -117,7 +112,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mOpenPdf.setVisibility(View.GONE);
-
+        PageSizeUtils.mPageSize = getString(R.string.a4);
         // Get runtime permissions if build version >= Android M
         getRuntimePermissions(false);
 
@@ -215,7 +210,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         final String filename = input.toString();
                         FileUtils utils = new FileUtils(mActivity);
                         if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
-                            new CreatePdf(mActivity, new ImageToPDFOptions(filename, mPageSize,
+                            new CreatePdf(mActivity, new ImageToPDFOptions(filename, PageSizeUtils.mPageSize,
                                     mPasswordProtected, mPassword, mQuality, mImagesUri),
                                     ImageToPdfFragment.this).execute();
                         } else {
@@ -225,7 +220,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                                     .positiveText(android.R.string.ok)
                                     .negativeText(android.R.string.cancel)
                                     .onPositive((dialog12, which) -> new CreatePdf(
-                                            mActivity, new ImageToPDFOptions(filename, mPageSize,
+                                            mActivity, new ImageToPDFOptions(filename, PageSizeUtils.mPageSize,
                                             mPasswordProtected, mPassword, mQuality, mImagesUri),
                                             ImageToPdfFragment.this).execute())
                                     .onNegative((dialog1, which) -> createPdf())
@@ -404,22 +399,8 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
             showSnackbar(R.string.snackbar_no_images);
             return;
         }
-
-        new MaterialDialog.Builder(mActivity)
-                .title(R.string.set_page_size_text)
-                .customView(R.layout.set_page_size_dialog, true)
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
-                .onPositive((dialog1, which) -> {
-                    View view = dialog1.getCustomView();
-                    RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
-                    int selectedId = radioGroup.getCheckedRadioButtonId();
-                    Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
-                    Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
-                    PageSizeUtils utils = new PageSizeUtils();
-                    mPageSize = utils.getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
-                            spinnerB.getSelectedItem().toString());
-                }).show();
+        PageSizeUtils utils = new PageSizeUtils(mActivity);
+        utils.showPageSizeDialog();
     }
 
     private void compressImage() {

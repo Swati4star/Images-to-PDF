@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -43,7 +44,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private LottieAnimationView mAnimationView;
     private boolean mSuccess;
     private String mPath;
-    private final Rectangle mPageSize;
+    private final String mPageSize;
     private MaterialDialog mMaterialDialog;
     private final boolean mPasswordProtected;
 
@@ -88,7 +89,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Document document = new Document(mPageSize, 38, 38, 50, 38);
+        Document document = new Document(PageSize.getRectangle(mPageSize), 38, 38, 50, 38);
 
         Log.v("stage 2", "Document Created");
 
