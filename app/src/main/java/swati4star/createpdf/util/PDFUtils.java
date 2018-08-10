@@ -10,6 +10,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -72,7 +73,7 @@ public class PDFUtils {
     public void createPdf(TextToPDFOptions mTextToPDFOptions)
             throws DocumentException, IOException {
 
-        Document document = new Document(mTextToPDFOptions.getPageSize());
+        Document document = new Document(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
         String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" +
                 mTextToPDFOptions.getOutFileName() + ".pdf";
         PdfWriter.getInstance(document, new FileOutputStream(finalOutput)).setPdfVersion(PdfWriter.VERSION_1_7);

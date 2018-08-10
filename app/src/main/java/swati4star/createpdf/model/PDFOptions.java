@@ -1,14 +1,12 @@
 package swati4star.createpdf.model;
 
-import com.itextpdf.text.Rectangle;
-
 public class PDFOptions {
 
     private final String mOutFileName;
-    private final Rectangle mPageSize;
+    private final String mPageSize;
 
 
-    PDFOptions(String mFileName, Rectangle mPageSize) {
+    PDFOptions(String mFileName, String mPageSize) {
         this.mOutFileName = mFileName;
         this.mPageSize = mPageSize;
     }
@@ -17,7 +15,7 @@ public class PDFOptions {
         return mOutFileName;
     }
 
-    public Rectangle getPageSize() {
+    public String getPageSize() {
         return mPageSize;
     }
 }
