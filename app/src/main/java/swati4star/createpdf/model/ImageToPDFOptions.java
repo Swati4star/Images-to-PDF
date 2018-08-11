@@ -7,8 +7,9 @@ public class ImageToPDFOptions extends PDFOptions {
     private final ArrayList<String> mImagesUri;
 
     public ImageToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
-                             String mPassword, String mQualityString, ArrayList<String> mImagesUri) {
-        super(mFileName, mPageSize, mPasswordProtected, mPassword);
+                             String mPassword, String mQualityString, int mBorderWidth,
+                             ArrayList<String> mImagesUri) {
+        super(mFileName, mPageSize, mPasswordProtected, mPassword, mBorderWidth);
         this.mQualityString = mQualityString;
         this.mImagesUri = mImagesUri;
     }

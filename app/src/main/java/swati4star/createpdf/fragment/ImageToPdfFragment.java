@@ -44,6 +44,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.ImageToPDFOptions;
@@ -63,7 +64,7 @@ import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancem
 /**
  * ImageToPdfFragment fragment to start with creating PDF
  */
-public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAdapter.OnItemClickListner,
+public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         OnPDFCreatedInterface {
 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
@@ -95,6 +96,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
     private boolean mPasswordProtected = false;
     private FileUtils mFileUtils;
     private int mButtonClicked = 0;
+    private int mBorderWidth = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -202,7 +204,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                         FileUtils utils = new FileUtils(mActivity);
                         if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                             new CreatePdf(mActivity, new ImageToPDFOptions(filename, PageSizeUtils.mPageSize,
-                                    mPasswordProtected, mPassword, mQuality, mImagesUri),
+                                    mPasswordProtected, mPassword, mQuality, mBorderWidth, mImagesUri),
                                     ImageToPdfFragment.this).execute();
                         } else {
                             new MaterialDialog.Builder(mActivity)
@@ -212,7 +214,7 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
                                     .negativeText(android.R.string.cancel)
                                     .onPositive((dialog12, which) -> new CreatePdf(
                                             mActivity, new ImageToPDFOptions(filename, PageSizeUtils.mPageSize,
-                                            mPasswordProtected, mPassword, mQuality, mImagesUri),
+                                            mPasswordProtected, mPassword, mQuality, mBorderWidth, mImagesUri),
                                             ImageToPdfFragment.this).execute())
                                     .onNegative((dialog1, which) -> createPdf())
                                     .show();
@@ -354,9 +356,42 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
             case 5:
                 previewPDF();
                 break;
+            case 6:
+                addBorder();
+                break;
             default:
                 break;
         }
+    }
+
+    private void addBorder() {
+
+        if (mTempUris.size() == 0) {
+            showSnackbar(R.string.snackbar_no_images);
+            return;
+        }
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(getString(R.string.border))
+                .customView(R.layout.border_image_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .onPositive((dialog1, which) -> {
+                    final EditText input = dialog1.getCustomView().findViewById(R.id.border_width);
+                    int value;
+                    try {
+                        value = Integer.parseInt(String.valueOf(input.getText()));
+                        if (value > 200 || value < 0) {
+                            showSnackbar(R.string.invalid_entry);
+                        } else {
+                            mBorderWidth = value;
+                            showBorderWidth();
+                        }
+                    } catch (NumberFormatException e) {
+                        showSnackbar(R.string.invalid_entry);
+                    }
+                }).build();
+        dialog.show();
     }
 
     private void previewPDF() {
@@ -509,10 +544,17 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
+    private void showBorderWidth() {
+        mEnhancementOptionsEntityArrayList.get(6)
+                .setName("Border width : " + mBorderWidth);
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onPDFCreated(boolean success, String path) {
         mImagesUri.clear();
         mNoOfImages.setVisibility(View.GONE);
+        mBorderWidth = 0;
         mImageCounter = 0;
         mPassword = null;
         if (success) {
@@ -541,7 +583,6 @@ public class ImageToPdfFragment extends Fragment implements EnhancementOptionsAd
         } else {
             mImageCounter = 0;
         }
-
     }
 
     private boolean getRuntimePermissions(boolean openImagesActivity) {

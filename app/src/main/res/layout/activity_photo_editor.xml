@@ -90,75 +90,27 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/doodleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/recyclerView"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="10dp"
-        android:background="@android:color/holo_orange_dark"
-        android:text="@string/enable_doodle_effect"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
-
     <SeekBar
         android:id="@+id/doodleSeekBar"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:layout_above="@id/doodle_colors"
-        android:layout_toEndOf="@id/doodleButton"
         android:max="100"
         android:progress="30"
         android:visibility="gone" />
 
-    <LinearLayout
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/doodle_colors"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/recyclerView"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/doodleButton"
         android:background="@color/gray_background"
+        android:gravity="center"
         android:orientation="horizontal"
         android:padding="3dp"
-        android:visibility="gone">
-
-        <Button
-            android:id="@+id/doodle_color_white"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:layout_margin="3dp"
-            android:background="@color/mb_white" />
-
-        <Button
-            android:id="@+id/doodle_color_red"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:layout_margin="3dp"
-            android:background="@color/red" />
-
-        <Button
-            android:id="@+id/doodle_color_black"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="3dp"
-            android:background="@color/black_87" />
-
-        <Button
-            android:id="@+id/doodle_color_blue"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="3dp"
-            android:background="@color/mb_blue" />
-
-        <Button
-            android:id="@+id/doodle_color_green"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="3dp"
-            android:background="@color/mb_green" />
-    </LinearLayout>
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

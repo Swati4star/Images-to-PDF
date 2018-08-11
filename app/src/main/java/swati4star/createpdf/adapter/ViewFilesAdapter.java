@@ -14,10 +14,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
-import com.itextpdf.text.pdf.PdfReader;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -33,7 +31,6 @@ import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
-
 
 /**
  * Created by swati on 9/10/15.
@@ -93,12 +90,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         final int position          = holder.getAdapterPosition();
         final File file             = mFileList.get(position);
 
-        boolean isEncrypted = false;
-        try {
-            new PdfReader(file.getPath());
-        } catch (IOException e) {
-            isEncrypted = true;
-        }
+        boolean isEncrypted = mPDFUtils.isPDFEncrypted(file.getPath());
         holder.mFilename.setText(file.getName());
         holder.mFilesize.setText(FileUtils.getFormattedSize(file));
         holder.mFiledate.setText(getFormattedDate(file));

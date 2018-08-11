@@ -39,6 +39,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final String mPassword;
     private final String mQualityString;
     private final ArrayList<String> mImagesUri;
+    private final int mBorderWidth;
     private final Activity mContext;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private LottieAnimationView mAnimationView;
@@ -57,6 +58,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mOnPDFCreatedInterface = onPDFCreated;
         this.mPageSize = mImageToPDFOptions.getPageSize();
         this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
+        this.mBorderWidth = mImageToPDFOptions.getBorderWidth();
     }
 
     @Override
@@ -122,18 +124,21 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                     quality = Integer.parseInt(mQualityString);
                 }
                 Image image = Image.getInstance(mImagesUri.get(i));
-                image.setCompressionLevel(100 - quality);
+                // compressionLevel is a value between 0 (best speed) and 9 (best compression)
+                image.setCompressionLevel((quality / 100) * 9);
+                image.setBorder(Rectangle.BOX);
+                image.setBorderWidth(mBorderWidth);
 
                 Log.v("Stage 5", "Image compressed");
-
 
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);
 
-                Rectangle imageSize = ImageUtils.calculateFitSize(bitmap.getWidth(), bitmap.getHeight(), documentRect);
+                Rectangle imageSize = ImageUtils.calculateFitSize(bitmap.getWidth() + mBorderWidth,
+                        bitmap.getHeight() + mBorderWidth, documentRect);
                 image.scaleAbsolute(imageSize);
 
-                Log.v("Stage 6", "Image mPath adding");
+                Log.v("Stage 6", "Image path adding");
 
                 image.setAbsolutePosition(
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,

@@ -2,7 +2,6 @@ package swati4star.createpdf.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,19 +34,24 @@ import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 import ja.burhanrashid52.photoeditor.PhotoFilter;
 import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.BrushItemAdapter;
 import swati4star.createpdf.adapter.ImageFiltersAdapter;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
+import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
 
+import static swati4star.createpdf.util.BrushUtils.getBrushItems;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
-public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener {
+public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListner {
 
     private ArrayList<String> mFilterUris = new ArrayList<>();
     private final ArrayList<String> mImagepaths = new ArrayList<>();
     private ArrayList<FilterItem> mFilterItems;
+    private ArrayList<BrushItem> mBrushItems;
 
     private int mImagesCount;
     private int mDisplaySize;
@@ -64,15 +68,20 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     ImageButton mPreviousButton;
     @BindView(R.id.resetCurrent)
     Button resetCurrent;
+    @BindView(R.id.doodleSeekBar)
     SeekBar doodleSeekBar;
+    @BindView(R.id.photoEditorView)
+    PhotoEditorView mPhotoEditorView;
+    @BindView(R.id.scrollViewImage)
+    ScrollView mImageScrollView;
+    @BindView(R.id.doodle_colors)
+    RecyclerView brushColorsView;
 
-    private Bitmap mBitmap;
-    private PhotoEditorView mPhotoEditorView;
     private boolean mClicked = false;
     private boolean mClickedFilter = false;
+    private boolean mDoodleSelected = false;
 
     private PhotoEditor mPhotoEditor;
-    Button mDoodleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +89,19 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         setContentView(R.layout.activity_photo_editor);
         ButterKnife.bind(this);
 
-        mPhotoEditorView = findViewById(R.id.photoEditorView);
-
         // Extract images
         mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
         mImagesCount = mFilterUris.size() - 1;
-        mBitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
-        mPhotoEditorView.getSource().setImageBitmap(mBitmap);
-        String showingText = "Showing " + String.valueOf(1) + " of " + mDisplaySize;
-        mImgcount.setText(showingText);
+        mPhotoEditorView.getSource()
+                .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
+        setImageCount();
         mPreviousButton.setVisibility(View.INVISIBLE);
         mFilterItems = getFiltersList(this);
+        mBrushItems = getBrushItems();
         mImagepaths.addAll(mFilterUris);
         initRecyclerView();
-        mDoodleButton = findViewById(R.id.doodleButton);
-        doodleSeekBar = findViewById(R.id.doodleSeekBar);
+
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                 .setPinchTextScalable(true)
                 .build();
@@ -116,36 +122,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         });
         mPhotoEditor.setBrushDrawingMode(false);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
-
-    @OnClick(R.id.doodle_color_white)
-    void setColorWhite() {
-        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.mb_white));
-        mPhotoEditor.setBrushColor(getResources().getColor(R.color.mb_white));
-    }
-
-    @OnClick(R.id.doodle_color_black)
-    void setColorBlack() {
-        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.black_87));
-        mPhotoEditor.setBrushColor(getResources().getColor(R.color.black_87));
-    }
-
-    @OnClick(R.id.doodle_color_red)
-    void setColorRed() {
-        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.red));
-        mPhotoEditor.setBrushColor(getResources().getColor(R.color.red));
-    }
-
-    @OnClick(R.id.doodle_color_blue)
-    void setColorBlue() {
-        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.mb_blue));
-        mPhotoEditor.setBrushColor(getResources().getColor(R.color.mb_blue));
-    }
-
-    @OnClick(R.id.doodle_color_green)
-    void setColorGreen() {
-        doodleSeekBar.setBackgroundColor(getResources().getColor(R.color.mb_green));
-        mPhotoEditor.setBrushColor(getResources().getColor(R.color.mb_green));
     }
 
     @OnClick(R.id.nextimageButton)
@@ -175,7 +151,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.savecurrent)
     void saveC() {
         mClicked = true;
-        if (mClickedFilter) {
+        if (mClickedFilter || mDoodleSelected) {
             saveCurrentImage();
         } else {
             applyFilter(PhotoFilter.NONE);
@@ -186,14 +162,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.resetCurrent)
     void resetCurrent() {
         String originalPath = mFilterUris.get(mCurrentImage);
-        if (!mImagepaths.contains(originalPath)) {
-            mImagepaths.remove(mCurrentImage);
-            mImagepaths.add(mCurrentImage, originalPath);
-            mBitmap = BitmapFactory.decodeFile(originalPath);
-            mPhotoEditorView.getSource().setImageBitmap(mBitmap);
-            mPhotoEditor.clearAllViews();
-            mPhotoEditor.undo();
-        }
+        mImagepaths.set(mCurrentImage, originalPath);
+        mPhotoEditorView.getSource()
+                .setImageBitmap(BitmapFactory.decodeFile(originalPath));
+        mPhotoEditor.clearAllViews();
+        mPhotoEditor.undo();
     }
 
     /**
@@ -251,12 +224,15 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 public void onSuccess(@NonNull String imagePath) {
                     mImagepaths.remove(mCurrentImage);
                     mImagepaths.add(mCurrentImage, imagePath);
-                    Toast.makeText(getApplicationContext(), R.string.saving_dialog, Toast.LENGTH_SHORT).show();
+                    mPhotoEditorView.getSource()
+                            .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage)));
+                    Toast.makeText(getApplicationContext(), R.string.filter_saved, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     Log.e("imgFilter", "Failed to save");
+                    Toast.makeText(getApplicationContext(), R.string.filter_not_saved, Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (SecurityException e) {
@@ -264,12 +240,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
-    /**
-     * Store imagepaths for creation of PDF when Done
-     */
-    private void done() {
-        passUris(mImagepaths);
-    }
 
     /**
      * Intent to Send Back final edited URIs
@@ -289,8 +259,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void next() {
         try {
             if (mCurrentImage + 1 <= mImagesCount) {
-                mBitmap = BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage + 1));
-                mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+                mPhotoEditorView.getSource()
+                        .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage + 1)));
                 mCurrentImage++;
             }
         } catch (Exception e) {
@@ -304,8 +274,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private void previous() {
         try {
             if (mCurrentImage - 1 >= 0) {
-                mBitmap = BitmapFactory.decodeFile(mImagepaths.get((mCurrentImage - 1)));
-                mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+                mPhotoEditorView.getSource()
+                        .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get((mCurrentImage - 1))));
                 mCurrentImage--;
             }
         } catch (Exception e) {
@@ -322,6 +292,12 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         recyclerView.setLayoutManager(layoutManager);
         ImageFiltersAdapter adapter = new ImageFiltersAdapter(mFilterItems, this, this);
         recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        brushColorsView.setLayoutManager(layoutManager2);
+        BrushItemAdapter brushItemAdapter = new BrushItemAdapter(this,
+                this, mBrushItems);
+        brushColorsView.setAdapter(brushItemAdapter);
     }
 
     /**
@@ -332,8 +308,26 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     @Override
     public void onItemClick(View view, int position) {
-        PhotoFilter filter = mFilterItems.get(position).getFilter();
-        applyFilter(filter);
+        // Brush effect is in second position
+        if (position == 1) {
+            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+                    .setPinchTextScalable(true)
+                    .build();
+            if (doodleSeekBar.getVisibility() == View.GONE && brushColorsView.getVisibility() == View.GONE) {
+                mPhotoEditor.setBrushDrawingMode(true);
+                doodleSeekBar.setVisibility(View.VISIBLE);
+                brushColorsView.setVisibility(View.VISIBLE);
+                mDoodleSelected = true;
+            } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
+                    brushColorsView.getVisibility() == View.VISIBLE) {
+                mPhotoEditor.setBrushDrawingMode(false);
+                doodleSeekBar.setVisibility(View.GONE);
+                brushColorsView.setVisibility(View.GONE);
+            }
+        } else {
+            PhotoFilter filter = mFilterItems.get(position).getFilter();
+            applyFilter(filter);
+        }
     }
 
     /**
@@ -347,7 +341,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             mPhotoEditor.setFilterEffect(filterType);
             mFilterName = filterType.name();
             mClickedFilter = filterType != PhotoFilter.NONE;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -364,50 +357,31 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.finish:
-                done();
+                passUris(mImagepaths);
                 return true;
             case android.R.id.home:
-                cancelFilter();
+                new MaterialDialog.Builder(this)
+                        .onPositive((dialog, which) -> finish())
+                        .title(R.string.filter_cancel_question)
+                        .content(R.string.filter_cancel_description)
+                        .positiveText(R.string.ok)
+                        .negativeText(R.string.cancel).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void cancelFilter() {
-        new MaterialDialog.Builder(this)
-                .onPositive((dialog, which) -> finish())
-                .title(R.string.filter_cancel_question)
-                .content(R.string.filter_cancel_description)
-                .positiveText(R.string.ok)
-                .negativeText(R.string.cancel).show();
-    }
-
-    @OnClick(R.id.doodleButton)
-    public void doodleEffect() {
-
-        mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                .setPinchTextScalable(true)
-                .build();
-        LinearLayout colorLayout = findViewById(R.id.doodle_colors);
-        if (doodleSeekBar.getVisibility() == View.GONE && colorLayout.getVisibility() == View.GONE) {
-            mPhotoEditor.setBrushDrawingMode(true);
-            doodleSeekBar.setVisibility(View.VISIBLE);
-            mDoodleButton.setText(R.string.disable_doodle_effect);
-            mDoodleButton.setBackgroundColor(getResources().getColor(R.color.mb_white));
-            colorLayout.setVisibility(View.VISIBLE);
-        } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
-                colorLayout.getVisibility() == View.VISIBLE) {
-            mPhotoEditor.setBrushDrawingMode(false);
-            doodleSeekBar.setVisibility(View.GONE);
-            mDoodleButton.setText(R.string.enable_doodle_effect);
-            mDoodleButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_dark));
-            colorLayout.setVisibility(View.GONE);
-        }
+    @Override
+    public void onBackPressed() {
+        passUris(mImagepaths);
     }
 
     @Override
-    public void onBackPressed() {
-        done();
+    public void onItemClick(int position) {
+        int color = mBrushItems.get(position).getColor();
+        doodleSeekBar.setBackgroundColor(getResources().getColor(color));
+        mPhotoEditor.setBrushColor(getResources().getColor(color));
     }
+
 }

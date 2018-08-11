@@ -44,10 +44,13 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
         int imageid = mFilterItem.get(position).getImageId();
 
         Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageid);
-        int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
-        int radius = width > height ? height : width; // set the smallest edge as radius.
-        roundBitmap = ImageUtils.getRoundBitmap(roundBitmap, radius);
-        holder.img.setImageBitmap(roundBitmap);
+        if (roundBitmap != null) {
+            int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
+            int radius = width > height ? height : width; // set the smallest edge as radius.
+            roundBitmap = ImageUtils.getRoundBitmap(roundBitmap, radius);
+            holder.img.setImageBitmap(roundBitmap);
+        } else
+            holder.img.setImageResource(imageid);
         holder.Filter_name.setText(mFilterItem.get(position).getName());
     }
 

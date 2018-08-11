@@ -13,6 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 /**
@@ -68,9 +69,5 @@ public class EnhancementOptionsAdapter
         public void onClick(View view) {
             mOnItemClickListner.onItemClick(getAdapterPosition());
         }
-    }
-
-    public interface OnItemClickListner {
-        void onItemClick(int position);
     }
 }
