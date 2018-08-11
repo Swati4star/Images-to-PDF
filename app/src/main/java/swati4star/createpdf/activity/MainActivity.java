@@ -241,8 +241,8 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         if (fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
             fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content, fragment).commit();
             mPreviousFragmentId = id;
         }

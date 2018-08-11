@@ -47,7 +47,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private List<History> mHistoryList;
     private HistoryAdapter mHistoryAdapter;
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -145,6 +144,8 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                 mHistoryRecyclerView.setLayoutManager(mLayoutManager);
                 mHistoryRecyclerView.setAdapter(mHistoryAdapter);
                 mHistoryRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(mContext));
+            } else {
+                mEmptyStatusLayout.setVisibility(View.VISIBLE);
             }
             super.onPostExecute(aVoid);
         }
