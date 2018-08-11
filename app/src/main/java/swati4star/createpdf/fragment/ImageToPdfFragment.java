@@ -72,10 +72,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
 
-    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
-    private ArrayList<String> mImagesUri = new ArrayList<>();
-    private final ArrayList<String> mTempUris = new ArrayList<>();
-
+    private static int mImageCounter = 0;
     @BindView(R.id.addImages)
     MorphingButton addImages;
     @BindView(R.id.pdfCreate)
@@ -86,9 +83,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     RecyclerView mEnhancementOptionsRecycleView;
     @BindView(R.id.tvNoOfImages)
     TextView mNoOfImages;
-
+    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
+    private ArrayList<String> mImagesUri = new ArrayList<>();
     private String mPath;
     private String mPassword;
     private String mQuality;
@@ -97,7 +95,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private boolean mPasswordProtected = false;
     private FileUtils mFileUtils;
-    private static int mImageCounter = 0;
     private int mButtonClicked = 0;
     private int mBorderWidth = 0;
 
@@ -133,10 +130,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 if (mFileUtils.getUriRealPath(uri) == null) {
                     showSnackbar(R.string.whatsappToast);
                 } else {
-                    mTempUris.add(mFileUtils.getUriRealPath(uri));
-                    if (mTempUris.size() > 0) {
+                    mImagesUri.add(mFileUtils.getUriRealPath(uri));
+                    if (mImagesUri.size() > 0) {
                         mNoOfImages.setText(String.format(mActivity.getResources()
-                                .getString(R.string.images_selected), mTempUris.size()));
+                                .getString(R.string.images_selected), mImagesUri.size()));
                         mNoOfImages.setVisibility(View.VISIBLE);
                     } else {
                         mNoOfImages.setVisibility(View.GONE);
@@ -173,13 +170,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void filterImages() {
-        if (mTempUris.size() == 0)
+        if (mImagesUri.size() == 0)
             showSnackbar(R.string.snackbar_no_images);
         else {
             // Apply filters
             try {
                 Intent intent = new Intent(getContext(), ImageEditor.class);
-                intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mTempUris);
+                intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mImagesUri);
                 startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -192,18 +189,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @OnClick({R.id.pdfCreate})
     void createPdf() {
         if (mImagesUri.size() == 0) {
-            if (mTempUris.size() == 0) {
-                showSnackbar(R.string.snackbar_no_images);
-                return;
-            } else
-                mImagesUri = (ArrayList<String>) mTempUris.clone();
+            showSnackbar(R.string.snackbar_no_images);
+            return;
         }
 
-        if (mImagesUri.size() < mTempUris.size()) {
-            for (int i = mImagesUri.size(); i < mTempUris.size(); i++) {
-                mImagesUri.add(mTempUris.get(i));
-            }
-        }
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -280,10 +269,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         switch (requestCode) {
             case INTENT_REQUEST_GET_IMAGES:
 
-                mTempUris.clear();
+                mImagesUri.clear();
                 ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
                 for (Uri uri : imageUris)
-                    mTempUris.add(uri.getPath());
+                    mImagesUri.add(uri.getPath());
                 if (imageUris.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), imageUris.size()));
@@ -303,17 +292,15 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Uri resultUri = result.getUri();
-                        mImagesUri.add(resultUri.getPath());
+                        mImagesUri.set(mImageCounter, resultUri.getPath());
                         showSnackbar(R.string.snackbar_imagecropped);
                         break;
                     case CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE:
                         Exception error = result.getError();
                         showSnackbar(R.string.snackbar_error_getCropped);
                         error.printStackTrace();
-                    default:
-                        mImagesUri.add(mTempUris.get(mImageCounter));
+                        break;
                 }
-                mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 mImageCounter++;
                 next();
                 break;
@@ -322,11 +309,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     case Activity.RESULT_OK:
                         try {
                             mImagesUri.clear();
-                            mTempUris.clear();
                             ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
                             int size = mFilterUris.size() - 1;
                             for (int k = 0; k <= size; k++) {
-                                mTempUris.add(mFilterUris.get(k));
+                                mImagesUri.add(mFilterUris.get(k));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -339,10 +325,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     case Activity.RESULT_OK:
                         try {
                             mImagesUri.clear();
-                            mTempUris.clear();
-                            ArrayList<String> uris = data.getStringArrayListExtra(RESULT);
-                            mImagesUri = uris;
-                            mTempUris.addAll(uris);
+                            mImagesUri = data.getStringArrayListExtra(RESULT);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -383,7 +366,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void addBorder() {
 
-        if (mTempUris.size() == 0) {
+        if (mImagesUri.size() == 0) {
             showSnackbar(R.string.snackbar_no_images);
             return;
         }
@@ -413,17 +396,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void previewPDF() {
         if (mImagesUri.size() == 0) {
-            if (mTempUris.size() == 0) {
-                showSnackbar(R.string.snackbar_no_images);
-                return;
-            } else
-                mImagesUri = (ArrayList<String>) mTempUris.clone();
-        }
-
-        if (mImagesUri.size() < mTempUris.size()) {
-            for (int i = mImagesUri.size(); i < mTempUris.size(); i++) {
-                mImagesUri.add(mTempUris.get(i));
-            }
+            showSnackbar(R.string.snackbar_no_images);
+            return;
         }
 
         Intent intent = new Intent(mActivity, PreviewActivity.class);
@@ -432,7 +406,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void setPageSize() {
-        if (mTempUris.size() == 0) {
+        if (mImagesUri.size() == 0) {
             showSnackbar(R.string.snackbar_no_images);
             return;
         }
@@ -442,7 +416,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void compressImage() {
 
-        if (mTempUris.size() == 0) {
+        if (mImagesUri.size() == 0) {
             showSnackbar(R.string.snackbar_no_images);
             return;
         }
@@ -500,7 +474,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void passwordProtectPDF() {
-        if (mTempUris.size() == 0) {
+        if (mImagesUri.size() == 0) {
             showSnackbar(R.string.snackbar_no_images);
             return;
         }
@@ -579,7 +553,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public void onPDFCreated(boolean success, String path) {
         mImagesUri.clear();
-        mTempUris.clear();
         mNoOfImages.setVisibility(View.GONE);
         mBorderWidth = 0;
         mImageCounter = 0;
@@ -592,7 +565,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     void cropImages() {
-        if (mTempUris.size() == 0) {
+        if (mImagesUri.size() == 0) {
             showSnackbar(R.string.snackbar_no_images);
             return;
         }
@@ -600,13 +573,15 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void next() {
-        if (mImageCounter != mTempUris.size() && mImageCounter < mTempUris.size()) {
-            CropImage.activity(Uri.fromFile(new File(mTempUris.get(mImageCounter))))
+        if (mImageCounter != mImagesUri.size() && mImageCounter < mImagesUri.size()) {
+            CropImage.activity(Uri.fromFile(new File(mImagesUri.get(mImageCounter))))
                     .setActivityMenuIconColor(mMorphButtonUtility.color(R.color.colorPrimary))
                     .setInitialCropWindowPaddingRatio(0)
                     .setAllowRotation(true)
                     .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
                     .start(mActivity, this);
+        } else {
+            mImageCounter = 0;
         }
     }
 
@@ -644,10 +619,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         //add to intent the URIs of the already selected images
         //first they are converted to Uri objects
-        ArrayList<Uri> uris = new ArrayList<>(mTempUris.size());
-        for (String stringUri : mTempUris) {
+        ArrayList<Uri> uris = new ArrayList<>(mImagesUri.size());
+        for (String stringUri : mImagesUri)
             uris.add(Uri.fromFile(new File(stringUri)));
-        }
         // add them to the intent
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
