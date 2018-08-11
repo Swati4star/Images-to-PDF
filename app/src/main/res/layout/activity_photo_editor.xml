@@ -1,18 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.ImageEditor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/resetCurrent"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/holo_orange_dark"
+            android:text="@string/reset"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/savecurrent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/holo_orange_dark"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:text="@string/save_current"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/previousImageButton"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/ic_navigate_before_white_24dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@string/previous_image_content_desc" />
+
+        <TextView
+            android:id="@+id/imagecount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:gravity="center_horizontal"
+            android:text="@string/img_Count_filter"
+            android:textColor="@android:color/background_dark" />
+
+        <ImageButton
+            android:id="@+id/nextimageButton"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_navigate_next_black_24dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@string/nextimage_contentdesc" />
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollViewImage"
         android:layout_width="match_parent"
-        android:layout_height="378dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/nextimageButton"
-        android:layout_marginTop="18dp">
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="20"
+        android:descendantFocusability="blocksDescendants">
 
         <ja.burhanrashid52.photoeditor.PhotoEditorView
             android:id="@+id/photoEditorView"
@@ -27,88 +87,23 @@
         </ja.burhanrashid52.photoeditor.PhotoEditorView>
     </ScrollView>
 
-    <ImageButton
-        android:id="@+id/previousImageButton"
-        android:layout_width="46dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="13dp"
-        android:layout_toStartOf="@id/imagecount"
-        android:background="@drawable/ic_navigate_before_white_24dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:contentDescription="@string/previous_image_content_desc" />
-
-    <ImageButton
-        android:id="@+id/nextimageButton"
-        android:layout_width="46dp"
-        android:layout_height="44dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/ic_navigate_next_black_24dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:contentDescription="@string/nextimage_contentdesc" />
-
-    <TextView
-        android:id="@+id/imagecount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/savecurrent"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_toStartOf="@id/nextimageButton"
-        android:gravity="center_horizontal"
-        android:text="@string/img_Count_filter"
-        android:textColor="@android:color/background_dark" />
-
-    <Button
-        android:id="@+id/savecurrent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/nextimageButton"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/resetCurrent"
-        android:background="@android:color/holo_orange_dark"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
-        android:text="@string/save_current"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
-
-    <Button
-        android:id="@+id/resetCurrent"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/nextimageButton"
-        android:layout_marginStart="10dp"
-        android:background="@android:color/holo_orange_dark"
-        android:text="@string/reset"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
-
     <SeekBar
         android:id="@+id/doodleSeekBar"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:layout_above="@id/doodle_colors"
+        android:layout_weight="1"
         android:max="100"
         android:progress="30"
         android:visibility="gone" />
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/doodle_colors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/recyclerView"
+        android:layout_weight="1"
         android:background="@color/gray_background"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="3dp"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
@@ -116,9 +111,9 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_weight="0.5"
         android:background="#e6e4e4"
         android:orientation="horizontal"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-</RelativeLayout>
+</LinearLayout>

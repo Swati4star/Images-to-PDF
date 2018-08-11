@@ -331,7 +331,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         File oldfile = mFileList.get(position);
         String oldPath = oldfile.getPath();
         String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
-                + "/" + newName.toString() + mActivity.getString(R.string.pdf_ext);
+                + "/" + newName + mActivity.getString(R.string.pdf_ext);
         File newfile = new File(newfilename);
         if (oldfile.renameTo(newfile)) {
             showSnackbar(R.string.snackbar_file_renamed);

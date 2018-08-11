@@ -13,10 +13,8 @@
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
     <string name="search_hint">Name of file</string>
-    <string name="no_result">Couldn\'t find anything</string>
     <string name="search">search</string>
 
-    <string name="mb_button">PDF を作成</string>
     <string name="details"><b>詳細</b></string>
 
     <array name="items">
@@ -99,10 +97,8 @@
     <string name="pdf_merge_error">Unable to Merge. Files may be encrypted or in the external storage. Files on SD card are supported only currently.</string>
     <string name="file_one">Select first PDF</string>
     <string name="file_two">Select second PDF</string>
-    <string name="File_hint_one">File Path for PDF one</string>
     <string name="File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>
-    <string name="note">Files present on SD Card are supported</string>
     <string name="file_date_text">File Date</string>
     <string name="file_size_text">File Size</string>
     <string name="password_added">Password Added</string>
@@ -110,7 +106,6 @@
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
     <string name="btn_sav_text">savText</string>
     <string name="path_seperator">/</string>
-    <string name="grayscale_filter">Gray Scale</string>
     <string name="done_filter">Done</string>
     <string name="filter_images_Text">Filter Images</string>
     <string name="nextimage_contentdesc">Next Image</string>
@@ -126,7 +121,6 @@
     <string name="incorrect_passowrd">Incorrect Password</string>
     <string name="img_Count_filter">Showing X of X</string>
     <string name="save_current">Save Current</string>
-    <string name="saving_dialog">Saving..</string>
     <string name="save_first">Save Current Image First</string>
     <string name="Filter_name">Filter</string>
     <string name="Filter_image_preview">Filter Image Preview</string>

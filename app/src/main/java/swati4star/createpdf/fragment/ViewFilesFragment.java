@@ -377,7 +377,7 @@ public class ViewFilesFragment extends Fragment
                 .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                     final String dirName = input.getText().toString();
                     final File directory = mDirectoryUtils.getDirectory(dirName);
-                    if (directory == null) {
+                    if (directory == null || dirName.trim().isEmpty()) {
                         showSnack(R.string.dir_does_not_exists);
                     } else {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
@@ -407,5 +407,4 @@ public class ViewFilesFragment extends Fragment
         Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG).show();
     }
-
 }

@@ -198,9 +198,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     Fragment getCurrentFragment() {
-        Fragment currentFragment = getSupportFragmentManager()
+        return getSupportFragmentManager()
                 .findFragmentById(R.id.content);
-        return currentFragment;
     }
 
     @Override

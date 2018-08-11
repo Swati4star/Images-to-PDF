@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -231,7 +230,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Log.e("imgFilter", "Failed to save");
                     Toast.makeText(getApplicationContext(), R.string.filter_not_saved, Toast.LENGTH_SHORT).show();
                 }
             });

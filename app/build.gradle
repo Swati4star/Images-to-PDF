@@ -10,8 +10,8 @@ android {
         minSdkVersion 19
         multiDexEnabled true
         targetSdkVersion 27
-        versionCode 23
-        versionName "6.4.0"
+        versionCode 24
+        versionName "6.5.0"
     }
     buildTypes {
         release {
@@ -51,10 +51,10 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.github.ParkSangGwon:TedPicker:v1.0.10'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.jakewharton:butterknife:8.5.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.madgag.spongycastle:core:1.58.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation "android.arch.persistence.room:runtime:$room_version"

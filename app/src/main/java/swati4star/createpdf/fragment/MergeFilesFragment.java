@@ -93,6 +93,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mDirectoryUtils = new DirectoryUtils(mActivity);
         mFileUtils = new FileUtils(mActivity);
@@ -102,6 +103,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             mLayout.setVisibility(View.GONE);
         }
 
+        // Init recycler view
         MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
         mRecyclerViewFiles.setLayoutManager(mLayoutManager);
@@ -138,7 +140,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.mergebtn)
     void mergeFiles(final View v) {
-
         String[] pdfpaths = {firstFilePath, secondFilePath};
         if (firstFilePath == null || secondFilePath == null || !mSuccess) {
             showSnackbar(R.string.snackbar_no_pdfs_selected);
@@ -171,29 +172,27 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (data != null) {
-            if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    Log.v("file", uri + " ");
-                    mRealPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-                    //Check if First button is clicked from mCheckbtClickTag
-                    if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
-                        firstFilePath = getFilePath(uri);
-                        Log.v("File path 1", firstFilePath + mSuccess);
-                        addFileOne.setText(firstFilePath);
-                        addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-                    } else {
-                        secondFilePath = getFilePath(uri);
-                        Log.v("File path 2", secondFilePath);
-                        addFileTwo.setText(secondFilePath);
-                        addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-                    }
-                    if (firstFilePath != null && secondFilePath != null) {
-                        mergeBtn.setEnabled(true);
-                        mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
-                    }
-                }
+        if (data == null || resultCode != RESULT_OK || data.getData() == null)
+            return;
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            Uri uri = data.getData();
+            Log.v("file", uri + " ");
+            mRealPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            //Check if First button is clicked from mCheckbtClickTag
+            if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
+                firstFilePath = getFilePath(uri);
+                Log.v("File path 1", firstFilePath + mSuccess);
+                addFileOne.setText(firstFilePath);
+                addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
+            } else {
+                secondFilePath = getFilePath(uri);
+                Log.v("File path 2", secondFilePath);
+                addFileTwo.setText(secondFilePath);
+                addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
+            }
+            if (firstFilePath != null && secondFilePath != null) {
+                mergeBtn.setEnabled(true);
+                mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
             }
         }
     }
@@ -201,22 +200,22 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     //Returns the complete filepath of the PDF as a string
     private String getFilePath(Uri uri) {
         String uriString = uri.toString();
-        String filepath = null;
         File file = new File(uri.toString());
         String path = file.getPath();
-
         if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
             mSuccess = false;
         } else {
             mSuccess = true;
             mDisplayName = mFileUtils.getFileName(uri);
         }
-
         if (mSuccess) {
             String folname = getParentFolder(path);
-            filepath = setPathontextview(folname);
+            if (folname != null) {
+                String c = getString(R.string.path_seperator);
+                mRealPath = mRealPath + c + folname + c + mDisplayName;
+            }
         }
-        return filepath;
+        return mRealPath;
     }
 
     private String getParentFolder(String p) {
@@ -238,16 +237,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             e.printStackTrace();
         }
         return folName;
-    }
-
-    //Returns the folder and file name as string
-    private String setPathontextview(String folname) {
-        if (folname != null) {
-            String c = getString(R.string.path_seperator);
-            mRealPath = mRealPath + c + folname + c + mDisplayName;
-        }
-        Log.e("file p[ppp", mRealPath);
-        return mRealPath;
     }
 
     @Override
@@ -300,7 +289,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                     }
                 })
                 .show();
-
     }
 
     /**
