@@ -254,4 +254,6 @@
     <string name="filter_brush">Brush</string>
     <string name="filter_saved">Image saved</string>
     <string name="filter_not_saved">Image could not be saved</string>
+    <string name="border_dialog_title">Enter border width in units (Default is 0) :</string>
+    <string name="image_border">Add Border</string>
 </resources>

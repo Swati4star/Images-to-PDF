@@ -6,13 +6,14 @@ public class PDFOptions {
     private final boolean mPasswordProtected;
     private final String mPassword;
     private final String mPageSize;
+    private final int mBorderWidth;
 
-
-    PDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected, String mPassword) {
+    PDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected, String mPassword, int mBorderWidth) {
         this.mOutFileName = mFileName;
         this.mPageSize = mPageSize;
         this.mPasswordProtected = mPasswordProtected;
         this.mPassword = mPassword;
+        this.mBorderWidth = mBorderWidth;
     }
 
     public String getOutFileName() {
@@ -29,5 +30,9 @@ public class PDFOptions {
 
     public String getPassword() {
         return mPassword;
+    }
+
+    public int getBorderWidth() {
+        return mBorderWidth;
     }
 }

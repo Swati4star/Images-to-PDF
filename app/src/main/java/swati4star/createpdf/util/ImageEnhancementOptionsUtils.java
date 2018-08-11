@@ -42,6 +42,10 @@ public class ImageEnhancementOptionsUtils {
                 context.getResources().getDrawable(R.drawable.ic_play_circle_outline_black_24dp),
                 context.getResources().getString(R.string.preview_image_to_pdf)));
 
+        options.add(new EnhancementOptionsEntity(
+                context.getResources().getDrawable(R.drawable.ic_border_image_black_24dp),
+                context.getResources().getString(R.string.image_border)));
+
         return options;
     }
 }
