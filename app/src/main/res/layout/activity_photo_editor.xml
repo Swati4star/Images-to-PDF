@@ -104,7 +104,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/recyclerView"
-        android:layout_marginStart="10dp"
         android:background="@color/gray_background"
         android:orientation="horizontal"
         android:padding="3dp"

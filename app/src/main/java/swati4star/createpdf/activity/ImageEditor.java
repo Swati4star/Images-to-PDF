@@ -187,14 +187,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.resetCurrent)
     void resetCurrent() {
         String originalPath = mFilterUris.get(mCurrentImage);
-        if (!mImagepaths.contains(originalPath)) {
-            mImagepaths.remove(mCurrentImage);
-            mImagepaths.add(mCurrentImage, originalPath);
-            mBitmap = BitmapFactory.decodeFile(originalPath);
-            mPhotoEditorView.getSource().setImageBitmap(mBitmap);
-            mPhotoEditor.clearAllViews();
-            mPhotoEditor.undo();
-        }
+        mImagepaths.set(mCurrentImage, originalPath);
+        mBitmap = BitmapFactory.decodeFile(originalPath);
+        mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+        mPhotoEditor.clearAllViews();
+        mPhotoEditor.undo();
     }
 
     /**
