@@ -145,4 +145,30 @@ public class DirectoryUtils {
         return folder;
     }
 
+    /**
+     * get all the file paths (inside the directory & on home directory)
+     * @return - list of file paths
+     */
+    public ArrayList<String> getAllFilePaths() {
+        ArrayList<String> pdfPaths = new ArrayList<>();
+        ArrayList<File> pdfFiles;
+        ArrayList<File> pdfFromOtherDir = getPdfFromOtherDirectories();
+        final File[] files = getOrCreatePdfDirectory().listFiles();
+        if ((files == null || files.length == 0) && pdfFromOtherDir == null) {
+            return null;
+        } else {
+
+            pdfFiles = getPdfsFromPdfFolder(files);
+            if (pdfFromOtherDir != null) {
+                pdfFiles.addAll(pdfFromOtherDir);
+            }
+        }
+        if (pdfFiles != null) {
+            for (File pdf : pdfFiles) {
+                pdfPaths.add(pdf.getAbsolutePath());
+            }
+        }
+        return pdfPaths;
+    }
+
 }

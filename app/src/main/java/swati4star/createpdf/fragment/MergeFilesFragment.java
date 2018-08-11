@@ -1,11 +1,9 @@
 package swati4star.createpdf.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -27,14 +25,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfCopy;
-import com.itextpdf.text.pdf.PdfReader;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -43,27 +36,24 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 
-public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener {
+public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener {
     private Activity mActivity;
     private boolean mSuccess;
-    private String mFilename;
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private String mRealPath;
     private String mDisplayName;
-    private MaterialDialog mMaterialDialog;
-    private LottieAnimationView mAnimationView;
-    private MergeFilesAdapter mMergeFilesAdapter;
     private DirectoryUtils mDirectoryUtils;
-    private ArrayList<String> mAllFilesPaths;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
 
@@ -106,18 +96,21 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mDirectoryUtils = new DirectoryUtils(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mAllFilesPaths = getAllFilePaths();
-        mMergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-        mRecyclerViewFiles.setAdapter(mMergeFilesAdapter);
-        mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback());
-        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
-        mergeBtn.setEnabled(false);
+
+        ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
             mLayout.setVisibility(View.GONE);
         }
+
+        MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+        mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+        mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
+        mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback());
+        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
+        mergeBtn.setEnabled(false);
 
         return root;
     }
@@ -158,13 +151,15 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                     if (StringUtils.isEmpty(input)) {
                         showSnackbar(R.string.snackbar_name_not_blank);
                     } else {
-                        mFilename = input.toString();
-                        new MergePdf().execute(pdfpaths);
+                        new MergePdf(mActivity, input.toString(), this).execute(pdfpaths);
                     }
                 })
                 .show();
     }
 
+    /**
+     * Displays file chooser intent
+     */
     private void showFileChooser() {
         String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();
@@ -280,28 +275,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 resID, Snackbar.LENGTH_LONG).show();
     }
 
-    private ArrayList<String> getAllFilePaths() {
-        ArrayList<String> pdfPaths = new ArrayList<>();
-        ArrayList<File> pdfFiles;
-        ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
-        final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
-        if ((files == null || files.length == 0) && pdfFromOtherDir == null) {
-            return null;
-        } else {
-
-            pdfFiles = mDirectoryUtils.getPdfsFromPdfFolder(files);
-            if (pdfFromOtherDir != null) {
-                pdfFiles.addAll(pdfFromOtherDir);
-            }
-        }
-        if (pdfFiles != null) {
-            for (File pdf : pdfFiles) {
-                pdfPaths.add(pdf.getAbsolutePath());
-            }
-        }
-        return pdfPaths;
-    }
-
     @Override
     public void onItemClick(String path) {
         new MaterialDialog.Builder(mActivity)
@@ -333,7 +306,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     /**
      * resets fragment to initial stage
      */
-    private void reset() {
+    @Override
+    public void resetValues() {
         firstFilePath = "";
         secondFilePath = "";
         addFileOne.setText(R.string.file_one);
@@ -363,76 +337,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         @Override
         public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private class MergePdf extends AsyncTask<String, Void, Void> {
-
-        private String mFinPath;
-        private Boolean mIsPDFMerged;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mMaterialDialog = new MaterialDialog.Builder(mActivity)
-                    .customView(R.layout.lottie_anim_dialog, false)
-                    .build();
-            mAnimationView = mMaterialDialog.getCustomView().findViewById(R.id.animation_view);
-            mAnimationView.playAnimation();
-            mIsPDFMerged = false;
-            mMaterialDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... pdfpaths) {
-            try {
-                // Create document object
-                Document document = new Document();
-                // Create pdf copy object to copy current document to the output mergedresult file
-                String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                        MergeFilesFragment.this.getString(R.string.pdf_dir);
-                mFilename = mFilename + getString(R.string.pdf_ext);
-                mFinPath = mPath + mFilename;
-                PdfCopy copy = new PdfCopy(document, new FileOutputStream(mFinPath));
-                // Open the document
-                document.open();
-                PdfReader pdfreader;
-                int numOfPages;
-                for (String pdfPath : pdfpaths) {
-                    // Create pdf reader object to read each input pdf file
-                    pdfreader = new PdfReader(pdfPath);
-                    // Get the number of pages of the pdf file
-                    numOfPages = pdfreader.getNumberOfPages();
-                    for (int page = 1; page <= numOfPages; page++) {
-                        // Import all pages from the file to PdfCopy
-                        copy.addPage(copy.getImportedPage(pdfreader, page));
-                    }
-                }
-                mIsPDFMerged = true;
-                document.close(); // close the document
-            } catch (Exception e) {
-                mIsPDFMerged = false;
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            mAnimationView.cancelAnimation();
-            mMaterialDialog.dismiss();
-            reset();
-            if (mIsPDFMerged)
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.pdf_merged, Snackbar.LENGTH_LONG).setAction(R.string.snackbar_viewAction, v -> {
-                        FileUtils fileUtils = new FileUtils(mActivity);
-                        fileUtils.openFile(mFinPath);
-                    }).show();
-            else
-                Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                        R.string.pdf_merge_error, Snackbar.LENGTH_LONG).show();
         }
     }
 }

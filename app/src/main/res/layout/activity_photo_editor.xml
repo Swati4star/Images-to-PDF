@@ -126,36 +126,36 @@
 
         <Button
             android:id="@+id/doodle_color_white"
-            android:layout_width="30dp"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="3dp"
             android:background="@color/mb_white" />
 
         <Button
             android:id="@+id/doodle_color_red"
-            android:layout_width="30dp"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="3dp"
             android:background="@color/red" />
 
         <Button
             android:id="@+id/doodle_color_black"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="3dp"
             android:background="@color/black_87" />
 
         <Button
             android:id="@+id/doodle_color_blue"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="3dp"
             android:background="@color/mb_blue" />
 
         <Button
             android:id="@+id/doodle_color_green"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="3dp"
             android:background="@color/mb_green" />
     </LinearLayout>

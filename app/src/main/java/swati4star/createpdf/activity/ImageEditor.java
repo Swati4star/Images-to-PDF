@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,15 +65,20 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     ImageButton mPreviousButton;
     @BindView(R.id.resetCurrent)
     Button resetCurrent;
+    @BindView(R.id.doodleSeekBar)
     SeekBar doodleSeekBar;
+    @BindView(R.id.doodleButton)
+    Button mDoodleButton;
+    @BindView(R.id.photoEditorView)
+    PhotoEditorView mPhotoEditorView;
+    @BindView(R.id.scrollViewImage)
+    ScrollView mImageScrollView;
 
     private Bitmap mBitmap;
-    private PhotoEditorView mPhotoEditorView;
     private boolean mClicked = false;
     private boolean mClickedFilter = false;
 
     private PhotoEditor mPhotoEditor;
-    Button mDoodleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +86,18 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         setContentView(R.layout.activity_photo_editor);
         ButterKnife.bind(this);
 
-        mPhotoEditorView = findViewById(R.id.photoEditorView);
-
         // Extract images
         mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
         mImagesCount = mFilterUris.size() - 1;
         mBitmap = BitmapFactory.decodeFile(mFilterUris.get(0));
         mPhotoEditorView.getSource().setImageBitmap(mBitmap);
-        String showingText = "Showing " + String.valueOf(1) + " of " + mDisplaySize;
-        mImgcount.setText(showingText);
+        setImageCount();
         mPreviousButton.setVisibility(View.INVISIBLE);
         mFilterItems = getFiltersList(this);
         mImagepaths.addAll(mFilterUris);
         initRecyclerView();
-        mDoodleButton = findViewById(R.id.doodleButton);
-        doodleSeekBar = findViewById(R.id.doodleSeekBar);
+
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                 .setPinchTextScalable(true)
                 .build();
@@ -385,7 +387,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     @OnClick(R.id.doodleButton)
     public void doodleEffect() {
-
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                 .setPinchTextScalable(true)
                 .build();
@@ -394,7 +395,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             mPhotoEditor.setBrushDrawingMode(true);
             doodleSeekBar.setVisibility(View.VISIBLE);
             mDoodleButton.setText(R.string.disable_doodle_effect);
-            mDoodleButton.setBackgroundColor(getResources().getColor(R.color.mb_white));
+            mDoodleButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             colorLayout.setVisibility(View.VISIBLE);
         } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
                 colorLayout.getVisibility() == View.VISIBLE) {

@@ -12,6 +12,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.BufferedReader;
@@ -126,4 +127,19 @@ public class PDFUtils {
         }
     }
 
+    /**
+     * Check if a PDF at given path is encrypted
+     *
+     * @param path - path of PDF
+     * @return true - if encrypted otherwise false
+     */
+    public boolean isPDFEncrypted(String path) {
+        boolean isEncrypted = false;
+        try {
+            new PdfReader(path);
+        } catch (IOException e) {
+            isEncrypted = true;
+        }
+        return isEncrypted;
+    }
 }
