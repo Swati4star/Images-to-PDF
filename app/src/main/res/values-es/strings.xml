@@ -253,4 +253,7 @@
     <string name="enable_doodle_effect">Enable Doodle Effect</string>
     <string name="disable_doodle_effect">Disable Doodle Effect</string>
     <string name="select_as">Select as:</string>
+    <string name="filter_brush">Brush</string>
+    <string name="filter_saved">Image saved</string>
+    <string name="filter_not_saved">Image could not be saved</string>
 </resources>

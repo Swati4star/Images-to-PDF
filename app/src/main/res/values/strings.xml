@@ -253,6 +253,7 @@
     <string name="showing_image">Showing %1$d of %2$d image(s)</string>
 
     <!-- Filter strings -->
+    <string name="filter_brush">Brush</string>
     <string name="filter_none">None</string>
     <string name="filter_autofix">Auto Fix</string>
     <string name="filter_grayscale">GrayScale</string>
@@ -277,6 +278,7 @@
     <string name="filter_vig">Vignette</string>
     <string name="filter_cancel_question">Are you sure you want to remove filters from all your images?</string>
     <string name="filter_cancel_description">Pressing OK will remove all your filters</string>
+    <string name="filter_saved">Image saved</string>
     <string name="history">History</string>
     <string name="created">Created</string>
     <string name="printed">Printed</string>
@@ -312,4 +314,5 @@
     <string name="enable_doodle_effect">Enable Doodle Effect</string>
     <string name="disable_doodle_effect">Disable Doodle Effect</string>
     <string name="select_as">Select as:</string>
+    <string name="filter_not_saved">Image could not be saved</string>
 </resources>

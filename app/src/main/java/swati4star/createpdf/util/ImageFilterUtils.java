@@ -16,6 +16,8 @@ public class ImageFilterUtils {
 
         items.add(new FilterItem(R.drawable.none,
                 context.getString(R.string.filter_none), PhotoFilter.NONE));
+        items.add(new FilterItem(R.drawable.brush,
+                context.getString(R.string.filter_brush), PhotoFilter.NONE));
         items.add(new FilterItem(R.drawable.auto_fix,
                 context.getString(R.string.filter_autofix), PhotoFilter.AUTO_FIX));
         items.add(new FilterItem(R.drawable.black,

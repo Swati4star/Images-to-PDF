@@ -90,38 +90,25 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/doodleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/recyclerView"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="10dp"
-        android:background="@android:color/holo_orange_dark"
-        android:text="@string/enable_doodle_effect"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
-
     <SeekBar
         android:id="@+id/doodleSeekBar"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:layout_above="@id/doodle_colors"
-        android:layout_toEndOf="@id/doodleButton"
         android:max="100"
         android:progress="30"
         android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/doodle_colors"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/recyclerView"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/doodleButton"
         android:background="@color/gray_background"
         android:orientation="horizontal"
         android:padding="3dp"
+        android:gravity="center"
         android:visibility="gone">
 
         <Button

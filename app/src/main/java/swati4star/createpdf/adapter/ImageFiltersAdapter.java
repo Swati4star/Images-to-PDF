@@ -5,11 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.airbnb.lottie.L;
 
 import java.util.ArrayList;
 
@@ -44,10 +47,13 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
         int imageid = mFilterItem.get(position).getImageId();
 
         Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageid);
-        int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
-        int radius = width > height ? height : width; // set the smallest edge as radius.
-        roundBitmap = ImageUtils.getRoundBitmap(roundBitmap, radius);
-        holder.img.setImageBitmap(roundBitmap);
+        if (roundBitmap != null) {
+            int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
+            int radius = width > height ? height : width; // set the smallest edge as radius.
+            roundBitmap = ImageUtils.getRoundBitmap(roundBitmap, radius);
+            holder.img.setImageBitmap(roundBitmap);
+        } else
+            holder.img.setImageResource(imageid);
         holder.Filter_name.setText(mFilterItem.get(position).getName());
     }
 

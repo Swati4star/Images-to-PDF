@@ -67,8 +67,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     Button resetCurrent;
     @BindView(R.id.doodleSeekBar)
     SeekBar doodleSeekBar;
-    @BindView(R.id.doodleButton)
-    Button mDoodleButton;
     @BindView(R.id.photoEditorView)
     PhotoEditorView mPhotoEditorView;
     @BindView(R.id.scrollViewImage)
@@ -77,6 +75,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private Bitmap mBitmap;
     private boolean mClicked = false;
     private boolean mClickedFilter = false;
+    private boolean mDoodleSelected = false;
 
     private PhotoEditor mPhotoEditor;
 
@@ -177,7 +176,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.savecurrent)
     void saveC() {
         mClicked = true;
-        if (mClickedFilter) {
+        if (mClickedFilter || mDoodleSelected) {
             saveCurrentImage();
         } else {
             applyFilter(PhotoFilter.NONE);
@@ -253,12 +252,15 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 public void onSuccess(@NonNull String imagePath) {
                     mImagepaths.remove(mCurrentImage);
                     mImagepaths.add(mCurrentImage, imagePath);
-                    Toast.makeText(getApplicationContext(), R.string.saving_dialog, Toast.LENGTH_SHORT).show();
+                    mBitmap = BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage));
+                    mPhotoEditorView.getSource().setImageBitmap(mBitmap);
+                    Toast.makeText(getApplicationContext(), R.string.filter_saved, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     Log.e("imgFilter", "Failed to save");
+                    Toast.makeText(getApplicationContext(), R.string.filter_not_saved, Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (SecurityException e) {
@@ -266,12 +268,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
-    /**
-     * Store imagepaths for creation of PDF when Done
-     */
-    private void done() {
-        passUris(mImagepaths);
-    }
 
     /**
      * Intent to Send Back final edited URIs
@@ -334,8 +330,27 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     @Override
     public void onItemClick(View view, int position) {
-        PhotoFilter filter = mFilterItems.get(position).getFilter();
-        applyFilter(filter);
+        // Brush effect is in second position
+        if (position == 1) {
+            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+                    .setPinchTextScalable(true)
+                    .build();
+            LinearLayout colorLayout = findViewById(R.id.doodle_colors);
+            if (doodleSeekBar.getVisibility() == View.GONE && colorLayout.getVisibility() == View.GONE) {
+                mPhotoEditor.setBrushDrawingMode(true);
+                doodleSeekBar.setVisibility(View.VISIBLE);
+                colorLayout.setVisibility(View.VISIBLE);
+                mDoodleSelected = true;
+            } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
+                    colorLayout.getVisibility() == View.VISIBLE) {
+                mPhotoEditor.setBrushDrawingMode(false);
+                doodleSeekBar.setVisibility(View.GONE);
+                colorLayout.setVisibility(View.GONE);
+            }
+        } else {
+            PhotoFilter filter = mFilterItems.get(position).getFilter();
+            applyFilter(filter);
+        }
     }
 
     /**
@@ -366,7 +381,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.finish:
-                done();
+                passUris(mImagepaths);
                 return true;
             case android.R.id.home:
                 cancelFilter();
@@ -385,30 +400,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 .negativeText(R.string.cancel).show();
     }
 
-    @OnClick(R.id.doodleButton)
-    public void doodleEffect() {
-        mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                .setPinchTextScalable(true)
-                .build();
-        LinearLayout colorLayout = findViewById(R.id.doodle_colors);
-        if (doodleSeekBar.getVisibility() == View.GONE && colorLayout.getVisibility() == View.GONE) {
-            mPhotoEditor.setBrushDrawingMode(true);
-            doodleSeekBar.setVisibility(View.VISIBLE);
-            mDoodleButton.setText(R.string.disable_doodle_effect);
-            mDoodleButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-            colorLayout.setVisibility(View.VISIBLE);
-        } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
-                colorLayout.getVisibility() == View.VISIBLE) {
-            mPhotoEditor.setBrushDrawingMode(false);
-            doodleSeekBar.setVisibility(View.GONE);
-            mDoodleButton.setText(R.string.enable_doodle_effect);
-            mDoodleButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_dark));
-            colorLayout.setVisibility(View.GONE);
-        }
-    }
-
     @Override
     public void onBackPressed() {
-        done();
+        passUris(mImagepaths);
     }
 }
