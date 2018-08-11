@@ -114,6 +114,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mOpenPdf.setVisibility(View.GONE);
         PageSizeUtils.mPageSize = getString(R.string.a4);
+
         // Get runtime permissions if build version >= Android M
         getRuntimePermissions(false);
 
@@ -170,17 +171,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void filterImages() {
-        if (mImagesUri.size() == 0)
-            showSnackbar(R.string.snackbar_no_images);
-        else {
-            // Apply filters
-            try {
-                Intent intent = new Intent(getContext(), ImageEditor.class);
-                intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mImagesUri);
-                startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        // Apply filters
+        try {
+            Intent intent = new Intent(getContext(), ImageEditor.class);
+            intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mImagesUri);
+            startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -302,7 +299,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         break;
                 }
                 mImageCounter++;
-                next();
+                cropNextImage();
                 break;
             case INTENT_REQUEST_APPLY_FILTER:
                 switch (resultCode) {
@@ -337,12 +334,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     @Override
     public void onItemClick(int position) {
+
+        if (mImagesUri.size() == 0) {
+            showSnackbar(R.string.snackbar_no_images);
+            return;
+        }
+
         switch (position) {
             case 0:
                 passwordProtectPDF();
                 break;
             case 1:
-                cropImages();
+                cropNextImage();
                 break;
             case 2:
                 compressImage();
@@ -365,12 +368,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void addBorder() {
-
-        if (mImagesUri.size() == 0) {
-            showSnackbar(R.string.snackbar_no_images);
-            return;
-        }
-
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(getString(R.string.border))
                 .customView(R.layout.border_image_dialog, true)
@@ -395,32 +392,17 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void previewPDF() {
-        if (mImagesUri.size() == 0) {
-            showSnackbar(R.string.snackbar_no_images);
-            return;
-        }
-
         Intent intent = new Intent(mActivity, PreviewActivity.class);
         intent.putExtra(PREVIEW_IMAGES, mImagesUri);
         startActivityForResult(intent, INTENT_REQUEST_PREVIEW_IMAGE);
     }
 
     private void setPageSize() {
-        if (mImagesUri.size() == 0) {
-            showSnackbar(R.string.snackbar_no_images);
-            return;
-        }
         PageSizeUtils utils = new PageSizeUtils(mActivity);
         utils.showPageSizeDialog();
     }
 
     private void compressImage() {
-
-        if (mImagesUri.size() == 0) {
-            showSnackbar(R.string.snackbar_no_images);
-            return;
-        }
-
         String title = getString(R.string.compress_image) + " " +
                 mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)";
 
@@ -474,11 +456,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void passwordProtectPDF() {
-        if (mImagesUri.size() == 0) {
-            showSnackbar(R.string.snackbar_no_images);
-            return;
-        }
-
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.set_password)
                 .customView(R.layout.custom_dialog, true)
@@ -564,15 +541,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         }
     }
 
-    void cropImages() {
-        if (mImagesUri.size() == 0) {
-            showSnackbar(R.string.snackbar_no_images);
-            return;
-        }
-        next();
-    }
-
-    private void next() {
+    private void cropNextImage() {
         if (mImageCounter != mImagesUri.size() && mImageCounter < mImagesUri.size()) {
             CropImage.activity(Uri.fromFile(new File(mImagesUri.get(mImageCounter))))
                     .setActivityMenuIconColor(mMorphButtonUtility.color(R.color.colorPrimary))
@@ -606,7 +575,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         return true;
     }
 
-
     /**
      * Opens ImagePickerActivity to select Images
      */
@@ -618,11 +586,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         Intent intent = new Intent(mActivity, ImagePickerActivity.class);
 
         //add to intent the URIs of the already selected images
-        //first they are converted to Uri objects
         ArrayList<Uri> uris = new ArrayList<>(mImagesUri.size());
         for (String stringUri : mImagesUri)
             uris.add(Uri.fromFile(new File(stringUri)));
-        // add them to the intent
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
