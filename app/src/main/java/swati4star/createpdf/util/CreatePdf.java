@@ -124,6 +124,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                     quality = Integer.parseInt(mQualityString);
                 }
                 Image image = Image.getInstance(mImagesUri.get(i));
+                // compressionLevel is a value between 0 (best speed) and 9 (best compression)
+                image.setCompressionLevel((quality / 100) * 9);
                 image.setBorder(Rectangle.BOX);
                 image.setBorderWidth(mBorderWidth);
 
@@ -136,7 +138,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                         bitmap.getHeight() + mBorderWidth, documentRect);
                 image.scaleAbsolute(imageSize);
 
-                Log.v("Stage 6", "Image mPath adding");
+                Log.v("Stage 6", "Image path adding");
 
                 image.setAbsolutePosition(
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,
