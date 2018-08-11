@@ -366,7 +366,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void addBorder() {
 
-        if (mTempUris.size() == 0) {
+        if (mImagesUri.size() == 0) {
             showSnackbar(R.string.snackbar_no_images);
             return;
         }
