@@ -3,6 +3,7 @@ package swati4star.createpdf.util;
 import android.app.Activity;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
+import android.widget.FrameLayout;
 
 import com.dd.morphingbutton.MorphingButton;
 
@@ -35,9 +36,12 @@ public class MorphButtonUtility {
      */
     public void morphToSquare(final MorphingButton btnMorph, int duration) {
         MorphingButton.Params square = defaultButton(duration);
+        String text = btnMorph.getText().toString().isEmpty() ?
+                mActivity.getString(R.string.create_pdf) :
+                btnMorph.getText().toString();
         square.color(color(R.color.mb_blue));
         square.colorPressed(color(R.color.mb_blue_dark));
-        square.text(btnMorph.getText().toString());
+        square.text(text);
         btnMorph.morph(square);
     }
 
@@ -81,7 +85,7 @@ public class MorphButtonUtility {
         return MorphingButton.Params.create()
                 .duration(duration)
                 .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
-                .width(dimen(R.dimen.mb_width_328))
-                .height(dimen(R.dimen.mb_height_48));
+                .width(FrameLayout.LayoutParams.MATCH_PARENT)
+                .height(FrameLayout.LayoutParams.WRAP_CONTENT);
     }
 }
