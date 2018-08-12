@@ -72,33 +72,35 @@ public class DirectoryUtils {
      * @param files list of files (folder)
      */
     public ArrayList<File> getPdfsFromPdfFolder(File[] files) {
-        final ArrayList<File> pdfFiles = new ArrayList<>();
+        ArrayList<File> pdfFiles = new ArrayList<>();
         for (File file : files) {
-            if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
+            if (isPDFAndNotDirectory(file))
                 pdfFiles.add(file);
-                Log.v("adding", file.getName());
-            }
         }
         return pdfFiles;
     }
 
     private ArrayList<File> searchPdfsFromPdfFolder(File[] files) {
-        final ArrayList<File> pdfFiles = new ArrayList<>();
+        ArrayList<File> pdfFiles = getPdfsFromPdfFolder(files);
         for (File file : files) {
-            if (!file.isDirectory() && file.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
-                pdfFiles.add(file);
-                Log.v("adding", file.getName());
-            }
             if (file.isDirectory()) {
                 for (File dirFiles : file.listFiles()) {
-                    if (!dirFiles.isDirectory() && dirFiles.getName().endsWith(mContext.getString(R.string.pdf_ext))) {
+                    if (isPDFAndNotDirectory(dirFiles))
                         pdfFiles.add(dirFiles);
-                        Log.v("adding", dirFiles.getName());
-                    }
                 }
             }
         }
         return pdfFiles;
+    }
+
+    /**
+     * Checks if a given file is PDF
+     * @param file - input file
+     * @return tru - if condition satistfies, else false
+     */
+    private boolean isPDFAndNotDirectory(File file) {
+        return !file.isDirectory() &&
+                file.getName().endsWith(mContext.getString(R.string.pdf_ext));
     }
 
     /**
@@ -157,7 +159,6 @@ public class DirectoryUtils {
         if ((files == null || files.length == 0) && pdfFromOtherDir == null) {
             return null;
         } else {
-
             pdfFiles = getPdfsFromPdfFolder(files);
             if (pdfFromOtherDir != null) {
                 pdfFiles.addAll(pdfFromOtherDir);
@@ -171,4 +172,29 @@ public class DirectoryUtils {
         return pdfPaths;
     }
 
+    /**
+     * Get parent folder name of file with given path
+     * @param p - path of file
+     * @return - parent folder name
+     */
+    public String getParentFolder(String p) {
+        String folName = null;
+        try {
+            //Get Name of Parent Folder of File
+            // Folder Name found between first occurance of string %3A and %2F from path
+            // of content://...
+            if (p.contains("%3A")) {
+                int beg = p.indexOf("%3A") + 3;
+                folName = p.substring(beg, p.indexOf("%2F"));
+                Log.d("img", folName);
+            } else {
+                folName = null;
+            }
+
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+            e.printStackTrace();
+        }
+        return folName;
+    }
 }

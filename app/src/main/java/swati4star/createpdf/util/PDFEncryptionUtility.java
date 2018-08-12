@@ -104,7 +104,7 @@ public class PDFEncryptionUtility {
                 mContext.getString(R.string.encrypted_file));
 
         if (mFileUtils.isFileExist(finalOutputFile)) {
-            int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
+            int append = mFileUtils.checkRepeat(finalOutputFile, mFileList);
             finalOutputFile = finalOutputFile.replace(mContext.getString(R.string.pdf_ext),
                     append + mContext.getResources().getString(R.string.pdf_ext));
         }
@@ -187,7 +187,7 @@ public class PDFEncryptionUtility {
                     mContext.getString(R.string.decrypted_file));
 
             if (mFileUtils.isFileExist(finalOutputFile)) {
-                int append = FileUtils.checkRepeat(finalOutputFile, mFileList);
+                int append = mFileUtils.checkRepeat(finalOutputFile, mFileList);
                 finalOutputFile = finalOutputFile.replace(mContext.getResources().getString(R.string.pdf_ext),
                         append + mContext.getResources().getString(R.string.pdf_ext));
             }

@@ -2,11 +2,15 @@ package swati4star.createpdf.model;
 
 public class PDFOptions {
 
-    private final String mOutFileName;
-    private final boolean mPasswordProtected;
-    private final String mPassword;
-    private final String mPageSize;
-    private final int mBorderWidth;
+    private String mOutFileName;
+    private boolean mPasswordProtected;
+    private String mPassword;
+    private String mPageSize;
+    private int mBorderWidth;
+
+    PDFOptions() {
+
+    }
 
     PDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected, String mPassword, int mBorderWidth) {
         this.mOutFileName = mFileName;
@@ -34,5 +38,25 @@ public class PDFOptions {
 
     public int getBorderWidth() {
         return mBorderWidth;
+    }
+
+    public void setOutFileName(String mOutFileName) {
+        this.mOutFileName = mOutFileName;
+    }
+
+    public void setPasswordProtected(boolean mPasswordProtected) {
+        this.mPasswordProtected = mPasswordProtected;
+    }
+
+    public void setPassword(String mPassword) {
+        this.mPassword = mPassword;
+    }
+
+    public void setPageSize(String mPageSize) {
+        this.mPageSize = mPageSize;
+    }
+
+    public void setBorderWidth(int mBorderWidth) {
+        this.mBorderWidth = mBorderWidth;
     }
 }

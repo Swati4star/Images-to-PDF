@@ -56,6 +56,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private DirectoryUtils mDirectoryUtils;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
+    String firstFilePath;
+    String secondFilePath;
 
     @BindView(R.id.textView)
     TextView nosupport;
@@ -77,14 +79,11 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     ImageView mDownArrow;
     @BindView(R.id.layout)
     RelativeLayout mLayout;
-    String firstFilePath;
-    String secondFilePath;
     BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
 
     public MergeFilesFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -126,14 +125,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         }
     }
 
-    @OnClick(R.id.fileonebtn)
+    @OnClick({R.id.fileonebtn, R.id.filetwobtn})
     void startAddingPDF(View v) {
-        mCheckbtClickTag = (v).getTag().toString();
-        showFileChooser();
-    }
-
-    @OnClick(R.id.filetwobtn)
-    void startAddingPDF2(View v) {
         mCheckbtClickTag = (v).getTag().toString();
         showFileChooser();
     }
@@ -209,34 +202,13 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             mDisplayName = mFileUtils.getFileName(uri);
         }
         if (mSuccess) {
-            String folname = getParentFolder(path);
+            String folname = mDirectoryUtils.getParentFolder(path);
             if (folname != null) {
                 String c = getString(R.string.path_seperator);
                 mRealPath = mRealPath + c + folname + c + mDisplayName;
             }
         }
         return mRealPath;
-    }
-
-    private String getParentFolder(String p) {
-        String folName = null;
-        try {
-            //Get Name of Parent Folder of File
-            // Folder Name found between first occurance of string %3A and %2F from path
-            // of content://...
-            if (p.contains("%3A")) {
-                int beg = p.indexOf("%3A") + 3;
-                folName = p.substring(beg, p.indexOf("%2F"));
-                Log.d("img", folName);
-            } else {
-                folName = null;
-            }
-
-        } catch (Exception e) {
-            Log.e("Exception", e.getMessage());
-            e.printStackTrace();
-        }
-        return folName;
     }
 
     @Override
