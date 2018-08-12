@@ -249,4 +249,7 @@
     <string name="filter_not_saved">Image could not be saved</string>
     <string name="border_dialog_title">Enter border width in units (Default is 0) :</string>
     <string name="image_border">Add Border</string>
+    <string name="extract_images">Extract Images</string>
+    <string name="extract_images_failed">We couldn\'t find any images in the selected PDF.</string>
+    <string name="extract_images_success">We found %1$d image(s) in the selected PDF. They have been saved in the PDF Files folder in root directory.</string>
 </resources>

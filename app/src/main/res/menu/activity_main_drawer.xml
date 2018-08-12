@@ -22,6 +22,10 @@
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_black_24dp"
             android:title="@string/history" />
+        <item
+            android:id="@+id/nav_extract_images"
+            android:icon="@drawable/ic_broken_image_black_24dp"
+            android:title="@string/extract_images" />
 
     </group>
 

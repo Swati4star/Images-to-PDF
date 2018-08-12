@@ -22,6 +22,7 @@ import io.github.tonnyl.whatsnew.WhatsNew;
 import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
+import swati4star.createpdf.fragment.ExtractImagesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
@@ -237,6 +238,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_about:
                 fragment = new AboutUsFragment();
+                break;
+            case R.id.nav_extract_images:
+                fragment = new ExtractImagesFragment();
                 break;
         }
 
