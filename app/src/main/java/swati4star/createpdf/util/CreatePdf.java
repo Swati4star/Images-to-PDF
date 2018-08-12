@@ -125,11 +125,12 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 }
                 Image image = Image.getInstance(mImagesUri.get(i));
                 // compressionLevel is a value between 0 (best speed) and 9 (best compression)
-                image.setCompressionLevel((quality / 100) * 9);
+                double qualtyMod = quality * 0.09;
+                image.setCompressionLevel((int) qualtyMod);
                 image.setBorder(Rectangle.BOX);
                 image.setBorderWidth(mBorderWidth);
 
-                Log.v("Stage 5", "Image compressed");
+                Log.v("Stage 5", "Image compressed " + qualtyMod);
 
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);

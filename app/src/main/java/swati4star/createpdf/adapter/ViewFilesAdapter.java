@@ -85,8 +85,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int pos) {
-        Log.d("logs", "getItemCount: " + mFileList.size());
-
         final int position          = holder.getAdapterPosition();
         final File file             = mFileList.get(position);
 
