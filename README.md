@@ -17,30 +17,53 @@ Here is an easy to use Android app to convert images to PDF file!
 ### Slack
 You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com/](https://imagestopdf.slack.com/) and chat with developers. Use [this link](https://join.slack.com/t/imagestopdf/shared_invite/enQtNDA2ODk1NDE3Mzk3LTUwNjllYzY5YWZkZDliY2FmNDhkNmM1NjIwZTc1YjU4NTgxNWI0ZDczMWQxMTEyZjA0M2Y5N2RlN2NiMWRjZGI) to join our slack team.
 
-#### Creating a PDF file
+### Features 
+- Create PDF from multiple images from camera or gallery
+- View your converted PDFs
+  - Open, Rename, Delete, print, share files
+  - Sort the files order based on a number of options
+  - View File details (Path, size, date created ...)
+  - Encrypt PDF
+  - Decrypt PDF
+- Merge existing PDFs
+- Convert text file to PDFs
+- History : View all the PDF related conversions
+
+<img src="./screenshots/0_navigation.png" width="190px">
+
+### Creating a PDF file
 
 ##### Step 1 : User can view the PDF files previously created or create a new one! 
-<img src="./screenshots/options.jpg" width="190px">
+<img src="./screenshots/1_home.png" width="190px">
 
 
 ##### Step 2 : Select the images
-<img src="./screenshots/select.jpg" width="190px"> <img src="./screenshots/selecting2.jpg" width="190px">
+<img src="./screenshots/2_1_camera.png" width="190px"> <img src="./screenshots/2_gallery.png" width="190px">
 
 
 ##### Step 3 : Name the PDF file
-<img src="./screenshots/name.jpg" width="190px">
+<img src="./screenshots/3_rename.png" width="190px">
 
 
 ##### Step 4 : Creating PDF
-<img src="./screenshots/done.jpg" width="190px">
+<img src="./screenshots/4_converting.png" width="190px">
 
 
 Hurray! PDF files of selected images are created.
 
 
-#### Viewing the PDF files
+### Viewing the PDF files
 
-<img src="./screenshots/list.jpg" width="190px"> <img src="./screenshots/pdf_options.jpg" width="190px">
+<img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
+
+### Merge PDF
+<img src="./screenshots/7_merge_pdf.png" width="190px">
+
+### Text to PDF
+<img src="./screenshots/8_text_to_pdf.png" width="190px">
+
+### History
+<img src="./screenshots/9_history.png" width="190px">
 
 ### Contributing
 
