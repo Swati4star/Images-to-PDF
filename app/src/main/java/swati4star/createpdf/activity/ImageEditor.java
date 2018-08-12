@@ -95,7 +95,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mPhotoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
         setImageCount();
-        mPreviousButton.setVisibility(View.INVISIBLE);
+        if (mDisplaySize == 1) {
+            mNextButton.setVisibility(View.INVISIBLE);
+        }
         mFilterItems = getFiltersList(this);
         mBrushItems = getBrushItems();
         mImagepaths.addAll(mFilterUris);
