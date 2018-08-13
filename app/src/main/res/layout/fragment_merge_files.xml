@@ -5,75 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tableLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:stretchColumns="*"
-    tools:context=".fragment.MergeFilesFragment">
-
-    <Button
-        android:id="@+id/fileonebtn"
-        android:layout_width="155dp"
-        android:layout_height="127dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="44dp"
-        android:background="@color/colorGray"
-        android:maxWidth="30dp"
-        android:padding="3dip"
-        android:tag="fbt"
-        android:text="@string/file_one"
-        android:textColor="@color/mb_white"
-        app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/filetwobtn"
-        android:layout_width="155dp"
-        android:layout_height="127dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
-        android:background="@color/colorGray"
-        android:padding="3dip"
-        android:tag="sbt"
-        android:text="@string/file_two"
-        android:textColor="@color/mb_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fileonebtn"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filetwobtn" />
-
-    <com.dd.morphingbutton.MorphingButton
-        android:id="@+id/mergebtn"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:padding="10dp"
-        android:text="@string/merge_files"
-        android:textColor="@color/mb_white"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
+        android:layout_height="match_parent"
+        android:stretchColumns="*"
+        tools:context=".fragment.MergeFilesFragment">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/fileonebtn"
+            android:layout_width="155dp"
+            android:layout_height="127dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="44dp"
+            android:background="@color/colorGray"
+            android:maxWidth="30dp"
+            android:padding="3dip"
+            android:tag="fbt"
+            android:text="@string/file_one"
+            android:textColor="@color/mb_white"
+            app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/filetwobtn"
+            android:layout_width="155dp"
+            android:layout_height="127dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/fileonebtn"
+            android:layout_marginEnd="20dp"
+            android:background="@color/colorGray"
+            android:padding="3dip"
+            android:tag="sbt"
+            android:text="@string/file_two"
+            android:textColor="@color/mb_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fileonebtn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/mergebtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="192dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="10dp"
+            android:text="@string/merge_files"
+            android:textColor="@color/mb_white"
+            app:layout_constraintBottom_toTopOf="@id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    </RelativeLayout>
 
     <include layout="@layout/bottom_sheet" />
 </android.support.design.widget.CoordinatorLayout>

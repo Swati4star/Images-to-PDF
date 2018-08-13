@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity
 
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
-    private int mPreviousFragmentId;
 
     private boolean mDoubleBackToExitPressedOnce = false;
 
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = new ImageToPdfFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-        mPreviousFragmentId = R.id.nav_camera;
 
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
@@ -211,9 +209,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-        if (mPreviousFragmentId == id)
-            return true;
-
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -244,11 +239,8 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        if (fragment != null) {
+        if (fragment != null)
             fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content, fragment).commit();
-            mPreviousFragmentId = id;
-        }
 
         return true;
     }

@@ -59,8 +59,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     String firstFilePath;
     String secondFilePath;
 
-    @BindView(R.id.textView)
-    TextView nosupport;
     @BindView(R.id.fileonebtn)
     Button addFileOne;
     @BindView(R.id.filetwobtn)
@@ -71,8 +69,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     RecyclerView mRecyclerViewFiles;
     @BindView(R.id.viewFiles)
     TextView mViewFiles;
-    @BindView(R.id.tableLayout)
-    ConstraintLayout mTableLayout;
     @BindView(R.id.upArrow)
     ImageView mUpArrow;
     @BindView(R.id.downArrow)
