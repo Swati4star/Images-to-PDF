@@ -93,7 +93,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);
-        PageSizeUtils.mPageSize = getString(R.string.a4);
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
+                Constants.DEFAULT_PAGE_SIZE);
 
         return rootview;
     }
