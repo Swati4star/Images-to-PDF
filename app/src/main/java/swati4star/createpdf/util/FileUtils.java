@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -19,6 +20,7 @@ import android.print.PrintManager;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -287,5 +289,27 @@ public class FileUtils {
      */
     public String getFileName(String path) {
         return path.substring(path.lastIndexOf(mContext.getString(R.string.path_seperator)) + 1);
+    }
+
+    /**
+     * Saves bitmap to external storage
+     * @param finalBitmap - bitmap to save
+     */
+    public void saveImage(Bitmap finalBitmap) {
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + mContext.getString(R.string.pdf_dir));
+        String fname = "image_" + System.currentTimeMillis() + ".jpg";
+
+        File file = new File(myDir, fname);
+        if (file.exists()) file.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            Log.v("saving", fname);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
