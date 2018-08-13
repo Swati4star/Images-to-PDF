@@ -195,6 +195,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         final String filename = input.toString();
                         FileUtils utils = new FileUtils(mActivity);
                         if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
+                            mPdfOptions.setOutFileName(filename);
                             new CreatePdf(mActivity, mPdfOptions,
                                     ImageToPdfFragment.this).execute();
                         } else {
@@ -203,9 +204,11 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                                     .content(R.string.overwrite_message)
                                     .positiveText(android.R.string.ok)
                                     .negativeText(android.R.string.cancel)
-                                    .onPositive((dialog12, which) -> new CreatePdf(
-                                            mActivity, mPdfOptions,
-                                            ImageToPdfFragment.this).execute())
+                                    .onPositive((dialog12, which) -> {
+                                        mPdfOptions.setOutFileName(filename);
+                                        new CreatePdf(mActivity, mPdfOptions,
+                                            ImageToPdfFragment.this).execute();
+                                    })
                                     .onNegative((dialog1, which) -> createPdf())
                                     .show();
                         }
