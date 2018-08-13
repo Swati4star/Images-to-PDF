@@ -186,7 +186,7 @@
     <string name="letter">LETTER</string>
     <string name="legal">LEGAL</string>
     <string name="a4">A4</string>
-    <string name="default_a4">DEFAULT (A4)</string>
+    <string name="default_page_size">DEFAULT ( %s )</string>
 
 
     <string name="delete_alert">Do you want to delete all selected files?</string>

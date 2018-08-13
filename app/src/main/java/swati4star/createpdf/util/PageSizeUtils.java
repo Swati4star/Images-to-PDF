@@ -1,7 +1,11 @@
 package swati4star.createpdf.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
@@ -12,10 +16,15 @@ import swati4star.createpdf.R;
 public class PageSizeUtils {
 
     private final Context mActivity;
+    private SharedPreferences mSharedPreferences;
     public static String mPageSize = "A4";
+    private String mDefaultPageSize;
 
     public PageSizeUtils(Context mActivity) {
         this.mActivity = mActivity;
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
+                Constants.DEFAULT_PAGE_SIZE);
     }
 
     /**
@@ -66,19 +75,28 @@ public class PageSizeUtils {
                 .negativeText(android.R.string.cancel)
                 .onPositive((dialog1, which) -> {
                     View view = dialog1.getCustomView();
+                    CheckBox mSetAsDefault = view.findViewById(R.id.set_as_default);
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
                     Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
                     mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
                             spinnerB.getSelectedItem().toString());
+                    if (mSetAsDefault.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
+                        editor.apply();
+                    }
                 }).build();
 
         View view = materialDialog.getCustomView();
         RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
         Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
         Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
-        if (mPageSize.equals(mActivity.getString(R.string.a4))) {
+        RadioButton radioButtonDefault = view.findViewById(R.id.page_size_default);
+        radioButtonDefault.setText(String.format(mActivity.getString(R.string.default_page_size), mDefaultPageSize));
+
+        if (mPageSize.equals(mDefaultPageSize)) {
             radioGroup.check(R.id.page_size_default);
 
         } else if (mPageSize.equals(mActivity.getString(R.string.letter))) {

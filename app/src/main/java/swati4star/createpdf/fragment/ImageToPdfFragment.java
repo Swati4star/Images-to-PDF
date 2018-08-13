@@ -48,6 +48,7 @@ import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.ImageToPDFOptions;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -112,7 +113,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPdfOptions = new ImageToPDFOptions();
-        PageSizeUtils.mPageSize = getString(R.string.a4);
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
+                Constants.DEFAULT_PAGE_SIZE);
         mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
         mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
