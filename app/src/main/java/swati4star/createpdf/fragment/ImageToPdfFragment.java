@@ -48,6 +48,7 @@ import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.ImageToPDFOptions;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -112,7 +113,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPdfOptions = new ImageToPDFOptions();
-        PageSizeUtils.mPageSize = getString(R.string.a4);
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
+                Constants.DEFAULT_PAGE_SIZE);
         mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
         mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
@@ -193,6 +195,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         final String filename = input.toString();
                         FileUtils utils = new FileUtils(mActivity);
                         if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
+                            mPdfOptions.setOutFileName(filename);
                             new CreatePdf(mActivity, mPdfOptions,
                                     ImageToPdfFragment.this).execute();
                         } else {
@@ -201,9 +204,11 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                                     .content(R.string.overwrite_message)
                                     .positiveText(android.R.string.ok)
                                     .negativeText(android.R.string.cancel)
-                                    .onPositive((dialog12, which) -> new CreatePdf(
-                                            mActivity, mPdfOptions,
-                                            ImageToPdfFragment.this).execute())
+                                    .onPositive((dialog12, which) -> {
+                                        mPdfOptions.setOutFileName(filename);
+                                        new CreatePdf(mActivity, mPdfOptions,
+                                            ImageToPdfFragment.this).execute();
+                                    })
                                     .onNegative((dialog1, which) -> createPdf())
                                     .show();
                         }
