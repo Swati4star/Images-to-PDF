@@ -363,7 +363,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.finish:
-                passUris(mImagepaths);
+                onFinishClick();
                 return true;
             case android.R.id.home:
                 new MaterialDialog.Builder(this)
@@ -375,6 +375,20 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void onFinishClick() {
+        if (mClicked) {
+            passUris(mImagepaths);
+        } else {
+            new MaterialDialog.Builder(this)
+                    .onPositive((dialog, which) -> passUris(mImagepaths))
+                    .title(R.string.warning)
+                    .content(R.string.filter_on_finish_click_warning_message)
+                    .positiveText(R.string.ok)
+                    .negativeText(R.string.cancel)
+                    .show();
         }
     }
 
