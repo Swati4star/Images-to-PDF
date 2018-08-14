@@ -1,7 +1,6 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,10 +20,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.DataSetChanged;
+
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFEncryptionUtility {
 
@@ -69,7 +69,7 @@ public class PDFEncryptionUtility {
                     @Override
                     public void afterTextChanged(Editable input) {
                         if (StringUtils.isEmpty(input))
-                            showSnackbar(R.string.snackbar_password_cannot_be_blank);
+                            showSnackbar(mContext, R.string.snackbar_password_cannot_be_blank);
                         else
                             mPassword = input.toString();
                     }
@@ -80,10 +80,10 @@ public class PDFEncryptionUtility {
             try {
                 doEncryption(filePath, mPassword, mFileList);
                 dataSetChanged.updateDataset();
-                showSnackbar(R.string.password_added);
+                showSnackbar(mContext, R.string.password_added);
             } catch (BadPasswordException e) {
                 e.printStackTrace();
-                showSnackbar(R.string.cannot_add_password);
+                showSnackbar(mContext, R.string.cannot_add_password);
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
             }
@@ -132,7 +132,7 @@ public class PDFEncryptionUtility {
         }
         //Check if PDF is encrypted or not.
         if (!reader.isEncrypted()) {
-            showSnackbar(R.string.not_encrypted);
+            showSnackbar(mContext, R.string.not_encrypted);
             return false;
         }
         return true;
@@ -201,22 +201,13 @@ public class PDFEncryptionUtility {
                 } catch (DocumentException | IOException e) {
                     e.printStackTrace();
                 }
-                showSnackbar(R.string.password_remove);
+                showSnackbar(mContext, R.string.password_remove);
                 reader.close();
                 dataSetChanged.updateDataset();
             } else {
-                showSnackbar(R.string.incorrect_passowrd);
+                showSnackbar(mContext, R.string.incorrect_passowrd);
             }
             dialog.dismiss();
         });
-    }
-
-    /**
-     * Creates Snackbar
-     */
-    private void showSnackbar(int input) {
-        Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                input,
-                Snackbar.LENGTH_LONG).show();
     }
 }

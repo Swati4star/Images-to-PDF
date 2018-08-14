@@ -50,6 +50,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
 public class TextToPdfFragment extends Fragment implements OnItemClickListner {
@@ -155,7 +156,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     @Override
                     public void afterTextChanged(Editable input) {
                         if (StringUtils.isEmpty(input)) {
-                            showSnackbar(R.string.snackbar_password_cannot_be_blank);
+                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
                         } else {
                             mPassword = input.toString();
                             mPasswordProtected = true;
@@ -169,7 +170,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 onPasswordRemoved();
                 mPasswordProtected = false;
                 dialog.dismiss();
-                showSnackbar(R.string.password_remove);
+                showSnackbar(mActivity, R.string.password_remove);
             });
         }
         dialog.show();
@@ -230,11 +231,11 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     try {
                         int check = Integer.parseInt(String.valueOf(fontInput.getText()));
                         if (check > 1000 || check < 0) {
-                            showSnackbar(R.string.invalid_entry);
+                            showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mFontSize = check;
                             showFontSize();
-                            showSnackbar(R.string.font_size_changed);
+                            showSnackbar(mActivity, R.string.font_size_changed);
                             if (cbSetDefault.isChecked()) {
                                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                                 editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
@@ -245,7 +246,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                             }
                         }
                     } catch (NumberFormatException e) {
-                        showSnackbar(R.string.invalid_entry);
+                        showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 })
                 .show();
@@ -276,7 +277,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
                     if (StringUtils.isEmpty(input)) {
-                        showSnackbar(R.string.snackbar_name_not_blank);
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
@@ -338,7 +339,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                         Intent.createChooser(intent, String.valueOf(R.string.select_file)),
                         mFileSelectCode);
             } catch (android.content.ActivityNotFoundException ex) {
-                showSnackbar(R.string.install_file_manager);
+                showSnackbar(mActivity, R.string.install_file_manager);
             }
             mButtonClicked = 1;
         }
@@ -351,7 +352,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
             case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
                     mTextFileUri = data.getData();
-                    showSnackbar(R.string.text_file_selected);
+                    showSnackbar(mActivity, R.string.text_file_selected);
                     String fileName = mFileUtils.getFileName(mTextFileUri);
                     fileName = getString(R.string.text_file_name) + fileName;
                     mTextView.setText(fileName);
@@ -381,9 +382,5 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mTextEnhancementOptionsEntityArrayList.get(3)
                 .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
-    }
-    private void showSnackbar(int resID) {
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                resID, Snackbar.LENGTH_LONG).show();
     }
 }

@@ -30,6 +30,7 @@ import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 /**
  * Created by swati on 9/10/15.
@@ -270,7 +271,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             File fdelete = new File(fileName);
             mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
             if (fdelete.exists() && !fdelete.delete())
-                showSnackbar(R.string.snackbar_file_not_deleted);
+                showSnackbar(mActivity, R.string.snackbar_file_not_deleted);
         }
 
         ArrayList<File> newList = new ArrayList<>();
@@ -306,7 +307,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .content(R.string.enter_file_name)
                 .input(mActivity.getString(R.string.example), null, (dialog, input) -> {
                     if (input == null || input.toString().trim().isEmpty())
-                        showSnackbar(R.string.snackbar_name_not_blank);
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     else {
                         if (!mFileUtils.isFileExist(input + mActivity.getString(R.string.pdf_ext))) {
                             renameFile(position, input.toString());
@@ -331,12 +332,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 + "/" + newName + mActivity.getString(R.string.pdf_ext);
         File newfile = new File(newfilename);
         if (oldfile.renameTo(newfile)) {
-            showSnackbar(R.string.snackbar_file_renamed);
+            showSnackbar(mActivity, R.string.snackbar_file_renamed);
             mFileList.set(position, newfile);
             notifyDataSetChanged();
             mDatabaseHelper.insertRecord(newfilename, mActivity.getString(R.string.renamed));
         } else
-            showSnackbar(R.string.snackbar_file_not_renamed);
+            showSnackbar(mActivity, R.string.snackbar_file_not_renamed);
     }
 
     @Override
@@ -344,11 +345,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         File folder = mDirectoryUtils.getOrCreatePdfDirectory();
         ArrayList<File> pdfsFromFolder = mDirectoryUtils.getPdfsFromPdfFolder(folder.listFiles());
         setData(pdfsFromFolder);
-    }
-
-    private void showSnackbar(int resID) {
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                resID, Snackbar.LENGTH_LONG).show();
     }
 
     public class ViewFilesHolder extends RecyclerView.ViewHolder {
