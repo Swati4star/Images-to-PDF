@@ -76,7 +76,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @BindView(R.id.doodle_colors)
     RecyclerView brushColorsView;
 
-    private boolean mClicked = false;
+    private boolean mClicked = true;
     private boolean mClickedFilter = false;
     private boolean mDoodleSelected = false;
 
@@ -128,11 +128,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.nextimageButton)
     void nextImg() {
         //Proceed to next if Save Current has been clicked
-        if (mClicked == mClickedFilter) {
+        if (mClicked) {
             next();
             incrementImageCount();
-            mClicked = false;
-            mClickedFilter = false;
         } else
             Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
     }
@@ -140,11 +138,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @OnClick(R.id.previousImageButton)
     void previousImg() {
         //move to previous if Save Current has been clicked
-        if (mClicked == mClickedFilter) {
+        if (mClicked) {
             previous();
             decrementImageCount();
-            mClicked = false;
-            mClickedFilter = false;
         } else
             Toast.makeText(getApplicationContext(), R.string.save_first, Toast.LENGTH_SHORT).show();
     }
@@ -154,9 +150,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mClicked = true;
         if (mClickedFilter || mDoodleSelected) {
             saveCurrentImage();
-        } else {
-            applyFilter(PhotoFilter.NONE);
-            saveCurrentImage();
+            hideBrushEffect();
+            mClickedFilter = false;
+            mDoodleSelected = false;
         }
     }
 
@@ -308,26 +304,36 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     @Override
     public void onItemClick(View view, int position) {
+        //setting mClicked true when none filter is selected otherwise false
+        mClicked = position == 0;
         // Brush effect is in second position
         if (position == 1) {
             mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
             if (doodleSeekBar.getVisibility() == View.GONE && brushColorsView.getVisibility() == View.GONE) {
-                mPhotoEditor.setBrushDrawingMode(true);
-                doodleSeekBar.setVisibility(View.VISIBLE);
-                brushColorsView.setVisibility(View.VISIBLE);
-                mDoodleSelected = true;
+                showBrushEffect();
             } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
                     brushColorsView.getVisibility() == View.VISIBLE) {
-                mPhotoEditor.setBrushDrawingMode(false);
-                doodleSeekBar.setVisibility(View.GONE);
-                brushColorsView.setVisibility(View.GONE);
+                hideBrushEffect();
             }
         } else {
             PhotoFilter filter = mFilterItems.get(position).getFilter();
             applyFilter(filter);
         }
+    }
+
+    private void showBrushEffect() {
+        mPhotoEditor.setBrushDrawingMode(true);
+        doodleSeekBar.setVisibility(View.VISIBLE);
+        brushColorsView.setVisibility(View.VISIBLE);
+        mDoodleSelected = true;
+    }
+
+    private void hideBrushEffect() {
+        mPhotoEditor.setBrushDrawingMode(false);
+        doodleSeekBar.setVisibility(View.GONE);
+        brushColorsView.setVisibility(View.GONE);
     }
 
     /**
