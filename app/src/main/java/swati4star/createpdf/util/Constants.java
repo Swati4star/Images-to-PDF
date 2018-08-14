@@ -27,4 +27,5 @@ public class Constants {
     public static final String RESULT = "result";
     public static final String DEFAULT_PAGE_SIZE_TEXT = "DefaultPageSize";
     public static final String DEFAULT_PAGE_SIZE = "A4";
+    public static final String CHOICE_REMOVE_IMAGE = "CHOICE_REMOVE_IMAGE";
 }

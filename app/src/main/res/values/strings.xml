@@ -313,5 +313,7 @@
     <string name="border_dialog_title">Enter border width in units (Default is 0) : </string>
     <string name="select_as">Select as:</string>
     <string name="filter_not_saved">Image could not be saved</string>
+    <string name="remove_image_message">Are you sure you want to remove this image?</string>
+    <string name="dont_show_again">Don\'t show again</string>
     <string name="filter_on_finish_click_warning_message">The filter on current image is not saved. Do you want to continue without saving?</string>
 </resources>
