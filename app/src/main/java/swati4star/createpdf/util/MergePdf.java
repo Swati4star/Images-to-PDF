@@ -1,13 +1,11 @@
 package swati4star.createpdf.util;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
@@ -18,14 +16,12 @@ import java.util.Objects;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
-@SuppressLint("StaticFieldLeak")
 public class MergePdf extends AsyncTask<String, Void, Void> {
 
     private String mFinPath;
     private Boolean mIsPDFMerged;
     private MaterialDialog mMaterialDialog;
     private Activity mActivity;
-    private LottieAnimationView mAnimationView;
     private String mFilename;
     private MergeFilesListener mMergeFilesListener;
 
@@ -41,8 +37,6 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
         mMaterialDialog = new MaterialDialog.Builder(mActivity)
                 .customView(R.layout.lottie_anim_dialog, false)
                 .build();
-        mAnimationView = mMaterialDialog.getCustomView().findViewById(R.id.animation_view);
-        mAnimationView.playAnimation();
         mIsPDFMerged = false;
         mMaterialDialog.show();
     }
@@ -84,7 +78,6 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mAnimationView.cancelAnimation();
         mMaterialDialog.dismiss();
         mMergeFilesListener.resetValues();
         if (mIsPDFMerged)

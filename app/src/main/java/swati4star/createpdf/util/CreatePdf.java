@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
@@ -42,7 +41,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final int mBorderWidth;
     private final Activity mContext;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
-    private LottieAnimationView mAnimationView;
     private boolean mSuccess;
     private String mPath;
     private final String mPageSize;
@@ -68,8 +66,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         mMaterialDialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.lottie_anim_dialog, false)
                 .build();
-        mAnimationView = mMaterialDialog.getCustomView().findViewById(R.id.animation_view);
-        mAnimationView.playAnimation();
         mMaterialDialog.show();
     }
 
@@ -171,7 +167,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        mAnimationView.cancelAnimation();
         mMaterialDialog.dismiss();
         if (!mSuccess) {
             Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
