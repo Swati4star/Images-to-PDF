@@ -366,13 +366,16 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 passUris(mImagepaths);
                 return true;
             case android.R.id.home:
-                new MaterialDialog.Builder(this)
-                        .onPositive((dialog, which) -> finish())
-                        .title(R.string.filter_cancel_question)
-                        .content(R.string.filter_cancel_description)
-                        .positiveText(R.string.ok)
-                        .negativeText(R.string.cancel).show();
-                return true;
+                if (!mFilterUris.equals(mImagepaths)) {
+                    new MaterialDialog.Builder(this)
+                            .onPositive((dialog, which) -> finish())
+                            .title(R.string.filter_cancel_question)
+                            .content(R.string.filter_cancel_description)
+                            .positiveText(R.string.ok)
+                            .negativeText(R.string.cancel).show();
+                    return true;
+                }
+                super.onBackPressed();
             default:
                 return super.onOptionsItemSelected(item);
         }
