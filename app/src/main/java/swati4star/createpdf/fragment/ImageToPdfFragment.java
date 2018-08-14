@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -35,7 +34,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +58,7 @@ import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 /**
  * ImageToPdfFragment fragment to start with creating PDF
@@ -131,7 +130,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             for (Parcelable p : uris) {
                 Uri uri = (Uri) p;
                 if (mFileUtils.getUriRealPath(uri) == null) {
-                    showSnackbar(R.string.whatsappToast);
+                    showSnackbar(mActivity, R.string.whatsappToast);
                 } else {
                     mImagesUri.add(mFileUtils.getUriRealPath(uri));
                     if (mImagesUri.size() > 0) {
@@ -141,7 +140,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     } else {
                         mNoOfImages.setVisibility(View.GONE);
                     }
-                    showSnackbar(R.string.successToast);
+                    showSnackbar(mActivity, R.string.successToast);
                 }
             }
         }
@@ -190,7 +189,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
                     if (StringUtils.isEmpty(input)) {
-                        showSnackbar(R.string.snackbar_name_not_blank);
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String filename = input.toString();
                         FileUtils utils = new FileUtils(mActivity);
@@ -242,9 +241,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (mOpenSelectImages)
                         selectImages();
-                    showSnackbar(R.string.snackbar_permissions_given);
+                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
                 } else
-                    showSnackbar(R.string.snackbar_insufficient_permissions);
+                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
             }
         }
     }
@@ -273,7 +272,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), imageUris.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
-                    showSnackbar(R.string.snackbar_images_added);
+                    showSnackbar(mActivity, R.string.snackbar_images_added);
                     mCreatePdf.setEnabled(true);
                 } else {
                     mNoOfImages.setVisibility(View.GONE);
@@ -288,11 +287,11 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     case Activity.RESULT_OK:
                         Uri resultUri = result.getUri();
                         mImagesUri.set(mImageCounter, resultUri.getPath());
-                        showSnackbar(R.string.snackbar_imagecropped);
+                        showSnackbar(mActivity, R.string.snackbar_imagecropped);
                         break;
                     case CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE:
                         Exception error = result.getError();
-                        showSnackbar(R.string.snackbar_error_getCropped);
+                        showSnackbar(mActivity, R.string.snackbar_error_getCropped);
                         error.printStackTrace();
                         break;
                 }
@@ -342,7 +341,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     public void onItemClick(int position) {
 
         if (mImagesUri.size() == 0) {
-            showSnackbar(R.string.snackbar_no_images);
+            showSnackbar(mActivity, R.string.snackbar_no_images);
             return;
         }
         switch (position) {
@@ -367,7 +366,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             case 6:
                 addBorder();
                 break;
+            case 7:
+                showWatermarkOptions();
         }
+    }
+
+    private void showWatermarkOptions() {
+
     }
 
     private void addBorder() {
@@ -382,13 +387,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     try {
                         value = Integer.parseInt(String.valueOf(input.getText()));
                         if (value > 200 || value < 0) {
-                            showSnackbar(R.string.invalid_entry);
+                            showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mPdfOptions.setBorderWidth(value);
                             showBorderWidth();
                         }
                     } catch (NumberFormatException e) {
-                        showSnackbar(R.string.invalid_entry);
+                        showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 }).build();
         dialog.show();
@@ -417,7 +422,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     try {
                         check = Integer.parseInt(String.valueOf(qualityInput.getText()));
                         if (check > 100 || check < 0) {
-                            showSnackbar(R.string.invalid_entry);
+                            showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mPdfOptions.setQualityString(String.valueOf(check));
                             if (cbSetDefault.isChecked()) {
@@ -428,7 +433,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                             showCompression();
                         }
                     } catch (NumberFormatException e) {
-                        showSnackbar(R.string.invalid_entry);
+                        showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 }).build();
 
@@ -480,7 +485,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     @Override
                     public void afterTextChanged(Editable input) {
                         if (StringUtils.isEmpty(input)) {
-                            showSnackbar(R.string.snackbar_password_cannot_be_blank);
+                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
                         } else {
                             mPdfOptions.setPassword(input.toString());
                             mPdfOptions.setPasswordProtected(true);
@@ -493,7 +498,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 onPasswordRemoved();
                 mPdfOptions.setPasswordProtected(false);
                 dialog.dismiss();
-                showSnackbar(R.string.password_remove);
+                showSnackbar(mActivity, R.string.password_remove);
             });
         }
         dialog.show();
@@ -594,10 +599,4 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }
-
-    private void showSnackbar(int resID) {
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                resID, Snackbar.LENGTH_LONG).show();
-    }
-
 }

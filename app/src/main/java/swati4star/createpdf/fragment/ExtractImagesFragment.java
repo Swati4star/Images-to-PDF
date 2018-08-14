@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +28,8 @@ import com.itextpdf.text.pdf.PdfObject;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfImageObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +42,8 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener {
 
@@ -81,17 +79,18 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         sheetBehavior.setBottomSheetCallback(new ExtractImagesFragment.BottomSheetCallback());
 
         ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
-        if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
+        if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)
             mLayout.setVisibility(View.GONE);
+        else {
+            // Init recycler view
+            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
+            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
         }
 
-        // Init recycler view
-        MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-        mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-        mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        mPath = null;
+        resetValues();
 
         return rootview;
     }
@@ -122,47 +121,16 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-            setTextAndActivateButtons(getFilePath(data.getData()));
-        }
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
+            setTextAndActivateButtons(getFilePath(mActivity, data.getData()));
     }
 
-    //Returns the complete filepath of the PDF as a string
-    private String getFilePath(Uri uri) {
-        String uriString = uri.toString();
-        File file = new File(uri.toString());
-        String path = file.getPath();
-        String returnPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        Boolean success;
-        String name = null;
-        if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
-            success = false;
-        } else {
-            success = true;
-            name = mFileUtils.getFileName(uri);
-        }
-        if (success) {
-            String folname = mDirectoryUtils.getParentFolder(path);
-            if (folname != null) {
-                String c = getString(R.string.path_seperator);
-                returnPath = returnPath + c + folname + c + name;
-            }
-        }
-        return returnPath;
-    }
 
     @OnClick(R.id.extractImages)
     public void parse() {
-
-        if (mPath == null) {
-            showSnackbar(mActivity.getString(R.string.merge_file_select));
-            return;
-        }
-
         int imagesCount = 0;
         try {
             PdfReader reader = new PdfReader(mPath);
-            Log.v("path", mPath);
             PdfObject obj;
             for (int i = 1; i <= reader.getXrefSize(); i++) {
                 obj = reader.getPdfObject(i);
@@ -182,13 +150,16 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (imagesCount == 0) {
-            showSnackbar(getString(R.string.extract_images_failed));
-        } else {
-            showSnackbar(String.format(getString(R.string.extract_images_success),
+        if (imagesCount == 0)
+            showSnackbar(mActivity, R.string.extract_images_failed);
+        else
+            showSnackbar(mActivity, String.format(getString(R.string.extract_images_success),
                     imagesCount));
-        }
-        mPath = "";
+        resetValues();
+    }
+
+    private void resetValues() {
+        mPath = null;
         selectFileButton.setText(R.string.merge_file_select);
         selectFileButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
         mMorphButtonUtility.morphToGrey(extractImagesButton, mMorphButtonUtility.integer());
@@ -237,10 +208,5 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         @Override
         public void onSlide(@NonNull View bottomSheet, float slideOffset) {
         }
-    }
-
-    private void showSnackbar(String resID) {
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                resID, Snackbar.LENGTH_LONG).show();
     }
 }

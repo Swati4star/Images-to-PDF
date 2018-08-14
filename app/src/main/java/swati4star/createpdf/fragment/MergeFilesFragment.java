@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,9 +25,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,24 +34,21 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.util.DirectoryUtils;
-import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener {
     private Activity mActivity;
     private boolean mSuccess;
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
-    private String mRealPath;
-    private String mDisplayName;
-    private DirectoryUtils mDirectoryUtils;
     private MorphButtonUtility mMorphButtonUtility;
-    private FileUtils mFileUtils;
     String firstFilePath;
     String secondFilePath;
 
@@ -89,10 +83,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        mDirectoryUtils = new DirectoryUtils(mActivity);
-        mFileUtils = new FileUtils(mActivity);
+        DirectoryUtils directoryUtils = new DirectoryUtils(mActivity);
 
-        ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
+        ArrayList<String> mAllFilesPaths = directoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
             mLayout.setVisibility(View.GONE);
         }
@@ -130,7 +123,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     void mergeFiles(final View v) {
         String[] pdfpaths = {firstFilePath, secondFilePath};
         if (firstFilePath == null || secondFilePath == null || !mSuccess) {
-            showSnackbar(R.string.snackbar_no_pdfs_selected);
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
             return;
         }
         new MaterialDialog.Builder(mActivity)
@@ -138,7 +131,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
                     if (StringUtils.isEmpty(input)) {
-                        showSnackbar(R.string.snackbar_name_not_blank);
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         new MergePdf(mActivity, input.toString(), this).execute(pdfpaths);
                     }
@@ -165,16 +158,13 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             Uri uri = data.getData();
             Log.v("file", uri + " ");
-            mRealPath = Environment.getExternalStorageDirectory().getAbsolutePath();
             //Check if First button is clicked from mCheckbtClickTag
             if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
-                firstFilePath = getFilePath(uri);
-                Log.v("File path 1", firstFilePath + mSuccess);
+                firstFilePath = getFilePath(mActivity, uri);
                 addFileOne.setText(firstFilePath);
                 addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
             } else {
-                secondFilePath = getFilePath(uri);
-                Log.v("File path 2", secondFilePath);
+                secondFilePath = getFilePath(mActivity, uri);
                 addFileTwo.setText(secondFilePath);
                 addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
             }
@@ -183,27 +173,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
             }
         }
-    }
-
-    //Returns the complete filepath of the PDF as a string
-    private String getFilePath(Uri uri) {
-        String uriString = uri.toString();
-        File file = new File(uri.toString());
-        String path = file.getPath();
-        if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
-            mSuccess = false;
-        } else {
-            mSuccess = true;
-            mDisplayName = mFileUtils.getFileName(uri);
-        }
-        if (mSuccess) {
-            String folname = mDirectoryUtils.getParentFolder(path);
-            if (folname != null) {
-                String c = getString(R.string.path_seperator);
-                mRealPath = mRealPath + c + folname + c + mDisplayName;
-            }
-        }
-        return mRealPath;
     }
 
     @Override
@@ -224,11 +193,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
-    }
-
-    private void showSnackbar(int resID) {
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                resID, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
