@@ -91,6 +91,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         mRecyclerViewFiles.setLayoutManager(mLayoutManager);
         mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
         mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        mPath = null;
 
         return rootview;
     }
@@ -152,10 +153,15 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
     @OnClick(R.id.extractImages)
     public void parse() {
-        PdfReader reader = null;
+
+        if (mPath == null) {
+            showSnackbar(mActivity.getString(R.string.merge_file_select));
+            return;
+        }
+
         int imagesCount = 0;
         try {
-            reader = new PdfReader(mPath);
+            PdfReader reader = new PdfReader(mPath);
             Log.v("path", mPath);
             PdfObject obj;
             for (int i = 1; i <= reader.getXrefSize(); i++) {

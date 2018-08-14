@@ -256,4 +256,5 @@
     <string name="extract_images_success">We found %1$d image(s) in the selected PDF. They have been saved in the PDF Files folder in root directory.</string>
     <string name="remove_image_message">Are you sure you want to remove this image?</string>
     <string name="dont_show_again">Don\'t show again</string>
+    <string name="filter_on_finish_click_warning_message">The filter on current image is not saved. Do you want to continue without saving?</string>
 </resources>
