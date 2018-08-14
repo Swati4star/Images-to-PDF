@@ -321,6 +321,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     case Activity.RESULT_OK:
                         try {
                             mImagesUri = data.getStringArrayListExtra(RESULT);
+                            if (mImagesUri.size() > 0) {
+                                mNoOfImages.setText(String.format(mActivity.getResources()
+                                        .getString(R.string.images_selected), mImagesUri.size()));
+                            } else {
+                                mNoOfImages.setVisibility(View.GONE);
+                                mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+                                mCreatePdf.setEnabled(false);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -254,4 +254,6 @@
     <string name="extract_images">Extract Images</string>
     <string name="extract_images_failed">We couldn\'t find any images in the selected PDF.</string>
     <string name="extract_images_success">We found %1$d image(s) in the selected PDF. They have been saved in the PDF Files folder in root directory.</string>
+    <string name="remove_image_message">Are you sure you want to remove this image?</string>
+    <string name="dont_show_again">Don\'t show again</string>
 </resources>

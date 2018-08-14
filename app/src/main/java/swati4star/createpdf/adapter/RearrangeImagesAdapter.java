@@ -75,12 +75,15 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
         ImageButton buttonDown;
         @BindView(R.id.pageNumber)
         TextView pageNumber;
+        @BindView(R.id.removeImage)
+        ImageButton mRemoveImage;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             buttonDown.setOnClickListener(this);
             buttonUp.setOnClickListener(this);
+            mRemoveImage.setOnClickListener(this);
         }
 
         @Override
@@ -92,6 +95,8 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
                 case R.id.buttonDown:
                     mOnClickListener.onDownClick(getAdapterPosition());
                     break;
+                case R.id.removeImage:
+                    mOnClickListener.onRemoveClick(getAdapterPosition());
             }
         }
     }
@@ -105,5 +110,7 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
         void onUpClick(int position);
 
         void onDownClick(int position);
+
+        void onRemoveClick(int position);
     }
 }
