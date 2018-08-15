@@ -4,6 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_height">160dp</dimen>
-    <dimen name="img_height">100dp</dimen>
-    <dimen name="img_width">100dp</dimen>
+    <dimen name="img_height">90dp</dimen>
+    <dimen name="img_width">90dp</dimen>
 </resources>
