@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:id="@+id/fileName"
@@ -15,4 +16,15 @@
             android:textSize="16sp"
             android:textStyle="bold" />
     </com.balysv.materialripple.MaterialRippleLayout>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/encryptionImage"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/encrypted_file_text"
+        android:src="@drawable/lock_closed"
+        android:visibility="gone" />
+</RelativeLayout>

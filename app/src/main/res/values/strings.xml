@@ -320,4 +320,5 @@
 
     <!-- Watermark Strings -->
     <string name="add_watermark">Add watermark</string>
+    <string name="encrypted_file_text">encrypted file</string>
 </resources>
