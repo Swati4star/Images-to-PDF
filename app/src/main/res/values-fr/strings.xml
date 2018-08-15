@@ -258,4 +258,5 @@
     <string name="dont_show_again">Don\'t show again</string>
     <string name="filter_on_finish_click_warning_message">The filter on current image is not saved. Do you want to continue without saving?</string>
     <string name="add_watermark">Add watermark</string>
+    <string name="encrypted_file_text">encrypted file</string>
 </resources>
