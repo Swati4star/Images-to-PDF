@@ -46,6 +46,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final String mPageSize;
     private MaterialDialog mMaterialDialog;
     private final boolean mPasswordProtected;
+    private Boolean mAddWatermak;
 
     public CreatePdf(Activity context, ImageToPDFOptions mImageToPDFOptions, OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = mImageToPDFOptions.getImagesUri();
@@ -57,6 +58,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mPageSize = mImageToPDFOptions.getPageSize();
         this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
         this.mBorderWidth = mImageToPDFOptions.getBorderWidth();
+        this.mAddWatermak = mImageToPDFOptions.isAddWatermark();
     }
 
     @Override
@@ -106,6 +108,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
                 Log.v("Stage 3.1", "Set Encryption");
             }
+
+            // TODO :: Uncomment below to add watermark
+            // if (mAddWatermak)
+            // writer.setPageEvent(new WatermarkPageEvent());
 
             document.open();
 

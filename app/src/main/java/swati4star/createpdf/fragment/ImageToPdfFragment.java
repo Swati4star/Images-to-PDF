@@ -366,7 +366,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             case 6:
                 addBorder();
                 break;
+            case 7:
+                showWatermarkOptions();
         }
+    }
+
+    private void showWatermarkOptions() {
+
     }
 
     private void addBorder() {

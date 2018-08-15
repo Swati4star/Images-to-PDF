@@ -7,6 +7,7 @@ public class PDFOptions {
     private String mPassword;
     private String mPageSize;
     private int mBorderWidth;
+    private boolean mAddWatermark;
 
     PDFOptions() {
 
@@ -59,4 +60,14 @@ public class PDFOptions {
     public void setBorderWidth(int mBorderWidth) {
         this.mBorderWidth = mBorderWidth;
     }
+
+    public boolean isAddWatermark() {
+        return mAddWatermark;
+    }
+
+    public void setAddWatermark(boolean mAddWatermark) {
+        this.mAddWatermark = mAddWatermark;
+    }
+
+
 }
