@@ -18,16 +18,17 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
 
-public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.ViewMergeFilesHolder> {
+public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.ViewMergeFilesHolder> {
 
     private ArrayList<String> mFilePaths;
     private Activity mContext;
     private FileUtils mFileUtils;
-    private OnClickListener mOnClickListener;
+    private OnFileItemClickedListener mOnClickListener;
     private final PDFUtils mPDFUtils;
 
 
-    public MergeFilesAdapter(Activity mContext, ArrayList<String> mFilePaths, OnClickListener mOnClickListener) {
+    public FilesListAdapter(Activity mContext, ArrayList<String> mFilePaths,
+                            OnFileItemClickedListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         mFileUtils = new FileUtils(mContext);
@@ -40,7 +41,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     public ViewMergeFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_merge_files, parent, false);
-        return new MergeFilesAdapter.ViewMergeFilesHolder(itemView);
+        return new FilesListAdapter.ViewMergeFilesHolder(itemView);
     }
 
     @Override
@@ -75,11 +76,11 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
         public void onClick(View view) {
             Log.v("Click", view.getId() + " " + R.id.splitted_files +
                     " " + R.id.recyclerViewFiles);
-            mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
+            mOnClickListener.onFileItemClick(mFilePaths.get(getAdapterPosition()));
         }
     }
 
-    public interface OnClickListener {
-        void onItemClick(String path);
+    public interface OnFileItemClickedListener {
+        void onFileItemClick(String path);
     }
 }

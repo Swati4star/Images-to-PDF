@@ -257,4 +257,7 @@
     <string name="filter_on_finish_click_warning_message">The filter on current image is not saved. Do you want to continue without saving?</string>
     <string name="add_watermark">Add watermark</string>
     <string name="encrypted_file_text">encrypted file</string>
+    <string name="split_pdf">Split PDF</string>
+    <string name="split_error">We were unable to split PDF. Files may be encrypted or in the external storage.</string>
+    <string name="split_success">The selected PDF was split successfully. It was split into %1$d PDF(s)</string>
 </resources>

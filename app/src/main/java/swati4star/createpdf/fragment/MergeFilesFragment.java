@@ -60,8 +60,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     MorphingButton mergeBtn;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.viewFiles)
-    TextView mViewFiles;
     @BindView(R.id.upArrow)
     ImageView mUpArrow;
     @BindView(R.id.downArrow)
