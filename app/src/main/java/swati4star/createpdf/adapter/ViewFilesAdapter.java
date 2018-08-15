@@ -85,8 +85,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int pos) {
-        final int position          = holder.getAdapterPosition();
-        final File file             = mFileList.get(position);
+        final int position = holder.getAdapterPosition();
+        final File file = mFileList.get(position);
 
         boolean isEncrypted = mPDFUtils.isPDFEncrypted(file.getPath());
         holder.mFilename.setText(file.getName());
@@ -100,15 +100,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         } else {
             holder.mEncryptionImage.setVisibility(View.GONE);
         }
-
-        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (!mSelectedFiles.contains(position)) {
-                    mSelectedFiles.add(position);
-                }
-            } else
-                mSelectedFiles.remove(Integer.valueOf(position));
-        });
 
         holder.mRipple.setOnClickListener(view -> {
             new MaterialDialog.Builder(mActivity)
@@ -125,9 +116,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * Performs the required option on file
      * as per user selction
      *
-     * @param index - index of operation performed
+     * @param index    - index of operation performed
      * @param position - position of item clicked
-     * @param file - file object clicked
+     * @param file     - file object clicked
      */
     private void performOperation(int index, int position, File file) {
         switch (index) {
@@ -185,6 +176,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Returns path of selected files
+     *
      * @return paths of files
      */
     public ArrayList<String> getSelectedFilePath() {
@@ -207,6 +199,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Sets pdf files
+     *
      * @param pdfFiles array list containing path of files
      */
     public void setData(ArrayList<File> pdfFiles) {
@@ -216,6 +209,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Checks if any item is selected
+     *
      * @return tru, if atleast one item is checked
      */
     public boolean areItemsSelected() {
@@ -224,7 +218,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Delete the file
-     * @param name - name of the file
+     *
+     * @param name     - name of the file
      * @param position - position of file in arraylist
      */
     private void deleteFile(String name, int position) {
@@ -299,6 +294,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Renames the selected file
+     *
      * @param position - position of file to be renamed
      */
     private void onRenameFileClick(final int position) {
@@ -365,6 +361,14 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         ViewFilesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    if (!mSelectedFiles.contains(getAdapterPosition())) {
+                        mSelectedFiles.add(getAdapterPosition());
+                    }
+                } else
+                    mSelectedFiles.remove(Integer.valueOf(getAdapterPosition()));
+            });
         }
     }
 }
