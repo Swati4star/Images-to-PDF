@@ -62,6 +62,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private Uri mTextFileUri = null;
     private String mFontTitle;
     private int mFontSize = 0;
+    private int mButtonClicked = 0;
     private boolean mPasswordProtected = false;
     private String mPassword;
 
@@ -71,14 +72,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     TextView mTextView;
     @BindView(R.id.createtextpdf)
     MorphingButton mCreateTextPdf;
-    private int mButtonClicked = 0;
 
     private ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private SharedPreferences mSharedPreferences;
     private Font.FontFamily mFontFamily;
     private MorphButtonUtility mMorphButtonUtility;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -96,7 +95,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mCreateTextPdf.setEnabled(false);
         PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
                 Constants.DEFAULT_PAGE_SIZE);
-
         return rootview;
     }
 
