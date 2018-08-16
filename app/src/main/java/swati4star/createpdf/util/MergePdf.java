@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
 public class MergePdf extends AsyncTask<String, Void, Void> {
@@ -21,9 +22,9 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     private String mFinPath;
     private Boolean mIsPDFMerged;
     private MaterialDialog mMaterialDialog;
-    private Activity mActivity;
+    private final Activity mActivity;
     private String mFilename;
-    private MergeFilesListener mMergeFilesListener;
+    private final MergeFilesListener mMergeFilesListener;
 
     public MergePdf(Activity activity, String fileName, MergeFilesListener mergeFilesListener) {
         mActivity = activity;
@@ -80,13 +81,15 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
         super.onPostExecute(aVoid);
         mMaterialDialog.dismiss();
         mMergeFilesListener.resetValues();
-        if (mIsPDFMerged)
+        if (mIsPDFMerged) {
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.pdf_merged, Snackbar.LENGTH_LONG).setAction(R.string.snackbar_viewAction, v -> {
                         FileUtils fileUtils = new FileUtils(mActivity);
                         fileUtils.openFile(mFinPath);
                     }).show();
-        else
+            new DatabaseHelper(mActivity).insertRecord(mFinPath,
+                    mActivity.getString(R.string.created));
+        } else
             Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
                     R.string.pdf_merge_error, Snackbar.LENGTH_LONG).show();
     }

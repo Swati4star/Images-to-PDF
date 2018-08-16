@@ -1,7 +1,7 @@
 package swati4star.createpdf.model;
 
 public class BrushItem {
-    private int mColor;
+    private final int mColor;
 
     public BrushItem (int color) {
         this.mColor = color;

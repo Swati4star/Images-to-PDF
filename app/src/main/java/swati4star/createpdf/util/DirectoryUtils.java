@@ -14,7 +14,7 @@ import swati4star.createpdf.R;
 
 public class DirectoryUtils {
 
-    private Context mContext;
+    private final Context mContext;
 
     public DirectoryUtils(Context context) {
         mContext = context;

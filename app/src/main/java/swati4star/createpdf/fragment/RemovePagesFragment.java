@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,52 +16,53 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.dd.morphingbutton.MorphingButton;
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener {
+public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener {
 
     private Activity mActivity;
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
+    private PDFUtils mPDFUtils;
     private DirectoryUtils mDirectoryUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
 
     @BindView(R.id.selectFile)
     Button selectFileButton;
-    @BindView(R.id.splitFiles)
-    MorphingButton splitFilesButton;
+    @BindView(R.id.pdfCreate)
+    MorphingButton createPdf;
     BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
@@ -70,20 +72,18 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     ImageView mDownArrow;
     @BindView(R.id.layout)
     RelativeLayout mLayout;
+    @BindView(R.id.pages)
+    EditText pagesInput;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.splitted_files)
-    RecyclerView mSplittedFiles;
-    @BindView(R.id.splitfiles_text)
-    TextView splitFilesSuccessText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_split_files, container, false);
+        View rootview = inflater.inflate(R.layout.fragment_remove_pages, container, false);
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new SplitFilesFragment.BottomSheetCallback());
+        sheetBehavior.setBottomSheetCallback(new RemovePagesFragment.BottomSheetCallback());
 
         ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)
@@ -133,56 +133,49 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
 
-    @OnClick(R.id.splitFiles)
+    @OnClick(R.id.pdfCreate)
     public void parse() {
-        int numberOfPages;
-        ArrayList<String> outputFilePaths = new ArrayList<>();
-        try {
-            String folderPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    mActivity.getString(R.string.pdf_dir);
-            PdfReader reader = new PdfReader(mPath);
-            PdfCopy copy;
-            Document document;
-            numberOfPages = reader.getNumberOfPages();
-            for (int i = 1; i <= numberOfPages; i++) {
-                document = new Document();
-                String fileName = folderPath + mFileUtils.getFileName(mPath);
-                fileName = fileName.replace(mActivity.getString(R.string.pdf_ext),
-                        i + mActivity.getString(R.string.pdf_ext));
-                Log.v("splitting", fileName);
-                copy = new PdfCopy(document, new FileOutputStream(fileName));
-                document.open();
-                copy.addPage(copy.getImportedPage(reader, i));
-                document.close();
-                outputFilePaths.add(fileName);
-                new DatabaseHelper(mActivity).insertRecord(fileName,
-                        mActivity.getString(R.string.created));
-            }
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-            showSnackbar(mActivity, R.string.split_error);
+        String pages = pagesInput.getText().toString();
+        String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
+                "_edited" + pages + mActivity.getString(R.string.pdf_ext));
+        hideKeyboard(mActivity);
+        if (mPDFUtils.isPDFEncrypted(mPath)) {
+            showSnackbar(mActivity, R.string.encrypted_pdf);
             return;
         }
 
-        String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
-        showSnackbar(mActivity, output);
-        splitFilesSuccessText.setVisibility(View.VISIBLE);
-        splitFilesSuccessText.setText(output);
-
-        FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        mSplittedFiles.setVisibility(View.VISIBLE);
-        mSplittedFiles.setLayoutManager(mLayoutManager);
-        mSplittedFiles.setAdapter(splitFilesAdapter);
-        mSplittedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        try {
+            PdfReader reader = new PdfReader(mPath);
+            reader.selectPages(pages);
+            if (reader.getNumberOfPages() == 0) {
+                showSnackbar(mActivity, R.string.remove_pages_error);
+                return;
+            }
+            Log.e("pages", reader.getNumberOfPages() + " ");
+            //if (reader.getNumberOfPages() )
+            PdfStamper pdfStamper = new PdfStamper(reader,
+                    new FileOutputStream(outputPath));
+            pdfStamper.close();
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+            showSnackbar(mActivity, R.string.remove_pages_error);
+            return;
+        }
+        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
+                , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(outputPath)).show();
+        new DatabaseHelper(mActivity).insertRecord(outputPath,
+                mActivity.getString(R.string.created));
+        resetValues();
     }
 
     private void resetValues() {
         mPath = null;
+        pagesInput.setText(null);
         selectFileButton.setText(R.string.merge_file_select);
         selectFileButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
-        mMorphButtonUtility.morphToGrey(splitFilesButton, mMorphButtonUtility.integer());
-        splitFilesButton.setEnabled(false);
+        mMorphButtonUtility.morphToGrey(createPdf, mMorphButtonUtility.integer());
+        createPdf.setEnabled(false);
     }
 
     @Override
@@ -192,6 +185,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mDirectoryUtils = new DirectoryUtils(mActivity);
+        mPDFUtils = new PDFUtils(mActivity);
     }
 
     @Override
@@ -201,22 +195,14 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     private void setTextAndActivateButtons(String path) {
-        mSplittedFiles.setVisibility(View.GONE);
-        splitFilesSuccessText.setVisibility(View.GONE);
         mPath = path;
         selectFileButton.setText(mPath);
         selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-        splitFilesButton.setEnabled(true);
-        mMorphButtonUtility.morphToSquare(splitFilesButton, mMorphButtonUtility.integer());
-    }
-
-    @Override
-    public void onFileItemClick(String path) {
-        mFileUtils.openFile(path);
+        createPdf.setEnabled(true);
+        mMorphButtonUtility.morphToSquare(createPdf, mMorphButtonUtility.integer());
     }
 
     private class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
-
         @Override
         public void onStateChanged(@NonNull View bottomSheet, int newState) {
             switch (newState) {
@@ -234,5 +220,16 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         @Override
         public void onSlide(@NonNull View bottomSheet, float slideOffset) {
         }
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

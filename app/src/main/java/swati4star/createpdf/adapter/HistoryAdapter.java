@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -21,7 +22,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
     private final List<History> mHistoryList;
     private final Activity mActivity;
     private final OnClickListener mOnClickListener;
-
 
     public HistoryAdapter(Activity mActivity, List<History> mHistoryList, OnClickListener mOnClickListener) {
         this.mHistoryList = mHistoryList;
@@ -60,6 +60,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         holder.mFilename.setText(fileName);
         holder.mOperationDate.setText(date);
         holder.mOperationType.setText(operationType);
+        holder.mOperationImage.setImageResource(getIconFromString(operationType));
     }
 
     public void deleteHistory() {
@@ -80,6 +81,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         TextView mOperationDate;
         @BindView(R.id.operationType)
         TextView mOperationType;
+        @BindView(R.id.operationImage)
+        ImageView mOperationImage;
 
         ViewHistoryHolder(View itemView) {
             super(itemView);
@@ -95,5 +98,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
 
     public interface OnClickListener {
         void onItemClick(String path);
+    }
+
+    private int getIconFromString(String operation) {
+        if (operation.equalsIgnoreCase(mActivity.getString(R.string.printed)))
+            return R.drawable.ic_print_black_24dp;
+        if (operation.equalsIgnoreCase(mActivity.getString(R.string.created)))
+            return R.drawable.ic_insert_drive_file_black_24dp;
+        if (operation.equalsIgnoreCase(mActivity.getString(R.string.deleted)))
+            return R.drawable.baseline_delete_24;
+        if (operation.equalsIgnoreCase(mActivity.getString(R.string.renamed)))
+            return R.drawable.ic_create_black_24dp;
+        return R.drawable.ic_insert_drive_file_black_24dp;
     }
 }

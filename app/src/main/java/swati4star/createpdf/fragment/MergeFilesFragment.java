@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
@@ -49,8 +48,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private MorphButtonUtility mMorphButtonUtility;
-    String firstFilePath;
-    String secondFilePath;
+    private String mFirstFilePath;
+    private String mSecondFilePath;
 
     @BindView(R.id.fileonebtn)
     Button addFileOne;
@@ -119,8 +118,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.mergebtn)
     void mergeFiles(final View v) {
-        String[] pdfpaths = {firstFilePath, secondFilePath};
-        if (firstFilePath == null || secondFilePath == null || !mSuccess) {
+        String[] pdfpaths = {mFirstFilePath, mSecondFilePath};
+        if (mFirstFilePath == null || mSecondFilePath == null || !mSuccess) {
             showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
             return;
         }
@@ -158,15 +157,15 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             Log.v("file", uri + " ");
             //Check if First button is clicked from mCheckbtClickTag
             if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
-                firstFilePath = getFilePath(mActivity, uri);
-                addFileOne.setText(firstFilePath);
+                mFirstFilePath = getFilePath(mActivity, uri);
+                addFileOne.setText(mFirstFilePath);
                 addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
             } else {
-                secondFilePath = getFilePath(mActivity, uri);
-                addFileTwo.setText(secondFilePath);
+                mSecondFilePath = getFilePath(mActivity, uri);
+                addFileTwo.setText(mSecondFilePath);
                 addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
             }
-            if (firstFilePath != null && secondFilePath != null) {
+            if (mFirstFilePath != null && mSecondFilePath != null) {
                 mergeBtn.setEnabled(true);
                 mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
             }
@@ -201,18 +200,18 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 .itemsCallback((dialog, itemView, position, text) -> {
                     switch (position) {
                         case 0:
-                            firstFilePath = path;
+                            mFirstFilePath = path;
                             addFileOne.setText(path);
                             addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                             break;
                         case 1:
                             addFileTwo.setText(path);
-                            secondFilePath = path;
+                            mSecondFilePath = path;
                             addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
                             mSuccess = true;
                             break;
                     }
-                    if (firstFilePath != null && secondFilePath != null) {
+                    if (mFirstFilePath != null && mSecondFilePath != null) {
                         mergeBtn.setEnabled(true);
                         mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
                     }
@@ -225,8 +224,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
      */
     @Override
     public void resetValues() {
-        firstFilePath = "";
-        secondFilePath = "";
+        mFirstFilePath = "";
+        mSecondFilePath = "";
         addFileOne.setText(R.string.file_one);
         addFileTwo.setText(R.string.file_two);
         addFileTwo.setBackgroundColor(getResources().getColor(R.color.colorGray));

@@ -12,7 +12,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class WatermarkPageEvent extends PdfPageEventHelper {
 
-    private Phrase mWatermark = new Phrase("WATERMARKWATERMARKWATERMARKWATERMARKWAT" +
+    private final Phrase mWatermark = new Phrase("WATERMARKWATERMARKWATERMARKWATERMARKWAT" +
             "ERMARKWATERMARKWATERMARKWATERMARKWATERMARKWATERMARKWATERMARK",
             new Font(Font.FontFamily.HELVETICA, 20, Font.NORMAL, BaseColor.GRAY));
 

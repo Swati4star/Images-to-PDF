@@ -325,4 +325,17 @@
     <string name="split_pdf">Split PDF</string>
     <string name="split_error">We were unable to split PDF. Files may be encrypted or in the external storage.</string>
     <string name="split_success">The selected PDF was split successfully. It was split into %1$d PDF(s)</string>
+
+    <!-- Remove Pages -->
+    <string name="remove_pages">Remove Pages</string>
+    <string name="remove_pages_text">Enter the pages you want to keep in the PDF. For example, if you want pages 1 to 5 and 7 to 10, enter 1–5,7-10.</string>
+    <string name="remove_pages_error">The input value is not valid</string>
+    <string name="encrypted_pdf">PDF is password protected</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_positive">Rate now</string>
+    <string name="rate_negative">No, thanks</string>
+    <string name="rate_title">Rate us!</string>
+    <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
+    <string name="rate_us_never">Never</string>
 </resources>

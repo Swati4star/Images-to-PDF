@@ -23,7 +23,6 @@
             android:background="@color/colorGray"
             android:maxWidth="30dp"
             android:padding="3dip"
-            android:tag="fbt"
             android:text="@string/merge_file_select"
             android:textColor="@color/mb_white"
             app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
@@ -44,6 +43,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/extractedimages_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/split_success"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/extracted_files"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

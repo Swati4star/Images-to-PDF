@@ -295,7 +295,7 @@ public class FileUtils {
      * Saves bitmap to external storage
      * @param finalBitmap - bitmap to save
      */
-    public void saveImage(Bitmap finalBitmap) {
+    public String  saveImage(Bitmap finalBitmap) {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + mContext.getString(R.string.pdf_dir));
         String fname = "image_" + System.currentTimeMillis() + ".jpg";
@@ -310,6 +310,25 @@ public class FileUtils {
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return myDir + "/" + fname;
+    }
+
+    public void openImage(String path) {
+        File file = new File(path);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+        target.setDataAndType(uri,  "image/*");
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
+        try {
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
+                    R.string.snackbar_no_pdf_app, Snackbar.LENGTH_LONG).show();
         }
     }
 }

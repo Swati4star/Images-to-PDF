@@ -18,10 +18,10 @@ import swati4star.createpdf.R;
 public class PageSizeUtils {
 
     private final Context mActivity;
-    private SharedPreferences mSharedPreferences;
+    private final SharedPreferences mSharedPreferences;
     public static String mPageSize = "A4";
-    private String mDefaultPageSize;
-    private HashMap<Integer, Integer> mPageSizeToString;
+    private final String mDefaultPageSize;
+    private final HashMap<Integer, Integer> mPageSizeToString;
 
     public PageSizeUtils(Context mActivity) {
         this.mActivity = mActivity;

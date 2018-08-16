@@ -20,10 +20,10 @@ import swati4star.createpdf.util.PDFUtils;
 
 public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.ViewMergeFilesHolder> {
 
-    private ArrayList<String> mFilePaths;
-    private Activity mContext;
-    private FileUtils mFileUtils;
-    private OnFileItemClickedListener mOnClickListener;
+    private final ArrayList<String> mFilePaths;
+    private final Activity mContext;
+    private final FileUtils mFileUtils;
+    private final OnFileItemClickedListener mOnClickListener;
     private final PDFUtils mPDFUtils;
 
 
@@ -49,10 +49,7 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
         boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
         Log.v("adding ", String.valueOf(position) + isEncrypted);
         holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
-        if (isEncrypted)
-            holder.mEncryptionImage.setVisibility(View.VISIBLE);
-        else
-            holder.mEncryptionImage.setVisibility(View.INVISIBLE);
+        holder.mEncryptionImage.setVisibility(View.GONE);
     }
 
     @Override

@@ -32,12 +32,12 @@ public class PDFEncryptionUtility {
     private final FileUtils mFileUtils;
     private String mPassword;
 
-    final MaterialDialog dialog;
+    private final MaterialDialog mDialog;
 
     public PDFEncryptionUtility(Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(context);
-        dialog = new MaterialDialog.Builder(mContext)
+        mDialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.custom_dialog, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
@@ -45,17 +45,17 @@ public class PDFEncryptionUtility {
     }
 
     /**
-     * Opens the password dialog to set Password for an existing PDF file.
+     * Opens the password mDialog to set Password for an existing PDF file.
      *
      * @param filePath Path of file to be encrypted
      */
     public void setPassword(final String filePath, final DataSetChanged dataSetChanged,
                             final ArrayList<File> mFileList) {
 
-        dialog.setTitle(R.string.set_password);
-        final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        assert dialog.getCustomView() != null;
-        EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
+        mDialog.setTitle(R.string.set_password);
+        final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
+        assert mDialog.getCustomView() != null;
+        EditText mPasswordInput = mDialog.getCustomView().findViewById(R.id.password);
         mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -74,7 +74,7 @@ public class PDFEncryptionUtility {
                             mPassword = input.toString();
                     }
                 });
-        dialog.show();
+        mDialog.show();
         mPositiveAction.setEnabled(false);
         mPositiveAction.setOnClickListener(v -> {
             try {
@@ -87,7 +87,7 @@ public class PDFEncryptionUtility {
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
             }
-            dialog.dismiss();
+            mDialog.dismiss();
         });
     }
 
@@ -151,10 +151,10 @@ public class PDFEncryptionUtility {
             return;
 
         final String[] input_password = new String[1];
-        dialog.setTitle(R.string.enter_password);
-        final View mPositiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        final EditText mPasswordInput = dialog.getCustomView().findViewById(R.id.password);
-        TextView text = dialog.getCustomView().findViewById(R.id.enter_password);
+        mDialog.setTitle(R.string.enter_password);
+        final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
+        final EditText mPasswordInput = mDialog.getCustomView().findViewById(R.id.password);
+        TextView text = mDialog.getCustomView().findViewById(R.id.enter_password);
         text.setText(R.string.decrypt_message);
         mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
@@ -172,7 +172,7 @@ public class PDFEncryptionUtility {
                         input_password[0] = input.toString();
                     }
                 });
-        dialog.show();
+        mDialog.show();
         mPositiveAction.setEnabled(false);
         mPositiveAction.setOnClickListener(v -> {
             String finalOutputFile;
@@ -207,7 +207,7 @@ public class PDFEncryptionUtility {
             } else {
                 showSnackbar(mContext, R.string.incorrect_passowrd);
             }
-            dialog.dismiss();
+            mDialog.dismiss();
         });
     }
 }

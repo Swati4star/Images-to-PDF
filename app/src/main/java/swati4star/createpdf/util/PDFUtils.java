@@ -35,7 +35,7 @@ public class PDFUtils {
     }
 
     /**
-     * Creates a dialog with details of given PDF file
+     * Creates a mDialog with details of given PDF file
      *
      * @param file - file name
      */

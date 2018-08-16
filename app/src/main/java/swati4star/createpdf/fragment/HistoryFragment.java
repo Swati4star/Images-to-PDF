@@ -57,7 +57,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Nullable
@@ -66,7 +65,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, root);
-
         new LoadHistory(mActivity).execute();
         return root;
     }
@@ -126,7 +124,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         LoadHistory(Context mContext) {
             this.mContext = mContext;
         }
-
 
         @Override
         protected Void doInBackground(Void... voids) {

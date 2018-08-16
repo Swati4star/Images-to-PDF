@@ -1,8 +1,10 @@
 package swati4star.createpdf.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -26,11 +28,13 @@ import swati4star.createpdf.fragment.ExtractImagesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
+import swati4star.createpdf.fragment.RemovePagesFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
+import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW1_TEXT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW1_TITLE;
 import static swati4star.createpdf.util.Constants.WHATS_NEW2_TEXT;
@@ -47,9 +51,8 @@ public class MainActivity extends AppCompatActivity
 
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
-
+    private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,11 @@ public class MainActivity extends AppCompatActivity
 
         // initialize values
         initializeValues();
+
+        int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
+        if (count > 0 && count % 15 == 0)
+            mFeedbackUtils.rateUs();
+        mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
     }
 
     /**
@@ -90,6 +98,7 @@ public class MainActivity extends AppCompatActivity
         mFeedbackUtils = new FeedbackUtils(this);
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setDefaultMenuSelected(0);
     }
 
@@ -197,23 +206,20 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
     }
 
-    Fragment getCurrentFragment() {
+    private Fragment getCurrentFragment() {
         return getSupportFragmentManager()
                 .findFragmentById(R.id.content);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
                 break;
@@ -240,6 +246,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_extract_images:
                 fragment = new ExtractImagesFragment();
+                break;
+            case R.id.nav_remove_pages:
+                fragment = new RemovePagesFragment();
                 break;
         }
 

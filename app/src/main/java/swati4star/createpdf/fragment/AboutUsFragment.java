@@ -20,11 +20,13 @@ import java.util.Objects;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.FeedbackUtils;
 
 
 public class AboutUsFragment extends Fragment {
 
     private Activity mActivity;
+    private FeedbackUtils mFeedbackUtils;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -38,6 +40,7 @@ public class AboutUsFragment extends Fragment {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        mFeedbackUtils = new FeedbackUtils(mActivity);
         return rootview;
     }
 
@@ -59,51 +62,44 @@ public class AboutUsFragment extends Fragment {
 
     @OnClick(R.id.layout_website)
     void openWeb() {
-        openWebPage("http://swati4star.github.io/Images-to-PDF/");
+        mFeedbackUtils.openWebPage("http://swati4star.github.io/Images-to-PDF/");
     }
 
     @OnClick(R.id.layout_slack)
     void joinSlack() {
-        openWebPage("https://join.slack.com/t/imagestopdf/shared_invite/" +
+        mFeedbackUtils.openWebPage("https://join.slack.com/t/imagestopdf/shared_invite/" +
                 "enQtNDA2ODk1NDE3Mzk3LTUwNjllYzY5YWZkZDliY2FmNDhkNmM1NjIwZTc1Y" +
                 "jU4NTgxNWI0ZDczMWQxMTEyZjA0M2Y5N2RlN2NiMWRjZGI");
     }
 
     @OnClick(R.id.layout_github)
     void githubRepo() {
-        openWebPage("https://github.com/Swati4star/Images-to-PDF");
+        mFeedbackUtils.openWebPage("https://github.com/Swati4star/Images-to-PDF");
     }
 
     @OnClick(R.id.layout_contri)
     void contributorsList() {
-        openWebPage("https://github.com/Swati4star/Images-to-PDF/graphs/contributors");
+        mFeedbackUtils.openWebPage("https://github.com/Swati4star/Images-to-PDF/graphs/contributors");
     }
 
     @OnClick(R.id.layout_playstore)
     void openPlaystore() {
-        openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
+        mFeedbackUtils.openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
     }
 
     @OnClick(R.id.layout_privacy)
     void privacyPolicy() {
-        openWebPage("https://sites.google.com/view/privacy-policy-image-to-pdf/home");
+        mFeedbackUtils.openWebPage("https://sites.google.com/view/privacy-policy-image-to-pdf/home");
     }
 
     @OnClick(R.id.layout_license)
     void license() {
-        openWebPage("https://github.com/Swati4star/Images-to-PDF/blob/master/LICENSE.md");
+        mFeedbackUtils.openWebPage("https://github.com/Swati4star/Images-to-PDF/blob/master/LICENSE.md");
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
-    }
-
-    private void openWebPage(String url) {
-        Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        if (intent.resolveActivity(mActivity.getPackageManager()) != null)
-            startActivity(intent);
     }
 }

@@ -21,26 +21,26 @@ import swati4star.createpdf.interfaces.EmptyStateChangeListener;
  */
 public class PopulateList extends AsyncTask<Void, Void, Void> {
 
-    MaterialDialog dialog;
-    private Activity mActivity;
-    private int mCurrentSortingIndex;
-    private EmptyStateChangeListener mEmptyStateChangeListener;
-    private DirectoryUtils mDirectoryUtils;
-    ViewFilesAdapter adapter;
-    private Handler mHandler;
+    private MaterialDialog mDialog;
+    private final Activity mActivity;
+    private final int mCurrentSortingIndex;
+    private final EmptyStateChangeListener mEmptyStateChangeListener;
+    private final DirectoryUtils mDirectoryUtils;
+    private final ViewFilesAdapter mAdapter;
+    private final Handler mHandler;
 
     /**
      * Instantiates populate list object
      *
      * @param activity - activity instance
-     * @param adapter - adapter to be notified with new data
+     * @param adapter - mAdapter to be notified with new data
      * @param emptyStateChangeListener - set appropriate view on no results
      * @param index - sorting order
      */
     public PopulateList(Activity activity, ViewFilesAdapter adapter,
                         EmptyStateChangeListener emptyStateChangeListener, int index) {
         mActivity = activity;
-        this.adapter = adapter;
+        this.mAdapter = adapter;
         mCurrentSortingIndex = index;
         mEmptyStateChangeListener = emptyStateChangeListener;
         mDirectoryUtils = new DirectoryUtils(mActivity);
@@ -61,14 +61,14 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
                 .content(mActivity.getResources().getString(R.string.populating_list))
                 .cancelable(false)
                 .progress(true, 0);
-        dialog = builder.build();
-        dialog.show();
+        mDialog = builder.build();
+        mDialog.show();
     }
 
     @Override
     protected void onPostExecute(Void v) {
         super.onPostExecute(v);
-        dialog.dismiss();
+        mDialog.dismiss();
     }
 
     /**
@@ -89,7 +89,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
         }
         Log.v("done", "adding");
         FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
-        adapter.setData(pdfFiles);
+        mAdapter.setData(pdfFiles);
     }
 
 }

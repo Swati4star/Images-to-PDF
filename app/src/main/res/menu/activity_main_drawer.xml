@@ -23,13 +23,18 @@
             android:icon="@drawable/ic_text_format_black_24dp"
             android:title="@string/text_to_pdf"/>
         <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/ic_history_black_24dp"
-            android:title="@string/history" />
+            android:id="@+id/nav_remove_pages"
+            android:icon="@drawable/ic_remove_circle_black_24dp"
+            android:title="@string/remove_pages"/>
+
         <item
             android:id="@+id/nav_extract_images"
             android:icon="@drawable/ic_broken_image_black_24dp"
             android:title="@string/extract_images" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/history" />
 
     </group>
 

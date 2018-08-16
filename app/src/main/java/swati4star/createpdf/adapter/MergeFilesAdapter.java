@@ -20,10 +20,10 @@ import swati4star.createpdf.util.PDFUtils;
 
 public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.ViewMergeFilesHolder> {
 
-    private ArrayList<String> mFilePaths;
-    private Activity mContext;
-    private FileUtils mFileUtils;
-    private OnClickListener mOnClickListener;
+    private final ArrayList<String> mFilePaths;
+    private final Activity mContext;
+    private final FileUtils mFileUtils;
+    private final OnClickListener mOnClickListener;
     private final PDFUtils mPDFUtils;
 
 
