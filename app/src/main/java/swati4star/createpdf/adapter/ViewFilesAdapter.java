@@ -96,7 +96,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
 
         if (isEncrypted) {
-            holder.mEncryptionImage.setImageResource(R.drawable.lock_closed);
+            holder.mEncryptionImage.setImageResource(R.drawable.ic_lock_black_24dp);
             holder.mEncryptionImage.setVisibility(View.VISIBLE);
         } else {
             holder.mEncryptionImage.setVisibility(View.GONE);
@@ -174,6 +174,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     if (result) {
                         mFileList.add(new File(destFilePath));
                         notifyDataSetChanged();
+                        new DatabaseHelper(mActivity).insertRecord(destFilePath,
+                                mActivity.getString(R.string.rotated));
                     }
                 })
                 .inputType(InputType.TYPE_NUMBER_FLAG_SIGNED)

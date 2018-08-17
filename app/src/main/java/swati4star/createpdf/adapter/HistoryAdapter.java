@@ -109,6 +109,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
             return R.drawable.baseline_delete_24;
         if (operation.equalsIgnoreCase(mActivity.getString(R.string.renamed)))
             return R.drawable.ic_create_black_24dp;
+        if (operation.equalsIgnoreCase(mActivity.getString(R.string.rotated)))
+            return R.drawable.baseline_crop_rotate_24;
+        if (operation.equalsIgnoreCase(mActivity.getString(R.string.encrypted)))
+            return R.drawable.ic_lock_black_24dp;
+        if (operation.equalsIgnoreCase(mActivity.getString(R.string.decrypted)))
+            return R.drawable.ic_lock_open_black_24dp;
         return R.drawable.ic_insert_drive_file_black_24dp;
     }
 }
