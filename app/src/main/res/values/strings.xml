@@ -28,6 +28,7 @@
         <item>Show Details</item>
         <item>Add Password</item>
         <item>Remove Password</item>
+        <item>Rotate Pages</item>
     </array>
 
     <array name="itemIds" translatable="false">
@@ -338,4 +339,8 @@
     <string name="rate_title">Rate us!</string>
     <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
     <string name="rate_us_never">Never</string>
+    <string name="error_occurred">Error Occurred</string>
+    <string name="rotate_pages">Rotate Pages</string>
+    <string name="enter_rotation_angle">Enter Rotation Angle</string>
+    <string name="rotated_file_name">%s_rotated_%s%s</string>
 </resources>

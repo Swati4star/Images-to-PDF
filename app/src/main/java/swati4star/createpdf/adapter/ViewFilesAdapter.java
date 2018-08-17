@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,14 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
+import com.itextpdf.text.pdf.PdfDictionary;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfNumber;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -150,9 +157,51 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 mPDFEncryptionUtils.setPassword(file.getPath(), ViewFilesAdapter.this, mFileList);
                 break;
 
-            case 7://Password  Remove
+            case 7://Password Remove
                 mPDFEncryptionUtils.removePassword(file.getPath(), ViewFilesAdapter.this, mFileList);
                 break;
+
+            case 8://Rotate Pages
+                new MaterialDialog.Builder(mActivity)
+                        .title(R.string.rotate_pages)
+                        .content(R.string.enter_rotation_angle)
+                        .input(null, null, false, (dialog, input) -> {
+                            String sourceFilePath = file.getPath();
+                            String destFilePath = sourceFilePath.substring(0, sourceFilePath.lastIndexOf('/') + 1);
+                            String fileName = sourceFilePath.substring(sourceFilePath.lastIndexOf('/') + 1);
+                            destFilePath += String.format(mActivity.getString(R.string.rotated_file_name),
+                                    fileName.substring(0, fileName.lastIndexOf('.')), input,
+                                    mActivity.getString(R.string.pdf_ext));
+                            try {
+                                int angle = Integer.parseInt(input.toString());
+                                PdfReader reader = new PdfReader(sourceFilePath);
+                                int n = reader.getNumberOfPages();
+                                PdfDictionary page;
+                                PdfNumber rotate;
+                                for (int p = 1; p <= n; p++) {
+                                    page = reader.getPageN(p);
+                                    rotate = page.getAsNumber(PdfName.ROTATE);
+                                    if (rotate == null) {
+                                        page.put(PdfName.ROTATE, new PdfNumber(angle));
+                                    } else {
+                                        page.put(PdfName.ROTATE, new PdfNumber((rotate.intValue() + angle) % 360));
+                                    }
+                                }
+                                PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(destFilePath));
+                                stamper.close();
+                                reader.close();
+                                showSnackbar(mActivity, R.string.snackbar_pdfCreated);
+                                notifyDataSetChanged();
+                            } catch (NumberFormatException e) {
+                                showSnackbar(mActivity, R.string.invalid_entry);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                showSnackbar(mActivity , R.string.error_occurred);
+                            }
+                        })
+                        .inputType(InputType.TYPE_NUMBER_FLAG_SIGNED)
+                        .inputRange(1, 4)
+                        .show();
         }
     }
 

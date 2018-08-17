@@ -26,6 +26,7 @@
         <item>afficher les détails</item>
         <item>Ajouter mot de passe</item>
         <item>Supprimer le mot de</item>
+        <item>Faire pivoter les pages</item>
     </array>
 
     <string name="please_wait">Patientez</string>
@@ -271,4 +272,8 @@
     <string name="remove_pages_text">Enter the pages you want to keep in the PDF. For example, if you want pages 1 to 5 and 7 to 10, enter 1–5,7-10.</string>
     <string name="remove_pages_error">The input value is not valid</string>
     <string name="encrypted_pdf">PDF is password protected</string>
+    <string name="error_occurred">Error Occurred</string>
+    <string name="rotate_pages">Rotate Pages</string>
+    <string name="enter_rotation_angle">Enter Rotation Angle</string>
+    <string name="rotated_file_name">%s_rotated_%s%s</string>
 </resources>
