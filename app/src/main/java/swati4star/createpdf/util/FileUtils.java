@@ -292,6 +292,16 @@ public class FileUtils {
     }
 
     /**
+     * Extracts directory path from full file path
+     *
+     * @param path absolute path of the file
+     * @return absolute path of file directory
+     */
+    public String getFileDirectoryPath(String path) {
+        return path.substring(0, path.lastIndexOf('/') + 1);
+    }
+
+    /**
      * Saves bitmap to external storage
      * @param finalBitmap - bitmap to save
      */

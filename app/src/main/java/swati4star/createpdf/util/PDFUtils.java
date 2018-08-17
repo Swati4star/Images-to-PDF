@@ -12,7 +12,11 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfDictionary;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfNumber;
 import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.BufferedReader;
@@ -25,6 +29,8 @@ import java.io.InputStreamReader;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.model.TextToPDFOptions;
+
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFUtils {
 
@@ -141,5 +147,43 @@ public class PDFUtils {
             isEncrypted = true;
         }
         return isEncrypted;
+    }
+
+    /**
+     * Rotates pages in pdf
+     *
+     * @param input          rotation angle
+     * @param sourceFilePath source file path
+     * @param destFilePath   destination file path
+     * @return true if no error else false
+     */
+    public boolean rotatePDFPages(String input, String sourceFilePath, String destFilePath) {
+        try {
+            int angle = Integer.parseInt(input);
+            PdfReader reader = new PdfReader(sourceFilePath);
+            int n = reader.getNumberOfPages();
+            PdfDictionary page;
+            PdfNumber rotate;
+            for (int p = 1; p <= n; p++) {
+                page = reader.getPageN(p);
+                rotate = page.getAsNumber(PdfName.ROTATE);
+                if (rotate == null) {
+                    page.put(PdfName.ROTATE, new PdfNumber(angle));
+                } else {
+                    page.put(PdfName.ROTATE, new PdfNumber((rotate.intValue() + angle) % 360));
+                }
+            }
+            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(destFilePath));
+            stamper.close();
+            reader.close();
+            showSnackbar(mContext, R.string.snackbar_pdfCreated);
+            return true;
+        } catch (NumberFormatException e) {
+            showSnackbar(mContext, R.string.invalid_entry);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showSnackbar(mContext, R.string.error_occurred);
+        }
+        return false;
     }
 }
