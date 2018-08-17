@@ -33,6 +33,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.StringUtils;
@@ -50,6 +51,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private MorphButtonUtility mMorphButtonUtility;
     private String mFirstFilePath;
     private String mSecondFilePath;
+    private FileUtils mFileUtils;
 
     @BindView(R.id.fileonebtn)
     Button addFileOne;
@@ -117,7 +119,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @OnClick(R.id.mergebtn)
-    void mergeFiles(final View v) {
+    void mergeFiles(final View view) {
         String[] pdfpaths = {mFirstFilePath, mSecondFilePath};
         if (mFirstFilePath == null || mSecondFilePath == null || !mSuccess) {
             showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
@@ -130,7 +132,20 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                     if (StringUtils.isEmpty(input)) {
                         showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
-                        new MergePdf(mActivity, input.toString(), this).execute(pdfpaths);
+                        final String inputName = input.toString();
+                        if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
+                            new MergePdf(mActivity, input.toString(), this).execute(pdfpaths);
+                        } else {
+                            new MaterialDialog.Builder(mActivity)
+                                    .title(R.string.warning)
+                                    .content(R.string.overwrite_message)
+                                    .positiveText(android.R.string.ok)
+                                    .negativeText(android.R.string.cancel)
+                                    .onPositive((dialog12, which) -> new MergePdf(mActivity, input.toString(),
+                                            this).execute(pdfpaths))
+                                    .onNegative((dialog1, which) -> mergeFiles(view))
+                                    .show();
+                        }
                     }
                 })
                 .show();
@@ -190,6 +205,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+        mFileUtils = new FileUtils(mActivity);
     }
 
     @Override
