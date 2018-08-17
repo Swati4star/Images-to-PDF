@@ -155,6 +155,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
             }
         } catch (IOException e) {
             e.printStackTrace();
+            showSnackbar(mActivity, R.string.extract_images_failed);
+            return;
         }
         if (imagesCount == 0) {
             showSnackbar(mActivity, R.string.extract_images_failed);

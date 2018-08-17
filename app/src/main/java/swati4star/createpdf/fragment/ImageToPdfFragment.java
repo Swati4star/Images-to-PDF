@@ -286,7 +286,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Uri resultUri = result.getUri();
-                        mImagesUri.set(mImageCounter, resultUri.getPath());
+                        if (mImagesUri.size() > mImageCounter)
+                            mImagesUri.set(mImageCounter, resultUri.getPath());
                         showSnackbar(mActivity, R.string.snackbar_imagecropped);
                         break;
                     case CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE:

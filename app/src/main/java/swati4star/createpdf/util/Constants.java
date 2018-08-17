@@ -29,5 +29,9 @@ public class Constants {
     public static final String DEFAULT_PAGE_SIZE = "A4";
     public static final String CHOICE_REMOVE_IMAGE = "CHOICE_REMOVE_IMAGE";
 
+    public static final String BUNDLE_DATA = "bundle_data";
+    public static final String REORDER_PAGES = "reorder_pages";
+    public static final String REMOVE_PAGEs = "remove_pages";
+
     public static final String LAUNCH_COUNT = "launch_count";
 }

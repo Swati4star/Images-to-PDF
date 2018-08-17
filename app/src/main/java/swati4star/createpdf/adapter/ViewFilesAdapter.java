@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
 
         if (isEncrypted) {
-            holder.mEncryptionImage.setImageResource(R.drawable.lock_closed);
+            holder.mEncryptionImage.setImageResource(R.drawable.ic_lock_black_24dp);
             holder.mEncryptionImage.setVisibility(View.VISIBLE);
         } else {
             holder.mEncryptionImage.setVisibility(View.GONE);
@@ -156,29 +155,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 8://Rotate Pages
-                onRotatePagesClick(file.getPath());
+                mPDFUtils.rotatePages(file.getPath());
+                updateDataset();
         }
-    }
-
-    private void onRotatePagesClick(String sourceFilePath) {
-        new MaterialDialog.Builder(mActivity)
-                .title(R.string.rotate_pages)
-                .content(R.string.enter_rotation_angle)
-                .input(null, null, false, (dialog, input) -> {
-                    String destFilePath = mFileUtils.getFileDirectoryPath(sourceFilePath);
-                    String fileName = mFileUtils.getFileName(sourceFilePath);
-                    destFilePath += String.format(mActivity.getString(R.string.rotated_file_name),
-                            fileName.substring(0, fileName.lastIndexOf('.')), input,
-                            mActivity.getString(R.string.pdf_ext));
-                    boolean result = mPDFUtils.rotatePDFPages(input.toString(), sourceFilePath, destFilePath);
-                    if (result) {
-                        mFileList.add(new File(destFilePath));
-                        notifyDataSetChanged();
-                    }
-                })
-                .inputType(InputType.TYPE_NUMBER_FLAG_SIGNED)
-                .inputRange(1, 4)
-                .show();
     }
 
     /**

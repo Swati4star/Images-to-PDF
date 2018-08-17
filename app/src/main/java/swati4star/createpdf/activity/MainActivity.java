@@ -34,7 +34,10 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGEs;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.WHATS_NEW1_TEXT;
 import static swati4star.createpdf.util.Constants.WHATS_NEW1_TITLE;
 import static swati4star.createpdf.util.Constants.WHATS_NEW2_TEXT;
@@ -218,6 +221,7 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Bundle bundle = new Bundle();
 
         switch (item.getItemId()) {
             case R.id.nav_camera:
@@ -249,11 +253,22 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PAGEs);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_rearrange_pages:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REORDER_PAGES);
+                fragment.setArguments(bundle);
                 break;
         }
 
-        if (fragment != null)
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        try {
+            if (fragment != null)
+                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        } catch (Exception e) {
+            return true;
+        }
 
         return true;
     }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -115,6 +116,7 @@ public class PDFEncryptionUtility {
                 PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_128);
         stamper.close();
         reader.close();
+        new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.encrypted));
         return finalOutputFile;
     }
 
@@ -204,6 +206,7 @@ public class PDFEncryptionUtility {
                 showSnackbar(mContext, R.string.password_remove);
                 reader.close();
                 dataSetChanged.updateDataset();
+                new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
             } else {
                 showSnackbar(mContext, R.string.incorrect_passowrd);
             }
