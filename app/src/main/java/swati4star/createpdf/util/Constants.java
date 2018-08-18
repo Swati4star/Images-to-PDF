@@ -2,18 +2,6 @@ package swati4star.createpdf.util;
 
 public class Constants {
 
-    // Version 18
-    public static final String WHATS_NEW1_TITLE = "Preview PDF";
-    public static final String WHATS_NEW1_TEXT = "You can now rearrange images in preview screen.";
-    public static final String WHATS_NEW2_TITLE = "History";
-    public static final String WHATS_NEW2_TEXT = "View all the PDF operations performed by you";
-    public static final String WHATS_NEW3_TITLE = "Font family";
-    public static final String WHATS_NEW3_TEXT = "Select font family while converting text to PDF";
-    public static final String WHATS_NEW4_TITLE = "Search PDF";
-    public static final String WHATS_NEW4_TEXT = "Search PDFs more easily in view files section.";
-    public static final String WHATS_NEW5_TITLE = "Improved performance";
-    public static final String WHATS_NEW5_TEXT = "Improved the PDF conversion performance.";
-
     public static final String DEFAULT_COMPRESSION = "DefaultCompression";
     public static final String SORTING_INDEX = "SORTING_INDEX";
 

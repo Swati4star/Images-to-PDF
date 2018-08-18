@@ -59,8 +59,6 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-    // To show what's new in the application
-    implementation 'io.github.tonnyl:whatsnew:0.1.1'
     implementation 'com.airbnb.android:lottie:2.5.5'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'

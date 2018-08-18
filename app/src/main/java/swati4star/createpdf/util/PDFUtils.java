@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.model.TextToPDFOptions;
 
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -157,7 +158,8 @@ public class PDFUtils {
      * Show the dialog for angle of rotation of pdf pages
      * @param sourceFilePath - path of file to be rotated
      */
-    public void rotatePages(String sourceFilePath) {
+    public void rotatePages(String sourceFilePath,
+                               final DataSetChanged dataSetChanged) {
         new MaterialDialog.Builder(mContext)
                 .title(R.string.rotate_pages)
                 .content(R.string.enter_rotation_angle)
@@ -167,7 +169,8 @@ public class PDFUtils {
                     destFilePath += String.format(mContext.getString(R.string.rotated_file_name),
                             fileName.substring(0, fileName.lastIndexOf('.')), input,
                             mContext.getString(R.string.pdf_ext));
-                    boolean result = rotatePDFPages(input.toString(), sourceFilePath, destFilePath);
+                    boolean result = rotatePDFPages(input.toString(), sourceFilePath,
+                            destFilePath, dataSetChanged);
                     if (result) {
                         new DatabaseHelper(mContext).insertRecord(destFilePath,
                                 mContext.getString(R.string.rotated));
@@ -187,7 +190,8 @@ public class PDFUtils {
      * @param destFilePath   destination file path
      * @return true if no error else false
      */
-    private boolean rotatePDFPages(String input, String sourceFilePath, String destFilePath) {
+    private boolean rotatePDFPages(String input, String sourceFilePath, String destFilePath,
+                                   final DataSetChanged dataSetChanged) {
         try {
             int angle = Integer.parseInt(input);
             PdfReader reader = new PdfReader(sourceFilePath);
@@ -207,6 +211,7 @@ public class PDFUtils {
             stamper.close();
             reader.close();
             showSnackbar(mContext, R.string.snackbar_pdfCreated);
+            dataSetChanged.updateDataset();
             return true;
         } catch (NumberFormatException e) {
             showSnackbar(mContext, R.string.invalid_entry);
