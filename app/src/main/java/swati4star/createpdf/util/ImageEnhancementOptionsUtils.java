@@ -44,11 +44,11 @@ public class ImageEnhancementOptionsUtils {
 
         options.add(new EnhancementOptionsEntity(
                 context.getResources().getDrawable(R.drawable.ic_border_image_black_24dp),
-                context.getResources().getString(R.string.image_border)));
+                context.getResources().getString(R.string.border_dialog_title)));
 
-        options.add(new EnhancementOptionsEntity(
-                context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),
-                context.getResources().getString(R.string.add_watermark)));
+        //options.add(new EnhancementOptionsEntity(
+          //      context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),
+            //    context.getResources().getString(R.string.add_watermark)));
 
         return options;
     }

@@ -54,6 +54,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
@@ -144,6 +145,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 }
             }
         }
+
+        mPdfOptions.setBorderWidth(mSharedPreferences.getInt(DEFAULT_IMAGE_BORDER_TEXT, 0));
+        showBorderWidth();
 
         return root;
     }
@@ -379,12 +383,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private void addBorder() {
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
                 .title(getString(R.string.border))
-                .customView(R.layout.border_image_dialog, true)
+                .customView(R.layout.dialog_border_image, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .onPositive((dialog1, which) -> {
-                    final EditText input = dialog1.getCustomView().findViewById(R.id.border_width);
-                    int value;
+                    View view = dialog1.getCustomView();
+                    final EditText input = view.findViewById(R.id.border_width);
+                    int value = 0;
                     try {
                         value = Integer.parseInt(String.valueOf(input.getText()));
                         if (value > 200 || value < 0) {
@@ -395,6 +400,12 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         }
                     } catch (NumberFormatException e) {
                         showSnackbar(mActivity, R.string.invalid_entry);
+                    }
+                    final CheckBox cbSetDefault = view.findViewById(R.id.cbSetDefault);
+                    if (cbSetDefault.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putInt(Constants.DEFAULT_IMAGE_BORDER_TEXT, value);
+                        editor.apply();
                     }
                 }).build();
         dialog.show();

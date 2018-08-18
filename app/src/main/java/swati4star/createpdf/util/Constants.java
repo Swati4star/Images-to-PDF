@@ -12,6 +12,7 @@ public class Constants {
     public static final String DATABASE_NAME = "ImagesToPdfDB.db";
     public static final String DEFAULT_FONT_FAMILY_TEXT = "DefaultFontFamily";
     public static final String DEFAULT_FONT_FAMILY = "TIMES_ROMAN";
+    public static final String DEFAULT_IMAGE_BORDER_TEXT = "Image_border_text";
     public static final String RESULT = "result";
     public static final String DEFAULT_PAGE_SIZE_TEXT = "DefaultPageSize";
     public static final String DEFAULT_PAGE_SIZE = "A4";

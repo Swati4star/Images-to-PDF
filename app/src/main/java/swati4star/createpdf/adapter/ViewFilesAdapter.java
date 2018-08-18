@@ -97,14 +97,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         holder.mFilesize.setText(FileUtils.getFormattedSize(file));
         holder.mFiledate.setText(getFormattedDate(file));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
-
-        if (isEncrypted) {
-            holder.mEncryptionImage.setImageResource(R.drawable.ic_lock_black_24dp);
-            holder.mEncryptionImage.setVisibility(View.VISIBLE);
-        } else {
-            holder.mEncryptionImage.setVisibility(View.GONE);
-        }
-
+        holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.GONE);
         holder.mRipple.setOnClickListener(view -> {
             new MaterialDialog.Builder(mActivity)
                     .title(R.string.title)
