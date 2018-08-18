@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,8 +19,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import io.github.tonnyl.whatsnew.WhatsNew;
-import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.ExtractImagesFragment;
@@ -34,17 +31,10 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW1_TEXT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW1_TITLE;
-import static swati4star.createpdf.util.Constants.WHATS_NEW2_TEXT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW2_TITLE;
-import static swati4star.createpdf.util.Constants.WHATS_NEW3_TEXT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW3_TITLE;
-import static swati4star.createpdf.util.Constants.WHATS_NEW4_TEXT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW4_TITLE;
-import static swati4star.createpdf.util.Constants.WHATS_NEW5_TEXT;
-import static swati4star.createpdf.util.Constants.WHATS_NEW5_TITLE;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGEs;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,9 +60,6 @@ public class MainActivity extends AppCompatActivity
         //Replaced setDrawerListener with addDrawerListener because it was deprecated.
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        // To show what's new in our application
-        //setWhatsNew();
 
         // Set ImageToPdfFragment fragment
         Fragment fragment = new ImageToPdfFragment();
@@ -111,22 +98,6 @@ public class MainActivity extends AppCompatActivity
                 && mNavigationView.getMenu().getItem(position) != null) {
             mNavigationView.getMenu().getItem(position).setChecked(true);
         }
-    }
-
-    /**
-     * To show the new features in the update
-     */
-    private void setWhatsNew() {
-        WhatsNew whatsNew = WhatsNew.newInstance(
-                new WhatsNewItem(WHATS_NEW1_TITLE, WHATS_NEW1_TEXT),
-                new WhatsNewItem(WHATS_NEW2_TITLE, WHATS_NEW2_TEXT),
-                new WhatsNewItem(WHATS_NEW3_TITLE, WHATS_NEW3_TEXT),
-                new WhatsNewItem(WHATS_NEW4_TITLE, WHATS_NEW4_TEXT),
-                new WhatsNewItem(WHATS_NEW5_TITLE, WHATS_NEW5_TEXT)
-        );
-        whatsNew.setButtonBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        whatsNew.setButtonTextColor(ContextCompat.getColor(this, R.color.mb_white));
-        whatsNew.presentAutomatically(this);
     }
 
     /**
@@ -218,6 +189,7 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Bundle bundle = new Bundle();
 
         switch (item.getItemId()) {
             case R.id.nav_camera:
@@ -249,12 +221,22 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PAGEs);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_rearrange_pages:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REORDER_PAGES);
+                fragment.setArguments(bundle);
                 break;
         }
 
-        if (fragment != null)
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-
+        try {
+            if (fragment != null)
+                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        } catch (Exception e) {
+            return true;
+        }
         return true;
     }
 

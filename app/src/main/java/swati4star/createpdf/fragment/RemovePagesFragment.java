@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dd.morphingbutton.MorphingButton;
 import com.itextpdf.text.DocumentException;
@@ -46,6 +47,8 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -76,6 +79,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     EditText pagesInput;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
+    @BindView(R.id.infoText)
+    TextView mInfoText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -84,6 +89,13 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new RemovePagesFragment.BottomSheetCallback());
+
+        String argument = getArguments().getString(BUNDLE_DATA);
+        if (argument.equals(REORDER_PAGES))
+            mInfoText.setText(R.string.reorder_pages_text);
+        else
+            mInfoText.setText(R.string.remove_pages_text);
+
 
         ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)

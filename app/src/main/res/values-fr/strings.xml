@@ -251,7 +251,6 @@
     <string name="filter_saved">Image saved</string>
     <string name="filter_not_saved">Image could not be saved</string>
     <string name="border_dialog_title">Enter border width in units (Default is 0) :</string>
-    <string name="image_border">Add Border</string>
     <string name="extract_images">Extract Images</string>
     <string name="extract_images_failed">We couldn\'t find any images in the selected PDF.</string>
     <string name="extract_images_success">We found %1$d image(s) in the selected PDF. They have been saved in the PDF Files folder in root directory.</string>
@@ -279,4 +278,6 @@
     <string name="rotated">Rotated</string>
     <string name="encrypted">Encrypted</string>
     <string name="decrypted">Decrypted</string>
+    <string name="reorder_pages">Reorder Pages</string>
+    <string name="reorder_pages_text">Enter the order of the pages. For example, if you want to reorder a PDF with 5 pages, you may write 4-5,1-3. The output PDF with have page no. 4,5, and then, 1,2,3.</string>
 </resources>

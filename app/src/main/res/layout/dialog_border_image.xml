@@ -21,4 +21,12 @@
         android:textColor="@color/black_87"
         android:textSize="20sp" />
 
+    <CheckBox
+        android:id="@+id/cbSetDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text="@string/set_as_default" />
+
 </LinearLayout>

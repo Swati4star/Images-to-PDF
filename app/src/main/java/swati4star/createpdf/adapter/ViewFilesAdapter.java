@@ -1,10 +1,11 @@
 package swati4star.createpdf.adapter;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,13 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
-import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.PopulateList;
 
+import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -40,7 +43,7 @@ import static swati4star.createpdf.util.StringUtils.showSnackbar;
  */
 
 public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder>
-        implements DataSetChanged {
+        implements DataSetChanged, EmptyStateChangeListener {
 
     private final Activity mActivity;
     private final EmptyStateChangeListener mEmptyStateChangeListener;
@@ -50,10 +53,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final ArrayList<Integer> mSelectedFiles;
 
     private final FileUtils mFileUtils;
-    private final DirectoryUtils mDirectoryUtils;
     private final PDFUtils mPDFUtils;
     private final PDFEncryptionUtility mPDFEncryptionUtils;
     private final DatabaseHelper mDatabaseHelper;
+    private final SharedPreferences mSharedPreferences;
 
     /**
      * Returns adapter instance
@@ -71,9 +74,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
-        mDirectoryUtils = new DirectoryUtils(activity);
         mPDFEncryptionUtils = new PDFEncryptionUtility(activity);
         mDatabaseHelper = new DatabaseHelper(mActivity);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
     }
 
     @NonNull
@@ -94,14 +97,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         holder.mFilesize.setText(FileUtils.getFormattedSize(file));
         holder.mFiledate.setText(getFormattedDate(file));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
-
-        if (isEncrypted) {
-            holder.mEncryptionImage.setImageResource(R.drawable.ic_lock_black_24dp);
-            holder.mEncryptionImage.setVisibility(View.VISIBLE);
-        } else {
-            holder.mEncryptionImage.setVisibility(View.GONE);
-        }
-
+        holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.GONE);
         holder.mRipple.setOnClickListener(view -> {
             new MaterialDialog.Builder(mActivity)
                     .title(R.string.title)
@@ -156,31 +152,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 8://Rotate Pages
-                onRotatePagesClick(file.getPath());
+                mPDFUtils.rotatePages(file.getPath(), ViewFilesAdapter.this);
         }
-    }
-
-    private void onRotatePagesClick(String sourceFilePath) {
-        new MaterialDialog.Builder(mActivity)
-                .title(R.string.rotate_pages)
-                .content(R.string.enter_rotation_angle)
-                .input(null, null, false, (dialog, input) -> {
-                    String destFilePath = mFileUtils.getFileDirectoryPath(sourceFilePath);
-                    String fileName = mFileUtils.getFileName(sourceFilePath);
-                    destFilePath += String.format(mActivity.getString(R.string.rotated_file_name),
-                            fileName.substring(0, fileName.lastIndexOf('.')), input,
-                            mActivity.getString(R.string.pdf_ext));
-                    boolean result = mPDFUtils.rotatePDFPages(input.toString(), sourceFilePath, destFilePath);
-                    if (result) {
-                        mFileList.add(new File(destFilePath));
-                        notifyDataSetChanged();
-                        new DatabaseHelper(mActivity).insertRecord(destFilePath,
-                                mActivity.getString(R.string.rotated));
-                    }
-                })
-                .inputType(InputType.TYPE_NUMBER_FLAG_SIGNED)
-                .inputRange(1, 4)
-                .show();
     }
 
     /**
@@ -365,9 +338,18 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void updateDataset() {
-        File folder = mDirectoryUtils.getOrCreatePdfDirectory();
-        ArrayList<File> pdfsFromFolder = mDirectoryUtils.getPdfsFromPdfFolder(folder.listFiles());
-        setData(pdfsFromFolder);
+        int index = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
+        new PopulateList(mActivity, this, this, index).execute();
+    }
+
+    @Override
+    public void setEmptyStateVisible() {
+
+    }
+
+    @Override
+    public void setEmptyStateInvisible() {
+
     }
 
     public class ViewFilesHolder extends RecyclerView.ViewHolder {

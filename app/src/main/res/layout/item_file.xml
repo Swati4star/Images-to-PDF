@@ -79,8 +79,9 @@
                             android:layout_height="20dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="15dp"
-                            android:layout_marginEnd="10dp"
-                            android:visibility="gone" />
+                            app:srcCompat="@drawable/ic_lock_black_24dp"
+                            android:tint="@color/black"
+                            android:layout_marginEnd="10dp" />
                     </LinearLayout>
 
                     <TextView

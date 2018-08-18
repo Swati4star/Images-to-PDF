@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.InputType;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -28,6 +30,7 @@ import java.io.InputStreamReader;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.model.TextToPDFOptions;
 
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -35,9 +38,11 @@ import static swati4star.createpdf.util.StringUtils.showSnackbar;
 public class PDFUtils {
 
     private final Activity mContext;
+    private final FileUtils mFileUtils;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
+        this.mFileUtils = new FileUtils(mContext);
     }
 
     /**
@@ -150,6 +155,34 @@ public class PDFUtils {
     }
 
     /**
+     * Show the dialog for angle of rotation of pdf pages
+     * @param sourceFilePath - path of file to be rotated
+     */
+    public void rotatePages(String sourceFilePath,
+                               final DataSetChanged dataSetChanged) {
+        new MaterialDialog.Builder(mContext)
+                .title(R.string.rotate_pages)
+                .content(R.string.enter_rotation_angle)
+                .input(null, null, false, (dialog, input) -> {
+                    String destFilePath = mFileUtils.getFileDirectoryPath(sourceFilePath);
+                    String fileName = mFileUtils.getFileName(sourceFilePath);
+                    destFilePath += String.format(mContext.getString(R.string.rotated_file_name),
+                            fileName.substring(0, fileName.lastIndexOf('.')), input,
+                            mContext.getString(R.string.pdf_ext));
+                    boolean result = rotatePDFPages(input.toString(), sourceFilePath,
+                            destFilePath, dataSetChanged);
+                    if (result) {
+                        new DatabaseHelper(mContext).insertRecord(destFilePath,
+                                mContext.getString(R.string.rotated));
+                    }
+                })
+                .inputType(InputType.TYPE_NUMBER_FLAG_SIGNED)
+                .inputRange(1, 4)
+                .show();
+    }
+
+
+    /**
      * Rotates pages in pdf
      *
      * @param input          rotation angle
@@ -157,7 +190,8 @@ public class PDFUtils {
      * @param destFilePath   destination file path
      * @return true if no error else false
      */
-    public boolean rotatePDFPages(String input, String sourceFilePath, String destFilePath) {
+    private boolean rotatePDFPages(String input, String sourceFilePath, String destFilePath,
+                                   final DataSetChanged dataSetChanged) {
         try {
             int angle = Integer.parseInt(input);
             PdfReader reader = new PdfReader(sourceFilePath);
@@ -177,6 +211,7 @@ public class PDFUtils {
             stamper.close();
             reader.close();
             showSnackbar(mContext, R.string.snackbar_pdfCreated);
+            dataSetChanged.updateDataset();
             return true;
         } catch (NumberFormatException e) {
             showSnackbar(mContext, R.string.invalid_entry);
