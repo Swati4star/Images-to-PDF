@@ -350,4 +350,5 @@
     <string name="rotate_pages">Rotate Pages</string>
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
     <string name="rotated_file_name">%s_rotated_%s%s</string>
+    <string name="share_files">Share Files</string>
 </resources>

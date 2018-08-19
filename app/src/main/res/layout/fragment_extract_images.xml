@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="*"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical"
+        android:stretchColumns="*"
         tools:context=".fragment.ExtractImagesFragment">
 
         <Button
@@ -24,42 +22,54 @@
             android:maxWidth="30dp"
             android:padding="3dip"
             android:text="@string/merge_file_select"
-            android:textColor="@color/mb_white"
-            app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/mb_white" />
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/extractImages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/selectFile"
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:layout_marginTop="112dp"
             android:padding="10dp"
             android:text="@string/extract_images"
-            android:textColor="@color/mb_white"
-            app:layout_constraintBottom_toTopOf="@id/recyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView" />
+            android:textColor="@color/mb_white" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/extractedimages_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/extractImages"
             android:layout_margin="10dp"
             android:text="@string/split_success"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/extracted_files"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_above="@id/share_files"
+            android:layout_below="@id/extractedimages_text" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/share_files"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimary"
+            android:drawableEnd="@drawable/baseline_share_24"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:text="@string/share_files"
+            android:textColor="@color/mb_white"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <include layout="@layout/bottom_sheet" />
 </android.support.design.widget.CoordinatorLayout>

@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.dd.morphingbutton.MorphingButton;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -49,6 +50,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     private FileUtils mFileUtils;
     private DirectoryUtils mDirectoryUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private ArrayList<String> mOutFilePaths;
 
     @BindView(R.id.selectFile)
     Button selectFileButton;
@@ -69,6 +71,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     RecyclerView mExtractedFiles;
     @BindView(R.id.extractedimages_text)
     TextView extractImagesSuccessText;
+    @BindView(R.id.share_files)
+    Button mShareFiles;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -92,6 +96,17 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
         resetView();
         return rootview;
+    }
+
+    @OnClick(R.id.share_files)
+    void onShareFilesClick(View view) {
+        if (mOutFilePaths != null) {
+            ArrayList<File> fileArrayList = new ArrayList<>();
+            for (String path : mOutFilePaths) {
+                fileArrayList.add(new File(path));
+            }
+            mFileUtils.shareMultipleFiles(fileArrayList);
+        }
     }
 
     @OnClick(R.id.viewFiles)
@@ -146,6 +161,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
     private void setTextAndActivateButtons(String path) {
         mExtractedFiles.setVisibility(View.GONE);
+        mShareFiles.setVisibility(View.GONE);
         extractImagesSuccessText.setVisibility(View.GONE);
         mPath = path;
         selectFileButton.setText(mPath);
@@ -171,6 +187,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     @Override
     public void updateView(String text, ArrayList<String> outputFilePaths) {
         extractImagesSuccessText.setVisibility(View.VISIBLE);
+        mShareFiles.setVisibility(View.VISIBLE);
+        mOutFilePaths = outputFilePaths;
         FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
         extractImagesSuccessText.setText(text);

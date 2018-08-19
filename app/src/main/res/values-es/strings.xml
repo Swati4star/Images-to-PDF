@@ -279,4 +279,5 @@
     <string name="decrypted">Decrypted</string>
     <string name="reorder_pages">Reorder Pages</string>
     <string name="reorder_pages_text">Enter the order of the pages. For example, if you want to reorder a PDF with 5 pages, you may write 4-5,1-3. The output PDF with have page no. 4,5, and then, 1,2,3.</string>
+    <string name="share_files">Share Files</string>
 </resources>
