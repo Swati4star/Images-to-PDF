@@ -3,8 +3,6 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,13 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dd.morphingbutton.MorphingButton;
-import com.itextpdf.text.pdf.PRStream;
-import com.itextpdf.text.pdf.PdfName;
-import com.itextpdf.text.pdf.PdfObject;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.PdfImageObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -38,17 +30,18 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener {
+        FilesListAdapter.OnFileItemClickedListener, ExtractImagesListener {
 
     private Activity mActivity;
     private String mPath;
@@ -97,7 +90,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
             mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
         }
 
-        resetValues();
+        resetView();
         return rootview;
     }
 
@@ -133,56 +126,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
     @OnClick(R.id.extractImages)
     public void parse() {
-        ArrayList<String> outputFilePaths = new ArrayList<>();
-        int imagesCount = 0;
-        try {
-            PdfReader reader = new PdfReader(mPath);
-            PdfObject obj;
-            for (int i = 1; i <= reader.getXrefSize(); i++) {
-                obj = reader.getPdfObject(i);
-                if (obj != null && obj.isStream()) {
-                    PRStream stream = (PRStream) obj;
-                    PdfObject type = stream.get(PdfName.SUBTYPE); //get the object type
-                    if (type != null && type.toString().equals(PdfName.IMAGE.toString())) {
-                        PdfImageObject pio = new PdfImageObject(stream);
-                        byte[] image = pio.getImageAsBytes();
-                        Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,
-                                image.length);
-                        imagesCount++;
-                        outputFilePaths.add(mFileUtils.saveImage(bmp));
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            showSnackbar(mActivity, R.string.extract_images_failed);
-            return;
-        }
-        if (imagesCount == 0) {
-            showSnackbar(mActivity, R.string.extract_images_failed);
-            return;
-        }
-
-        String text = String.format(getString(R.string.extract_images_success), imagesCount);
-        showSnackbar(mActivity, text);
-        extractImagesSuccessText.setVisibility(View.VISIBLE);
-        extractImagesSuccessText.setText(text);
-        FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        mExtractedFiles.setVisibility(View.VISIBLE);
-        mExtractedFiles.setLayoutManager(mLayoutManager);
-        mExtractedFiles.setAdapter(splitFilesAdapter);
-        mExtractedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-
-        resetValues();
-    }
-
-    private void resetValues() {
-        mPath = null;
-        selectFileButton.setText(R.string.merge_file_select);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
-        mMorphButtonUtility.morphToGrey(extractImagesButton, mMorphButtonUtility.integer());
-        extractImagesButton.setEnabled(false);
+        new ExtractImages(mActivity, mPath, this).execute();
     }
 
     @Override
@@ -213,6 +157,27 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     @Override
     public void onFileItemClick(String path) {
         mFileUtils.openImage(path);
+    }
+
+    @Override
+    public void resetView() {
+        mPath = null;
+        selectFileButton.setText(R.string.merge_file_select);
+        selectFileButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
+        mMorphButtonUtility.morphToGrey(extractImagesButton, mMorphButtonUtility.integer());
+        extractImagesButton.setEnabled(false);
+    }
+
+    @Override
+    public void updateView(String text, ArrayList<String> outputFilePaths) {
+        extractImagesSuccessText.setVisibility(View.VISIBLE);
+        FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+        extractImagesSuccessText.setText(text);
+        mExtractedFiles.setVisibility(View.VISIBLE);
+        mExtractedFiles.setLayoutManager(mLayoutManager);
+        mExtractedFiles.setAdapter(splitFilesAdapter);
+        mExtractedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
     }
 
     private class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
