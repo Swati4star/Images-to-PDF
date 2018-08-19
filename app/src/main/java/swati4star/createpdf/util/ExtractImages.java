@@ -65,8 +65,11 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                         byte[] image = pio.getImageAsBytes();
                         Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,
                                 image.length);
-                        mImagesCount++;
-                        mOutputFilePaths.add(mFileUtils.saveImage(bmp));
+                        String path = mFileUtils.saveImage(bmp);
+                        if (path != null) {
+                            mOutputFilePaths.add(path);
+                            mImagesCount++;
+                        }
                     }
                 }
             }

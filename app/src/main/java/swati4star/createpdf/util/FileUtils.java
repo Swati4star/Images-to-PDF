@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -306,6 +307,10 @@ public class FileUtils {
      * @param finalBitmap - bitmap to save
      */
     public String  saveImage(Bitmap finalBitmap) {
+
+        if (checkIfBitmapIsWhite(finalBitmap))
+            return null;
+
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + mContext.getString(R.string.pdf_dir));
         String fname = "image_" + System.currentTimeMillis() + ".jpg";
@@ -322,6 +327,20 @@ public class FileUtils {
             e.printStackTrace();
         }
         return myDir + "/" + fname;
+    }
+
+    private boolean checkIfBitmapIsWhite(Bitmap bitmap) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        for (int i =  0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                int pixel =  bitmap.getPixel(i, j);
+                if (pixel != Color.WHITE) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void openImage(String path) {
