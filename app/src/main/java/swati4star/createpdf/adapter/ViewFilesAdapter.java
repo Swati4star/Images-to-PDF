@@ -225,7 +225,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private void deleteFile(String name, int position) {
         mIsFileDeleteUndoClicked = 0;
         final File fdelete = new File(name);
-        final File fcreate = new File(name);
         if (fdelete.exists()) {
             mFileList.remove(position);
             notifyDataSetChanged();
@@ -236,8 +235,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         if (mFileList.size() == 0) {
                             mEmptyStateChangeListener.setEmptyStateInvisible();
                         }
-                        mFileList.add(fcreate);
-                        notifyDataSetChanged();
+                        updateDataset();
                         mIsFileDeleteUndoClicked = 1;
                     }).addCallback(new Snackbar.Callback() {
 

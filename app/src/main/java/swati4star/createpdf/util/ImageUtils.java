@@ -1,6 +1,7 @@
 package swati4star.createpdf.util;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +10,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 
 import com.itextpdf.text.Rectangle;
+
+import java.io.File;
 
 public class ImageUtils {
 
@@ -72,6 +75,20 @@ public class ImageUtils {
         canvas.drawBitmap(sbmp, rect, rect, paint);
 
         return output;
+    }
+
+    /**
+     * Get round bitmap from file path
+     * @param path - file path
+     * @return - output round bitmap
+     */
+    public static Bitmap getRoundBitmapFromPath(String path) {
+        File file = new File(path);
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
+        int width = bitmap.getWidth(), height = bitmap.getHeight();
+        int radius = width > height ? height : width; // set the smallest edge as radius.
+        return ImageUtils.getRoundBitmap(bitmap, radius);
     }
 
 }

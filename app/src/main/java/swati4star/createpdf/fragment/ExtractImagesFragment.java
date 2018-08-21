@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-import swati4star.createpdf.adapter.FilesListAdapter;
+import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.util.DirectoryUtils;
@@ -42,7 +42,7 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 
 public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener, ExtractImagesListener {
+        ExtractImagesAdapter.OnFileItemClickedListener, ExtractImagesListener {
 
     private Activity mActivity;
     private String mPath;
@@ -189,12 +189,12 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         extractImagesSuccessText.setVisibility(View.VISIBLE);
         mShareFiles.setVisibility(View.VISIBLE);
         mOutFilePaths = outputFilePaths;
-        FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
+        ExtractImagesAdapter extractImagesAdapter = new ExtractImagesAdapter(mActivity, outputFilePaths, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
         extractImagesSuccessText.setText(text);
         mExtractedFiles.setVisibility(View.VISIBLE);
         mExtractedFiles.setLayoutManager(mLayoutManager);
-        mExtractedFiles.setAdapter(splitFilesAdapter);
+        mExtractedFiles.setAdapter(extractImagesAdapter);
         mExtractedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
     }
 
