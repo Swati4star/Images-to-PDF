@@ -2,8 +2,13 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.text.InputType;
 import android.widget.TextView;
 
@@ -14,19 +19,24 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PRStream;
 import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfNumber;
+import com.itextpdf.text.pdf.PdfObject;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.PdfImageObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -156,10 +166,11 @@ public class PDFUtils {
 
     /**
      * Show the dialog for angle of rotation of pdf pages
+     *
      * @param sourceFilePath - path of file to be rotated
      */
     public void rotatePages(String sourceFilePath,
-                               final DataSetChanged dataSetChanged) {
+                            final DataSetChanged dataSetChanged) {
         new MaterialDialog.Builder(mContext)
                 .title(R.string.rotate_pages)
                 .content(R.string.enter_rotation_angle)
@@ -220,5 +231,101 @@ public class PDFUtils {
             showSnackbar(mContext, R.string.error_occurred);
         }
         return false;
+    }
+
+    public void compressPDF(String inputPath, String outputPath, int quality) {
+        new CompressPdfAsync(inputPath, outputPath, quality).execute();
+    }
+
+    private class CompressPdfAsync extends AsyncTask<String, String, String> {
+
+        private MaterialDialog mMaterialDialog;
+        String inputPath, outputPath;
+        int quality;
+
+        CompressPdfAsync(String inputPath, String outputPath, int quality) {
+            this.inputPath = inputPath;
+            this.outputPath = outputPath;
+            this.quality = quality;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mMaterialDialog = new MaterialDialog.Builder(mContext)
+                    .customView(R.layout.lottie_anim_dialog, false)
+                    .build();
+            mMaterialDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+
+                PdfReader reader = new PdfReader(inputPath);
+                int n = reader.getXrefSize();
+                PdfObject object;
+                PRStream stream;
+
+                for (int i = 0; i < n; i++) {
+                    object = reader.getPdfObject(i);
+                    if (object == null || !object.isStream())
+                        continue;
+                    stream = (PRStream) object;
+                    PdfObject pdfsubtype = stream.get(PdfName.SUBTYPE);
+                    System.out.println(stream.type());
+                    if (pdfsubtype != null && pdfsubtype.toString().equals(PdfName.IMAGE.toString())) {
+                        PdfImageObject image = new PdfImageObject(stream);
+                        byte[] imageBytes = image.getImageAsBytes();
+                        Bitmap bmp;
+                        bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                        if (bmp == null) continue;
+
+                        int width = bmp.getWidth();
+                        int height = bmp.getHeight();
+
+                        Bitmap outBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        Canvas outCanvas = new Canvas(outBitmap);
+                        outCanvas.drawBitmap(bmp, 0f, 0f, null);
+
+                        ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
+
+                        outBitmap.compress(Bitmap.CompressFormat.JPEG, quality, imgBytes);
+                        stream.clear();
+                        stream.setData(imgBytes.toByteArray(), false, PRStream.BEST_COMPRESSION);
+                        stream.put(PdfName.TYPE, PdfName.XOBJECT);
+                        stream.put(PdfName.SUBTYPE, PdfName.IMAGE);
+                        stream.put(PdfName.FILTER, PdfName.DCTDECODE);
+                        stream.put(PdfName.WIDTH, new PdfNumber(width));
+                        stream.put(PdfName.HEIGHT, new PdfNumber(height));
+                        stream.put(PdfName.BITSPERCOMPONENT, new PdfNumber(8));
+                        stream.put(PdfName.COLORSPACE, PdfName.DEVICERGB);
+                    }
+
+                }
+
+                reader.removeUnusedObjects();
+                // Save altered PDF
+                PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputPath));
+                stamper.setFullCompression();
+                stamper.close();
+                reader.close();
+
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            mMaterialDialog.dismiss();
+            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content)
+                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(outputPath)).show();
+            new DatabaseHelper(mContext).insertRecord(outputPath,
+                    mContext.getString(R.string.created));
+        }
     }
 }

@@ -20,7 +20,8 @@ public class Constants {
 
     public static final String BUNDLE_DATA = "bundle_data";
     public static final String REORDER_PAGES = "reorder_pages";
-    public static final String REMOVE_PAGEs = "remove_pages";
+    public static final String REMOVE_PAGES = "remove_pages";
+    public static final String COMPRESS_PDF = "remove_pages";
 
     public static final String LAUNCH_COUNT = "launch_count";
 }

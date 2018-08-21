@@ -41,6 +41,7 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
+import swati4star.createpdf.activity.RearrangeImages;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -71,6 +72,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
+    private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
 
     @BindView(R.id.addImages)
     MorphingButton addImages;
@@ -287,55 +289,47 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
             case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        Uri resultUri = result.getUri();
-                        if (mImagesUri.size() > mImageCounter)
-                            mImagesUri.set(mImageCounter, resultUri.getPath());
-                        showSnackbar(mActivity, R.string.snackbar_imagecropped);
-                        break;
-                    case CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE:
-                        Exception error = result.getError();
-                        showSnackbar(mActivity, R.string.snackbar_error_getCropped);
-                        error.printStackTrace();
-                        break;
-                }
+                Uri resultUri = result.getUri();
+                if (mImagesUri.size() > mImageCounter)
+                    mImagesUri.set(mImageCounter, resultUri.getPath());
+                showSnackbar(mActivity, R.string.snackbar_imagecropped);
                 mImageCounter++;
                 cropNextImage();
                 break;
 
             case INTENT_REQUEST_APPLY_FILTER:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        try {
-                            mImagesUri.clear();
-                            ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
-                            int size = mFilterUris.size() - 1;
-                            for (int k = 0; k <= size; k++) {
-                                mImagesUri.add(mFilterUris.get(k));
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                try {
+                    mImagesUri.clear();
+                    ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
+                    int size = mFilterUris.size() - 1;
+                    for (int k = 0; k <= size; k++) {
+                        mImagesUri.add(mFilterUris.get(k));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                break;
 
             case INTENT_REQUEST_PREVIEW_IMAGE:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        try {
-                            mImagesUri = data.getStringArrayListExtra(RESULT);
-                            if (mImagesUri.size() > 0) {
-                                mNoOfImages.setText(String.format(mActivity.getResources()
+                try {
+                    mImagesUri = data.getStringArrayListExtra(RESULT);
+                    if (mImagesUri.size() > 0) {
+                        mNoOfImages.setText(String.format(mActivity.getResources()
                                         .getString(R.string.images_selected), mImagesUri.size()));
-                            } else {
-                                mNoOfImages.setVisibility(View.GONE);
-                                mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
-                                mCreatePdf.setEnabled(false);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    } else {
+                        mNoOfImages.setVisibility(View.GONE);
+                        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+                        mCreatePdf.setEnabled(false);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case INTENT_REQUEST_REARRANGE_IMAGE:
+                try {
+                    mImagesUri = data.getStringArrayListExtra(Constants.RESULT);
+                    showSnackbar(mActivity, R.string.images_rearranged);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }
@@ -372,12 +366,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 addBorder();
                 break;
             case 7:
-                showWatermarkOptions();
+                rearrangeImages();
         }
     }
 
-    private void showWatermarkOptions() {
-
+    private void rearrangeImages() {
+        Intent intent = new Intent(mActivity, RearrangeImages.class);
+        intent.putStringArrayListExtra(PREVIEW_IMAGES, mImagesUri);
+        startActivityForResult(intent, INTENT_REQUEST_REARRANGE_IMAGE);
     }
 
     private void addBorder() {

@@ -48,6 +48,7 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -61,6 +62,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private PDFUtils mPDFUtils;
     private DirectoryUtils mDirectoryUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private String mOperation;
 
     @BindView(R.id.selectFile)
     Button selectFileButton;
@@ -91,8 +93,11 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         sheetBehavior.setBottomSheetCallback(new RemovePagesFragment.BottomSheetCallback());
 
         String argument = getArguments().getString(BUNDLE_DATA);
+        mOperation = argument;
         if (argument.equals(REORDER_PAGES))
             mInfoText.setText(R.string.reorder_pages_text);
+        else if (argument.equals(COMPRESS_PDF))
+            mInfoText.setText(R.string.compress_pdf_prompt);
         else
             mInfoText.setText(R.string.remove_pages_text);
 
@@ -147,15 +152,19 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @OnClick(R.id.pdfCreate)
     public void parse() {
+        hideKeyboard(mActivity);
+        if (mOperation.equals(COMPRESS_PDF)) {
+            compressPDF();
+            return;
+        }
+
         String pages = pagesInput.getText().toString();
         String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
                 "_edited" + pages + mActivity.getString(R.string.pdf_ext));
-        hideKeyboard(mActivity);
         if (mPDFUtils.isPDFEncrypted(mPath)) {
             showSnackbar(mActivity, R.string.encrypted_pdf);
             return;
         }
-
         try {
             PdfReader reader = new PdfReader(mPath);
             reader.selectPages(pages);
@@ -178,6 +187,26 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(outputPath)).show();
         new DatabaseHelper(mActivity).insertRecord(outputPath,
                 mActivity.getString(R.string.created));
+        resetValues();
+    }
+
+    private void compressPDF() {
+
+        String input = pagesInput.getText().toString();
+        int check;
+        try {
+            check = Integer.parseInt(String.valueOf(input));
+            if (check > 100 || check <= 0) {
+                showSnackbar(mActivity, R.string.invalid_entry);
+            } else {
+                String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
+                        "_edited" + check + mActivity.getString(R.string.pdf_ext));
+
+                mPDFUtils.compressPDF(mPath, outputPath, 100 - check);
+            }
+        } catch (NumberFormatException e) {
+            showSnackbar(mActivity, R.string.invalid_entry);
+        }
         resetValues();
     }
 

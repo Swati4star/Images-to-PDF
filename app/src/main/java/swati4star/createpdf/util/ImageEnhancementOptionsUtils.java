@@ -46,6 +46,10 @@ public class ImageEnhancementOptionsUtils {
                 context.getResources().getDrawable(R.drawable.ic_border_image_black_24dp),
                 context.getResources().getString(R.string.border_dialog_title)));
 
+        options.add(new EnhancementOptionsEntity(
+                context.getResources().getDrawable(R.drawable.ic_rearrange),
+                context.getResources().getString(R.string.rearrange_images)));
+
         //options.add(new EnhancementOptionsEntity(
           //      context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),
             //    context.getResources().getString(R.string.add_watermark)));

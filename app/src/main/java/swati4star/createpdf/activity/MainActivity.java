@@ -32,8 +32,9 @@ import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
-import static swati4star.createpdf.util.Constants.REMOVE_PAGEs;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 
 public class MainActivity extends AppCompatActivity
@@ -221,12 +222,17 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
-                bundle.putString(BUNDLE_DATA, REMOVE_PAGEs);
+                bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_compress_pdf:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
         }

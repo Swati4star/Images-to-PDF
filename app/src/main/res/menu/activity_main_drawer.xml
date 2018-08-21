@@ -23,6 +23,10 @@
             android:icon="@drawable/ic_text_format_black_24dp"
             android:title="@string/text_to_pdf"/>
         <item
+            android:id="@+id/nav_compress_pdf"
+            android:icon="@drawable/ic_compress_image"
+            android:title="@string/compress_pdf"/>
+        <item
             android:id="@+id/nav_remove_pages"
             android:icon="@drawable/ic_remove_circle_black_24dp"
             android:title="@string/remove_pages"/>
