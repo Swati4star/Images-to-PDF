@@ -62,7 +62,6 @@
     <string name="snackbar_password_cannot_be_blank">Le mot de passe ne peut pas être vide</string>
     <string name="cannot_add_password">Le mot de passe n\'a pas pu être appliqué au fichier PDF. Veuillez vérifier le PDF à nouveau.</string>
 
-    <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
@@ -89,8 +88,6 @@
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
     <string name="pdf_merge_error">Unable to Merge. Files may be encrypted or in the external storage. Files on SD card are supported only currently.</string>
-    <string name="file_one">Select first PDF</string>
-    <string name="file_two">Select second PDF</string>
     <string name="pdf_merged">PDFs Merged</string>
     <string name="File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>
@@ -246,7 +243,6 @@
 
     <string name="confirm_exit_message">Appuyez à nouveau pour quitter</string>
     <string name="border">Add Image Border</string>
-    <string name="select_as">Select as:</string>
     <string name="filter_brush">Brush</string>
     <string name="filter_saved">Image saved</string>
     <string name="filter_not_saved">Image could not be saved</string>
@@ -257,7 +253,6 @@
     <string name="remove_image_message">Are you sure you want to remove this image?</string>
     <string name="dont_show_again">Don\'t show again</string>
     <string name="filter_on_finish_click_warning_message">The filter on current image is not saved. Do you want to continue without saving?</string>
-    <string name="add_watermark">Add watermark</string>
     <string name="encrypted_file_text">encrypted file</string>
     <string name="split_pdf">Split PDF</string>
     <string name="split_error">We were unable to split PDF. Files may be encrypted or in the external storage.</string>

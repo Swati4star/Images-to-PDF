@@ -14,12 +14,4 @@
         <item>Date ▼</item>
     </string-array>
 
-    <string-array name="select_as_options">
-        <item>First</item>
-        <item>Second</item>
-    </string-array>
-
-    <string-array name="pdf_actions">
-        <item>Remove</item>
-    </string-array>
 </resources>

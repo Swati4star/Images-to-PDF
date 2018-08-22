@@ -30,8 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.adapter.MergeSelectedFilesAdapter;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
@@ -45,14 +45,14 @@ import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
-        FilesListAdapter.OnFileItemClickedListener {
+        MergeSelectedFilesAdapter.OnFileItemClickListener {
     private Activity mActivity;
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private MorphButtonUtility mMorphButtonUtility;
     private ArrayList<String> mFilePaths;
     private FileUtils mFileUtils;
-    private FilesListAdapter mFilesListAdapter;
+    private MergeSelectedFilesAdapter mMergeSelectedFilesAdapter;
 
     @BindView(R.id.mergebtn)
     MorphingButton mergeBtn;
@@ -82,7 +82,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         ButterKnife.bind(this, root);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mFilePaths = new ArrayList<>();
-        mFilesListAdapter = new FilesListAdapter(mActivity, mFilePaths, this);
+        mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         DirectoryUtils directoryUtils = new DirectoryUtils(mActivity);
 
@@ -98,7 +98,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
         mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
 
-        mSelectedFiles.setAdapter(mFilesListAdapter);
+        mSelectedFiles.setAdapter(mMergeSelectedFilesAdapter);
         mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback());
@@ -117,7 +117,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         }
     }
 
-    @OnClick({R.id.selectFiles})
+    @OnClick(R.id.selectFiles)
     void startAddingPDF(View v) {
         showFileChooser();
     }
@@ -171,7 +171,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             Uri uri = data.getData();
             Log.v("file", uri + " ");
             mFilePaths.add(getFilePath(mActivity, uri));
-            mFilesListAdapter.notifyDataSetChanged();
+            mMergeSelectedFilesAdapter.notifyDataSetChanged();
             showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
             if (mFilePaths.size() > 1 && !mergeBtn.isEnabled()) {
                 mergeBtn.setEnabled(true);
@@ -204,7 +204,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public void onItemClick(String path) {
         mFilePaths.add(path);
-        mFilesListAdapter.notifyDataSetChanged();
+        mMergeSelectedFilesAdapter.notifyDataSetChanged();
         if (mFilePaths.size() > 1 && !mergeBtn.isEnabled()) {
             mergeBtn.setEnabled(true);
             mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
@@ -220,24 +220,24 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
         mergeBtn.setEnabled(false);
         mFilePaths.clear();
-        mFilesListAdapter.notifyDataSetChanged();
+        mMergeSelectedFilesAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void viewFile(String path) {
+        mFileUtils.openFile(path);
     }
 
     @Override
-    public void onFileItemClick(String path) {
-        new MaterialDialog.Builder(mActivity)
-                .title(R.string.title)
-                .items(R.array.pdf_actions)
-                .itemsCallback((dialog, itemView, position, text) -> {
-                    mFilePaths.remove(path);
-                    mFilesListAdapter.notifyDataSetChanged();
-                    showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
-                    if (mFilePaths.size() < 2 && mergeBtn.isEnabled()) {
-                        mergeBtn.setEnabled(false);
-                        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
-                    }
-                })
-                .show();
+    public void removeFile(String path) {
+        mFilePaths.remove(path);
+        mMergeSelectedFilesAdapter.notifyDataSetChanged();
+        showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
+        if (mFilePaths.size() < 2 && mergeBtn.isEnabled()) {
+            mergeBtn.setEnabled(false);
+            mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
+        }
     }
 
 

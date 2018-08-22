@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/fileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <ImageView
+        android:id="@+id/view_file"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="60dp"
+        android:contentDescription="@string/snackbar_viewAction"
+        android:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/view_24dp" />
+
+    <ImageView
+        android:id="@+id/remove"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/delete"
+        android:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_close_black_24dp" />
+
+</RelativeLayout>
