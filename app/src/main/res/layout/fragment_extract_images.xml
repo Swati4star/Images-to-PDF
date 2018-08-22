@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_margin="24dp"
-            android:background="@color/colorGray"
+            android:background="@color/mb_blue"
             android:maxWidth="30dp"
             android:padding="3dip"
             android:text="@string/merge_file_select"

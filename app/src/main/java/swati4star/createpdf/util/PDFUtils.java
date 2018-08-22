@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
 import android.text.InputType;
 import android.widget.TextView;
 
@@ -36,11 +35,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
+import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.model.TextToPDFOptions;
 
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -169,8 +168,7 @@ public class PDFUtils {
      *
      * @param sourceFilePath - path of file to be rotated
      */
-    public void rotatePages(String sourceFilePath,
-                            final DataSetChanged dataSetChanged) {
+    public void rotatePages(String sourceFilePath, final DataSetChanged dataSetChanged) {
         new MaterialDialog.Builder(mContext)
                 .title(R.string.rotate_pages)
                 .content(R.string.enter_rotation_angle)
@@ -212,11 +210,10 @@ public class PDFUtils {
             for (int p = 1; p <= n; p++) {
                 page = reader.getPageN(p);
                 rotate = page.getAsNumber(PdfName.ROTATE);
-                if (rotate == null) {
+                if (rotate == null)
                     page.put(PdfName.ROTATE, new PdfNumber(angle));
-                } else {
+                else
                     page.put(PdfName.ROTATE, new PdfNumber((rotate.intValue() + angle) % 360));
-                }
             }
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(destFilePath));
             stamper.close();
@@ -224,38 +221,36 @@ public class PDFUtils {
             showSnackbar(mContext, R.string.snackbar_pdfCreated);
             dataSetChanged.updateDataset();
             return true;
-        } catch (NumberFormatException e) {
-            showSnackbar(mContext, R.string.invalid_entry);
         } catch (Exception e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.error_occurred);
+            showSnackbar(mContext, R.string.invalid_entry);
         }
         return false;
     }
 
-    public void compressPDF(String inputPath, String outputPath, int quality) {
-        new CompressPdfAsync(inputPath, outputPath, quality).execute();
+    public void compressPDF(String inputPath, String outputPath, int quality,
+                            OnPDFCompressedInterface onPDFCompressedInterface) {
+        new CompressPdfAsync(inputPath, outputPath, quality, onPDFCompressedInterface)
+                .execute();
     }
 
-    private class CompressPdfAsync extends AsyncTask<String, String, String> {
+    private static class CompressPdfAsync extends AsyncTask<String, String, String> {
 
-        private MaterialDialog mMaterialDialog;
-        String inputPath, outputPath;
         int quality;
-
-        CompressPdfAsync(String inputPath, String outputPath, int quality) {
+        String inputPath, outputPath;
+        OnPDFCompressedInterface mPDFCompressedInterface;
+        CompressPdfAsync(String inputPath, String outputPath, int quality,
+                         OnPDFCompressedInterface onPDFCompressedInterface) {
             this.inputPath = inputPath;
             this.outputPath = outputPath;
             this.quality = quality;
+            this.mPDFCompressedInterface = onPDFCompressedInterface;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mMaterialDialog = new MaterialDialog.Builder(mContext)
-                    .customView(R.layout.lottie_anim_dialog, false)
-                    .build();
-            mMaterialDialog.show();
+            mPDFCompressedInterface.pdfCompressionStarted();
         }
 
         @Override
@@ -301,7 +296,6 @@ public class PDFUtils {
                         stream.put(PdfName.BITSPERCOMPONENT, new PdfNumber(8));
                         stream.put(PdfName.COLORSPACE, PdfName.DEVICERGB);
                     }
-
                 }
 
                 reader.removeUnusedObjects();
@@ -310,7 +304,6 @@ public class PDFUtils {
                 stamper.setFullCompression();
                 stamper.close();
                 reader.close();
-
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
             }
@@ -320,12 +313,7 @@ public class PDFUtils {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            mMaterialDialog.dismiss();
-            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content)
-                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(outputPath)).show();
-            new DatabaseHelper(mContext).insertRecord(outputPath,
-                    mContext.getString(R.string.created));
+            mPDFCompressedInterface.pdfCompressionEnded(outputPath, true);
         }
     }
 }

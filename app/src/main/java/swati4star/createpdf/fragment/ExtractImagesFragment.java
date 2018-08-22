@@ -3,9 +3,7 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
@@ -32,6 +30,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
+import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
@@ -39,6 +38,7 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 
 public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -80,7 +80,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         View rootview = inflater.inflate(R.layout.fragment_extract_images, container, false);
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new ExtractImagesFragment.BottomSheetCallback());
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
 
         ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)
@@ -111,11 +111,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+        showHideSheet(sheetBehavior);
     }
 
     /**
@@ -123,13 +119,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
      */
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
-        String folderPath = Environment.getExternalStorageDirectory() + "/";
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        Uri myUri = Uri.parse(folderPath);
-        intent.setDataAndType(myUri, getString(R.string.pdf_type));
-        Intent intentChooser = Intent.createChooser(intent, getString(R.string.merge_file_select));
-        startActivityForResult(intentChooser, INTENT_REQUEST_PICKFILE_CODE);
+        startActivityForResult(mFileUtils.getFileChooser(),
+                INTENT_REQUEST_PICKFILE_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
@@ -179,7 +170,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     public void resetView() {
         mPath = null;
         selectFileButton.setText(R.string.merge_file_select);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
+        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_blue));
         mMorphButtonUtility.morphToGrey(extractImagesButton, mMorphButtonUtility.integer());
         extractImagesButton.setEnabled(false);
     }
@@ -198,24 +189,4 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         mExtractedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
     }
 
-    private class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
-
-        @Override
-        public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            switch (newState) {
-                case BottomSheetBehavior.STATE_EXPANDED:
-                    mUpArrow.setVisibility(View.GONE);
-                    mDownArrow.setVisibility(View.VISIBLE);
-                    break;
-                case BottomSheetBehavior.STATE_COLLAPSED:
-                    mUpArrow.setVisibility(View.VISIBLE);
-                    mDownArrow.setVisibility(View.GONE);
-                    break;
-            }
-        }
-
-        @Override
-        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-        }
-    }
 }

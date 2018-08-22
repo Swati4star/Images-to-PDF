@@ -25,8 +25,14 @@ You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com
   - View File details (Path, size, date created ...)
   - Encrypt PDF
   - Decrypt PDF
+  - Rotate Pages
 - Merge existing PDFs
+- Split existing PDFs
 - Convert text file to PDFs
+- Compress existing PDF
+- Remove pages from a PDF
+- Rearrange pages of a PDF
+- Extract images from PDF
 - History : View all the PDF related conversions
 
 <img src="./screenshots/0_navigation.png" width="190px">

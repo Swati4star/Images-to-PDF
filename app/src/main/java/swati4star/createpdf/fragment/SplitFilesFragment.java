@@ -3,7 +3,6 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -38,12 +37,14 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -83,7 +84,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         View rootview = inflater.inflate(R.layout.fragment_split_files, container, false);
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new SplitFilesFragment.BottomSheetCallback());
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
 
         ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)
@@ -104,11 +105,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+        showHideSheet(sheetBehavior);
     }
 
     /**
@@ -116,13 +113,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
      */
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
-        String folderPath = Environment.getExternalStorageDirectory() + "/";
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        Uri myUri = Uri.parse(folderPath);
-        intent.setDataAndType(myUri, getString(R.string.pdf_type));
-        Intent intentChooser = Intent.createChooser(intent, getString(R.string.merge_file_select));
-        startActivityForResult(intentChooser, INTENT_REQUEST_PICKFILE_CODE);
+        startActivityForResult(mFileUtils.getFileChooser(),
+                INTENT_REQUEST_PICKFILE_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
@@ -180,7 +172,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private void resetValues() {
         mPath = null;
         selectFileButton.setText(R.string.merge_file_select);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
+        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_blue));
         mMorphButtonUtility.morphToGrey(splitFilesButton, mMorphButtonUtility.integer());
         splitFilesButton.setEnabled(false);
     }
@@ -215,24 +207,4 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mFileUtils.openFile(path);
     }
 
-    private class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
-
-        @Override
-        public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            switch (newState) {
-                case BottomSheetBehavior.STATE_EXPANDED:
-                    mUpArrow.setVisibility(View.GONE);
-                    mDownArrow.setVisibility(View.VISIBLE);
-                    break;
-                case BottomSheetBehavior.STATE_COLLAPSED:
-                    mUpArrow.setVisibility(View.VISIBLE);
-                    mDownArrow.setVisibility(View.GONE);
-                    break;
-            }
-        }
-
-        @Override
-        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-        }
-    }
 }

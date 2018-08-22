@@ -191,14 +191,9 @@ public class FileUtils {
         target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
-        try {
-            mContext.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                    R.string.snackbar_no_pdf_app, Snackbar.LENGTH_LONG).show();
-        }
+        openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
     }
+
     /**
      * Checks if the new file already exists.
      *
@@ -352,12 +347,28 @@ public class FileUtils {
         target.setDataAndType(uri,  "image/*");
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
+        openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
+    }
+
+    private void openIntent(Intent intent) {
         try {
             mContext.startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
                     R.string.snackbar_no_pdf_app, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Returns file chooser intent
+     * @return - intent
+     */
+    public Intent getFileChooser() {
+        String folderPath = Environment.getExternalStorageDirectory() + "/";
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Uri myUri = Uri.parse(folderPath);
+        intent.setDataAndType(myUri, mContext.getString(R.string.pdf_type));
+        return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
     }
 }

@@ -280,4 +280,5 @@
     <string name="pdf_removed_from_list">PDF has been removed from the list.</string>
     <string name="pdf_added_to_list">PDF has been added to the list.</string>
     <string name="select_files">Select Files</string>
+    <string name="compress_info">Congratulations! Your PDF is compressed:   Original PDF Size : %s   Compressed PDF Size: %s</string>
 </resources>

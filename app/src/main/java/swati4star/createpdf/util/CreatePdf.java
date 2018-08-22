@@ -164,6 +164,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         } catch (Exception e) {
             e.printStackTrace();
+            mSuccess = false;
         }
 
         document.close();

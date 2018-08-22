@@ -339,6 +339,7 @@
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
     <string name="compress_pdf_prompt">Enter % compression of PDF : </string>
+    <string name="compress_info">Congratulations! Your PDF is compressed: \n Original PDF Size : %s \n Compressed PDF Size: %s</string>
 
     <!-- Rate us strings -->
     <string name="rate_positive">Rate now</string>
