@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.util.DirectoryUtils;
@@ -43,20 +44,16 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener {
+public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
+        FilesListAdapter.OnFileItemClickedListener {
     private Activity mActivity;
-    private boolean mSuccess;
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private MorphButtonUtility mMorphButtonUtility;
-    private String mFirstFilePath;
-    private String mSecondFilePath;
+    private ArrayList<String> mFilePaths;
     private FileUtils mFileUtils;
+    private FilesListAdapter mFilesListAdapter;
 
-    @BindView(R.id.fileonebtn)
-    Button addFileOne;
-    @BindView(R.id.filetwobtn)
-    Button addFileTwo;
     @BindView(R.id.mergebtn)
     MorphingButton mergeBtn;
     @BindView(R.id.recyclerViewFiles)
@@ -70,6 +67,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
+    @BindView(R.id.selectFiles)
+    Button mSelectFiles;
+    @BindView(R.id.selected_files)
+    RecyclerView mSelectedFiles;
 
     public MergeFilesFragment() {
     }
@@ -80,7 +81,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-
+        mFilePaths = new ArrayList<>();
+        mFilesListAdapter = new FilesListAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         DirectoryUtils directoryUtils = new DirectoryUtils(mActivity);
 
@@ -95,6 +97,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mRecyclerViewFiles.setLayoutManager(mLayoutManager);
         mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
         mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+
+        mSelectedFiles.setAdapter(mFilesListAdapter);
+        mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback());
         mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
@@ -112,19 +117,14 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         }
     }
 
-    @OnClick({R.id.fileonebtn, R.id.filetwobtn})
+    @OnClick({R.id.selectFiles})
     void startAddingPDF(View v) {
-        mCheckbtClickTag = (v).getTag().toString();
         showFileChooser();
     }
 
     @OnClick(R.id.mergebtn)
     void mergeFiles(final View view) {
-        String[] pdfpaths = {mFirstFilePath, mSecondFilePath};
-        if (mFirstFilePath == null || mSecondFilePath == null || !mSuccess) {
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
-            return;
-        }
+        String[] pdfpaths = mFilePaths.toArray(new String[0]);
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -170,17 +170,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             Uri uri = data.getData();
             Log.v("file", uri + " ");
-            //Check if First button is clicked from mCheckbtClickTag
-            if (addFileOne.getTag().toString().equals(mCheckbtClickTag)) {
-                mFirstFilePath = getFilePath(mActivity, uri);
-                addFileOne.setText(mFirstFilePath);
-                addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-            } else {
-                mSecondFilePath = getFilePath(mActivity, uri);
-                addFileTwo.setText(mSecondFilePath);
-                addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-            }
-            if (mFirstFilePath != null && mSecondFilePath != null) {
+            mFilePaths.add(getFilePath(mActivity, uri));
+            mFilesListAdapter.notifyDataSetChanged();
+            showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
+            if (mFilePaths.size() > 1 && !mergeBtn.isEnabled()) {
                 mergeBtn.setEnabled(true);
                 mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
             }
@@ -210,29 +203,13 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onItemClick(String path) {
-        new MaterialDialog.Builder(mActivity)
-                .title(R.string.select_as)
-                .items(R.array.select_as_options)
-                .itemsCallback((dialog, itemView, position, text) -> {
-                    switch (position) {
-                        case 0:
-                            mFirstFilePath = path;
-                            addFileOne.setText(path);
-                            addFileOne.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-                            break;
-                        case 1:
-                            addFileTwo.setText(path);
-                            mSecondFilePath = path;
-                            addFileTwo.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-                            mSuccess = true;
-                            break;
-                    }
-                    if (mFirstFilePath != null && mSecondFilePath != null) {
-                        mergeBtn.setEnabled(true);
-                        mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
-                    }
-                })
-                .show();
+        mFilePaths.add(path);
+        mFilesListAdapter.notifyDataSetChanged();
+        if (mFilePaths.size() > 1 && !mergeBtn.isEnabled()) {
+            mergeBtn.setEnabled(true);
+            mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
+        }
+        showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
     }
 
     /**
@@ -240,15 +217,29 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
      */
     @Override
     public void resetValues() {
-        mFirstFilePath = "";
-        mSecondFilePath = "";
-        addFileOne.setText(R.string.file_one);
-        addFileTwo.setText(R.string.file_two);
-        addFileTwo.setBackgroundColor(getResources().getColor(R.color.colorGray));
-        addFileOne.setBackgroundColor(getResources().getColor(R.color.colorGray));
         mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
         mergeBtn.setEnabled(false);
+        mFilePaths.clear();
+        mFilesListAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onFileItemClick(String path) {
+        new MaterialDialog.Builder(mActivity)
+                .title(R.string.title)
+                .items(R.array.pdf_actions)
+                .itemsCallback((dialog, itemView, position, text) -> {
+                    mFilePaths.remove(path);
+                    mFilesListAdapter.notifyDataSetChanged();
+                    showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
+                    if (mFilePaths.size() < 2 && mergeBtn.isEnabled()) {
+                        mergeBtn.setEnabled(false);
+                        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
+                    }
+                })
+                .show();
+    }
+
 
     private class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
 

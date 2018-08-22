@@ -356,4 +356,7 @@
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
     <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="share_files">Share Files</string>
+    <string name="pdf_removed_from_list">PDF has been removed from the list.</string>
+    <string name="pdf_added_to_list">PDF has been added to the list.</string>
+    <string name="select_files">Select Files</string>
 </resources>
