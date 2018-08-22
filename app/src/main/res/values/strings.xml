@@ -112,7 +112,6 @@
     <string name="snackbar_password_cannot_be_blank">Password cannot be blank</string>
     <string name="cannot_add_password">Password could not be applied to the PDF. Please check the PDF again.</string>
 
-    <string name="snackbar_error_getCropped">Error on getting cropped images</string>
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop image No.</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
@@ -148,8 +147,6 @@
 
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
-    <string name="file_one">Select first PDF</string>
-    <string name="file_two">Select second PDF</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>
     <string name="file_date_text">File Date</string>
@@ -315,14 +312,12 @@
 
     <string name="border">Add Image Border</string>
     <string name="border_dialog_title">Enter border width in units (Default is 0) : </string>
-    <string name="select_as">Select as:</string>
     <string name="filter_not_saved">Image could not be saved</string>
     <string name="remove_image_message">Are you sure you want to remove this image?</string>
     <string name="dont_show_again">Don\'t show again</string>
     <string name="filter_on_finish_click_warning_message">The filter on current image is not saved. Do you want to continue without saving?</string>
 
     <!-- Watermark Strings -->
-    <string name="add_watermark">Add watermark \n </string>
     <string name="encrypted_file_text">encrypted file</string>
 
     <!-- Split PDF -->
@@ -356,4 +351,7 @@
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
     <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="share_files">Share Files</string>
+    <string name="pdf_removed_from_list">PDF has been removed from the list.</string>
+    <string name="pdf_added_to_list">PDF has been added to the list.</string>
+    <string name="select_files">Select Files</string>
 </resources>
