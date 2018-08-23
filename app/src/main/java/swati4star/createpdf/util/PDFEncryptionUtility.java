@@ -100,8 +100,8 @@ public class PDFEncryptionUtility {
                                 final ArrayList<File> mFileList) throws IOException, DocumentException {
         String finalOutputFile = path.replace(mContext.getString(R.string.pdf_ext),
                 mContext.getString(R.string.encrypted_file));
-
-        if (mFileUtils.isFileExist(finalOutputFile)) {
+        File file = new File(finalOutputFile);
+        if (mFileUtils.isFileExist(file.getName())) {
             int append = mFileUtils.checkRepeat(finalOutputFile, mFileList);
             finalOutputFile = finalOutputFile.replace(mContext.getString(R.string.pdf_ext),
                     append + mContext.getResources().getString(R.string.pdf_ext));
@@ -124,10 +124,12 @@ public class PDFEncryptionUtility {
      */
     private boolean isPDFEncrypted(final String file) {
         PdfReader reader = null;
+        String ownerPass = mContext.getString(R.string.app_name);
         try {
-            reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
+            reader = new PdfReader(file, ownerPass.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
+            return true;
         }
         //Check if PDF is encrypted or not.
         if (!reader.isEncrypted()) {
@@ -185,14 +187,14 @@ public class PDFEncryptionUtility {
                                     final String[] inputPassword) {
 
         String finalOutputFile;
-        PdfReader reader = null;
+        PdfReader reader;
         try {
             reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
             byte[] password;
             finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
                     mContext.getString(R.string.decrypted_file));
-
-            if (mFileUtils.isFileExist(finalOutputFile)) {
+            File temp = new File(finalOutputFile);
+            if (mFileUtils.isFileExist(temp.getName())) {
                 int append = mFileUtils.checkRepeat(finalOutputFile, mFileList);
                 finalOutputFile = finalOutputFile.replace(mContext.getResources().getString(R.string.pdf_ext),
                         append + mContext.getResources().getString(R.string.pdf_ext));

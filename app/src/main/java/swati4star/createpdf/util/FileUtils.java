@@ -199,23 +199,16 @@ public class FileUtils {
      *
      * @param finalOutputFile Path of pdf file to check
      * @param mFile File List of all PDFs
-     * @return Number to be added finally in the name
+     * @return Number to be added finally in the name to avoid overwrite
      */
     public int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
-        int flag = 1;
-        int append = 1;
-        while (flag == 1) {
-            for (int i = 0; i <= mFile.size(); i++) {
-                flag = 0;
-                if (finalOutputFile.equals(mFile.get(i).getPath())) {
-                    flag = 1;
-                    append++;
-                    break;
-                }
-            }
-            finalOutputFile = finalOutputFile.replace(mContext.getString(R.string.pdf_ext),
+        boolean flag = true;
+        int append = 0;
+        while (flag) {
+            append++;
+            String name = finalOutputFile.replace(mContext.getString(R.string.pdf_ext),
                     append + mContext.getString(R.string.pdf_ext));
-
+            flag = mFile.contains(new File(name));
         }
         return append;
     }

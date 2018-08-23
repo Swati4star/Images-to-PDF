@@ -17,18 +17,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".activity.MainActivity">
 
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
-
-            <CheckBox
-                android:id="@+id/checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-        </com.balysv.materialripple.MaterialRippleLayout>
+        <CheckBox
+            android:layout_margin="10dp"
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
         <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/fileRipple"
@@ -47,8 +41,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:padding="4dp"
                     android:text="@string/file_name_text"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -66,10 +61,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:maxLines="1"
-                            android:padding="10dp"
+                            android:padding="7dp"
                             android:paddingStart="0dp"
                             android:text="@string/file_size_text"
-                            android:textColor="@color/black_87"
                             android:textSize="12sp" />
 
                         <ImageView
@@ -77,10 +71,10 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
                             android:layout_marginStart="15dp"
-                            app:srcCompat="@drawable/ic_lock_black_24dp"
                             android:tint="@color/black"
-                            android:layout_marginEnd="10dp" />
+                            app:srcCompat="@drawable/ic_lock_black_24dp" />
                     </LinearLayout>
 
                     <TextView
@@ -88,10 +82,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:padding="10dp"
+                        android:padding="7dp"
                         android:paddingStart="0dp"
                         android:text="@string/file_date_text"
-                        android:textColor="@color/black_87"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>

@@ -22,13 +22,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -100,16 +95,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
 
         mOperation = getArguments().getString(BUNDLE_DATA);
-        switch (mOperation) {
-            case REORDER_PAGES:
-                mInfoText.setText(R.string.reorder_pages_text);
-                break;
-            case COMPRESS_PDF:
-                mInfoText.setText(R.string.compress_pdf_prompt);
-                break;
-            default:
-                mInfoText.setText(R.string.remove_pages_text);
-        }
 
         ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)
@@ -164,27 +149,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             showSnackbar(mActivity, R.string.encrypted_pdf);
             return;
         }
-        try {
-            PdfReader reader = new PdfReader(mPath);
-            reader.selectPages(pages);
-            if (reader.getNumberOfPages() == 0) {
-                showSnackbar(mActivity, R.string.remove_pages_error);
-                return;
-            }
-            //if (reader.getNumberOfPages() )
-            PdfStamper pdfStamper = new PdfStamper(reader,
-                    new FileOutputStream(outputPath));
-            pdfStamper.close();
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-            showSnackbar(mActivity, R.string.remove_pages_error);
-            return;
-        }
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(outputPath)).show();
-        new DatabaseHelper(mActivity).insertRecord(outputPath,
-                mActivity.getString(R.string.created));
+
+        mPDFUtils.reorderRemovePDF(mPath, outputPath, pages);
         resetValues();
     }
 
@@ -213,6 +179,16 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_blue));
         mMorphButtonUtility.morphToGrey(createPdf, mMorphButtonUtility.integer());
         createPdf.setEnabled(false);
+        switch (mOperation) {
+            case REORDER_PAGES:
+                mInfoText.setText(R.string.reorder_pages_text);
+                break;
+            case COMPRESS_PDF:
+                mInfoText.setText(R.string.compress_pdf_prompt);
+                break;
+            default:
+                mInfoText.setText(R.string.remove_pages_text);
+        }
     }
 
     @Override
@@ -251,17 +227,21 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public void pdfCompressionEnded(String path, Boolean success) {
         mMaterialDialog.dismiss();
-        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
-        new DatabaseHelper(mActivity).insertRecord(path,
-                mActivity.getString(R.string.created));
-        File input = new File(mPath);
-        File output = new File(path);
-        mCompressionInfoText.setVisibility(View.VISIBLE);
-        mCompressionInfoText.setText(String.format(mActivity.getString(R.string.compress_info),
-                getFormattedSize(input),
-                getFormattedSize(output)));
+        if (success) {
+            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
+                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
+            new DatabaseHelper(mActivity).insertRecord(path,
+                    mActivity.getString(R.string.created));
+            File input = new File(mPath);
+            File output = new File(path);
+            mCompressionInfoText.setVisibility(View.VISIBLE);
+            mCompressionInfoText.setText(String.format(mActivity.getString(R.string.compress_info),
+                    getFormattedSize(input),
+                    getFormattedSize(output)));
+        } else {
+            showSnackbar(mActivity, R.string.encrypted_pdf);
+        }
         resetValues();
     }
 }

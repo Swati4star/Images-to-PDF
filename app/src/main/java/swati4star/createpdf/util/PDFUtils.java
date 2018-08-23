@@ -8,7 +8,9 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.text.InputType;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -19,6 +21,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PRStream;
+import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfNumber;
@@ -35,6 +38,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -48,10 +54,15 @@ public class PDFUtils {
 
     private final Activity mContext;
     private final FileUtils mFileUtils;
+    private HashMap<Integer, Integer> mAngleRadioButton;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(mContext);
+        mAngleRadioButton = new HashMap<>();
+        mAngleRadioButton.put(R.id.deg90, 90);
+        mAngleRadioButton.put(R.id.deg180, 180);
+        mAngleRadioButton.put(R.id.deg270, 270);
     }
 
     /**
@@ -171,38 +182,42 @@ public class PDFUtils {
     public void rotatePages(String sourceFilePath, final DataSetChanged dataSetChanged) {
         new MaterialDialog.Builder(mContext)
                 .title(R.string.rotate_pages)
-                .content(R.string.enter_rotation_angle)
-                .input(null, null, false, (dialog, input) -> {
+                .customView(R.layout.dialog_rotate_pdf, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive((dialog, which) -> {
+                    final RadioGroup angleInput = dialog.getCustomView().findViewById(R.id.rotation_angle);
+                    int angle = mAngleRadioButton.get(angleInput.getCheckedRadioButtonId());
                     String destFilePath = mFileUtils.getFileDirectoryPath(sourceFilePath);
                     String fileName = mFileUtils.getFileName(sourceFilePath);
                     destFilePath += String.format(mContext.getString(R.string.rotated_file_name),
-                            fileName.substring(0, fileName.lastIndexOf('.')), input,
+                            fileName.substring(0, fileName.lastIndexOf('.')),
+                            Integer.toString(angle),
                             mContext.getString(R.string.pdf_ext));
-                    boolean result = rotatePDFPages(input.toString(), sourceFilePath,
+                    boolean result = rotatePDFPages(angle, sourceFilePath,
                             destFilePath, dataSetChanged);
                     if (result) {
                         new DatabaseHelper(mContext).insertRecord(destFilePath,
                                 mContext.getString(R.string.rotated));
                     }
+
                 })
-                .inputType(InputType.TYPE_NUMBER_FLAG_SIGNED)
-                .inputRange(1, 4)
                 .show();
+
     }
 
 
     /**
      * Rotates pages in pdf
      *
-     * @param input          rotation angle
+     * @param angle          rotation angle
      * @param sourceFilePath source file path
      * @param destFilePath   destination file path
      * @return true if no error else false
      */
-    private boolean rotatePDFPages(String input, String sourceFilePath, String destFilePath,
+    private boolean rotatePDFPages(int angle, String sourceFilePath, String destFilePath,
                                    final DataSetChanged dataSetChanged) {
         try {
-            int angle = Integer.parseInt(input);
             PdfReader reader = new PdfReader(sourceFilePath);
             int n = reader.getNumberOfPages();
             PdfDictionary page;
@@ -223,7 +238,7 @@ public class PDFUtils {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.invalid_entry);
+            showSnackbar(mContext, R.string.encrypted_pdf);
         }
         return false;
     }
@@ -238,13 +253,16 @@ public class PDFUtils {
 
         int quality;
         String inputPath, outputPath;
+        boolean success;
         OnPDFCompressedInterface mPDFCompressedInterface;
+
         CompressPdfAsync(String inputPath, String outputPath, int quality,
                          OnPDFCompressedInterface onPDFCompressedInterface) {
             this.inputPath = inputPath;
             this.outputPath = outputPath;
             this.quality = quality;
             this.mPDFCompressedInterface = onPDFCompressedInterface;
+            success = false;
         }
 
         @Override
@@ -304,8 +322,10 @@ public class PDFUtils {
                 stamper.setFullCompression();
                 stamper.close();
                 reader.close();
+                success = true;
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
+                success = false;
             }
             return null;
         }
@@ -313,7 +333,62 @@ public class PDFUtils {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            mPDFCompressedInterface.pdfCompressionEnded(outputPath, true);
+            mPDFCompressedInterface.pdfCompressionEnded(outputPath, success);
         }
+    }
+
+    public void reorderRemovePDF(String inputPath, String output, String pages) {
+        try {
+            PdfReader reader = new PdfReader(inputPath);
+            reader.selectPages(pages);
+            if (reader.getNumberOfPages() == 0) {
+                showSnackbar(mContext, R.string.remove_pages_error);
+                return;
+            }
+            //if (reader.getNumberOfPages() )
+            PdfStamper pdfStamper = new PdfStamper(reader,
+                    new FileOutputStream(output));
+            pdfStamper.close();
+
+            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content)
+                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
+            new DatabaseHelper(mContext).insertRecord(output,
+                    mContext.getString(R.string.created));
+
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+            showSnackbar(mContext, R.string.remove_pages_error);
+        }
+    }
+
+    public ArrayList<String> splitPDF(String path) {
+        ArrayList<String> outputPaths = new ArrayList<>();
+        try {
+            String folderPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                    mContext.getString(R.string.pdf_dir);
+            PdfReader reader = new PdfReader(path);
+            PdfCopy copy;
+            Document document;
+            int pages = reader.getNumberOfPages();
+            for (int i = 1; i <= pages; i++) {
+                document = new Document();
+                String fileName = folderPath + mFileUtils.getFileName(path);
+                fileName = fileName.replace(mContext.getString(R.string.pdf_ext),
+                        i + mContext.getString(R.string.pdf_ext));
+                Log.v("splitting", fileName);
+                copy = new PdfCopy(document, new FileOutputStream(fileName));
+                document.open();
+                copy.addPage(copy.getImportedPage(reader, i));
+                document.close();
+                outputPaths.add(fileName);
+                new DatabaseHelper(mContext).insertRecord(fileName,
+                        mContext.getString(R.string.created));
+            }
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+            showSnackbar(mContext, R.string.split_error);
+        }
+        return outputPaths;
     }
 }

@@ -348,9 +348,13 @@
     <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
     <string name="rate_us_never">Never</string>
     <string name="error_occurred">Error Occurred</string>
+
     <string name="rotate_pages">Rotate Pages</string>
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
     <string name="rotated_file_name">%s_rotated_%s%s</string>
+    <string name="degree_90" translatable="false">90 &#xb0;</string>
+    <string name="degree_180" translatable="false">180 &#xb0;</string>
+    <string name="degree_270" translatable="false">270 &#xb0;</string>
     <string name="share_files">Share Files</string>
     <string name="pdf_removed_from_list">PDF has been removed from the list.</string>
     <string name="pdf_added_to_list">PDF has been added to the list.</string>
