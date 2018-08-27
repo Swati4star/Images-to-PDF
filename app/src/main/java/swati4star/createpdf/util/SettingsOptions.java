@@ -25,22 +25,25 @@ public class SettingsOptions {
 
             options.add(new EnhancementOptionsEntity(
                     context.getResources().getDrawable(R.drawable.ic_compress_image),
-                    context.getResources().getString(R.string.compress_image) + " " +
+                    context.getString(R.string.image_compression_value_default) +
                             sharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)"));
 
             options.add(new EnhancementOptionsEntity(
                     context.getResources().getDrawable(R.drawable.ic_page_size_24dp),
-                    context.getResources().getString(R.string.set_page_size_text)));
+                    context.getString(R.string.page_size_value_def) +
+                            sharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
+                            Constants.DEFAULT_PAGE_SIZE)));
 
 
             options.add(new EnhancementOptionsEntity(
                     context.getResources().getDrawable(R.drawable.ic_font_black_24dp),
-                    fontTitle));
+                    context.getString(R.string.font_size_value_def)
+                            + fontTitle));
 
             options.add(new EnhancementOptionsEntity(
                     context.getResources().getDrawable(R.drawable.ic_font_family_24dp),
-                    String.format(context.getString(R.string.default_font_family_text),
-                    fontFamily.name())));
+                    context.getString(R.string.font_family_value_def)
+                            + fontFamily.name()));
 
             //options.add(new EnhancementOptionsEntity(
             //      context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),

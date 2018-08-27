@@ -20,9 +20,10 @@ public class PageSizeUtils {
     private final Context mActivity;
     private final SharedPreferences mSharedPreferences;
     public static String mPageSize = "A4";
-    private final String mDefaultPageSize;
+    private final String mDefaultPageSize, mPageTitle;
     private final HashMap<Integer, Integer> mPageSizeToString;
     private static int layout = R.layout.set_page_size_dialog;
+    private boolean mSettingsPage = false;
 
 
     public PageSizeUtils(Context mActivity) {
@@ -30,6 +31,7 @@ public class PageSizeUtils {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
+        mPageTitle = mActivity.getString(R.string.set_page_size_text);
         mPageSizeToString = new HashMap<>();
         mPageSizeToString.put(R.id.page_size_default, R.string.a4);
         mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
@@ -42,9 +44,11 @@ public class PageSizeUtils {
     public PageSizeUtils(Context mActivity, int layout) {
         this.mActivity = mActivity;
         this.layout = layout;
+        mSettingsPage = true;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
+        mPageTitle = mActivity.getString(R.string.page_size_value_def);
         mPageSizeToString = new HashMap<>();
         mPageSizeToString.put(R.id.page_size_default, R.string.a4);
         mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
@@ -121,7 +125,7 @@ public class PageSizeUtils {
                     Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
                     mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
                             spinnerB.getSelectedItem().toString());
-                    if (layout == R.layout.compress_image_default) {
+                    if (mSettingsPage) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
                         editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
                         editor.apply();

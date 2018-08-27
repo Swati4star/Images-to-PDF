@@ -9,17 +9,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
 
@@ -32,7 +28,6 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.ImageToPDFOptions;
-import swati4star.createpdf.model.PDFOptions;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.PageSizeUtils;
 
@@ -50,12 +45,14 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
 
     private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
     private Activity mActivity;
+    private Context mContext;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private ImageToPDFOptions mPdfOptions;
     private SharedPreferences mSharedPreferences;
-    private String mFontTitle;
+    private String mFontTitle, mDefaultPageSize;
     private Font.FontFamily mFontFamily;
     private int mFontSize;
+    public static String mPageSize = "A4";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -64,6 +61,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mContext = context;
         mActivity = (Activity) context;
     }
 
@@ -78,6 +76,8 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         mPdfOptions = new ImageToPDFOptions();
         mFontTitle = String.format(getString(R.string.edit_font_size),
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
+        mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
+                Constants.DEFAULT_PAGE_SIZE);
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
@@ -99,7 +99,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     public void onItemClick(int position) {
         switch (position) {
             case 0:
-                compressImage();
+                changeCompressImage();
                 break;
             case 1:
                 setPageSize();
@@ -113,17 +113,18 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         }
     }
 
-    private void showCompression() {
+    private void showCompressionDef() {
         mEnhancementOptionsEntityArrayList.get(0)
-                .setName(mPdfOptions.getQualityString() + "% Compressed");
+                .setName(mContext.getString(R.string.image_compression_value_default) +
+                        mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)");
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
-    private void compressImage() {
+    private void changeCompressImage() {
         String title = getString(R.string.compress_image) + " " +
                 mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)";
 
-        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+        new MaterialDialog.Builder(mActivity)
                 .title(title)
                 .customView(R.layout.compress_image_default, true)
                 .positiveText(android.R.string.ok)
@@ -141,37 +142,28 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                             SharedPreferences.Editor editor = mSharedPreferences.edit();
                             editor.putInt(DEFAULT_COMPRESSION, check);
                             editor.apply();
-                            showCompression();
+                            showCompressionDef();
                         }
                     } catch (NumberFormatException e) {
                         showSnackbar(mActivity, R.string.invalid_entry);
                     }
-                }).build();
-
-        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        final EditText qualityValueInput = dialog.getCustomView().findViewById(R.id.quality);
-        qualityValueInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        positiveAction.setEnabled(s.toString().trim().length() > 0);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable input) {
-                    }
-                });
-        dialog.show();
-        positiveAction.setEnabled(false);
+                }).show();
     }
 
     private void setPageSize() {
         PageSizeUtils utils = new PageSizeUtils(mActivity, R.layout.set_page_size_default);
         utils.showPageSizeDialog();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
+        editor.apply();
+        showPageSizeDef();
+    }
+
+    private void showPageSizeDef() {
+        mEnhancementOptionsEntityArrayList.get(0)
+                .setName(mContext.getString(R.string.image_compression_value_default) +
+                        mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)");
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
     private void editFontSize() {
@@ -188,7 +180,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                             showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mFontSize = check;
-                            showFontSize();
+                            showFontSizeDef();
                             showSnackbar(mActivity, R.string.font_size_changed);
                             SharedPreferences.Editor editor = mSharedPreferences.edit();
                             editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
@@ -205,9 +197,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                 .show();
     }
 
-    private void showFontSize() {
+    private void showFontSizeDef() {
         mEnhancementOptionsEntityArrayList.get(2)
-                .setName(String.format(getString(R.string.font_size), String.valueOf(mFontSize)));
+                .setName(String.format(getString(R.string.font_size_value_def) + String.valueOf(mFontSize)));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
@@ -241,7 +233,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
 
     private void showFontFamily() {
         mEnhancementOptionsEntityArrayList.get(3)
-                .setName(getString(R.string.font_family_text) + mFontFamily.name());
+                .setName(getString(R.string.font_family_value_def) + mFontFamily.name());
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
