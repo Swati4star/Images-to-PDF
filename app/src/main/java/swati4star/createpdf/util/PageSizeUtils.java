@@ -22,9 +22,26 @@ public class PageSizeUtils {
     public static String mPageSize = "A4";
     private final String mDefaultPageSize;
     private final HashMap<Integer, Integer> mPageSizeToString;
+    private static int layout = R.layout.set_page_size_dialog;
+
 
     public PageSizeUtils(Context mActivity) {
         this.mActivity = mActivity;
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
+                Constants.DEFAULT_PAGE_SIZE);
+        mPageSizeToString = new HashMap<>();
+        mPageSizeToString.put(R.id.page_size_default, R.string.a4);
+        mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
+        mPageSizeToString.put(R.id.page_size_executive, R.string.executive);
+        mPageSizeToString.put(R.id.page_size_ledger, R.string.ledger);
+        mPageSizeToString.put(R.id.page_size_tabloid, R.string.tabloid);
+        mPageSizeToString.put(R.id.page_size_letter, R.string.letter);
+    }
+
+    public PageSizeUtils(Context mActivity, int layout) {
+        this.mActivity = mActivity;
+        this.layout = layout;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
@@ -92,7 +109,7 @@ public class PageSizeUtils {
     private MaterialDialog getPageSizeDialog() {
         return new MaterialDialog.Builder(mActivity)
                 .title(R.string.set_page_size_text)
-                .customView(R.layout.set_page_size_dialog, true)
+                .customView(layout, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .onPositive((dialog1, which) -> {
@@ -104,7 +121,11 @@ public class PageSizeUtils {
                     Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
                     mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
                             spinnerB.getSelectedItem().toString());
-                    if (mSetAsDefault.isChecked()) {
+                    if (layout == R.layout.compress_image_default) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
+                        editor.apply();
+                    } else if (mSetAsDefault.isChecked()) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
                         editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
                         editor.apply();
