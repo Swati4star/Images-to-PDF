@@ -26,6 +26,7 @@ import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.RemovePagesFragment;
+import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
@@ -216,6 +217,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_about:
                 fragment = new AboutUsFragment();
+                break;
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
                 break;
             case R.id.nav_extract_images:
                 fragment = new ExtractImagesFragment();
