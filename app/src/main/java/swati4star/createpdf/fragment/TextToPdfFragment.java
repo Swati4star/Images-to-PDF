@@ -1,16 +1,20 @@
 package swati4star.createpdf.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -65,6 +69,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private int mButtonClicked = 0;
     private boolean mPasswordProtected = false;
     private String mPassword;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private boolean mPermissionGranted = false;
 
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
@@ -270,6 +276,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
 
     @OnClick(R.id.createtextpdf)
     public void openCreateTextPdf() {
+        if (!mPermissionGranted) {
+            getRuntimePermissions();
+            return;
+        }
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -370,6 +380,23 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mFileUtils = new FileUtils(mActivity);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length < 1)
+            return;
+        switch (requestCode) {
+            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mPermissionGranted = true;
+                    openCreateTextPdf();
+                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                } else
+                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+            }
+        }
+    }
+
     private void onPasswordAdded() {
         mTextEnhancementOptionsEntityArrayList.get(3)
                 .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
@@ -380,5 +407,21 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mTextEnhancementOptionsEntityArrayList.get(3)
                 .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
+    private void getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                requestPermissions(new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+                return;
+            }
+            mPermissionGranted = true;
+        }
     }
 }
