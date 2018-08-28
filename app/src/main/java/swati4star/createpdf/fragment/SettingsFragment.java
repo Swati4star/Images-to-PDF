@@ -9,17 +9,21 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +36,8 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.PageSizeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -49,10 +55,12 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private ImageToPDFOptions mPdfOptions;
     private SharedPreferences mSharedPreferences;
-    private String mFontTitle, mDefaultPageSize;
+    private String mFontTitle, mDefaultPageSize, mPageTitle;
     private Font.FontFamily mFontFamily;
     private int mFontSize;
     public static String mPageSize = "A4";
+    private HashMap<Integer, Integer> mPageSizeToString;
+    private static int layout = R.layout.set_page_size_dialog;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -81,6 +89,16 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+        mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
+                Constants.DEFAULT_PAGE_SIZE);
+        mPageTitle = mActivity.getString(R.string.page_size_value_def);
+        mPageSizeToString = new HashMap<>();
+        mPageSizeToString.put(R.id.page_size_default, R.string.a4);
+        mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
+        mPageSizeToString.put(R.id.page_size_executive, R.string.executive);
+        mPageSizeToString.put(R.id.page_size_ledger, R.string.ledger);
+        mPageSizeToString.put(R.id.page_size_tabloid, R.string.tabloid);
+        mPageSizeToString.put(R.id.page_size_letter, R.string.letter);
 
         showEnhancementOptions();
 
@@ -117,6 +135,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         mEnhancementOptionsEntityArrayList.get(0)
                 .setName(mContext.getString(R.string.image_compression_value_default) +
                         mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)");
+        Log.d("COMPRESSION", mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%");
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
@@ -150,20 +169,96 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                 }).show();
     }
 
-    private void setPageSize() {
-        PageSizeUtils utils = new PageSizeUtils(mActivity, R.layout.set_page_size_default);
-        utils.showPageSizeDialog();
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
-        editor.apply();
-        showPageSizeDef();
+    private void showPageSizeDef() {
+        Log.d("PAGE SIZE", mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
+                Constants.DEFAULT_PAGE_SIZE));
+        mEnhancementOptionsEntityArrayList.get(1)
+                .setName(mContext.getString(R.string.page_size_value_def) +
+                         mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
+                         Constants.DEFAULT_PAGE_SIZE));
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
-    private void showPageSizeDef() {
-        mEnhancementOptionsEntityArrayList.get(0)
-                .setName(mContext.getString(R.string.image_compression_value_default) +
-                        mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)");
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    /**
+     * @param selectionId   - id of selected radio button
+     * @param spinnerAValue - Value of A0 to A10 spinner
+     * @param spinnerBValue - Value of B0 to B10 spinner
+     * @return - Rectangle page size
+     */
+    private String getPageSize(int selectionId, String spinnerAValue, String spinnerBValue) {
+        String stringPageSize;
+        switch (selectionId) {
+            case R.id.page_size_a0_a10:
+                stringPageSize = spinnerAValue;
+                mPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                break;
+            case R.id.page_size_b0_b10:
+                stringPageSize = spinnerBValue;
+                mPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
+                break;
+            default:
+                mPageSize = mActivity.getString(mPageSizeToString.get(selectionId));
+
+        }
+        return mPageSize;
+    }
+
+    public void setPageSize() {
+
+        MaterialDialog materialDialog = getPageSizeDialog(mPageTitle);
+
+        View view = materialDialog.getCustomView();
+        RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
+        Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
+        Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
+        RadioButton radioButtonDefault = view.findViewById(R.id.page_size_default);
+        radioButtonDefault.setText(String.format(mActivity.getString(R.string.default_page_size), mDefaultPageSize));
+
+        if (mPageSize.equals(mDefaultPageSize)) {
+            radioGroup.check(R.id.page_size_default);
+        } else if (mPageSize.startsWith("A")) {
+            radioGroup.check(R.id.page_size_a0_a10);
+            spinnerA.setSelection(java.lang.Integer.parseInt(mPageSize.substring(1)));
+        } else if (mPageSize.startsWith("B")) {
+            radioGroup.check(R.id.page_size_b0_b10);
+            spinnerB.setSelection(java.lang.Integer.parseInt(mPageSize.substring(1)));
+        } else {
+            Integer key = getKey(mPageSizeToString, mPageSize);
+            if (key != null)
+                radioGroup.check(key.intValue());
+        }
+
+        materialDialog.show();
+    }
+
+    private MaterialDialog getPageSizeDialog(String title) {
+        return new MaterialDialog.Builder(mActivity)
+                .title(title)
+                .customView(layout, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .onPositive((dialog1, which) -> {
+                    View view = dialog1.getCustomView();
+                    RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
+                    Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
+                    mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
+                            spinnerB.getSelectedItem().toString());
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
+                    editor.apply();
+                    showPageSizeDef();
+                }).build();
+    }
+
+    private Integer getKey(HashMap<Integer, Integer> map, String value) {
+        for (HashMap.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (value.equals(mActivity.getString(entry.getValue()))) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     private void editFontSize() {
