@@ -61,9 +61,9 @@ public class PageSizeUtils {
         return mPageSize;
     }
 
-    public void showPageSizeDialog() {
+    public MaterialDialog showPageSizeDialog(int layout, boolean saveValue) {
 
-        MaterialDialog materialDialog = getPageSizeDialog();
+        MaterialDialog materialDialog = getPageSizeDialog(layout, saveValue);
 
         View view = materialDialog.getCustomView();
         RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
@@ -87,12 +87,13 @@ public class PageSizeUtils {
         }
 
         materialDialog.show();
+        return materialDialog;
     }
 
-    private MaterialDialog getPageSizeDialog() {
+    private MaterialDialog getPageSizeDialog(int layout, boolean saveValue) {
         return new MaterialDialog.Builder(mActivity)
                 .title(R.string.set_page_size_text)
-                .customView(R.layout.set_page_size_dialog, true)
+                .customView(layout, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .onPositive((dialog1, which) -> {
@@ -104,7 +105,7 @@ public class PageSizeUtils {
                     Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
                     mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
                             spinnerB.getSelectedItem().toString());
-                    if (mSetAsDefault.isChecked()) {
+                    if (mSetAsDefault.isChecked() || saveValue) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
                         editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
                         editor.apply();

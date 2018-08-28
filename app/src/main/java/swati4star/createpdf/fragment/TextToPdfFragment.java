@@ -177,7 +177,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
 
     private void setPageSize() {
         PageSizeUtils utils = new PageSizeUtils(mActivity);
-        utils.showPageSizeDialog();
+        utils.showPageSizeDialog(R.layout.set_page_size_dialog, false);
     }
 
     /**
