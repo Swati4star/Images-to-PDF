@@ -134,8 +134,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     private void showCompressionDef() {
         mEnhancementOptionsEntityArrayList.get(0)
                 .setName(mContext.getString(R.string.image_compression_value_default) +
-                        mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)");
-        Log.d("COMPRESSION", mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%");
+                        mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%");
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
@@ -170,8 +169,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     }
 
     private void showPageSizeDef() {
-        Log.d("PAGE SIZE", mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
-                Constants.DEFAULT_PAGE_SIZE));
         mEnhancementOptionsEntityArrayList.get(1)
                 .setName(mContext.getString(R.string.page_size_value_def) +
                          mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
