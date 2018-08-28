@@ -45,10 +45,6 @@ public class SettingsOptions {
                     context.getString(R.string.font_family_value_def)
                             + fontFamily.name()));
 
-            //options.add(new EnhancementOptionsEntity(
-            //      context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),
-            //    context.getResources().getString(R.string.add_watermark)));
-
             return options;
         }
     }
