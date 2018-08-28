@@ -26,7 +26,7 @@ public class SettingsOptions {
             options.add(new EnhancementOptionsEntity(
                     context.getResources().getDrawable(R.drawable.ic_compress_image),
                     context.getString(R.string.image_compression_value_default) +
-                            sharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)"));
+                            sharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%"));
 
             options.add(new EnhancementOptionsEntity(
                     context.getResources().getDrawable(R.drawable.ic_page_size_24dp),
