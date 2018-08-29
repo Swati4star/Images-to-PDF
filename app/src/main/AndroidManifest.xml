@@ -25,10 +25,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,RtlEnabled">
         <activity
-            android:name="com.gun0912.tedpicker.ImagePickerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_picker"/>
-        <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
         <activity

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -28,12 +29,14 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
-import com.gun0912.tedpicker.Config;
-import com.gun0912.tedpicker.ImagePickerActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -255,9 +258,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     /**
-     * Called after ImagePickerActivity is called
+     * Called after Matisse Activity is called
      *
-     * @param requestCode REQUEST Code for opening ImagePickerActivity
+     * @param requestCode REQUEST Code for opening Matisse Activity
      * @param resultCode  result code of the process
      * @param data        Data of the image selected
      */
@@ -271,9 +274,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         switch (requestCode) {
             case INTENT_REQUEST_GET_IMAGES:
                 mImagesUri.clear();
-                ArrayList<Uri> imageUris = data.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+                List<Uri> imageUris = Matisse.obtainResult(data);
                 for (Uri uri : imageUris)
-                    mImagesUri.add(uri.getPath());
+                    mImagesUri.add(mFileUtils.getUriRealPath(uri));
                 if (imageUris.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), imageUris.size()));
@@ -590,21 +593,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     /**
-     * Opens ImagePickerActivity to select Images
+     * Opens Matisse activity to select Images
      */
     private void selectImages() {
-        Config config = new Config();
-        config.setToolbarTitleRes(R.string.image_picker_activity_toolbar_title);
-        ImagePickerActivity.setConfig(config);
-
-        Intent intent = new Intent(mActivity, ImagePickerActivity.class);
-
-        //add to intent the URIs of the already selected images
-        ArrayList<Uri> uris = new ArrayList<>(mImagesUri.size());
-        for (String stringUri : mImagesUri)
-            uris.add(Uri.fromFile(new File(stringUri)));
-        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
-
-        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+        Matisse.from(this)
+                .choose(MimeType.ofAll(), false)
+                .countable(true)
+                .maxSelectable(1000)
+                .imageEngine(new PicassoEngine())
+                .forResult(INTENT_REQUEST_GET_IMAGES);
     }
 }

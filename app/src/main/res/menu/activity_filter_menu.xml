@@ -6,8 +6,6 @@
         android:id="@+id/finish"
         android:title="@string/done_filter"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_done"
-        />
-
+        android:icon="@drawable/ic_action_done" />
 
 </menu>

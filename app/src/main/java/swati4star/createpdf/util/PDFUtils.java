@@ -85,7 +85,7 @@ public class PDFUtils {
         title.setText(R.string.details);
         title.setPadding(20, 10, 10, 10);
         title.setTextSize(30);
-        title.setTextColor(mContext.getResources().getColor(R.color.black_54));
+        title.setTextColor(mContext.getResources().getColor(R.color.black));
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         final AlertDialog dialog = builder.create();
         builder.setView(message);

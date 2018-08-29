@@ -36,7 +36,7 @@
         android:gravity="center"
         android:padding="2dp"
         android:textAlignment="center"
-        android:textColor="@color/black_87"
+        android:textColor="@color/black"
         android:textSize="12sp"
         tools:text="@string/rearrange_text" />
 
