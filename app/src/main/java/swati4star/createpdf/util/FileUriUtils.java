@@ -46,7 +46,7 @@ public class FileUriUtils {
     }
 
     private static boolean checkURI(Uri uri, String toCheckWith) {
-        return uri != null && uri.getScheme().equalsIgnoreCase("file");
+        return uri != null && uri.getScheme().equalsIgnoreCase(toCheckWith);
     }
 
     /**

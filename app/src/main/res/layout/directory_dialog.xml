@@ -12,7 +12,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:textColor="@color/black_87"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <EditText

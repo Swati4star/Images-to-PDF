@@ -25,7 +25,7 @@
         android:layout_below="@+id/filter_preview"
         android:layout_marginBottom="3dp"
         android:textAlignment="center"
-        android:textColor="@color/black_87"
+        android:textColor="@color/black"
         android:textSize="10sp"
         tools:text="@string/Filter_name"/>
 

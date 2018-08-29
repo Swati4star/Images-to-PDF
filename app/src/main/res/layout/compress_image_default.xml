@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/quality_image"
-        android:textColor="@color/black_87"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -23,14 +23,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/compress_dialog_enter_prompt"
-            android:textColor="@color/black_87"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/compress_dialog_percentage"
-            android:textColor="@color/black_87"
+            android:textColor="@color/black"
             android:textSize="20sp" />
     </LinearLayout>
 

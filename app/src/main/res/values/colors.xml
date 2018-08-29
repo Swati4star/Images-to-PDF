@@ -9,4 +9,6 @@
     <color name="gray_background">#eceff1</color>
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
+    <color name="light_blue">#B3E5FC</color>
+    <color name="dark1_gray">#949292</color>
 </resources>

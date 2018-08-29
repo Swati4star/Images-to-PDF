@@ -77,7 +77,7 @@ Hurray! PDF files of selected images are created.
 + [iTextG](http://developers.itextpdf.com/itextg-android)
 + [Material Ripple](https://github.com/balysv/material-ripple)
 + [Morphing Button](https://github.com/dmytrodanylyk/android-morphing-button)
-+ [TedPicker](https://github.com/ParkSangGwon/TedPicker)
++ [Matisse](https://github.com/zhihu/Matisse)
 + [Material Dialogs](https://github.com/afollestad/material-dialogs)
 + [What's new](https://github.com/TonnyL/WhatsNew)
 + [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
