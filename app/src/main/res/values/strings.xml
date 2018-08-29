@@ -158,7 +158,7 @@
     <string name="done_filter">Done</string>
     <string name="filter_images_Text">Filter Images \n</string>
     <string name="nextimage_contentdesc">Next Image</string>
-    <string name="compress_image">Compress the Image (Default : </string>
+    <string name="compress_image">Image compression : %s%%</string>
     <string name="quality_image">Enter % compression of image :</string>
     <string name="invalid_entry">Invaid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
@@ -311,7 +311,8 @@
     <string name="confirm_exit_message">Press back again to exit</string>
 
     <string name="border">Add Image Border</string>
-    <string name="border_dialog_title">Enter border width in units (Default is 0) : </string>
+    <string name="border_dialog_title">Border width : %d</string>
+    <string name="border_width_prompt">Enter border width units</string>
     <string name="filter_not_saved">Image could not be saved</string>
     <string name="remove_image_message">Are you sure you want to remove this image?</string>
     <string name="dont_show_again">Don\'t show again</string>

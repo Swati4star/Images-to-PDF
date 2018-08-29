@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -57,8 +56,12 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
+import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
@@ -88,15 +91,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @BindView(R.id.tvNoOfImages)
     TextView mNoOfImages;
 
-    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = new ArrayList<>();
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     private ArrayList<String> mImagesUri = new ArrayList<>();
     private String mPath;
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
-    private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private FileUtils mFileUtils;
+    private PageSizeUtils mPageSizeUtils;
     private int mButtonClicked = 0;
     private static int mImageCounter = 0;
     private ImageToPDFOptions mPdfOptions;
@@ -117,8 +119,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mPdfOptions = new ImageToPDFOptions();
-        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
+        mPageSizeUtils = new PageSizeUtils(mActivity);
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT ,
                 Constants.DEFAULT_PAGE_SIZE);
         mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
         mCreatePdf.setEnabled(false);
@@ -127,9 +129,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         // Get runtime permissions if build version >= Android M
         getRuntimePermissions(false);
 
+        // Get default values
+        resetValues();
+
         showEnhancementOptions();
 
         // Check for the images received
+        checkForImagesInBundle();
+
+        return root;
+    }
+
+    private void checkForImagesInBundle() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
@@ -150,19 +161,15 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 }
             }
         }
-
-        mPdfOptions.setBorderWidth(mSharedPreferences.getInt(DEFAULT_IMAGE_BORDER_TEXT, 0));
-        showBorderWidth();
-
-        return root;
     }
 
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
-        mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
-        mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
+        ArrayList<EnhancementOptionsEntity> list = getEnhancementOptions(mActivity, mPdfOptions);
+        EnhancementOptionsAdapter adapter =
+                new EnhancementOptionsAdapter(this, list);
+        mEnhancementOptionsRecycleView.setAdapter(adapter);
     }
 
     /**
@@ -178,13 +185,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void filterImages() {
-        try {
-            Intent intent = new Intent(getContext(), ImageEditor.class);
-            intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mImagesUri);
-            startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Intent intent = new Intent(getContext(), ImageEditor.class);
+        intent.putStringArrayListExtra(IMAGE_EDITOR_KEY, mImagesUri);
+        startActivityForResult(intent, INTENT_REQUEST_APPLY_FILTER);
     }
 
     // Create Pdf of selected images
@@ -268,7 +271,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mButtonClicked = 0;
-        if (resultCode != Activity.RESULT_OK)
+        if (resultCode != Activity.RESULT_OK || data == null)
             return;
 
         switch (requestCode) {
@@ -301,39 +304,28 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 break;
 
             case INTENT_REQUEST_APPLY_FILTER:
-                try {
-                    mImagesUri.clear();
-                    ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
-                    int size = mFilterUris.size() - 1;
-                    for (int k = 0; k <= size; k++) {
-                        mImagesUri.add(mFilterUris.get(k));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                mImagesUri.clear();
+                ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
+                int size = mFilterUris.size() - 1;
+                for (int k = 0; k <= size; k++)
+                    mImagesUri.add(mFilterUris.get(k));
+                break;
 
             case INTENT_REQUEST_PREVIEW_IMAGE:
-                try {
-                    mImagesUri = data.getStringArrayListExtra(RESULT);
-                    if (mImagesUri.size() > 0) {
-                        mNoOfImages.setText(String.format(mActivity.getResources()
-                                        .getString(R.string.images_selected), mImagesUri.size()));
-                    } else {
-                        mNoOfImages.setVisibility(View.GONE);
-                        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
-                        mCreatePdf.setEnabled(false);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                mImagesUri = data.getStringArrayListExtra(RESULT);
+                if (mImagesUri.size() > 0) {
+                    mNoOfImages.setText(String.format(mActivity.getResources()
+                            .getString(R.string.images_selected), mImagesUri.size()));
+                } else {
+                    mNoOfImages.setVisibility(View.GONE);
+                    mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+                    mCreatePdf.setEnabled(false);
                 }
                 break;
+
             case INTENT_REQUEST_REARRANGE_IMAGE:
-                try {
-                    mImagesUri = data.getStringArrayListExtra(Constants.RESULT);
-                    showSnackbar(mActivity, R.string.images_rearranged);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                mImagesUri = data.getStringArrayListExtra(RESULT);
+                showSnackbar(mActivity, R.string.images_rearranged);
                 break;
         }
     }
@@ -360,7 +352,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 filterImages();
                 break;
             case 4:
-                setPageSize();
+                mPageSizeUtils.showPageSizeDialog(R.layout.set_page_size_dialog, false);
                 break;
             case 5:
                 previewPDF();
@@ -395,7 +387,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                             showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mPdfOptions.setBorderWidth(value);
-                            showBorderWidth();
+                            showEnhancementOptions();
                         }
                     } catch (NumberFormatException e) {
                         showSnackbar(mActivity, R.string.invalid_entry);
@@ -417,11 +409,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void compressImage() {
-        String title = getString(R.string.compress_image) + " " +
-                mSharedPreferences.getInt(DEFAULT_COMPRESSION, 30) + "%)";
-
-        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
-                .title(title)
+        new MaterialDialog.Builder(mActivity)
+                .title(mActivity.getString(R.string.compression_image_edit))
                 .customView(R.layout.compress_image_dialog, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
@@ -441,32 +430,12 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                                 editor.putInt(DEFAULT_COMPRESSION, check);
                                 editor.apply();
                             }
-                            showCompression();
+                            showEnhancementOptions();
                         }
                     } catch (NumberFormatException e) {
                         showSnackbar(mActivity, R.string.invalid_entry);
                     }
-                }).build();
-
-        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        final EditText qualityValueInput = dialog.getCustomView().findViewById(R.id.quality);
-        qualityValueInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        positiveAction.setEnabled(s.toString().trim().length() > 0);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable input) {
-                    }
-                });
-        dialog.show();
-        positiveAction.setEnabled(false);
+                }).show();
     }
 
     private void passwordProtectPDF() {
@@ -500,14 +469,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         } else {
                             mPdfOptions.setPassword(input.toString());
                             mPdfOptions.setPasswordProtected(true);
-                            onPasswordAdded();
+                            showEnhancementOptions();
                         }
                     }
                 });
         if (StringUtils.isNotEmpty(mPdfOptions.getPassword())) {
             neutralAction.setOnClickListener(v -> {
-                onPasswordRemoved();
                 mPdfOptions.setPasswordProtected(false);
+                showEnhancementOptions();
                 dialog.dismiss();
                 showSnackbar(mActivity, R.string.password_remove);
             });
@@ -516,47 +485,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         positiveAction.setEnabled(false);
     }
 
-    private void showCompression() {
-        mEnhancementOptionsEntityArrayList.get(2)
-                .setName(mPdfOptions.getQualityString() + "% Compressed");
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
-    }
-
-    private void onPasswordAdded() {
-        mEnhancementOptionsEntityArrayList.get(0)
-                .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
-    }
-
-    private void onPasswordRemoved() {
-        mEnhancementOptionsEntityArrayList.get(0)
-                .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
-    }
-
-    private void showBorderWidth() {
-        mEnhancementOptionsEntityArrayList.get(6)
-                .setName("Border width : " + mPdfOptions.getBorderWidth());
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
-    }
-
-    private void setPageSize() {
-        PageSizeUtils utils = new PageSizeUtils(mActivity);
-        utils.showPageSizeDialog(R.layout.set_page_size_dialog, false);
-    }
-
     @Override
     public void onPDFCreated(boolean success, String path) {
-        mImagesUri.clear();
         mNoOfImages.setVisibility(View.GONE);
         mImageCounter = 0;
         mPdfOptions = new ImageToPDFOptions();
         if (success) {
             mOpenPdf.setVisibility(View.VISIBLE);
             mMorphButtonUtility.morphToSuccess(mCreatePdf);
-            onPasswordRemoved();
+            showEnhancementOptions();
             mPath = path;
         }
+        resetValues();
     }
 
     private void cropNextImage() {
@@ -597,10 +537,24 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
      */
     private void selectImages() {
         Matisse.from(this)
-                .choose(MimeType.ofAll(), false)
+                .choose(MimeType.ofImage(), false)
                 .countable(true)
                 .maxSelectable(1000)
                 .imageEngine(new PicassoEngine())
                 .forResult(INTENT_REQUEST_GET_IMAGES);
+    }
+
+    private void resetValues() {
+        mPdfOptions = new ImageToPDFOptions();
+        mPdfOptions.setBorderWidth(mSharedPreferences.getInt(DEFAULT_IMAGE_BORDER_TEXT,
+                DEFAULT_BORDER_WIDTH));
+        mPdfOptions.setQualityString(
+                Integer.toString(mSharedPreferences.getInt(DEFAULT_COMPRESSION,
+                        DEFAULT_QUALITY_VALUE)));
+        mPdfOptions.setPageSize(mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT,
+                DEFAULT_PAGE_SIZE));
+        mPdfOptions.setPasswordProtected(false);
+        mImagesUri.clear();
+
     }
 }

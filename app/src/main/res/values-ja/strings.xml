@@ -291,4 +291,5 @@
     <string name="font_size_edit">Change default font size</string>
     <string name="settings_info">You can modify the default value for various settings here.</string>
     <string name="split_info">The PDF will be split into multiple PDFs of single page.</string>
+    <string name="border_width_prompt">Enter border width units</string>
 </resources>

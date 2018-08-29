@@ -15,11 +15,13 @@ import java.util.HashMap;
 
 import swati4star.createpdf.R;
 
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
+
 public class PageSizeUtils {
 
     private final Context mActivity;
     private final SharedPreferences mSharedPreferences;
-    public static String mPageSize = "A4";
+    public static String mPageSize = DEFAULT_PAGE_SIZE;
     private final String mDefaultPageSize;
     private final HashMap<Integer, Integer> mPageSizeToString;
 
@@ -27,7 +29,7 @@ public class PageSizeUtils {
         this.mActivity = mActivity;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
-                Constants.DEFAULT_PAGE_SIZE);
+                DEFAULT_PAGE_SIZE);
         mPageSizeToString = new HashMap<>();
         mPageSizeToString.put(R.id.page_size_default, R.string.a4);
         mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
