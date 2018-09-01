@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +23,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +34,8 @@ import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
+
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickListener {
 
@@ -111,9 +111,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         if (file.exists()) {
             fileUtils.openFile(path);
         } else {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.pdf_does_not_exist_message,
-                    Snackbar.LENGTH_LONG).show();
+            showSnackbar(mActivity, R.string.pdf_does_not_exist_message);
         }
     }
 

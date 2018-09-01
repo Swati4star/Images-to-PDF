@@ -63,6 +63,7 @@
                             android:maxLines="1"
                             android:padding="7dp"
                             android:paddingStart="0dp"
+                            android:paddingEnd="0dp"
                             android:text="@string/file_size_text"
                             android:textSize="12sp" />
 
@@ -74,6 +75,7 @@
                             android:layout_marginEnd="10dp"
                             android:layout_marginStart="15dp"
                             android:tint="@color/black"
+                            android:contentDescription="@string/default_content_description"
                             app:srcCompat="@drawable/ic_lock_black_24dp" />
                     </LinearLayout>
 
@@ -84,6 +86,7 @@
                         android:maxLines="1"
                         android:padding="7dp"
                         android:paddingStart="0dp"
+                        android:paddingEnd="0dp"
                         android:text="@string/file_date_text"
                         android:textSize="12sp" />
                 </LinearLayout>

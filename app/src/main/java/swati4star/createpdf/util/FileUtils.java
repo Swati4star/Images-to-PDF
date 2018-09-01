@@ -19,7 +19,6 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
@@ -31,7 +30,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -40,6 +38,8 @@ import static swati4star.createpdf.util.FileUriUtils.getImageRealPath;
 import static swati4star.createpdf.util.FileUriUtils.getUriRealPathAboveKitkat;
 import static swati4star.createpdf.util.FileUriUtils.isAboveKitKat;
 import static swati4star.createpdf.util.FileUriUtils.isWhatsappImage;
+import static swati4star.createpdf.util.StringUtils.pdfDirectory;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class FileUtils {
 
@@ -294,13 +294,13 @@ public class FileUtils {
      * Saves bitmap to external storage
      * @param finalBitmap - bitmap to save
      */
-    public String  saveImage(Bitmap finalBitmap) {
+    static String saveImage(Bitmap finalBitmap) {
 
         if (checkIfBitmapIsWhite(finalBitmap))
             return null;
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + mContext.getString(R.string.pdf_dir));
+        File myDir = new File(root + pdfDirectory);
         String fname = "image_" + System.currentTimeMillis() + ".jpg";
 
         File file = new File(myDir, fname);
@@ -317,7 +317,7 @@ public class FileUtils {
         return myDir + "/" + fname;
     }
 
-    private boolean checkIfBitmapIsWhite(Bitmap bitmap) {
+    private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         for (int i =  0; i < w; i++) {
@@ -347,8 +347,7 @@ public class FileUtils {
         try {
             mContext.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                    R.string.snackbar_no_pdf_app, Snackbar.LENGTH_LONG).show();
+            showSnackbar(mContext, R.string.snackbar_no_pdf_app);
         }
     }
 

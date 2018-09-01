@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
@@ -40,6 +41,7 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         ExtractImagesAdapter.OnFileItemClickedListener, ExtractImagesListener {
@@ -51,6 +53,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     private DirectoryUtils mDirectoryUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private ArrayList<String> mOutFilePaths;
+    private MaterialDialog mMaterialDialog;
 
     @BindView(R.id.selectFile)
     Button selectFileButton;
@@ -132,7 +135,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
     @OnClick(R.id.extractImages)
     public void parse() {
-        new ExtractImages(mActivity, mPath, this).execute();
+        new ExtractImages(mPath, this).execute();
     }
 
     @Override
@@ -176,7 +179,25 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     }
 
     @Override
-    public void updateView(String text, ArrayList<String> outputFilePaths) {
+    public void extractionStarted() {
+        mMaterialDialog = new MaterialDialog.Builder(mActivity)
+                .customView(R.layout.lottie_anim_dialog, false)
+                .build();
+        mMaterialDialog.show();
+    }
+
+    @Override
+    public void updateView(int imagecount, ArrayList<String> outputFilePaths) {
+
+        mMaterialDialog.dismiss();
+        resetView();
+        if (imagecount == 0) {
+            showSnackbar(mActivity, R.string.extract_images_failed);
+            return;
+        }
+
+        String text = String.format(mActivity.getString(R.string.extract_images_success), imagecount);
+        showSnackbar(mActivity, text);
         extractImagesSuccessText.setVisibility(View.VISIBLE);
         mShareFiles.setVisibility(View.VISIBLE);
         mOutFilePaths = outputFilePaths;

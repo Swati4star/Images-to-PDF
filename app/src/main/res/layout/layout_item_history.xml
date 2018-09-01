@@ -24,6 +24,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:tint="@color/colorPrimary"
+                android:contentDescription="@string/default_content_description"
                 app:srcCompat="@drawable/ic_compress_image" />
 
             <TextView

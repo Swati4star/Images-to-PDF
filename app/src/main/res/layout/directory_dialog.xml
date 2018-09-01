@@ -24,6 +24,8 @@
         android:layout_marginRight="10dp"
         android:labelFor="@id/directory_textView"
         android:padding="10dp"
-        android:textSize="20sp" />
+        android:hint="@string/dialog_dir"
+        android:textSize="20sp"
+        android:inputType="text" />
 
 </LinearLayout>

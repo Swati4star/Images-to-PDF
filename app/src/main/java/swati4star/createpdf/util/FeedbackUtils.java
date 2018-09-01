@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
-
-import java.util.Objects;
 
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class FeedbackUtils {
 
@@ -34,9 +32,7 @@ public class FeedbackUtils {
         try {
             mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                    R.string.snackbar_no_share_app,
-                    Snackbar.LENGTH_LONG).show();
+            showSnackbar(mContext, R.string.snackbar_no_share_app);
         }
     }
 

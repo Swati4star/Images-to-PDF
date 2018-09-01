@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/radio_group_page_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/page_size_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/page_size_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/letter"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/page_size_legal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/legal"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/page_size_executive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/executive"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/page_size_ledger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ledger"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/page_size_tabloid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabloid"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/page_size_a0_a10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/a0_to_a10"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/page_size_b0_b10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/b0_to_b10"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/spinner_page_size_a0_a10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:baselineAligned="false"
+            android:entries="@array/array_page_sizes_a0_b10" />
+
+        <Spinner
+            android:id="@+id/spinner_page_size_b0_b10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:entries="@array/array_page_sizes_b0_b10" />
+    </LinearLayout>
+
+</LinearLayout>

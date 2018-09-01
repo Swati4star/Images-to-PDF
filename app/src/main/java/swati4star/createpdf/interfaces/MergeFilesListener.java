@@ -1,5 +1,6 @@
 package swati4star.createpdf.interfaces;
 
 public interface MergeFilesListener {
-    void resetValues();
+    void resetValues(boolean isPDFMerged, String path);
+    void mergeStarted();
 }

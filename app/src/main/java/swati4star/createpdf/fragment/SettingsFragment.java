@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
@@ -183,8 +184,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      */
     public void setPageSize() {
         PageSizeUtils utils = new PageSizeUtils(mActivity);
-        MaterialDialog materialDialog = utils.showPageSizeDialog(R.layout.set_page_size_dialog, true);
+        MaterialDialog materialDialog = utils.showPageSizeDialog(R.layout.set_page_size_dialog_default, true);
         materialDialog.setOnDismissListener(dialog -> showSettingsOptions());
     }
-
 }

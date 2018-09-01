@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -123,7 +124,7 @@ public class PDFEncryptionUtility {
      * @return true, if PDF is encrypted, otherwise false
      */
     private boolean isPDFEncrypted(final String file) {
-        PdfReader reader = null;
+        PdfReader reader;
         String ownerPass = mContext.getString(R.string.app_name);
         try {
             reader = new PdfReader(file, ownerPass.getBytes());
@@ -154,7 +155,7 @@ public class PDFEncryptionUtility {
         final String[] input_password = new String[1];
         mDialog.setTitle(R.string.enter_password);
         final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
-        final EditText mPasswordInput = mDialog.getCustomView().findViewById(R.id.password);
+        final EditText mPasswordInput = Objects.requireNonNull(mDialog.getCustomView()).findViewById(R.id.password);
         TextView text = mDialog.getCustomView().findViewById(R.id.enter_password);
         text.setText(R.string.decrypt_message);
         mPasswordInput.addTextChangedListener(

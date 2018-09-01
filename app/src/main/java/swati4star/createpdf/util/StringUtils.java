@@ -13,6 +13,10 @@ import java.util.Objects;
 
 public class StringUtils {
 
+    public static final String pdfDirectory = "/PDFfiles/";
+    public static final String pdfExtension = ".pdf";
+    public static final String appName = "PDF Converter";
+
     public static boolean isEmpty(CharSequence s) {
         return s == null || s.toString().trim().equals("");
     }

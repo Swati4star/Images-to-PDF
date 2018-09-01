@@ -1,11 +1,9 @@
 package swati4star.createpdf.util;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.pdf.PRStream;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfObject;
@@ -15,36 +13,27 @@ import com.itextpdf.text.pdf.parser.PdfImageObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
+import static swati4star.createpdf.util.FileUtils.saveImage;
 
 public class ExtractImages extends AsyncTask<Void, Void, Void> {
-    private final Activity mActivity;
     private String mPath;
-    private FileUtils mFileUtils;
     private ExtractImagesListener mExtractImagesListener;
-    private MaterialDialog mMaterialDialog;
     private boolean mSuccess;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
 
-    public ExtractImages(Activity mActivity, String mPath, ExtractImagesListener mExtractImagesListener) {
-        this.mActivity = mActivity;
+    public ExtractImages(String mPath, ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
         this.mExtractImagesListener = mExtractImagesListener;
-        mFileUtils = new FileUtils(mActivity);
         mOutputFilePaths = new ArrayList<>();
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mMaterialDialog = new MaterialDialog.Builder(mActivity)
-                .customView(R.layout.lottie_anim_dialog, false)
-                .build();
-        mMaterialDialog.show();
+        mExtractImagesListener.extractionStarted();
         mSuccess = false;
     }
 
@@ -65,7 +54,7 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                         byte[] image = pio.getImageAsBytes();
                         Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,
                                 image.length);
-                        String path = mFileUtils.saveImage(bmp);
+                        String path = saveImage(bmp);
                         if (path != null) {
                             mOutputFilePaths.add(path);
                             mImagesCount++;
@@ -84,15 +73,6 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        if (mImagesCount == 0) {
-            showSnackbar(mActivity, R.string.extract_images_failed);
-        }
-        if (mSuccess) {
-            String text = String.format(mActivity.getString(R.string.extract_images_success), mImagesCount);
-            showSnackbar(mActivity, text);
-            mExtractImagesListener.updateView(text, mOutputFilePaths);
-        }
-        mMaterialDialog.dismiss();
-        mExtractImagesListener.resetView();
+        mExtractImagesListener.updateView(mImagesCount, mOutputFilePaths);
     }
 }

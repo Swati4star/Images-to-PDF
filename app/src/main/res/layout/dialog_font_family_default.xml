@@ -4,46 +4,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RadioGroup
-        android:id="@+id/radio_group_font_family"
+    <RadioButton
+        android:id="@+id/ff_courier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="@string/courier" />
 
-        <RadioButton
-            android:id="@+id/ff_courier"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/courier" />
+    <RadioButton
+        android:id="@+id/ff_helvetica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/helvetica" />
 
-        <RadioButton
-            android:id="@+id/ff_helvetica"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/helvetica" />
+    <RadioButton
+        android:id="@+id/ff_times_roman"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/times_roman" />
 
-        <RadioButton
-            android:id="@+id/ff_times_roman"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/times_roman" />
+    <RadioButton
+        android:id="@+id/ff_symbol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/symbol" />
 
-        <RadioButton
-            android:id="@+id/ff_symbol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/symbol" />
+    <RadioButton
+        android:id="@+id/ff_zapfdingbats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/zapfdingbats" />
 
-        <RadioButton
-            android:id="@+id/ff_zapfdingbats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/zapfdingbats" />
+    <RadioButton
+        android:id="@+id/ff_undefined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/undefined" />
 
-        <RadioButton
-            android:id="@+id/ff_undefined"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/undefined" />
-    </RadioGroup>
 </LinearLayout>

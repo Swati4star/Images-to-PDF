@@ -17,6 +17,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:contentDescription="@string/default_content_description"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
@@ -54,7 +55,8 @@
                     android:layout_gravity="center_vertical"
                     android:padding="8dp"
                     android:tint="@color/colorGray"
-                    app:srcCompat="@drawable/ic_version_white_24dp" />
+                    app:srcCompat="@drawable/ic_version_white_24dp"
+                    android:contentDescription="@string/default_content_description" />
 
                 <TextView
                     style="@style/TextAppearance.AppCompat.Medium"

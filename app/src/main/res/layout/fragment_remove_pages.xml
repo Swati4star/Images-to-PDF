@@ -37,7 +37,9 @@
             android:text="@string/remove_pages_text" />
 
         <EditText
+            android:labelFor="@id/infoText"
             android:id="@+id/pages"
+            android:hint="@string/prompt_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1" />

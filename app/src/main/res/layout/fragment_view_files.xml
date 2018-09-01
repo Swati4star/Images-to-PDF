@@ -50,6 +50,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/default_content_description"
                         app:srcCompat="@drawable/ic_add_black_24dp" />
 
                     <TextView
@@ -75,6 +76,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/default_content_description"
                         app:srcCompat="@drawable/ic_arrow_forward_white_24dp" />
 
                     <TextView
@@ -101,6 +103,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/default_content_description"
                         app:srcCompat="@drawable/ic_home_white_24dp" />
 
                     <TextView
@@ -125,6 +128,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/default_content_description"
                         app:srcCompat="@drawable/ic_delete_white_24dp" />
 
                     <TextView

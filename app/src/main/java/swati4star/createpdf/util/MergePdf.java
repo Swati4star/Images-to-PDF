@@ -1,33 +1,27 @@
 package swati4star.createpdf.util;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
 
 import java.io.FileOutputStream;
-import java.util.Objects;
 
-import swati4star.createpdf.R;
-import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.MergeFilesListener;
+
+import static swati4star.createpdf.util.StringUtils.pdfDirectory;
+import static swati4star.createpdf.util.StringUtils.pdfExtension;
 
 public class MergePdf extends AsyncTask<String, Void, Void> {
 
     private String mFinPath;
     private Boolean mIsPDFMerged;
-    private MaterialDialog mMaterialDialog;
-    private final Activity mActivity;
     private String mFilename;
     private final MergeFilesListener mMergeFilesListener;
 
-    public MergePdf(Activity activity, String fileName, MergeFilesListener mergeFilesListener) {
-        mActivity = activity;
+    public MergePdf(String fileName, MergeFilesListener mergeFilesListener) {
         mFilename = fileName;
         mMergeFilesListener = mergeFilesListener;
     }
@@ -35,11 +29,8 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mMaterialDialog = new MaterialDialog.Builder(mActivity)
-                .customView(R.layout.lottie_anim_dialog, false)
-                .build();
         mIsPDFMerged = false;
-        mMaterialDialog.show();
+        mMergeFilesListener.mergeStarted();
     }
 
     @Override
@@ -49,8 +40,8 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
             Document document = new Document();
             // Create pdf copy object to copy current document to the output mergedresult file
             String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    mActivity.getString(R.string.pdf_dir);
-            mFilename = mFilename + mActivity.getString(R.string.pdf_ext);
+                    pdfDirectory;
+            mFilename = mFilename + pdfExtension;
             mFinPath = mPath + mFilename;
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(mFinPath));
             // Open the document
@@ -79,18 +70,6 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mMaterialDialog.dismiss();
-        mMergeFilesListener.resetValues();
-        if (mIsPDFMerged) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.pdf_merged, Snackbar.LENGTH_LONG).setAction(R.string.snackbar_viewAction, v -> {
-                        FileUtils fileUtils = new FileUtils(mActivity);
-                        fileUtils.openFile(mFinPath);
-                    }).show();
-            new DatabaseHelper(mActivity).insertRecord(mFinPath,
-                    mActivity.getString(R.string.created));
-        } else
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.pdf_merge_error, Snackbar.LENGTH_LONG).show();
+        mMergeFilesListener.resetValues(mIsPDFMerged, mFinPath);
     }
 }

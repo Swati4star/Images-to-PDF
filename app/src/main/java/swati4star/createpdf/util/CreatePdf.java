@@ -1,16 +1,11 @@
 package swati4star.createpdf.util;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
@@ -20,14 +15,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Objects;
 
-import swati4star.createpdf.R;
-import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 
-import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.StringUtils.appName;
+import static swati4star.createpdf.util.StringUtils.pdfDirectory;
+import static swati4star.createpdf.util.StringUtils.pdfExtension;
 
 /**
  * An async task that converts selected images to Pdf
@@ -39,21 +33,18 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final String mQualityString;
     private final ArrayList<String> mImagesUri;
     private final int mBorderWidth;
-    private final Activity mContext;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private boolean mSuccess;
     private String mPath;
     private final String mPageSize;
-    private MaterialDialog mMaterialDialog;
     private final boolean mPasswordProtected;
     private Boolean mAddWatermak;
 
-    public CreatePdf(Activity context, ImageToPDFOptions mImageToPDFOptions, OnPDFCreatedInterface onPDFCreated) {
+    public CreatePdf(ImageToPDFOptions mImageToPDFOptions, OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = mImageToPDFOptions.getImagesUri();
         this.mFileName = mImageToPDFOptions.getOutFileName();
         this.mPassword = mImageToPDFOptions.getPassword();
         this.mQualityString = mImageToPDFOptions.getQualityString();
-        this.mContext = context;
         this.mOnPDFCreatedInterface = onPDFCreated;
         this.mPageSize = mImageToPDFOptions.getPageSize();
         this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
@@ -65,21 +56,16 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         mSuccess = true;
-        mMaterialDialog = new MaterialDialog.Builder(mContext)
-                .customView(R.layout.lottie_anim_dialog, false)
-                .build();
-        mMaterialDialog.show();
+        mOnPDFCreatedInterface.onPDFCreationStarted();
     }
 
     private void setFilePath() {
-
         mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                mContext.getString(R.string.pdf_dir);
+                pdfDirectory;
         File folder = new File(mPath);
         if (!folder.exists())
             folder.mkdir();
-
-        mPath = mPath + mFileName + mContext.getString(R.string.pdf_ext);
+        mPath = mPath + mFileName + pdfExtension;
     }
 
     @Override
@@ -101,8 +87,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             Log.v("Stage 3", "Pdf writer");
 
             if (mPasswordProtected) {
-                writer.setEncryption(mPassword.getBytes(),
-                        mContext.getString(R.string.app_name).getBytes(),
+                writer.setEncryption(mPassword.getBytes(), appName.getBytes(),
                         PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
                         PdfWriter.ENCRYPTION_AES_128);
 
@@ -119,9 +104,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
             for (int i = 0; i < mImagesUri.size(); i++) {
                 int quality;
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.mContext);
-                quality = preferences.getInt(DEFAULT_COMPRESSION, 30);
-
+                quality = 30;
                 if (StringUtils.isNotEmpty(mQualityString)) {
                     quality = Integer.parseInt(mQualityString);
                 }
@@ -159,7 +142,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
             Log.v("Stage 7", "Document Closed" + mPath);
 
-            new DatabaseHelper(mContext).insertRecord(mPath, mContext.getString(R.string.created));
             Log.v("Stage 8", "Record inserted in database");
 
         } catch (Exception e) {
@@ -174,23 +156,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        mMaterialDialog.dismiss();
-        if (!mSuccess) {
-            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content),
-                    R.string.snackbar_folder_not_created,
-                    Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
         mOnPDFCreatedInterface.onPDFCreated(mSuccess, mPath);
-
-        Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content)
-                , R.string.snackbar_pdfCreated
-                , Snackbar.LENGTH_LONG)
-                .setAction(R.string.snackbar_viewAction, v -> {
-                    FileUtils fileUtils = new FileUtils(mContext);
-                    fileUtils.openFile(mPath);
-                }).show();
     }
 }
 

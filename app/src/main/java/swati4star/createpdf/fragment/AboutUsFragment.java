@@ -8,19 +8,18 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.FeedbackUtils;
+
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 
 public class AboutUsFragment extends Fragment {
@@ -54,9 +53,7 @@ public class AboutUsFragment extends Fragment {
         try {
             mActivity.startActivity(Intent.createChooser(intent, mActivity.getString(R.string.feedback_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content),
-                    R.string.snackbar_no_email_clients,
-                    Snackbar.LENGTH_LONG).show();
+            showSnackbar(mActivity, R.string.snackbar_no_email_clients);
         }
     }
 

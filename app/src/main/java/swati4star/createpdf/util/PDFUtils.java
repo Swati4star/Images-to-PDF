@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -39,7 +40,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
@@ -54,12 +54,12 @@ public class PDFUtils {
 
     private final Activity mContext;
     private final FileUtils mFileUtils;
-    private HashMap<Integer, Integer> mAngleRadioButton;
+    private SparseIntArray mAngleRadioButton;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(mContext);
-        mAngleRadioButton = new HashMap<>();
+        mAngleRadioButton = new SparseIntArray();
         mAngleRadioButton.put(R.id.deg90, 90);
         mAngleRadioButton.put(R.id.deg180, 180);
         mAngleRadioButton.put(R.id.deg270, 270);

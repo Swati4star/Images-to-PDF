@@ -85,7 +85,7 @@ public class PageSizeUtils {
         } else {
             Integer key = getKey(mPageSizeToString, mPageSize);
             if (key != null)
-                radioGroup.check(key.intValue());
+                radioGroup.check(key);
         }
 
         materialDialog.show();
@@ -100,14 +100,14 @@ public class PageSizeUtils {
                 .negativeText(android.R.string.cancel)
                 .onPositive((dialog1, which) -> {
                     View view = dialog1.getCustomView();
-                    CheckBox mSetAsDefault = view.findViewById(R.id.set_as_default);
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
                     Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
                     mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
                             spinnerB.getSelectedItem().toString());
-                    if (mSetAsDefault.isChecked() || saveValue) {
+                    CheckBox mSetAsDefault = view.findViewById(R.id.set_as_default);
+                    if (saveValue || mSetAsDefault.isChecked() ) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
                         editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
                         editor.apply();

@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public interface ExtractImagesListener {
     void resetView();
-
-    void updateView(String text, ArrayList<String> outputFilePaths);
+    void extractionStarted();
+    void updateView(int imagecount, ArrayList<String> outputFilePaths);
 }

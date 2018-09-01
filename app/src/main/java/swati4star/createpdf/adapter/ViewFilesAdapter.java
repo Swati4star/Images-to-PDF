@@ -26,6 +26,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
+import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
@@ -337,7 +338,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     @Override
     public void updateDataset() {
         int index = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
-        new PopulateList(mActivity, this, this, index).execute();
+        new PopulateList(this, this,
+                new DirectoryUtils(mActivity), index).execute();
     }
 
     @Override

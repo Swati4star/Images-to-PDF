@@ -18,6 +18,8 @@
     <string name="set_page_size_text">Set Page Size</string>
     <string name="preview_image_to_pdf">Preview PDF</string>
 
+    <string name="default_content_description">no description</string>
+    <string name="prompt_input">Enter here</string>
     <array name="items">
         <item>Open File</item>
         <item>Delete File</item>
@@ -73,7 +75,6 @@
     <string name="pdf_type" translatable="false">application/pdf</string>
 
     <string name="please_wait">Please Wait</string>
-    <string name="populating_list">Fetching files. This may take a while</string>
 
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
@@ -127,7 +128,6 @@
     <string name="snackbar_no_share_app">No application to share.</string>
 
     <!-- Select Images string -->
-    <string name="image_picker_activity_toolbar_title">Select Images</string>
     <string name="images_selected"> %1$d image(s) selected.</string>
 
     <!-- Feedback Strings -->
@@ -159,7 +159,7 @@
     <string name="filter_images_Text">Filter Images \n</string>
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Image compression : %s%%</string>
-    <string name="quality_image">Enter % compression of image :</string>
+    <string name="quality_image">Enter %% compression of image :</string>
     <string name="invalid_entry">Invaid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
@@ -340,7 +340,7 @@
 
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
-    <string name="compress_pdf_prompt">Enter % compression of PDF : </string>
+    <string name="compress_pdf_prompt">Enter %% compression of PDF : </string>
     <string name="compress_info">Congratulations! Your PDF is compressed: \n Original PDF Size : %s \n Compressed PDF Size: %s</string>
 
     <!-- Rate us strings -->
@@ -369,7 +369,7 @@
     <string name="font_size_edit">Change default font size</string>
     <string name="image_compression_value_default">Image Compression default value : %d %%</string>
     <string name="page_size_value_def">Page size default value : %s </string>
-    <string name="font_size_value_def">Font size default value : %s </string>
+    <string name="font_size_value_def">Font size default value : %d </string>
     <string name="font_family_value_def">Font family default value : %s </string>
     <string name="settings_info">You can modify the default value for various settings here.</string>
 

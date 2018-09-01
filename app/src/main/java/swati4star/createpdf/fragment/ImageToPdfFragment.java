@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,10 +33,12 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +48,7 @@ import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.activity.RearrangeImages;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
@@ -102,6 +106,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mButtonClicked = 0;
     private static int mImageCounter = 0;
     private ImageToPDFOptions mPdfOptions;
+    private MaterialDialog mMaterialDialog;
 
     @Override
     public void onAttach(Context context) {
@@ -207,7 +212,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         FileUtils utils = new FileUtils(mActivity);
                         if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                             mPdfOptions.setOutFileName(filename);
-                            new CreatePdf(mActivity, mPdfOptions,
+                            new CreatePdf(mPdfOptions,
                                     ImageToPdfFragment.this).execute();
                         } else {
                             new MaterialDialog.Builder(mActivity)
@@ -217,7 +222,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                                     .negativeText(android.R.string.cancel)
                                     .onPositive((dialog12, which) -> {
                                         mPdfOptions.setOutFileName(filename);
-                                        new CreatePdf(mActivity, mPdfOptions,
+                                        new CreatePdf(mPdfOptions,
                                             ImageToPdfFragment.this).execute();
                                     })
                                     .onNegative((dialog1, which) -> createPdf())
@@ -486,16 +491,35 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     @Override
+    public void onPDFCreationStarted() {
+        mMaterialDialog = new MaterialDialog.Builder(mActivity)
+                .customView(R.layout.lottie_anim_dialog, false)
+                .build();
+        mMaterialDialog.show();
+    }
+
+    @Override
     public void onPDFCreated(boolean success, String path) {
+        mMaterialDialog.dismiss();
+
+        if (!success) {
+            showSnackbar(mActivity, R.string.snackbar_folder_not_created);
+            return;
+        }
+
+        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
+        Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
+                , R.string.snackbar_pdfCreated
+                , Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
+
         mNoOfImages.setVisibility(View.GONE);
         mImageCounter = 0;
         mPdfOptions = new ImageToPDFOptions();
-        if (success) {
-            mOpenPdf.setVisibility(View.VISIBLE);
-            mMorphButtonUtility.morphToSuccess(mCreatePdf);
-            showEnhancementOptions();
-            mPath = path;
-        }
+        mOpenPdf.setVisibility(View.VISIBLE);
+        mMorphButtonUtility.morphToSuccess(mCreatePdf);
+        showEnhancementOptions();
+        mPath = path;
         resetValues();
     }
 
@@ -539,6 +563,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         Matisse.from(this)
                 .choose(MimeType.ofImage(), false)
                 .countable(true)
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, "com.swati4star.shareFile"))
                 .maxSelectable(1000)
                 .imageEngine(new PicassoEngine())
                 .forResult(INTENT_REQUEST_GET_IMAGES);
