@@ -81,6 +81,7 @@ Hurray! PDF files of selected images are created.
 + [Material Dialogs](https://github.com/afollestad/material-dialogs)
 + [What's new](https://github.com/TonnyL/WhatsNew)
 + [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
++ [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
 
 #### Code & Issues
 If you are a developer and you wish to contribute to the app please fork the project

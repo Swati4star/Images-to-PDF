@@ -3,7 +3,6 @@ package swati4star.createpdf.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.itextpdf.text.Document;
@@ -19,9 +18,8 @@ import java.util.ArrayList;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 
-import static swati4star.createpdf.util.StringUtils.appName;
-import static swati4star.createpdf.util.StringUtils.pdfDirectory;
-import static swati4star.createpdf.util.StringUtils.pdfExtension;
+import static swati4star.createpdf.util.Constants.appName;
+import static swati4star.createpdf.util.Constants.pdfExtension;
 
 /**
  * An async task that converts selected images to Pdf
@@ -40,7 +38,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final boolean mPasswordProtected;
     private Boolean mAddWatermak;
 
-    public CreatePdf(ImageToPDFOptions mImageToPDFOptions, OnPDFCreatedInterface onPDFCreated) {
+    public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
+                     OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = mImageToPDFOptions.getImagesUri();
         this.mFileName = mImageToPDFOptions.getOutFileName();
         this.mPassword = mImageToPDFOptions.getPassword();
@@ -50,6 +49,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
         this.mBorderWidth = mImageToPDFOptions.getBorderWidth();
         this.mAddWatermak = mImageToPDFOptions.isAddWatermark();
+        mPath = parentPath;
     }
 
     @Override
@@ -60,8 +60,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     }
 
     private void setFilePath() {
-        mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                pdfDirectory;
         File folder = new File(mPath);
         if (!folder.exists())
             folder.mkdir();

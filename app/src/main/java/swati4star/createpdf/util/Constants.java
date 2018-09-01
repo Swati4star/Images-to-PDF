@@ -19,11 +19,18 @@ public class Constants {
     public static final String CHOICE_REMOVE_IMAGE = "CHOICE_REMOVE_IMAGE";
     public static final int DEFAULT_QUALITY_VALUE = 30;
     public static final int DEFAULT_BORDER_WIDTH = 0;
+    public static final String STORAGE_LOCATION = "storage_location";
 
     public static final String BUNDLE_DATA = "bundle_data";
     public static final String REORDER_PAGES = "reorder_pages";
     public static final String REMOVE_PAGES = "remove_pages";
-    public static final String COMPRESS_PDF = "remove_pages";
+    public static final String COMPRESS_PDF = "compress_pdf";
 
     public static final String LAUNCH_COUNT = "launch_count";
+
+    public static final String pdfDirectory = "/PDFfiles/";
+    public static final String pdfExtension = ".pdf";
+    public static final String appName = "PDF Converter";
+
+    public static final String AUTHORITY_APP = "com.swati4star.shareFile";
 }

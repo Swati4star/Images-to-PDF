@@ -293,4 +293,6 @@
     <string name="border_width_prompt">Enter border width units</string>
     <string name="default_content_description">no description</string>
     <string name="prompt_input">Enter here</string>
+    <string name="storage_location_modified">Storage location changed</string>
+    <string name="storage_location_info">Change storage location</string>
 </resources>

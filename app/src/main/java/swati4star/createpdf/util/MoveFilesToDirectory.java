@@ -3,7 +3,6 @@ package swati4star.createpdf.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -16,6 +15,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
+
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 
 public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
 
@@ -66,8 +67,7 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
                 String destination;
                 for (String path : mFilePath) {
                     String[] fileName = path.split("/");
-                    destination = Environment.getExternalStorageDirectory().getAbsolutePath()
-                            + mContext.getResources().getString(R.string.pdf_dir)
+                    destination = getDefaultStorageLocation()
                             + mDirectoryName + "/" + fileName[fileName.length - 1];
                     if (!path.equalsIgnoreCase(destination))
                         moveFile(mDirectoryName + "/", path, destination);
@@ -78,15 +78,13 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
                 for (String path : mFilePath)
                     new File(path).delete();
 
-                new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                        + mContext.getResources().getString(R.string.pdf_dir) + mDirectoryName).delete();
+                new File(getDefaultStorageLocation() + mDirectoryName).delete();
                 break;
 
             case HOME_DIRECTORY:
                 for (String path : mFilePath) {
                     String[] fileName = path.split("/");
-                    destination = Environment.getExternalStorageDirectory().getAbsolutePath()
-                            + mContext.getResources().getString(R.string.pdf_dir)
+                    destination = getDefaultStorageLocation()
                             + fileName[fileName.length - 1];
                     moveFile(null, path, destination);
                 }
@@ -107,8 +105,7 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
         int read;
         try {
             if (directoryName != null) {
-                File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                        + mContext.getResources().getString(R.string.pdf_dir) + directoryName);
+                File folder = new File(getDefaultStorageLocation() + directoryName);
                 if (!folder.exists())
                     folder.mkdir();
             }

@@ -1,7 +1,8 @@
 package swati4star.createpdf.util;
 
 import android.content.Context;
-import android.os.Environment;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.File;
@@ -12,12 +13,17 @@ import java.util.Set;
 
 import swati4star.createpdf.R;
 
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
+
 public class DirectoryUtils {
 
     private final Context mContext;
+    private final SharedPreferences mSharedPreferences;
 
     public DirectoryUtils(Context context) {
         mContext = context;
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
@@ -107,8 +113,8 @@ public class DirectoryUtils {
      * create PDF directory if directory does not exists
      */
     public File getOrCreatePdfDirectory() {
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + mContext.getResources().getString(R.string.pdf_dir));
+        File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation()));
         if (!folder.exists())
             folder.mkdir();
         return folder;
@@ -139,8 +145,8 @@ public class DirectoryUtils {
      * @return pdf directory if it exists , else null
      */
     public File getDirectory(String dirName) {
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + mContext.getResources().getString(R.string.pdf_dir) + dirName);
+        File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation()) + dirName);
         if (!folder.exists()) {
             return null;
         }

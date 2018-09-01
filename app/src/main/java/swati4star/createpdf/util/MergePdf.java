@@ -1,7 +1,6 @@
 package swati4star.createpdf.util;
 
 import android.os.AsyncTask;
-import android.os.Environment;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfCopy;
@@ -11,8 +10,7 @@ import java.io.FileOutputStream;
 
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
-import static swati4star.createpdf.util.StringUtils.pdfDirectory;
-import static swati4star.createpdf.util.StringUtils.pdfExtension;
+import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class MergePdf extends AsyncTask<String, Void, Void> {
 
@@ -21,9 +19,11 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     private String mFilename;
     private final MergeFilesListener mMergeFilesListener;
 
-    public MergePdf(String fileName, MergeFilesListener mergeFilesListener) {
+    public MergePdf(String fileName, String homePath,
+                    MergeFilesListener mergeFilesListener) {
         mFilename = fileName;
         mMergeFilesListener = mergeFilesListener;
+        mFinPath = homePath;
     }
 
     @Override
@@ -39,10 +39,8 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
             // Create document object
             Document document = new Document();
             // Create pdf copy object to copy current document to the output mergedresult file
-            String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    pdfDirectory;
             mFilename = mFilename + pdfExtension;
-            mFinPath = mPath + mFilename;
+            mFinPath = mFinPath + mFilename;
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(mFinPath));
             // Open the document
             document.open();

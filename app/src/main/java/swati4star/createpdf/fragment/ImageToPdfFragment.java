@@ -60,6 +60,7 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
+import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
@@ -69,7 +70,9 @@ import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 /**
@@ -107,6 +110,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private static int mImageCounter = 0;
     private ImageToPDFOptions mPdfOptions;
     private MaterialDialog mMaterialDialog;
+    private String mHomePath;
 
     @Override
     public void onAttach(Context context) {
@@ -130,6 +134,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
         mCreatePdf.setEnabled(false);
         mOpenPdf.setVisibility(View.GONE);
+        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation());
 
         // Get runtime permissions if build version >= Android M
         getRuntimePermissions(false);
@@ -212,7 +218,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         FileUtils utils = new FileUtils(mActivity);
                         if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                             mPdfOptions.setOutFileName(filename);
-                            new CreatePdf(mPdfOptions,
+                            new CreatePdf(mPdfOptions, mHomePath,
                                     ImageToPdfFragment.this).execute();
                         } else {
                             new MaterialDialog.Builder(mActivity)
@@ -222,7 +228,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                                     .negativeText(android.R.string.cancel)
                                     .onPositive((dialog12, which) -> {
                                         mPdfOptions.setOutFileName(filename);
-                                        new CreatePdf(mPdfOptions,
+                                        new CreatePdf(mPdfOptions, mHomePath,
                                             ImageToPdfFragment.this).execute();
                                     })
                                     .onNegative((dialog1, which) -> createPdf())
@@ -564,7 +570,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 .choose(MimeType.ofImage(), false)
                 .countable(true)
                 .capture(true)
-                .captureStrategy(new CaptureStrategy(true, "com.swati4star.shareFile"))
+                .captureStrategy(new CaptureStrategy(true, AUTHORITY_APP))
                 .maxSelectable(1000)
                 .imageEngine(new PicassoEngine())
                 .forResult(INTENT_REQUEST_GET_IMAGES);

@@ -222,4 +222,28 @@ public class FileUriUtils {
         return returnPath;
     }
 
+
+    public static String getFolderPath(Activity context, Uri uri) {
+        DirectoryUtils directoryUtils = new DirectoryUtils(context);
+        String uriString = uri.toString();
+        File file = new File(uri.toString());
+        String path = file.getPath();
+        String returnPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        Boolean success;
+        String name = null;
+        if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
+            success = false;
+        } else {
+            success = true;
+        }
+        if (success) {
+            String folname = directoryUtils.getParentFolder(path);
+            if (folname != null) {
+                String c = context.getString(R.string.path_seperator);
+                returnPath = returnPath + c + folname;
+            }
+        }
+        return returnPath;
+    }
+
 }

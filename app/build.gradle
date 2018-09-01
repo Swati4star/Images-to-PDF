@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
     implementation 'com.zhihu.android:matisse:0.5.2-beta2'
+    implementation 'lib.kashif:folderpicker:2.4'
 }
 
 preBuild.dependsOn('checkstyle')

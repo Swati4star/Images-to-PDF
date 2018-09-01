@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 import android.print.PageRange;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -34,21 +36,26 @@ import java.util.List;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 
+import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.pdfDirectory;
 import static swati4star.createpdf.util.FileUriUtils.getImageRealPath;
 import static swati4star.createpdf.util.FileUriUtils.getUriRealPathAboveKitkat;
 import static swati4star.createpdf.util.FileUriUtils.isAboveKitKat;
 import static swati4star.createpdf.util.FileUriUtils.isWhatsappImage;
-import static swati4star.createpdf.util.StringUtils.pdfDirectory;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class FileUtils {
 
     private final Activity mContext;
     private final ContentResolver mContentResolver;
+    private final SharedPreferences mSharedPreferences;
 
     public FileUtils(Activity context) {
         this.mContext = context;
         mContentResolver = mContext.getContentResolver();
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     // GET PDF DETAILS
@@ -144,7 +151,7 @@ public class FileUtils {
      * @param  file - the file to be shared
      */
     public void shareFile(File file) {
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+        Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
         ArrayList<Uri> uris = new ArrayList<>();
         uris.add(uri);
         shareFile(uris);
@@ -158,7 +165,7 @@ public class FileUtils {
     public void shareMultipleFiles(List<File> files) {
         ArrayList<Uri> uris = new ArrayList<>();
         for (File file: files) {
-            Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+            Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
             uris.add(uri);
         }
         shareFile(uris);
@@ -187,7 +194,7 @@ public class FileUtils {
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+        Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
         target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -241,8 +248,8 @@ public class FileUtils {
      */
 
     public boolean isFileExist(String mFileName) {
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                mContext.getString(R.string.pdf_dir) + mFileName;
+        String path = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation()) + mFileName;
         File file = new File(path);
         return file.exists();
     }
@@ -336,7 +343,7 @@ public class FileUtils {
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
+        Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
         target.setDataAndType(uri,  "image/*");
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 

@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -54,6 +53,8 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
@@ -311,8 +312,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
      * @param mFilename name of file to be created.
      */
     private void createPdf(String mFilename) {
-        String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                mActivity.getString(R.string.pdf_dir);
+        String mPath = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation());
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);

@@ -159,7 +159,7 @@
     <string name="filter_images_Text">Filter Images \n</string>
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Image compression : %s%%</string>
-    <string name="quality_image">Enter %% compression of image :</string>
+    <string name="quality_image">Enter % compression of image :</string>
     <string name="invalid_entry">Invaid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
@@ -340,7 +340,7 @@
 
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
-    <string name="compress_pdf_prompt">Enter %% compression of PDF : </string>
+    <string name="compress_pdf_prompt">Enter % compression of PDF : </string>
     <string name="compress_info">Congratulations! Your PDF is compressed: \n Original PDF Size : %s \n Compressed PDF Size: %s</string>
 
     <!-- Rate us strings -->
@@ -372,5 +372,7 @@
     <string name="font_size_value_def">Font size default value : %d </string>
     <string name="font_family_value_def">Font family default value : %s </string>
     <string name="settings_info">You can modify the default value for various settings here.</string>
+    <string name="storage_location_modified">Storage location changed</string>
+    <string name="storage_location_info">Change storage location</string>
 
 </resources>

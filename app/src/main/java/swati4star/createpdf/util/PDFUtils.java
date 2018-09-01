@@ -2,12 +2,13 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -48,6 +49,8 @@ import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.model.TextToPDFOptions;
 
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFUtils {
@@ -55,6 +58,7 @@ public class PDFUtils {
     private final Activity mContext;
     private final FileUtils mFileUtils;
     private SparseIntArray mAngleRadioButton;
+    private SharedPreferences mSharedPreferences;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
@@ -63,6 +67,8 @@ public class PDFUtils {
         mAngleRadioButton.put(R.id.deg90, 90);
         mAngleRadioButton.put(R.id.deg180, 180);
         mAngleRadioButton.put(R.id.deg270, 270);
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(mContext);
     }
 
     /**
@@ -106,7 +112,8 @@ public class PDFUtils {
             throws DocumentException, IOException {
 
         Document document = new Document(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
-        String finalOutput = Environment.getExternalStorageDirectory() + "/" + "PDFfiles" + "/" +
+        String finalOutput = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation()) +
                 mTextToPDFOptions.getOutFileName() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(finalOutput));
         writer.setPdfVersion(PdfWriter.VERSION_1_7);
@@ -365,8 +372,8 @@ public class PDFUtils {
     public ArrayList<String> splitPDF(String path) {
         ArrayList<String> outputPaths = new ArrayList<>();
         try {
-            String folderPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    mContext.getString(R.string.pdf_dir);
+            String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
+                    getDefaultStorageLocation());
             PdfReader reader = new PdfReader(path);
             PdfCopy copy;
             Document document;

@@ -3,8 +3,10 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -45,7 +47,9 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
@@ -58,6 +62,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private FileUtils mFileUtils;
     private MergeSelectedFilesAdapter mMergeSelectedFilesAdapter;
     private MaterialDialog mMaterialDialog;
+    private String mHomePath;
+    private SharedPreferences mSharedPreferences;
 
     @BindView(R.id.mergebtn)
     MorphingButton mergeBtn;
@@ -90,6 +96,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         DirectoryUtils directoryUtils = new DirectoryUtils(mActivity);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation());
 
         ArrayList<String> mAllFilesPaths = directoryUtils.getAllFilePaths();
         if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
@@ -136,7 +145,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
-                            new MergePdf(input.toString(), this).execute(pdfpaths);
+                            new MergePdf(input.toString(), mHomePath, this).execute(pdfpaths);
                         } else {
                             new MaterialDialog.Builder(mActivity)
                                     .title(R.string.warning)
@@ -144,7 +153,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                                     .positiveText(android.R.string.ok)
                                     .negativeText(android.R.string.cancel)
                                     .onPositive((dialog12, which) -> new MergePdf(input.toString(),
-                                            this).execute(pdfpaths))
+                                            mHomePath, this).execute(pdfpaths))
                                     .onNegative((dialog1, which) -> mergeFiles(view))
                                     .show();
                         }

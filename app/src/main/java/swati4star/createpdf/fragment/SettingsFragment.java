@@ -2,6 +2,7 @@ package swati4star.createpdf.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,12 +10,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import lib.folderpicker.FolderPicker;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListner;
@@ -31,19 +36,25 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.PageSizeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class SettingsFragment extends Fragment implements OnItemClickListner {
 
     @BindView(R.id.settings_list)
     RecyclerView mEnhancementOptionsRecycleView;
+    @BindView(R.id.storagelocation)
+    TextView storageLocation;
 
     private Activity mActivity;
     private SharedPreferences mSharedPreferences;
 
     public SettingsFragment() {
     }
+
+    static final int MODIFY_STORAGE_LOCATION_CODE = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -58,8 +69,35 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, root);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation()));
         showSettingsOptions();
         return root;
+    }
+
+    @OnClick(R.id.storagelocation)
+    void modifyStorageLocation() {
+        Intent intent = new Intent(mActivity, FolderPicker.class);
+        startActivityForResult(intent, MODIFY_STORAGE_LOCATION_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case MODIFY_STORAGE_LOCATION_CODE:
+                if (data.getExtras() != null) {
+                    String folderLocation = data.getExtras().getString("data") + "/";
+                    Log.i("folderLocation", folderLocation);
+                    mSharedPreferences.edit().putString(STORAGE_LOCATION, folderLocation).apply();
+                    showSnackbar(mActivity, R.string.storage_location_modified);
+                    storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
+                            getDefaultStorageLocation()));
+                } else {
+                    showSnackbar(mActivity, R.string.error_occurred);
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showSettingsOptions() {

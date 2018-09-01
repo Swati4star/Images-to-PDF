@@ -1,21 +1,20 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.Objects;
 
+import static swati4star.createpdf.util.Constants.pdfDirectory;
+
 /**
  * Created by anandparmar on 18/06/18.
  */
 
 public class StringUtils {
-
-    public static final String pdfDirectory = "/PDFfiles/";
-    public static final String pdfExtension = ".pdf";
-    public static final String appName = "PDF Converter";
 
     public static boolean isEmpty(CharSequence s) {
         return s == null || s.toString().trim().equals("");
@@ -44,5 +43,10 @@ public class StringUtils {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static String getDefaultStorageLocation() {
+        return Environment.getExternalStorageDirectory().getAbsolutePath() +
+                pdfDirectory;
     }
 }
