@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // initialize values
+        initializeValues();
+
         Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (Objects.requireNonNull(getIntent().getAction())) {
@@ -80,12 +83,15 @@ public class MainActivity extends AppCompatActivity
                 break;
             case ACTION_VIEW_FILES:
                 fragment = new ViewFilesFragment();
+                setDefaultMenuSelected(1);
                 break;
             case ACTION_TEXT_TO_PDF:
                 fragment = new TextToPdfFragment();
+                setDefaultMenuSelected(4);
                 break;
             case ACTION_MERGE_PDF:
                 fragment = new MergeFilesFragment();
+                setDefaultMenuSelected(2);
                 break;
             default:
                 // Set ImageToPdfFragment fragment
@@ -96,9 +102,6 @@ public class MainActivity extends AppCompatActivity
 
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
-
-        // initialize values
-        initializeValues();
 
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0)
