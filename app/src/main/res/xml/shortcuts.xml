@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_camera"
+        android:shortcutId="select_images"
+        android:shortcutShortLabel="@string/select_images_text"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.SELECT_IMAGES"
+            android:targetClass="swati4star.createpdf.activity.MainActivity"
+            android:targetPackage="swati4star.createpdf" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_gallery"
+        android:shortcutId="view_files"
+        android:shortcutShortLabel="@string/viewFiles"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW_FILES"
+            android:targetClass="swati4star.createpdf.activity.MainActivity"
+            android:targetPackage="swati4star.createpdf" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_text_format_black_24dp"
+        android:shortcutId="text_to_pdf"
+        android:shortcutShortLabel="@string/text_to_pdf"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.TEXT_TO_PDF"
+            android:targetClass="swati4star.createpdf.activity.MainActivity"
+            android:targetPackage="swati4star.createpdf" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_merge_type_black_24dp"
+        android:shortcutId="merge_pdf"
+        android:shortcutShortLabel="@string/merge_pdf"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.MERGE_PDF"
+            android:targetClass="swati4star.createpdf.activity.MainActivity"
+            android:targetPackage="swati4star.createpdf" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

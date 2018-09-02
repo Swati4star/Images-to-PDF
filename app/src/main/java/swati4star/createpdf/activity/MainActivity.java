@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
@@ -32,9 +33,14 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 
+import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
+import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
+import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 
@@ -63,9 +69,29 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Set ImageToPdfFragment fragment
-        Fragment fragment = new ImageToPdfFragment();
+        Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (Objects.requireNonNull(getIntent().getAction())) {
+            case ACTION_SELECT_IMAGES:
+                fragment = new ImageToPdfFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(OPEN_SELECT_IMAGES, true);
+                fragment.setArguments(bundle);
+                break;
+            case ACTION_VIEW_FILES:
+                fragment = new ViewFilesFragment();
+                break;
+            case ACTION_TEXT_TO_PDF:
+                fragment = new TextToPdfFragment();
+                break;
+            case ACTION_MERGE_PDF:
+                fragment = new MergeFilesFragment();
+                break;
+            default:
+                // Set ImageToPdfFragment fragment
+                fragment = new ImageToPdfFragment();
+                break;
+        }
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
 
         // Check if  images are received
@@ -92,8 +118,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     /*
-    * This will set default menu item selected at the position mentioned
-    */
+     * This will set default menu item selected at the position mentioned
+     */
     public void setDefaultMenuSelected(int position) {
         if (mNavigationView != null && mNavigationView.getMenu() != null &&
                 position < mNavigationView.getMenu().size()

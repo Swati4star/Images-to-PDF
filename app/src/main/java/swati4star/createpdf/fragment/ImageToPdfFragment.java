@@ -68,6 +68,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
@@ -129,7 +130,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
-        PageSizeUtils.mPageSize = mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT ,
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
         mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
         mCreatePdf.setEnabled(false);
@@ -148,6 +149,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         // Check for the images received
         checkForImagesInBundle();
 
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Boolean mOpenSelectImages = bundle.getBoolean(OPEN_SELECT_IMAGES);
+            if (mOpenSelectImages)
+                startAddingImages();
+        }
+
         return root;
     }
 
@@ -155,6 +163,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         Bundle bundle = getArguments();
         if (bundle != null) {
             ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
+            if (uris == null)
+                    return;
             for (Parcelable p : uris) {
                 Uri uri = (Uri) p;
                 if (mFileUtils.getUriRealPath(uri) == null) {
