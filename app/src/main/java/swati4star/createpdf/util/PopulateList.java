@@ -53,17 +53,20 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
         ArrayList<File> pdfFiles = new ArrayList<>();
         ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
         final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
-        if ((files == null || files.length == 0) && pdfFromOtherDir == null) {
+
+        if (files == null)
+            mEmptyStateChangeListener.showNoPermissionsView();
+        else if (files.length == 0 && pdfFromOtherDir == null) {
             mEmptyStateChangeListener.setEmptyStateVisible();
         } else {
-
             pdfFiles = mDirectoryUtils.getPdfsFromPdfFolder(files);
             if (pdfFromOtherDir != null) {
                 pdfFiles.addAll(pdfFromOtherDir);
             }
+            mEmptyStateChangeListener.hideNoPermissionsView();
+            FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
+            mAdapter.setData(pdfFiles);
         }
         Log.v("done", "adding");
-        FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
-        mAdapter.setData(pdfFiles);
     }
 }

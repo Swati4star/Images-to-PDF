@@ -352,6 +352,16 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     }
 
+    @Override
+    public void showNoPermissionsView() {
+
+    }
+
+    @Override
+    public void hideNoPermissionsView() {
+
+    }
+
     public class ViewFilesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.fileRipple)

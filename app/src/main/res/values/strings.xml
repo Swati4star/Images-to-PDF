@@ -92,6 +92,8 @@
     <string name="snackbar_name_not_blank">Name cannot be blank</string>
     <string name="snackbar_permissions_given">Permissions Given!</string>
     <string name="snackbar_insufficient_permissions">Insufficient Permissions!</string>
+    <string name="no_permissions">Please provide storage permissions to view your files.</string>
+    <string name="prompt_give_permission">Provide permissions</string>
     <string name="snackbar_images_added">Images added</string>
     <string name="snackbar_file_renamed">File renamed.</string>
     <string name="snackbar_file_not_renamed">File can\'t be renamed.</string>

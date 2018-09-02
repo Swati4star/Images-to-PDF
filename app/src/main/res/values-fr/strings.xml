@@ -295,4 +295,6 @@
     <string name="prompt_input">Enter here</string>
     <string name="storage_location_modified">Storage location changed</string>
     <string name="storage_location_info">Change storage location</string>
+    <string name="prompt_give_permission">Provide permissions</string>
+    <string name="no_permissions">Please provide storage permissions to view your files.</string>
 </resources>

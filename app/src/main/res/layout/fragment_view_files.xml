@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".fragment.ImageToPdfFragment">
 
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
@@ -19,18 +20,18 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
-                android:layout_weight="1"
                 android:id="@+id/filesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/layout_main"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:background="@color/mb_white"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
@@ -148,9 +149,9 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/emptyStatusView"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/emptyBackgroundImage"
@@ -210,5 +211,47 @@
             app:layout_constraintTop_toBottomOf="@+id/getStarted" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/no_permissions_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/no_permissions" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="200dp"
+            android:gravity="center"
+            android:text="@string/no_permissions"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/provide_permissions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp"
+            android:background="@color/mb_blue"
+            android:padding="10dp"
+            android:text="@string/prompt_give_permission"
+            android:textColor="@color/mb_white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
 
 </FrameLayout>
