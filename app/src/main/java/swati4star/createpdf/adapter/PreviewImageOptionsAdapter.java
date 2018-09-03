@@ -15,12 +15,10 @@ import java.util.ArrayList;
 import swati4star.createpdf.R;
 import swati4star.createpdf.model.PreviewImageOptionItem;
 
-
 public class PreviewImageOptionsAdapter extends RecyclerView.Adapter<PreviewImageOptionsAdapter.ViewHolder> {
     private final ArrayList<PreviewImageOptionItem> mOptions;
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
-
 
     public PreviewImageOptionsAdapter(OnItemClickListener onItemClickListener,
                                       ArrayList<PreviewImageOptionItem> optionItems, Context context) {

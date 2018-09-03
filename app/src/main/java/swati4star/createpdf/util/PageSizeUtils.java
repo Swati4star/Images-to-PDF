@@ -1,5 +1,6 @@
 package swati4star.createpdf.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -16,15 +17,20 @@ import java.util.HashMap;
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
+import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 
 public class PageSizeUtils {
 
     private final Context mActivity;
     private final SharedPreferences mSharedPreferences;
-    public static String mPageSize = DEFAULT_PAGE_SIZE;
+    public static String mPageSize;
     private final String mDefaultPageSize;
     private final HashMap<Integer, Integer> mPageSizeToString;
 
+    /**
+     * Utils object to modify the page size
+     * @param mActivity - current context
+     */
     public PageSizeUtils(Context mActivity) {
         this.mActivity = mActivity;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -63,10 +69,14 @@ public class PageSizeUtils {
         return mPageSize;
     }
 
+    /**
+     * Show a dialog to modify the page size
+     * @param layout - layout resoiurce id for dialog
+     * @param saveValue - save the value in shared preferences
+     * @return - dialog object
+     */
     public MaterialDialog showPageSizeDialog(int layout, boolean saveValue) {
-
         MaterialDialog materialDialog = getPageSizeDialog(layout, saveValue);
-
         View view = materialDialog.getCustomView();
         RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
         Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
@@ -87,17 +97,20 @@ public class PageSizeUtils {
             if (key != null)
                 radioGroup.check(key);
         }
-
         materialDialog.show();
         return materialDialog;
     }
 
+    /**
+     * Private showpagesizeutils dialog
+     * @param layout - layout resource id
+     * @param saveValue - save the value in shared prefs
+     * @return - dialog object
+     */
     private MaterialDialog getPageSizeDialog(int layout, boolean saveValue) {
-        return new MaterialDialog.Builder(mActivity)
-                .title(R.string.set_page_size_text)
-                .customView(layout, true)
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent((Activity) mActivity,
+                R.string.set_page_size_text);
+        return builder.customView(layout, true)
                 .onPositive((dialog1, which) -> {
                     View view = dialog1.getCustomView();
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
@@ -115,6 +128,12 @@ public class PageSizeUtils {
                 }).build();
     }
 
+    /**
+     * Get key from the value
+     * @param map - hashmap
+     * @param value - the value for which we want the key
+     * @return - key value
+     */
     private Integer getKey(HashMap<Integer, Integer> map, String value) {
         for (HashMap.Entry<Integer, Integer> entry : map.entrySet()) {
             if (value.equals(mActivity.getString(entry.getValue()))) {

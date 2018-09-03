@@ -34,6 +34,11 @@ public class StringUtils {
                 resID, Snackbar.LENGTH_LONG).show();
     }
 
+    public static Snackbar getSnackbarwithAction(Activity context, int resID) {
+        return Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
+                resID, Snackbar.LENGTH_LONG);
+    }
+
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.

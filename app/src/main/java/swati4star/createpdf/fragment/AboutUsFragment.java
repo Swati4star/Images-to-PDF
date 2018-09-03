@@ -21,7 +21,6 @@ import swati4star.createpdf.util.FeedbackUtils;
 
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-
 public class AboutUsFragment extends Fragment {
 
     private Activity mActivity;

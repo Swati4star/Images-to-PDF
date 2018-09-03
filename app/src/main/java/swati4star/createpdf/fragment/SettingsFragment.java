@@ -37,6 +37,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -132,11 +133,8 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      */
     private void changeCompressImage() {
 
-        new MaterialDialog.Builder(mActivity)
-                .title(mActivity.getString(R.string.compression_image_edit))
+        createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
                 .customView(R.layout.compress_image_default, true)
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
                 .onPositive((dialog1, which) -> {
                     final EditText qualityInput = dialog1.getCustomView().findViewById(R.id.quality);
                     int check;
@@ -161,11 +159,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      * To modify font size
      */
     private void editFontSize() {
-        new MaterialDialog.Builder(mActivity)
-                .title(mActivity.getString(R.string.font_size_edit))
-                .customView(R.layout.dialog_font_size_default, true)
-                .positiveText(R.string.ok)
-                .negativeText(R.string.cancel)
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+                R.string.font_size_edit);
+        builder.customView(R.layout.dialog_font_size_default, true)
                 .onPositive((dialog, which) -> {
                     final EditText fontInput = dialog.getCustomView().findViewById(R.id.fontInput);
                     try {
@@ -194,11 +190,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         String fontFamily = mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY);
         int ordinal = Font.FontFamily.valueOf(fontFamily).ordinal();
-        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
-                .title(mActivity.getString(R.string.font_family_edit))
-                .customView(R.layout.dialog_font_family_default, true)
-                .positiveText(R.string.ok)
-                .negativeText(R.string.cancel)
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+                R.string.font_family_edit);
+        MaterialDialog materialDialog = builder.customView(R.layout.dialog_font_family_default, true)
                 .onPositive((dialog, which) -> {
                     View view = dialog.getCustomView();
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_font_family);

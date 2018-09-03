@@ -54,6 +54,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:enabled="false"
                     android:padding="10dp"
                     android:text="@string/create_pdf_text"
                     android:textColor="@color/mb_white" />

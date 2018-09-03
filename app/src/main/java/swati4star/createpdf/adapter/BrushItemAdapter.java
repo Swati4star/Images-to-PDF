@@ -65,5 +65,4 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
             mOnItemClickListner.onItemClick(getAdapterPosition());
         }
     }
-
 }

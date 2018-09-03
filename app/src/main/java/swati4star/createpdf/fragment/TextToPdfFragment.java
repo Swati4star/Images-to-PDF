@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -35,7 +34,6 @@ import com.itextpdf.text.Font;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +52,10 @@ import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
+import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
@@ -135,11 +136,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     }
 
     private void setPassword() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
-                .title(R.string.set_password)
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+                R.string.set_password);
+        final MaterialDialog dialog = builder
                 .customView(R.layout.custom_dialog, true)
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
                 .neutralText(R.string.remove_dialog)
                 .build();
 
@@ -292,12 +292,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
                             createPdf(inputName);
                         } else {
-                            new MaterialDialog.Builder(mActivity)
-                                    .title(R.string.warning)
-                                    .content(R.string.overwrite_message)
-                                    .positiveText(android.R.string.ok)
-                                    .negativeText(android.R.string.cancel)
-                                    .onPositive((dialog12, which) -> createPdf(inputName))
+                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            builder.onPositive((dialog12, which) -> createPdf(inputName))
                                     .onNegative((dialog1, which) -> openCreateTextPdf())
                                     .show();
                         }
@@ -321,8 +317,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
             fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                     mPassword, mTextFileUri, mFontSize, mFontFamily));
             final String finalMPath = mPath;
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
             mTextView.setVisibility(View.GONE);
         } catch (DocumentException | IOException e) {

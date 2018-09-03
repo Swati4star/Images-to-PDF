@@ -3,7 +3,6 @@ package swati4star.createpdf.adapter;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.FileUtils;
-import swati4star.createpdf.util.PDFUtils;
 
 public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.ViewMergeFilesHolder> {
 
@@ -24,8 +22,6 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
     private final Activity mContext;
     private final FileUtils mFileUtils;
     private final OnFileItemClickedListener mOnClickListener;
-    private final PDFUtils mPDFUtils;
-
 
     public FilesListAdapter(Activity mContext, ArrayList<String> mFilePaths,
                             OnFileItemClickedListener mOnClickListener) {
@@ -33,7 +29,6 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
         this.mFilePaths = mFilePaths;
         mFileUtils = new FileUtils(mContext);
         this.mOnClickListener = mOnClickListener;
-        mPDFUtils = new PDFUtils(mContext);
     }
 
     @NonNull
@@ -46,8 +41,6 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
-        boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
-        Log.v("adding ", String.valueOf(position) + isEncrypted);
         holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
         holder.mEncryptionImage.setVisibility(View.GONE);
     }
@@ -71,8 +64,6 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
 
         @Override
         public void onClick(View view) {
-            Log.v("Click", view.getId() + " " + R.id.splitted_files +
-                    " " + R.id.recyclerViewFiles);
             mOnClickListener.onFileItemClick(mFilePaths.get(getAdapterPosition()));
         }
     }

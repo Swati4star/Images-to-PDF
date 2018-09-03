@@ -18,7 +18,7 @@ import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +33,10 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PopulateList;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 /**
@@ -50,7 +52,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final EmptyStateChangeListener mEmptyStateChangeListener;
 
     private ArrayList<File> mFileList;
-    private int mIsFileDeleteUndoClicked = 0;
     private final ArrayList<Integer> mSelectedFiles;
 
     private final FileUtils mFileUtils;
@@ -224,35 +225,29 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * @param position - position of file in arraylist
      */
     private void deleteFile(String name, int position) {
-        mIsFileDeleteUndoClicked = 0;
+        AtomicInteger undoClicked = new AtomicInteger();
         final File fdelete = new File(name);
-        if (fdelete.exists()) {
-            mFileList.remove(position);
-            notifyDataSetChanged();
-            Snackbar.make(Objects.requireNonNull(mActivity).findViewById(android.R.id.content)
-                    , R.string.snackbar_file_deleted
-                    , Snackbar.LENGTH_LONG)
-                    .setAction(R.string.snackbar_undoAction, v -> {
-                        if (mFileList.size() == 0) {
-                            mEmptyStateChangeListener.setEmptyStateInvisible();
+        mFileList.remove(position);
+        notifyDataSetChanged();
+        getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
+                .setAction(R.string.snackbar_undoAction, v -> {
+                    if (mFileList.size() == 0) {
+                        mEmptyStateChangeListener.setEmptyStateInvisible();
+                    }
+                    updateDataset();
+                    undoClicked.set(1);
+                }).addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        if (undoClicked.get() == 0) {
+                            fdelete.delete();
+                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                    mActivity.getString(R.string.deleted));
                         }
-                        updateDataset();
-                        mIsFileDeleteUndoClicked = 1;
-                    }).addCallback(new Snackbar.Callback() {
-
-                        @Override
-                        public void onDismissed(Snackbar snackbar, int event) {
-                            if (mIsFileDeleteUndoClicked == 0) {
-                                fdelete.delete();
-                                mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
-                                        mActivity.getString(R.string.deleted));
-                            }
-                        }
-                    }).show();
-        }
-        if (mFileList.size() == 0) {
+                    }
+                }).show();
+        if (mFileList.size() == 0)
             mEmptyStateChangeListener.setEmptyStateVisible();
-        }
     }
 
     /**
@@ -307,12 +302,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         if (!mFileUtils.isFileExist(input + mActivity.getString(R.string.pdf_ext))) {
                             renameFile(position, input.toString());
                         } else {
-                            new MaterialDialog.Builder(mActivity)
-                                    .title(R.string.warning)
-                                    .content(R.string.overwrite_message)
-                                    .positiveText(android.R.string.ok)
-                                    .negativeText(android.R.string.cancel)
-                                    .onPositive((dialog12, which) -> renameFile(position, input.toString()))
+                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            builder.onPositive((dialog2, which) -> renameFile(position, input.toString()))
                                     .onNegative((dialog1, which) -> onRenameFileClick(position))
                                     .show();
                         }

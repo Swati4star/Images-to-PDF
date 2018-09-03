@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 
         // Set navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.app_name, R.string.app_name);
 
         //Replaced setDrawerListener with addDrawerListener because it was deprecated.
         drawer.addDrawerListener(toggle);
@@ -72,6 +72,23 @@ public class MainActivity extends AppCompatActivity
         // initialize values
         initializeValues();
 
+        // Check for app shortcuts & select default fragment
+        Fragment fragment = checkForAppShortcutClicked();
+
+        // Check if  images are received
+        handleReceivedImagesIntent(fragment);
+
+        int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
+        if (count > 0 && count % 15 == 0)
+            mFeedbackUtils.rateUs();
+        mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+    }
+
+    /**
+     * Sets a fragment based on app shortcut selected, otherwise default
+     * @return - instance of current fragment
+     */
+    private Fragment checkForAppShortcutClicked() {
         Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (Objects.requireNonNull(getIntent().getAction())) {
@@ -99,14 +116,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-
-        // Check if  images are received
-        handleReceivedImagesIntent(fragment);
-
-        int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
-        if (count > 0 && count % 15 == 0)
-            mFeedbackUtils.rateUs();
-        mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+        return fragment;
     }
 
     /**
@@ -140,14 +150,14 @@ public class MainActivity extends AppCompatActivity
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
-        if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
-            if (type.startsWith("image/")) {
-                handleSendMultipleImages(intent, fragment); // Handle multiple images
-            }
-        } else if (Intent.ACTION_SEND.equals(action) && type != null) {
-            if (type.startsWith("image/")) {
-                handleSendImage(intent, fragment); // Handle single image
-            }
+
+        if (type == null || !type.startsWith("image/"))
+            return;
+
+        if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            handleSendMultipleImages(intent, fragment); // Handle multiple images
+        } else if (Intent.ACTION_SEND.equals(action)) {
+            handleSendImage(intent, fragment); // Handle single image
         }
     }
 
@@ -187,7 +197,9 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (getCurrentFragment() instanceof ImageToPdfFragment) {
+            Fragment currentFragment = getSupportFragmentManager()
+                    .findFragmentById(R.id.content);
+            if (currentFragment instanceof ImageToPdfFragment) {
                 checkDoubleBackPress();
             } else {
                 Fragment fragment = new ImageToPdfFragment();
@@ -197,20 +209,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Closes the app only when double clicked
+     */
     private void checkDoubleBackPress() {
-
         if (mDoubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
         }
-
         this.mDoubleBackToExitPressedOnce = true;
         Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
-    }
-
-    private Fragment getCurrentFragment() {
-        return getSupportFragmentManager()
-                .findFragmentById(R.id.content);
     }
 
     @Override
@@ -274,9 +282,8 @@ public class MainActivity extends AppCompatActivity
             if (fragment != null)
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         } catch (Exception e) {
-            return true;
+            e.printStackTrace();
         }
         return true;
     }
-
 }

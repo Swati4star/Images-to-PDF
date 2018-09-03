@@ -1,6 +1,7 @@
 package swati4star.createpdf.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,18 +10,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,18 +55,12 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     ImageButton mNextButton;
     @BindView(R.id.imagecount)
     TextView mImgcount;
-    @BindView(R.id.savecurrent)
-    Button saveCurrent;
     @BindView(R.id.previousImageButton)
     ImageButton mPreviousButton;
-    @BindView(R.id.resetCurrent)
-    Button resetCurrent;
     @BindView(R.id.doodleSeekBar)
     SeekBar doodleSeekBar;
     @BindView(R.id.photoEditorView)
     PhotoEditorView mPhotoEditorView;
-    @BindView(R.id.scrollViewImage)
-    ScrollView mImageScrollView;
     @BindView(R.id.doodle_colors)
     RecyclerView brushColorsView;
 
@@ -89,18 +77,17 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         ButterKnife.bind(this);
 
         // Extract images
-        mFilterUris = getIntent().getExtras().getStringArrayList(IMAGE_EDITOR_KEY);
+        mFilterUris = getIntent().getStringArrayListExtra(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
-        mImagesCount = mFilterUris.size() - 1;
+        mImagesCount = mDisplaySize - 1;
         mPhotoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
+
         setImageCount();
-        if (mDisplaySize == 1) {
+
+        if (mDisplaySize == 1)
             mNextButton.setVisibility(View.INVISIBLE);
-        }
-        mFilterItems = getFiltersList(this);
-        mBrushItems = getBrushItems();
-        mImagepaths.addAll(mFilterUris);
+
         initRecyclerView();
 
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
@@ -122,7 +109,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             }
         });
         mPhotoEditor.setBrushDrawingMode(false);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     @OnClick(R.id.nextimageButton)
@@ -198,9 +185,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
+    /**
+     * Display current image count in the textview
+     */
     private void setImageCount() {
-        String sText = "Showing " + String.valueOf(mCurrentImage + 1) + " of " + mDisplaySize;
-        mImgcount.setText(sText);
+        mImgcount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
     }
 
     /**
@@ -234,19 +223,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         } catch (SecurityException e) {
             e.printStackTrace();
         }
-    }
-
-
-    /**
-     * Intent to Send Back final edited URIs
-     *
-     * @param mImagepaths - the images array to be send pack
-     */
-    private void passUris(ArrayList<String> mImagepaths) {
-        Intent returnIntent = new Intent();
-        returnIntent.putStringArrayListExtra(RESULT, mImagepaths);
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
     }
 
     /**
@@ -283,6 +259,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      * Initialize Recycler View
      */
     private void initRecyclerView() {
+
+        mFilterItems = getFiltersList(this);
+        mBrushItems = getBrushItems();
+        mImagepaths.addAll(mFilterUris);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
@@ -323,6 +304,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
+    /**
+     * Shows the brush effect
+     */
     private void showBrushEffect() {
         mPhotoEditor.setBrushDrawingMode(true);
         doodleSeekBar.setVisibility(View.VISIBLE);
@@ -330,6 +314,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mDoodleSelected = true;
     }
 
+    /**
+     * Hides brush effect
+     */
     private void hideBrushEffect() {
         mPhotoEditor.setBrushDrawingMode(false);
         doodleSeekBar.setVisibility(View.GONE);
@@ -353,51 +340,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.activity_filter_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.finish:
-                onFinishClick();
-                return true;
-            case android.R.id.home:
-                if (!mFilterUris.equals(mImagepaths)) {
-                    new MaterialDialog.Builder(this)
-                            .onPositive((dialog, which) -> finish())
-                            .title(R.string.filter_cancel_question)
-                            .content(R.string.filter_cancel_description)
-                            .positiveText(R.string.ok)
-                            .negativeText(R.string.cancel).show();
-                    return true;
-                }
-                super.onBackPressed();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void onFinishClick() {
-        if (mClicked) {
-            passUris(mImagepaths);
-        } else {
-            new MaterialDialog.Builder(this)
-                    .onPositive((dialog, which) -> passUris(mImagepaths))
-                    .title(R.string.warning)
-                    .content(R.string.filter_on_finish_click_warning_message)
-                    .positiveText(R.string.ok)
-                    .negativeText(R.string.cancel)
-                    .show();
-        }
-    }
-
-    @Override
     public void onBackPressed() {
-        passUris(mImagepaths);
+        Intent returnIntent = new Intent();
+        returnIntent.putStringArrayListExtra(RESULT, mImagepaths);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     @Override
@@ -407,4 +354,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mPhotoEditor.setBrushColor(getResources().getColor(color));
     }
 
+    public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
+        Intent intent = new Intent(context, ImageEditor.class);
+        intent.putExtra(IMAGE_EDITOR_KEY, uris);
+        return intent;
+    }
 }

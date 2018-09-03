@@ -3,7 +3,6 @@ package swati4star.createpdf.util;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
      * Populate data into listView
      */
     private void populateListView() {
-        ArrayList<File> pdfFiles = new ArrayList<>();
+        ArrayList<File> pdfFiles;
         ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
         final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
 
@@ -67,6 +66,5 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
             FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
             mAdapter.setData(pdfFiles);
         }
-        Log.v("done", "adding");
     }
 }

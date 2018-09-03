@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -45,7 +44,6 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
         holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
-        File file = new File(mFileUtils.getFileName(mFilePaths.get(position)));
         holder.mImagePreview.setImageBitmap(getRoundBitmapFromPath(mFilePaths.get(position)));
     }
 

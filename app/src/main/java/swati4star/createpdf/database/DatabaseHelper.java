@@ -20,7 +20,6 @@ public class DatabaseHelper {
      */
     public void insertRecord(String filePath, String operationType) {
         new Insert().execute(new History(filePath,  new Date().toString(), operationType));
-
     }
 
     @SuppressLint("StaticFieldLeak")

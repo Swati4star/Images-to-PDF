@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.widget.RadioGroup;
@@ -41,7 +40,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -50,7 +48,9 @@ import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.model.TextToPDFOptions;
 
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFUtils {
@@ -187,11 +187,9 @@ public class PDFUtils {
      * @param sourceFilePath - path of file to be rotated
      */
     public void rotatePages(String sourceFilePath, final DataSetChanged dataSetChanged) {
-        new MaterialDialog.Builder(mContext)
-                .title(R.string.rotate_pages)
-                .customView(R.layout.dialog_rotate_pdf, true)
-                .positiveText(R.string.ok)
-                .negativeText(R.string.cancel)
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mContext,
+                R.string.rotate_pages);
+        builder.customView(R.layout.dialog_rotate_pdf, true)
                 .onPositive((dialog, which) -> {
                     final RadioGroup angleInput = dialog.getCustomView().findViewById(R.id.rotation_angle);
                     int angle = mAngleRadioButton.get(angleInput.getCheckedRadioButtonId());
@@ -207,10 +205,8 @@ public class PDFUtils {
                         new DatabaseHelper(mContext).insertRecord(destFilePath,
                                 mContext.getString(R.string.rotated));
                     }
-
                 })
                 .show();
-
     }
 
 
@@ -356,9 +352,7 @@ public class PDFUtils {
             PdfStamper pdfStamper = new PdfStamper(reader,
                     new FileOutputStream(output));
             pdfStamper.close();
-
-            Snackbar.make(Objects.requireNonNull(mContext).findViewById(android.R.id.content)
-                    , R.string.snackbar_pdfCreated, Snackbar.LENGTH_LONG)
+            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
             new DatabaseHelper(mContext).insertRecord(output,
                     mContext.getString(R.string.created));

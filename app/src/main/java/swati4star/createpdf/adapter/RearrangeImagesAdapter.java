@@ -20,12 +20,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 
-
 public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImagesAdapter.ViewHolder> {
     private ArrayList<String> mImagesUri;
     private final Context mContext;
     private final OnClickListener mOnClickListener;
-
 
     public RearrangeImagesAdapter(OnClickListener onClickListener,
                                   ArrayList<String> uris, Context context) {
@@ -40,7 +38,6 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_rearrange_images, parent, false);
         return new RearrangeImagesAdapter.ViewHolder(view);
-
     }
 
     @SuppressLint("NewApi")
@@ -108,9 +105,7 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
 
     public interface OnClickListener {
         void onUpClick(int position);
-
         void onDownClick(int position);
-
         void onRemoveClick(int position);
     }
 }

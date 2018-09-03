@@ -24,7 +24,6 @@ public class MergeSelectedFilesAdapter extends
     private final FileUtils mFileUtils;
     private final OnFileItemClickListener mOnClickListener;
 
-
     public MergeSelectedFilesAdapter(Activity mContext, ArrayList<String> mFilePaths,
                                      OnFileItemClickListener mOnClickListener) {
         this.mContext = mContext;
@@ -78,7 +77,6 @@ public class MergeSelectedFilesAdapter extends
 
     public interface OnFileItemClickListener {
         void viewFile(String path);
-
         void removeFile(String path);
     }
 }

@@ -32,17 +32,14 @@ public class PreviewAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup view, int position) {
         View layout = mInflater.inflate(R.layout.pdf_preview_item, view, false);
-
         final ImageView imageView = layout.findViewById(R.id.image);
         String path = mPreviewItems.get(position);
         File fileLocation = new File(path);
-
         Picasso.with(mContext).load(fileLocation).into(imageView);
         TextView fileName = layout.findViewById(R.id.tvFileName);
         String fileNameString = fileLocation.getName();
         fileName.setText(fileNameString);
         view.addView(layout, 0);
-
         return layout;
     }
 

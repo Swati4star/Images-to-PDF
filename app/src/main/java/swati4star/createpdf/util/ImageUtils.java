@@ -42,10 +42,11 @@ public class ImageUtils {
     /**
      * Creates a rounded bitmap from any bitmap
      * @param bmp - input bitmap
-     * @param radius - radius of output bitmap
      * @return - output bitmap
      */
-    public static Bitmap getRoundBitmap(Bitmap bmp, int radius) {
+    public static Bitmap getRoundBitmap(Bitmap bmp) {
+        int width = bmp.getWidth(), height = bmp.getHeight();
+        int radius = width > height ? height : width; // set the smallest edge as radius.
         Bitmap sbmp;
 
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
@@ -86,9 +87,6 @@ public class ImageUtils {
         File file = new File(path);
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
-        int width = bitmap.getWidth(), height = bitmap.getHeight();
-        int radius = width > height ? height : width; // set the smallest edge as radius.
-        return ImageUtils.getRoundBitmap(bitmap, radius);
+        return ImageUtils.getRoundBitmap(bitmap);
     }
-
 }

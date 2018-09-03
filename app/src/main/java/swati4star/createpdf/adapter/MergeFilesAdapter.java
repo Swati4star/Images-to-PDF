@@ -3,7 +3,6 @@ package swati4star.createpdf.adapter;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     private final OnClickListener mOnClickListener;
     private final PDFUtils mPDFUtils;
 
-
     public MergeFilesAdapter(Activity mContext, ArrayList<String> mFilePaths, OnClickListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
@@ -46,12 +44,8 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
         boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
-        Log.v("adding ", String.valueOf(position) + isEncrypted);
         holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
-        if (isEncrypted)
-            holder.mEncryptionImage.setVisibility(View.VISIBLE);
-        else
-            holder.mEncryptionImage.setVisibility(View.INVISIBLE);
+        holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -73,8 +67,6 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            Log.v("Click", view.getId() + " " + R.id.splitted_files +
-                    " " + R.id.recyclerViewFiles);
             mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
         }
     }

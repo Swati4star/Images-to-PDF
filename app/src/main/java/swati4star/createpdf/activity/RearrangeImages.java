@@ -1,6 +1,7 @@
 package swati4star.createpdf.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import swati4star.createpdf.util.Constants;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
+import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangeImages extends AppCompatActivity implements RearrangeImagesAdapter.OnClickListener {
 
@@ -74,12 +76,9 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
             mImages.remove(position);
             mRearrangeImagesAdapter.positionChanged(mImages);
         } else {
-            new MaterialDialog.Builder(this)
-                    .title(R.string.warning)
-                    .content(R.string.remove_image_message)
-                    .checkBoxPrompt(getString(R.string.dont_show_again), false, null)
-                    .positiveText(R.string.ok)
-                    .negativeText(R.string.cancel)
+            MaterialDialog.Builder builder = createWarningDialog(this,
+                    R.string.remove_image_message);
+            builder.checkBoxPrompt(getString(R.string.dont_show_again), false, null)
                     .onPositive((dialog, which) -> {
                         if (dialog.isPromptCheckBoxChecked()) {
                             SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -116,6 +115,12 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
+        Intent intent = new Intent(context, RearrangeImages.class);
+        intent.putExtra(PREVIEW_IMAGES, uris);
+        return intent;
     }
 }
 

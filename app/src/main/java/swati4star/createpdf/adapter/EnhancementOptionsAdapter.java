@@ -19,7 +19,6 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 /**
  * Created by anandparmar on 08/06/18.
  */
-
 public class EnhancementOptionsAdapter
         extends RecyclerView.Adapter<EnhancementOptionsAdapter.EnhancementOptionsViewHolder> {
 
@@ -55,7 +54,6 @@ public class EnhancementOptionsAdapter
 
         @BindView(R.id.option_image)
         ImageView optionImage;
-
         @BindView(R.id.option_name)
         TextView optionName;
 

@@ -1,6 +1,7 @@
 package swati4star.createpdf.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -54,6 +55,9 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         showOptions();
     }
 
+    /**
+     * Shows preview options at the bottom of activity
+     */
     private void showOptions() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -62,6 +66,10 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         mRecyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Returns a list of options for preview activity
+     * @return - list
+     */
     private ArrayList<PreviewImageOptionItem> getOptions() {
         ArrayList<PreviewImageOptionItem> mOptions = new ArrayList<>();
         mOptions.add(new PreviewImageOptionItem(R.drawable.ic_rearrange, getString(R.string.rearrange_text)));
@@ -73,7 +81,8 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     public void onItemClick(int position) {
         switch (position) {
             case 0:
-                reArrangeImages();
+                startActivityForResult(RearrangeImages.getStartIntent(this, mImagesArrayList),
+                        INTENT_REQUEST_REARRANGE_IMAGE);
                 break;
             case 1:
                 sortImages();
@@ -81,6 +90,9 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         }
     }
 
+    /**
+     * Shows a dialog to sort images
+     */
     private void sortImages() {
         new MaterialDialog.Builder(this)
                 .title(R.string.sort_by_title)
@@ -94,12 +106,9 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
                 .show();
     }
 
-    private void reArrangeImages() {
-        Intent intent = new Intent(this, RearrangeImages.class);
-        intent.putStringArrayListExtra(PREVIEW_IMAGES, mImagesArrayList);
-        startActivityForResult(intent, INTENT_REQUEST_REARRANGE_IMAGE);
-    }
-
+    /**
+     * Sends the resultant uri back to calling activity
+     */
     private void passUris() {
         Intent returnIntent = new Intent();
         returnIntent.putStringArrayListExtra(Constants.RESULT, mImagesArrayList);
@@ -129,5 +138,11 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     @Override
     public void onBackPressed() {
         passUris();
+    }
+
+    public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
+        Intent intent = new Intent(context, PreviewActivity.class);
+        intent.putExtra(PREVIEW_IMAGES, uris);
+        return intent;
     }
 }

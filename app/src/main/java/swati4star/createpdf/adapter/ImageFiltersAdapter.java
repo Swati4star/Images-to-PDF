@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
@@ -42,16 +43,12 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int imageid = mFilterItem.get(position).getImageId();
-
         Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageid);
         if (roundBitmap != null) {
-            int width = roundBitmap.getWidth(), height = roundBitmap.getHeight();
-            int radius = width > height ? height : width; // set the smallest edge as radius.
-            roundBitmap = ImageUtils.getRoundBitmap(roundBitmap, radius);
-            holder.img.setImageBitmap(roundBitmap);
+            holder.img.setImageBitmap(ImageUtils.getRoundBitmap(roundBitmap));
         } else
             holder.img.setImageResource(imageid);
-        holder.Filter_name.setText(mFilterItem.get(position).getName());
+        holder.name.setText(mFilterItem.get(position).getName());
     }
 
     @Override
@@ -60,21 +57,20 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final ImageView img;
-        final TextView Filter_name;
+        @BindView(R.id.filter_preview)
+        ImageView img;
+        @BindView(R.id.filter_Name)
+        TextView name;
 
         ViewHolder(View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.filter_preview);
-            Filter_name = itemView.findViewById(R.id.filter_Name);
             ButterKnife.bind(this, itemView);
-            img.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            int mAdapterp = getAdapterPosition();
-            mOnFilterItemClickedListener.onItemClick(view, mAdapterp);
+            mOnFilterItemClickedListener.onItemClick(view, getAdapterPosition());
         }
     }
 }
