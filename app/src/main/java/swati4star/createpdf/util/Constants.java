@@ -33,4 +33,10 @@ public class Constants {
     public static final String appName = "PDF Converter";
 
     public static final String AUTHORITY_APP = "com.swati4star.shareFile";
+
+    public static final String ACTION_SELECT_IMAGES = "android.intent.action.SELECT_IMAGES";
+    public static final String ACTION_VIEW_FILES = "android.intent.action.VIEW_FILES";
+    public static final String ACTION_TEXT_TO_PDF = "android.intent.action.TEXT_TO_PDF";
+    public static final String ACTION_MERGE_PDF = "android.intent.action.MERGE_PDF";
+    public static final String OPEN_SELECT_IMAGES = "open_select_images";
 }
