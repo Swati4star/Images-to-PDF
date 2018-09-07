@@ -65,4 +65,15 @@ public class DialogUtils {
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel);
     }
+
+    /**
+     * Creates dialog with animation
+     * @param activity - activity instance
+     * @return - material dialog
+     */
+    public static MaterialDialog createAnimationDialog(Activity activity) {
+        return new MaterialDialog.Builder(activity)
+                .customView(R.layout.lottie_anim_dialog, false)
+                .build();
+    }
 }

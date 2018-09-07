@@ -114,7 +114,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
-            setTextAndActivateButtons(getFilePath(mActivity, data.getData()));
+            setTextAndActivateButtons(getFilePath(data.getData()));
     }
 
 

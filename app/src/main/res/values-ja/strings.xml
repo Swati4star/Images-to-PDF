@@ -101,7 +101,7 @@
     <string name="filter_images_Text">Filter Images</string>
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Image compression : %s%%</string>
-    <string name="quality_image">Compress the Image (Default : 30%)</string>
+    <string name="quality_image">Enter % compression of image :</string>
     <string name="invalid_entry">Invaid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
@@ -265,7 +265,7 @@
     <string name="share_files">Share Files</string>
     <string name="images_rearranged">Images rearranged</string>
     <string name="compress_pdf">Compress PDF</string>
-    <string name="compress_pdf_prompt">Enter %% compression of PDF :</string>
+    <string name="compress_pdf_prompt">Enter % compression of PDF :</string>
     <string name="pdf_removed_from_list">PDF has been removed from the list.</string>
     <string name="pdf_added_to_list">PDF has been added to the list.</string>
     <string name="select_files">Select Files</string>

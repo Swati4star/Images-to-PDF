@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +44,7 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
@@ -161,9 +160,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-            Uri uri = data.getData();
-            Log.v("file", uri + " ");
-            mFilePaths.add(getFilePath(mActivity, uri));
+            mFilePaths.add(getFilePath(data.getData()));
             mMergeSelectedFilesAdapter.notifyDataSetChanged();
             showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
             if (mFilePaths.size() > 1 && !mergeBtn.isEnabled()) {
@@ -231,12 +228,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void mergeStarted() {
-        mMaterialDialog = new MaterialDialog.Builder(mActivity)
-                .customView(R.layout.lottie_anim_dialog, false)
-                .build();
+        mMaterialDialog = createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
-
 
     @Override
     public void viewFile(String path) {

@@ -44,6 +44,7 @@ import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.FileUtils.getFormattedSize;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
@@ -129,7 +130,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
-            setTextAndActivateButtons(getFilePath(mActivity, data.getData()));
+            setTextAndActivateButtons(getFilePath(data.getData()));
     }
 
 
@@ -217,9 +218,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @Override
     public void pdfCompressionStarted() {
-        mMaterialDialog = new MaterialDialog.Builder(mActivity)
-                .customView(R.layout.lottie_anim_dialog, false)
-                .build();
+        mMaterialDialog = createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 

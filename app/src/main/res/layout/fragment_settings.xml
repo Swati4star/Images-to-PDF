@@ -24,7 +24,8 @@
         android:padding="8dp"
         android:drawablePadding="15dp"
         android:drawableStart="@drawable/ic_folder_black_24dp"
-        android:drawableTint="@color/colorPrimary" />
+        android:drawableTint="@color/colorPrimary"
+        tools:targetApi="m" />
 
     <View
         android:layout_width="match_parent"

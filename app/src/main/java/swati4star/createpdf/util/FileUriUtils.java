@@ -1,6 +1,5 @@
 package swati4star.createpdf.util;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -11,12 +10,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
-import java.io.File;
-
-import swati4star.createpdf.R;
-
 public class FileUriUtils {
-
 
     private static final String EXTERNALSTORAGEDOC = "com.android.externalstorage.documents";
     private static final String ISDOWNLOADDOC = "com.android.providers.downloads.documents";
@@ -185,7 +179,6 @@ public class FileUriUtils {
 
                 // Get column index.
                 int imageColumnIndex = cursor.getColumnIndex(columnName);
-
                 if (imageColumnIndex == -1)
                     return ret;
 
@@ -197,47 +190,14 @@ public class FileUriUtils {
         return ret;
     }
 
-    public static String getFilePath(Activity context, Uri uri) {
-        FileUtils fileUtils = new FileUtils(context);
-        DirectoryUtils directoryUtils = new DirectoryUtils(context);
-        String uriString = uri.toString();
-        File file = new File(uri.toString());
-        String path = file.getPath();
-        String returnPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        Boolean success;
-        String name = null;
-        if (uriString.startsWith("content://") && uriString.contains("com.google.android.")) {
-            success = false;
-        } else {
-            success = true;
-            name = fileUtils.getFileName(uri);
-        }
-        if (success) {
-            String folname = directoryUtils.getParentFolder(path);
-            if (folname != null) {
-                String c = context.getString(R.string.path_seperator);
-                returnPath = returnPath + c + folname + c + name;
-            }
-        }
-        return returnPath;
+    /**
+     * Returns absolute path from uri
+     * @param uri - input uri
+     * @return - path
+     */
+    public static String getFilePath(Uri uri) {
+        String path = uri.getPath();
+        path =  path.replace("/document/raw:", "");
+        return path;
     }
-
-    public static String getFolderPath(Activity context, Uri uri) {
-        DirectoryUtils directoryUtils = new DirectoryUtils(context);
-        String uriString = uri.toString();
-        File file = new File(uri.toString());
-        String path = file.getPath();
-        String returnPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        Boolean success;
-        success = !uriString.startsWith("content://") || !uriString.contains("com.google.android.");
-        if (success) {
-            String folname = directoryUtils.getParentFolder(path);
-            if (folname != null) {
-                String c = context.getString(R.string.path_seperator);
-                returnPath = returnPath + c + folname;
-            }
-        }
-        return returnPath;
-    }
-
 }

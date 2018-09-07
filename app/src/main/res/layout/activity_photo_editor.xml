@@ -44,7 +44,8 @@
             android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/previous_image_content_desc"
             android:gravity="center"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/imagecount"
@@ -61,7 +62,8 @@
             android:background="@drawable/ic_navigate_next_black_24dp"
             android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/nextimage_contentdesc"
-            android:gravity="center" />
+            android:gravity="center"
+            tools:targetApi="lollipop" />
 
     </LinearLayout>
 

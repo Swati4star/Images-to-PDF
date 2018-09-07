@@ -324,6 +324,11 @@ public class FileUtils {
         return myDir + "/" + fname;
     }
 
+    /**
+     * Checks of the bitmap is just all white pixels
+     * @param bitmap - input bitmap
+     * @return - true, if bitmap is all white
+     */
     private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
@@ -338,18 +343,24 @@ public class FileUtils {
         return true;
     }
 
+    /**
+     * Opens image in a gallery application
+     * @param path - image path
+     */
     public void openImage(String path) {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
         Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
         target.setDataAndType(uri,  "image/*");
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
         openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
     }
 
+    /**
+     * Opens the targeted intent (if possible), otherwise show a snackbar
+     * @param intent - input intent
+     */
     private void openIntent(Intent intent) {
         try {
             mContext.startActivity(intent);

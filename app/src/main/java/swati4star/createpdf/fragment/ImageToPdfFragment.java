@@ -68,6 +68,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -469,9 +470,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = new MaterialDialog.Builder(mActivity)
-                .customView(R.layout.lottie_anim_dialog, false)
-                .build();
+        mMaterialDialog = createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 
