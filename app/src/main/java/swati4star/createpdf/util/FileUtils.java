@@ -194,11 +194,14 @@ public class FileUtils {
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-        Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
-        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
-        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
+        try {
+            Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
+            target.setDataAndType(uri, mContext.getString(R.string.pdf_type));
+            target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
+        } catch (Exception e) {
+            showSnackbar(mContext, R.string.error_occurred);
+        }
     }
 
     /**

@@ -36,6 +36,9 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... pdfpaths) {
         try {
+            PdfReader pdfreader;
+            for (String p : pdfpaths)
+                pdfreader = new PdfReader(p);
             // Create document object
             Document document = new Document();
             // Create pdf copy object to copy current document to the output mergedresult file
@@ -44,7 +47,6 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(mFinPath));
             // Open the document
             document.open();
-            PdfReader pdfreader;
             int numOfPages;
             for (String pdfPath : pdfpaths) {
                 // Create pdf reader object to read each input pdf file

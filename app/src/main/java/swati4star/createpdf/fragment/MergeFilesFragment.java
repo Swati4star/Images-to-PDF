@@ -212,8 +212,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         if (isPDFMerged) {
             getSnackbarwithAction(mActivity, R.string.pdf_merged)
                     .setAction(R.string.snackbar_viewAction, v -> {
-                        FileUtils fileUtils = new FileUtils(mActivity);
-                        fileUtils.openFile(path);
+                        mFileUtils.openFile(path);
                     }).show();
             new DatabaseHelper(mActivity).insertRecord(path,
                     mActivity.getString(R.string.created));

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 
 public class PageSizeUtils {
@@ -36,6 +37,7 @@ public class PageSizeUtils {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 DEFAULT_PAGE_SIZE);
+        mPageSize = mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT, DEFAULT_PAGE_SIZE);
         mPageSizeToString = new HashMap<>();
         mPageSizeToString.put(R.id.page_size_default, R.string.a4);
         mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
