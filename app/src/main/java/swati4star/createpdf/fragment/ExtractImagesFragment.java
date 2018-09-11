@@ -32,14 +32,13 @@ import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.util.BottomSheetCallback;
-import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -51,7 +50,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
-    private DirectoryUtils mDirectoryUtils;
+    private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private ArrayList<String> mOutFilePaths;
     private MaterialDialog mMaterialDialog;
@@ -85,19 +84,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
-
-        ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
-        if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)
-            mLayout.setVisibility(View.GONE);
-        else {
-            // Init recycler view
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        }
-
+        mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
+                mRecyclerViewFiles, this);
         resetView();
         return rootview;
     }
@@ -115,7 +103,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(sheetBehavior);
     }
 
     /**
@@ -145,7 +133,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mDirectoryUtils = new DirectoryUtils(mActivity);
+        mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
     @Override

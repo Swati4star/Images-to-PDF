@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,7 @@ import swati4star.createpdf.adapter.MergeSelectedFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.util.BottomSheetCallback;
-import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -42,7 +41,6 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -59,6 +57,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private MorphButtonUtility mMorphButtonUtility;
     private ArrayList<String> mFilePaths;
     private FileUtils mFileUtils;
+    private BottomSheetUtils mBottomSheetUtils;
     private MergeSelectedFilesAdapter mMergeSelectedFilesAdapter;
     private MaterialDialog mMaterialDialog;
     private String mHomePath;
@@ -94,22 +93,11 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mFilePaths = new ArrayList<>();
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        DirectoryUtils directoryUtils = new DirectoryUtils(mActivity);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
-
-        ArrayList<String> mAllFilesPaths = directoryUtils.getAllFilePaths();
-        if (mAllFilesPaths == null || mAllFilesPaths.size() == 0) {
-            mLayout.setVisibility(View.GONE);
-        }
-
-        // Init recycler view
-        MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-        mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-        mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
+                mRecyclerViewFiles, this);
 
         mSelectedFiles.setAdapter(mMergeSelectedFilesAdapter);
         mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
@@ -123,7 +111,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(sheetBehavior);
     }
 
     @OnClick(R.id.selectFiles)
@@ -189,6 +177,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
+        mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
     @Override

@@ -2,24 +2,25 @@ package swati4star.createpdf.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.pdfExtension;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 
 public class DirectoryUtils {
 
     private final Context mContext;
     private final SharedPreferences mSharedPreferences;
+    private ArrayList<String> mFilePaths;
 
     public DirectoryUtils(Context context) {
         mContext = context;
@@ -125,18 +126,12 @@ public class DirectoryUtils {
      * @return ArrayList of PDF files
      */
     public ArrayList<File> getPdfFromOtherDirectories() {
-        ArrayList<File> pdfFiles = new ArrayList<>();
-        File folder = getOrCreatePdfDirectory();
-        File[] files = folder.listFiles();
-        if (files == null)
-            return null;
-        for (File file : files) {
-            if (file.isDirectory())
-                Collections.addAll(pdfFiles, file.listFiles());
-        }
-        if (pdfFiles.isEmpty())
-            return null;
-        return pdfFiles;
+        mFilePaths = new ArrayList<>();
+        walkdir(getOrCreatePdfDirectory());
+        ArrayList<File> files = new ArrayList<>();
+        for (String path : mFilePaths)
+            files.add(new File(path));
+        return files;
     }
 
     /**
@@ -154,53 +149,33 @@ public class DirectoryUtils {
     }
 
     /**
-     * get all the file paths (inside the directory & on home directory)
-     * @return - list of file paths
+     * gets a list of all the pdf files on the user device
+     * @return - list of file absolute paths
      */
-    public ArrayList<String> getAllFilePaths() {
-        ArrayList<String> pdfPaths = new ArrayList<>();
-        ArrayList<File> pdfFiles;
-        ArrayList<File> pdfFromOtherDir = getPdfFromOtherDirectories();
-        final File[] files = getOrCreatePdfDirectory().listFiles();
-        if ((files == null || files.length == 0) && pdfFromOtherDir == null) {
-            return null;
-        } else {
-            pdfFiles = getPdfsFromPdfFolder(files);
-            if (pdfFromOtherDir != null) {
-                pdfFiles.addAll(pdfFromOtherDir);
-            }
-        }
-        if (pdfFiles != null) {
-            for (File pdf : pdfFiles) {
-                pdfPaths.add(pdf.getAbsolutePath());
-            }
-        }
-        return pdfPaths;
+    public ArrayList<String> getAllPDFsOnDevice() {
+        mFilePaths = new ArrayList<>();
+        walkdir(Environment.getExternalStorageDirectory());
+        return mFilePaths;
     }
 
     /**
-     * Get parent folder name of file with given path
-     * @param p - path of file
-     * @return - parent folder name
+     * Walks through given dir & sub direc, and append file path to mFilePaths
+     * @param dir - root directory
      */
-    public String getParentFolder(String p) {
-        String folName = null;
-        try {
-            //Get Name of Parent Folder of File
-            // Folder Name found between first occurance of string %3A and %2F from path
-            // of content://...
-            if (p.contains("%3A")) {
-                int beg = p.indexOf("%3A") + 3;
-                folName = p.substring(beg, p.indexOf("%2F"));
-                Log.d("img", folName);
-            } else {
-                folName = null;
-            }
+    private void walkdir(File dir) {
+        File[] listFile = dir.listFiles();
+        if (listFile != null) {
+            for (File aListFile : listFile) {
 
-        } catch (Exception e) {
-            Log.e("Exception", e.getMessage());
-            e.printStackTrace();
+                if (aListFile.isDirectory()) {
+                    walkdir(aListFile);
+                } else {
+                    if (aListFile.getName().endsWith(pdfExtension)) {
+                        //Do what ever u want
+                        mFilePaths.add(aListFile.getAbsolutePath());
+                    }
+                }
+            }
         }
-        return folName;
     }
 }

@@ -40,26 +40,40 @@ dependencies {
     implementation 'junit:junit:4.12'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'ja.burhanrashid52:photoeditor:0.2.1'
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'com.android.support:design:27.1.1'
-    implementation 'com.itextpdf:itextg:5.5.10'
-    implementation 'com.balysv:material-ripple:1.0.2'
-    implementation 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
+
+    // butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.madgag.spongycastle:core:1.58.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    // persistence room library - for db operations
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
+    // material ripple, morphing button, material dialog, animations
+    implementation 'com.balysv:material-ripple:1.0.2'
+    implementation 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.airbnb.android:lottie:2.5.5'
+
+    // Itext pdf library
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.madgag.spongycastle:core:1.58.0.0'
+
+    // Picasso, image editor, image cropper
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'ja.burhanrashid52:photoeditor:0.2.1'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+
+    // Viewpager transformation
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
+
+    // Image picker, and folder picker
     implementation 'com.zhihu.android:matisse:0.5.2-beta2'
     implementation 'lib.kashif:folderpicker:2.4'
 }

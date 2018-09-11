@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,14 +31,12 @@ import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
-import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
-import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.BottomSheetUtils.showHideSheet;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
@@ -58,8 +54,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
+    private BottomSheetUtils mBottomSheetUtils;
     private PDFUtils mPDFUtils;
-    private DirectoryUtils mDirectoryUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private String mOperation;
     private MaterialDialog mMaterialDialog;
@@ -93,20 +89,9 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
-
         mOperation = getArguments().getString(BUNDLE_DATA);
-
-        ArrayList<String> mAllFilesPaths = mDirectoryUtils.getAllFilePaths();
-        if (mAllFilesPaths == null || mAllFilesPaths.size() == 0)
-            mLayout.setVisibility(View.GONE);
-        else {
-            // Init recycler view
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, mAllFilesPaths, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        }
+        mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
+                mRecyclerViewFiles, this);
 
         resetValues();
         return rootview;
@@ -114,7 +99,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(sheetBehavior);
     }
 
     /**
@@ -197,8 +182,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mDirectoryUtils = new DirectoryUtils(mActivity);
         mPDFUtils = new PDFUtils(mActivity);
+        mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
     @Override
