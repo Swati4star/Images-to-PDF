@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -51,7 +50,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
 
     @BindView(R.id.selectFile)
-    Button selectFileButton;
+    MorphingButton selectFileButton;
     @BindView(R.id.splitFiles)
     MorphingButton splitFilesButton;
     BottomSheetBehavior sheetBehavior;
@@ -79,9 +78,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
         mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
                 mRecyclerViewFiles, this);
-
         resetValues();
-
         return rootview;
     }
 
@@ -110,9 +107,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     @OnClick(R.id.splitFiles)
     public void parse() {
         ArrayList<String> outputFilePaths = mPDFUtils.splitPDF(mPath);
-
         int numberOfPages = outputFilePaths.size();
-
         if (numberOfPages > 0) {
             String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
             showSnackbar(mActivity, output);
@@ -125,15 +120,13 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
             mSplittedFiles.setLayoutManager(mLayoutManager);
             mSplittedFiles.setAdapter(splitFilesAdapter);
             mSplittedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+            resetValues();
         }
     }
 
     private void resetValues() {
         mPath = null;
-        selectFileButton.setText(R.string.merge_file_select);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_blue));
-        mMorphButtonUtility.morphToGrey(splitFilesButton, mMorphButtonUtility.integer());
-        splitFilesButton.setEnabled(false);
+        mMorphButtonUtility.initializeButton(selectFileButton, splitFilesButton);
     }
 
     @Override
@@ -156,10 +149,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSplittedFiles.setVisibility(View.GONE);
         splitFilesSuccessText.setVisibility(View.GONE);
         mPath = path;
-        selectFileButton.setText(mPath);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-        splitFilesButton.setEnabled(true);
-        mMorphButtonUtility.morphToSquare(splitFilesButton, mMorphButtonUtility.integer());
+        mMorphButtonUtility.setTextAndActivateButtons(path,
+                selectFileButton, splitFilesButton);
     }
 
     @Override

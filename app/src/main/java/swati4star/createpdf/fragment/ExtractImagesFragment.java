@@ -56,7 +56,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     private MaterialDialog mMaterialDialog;
 
     @BindView(R.id.selectFile)
-    Button selectFileButton;
+    MorphingButton selectFileButton;
     @BindView(R.id.extractImages)
     MorphingButton extractImagesButton;
     BottomSheetBehavior sheetBehavior;
@@ -147,10 +147,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         mShareFiles.setVisibility(View.GONE);
         extractImagesSuccessText.setVisibility(View.GONE);
         mPath = path;
-        selectFileButton.setText(mPath);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-        extractImagesButton.setEnabled(true);
-        mMorphButtonUtility.morphToSquare(extractImagesButton, mMorphButtonUtility.integer());
+        mMorphButtonUtility.setTextAndActivateButtons(path,
+                selectFileButton, extractImagesButton);
     }
 
     @Override
@@ -161,10 +159,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     @Override
     public void resetView() {
         mPath = null;
-        selectFileButton.setText(R.string.merge_file_select);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_blue));
-        mMorphButtonUtility.morphToGrey(extractImagesButton, mMorphButtonUtility.integer());
-        extractImagesButton.setEnabled(false);
+        mMorphButtonUtility.initializeButton(selectFileButton, extractImagesButton);
     }
 
     @Override

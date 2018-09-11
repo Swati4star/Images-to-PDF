@@ -3,7 +3,6 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -61,7 +60,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private MergeSelectedFilesAdapter mMergeSelectedFilesAdapter;
     private MaterialDialog mMaterialDialog;
     private String mHomePath;
-    private SharedPreferences mSharedPreferences;
 
     @BindView(R.id.mergebtn)
     MorphingButton mergeBtn;
@@ -93,8 +91,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mFilePaths = new ArrayList<>();
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
+        mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
+                .getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
                 mRecyclerViewFiles, this);
@@ -103,8 +101,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
-        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
-        mergeBtn.setEnabled(false);
+        setMorphingButtonState(false);
 
         return root;
     }
@@ -151,10 +148,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             mFilePaths.add(getFilePath(data.getData()));
             mMergeSelectedFilesAdapter.notifyDataSetChanged();
             showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
-            if (mFilePaths.size() > 1 && !mergeBtn.isEnabled()) {
-                mergeBtn.setEnabled(true);
-                mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
-            }
+            if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
+                setMorphingButtonState(true);
         }
     }
 
@@ -184,10 +179,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onItemClick(String path) {
         mFilePaths.add(path);
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
-        if (mFilePaths.size() > 1 && !mergeBtn.isEnabled()) {
-            mergeBtn.setEnabled(true);
-            mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
-        }
+        if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
+            setMorphingButtonState(true);
         showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
     }
 
@@ -208,8 +201,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         } else
             showSnackbar(mActivity, R.string.pdf_merge_error);
 
-        mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
-        mergeBtn.setEnabled(false);
+        setMorphingButtonState(false);
         mFilePaths.clear();
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
     }
@@ -230,10 +222,16 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mFilePaths.remove(path);
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
         showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
-        if (mFilePaths.size() < 2 && mergeBtn.isEnabled()) {
-            mergeBtn.setEnabled(false);
-            mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
-        }
+        if (mFilePaths.size() < 2 && mergeBtn.isEnabled())
+            setMorphingButtonState(false);
     }
 
+    void setMorphingButtonState(Boolean enabled) {
+        if (enabled)
+            mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
+        else
+            mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
+
+        mergeBtn.setEnabled(enabled);
+    }
 }

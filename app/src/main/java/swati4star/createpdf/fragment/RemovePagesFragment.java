@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +60,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private MaterialDialog mMaterialDialog;
 
     @BindView(R.id.selectFile)
-    Button selectFileButton;
+    MorphingButton selectFileButton;
     @BindView(R.id.pdfCreate)
     MorphingButton createPdf;
     BottomSheetBehavior sheetBehavior;
@@ -149,7 +148,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             } else {
                 String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
                         "_edited" + check + mActivity.getString(R.string.pdf_ext));
-
                 mPDFUtils.compressPDF(mPath, outputPath, 100 - check, this);
             }
         } catch (NumberFormatException e) {
@@ -160,10 +158,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private void resetValues() {
         mPath = null;
         pagesInput.setText(null);
-        selectFileButton.setText(R.string.merge_file_select);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_blue));
-        mMorphButtonUtility.morphToGrey(createPdf, mMorphButtonUtility.integer());
-        createPdf.setEnabled(false);
+        mMorphButtonUtility.initializeButton(selectFileButton, createPdf);
         switch (mOperation) {
             case REORDER_PAGES:
                 mInfoText.setText(R.string.reorder_pages_text);
@@ -194,11 +189,9 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
-        selectFileButton.setText(mPath);
-        selectFileButton.setBackgroundColor(getResources().getColor(R.color.mb_green_dark));
-        createPdf.setEnabled(true);
-        mMorphButtonUtility.morphToSquare(createPdf, mMorphButtonUtility.integer());
         mCompressionInfoText.setVisibility(View.GONE);
+        mMorphButtonUtility.setTextAndActivateButtons(path,
+                selectFileButton, createPdf);
     }
 
     @Override
