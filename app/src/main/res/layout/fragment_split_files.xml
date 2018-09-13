@@ -26,10 +26,10 @@
             android:layout_marginTop="5dp"
             android:text="@string/split_info"/>
 
-        <Button
+        <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFile"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_margin="24dp"
             android:background="@color/mb_blue"
             android:maxWidth="30dp"
