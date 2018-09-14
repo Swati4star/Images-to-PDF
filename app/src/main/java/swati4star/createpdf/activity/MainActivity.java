@@ -24,6 +24,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.ExtractImagesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
+import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.RemovePagesFragment;
@@ -231,6 +232,9 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
 
         switch (item.getItemId()) {
+            case R.id.nav_home:
+                fragment = new HomeFragment();
+                break;
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
                 break;

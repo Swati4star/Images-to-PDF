@@ -1,118 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eceff1"
-    android:orientation="vertical"
-    tools:context=".fragment.ImageToPdfFragment"
-    tools:ignore="Overdraw"
-    android:focusableInTouchMode="true">
+    android:layout_width="match_parent">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/buttonLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:orientation="vertical">
-
-                <com.dd.morphingbutton.MorphingButton
-                    android:id="@+id/addImages"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/select_images_text"
-                    android:textColor="@color/mb_white" />
-
-                <com.dd.morphingbutton.MorphingButton
-                    android:id="@+id/pdfOpen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/open_pdf_text"
-                    android:textColor="@color/mb_white"
-                    android:visibility="gone" />
-
-                <com.dd.morphingbutton.MorphingButton
-                    android:id="@+id/pdfCreate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:enabled="false"
-                    android:padding="10dp"
-                    android:text="@string/create_pdf_text"
-                    android:textColor="@color/mb_white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:gravity="bottom|center"
-                android:orientation="vertical"
-                tools:targetApi="lollipop">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorGray" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/activity_horizontal_margin"
-                    android:text="@string/more_options_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorGray"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/enhancement_options_recycle_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/background_light"
-                android:gravity="center_horizontal"
-                android:padding="8dp"
-                android:text="@string/app_name"
-                android:textColor="@color/colorAccent"
-                android:visibility="invisible" />
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
-    <TextView
-        android:id="@+id/tvNoOfImages"
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/background_light"
-        android:gravity="center_horizontal"
-        android:padding="8dp"
-        android:textColor="@color/colorAccent"
-        android:visibility="gone" />
+        android:orientation="vertical"
+        tools:context=".HomeFragment">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Create new PDF"
+            android:textAllCaps="true"
+            android:textColor="@color/colorGray"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGray" />
+
+        <swati4star.createpdf.customviews.MyCardView
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="View PDFs"
+            android:textAllCaps="true"
+            android:textColor="@color/colorGray"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Modify existing PDFs"
+            android:textAllCaps="true"
+            android:textColor="@color/colorGray"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGray" />
+
+    </LinearLayout>
+
+</ScrollView>
