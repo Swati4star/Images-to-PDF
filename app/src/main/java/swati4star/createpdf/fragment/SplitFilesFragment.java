@@ -103,7 +103,6 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
             setTextAndActivateButtons(getFilePath(data.getData()));
     }
 
-
     @OnClick(R.id.splitFiles)
     public void parse() {
         ArrayList<String> outputFilePaths = mPDFUtils.splitPDF(mPath);
