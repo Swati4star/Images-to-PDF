@@ -368,6 +368,7 @@
     <string name="storage_location_info">Change storage location</string>
 
     <!-- Home page -->
+    <string name="home_page">Home</string>
     <string name="create_new_pdfs">Create new PDF</string>
     <string name="view_pdfs">View PDFs</string>
     <string name="modify_existing_pdfs">Modify existing PDFs</string>
