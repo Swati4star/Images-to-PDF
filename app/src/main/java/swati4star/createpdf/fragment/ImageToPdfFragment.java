@@ -121,7 +121,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
         ButterKnife.bind(this, root);
 
         // Initialize variables
