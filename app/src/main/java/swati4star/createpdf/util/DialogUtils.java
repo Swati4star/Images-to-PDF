@@ -8,6 +8,10 @@ import swati4star.createpdf.R;
 
 public class DialogUtils {
 
+    public static final int ROTATE_PAGES = 20;
+    public static final int ADD_PASSWORD = 21;
+    public static final int REMOVE_PASSWORD = 22;
+
     /**
      * Creates a material dialog with `Warning` title
      * @param activity - activity instance
@@ -75,5 +79,26 @@ public class DialogUtils {
         return new MaterialDialog.Builder(activity)
                 .customView(R.layout.lottie_anim_dialog, false)
                 .build();
+    }
+
+    public static void showFilesInfoDialog(Activity activity, int dialogId) {
+        int stringId = R.string.viewfiles_rotatepages;
+        switch (dialogId) {
+            case ROTATE_PAGES:
+                stringId = R.string.viewfiles_rotatepages;
+                break;
+            case REMOVE_PASSWORD:
+                stringId = R.string.viewfiles_removepassword;
+                break;
+            case ADD_PASSWORD:
+                stringId = R.string.viewfiles_addpassword;
+                break;
+        }
+        new MaterialDialog.Builder(activity)
+                .title(R.string.app_name)
+                .content(stringId)
+                .positiveText(android.R.string.ok)
+                .build()
+                .show();
     }
 }

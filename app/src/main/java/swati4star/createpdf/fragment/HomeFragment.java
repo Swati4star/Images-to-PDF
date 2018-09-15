@@ -19,6 +19,9 @@ import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.DialogUtils.ADD_PASSWORD;
+import static swati4star.createpdf.util.DialogUtils.REMOVE_PASSWORD;
+import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -43,7 +46,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView rearrangePages;
     @BindView(R.id.extract_images)
     MyCardView extractImages;
-
+    @BindView(R.id.add_password)
+    MyCardView addPassword;
+    @BindView(R.id.remove_password)
+    MyCardView removePassword;
+    @BindView(R.id.rotate_pages)
+    MyCardView rotatePdf;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -60,6 +68,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         removePages.setOnClickListener(this);
         rearrangePages.setOnClickListener(this);
         extractImages.setOnClickListener(this);
+        addPassword.setOnClickListener(this);
+        removePassword.setOnClickListener(this);
+        rotatePdf.setOnClickListener(this);
         return rootview;
     }
 
@@ -113,16 +124,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
                 break;
-
+            case R.id.add_password:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ADD_PASSWORD);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.remove_password:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, REMOVE_PASSWORD);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.rotate_pages:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
+                fragment.setArguments(bundle);
+                break;
         }
 
         try {
-            if (fragment != null)
+            if (fragment != null && fragmentManager != null)
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }

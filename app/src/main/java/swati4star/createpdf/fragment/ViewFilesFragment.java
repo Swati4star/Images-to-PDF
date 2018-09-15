@@ -46,7 +46,9 @@ import swati4star.createpdf.util.MoveFilesToDirectory;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.DialogUtils.showFilesInfoDialog;
 import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -56,6 +58,7 @@ public class ViewFilesFragment extends Fragment
     // Directory operations constants
     public static final int NEW_DIR = 1;
     public static final int EXISTING_DIR = 2;
+
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 10;
 
     @BindView(R.id.layout_main)
@@ -82,69 +85,6 @@ public class ViewFilesFragment extends Fragment
     private boolean mIsChecked = false;
     private AlertDialog.Builder mAlertDialogBuilder;
 
-    //When the "GET STARTED" button is clicked, the user is taken to home
-    @OnClick(R.id.getStarted)
-    public void loadHome() {
-        Fragment fragment = new ImageToPdfFragment();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-        //Set default item selected
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).setDefaultMenuSelected(0);
-        }
-    }
-
-    @OnClick(R.id.provide_permissions)
-    public void providePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA},
-                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-        }
-    }
-
-    /**
-     * Called after user is asked to grant permissions
-     *
-     * @param requestCode  REQUEST Code for opening permissions
-     * @param permissions  permissions asked to user
-     * @param grantResults bool array indicating if permission is granted
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-
-        if (grantResults.length < 1) {
-            showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            return;
-        }
-        switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                    onRefresh();
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (Activity) context;
-        mDirectoryUtils = new DirectoryUtils(mActivity);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -164,6 +104,12 @@ public class ViewFilesFragment extends Fragment
         mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
         mViewFilesListRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
         mSwipeView.setOnRefreshListener(this);
+
+        int dialogId;
+        if (getArguments() != null) {
+            dialogId = getArguments().getInt(BUNDLE_DATA);
+            showFilesInfoDialog(mActivity, dialogId);
+        }
 
         checkIfListEmpty();
         return root;
@@ -215,13 +161,13 @@ public class ViewFilesFragment extends Fragment
                 if (mViewFilesAdapter.areItemsSelected())
                     deleteFiles();
                 else
-                    showSnack(R.string.snackbar_no_pdfs_selected);
+                    showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 break;
             case R.id.item_share:
                 if (mViewFilesAdapter.areItemsSelected())
                     mViewFilesAdapter.shareFiles();
                 else
-                    showSnack(R.string.snackbar_no_pdfs_selected);
+                    showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 break;
             case R.id.select_all:
                 if (mIsChecked) {
@@ -248,7 +194,7 @@ public class ViewFilesFragment extends Fragment
         View alertView = inflater.inflate(R.layout.directory_dialog, null);
         final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
         if (filePath == null) {
-            showSnack(R.string.snackbar_no_pdfs_selected);
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
         } else {
             final EditText input = alertView.findViewById(R.id.directory_editText);
             TextView message = alertView.findViewById(R.id.directory_textView);
@@ -277,7 +223,7 @@ public class ViewFilesFragment extends Fragment
                                         .execute();
                                 populatePdfList();
                             } else {
-                                showSnack(R.string.dir_does_not_exists);
+                                showSnackbar(mActivity, R.string.dir_does_not_exists);
                                 dialogInterface.dismiss();
                             }
                         });
@@ -386,7 +332,7 @@ public class ViewFilesFragment extends Fragment
         if (mViewFilesAdapter.areItemsSelected())
             moveFilesToDirectory(NEW_DIR);
         else
-            showSnack(R.string.snackbar_no_pdfs_selected);
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
     }
 
     @OnClick(R.id.move_to_dir)
@@ -394,18 +340,18 @@ public class ViewFilesFragment extends Fragment
         if (mViewFilesAdapter.areItemsSelected())
             moveFilesToDirectory(EXISTING_DIR);
         else
-            showSnack(R.string.snackbar_no_pdfs_selected);
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
     }
 
     @OnClick(R.id.move_to_home_dir)
     void moveFilesToHomeDirectory() {
         if (!mViewFilesAdapter.areItemsSelected()) {
-            showSnack(R.string.snackbar_no_pdfs_selected);
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
             return;
         }
         final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
         if (filePath == null) {
-            showSnack(R.string.snackbar_no_pdfs_selected);
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
         } else {
             final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
             for (File pdf : mDirectoryUtils.getPdfsFromPdfFolder(files)) {
@@ -437,7 +383,7 @@ public class ViewFilesFragment extends Fragment
                     final String dirName = input.getText().toString();
                     final File directory = mDirectoryUtils.getDirectory(dirName);
                     if (directory == null || dirName.trim().isEmpty()) {
-                        showSnack(R.string.dir_does_not_exists);
+                        showSnackbar(mActivity, R.string.dir_does_not_exists);
                     } else {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
                         builder.setTitle(R.string.delete)
@@ -462,7 +408,67 @@ public class ViewFilesFragment extends Fragment
         mAlertDialogBuilder.create().show();
     }
 
-    private void showSnack(int resID) {
-        showSnackbar(mActivity, resID);
+
+    //When the "GET STARTED" button is clicked, the user is taken to home
+    @OnClick(R.id.getStarted)
+    public void loadHome() {
+        Fragment fragment = new ImageToPdfFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        //Set default item selected
+        if (mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).setDefaultMenuSelected(0);
+        }
+    }
+
+    @OnClick(R.id.provide_permissions)
+    public void providePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA},
+                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+        }
+    }
+
+    /**
+     * Called after user is asked to grant permissions
+     *
+     * @param requestCode  REQUEST Code for opening permissions
+     * @param permissions  permissions asked to user
+     * @param grantResults bool array indicating if permission is granted
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        if (grantResults.length < 1) {
+            showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+            return;
+        }
+        switch (requestCode) {
+            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                    onRefresh();
+                } else
+                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+            }
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+        mDirectoryUtils = new DirectoryUtils(mActivity);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 }

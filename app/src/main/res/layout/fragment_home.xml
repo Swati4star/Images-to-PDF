@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#eceff1"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#eceff1">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -17,14 +17,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5sp"
-            android:text="Create new PDF"
+            android:text="@string/create_new_pdfs"
             android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <swati4star.createpdf.customviews.MyCardView
                 android:id="@+id/images_to_pdf"
@@ -48,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5sp"
-            android:text="View PDFs"
+            android:text="@string/view_pdfs"
             android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -80,7 +81,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5sp"
-            android:text="Modify existing PDFs"
+            android:text="@string/enhance_created_pdfs"
+            android:textColor="@color/colorGray"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/add_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/ic_lock_black_24dp"
+                app:option_text="@string/add_password" />
+
+            <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/remove_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/ic_lock_open_black_24dp"
+                app:option_text="@string/remove_password" />
+
+            <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/rotate_pages"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/baseline_crop_rotate_24"
+                app:option_text="@string/rotate_pages" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="@string/modify_existing_pdfs"
             android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -121,7 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5sp"
-            android:text="More Options"
+            android:text="@string/more_options"
             android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
