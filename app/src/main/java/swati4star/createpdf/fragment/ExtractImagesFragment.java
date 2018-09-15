@@ -28,6 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.ImagesPreviewActivity;
+import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
@@ -74,8 +76,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     RecyclerView mExtractedFiles;
     @BindView(R.id.extractedimages_text)
     TextView extractImagesSuccessText;
-    @BindView(R.id.share_files)
-    Button mShareFiles;
+    @BindView(R.id.options)
+    LinearLayout options;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -106,9 +108,11 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         mBottomSheetUtils.showHideSheet(sheetBehavior);
     }
 
-    /**
-     * Displays file chooser intent
-     */
+    @OnClick(R.id.view_images)
+    void onViewImagesClicked(View view) {
+        mActivity.startActivity(ImagesPreviewActivity.getStartIntent(mActivity, mOutFilePaths));
+    }
+
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
         startActivityForResult(mFileUtils.getFileChooser(),
@@ -144,7 +148,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
     private void setTextAndActivateButtons(String path) {
         mExtractedFiles.setVisibility(View.GONE);
-        mShareFiles.setVisibility(View.GONE);
+        options.setVisibility(View.GONE);
         extractImagesSuccessText.setVisibility(View.GONE);
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
@@ -181,7 +185,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         String text = String.format(mActivity.getString(R.string.extract_images_success), imagecount);
         showSnackbar(mActivity, text);
         extractImagesSuccessText.setVisibility(View.VISIBLE);
-        mShareFiles.setVisibility(View.VISIBLE);
+        options.setVisibility(View.VISIBLE);
         mOutFilePaths = outputFilePaths;
         ExtractImagesAdapter extractImagesAdapter = new ExtractImagesAdapter(mActivity, outputFilePaths, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
