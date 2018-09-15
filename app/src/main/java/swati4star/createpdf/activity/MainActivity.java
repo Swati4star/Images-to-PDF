@@ -112,10 +112,14 @@ public class MainActivity extends AppCompatActivity
                 setDefaultMenuSelected(2);
                 break;
             default:
-                // Set ImageToPdfFragment fragment
-                fragment = new ImageToPdfFragment();
+                // Set default fragment
+                fragment = new HomeFragment();
                 break;
         }
+
+        if (areImagesRecevied())
+            fragment = new ImageToPdfFragment();
+
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         return fragment;
     }
@@ -162,6 +166,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    private boolean areImagesRecevied() {
+        Intent intent = getIntent();
+        String type = intent.getType();
+        return type != null && type.startsWith("image/");
+    }
+
     /**
      * Get image uri from intent and send the image to homeFragment
      *
@@ -200,10 +211,10 @@ public class MainActivity extends AppCompatActivity
         } else {
             Fragment currentFragment = getSupportFragmentManager()
                     .findFragmentById(R.id.content);
-            if (currentFragment instanceof ImageToPdfFragment) {
+            if (currentFragment instanceof HomeFragment) {
                 checkDoubleBackPress();
             } else {
-                Fragment fragment = new ImageToPdfFragment();
+                Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 setDefaultMenuSelected(0);
             }

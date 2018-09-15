@@ -5,9 +5,8 @@
 
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_home_white_24dp"
             android:title="@string/create_pdf" />
-
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"

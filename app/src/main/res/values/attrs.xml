@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyCardView">
+        <attr name="option_text" format="string"/>
+        <attr name="option_icon" format="integer"/>
+    </declare-styleable>
+</resources>
