@@ -336,17 +336,11 @@ public class ViewFilesFragment extends Fragment
     }
 
     private void displaySortDialog() {
-        final File folder = mDirectoryUtils.getOrCreatePdfDirectory();
         mAlertDialogBuilder.setTitle(R.string.sort_by_title)
                 .setItems(R.array.sort_options, (dialog, which) -> {
-                    ArrayList<File> pdfsFromFolder = mDirectoryUtils.getPdfsFromPdfFolder(folder.listFiles());
-                    ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
-                    if (pdfFromOtherDir != null) {
-                        pdfsFromFolder.addAll(pdfFromOtherDir);
-                    } else
-                        FileSortUtils.performSortOperation(which, pdfsFromFolder);
-
-                    mViewFilesAdapter.setData(pdfsFromFolder);
+                    ArrayList<File> allPdfs = mDirectoryUtils.getPdfFromOtherDirectories();
+                    FileSortUtils.performSortOperation(which, allPdfs);
+                    mViewFilesAdapter.setData(allPdfs);
                     mCurrentSortingIndex = which;
                     mSharedPreferences.edit().putInt(SORTING_INDEX, which).apply();
                 });

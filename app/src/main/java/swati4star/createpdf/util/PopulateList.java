@@ -49,19 +49,13 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
      * Populate data into listView
      */
     private void populateListView() {
-        ArrayList<File> pdfFiles;
-        ArrayList<File> pdfFromOtherDir = mDirectoryUtils.getPdfFromOtherDirectories();
-        final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
+        ArrayList<File> pdfFiles = mDirectoryUtils.getPdfFromOtherDirectories();
 
-        if (files == null)
+        if (pdfFiles == null)
             mEmptyStateChangeListener.showNoPermissionsView();
-        else if (files.length == 0 && pdfFromOtherDir == null) {
+        else if (pdfFiles.size() == 0) {
             mEmptyStateChangeListener.setEmptyStateVisible();
         } else {
-            pdfFiles = mDirectoryUtils.getPdfsFromPdfFolder(files);
-            if (pdfFromOtherDir != null) {
-                pdfFiles.addAll(pdfFromOtherDir);
-            }
             mEmptyStateChangeListener.hideNoPermissionsView();
             FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
             mAdapter.setData(pdfFiles);
