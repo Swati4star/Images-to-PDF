@@ -15,12 +15,12 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 
+import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
 import static swati4star.createpdf.util.FileUtils.saveImage;
 
 public class ExtractImages extends AsyncTask<Void, Void, Void> {
     private String mPath;
     private ExtractImagesListener mExtractImagesListener;
-    private boolean mSuccess;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
 
@@ -34,7 +34,6 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         mExtractImagesListener.extractionStarted();
-        mSuccess = false;
     }
 
     @Override
@@ -54,7 +53,9 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                         byte[] image = pio.getImageAsBytes();
                         Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,
                                 image.length);
-                        String path = saveImage(bmp);
+                        String filename = getFileNameWithoutExtension(mPath) +
+                                "_" + Integer.toString(mImagesCount + 1);
+                        String path = saveImage(filename, bmp);
                         if (path != null) {
                             mOutputFilePaths.add(path);
                             mImagesCount++;
@@ -62,7 +63,6 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                     }
                 }
             }
-            mSuccess = true;
         } catch (IOException e) {
             e.printStackTrace();
         }

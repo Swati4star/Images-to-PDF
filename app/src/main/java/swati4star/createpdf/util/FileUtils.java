@@ -37,8 +37,10 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
+import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
+import static swati4star.createpdf.util.Constants.pdfExtension;
 import static swati4star.createpdf.util.FileUriUtils.getImageRealPath;
 import static swati4star.createpdf.util.FileUriUtils.getUriRealPathAboveKitkat;
 import static swati4star.createpdf.util.FileUriUtils.isAboveKitKat;
@@ -281,13 +283,26 @@ public class FileUtils {
     }
 
     /**
-     * Extracts file name from the URI
+     * Extracts file name from the path
      *
      * @param path - file path
      * @return - extracted filename
      */
-    public String getFileName(String path) {
-        return path.substring(path.lastIndexOf(mContext.getString(R.string.path_seperator)) + 1);
+    public static String getFileName(String path) {
+        return path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
+    }
+
+
+    /**
+     * Extracts file name from the URI
+     *
+     * @param path - file path
+     * @return - extracted filename without extension
+     */
+    public static String getFileNameWithoutExtension(String path) {
+        String p = path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
+        p = p.replace(pdfExtension, "");
+        return p;
     }
 
     /**
@@ -296,22 +311,23 @@ public class FileUtils {
      * @param path absolute path of the file
      * @return absolute path of file directory
      */
-    public String getFileDirectoryPath(String path) {
-        return path.substring(0, path.lastIndexOf('/') + 1);
+    public static String getFileDirectoryPath(String path) {
+        return path.substring(0, path.lastIndexOf(PATH_SEPERATOR) + 1);
     }
 
     /**
      * Saves bitmap to external storage
+     * @param filename - name of the file
      * @param finalBitmap - bitmap to save
      */
-    static String saveImage(Bitmap finalBitmap) {
+    static String saveImage(String filename, Bitmap finalBitmap) {
 
         if (checkIfBitmapIsWhite(finalBitmap))
             return null;
 
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
-        String fname = "image_" + System.currentTimeMillis() + ".jpg";
+        String fname = filename + ".jpg";
 
         File file = new File(myDir, fname);
         if (file.exists()) file.delete();
