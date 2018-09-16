@@ -3,6 +3,8 @@
 ### Badges
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF)
 [![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF) 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PDF%20Converter-blue.svg?style=true)](https://android-arsenal.com/details/3/7132)
+
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/Swati4star/Images-to-PDF.svg?columns=all)](https://waffle.io/Swati4star/Images-to-PDF)
 
