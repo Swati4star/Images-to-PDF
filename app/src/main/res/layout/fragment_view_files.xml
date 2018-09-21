@@ -28,7 +28,7 @@
 
             <LinearLayout
                 android:id="@+id/layout_main"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
@@ -38,7 +38,7 @@
 
                 <LinearLayout
                     android:id="@+id/new_dir"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="3dp"
                     android:layout_marginStart="3dp"
@@ -55,11 +55,11 @@
                         app:srcCompat="@drawable/ic_add_black_24dp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:text="@string/new_directory"
+                        android:textAlignment="center"
                         android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -81,18 +81,18 @@
                         app:srcCompat="@drawable/ic_arrow_forward_white_24dp" />
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="3dp"
-                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:text="@string/move_n_files"
+                        android:textAlignment="center"
                         android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/move_to_home_dir"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="3dp"
                     android:layout_marginTop="3dp"
@@ -108,10 +108,11 @@
                         app:srcCompat="@drawable/ic_home_white_24dp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:text="@string/move_to_n_home_directory"
+                        android:textAlignment="center"
                         android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -133,10 +134,11 @@
                         app:srcCompat="@drawable/ic_delete_white_24dp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:text="@string/delete_directory"
+                        android:textAlignment="center"
                         android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
