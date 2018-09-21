@@ -90,6 +90,7 @@ public class ViewFilesFragment extends Fragment
     private int mCurrentSortingIndex;
     private SharedPreferences mSharedPreferences;
     private boolean mIsChecked = false;
+    private boolean mCheckBoxChanged = false;
     private AlertDialog.Builder mAlertDialogBuilder;
 
     @Override
@@ -124,31 +125,35 @@ public class ViewFilesFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.activity_view_files_actions, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        mMenuItem = menu.findItem(R.id.select_all);
-        mSearchView = (SearchView) item.getActionView();
-        mSearchView.setQueryHint(getString(R.string.search_hint));
-        mSearchView.setSubmitButtonEnabled(true);
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                setDataForQueryChange(s);
-                mSearchView.clearFocus();
-                return true;
-            }
+        if (!mCheckBoxChanged) {
+            inflater.inflate(R.menu.activity_view_files_actions, menu);
+            MenuItem item = menu.findItem(R.id.action_search);
+            mMenuItem = menu.findItem(R.id.select_all);
+            mSearchView = (SearchView) item.getActionView();
+            mSearchView.setQueryHint(getString(R.string.search_hint));
+            mSearchView.setSubmitButtonEnabled(true);
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    setDataForQueryChange(s);
+                    mSearchView.clearFocus();
+                    return true;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                setDataForQueryChange(s);
-                return true;
-            }
-        });
-        mSearchView.setOnCloseListener(() -> {
-            populatePdfList();
-            return false;
-        });
-        mSearchView.setIconifiedByDefault(true);
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    setDataForQueryChange(s);
+                    return true;
+                }
+            });
+            mSearchView.setOnCloseListener(() -> {
+                populatePdfList();
+                return false;
+            });
+            mSearchView.setIconifiedByDefault(true);
+        } else {
+            inflater.inflate(R.menu.activity_view_files_actions_if_selected, menu);
+        }
     }
 
     private void setDataForQueryChange(String s) {
@@ -475,13 +480,23 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void isSelected(Boolean isSelected, int countFiles) {
-        ActionBar toolbar = ((AppCompatActivity)
-                Objects.requireNonNull(getActivity())).getSupportActionBar();
+        AppCompatActivity activity = ((AppCompatActivity)
+                Objects.requireNonNull(getActivity()));
+        ActionBar toolbar = activity.getSupportActionBar();
+
         if (toolbar != null) {
             if (countFiles == 0) {
                 toolbar.setTitle(appName);
+                if (mCheckBoxChanged) {
+                    mCheckBoxChanged = false;
+                    activity.invalidateOptionsMenu();
+                }
             } else {
                 toolbar.setTitle(String.valueOf(countFiles));
+                if (!mCheckBoxChanged) {
+                    mCheckBoxChanged = true;
+                    activity.invalidateOptionsMenu();
+                }
             }
         }
     }
