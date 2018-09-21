@@ -14,7 +14,9 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -32,6 +34,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
+import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileSortUtils;
 import swati4star.createpdf.util.MoveFilesToDirectory;
@@ -48,12 +52,15 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.DialogUtils.showFilesInfoDialog;
 import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ViewFilesFragment extends Fragment
-        implements SwipeRefreshLayout.OnRefreshListener, EmptyStateChangeListener {
+        implements SwipeRefreshLayout.OnRefreshListener,
+        EmptyStateChangeListener,
+        ItemSelectedListener {
 
     // Directory operations constants
     public static final int NEW_DIR = 1;
@@ -90,11 +97,10 @@ public class ViewFilesFragment extends Fragment
 
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
         ButterKnife.bind(this, root);
-
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mCurrentSortingIndex = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
-        mViewFilesAdapter = new ViewFilesAdapter(mActivity, null, this);
+        mViewFilesAdapter = new ViewFilesAdapter(mActivity, null, this, this);
         mAlertDialogBuilder = new AlertDialog.Builder(mActivity)
                 .setCancelable(true)
                 .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss());
@@ -264,7 +270,8 @@ public class ViewFilesFragment extends Fragment
 
         for (File file : files)
             if (!file.isDirectory()) {
-                count++; break;
+                count++;
+                break;
             }
         if (count == 0)
             setEmptyStateVisible();
@@ -464,5 +471,18 @@ public class ViewFilesFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void isSelected(Boolean isSelected, int countFiles) {
+        ActionBar toolbar = ((AppCompatActivity)
+                Objects.requireNonNull(getActivity())).getSupportActionBar();
+        if (toolbar != null) {
+            if (countFiles == 0) {
+                toolbar.setTitle(appName);
+            } else {
+                toolbar.setTitle(String.valueOf(countFiles));
+            }
+        }
     }
 }
