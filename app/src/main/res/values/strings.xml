@@ -9,7 +9,7 @@
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
     <string name="details"><b>Details</b></string>
-    <string name="search_hint">Name of file</string>
+    <string name="search_hintr">Name of file</string>
     <string name="search">search</string>
     <string name="set_page_size_text">Set Page Size</string>
     <string name="preview_image_to_pdf">Preview PDF</string>
@@ -118,7 +118,7 @@
     <string name="delete">delete</string>
 
     <!-- Share strings -->
-    <string name="share_chooser">Select app to send message…</string>
+    <string name="share_chooserr">Select app to send message…</string>
 
     <!-- Rate us strings -->
     <string name="rate_us_text">Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .It converts images to PDF so smoothly. :)</string>
@@ -379,5 +379,6 @@
     <string name="viewfiles_rotatepages">1. Select the PDF you wish to rotate. \n2. Select Rotate Pages. \n3. Select angle of rotation. Select OK. \n4. New rotated PDF will be created.</string>
     <string name="viewfiles_addpassword">1. Select the PDF you wish to add password to. \n2. Select Add  Password. \n3. Type new password. Select OK. \n4. New PDF with password be created.</string>
     <string name="viewfiles_removepassword">1. Select the PDF you wish to remove password from. \n2. Select Remove Password. \n3. Type pdf password. Select OK. \n4. New PDF without PDF will be created.</string>
+    <string name="grayscale_images">Apply grayscale</string>
 
 </resources>
