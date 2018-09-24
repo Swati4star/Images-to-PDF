@@ -55,9 +55,7 @@ public class ImageEnhancementOptionsUtils {
                 context.getResources().getString(R.string.rearrange_images)));
 
         Drawable iconGrayscale = context.getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            iconGrayscale.setTint(Color.GRAY);
-        }
+        iconGrayscale.setColorFilter(Color.GRAY, android.graphics.PorterDuff.Mode.SRC_IN);
         options.add(new EnhancementOptionsEntity(
                 iconGrayscale,
                 context.getResources().getString(R.string.grayscale_images)));
