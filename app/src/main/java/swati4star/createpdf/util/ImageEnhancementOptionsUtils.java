@@ -1,6 +1,9 @@
 package swati4star.createpdf.util;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import java.util.ArrayList;
 
@@ -50,6 +53,14 @@ public class ImageEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context.getResources().getDrawable(R.drawable.ic_rearrange),
                 context.getResources().getString(R.string.rearrange_images)));
+
+        Drawable iconGrayscale = context.getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            iconGrayscale.setTint(Color.GRAY);
+        }
+        options.add(new EnhancementOptionsEntity(
+                iconGrayscale,
+                context.getResources().getString(R.string.grayscale_images)));
 
         //options.add(new EnhancementOptionsEntity(
         //      context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),
