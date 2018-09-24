@@ -26,6 +26,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
+import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
@@ -50,6 +51,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     private final Activity mActivity;
     private final EmptyStateChangeListener mEmptyStateChangeListener;
+    private final ItemSelectedListener mItemSelectedListener;
 
     private ArrayList<File> mFileList;
     private final ArrayList<Integer> mSelectedFiles;
@@ -66,12 +68,15 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * @param activity                 the activity calling this adapter
      * @param feedItems                array list containing path of files
      * @param emptyStateChangeListener interface for empty state change
+     * @param itemSelectedListener     interface for monitoring the status of file selection
      */
     public ViewFilesAdapter(Activity activity,
                             ArrayList<File> feedItems,
-                            EmptyStateChangeListener emptyStateChangeListener) {
+                            EmptyStateChangeListener emptyStateChangeListener,
+                            ItemSelectedListener itemSelectedListener) {
         this.mActivity = activity;
         this.mEmptyStateChangeListener = emptyStateChangeListener;
+        this.mItemSelectedListener = itemSelectedListener;
         this.mFileList = feedItems;
         mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
@@ -86,7 +91,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_file, parent, false);
-        return new ViewFilesHolder(itemView);
+        return new ViewFilesHolder(itemView, mItemSelectedListener);
     }
 
     @Override
@@ -238,12 +243,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     undoClicked.set(1);
                 }).addCallback(new Snackbar.Callback() {
                     @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        if (undoClicked.get() == 0) {
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            if (undoClicked.get() == 0) {
                             fdelete.delete();
                             mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
                                     mActivity.getString(R.string.deleted));
-                        }
+                            }
                     }
                 }).show();
         if (mFileList.size() == 0)
@@ -368,16 +373,18 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         @BindView(R.id.encryptionImage)
         ImageView mEncryptionImage;
 
-        ViewFilesHolder(View itemView) {
+        ViewFilesHolder(View itemView, ItemSelectedListener itemSelectedListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     if (!mSelectedFiles.contains(getAdapterPosition())) {
                         mSelectedFiles.add(getAdapterPosition());
+                        itemSelectedListener.isSelected(true, mSelectedFiles.size());
                     }
                 } else
                     mSelectedFiles.remove(Integer.valueOf(getAdapterPosition()));
+                itemSelectedListener.isSelected(false, mSelectedFiles.size());
             });
         }
     }
