@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -28,6 +31,9 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.squareup.picasso.Transformation;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -35,12 +41,14 @@ import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.picasso.transformations.GrayscaleTransformation;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
@@ -155,7 +163,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 startAddingImages();
             ArrayList<Parcelable> uris = bundle.getParcelableArrayList(getString(R.string.bundleKey));
             if (uris == null)
-                    return;
+                return;
             for (Parcelable p : uris) {
                 Uri uri = (Uri) p;
                 if (mFileUtils.getUriRealPath(uri) == null) {
@@ -220,7 +228,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                             ImageToPdfFragment.this).execute();
                 } else {
                     MaterialDialog.Builder builder2 = createOverwriteDialog(mActivity);
-                    builder2.onPositive( (dialog2, which) -> {
+                    builder2.onPositive((dialog2, which) -> {
                         mPdfOptions.setOutFileName(filename);
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
                     }).onNegative((dialog1, which) -> createPdf()).show();
@@ -365,6 +373,37 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             case 7:
                 startActivityForResult(RearrangeImages.getStartIntent(mActivity, mImagesUri),
                         INTENT_REQUEST_REARRANGE_IMAGE);
+                break;
+            case 8:
+                saveCurrentImage();
+                createPdf();
+                break;
+        }
+    }
+
+    /**
+     * Saves Current Image with grayscale filter
+     */
+    private void saveCurrentImage() {
+        try {
+            File sdCard = Environment.getExternalStorageDirectory();
+            File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
+            dir.mkdirs();
+            Picasso picasso = Picasso.with(getContext());
+            Transformation transformation = new GrayscaleTransformation();
+
+            for (int countElements = mImagesUri.size() - 1; countElements >= 0; countElements--) {
+                String fileName = String.format(getString(R.string.filter_file_name),
+                        String.valueOf(System.currentTimeMillis()), "grayscale");
+                File outFile = new File(dir, fileName);
+                String imagePath = outFile.getAbsolutePath();
+                picasso.load(new File(mImagesUri.get(countElements)))
+                        .transform(transformation)
+                        .into(getTarget(imagePath));
+                mImagesUri.remove(countElements);
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
     }
 
@@ -554,5 +593,38 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImageCounter = 0;
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
+    }
+
+    /**
+     * Target need to save the for picasso
+     */
+
+    private Target getTarget(final String url) {
+        return new Target() {
+
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                File file = new File(url);
+                try {
+                    file.createNewFile();
+                    FileOutputStream ostream = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+                    ostream.flush();
+                    ostream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mImagesUri.add(url);
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
     }
 }
