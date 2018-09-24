@@ -611,10 +611,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
                     ostream.flush();
                     ostream.close();
+                    mImagesUri.add(url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                mImagesUri.add(url);
             }
 
             @Override
