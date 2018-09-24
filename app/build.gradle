@@ -67,6 +67,7 @@ dependencies {
 
     // Picasso, image editor, image cropper
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    compile 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'ja.burhanrashid52:photoeditor:0.2.1'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
 
