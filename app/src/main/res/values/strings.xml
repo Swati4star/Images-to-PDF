@@ -9,7 +9,7 @@
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
     <string name="details"><b>Details</b></string>
-    <string name="search_hintr">Name of file</string>
+    <string name="search_hint">Name of file</string>
     <string name="search">search</string>
     <string name="set_page_size_text">Set Page Size</string>
     <string name="preview_image_to_pdf">Preview PDF</string>

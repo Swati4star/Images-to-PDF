@@ -10,7 +10,7 @@
     <string name="open_pdf_text">Ouvrir PDF</string>
     <string name="create_pdf_text">Créer PDF</string>
     <string name="details"><b>Détails</b></string>
-    <string name="search_hintr">Name of file</string>
+    <string name="search_hint">Name of file</string>
     <string name="search">search</string>
 
     <array name="items">

@@ -8,7 +8,7 @@
     <string name="edit_images_text">Edit Images</string>
     <string name="open_pdf_text">Open PDF</string>
     <string name="create_pdf_text">Create PDF</string>
-    <string name="search_hintr">Name of file</string>
+    <string name="search_hint">Name of file</string>
     <string name="search">search</string>
 
     <string name="details"><b>詳細</b></string>
