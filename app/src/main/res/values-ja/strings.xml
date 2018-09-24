@@ -298,6 +298,6 @@
     <string name="viewfiles_addpassword">1. Select the PDF you wish to add password to. \n2. Select Add  Password. \n3. Type new password. Select OK. \n4. New PDF with password be created.</string>
     <string name="viewfiles_removepassword">1. Select the PDF you wish to remove password from. \n2. Select Remove Password. \n3. Type pdf password. Select OK. \n4. New PDF without PDF will be created.</string>
     <string name="home_page">Home</string>
-    <string name="grayscale_images">Create grayscale PDFs</string>
+    <string name="grayscale_images">Create grayscale PDF</string>
 
 </resources>
