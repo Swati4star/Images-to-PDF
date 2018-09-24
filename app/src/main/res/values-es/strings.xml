@@ -72,7 +72,7 @@
     <string name="rate_us_text">"Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .     It converts images to PDF so smmothly. :) "</string>
     <string name="snackbar_no_share_app">No application to share.</string>
     <string name="extras">Extras</string>
-    <string name="share_chooserr">Select app to send message…</string>
+    <string name="share_chooser">Select app to send message…</string>
     <string name="feedback_chooser">Send mail…</string>
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
