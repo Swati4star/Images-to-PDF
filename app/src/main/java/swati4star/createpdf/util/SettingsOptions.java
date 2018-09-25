@@ -2,6 +2,7 @@ package swati4star.createpdf.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.itextpdf.text.Font;
@@ -9,6 +10,7 @@ import com.itextpdf.text.Font;
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
@@ -46,6 +48,19 @@ public class SettingsOptions {
                     context.getResources().getDrawable(R.drawable.ic_font_family_24dp),
                     String.format(context.getString(R.string.font_family_value_def),
                             fontFamily.name())));
+
+            int idTheme = 0;
+            try {
+                idTheme = context.getPackageManager().getActivityInfo(
+                        ((MainActivity) context).getComponentName(), 0)
+                        .getThemeResource();
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            options.add(new EnhancementOptionsEntity(
+                    context.getResources().getDrawable(R.drawable.baseline_settings_brightness_24),
+                    String.format(context.getString(R.string.theme_value_def),
+                            context.getResources().getResourceEntryName(idTheme))));
 
             return options;
         }
