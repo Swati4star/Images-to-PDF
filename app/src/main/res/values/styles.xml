@@ -8,7 +8,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:iconTint">@color/colorGray</item>
-
+        <item name="android:textColorSecondary">@color/colorGray</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -32,16 +32,14 @@
     </style>
 
     <style name="AppTheme.TextViewStyle">
-        <item name="android:textColor">@color/colorGray</item>
+
     </style>
 
     <style name="AppTheme.AboutUSTextViewMedium" parent="TextAppearance.AppCompat.Medium">
         <item name="android:drawableTint">@color/colorGray</item>
-        <item name="android:textColor">@color/colorGray</item>
     </style>
 
     <style name="AppTheme.AboutUSTextViewSmall" parent="TextAppearance.AppCompat.Small">
         <item name="android:drawableTint">@color/colorGray</item>
-        <item name="android:textColor">@color/colorGray</item>
     </style>
 </resources>
