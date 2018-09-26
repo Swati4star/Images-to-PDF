@@ -4,7 +4,6 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/mb_white"
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="40dp"
@@ -15,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -25,8 +23,7 @@
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:gravity="center"
-            android:text="@string/viewFiles"
-            android:textColor="@android:color/background_light" />
+            android:text="@string/viewFiles"/>
 
         <ImageView
             android:id="@+id/downArrow"
@@ -34,7 +31,6 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/arrow_down"
-            android:tint="@android:color/background_light"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_arrow_down_black_24dp" />
 
@@ -44,7 +40,6 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/arrow_down"
-            android:tint="@android:color/background_light"
             app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
     </RelativeLayout>
 

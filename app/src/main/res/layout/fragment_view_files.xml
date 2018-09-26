@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mb_white"
     android:orientation="vertical"
     tools:context=".fragment.ImageToPdfFragment">
 
@@ -32,7 +31,6 @@
                 android:layout_height="150dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@color/mb_white"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -44,7 +42,6 @@
                     android:layout_marginStart="3dp"
                     android:layout_marginTop="3dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
                     android:orientation="vertical">
 
                     <ImageView
@@ -60,7 +57,6 @@
                         android:layout_gravity="center"
                         android:text="@string/new_directory"
                         android:textAlignment="center"
-                        android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -70,7 +66,6 @@
                     android:layout_height="match_parent"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
                     android:orientation="vertical">
 
                     <ImageView
@@ -86,7 +81,6 @@
                         android:layout_gravity="center"
                         android:text="@string/move_n_files"
                         android:textAlignment="center"
-                        android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -97,7 +91,6 @@
                     android:layout_marginBottom="3dp"
                     android:layout_marginTop="3dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
                     android:orientation="vertical">
 
                     <ImageView
@@ -113,7 +106,6 @@
                         android:layout_gravity="center"
                         android:text="@string/move_to_n_home_directory"
                         android:textAlignment="center"
-                        android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -123,7 +115,6 @@
                     android:layout_height="match_parent"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
                     android:orientation="vertical">
 
                     <ImageView
@@ -139,7 +130,6 @@
                         android:layout_gravity="center"
                         android:text="@string/delete_directory"
                         android:textAlignment="center"
-                        android:textColor="@color/mb_white"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -173,7 +163,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="245dp"
             android:text="@string/no_pdf"
-            android:textColor="@color/cardview_light_background"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
@@ -182,16 +171,15 @@
 
         <Button
             android:id="@+id/getStarted"
+            style="@style/AppTheme.MorphingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="150dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="45dp"
-            android:background="@color/mb_blue"
             android:padding="10dp"
             android:text="@string/get_started"
-            android:textColor="@color/mb_white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +194,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/view_files_text"
-            android:textColor="@color/dark_purple"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/emptyBackgroundImage"
             app:layout_constraintStart_toStartOf="parent"
@@ -248,10 +235,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="100dp"
-            android:background="@color/mb_blue"
             android:padding="10dp"
             android:text="@string/prompt_give_permission"
-            android:textColor="@color/mb_white"
             android:textSize="18sp" />
 
     </RelativeLayout>

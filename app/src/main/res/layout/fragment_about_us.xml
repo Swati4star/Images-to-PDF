@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="AppTheme.AboutUSTextViewSmall"
             android:padding="8dp"
             android:layout_marginBottom="5dp"
             android:textSize="13sp"
@@ -55,12 +55,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="8dp"
-                    android:tint="@color/colorGray"
                     app:srcCompat="@drawable/ic_version_white_24dp"
                     android:contentDescription="@string/default_content_description" />
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Medium"
+                    style="@style/AppTheme.AboutUSTextViewMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -69,7 +68,7 @@
 
                 <TextView
                     android:id="@+id/version_value"
-                    style="@style/TextAppearance.AppCompat.Medium"
+                    style="@style/AppTheme.AboutUSTextViewMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical" />
@@ -83,14 +82,13 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="8dp"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_person_white_24dp"
-                android:drawableTint="@color/colorGray"
                 android:text="@string/developer"
                 tools:targetApi="m" />
 
@@ -103,14 +101,13 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="8dp"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_email_24dp"
-                android:drawableTint="@color/colorGray"
                 android:text="@string/mail"
                 tools:targetApi="m" />
 
@@ -123,14 +120,13 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="8dp"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_github"
-                android:drawableTint="@color/colorGray"
                 android:text="@string/github_repo"
                 tools:targetApi="m" />
 
@@ -143,14 +139,13 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="8dp"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_people_black_24dp"
-                android:drawableTint="@color/colorGray"
                 android:text="@string/view_contributors"
                 tools:targetApi="m" />
 
@@ -163,13 +158,12 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_playstore"
-                android:drawableTint="@color/colorGray"
                 android:padding="8dp"
                 android:text="@string/playstore"
                 tools:targetApi="m" />
@@ -183,13 +177,12 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_web"
-                android:drawableTint="@color/colorGray"
                 android:padding="8dp"
                 android:text="@string/website"
                 tools:targetApi="m" />
@@ -203,13 +196,12 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_slack"
-                android:drawableTint="@color/colorGray"
                 android:padding="8dp"
                 android:text="@string/join_slack"
                 tools:targetApi="m" />
@@ -223,13 +215,12 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_lock_black_24dp"
-                android:drawableTint="@color/colorGray"
                 android:padding="8dp"
                 android:text="@string/privacy_policy"
                 tools:targetApi="m" />
@@ -243,13 +234,12 @@
             android:layout_margin="5dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.AboutUSTextViewMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_license"
-                android:drawableTint="@color/colorGray"
                 android:padding="8dp"
                 android:text="@string/license"
                 tools:targetApi="m" />

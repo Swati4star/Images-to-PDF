@@ -18,11 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:background="@color/mb_blue"
             android:maxWidth="30dp"
             android:padding="3dip"
-            android:text="@string/merge_file_select"
-            android:textColor="@color/mb_white" />
+            android:text="@string/merge_file_select" />
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/extractImages"
@@ -32,8 +30,7 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:padding="10dp"
-            android:text="@string/extract_images"
-            android:textColor="@color/mb_white" />
+            android:text="@string/extract_images" />
 
         <TextView
             android:id="@+id/extractedimages_text"
@@ -71,8 +68,7 @@
                 android:drawablePadding="5dp"
                 android:drawableStart="@drawable/baseline_share_24"
                 android:padding="15dp"
-                android:text="@string/share_files"
-                android:textColor="@color/mb_white" />
+                android:text="@string/share_files" />
 
             <Button
                 android:id="@+id/view_images"
@@ -82,10 +78,8 @@
                 android:background="@drawable/cornered_edges"
                 android:drawablePadding="5dp"
                 android:drawableStart="@drawable/ic_menu_gallery"
-                android:drawableTint="@color/mb_white"
                 android:padding="15dp"
-                android:text="@string/viewFiles"
-                android:textColor="@color/mb_white" />
+                android:text="@string/viewFiles" />
 
         </LinearLayout>
 
