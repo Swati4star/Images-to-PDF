@@ -9,4 +9,6 @@
     <color name="gray_background">#eceff1</color>
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
+    <color name="foreground_material_dark_1">#ffffff</color>
+    <color name="foreground_material_light">#ffffff</color>
 </resources>

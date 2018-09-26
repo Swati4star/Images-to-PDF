@@ -13,8 +13,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:textColor">@color/colorGray</item>
         <item name="android:textViewStyle">@style/AppTheme.TextViewStyle</item>
+        <item name="android:navigationBarColor">@color/colorGray</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -41,5 +41,13 @@
 
     <style name="AppTheme.AboutUSTextViewSmall" parent="TextAppearance.AppCompat.Small">
         <item name="android:drawableTint">@color/colorGray</item>
+    </style>
+
+    <style name="bla" parent="Theme.AppCompat.NoActionBar" >
+        <item name="android:colorForeground">@color/foreground_material_dark_1</item>
+    </style>
+
+    <style name="AppTheme.PDFconverter">
+        <item name="android:textColor">@color/mb_white</item>
     </style>
 </resources>

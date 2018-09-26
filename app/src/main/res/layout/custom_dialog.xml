@@ -24,7 +24,6 @@
             android:padding="5dp"
             android:layout_height="wrap_content"
             android:hint="@string/example_pass_123"
-            android:textColorHint="@color/mb_gray"
             android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
