@@ -49,8 +49,7 @@
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/showing_image"
-            android:textColor="@android:color/background_dark" />
+            android:text="@string/showing_image" />
 
         <ImageButton
             android:id="@+id/nextimageButton"
