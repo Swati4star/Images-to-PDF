@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 
 
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
-        if (count > 0 && count % 2 == 0)
+        if (count > 0 && count % 15 == 0)
             mFeedbackUtils.rateUs();
         mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
     }
