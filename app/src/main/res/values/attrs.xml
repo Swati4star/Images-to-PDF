@@ -13,5 +13,6 @@
         <attr name="titleToolbarTextColor" format="color"/>
         <attr name="iconTintOnCard" format="color"/>
         <attr name="historyIconColor" format="color"/>
+        <attr name="customDividerColor" format="color"/>
     </declare-styleable>
 </resources>

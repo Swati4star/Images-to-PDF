@@ -13,6 +13,7 @@
         <item name="titleToolbarTextColor">@color/mb_white</item>
         <item name="iconTintOnCard">@color/colorPrimary</item>
         <item name="historyIconColor">@color/black</item>
+        <item name="customDividerColor">@color/black</item>
     </style>
 
     <style name="AppThemeWhite.MorphingButton">
@@ -36,6 +37,7 @@
         <item name="android:windowBackground">@color/colorBackground_black</item>
         <item name="historyIconColor">@color/windowBackground_dark</item>
         <item name="iconTintOnCard">@color/mb_white</item>
+        <item name="customDividerColor">@color/windowBackground_dark</item>
     </style>
 
     <!-- Light base activity theme -->
@@ -68,6 +70,7 @@
         <item name="titleToolbarTextColor">@color/mb_white</item>
         <item name="iconTintOnCard">@color/mb_white</item>
         <item name="historyIconColor">@color/black</item>
+        <item name="customDividerColor">@color/black</item>
     </style>
 
 </resources>
