@@ -11,6 +11,7 @@
         <item name="android:textColorSecondary">@color/colorGray</item>
         <item name="android:windowBackground">@color/windowBackground_light</item>
         <item name="titleToolbarTextColor">@color/mb_white</item>
+        <item name="iconTintOnCard">@color/colorPrimary</item>
     </style>
 
     <style name="AppThemeWhite.MorphingButton">
@@ -32,6 +33,7 @@
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/colorBackground_black</item>
+        <item name="iconTintOnCard">@color/mb_white</item>
     </style>
 
     <!-- Light base activity theme -->
@@ -62,6 +64,7 @@
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/windowBackground_dark</item>
         <item name="titleToolbarTextColor">@color/mb_white</item>
+        <item name="iconTintOnCard">@color/mb_white</item>
     </style>
 
 </resources>
