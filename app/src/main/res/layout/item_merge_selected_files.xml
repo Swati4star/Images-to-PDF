@@ -19,6 +19,28 @@
     </com.balysv.materialripple.MaterialRippleLayout>
 
     <ImageView
+        android:id="@+id/up_file"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="140dp"
+        android:contentDescription="@string/snackbar_viewAction"
+        android:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
+
+    <ImageView
+        android:id="@+id/down_file"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="100dp"
+        android:contentDescription="@string/snackbar_viewAction"
+        android:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
+
+    <ImageView
         android:id="@+id/view_file"
         android:layout_width="25dp"
         android:layout_height="25dp"

@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -224,6 +225,18 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
         if (mFilePaths.size() < 2 && mergeBtn.isEnabled())
             setMorphingButtonState(false);
+    }
+
+    @Override
+    public void moveUp(int position) {
+        Collections.swap(mFilePaths, position, position - 1);
+        mMergeSelectedFilesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void moveDown(int position) {
+        Collections.swap(mFilePaths, position, position + 1);
+        mMergeSelectedFilesAdapter.notifyDataSetChanged();
     }
 
     void setMorphingButtonState(Boolean enabled) {
