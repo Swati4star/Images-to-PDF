@@ -12,6 +12,7 @@
         <item name="android:windowBackground">@color/windowBackground_light</item>
         <item name="titleToolbarTextColor">@color/mb_white</item>
         <item name="iconTintOnCard">@color/colorPrimary</item>
+        <item name="historyIconColor">@color/black</item>
     </style>
 
     <style name="AppThemeWhite.MorphingButton">
@@ -33,6 +34,7 @@
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/colorBackground_black</item>
+        <item name="historyIconColor">@color/windowBackground_dark</item>
         <item name="iconTintOnCard">@color/mb_white</item>
     </style>
 
@@ -65,6 +67,7 @@
         <item name="android:windowBackground">@color/windowBackground_dark</item>
         <item name="titleToolbarTextColor">@color/mb_white</item>
         <item name="iconTintOnCard">@color/mb_white</item>
+        <item name="historyIconColor">@color/black</item>
     </style>
 
 </resources>

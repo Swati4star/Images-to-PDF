@@ -12,5 +12,6 @@
         <attr name="backgroundCardColor" format="color"/>
         <attr name="titleToolbarTextColor" format="color"/>
         <attr name="iconTintOnCard" format="color"/>
+        <attr name="historyIconColor" format="color"/>
     </declare-styleable>
 </resources>
