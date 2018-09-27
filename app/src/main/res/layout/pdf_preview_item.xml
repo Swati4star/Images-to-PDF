@@ -10,7 +10,6 @@
         android:layout_height="500dp"
         android:layout_above="@id/tvFileName"
         android:layout_marginTop="20dp"
-        android:background="@color/light_gray"
         android:contentDescription="@string/preview_image_to_pdf"
         android:padding="1dp" />
 
@@ -19,10 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/background_light"
         android:gravity="center"
-        android:padding="3dp"
-        android:textColor="@android:color/background_dark" />
+        android:padding="3dp" />
 
 
 </RelativeLayout>

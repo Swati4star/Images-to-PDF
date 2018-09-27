@@ -17,21 +17,19 @@
 
     <TextView
         android:id="@+id/storagelocation"
-        style="@style/TextAppearance.AppCompat.Medium"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:padding="8dp"
         android:drawablePadding="15dp"
         android:drawableStart="@drawable/ic_folder_black_24dp"
-        android:drawableTint="@color/colorPrimary"
         tools:targetApi="m" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_margin="10dp"
-        android:background="@color/colorPrimaryDark" />
+        android:layout_margin="10dp" />
 
     <TextView
         android:layout_width="match_parent"

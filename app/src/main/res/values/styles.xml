@@ -2,29 +2,69 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeWhite" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:iconTint">@color/colorGray</item>
+        <item name="android:textColorSecondary">@color/colorGray</item>
+        <item name="android:windowBackground">@color/windowBackground_light</item>
+        <item name="titleToolbarTextColor">@color/mb_white</item>
+        <item name="iconTintOnCard">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme_picker" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppThemeWhite.MorphingButton">
+        <item name="android:textColor">@color/mb_white</item>
+    </style>
+
+    <style name="AppThemeWhite.AboutUSTextViewMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:drawableTint">@color/colorGray</item>
+    </style>
+
+    <style name="AppThemeWhite.AboutUSTextViewSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:drawableTint">@color/colorGray</item>
+    </style>
+
+    <style name="AppThemeWhite.PDFconverter">
+        <item name="android:textColor">@color/mb_white</item>
+        <item name="colorAccent">@color/colorGray</item>
+    </style>
+
+    <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/colorBackground_black</item>
+        <item name="iconTintOnCard">@color/mb_white</item>
+    </style>
+
+    <!-- Light base activity theme -->
+    <style name="ActivityTheme.Primary.Base.Light" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryTextColor">@color/primaryTextColorLight</item>
+        <item name="secondaryTextColor">@color/secondaryTextColorLight</item>
+        <item name="backgroundCardColor">@color/backgroundCardColorLight</item>
+        <item name="dividerColor">@color/dividerColorLight</item>
+    </style>
+    <!-- Dark base activity theme -->
+    <style name="ActivityTheme.Primary.Base.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryTextColor">@color/primaryTextColorDark</item>
+        <item name="secondaryTextColor">@color/secondaryTextColorDark</item>
+        <item name="backgroundCardColor">@color/backgroundCardColorDark</item>
+        <item name="dividerColor">@color/dividerColorDark</item>
+    </style>
+
+    <!-- Specific Feed activity theme -->
+    <style name="ActivityThemeLight" parent="ActivityTheme.Primary.Base.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="titleToolbarTextColor">@color/mb_white</item>
+        <item name="android:windowBackground">@color/windowBackground_light</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="ActivityThemeDark" parent="ActivityTheme.Primary.Base.Dark">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/windowBackground_dark</item>
+        <item name="titleToolbarTextColor">@color/mb_white</item>
+        <item name="iconTintOnCard">@color/mb_white</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

@@ -12,6 +12,8 @@ public class Constants {
     public static final String DATABASE_NAME = "ImagesToPdfDB.db";
     public static final String DEFAULT_FONT_FAMILY_TEXT = "DefaultFontFamily";
     public static final String DEFAULT_FONT_FAMILY = "TIMES_ROMAN";
+    public static final String DEFAULT_THEME_TEXT = "DefaultTheme";
+    public static final String DEFAULT_THEME = "White";
     public static final String DEFAULT_IMAGE_BORDER_TEXT = "Image_border_text";
     public static final String RESULT = "result";
     public static final String DEFAULT_PAGE_SIZE_TEXT = "DefaultPageSize";
@@ -40,4 +42,8 @@ public class Constants {
     public static final String ACTION_TEXT_TO_PDF = "android.intent.action.TEXT_TO_PDF";
     public static final String ACTION_MERGE_PDF = "android.intent.action.MERGE_PDF";
     public static final String OPEN_SELECT_IMAGES = "open_select_images";
+
+    public static final String THEME_WHITE = "White";
+    public static final String THEME_BLACK = "Black";
+    public static final String THEME_DARK = "Dark";
 }

@@ -48,7 +48,6 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="60dp"
         android:contentDescription="@string/snackbar_viewAction"
-        android:tint="@color/colorPrimary"
         app:srcCompat="@drawable/view_24dp" />
 
     <ImageView
@@ -59,7 +58,6 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="20dp"
         android:contentDescription="@string/delete"
-        android:tint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_close_black_24dp" />
 
 </RelativeLayout>

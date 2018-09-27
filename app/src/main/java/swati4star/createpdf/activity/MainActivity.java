@@ -32,7 +32,9 @@ import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FeedbackUtils;
+import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
@@ -55,7 +57,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+                Constants.DEFAULT_THEME);
+        ThemeUtils.setThemeApp(themeName, this);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -87,6 +94,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Sets a fragment based on app shortcut selected, otherwise default
+     *
      * @return - instance of current fragment
      */
     private Fragment checkForAppShortcutClicked() {
@@ -131,7 +139,6 @@ public class MainActivity extends AppCompatActivity
         mFeedbackUtils = new FeedbackUtils(this);
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setDefaultMenuSelected(0);
     }
 
