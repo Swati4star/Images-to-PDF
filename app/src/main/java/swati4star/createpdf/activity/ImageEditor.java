@@ -109,7 +109,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             }
         });
         mPhotoEditor.setBrushDrawingMode(false);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     @OnClick(R.id.nextimageButton)
@@ -354,7 +356,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mPhotoEditor.setBrushColor(getResources().getColor(color));
     }
 
-    public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
+    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
         Intent intent = new Intent(context, ImageEditor.class);
         intent.putExtra(IMAGE_EDITOR_KEY, uris);
         return intent;

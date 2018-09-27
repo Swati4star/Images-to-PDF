@@ -51,7 +51,9 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         mViewPager.setAdapter(mPreviewAdapter);
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
 
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         showOptions();
     }
 
