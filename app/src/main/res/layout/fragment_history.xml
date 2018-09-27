@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
-        android:visibility="gone"
         android:id="@+id/emptyStatusView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/emptyBackgroundImage"
@@ -30,7 +30,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="245dp"
             android:text="@string/no_history_message"
-            android:textColor="@color/cardview_light_background"
             android:textSize="22sp"
             android:textStyle="bold"
             android:visibility="visible"
@@ -40,16 +39,15 @@
 
         <Button
             android:id="@+id/getStarted"
+            style="@style/AppThemeWhite.MorphingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="150dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="60dp"
-            android:background="@color/mb_blue"
             android:padding="10dp"
             android:text="@string/get_started"
-            android:textColor="@color/mb_white"
             android:textSize="18sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

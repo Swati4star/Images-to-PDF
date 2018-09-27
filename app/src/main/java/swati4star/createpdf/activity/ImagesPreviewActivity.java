@@ -2,7 +2,9 @@ package swati4star.createpdf.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -14,6 +16,8 @@ import java.util.Objects;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.PreviewAdapter;
+import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 
@@ -21,6 +25,10 @@ public class ImagesPreviewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+                Constants.DEFAULT_THEME);
+        ThemeUtils.setThemeApp(themeName, this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_images);
 
@@ -33,7 +41,9 @@ public class ImagesPreviewActivity extends AppCompatActivity {
         PreviewAdapter mPreviewAdapter = new PreviewAdapter(this, mImagesArrayList);
         mViewPager.setAdapter(mPreviewAdapter);
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     /**

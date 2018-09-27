@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_background">
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -17,7 +16,6 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="@string/create_new_pdfs"
-            android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -49,7 +47,6 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="@string/view_pdfs"
-            android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -81,7 +78,6 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="@string/enhance_created_pdfs"
-            android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -121,7 +117,6 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="@string/modify_existing_pdfs"
-            android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -162,7 +157,6 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="@string/more_options"
-            android:textColor="@color/colorGray"
             android:textSize="15sp"
             android:textStyle="bold" />
 

@@ -359,13 +359,18 @@
     <string name="compression_image_edit">Change image compression value</string>
     <string name="font_family_edit">Change default font family</string>
     <string name="font_size_edit">Change default font size</string>
+    <string name="theme_edit">Change default theme</string>
     <string name="image_compression_value_default">Image Compression default value : %d %%</string>
+    <string name="theme_value_def">Theme default value : %s </string>
     <string name="page_size_value_def">Page size default value : %s </string>
     <string name="font_size_value_def">Font size default value : %d </string>
     <string name="font_family_value_def">Font family default value : %s </string>
     <string name="settings_info">You can modify the default value for various settings here.</string>
     <string name="storage_location_modified">Storage location changed</string>
     <string name="storage_location_info">Change storage location</string>
+    <string name="theme_white">White</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_black">Black</string>
 
     <!-- Home page -->
     <string name="home_page">Home</string>

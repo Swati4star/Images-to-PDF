@@ -47,6 +47,12 @@ public class SettingsOptions {
                     String.format(context.getString(R.string.font_family_value_def),
                             fontFamily.name())));
 
+            options.add(new EnhancementOptionsEntity(
+                    context.getResources().getDrawable(R.drawable.baseline_settings_brightness_24),
+                    String.format(context.getString(R.string.theme_value_def),
+                            sharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+                                    Constants.DEFAULT_THEME))));
+
             return options;
         }
     }

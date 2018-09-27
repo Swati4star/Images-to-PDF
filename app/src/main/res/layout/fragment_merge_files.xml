@@ -14,13 +14,13 @@
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/mergebtn"
+            style="@style/AppThemeWhite.MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:padding="10dp"
-            android:text="@string/merge_files"
-            android:textColor="@color/mb_white" />
+            android:text="@string/merge_files" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/selected_files"
@@ -32,12 +32,12 @@
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFiles"
+            style="@style/AppThemeWhite.MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="10dp"
-            android:text="@string/select_files"
-            android:textColor="@color/mb_white" />
+            android:text="@string/select_files" />
     </LinearLayout>
 
     <include layout="@layout/bottom_sheet" />

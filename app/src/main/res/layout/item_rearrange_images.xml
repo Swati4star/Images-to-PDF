@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:layout_margin="8dp"
-    android:background="@android:color/background_light">
+    android:layout_margin="8dp">
 
     <ImageView
         android:id="@+id/image"
@@ -28,9 +27,7 @@
         android:layout_marginStart="19dp"
         android:layout_marginTop="19dp"
         android:background="@drawable/circle_white"
-        android:backgroundTint="@color/colorGray"
         android:gravity="center"
-        android:textColor="@android:color/background_light"
         android:textStyle="bold"
         tools:targetApi="lollipop" />
 
@@ -43,11 +40,9 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="19dp"
         android:background="@drawable/circle_white"
-        android:backgroundTint="@color/red"
         android:contentDescription="@string/delete"
         android:padding="4dp"
         android:scaleType="fitCenter"
-        android:tint="@android:color/background_light"
         app:srcCompat="@drawable/ic_close_black_24dp"
         tools:targetApi="lollipop" />
 
@@ -66,9 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/circle_white"
-            android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/arrow_up"
-            android:tint="@android:color/background_light"
             app:srcCompat="@drawable/ic_arrow_up_black_24dp"
             tools:targetApi="lollipop" />
 
@@ -78,9 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/circle_white"
-            android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/arrow_down"
-            android:tint="@android:color/background_light"
             app:srcCompat="@drawable/ic_arrow_down_black_24dp"
             tools:targetApi="lollipop" />
 

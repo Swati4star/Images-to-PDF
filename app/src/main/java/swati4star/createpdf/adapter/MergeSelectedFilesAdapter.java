@@ -57,18 +57,32 @@ public class MergeSelectedFilesAdapter extends
         ImageView mViewFile;
         @BindView(R.id.remove)
         ImageView mRemove;
+        @BindView(R.id.up_file)
+        ImageView mUp;
+        @BindView(R.id.down_file)
+        ImageView mDown;
 
         MergeSelectedFilesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mViewFile.setOnClickListener(this);
             mRemove.setOnClickListener(this);
+            mUp.setOnClickListener(this);
+            mDown.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.view_file) {
                 mOnClickListener.viewFile(mFilePaths.get(getAdapterPosition()));
+            } else if (view.getId() == R.id.up_file) {
+                if (getAdapterPosition() != 0) {
+                    mOnClickListener.moveUp(getAdapterPosition());
+                }
+            } else if (view.getId() == R.id.down_file) {
+                if (mFilePaths.size() != getAdapterPosition() + 1) {
+                    mOnClickListener.moveDown(getAdapterPosition());
+                }
             } else {
                 mOnClickListener.removeFile(mFilePaths.get(getAdapterPosition()));
             }
@@ -78,5 +92,7 @@ public class MergeSelectedFilesAdapter extends
     public interface OnFileItemClickListener {
         void viewFile(String path);
         void removeFile(String path);
+        void moveUp(int position);
+        void moveDown(int position);
     }
 }
