@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
 
-
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0)
             mFeedbackUtils.rateUs();
