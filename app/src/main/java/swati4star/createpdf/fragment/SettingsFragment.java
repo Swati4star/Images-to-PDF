@@ -23,7 +23,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +34,6 @@ import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.PageSizeUtils;
-import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
@@ -234,10 +232,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     public void setTheme() {
         String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
-        HashMap<String, String> themes = new HashMap<>();
-        themes.put(getString(R.string.theme_black), THEME_BLACK);
-        themes.put(getString(R.string.theme_dark), THEME_DARK);
-        themes.put(getString(R.string.theme_white), THEME_WHITE);
 
         MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
                 R.string.theme_edit);
@@ -247,31 +241,29 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_themes);
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     RadioButton radioButton = view.findViewById(selectedId);
-                    String themeName1 = themes.get(radioButton.getText().toString());
+                    String themeName1 = radioButton.getText().toString();
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     editor.putString(Constants.DEFAULT_THEME_TEXT, themeName1);
                     editor.apply();
-                    showSettingsOptions();
-                    ThemeUtils.setTheme(themeName1, getContext());
+                    mActivity.recreate();
                 }))
                 .build();
         RadioGroup radioGroup = materialDialog.getCustomView().findViewById(R.id.radio_group_themes);
 
         int position = 0;
         switch (themeName) {
-            case THEME_WHITE:
-                position = 2;
-                break;
             case THEME_BLACK:
                 position = 0;
                 break;
             case THEME_DARK:
                 position = 1;
                 break;
+            case THEME_WHITE:
+                position = 2;
+                break;
         }
         RadioButton rb = (RadioButton) radioGroup.getChildAt(position);
         rb.setChecked(true);
         materialDialog.show();
     }
-
 }

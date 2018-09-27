@@ -10,16 +10,16 @@ import static swati4star.createpdf.util.Constants.THEME_WHITE;
 
 public class ThemeUtils {
 
-    public static void setTheme(String theme, Context context) {
+    public static void setThemeApp(String theme, Context context) {
         switch (theme) {
             case THEME_WHITE:
-                context.setTheme(R.style.AppTheme_NoActionBar);
+                context.setTheme(R.style.AppThemeWhite);
                 break;
             case THEME_BLACK:
-                context.setTheme(R.style.Theme_AppCompat_DayNight_DarkActionBar);
+                context.setTheme(R.style.AppThemeBlack);
                 break;
             case THEME_DARK:
-                context.setTheme(R.style.ThemeOverlay_AppCompat_Dark_ActionBar);
+                context.setTheme(R.style.ActivityThemeDark);
                 break;
         }
     }

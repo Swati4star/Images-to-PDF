@@ -14,7 +14,7 @@
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/mergebtn"
-            style="@style/AppTheme.MorphingButton"
+            style="@style/AppThemeWhite.MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -32,7 +32,7 @@
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFiles"
-            style="@style/AppTheme.MorphingButton"
+            style="@style/AppThemeWhite.MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -2,7 +2,6 @@ package swati4star.createpdf.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.itextpdf.text.Font;
@@ -10,7 +9,6 @@ import com.itextpdf.text.Font;
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
-import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;

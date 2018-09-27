@@ -9,6 +9,21 @@
     <color name="gray_background">#eceff1</color>
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
-    <color name="foreground_material_dark_1">#ffffff</color>
-    <color name="foreground_material_light">#ffffff</color>
+
+
+    <color name="colorBackground_black">#0A0808</color>
+    <color name="colorBackground_dark">#7C7F87</color>
+
+    <color name="primaryTextColorLight">#F4F4F6</color>
+    <color name="secondaryTextColorLight">#96F4F4F6</color>
+    <color name="backgroundCardColorLight">#FFFF</color>
+    <color name="dividerColorLight">#F2F2F3</color>
+
+    <color name="primaryTextColorDark">#33343B</color>
+    <color name="secondaryTextColorDark">#8033343B</color>
+    <color name="backgroundCardColorDark">#28292e</color>
+    <color name="dividerColorDark">#F2F2F3</color>
+
+    <color name="windowBackground_light">#F4F4F6</color>
+    <color name="windowBackground_dark">#33343B</color>
 </resources>
