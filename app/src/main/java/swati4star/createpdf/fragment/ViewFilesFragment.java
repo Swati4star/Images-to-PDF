@@ -181,14 +181,18 @@ public class ViewFilesFragment extends Fragment
                     showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 break;
             case R.id.select_all:
-                if (mIsChecked) {
-                    mViewFilesAdapter.unCheckAll();
-                    mMenuItem.setIcon(R.drawable.ic_check_box_outline_blank_24dp);
+                if (mViewFilesAdapter.getItemCount() > 0) {
+                    if (mIsChecked) {
+                        mViewFilesAdapter.unCheckAll();
+                        mMenuItem.setIcon(R.drawable.ic_check_box_outline_blank_24dp);
+                    } else {
+                        mViewFilesAdapter.checkAll();
+                        mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
+                    }
+                    mIsChecked = !mIsChecked;
                 } else {
-                    mViewFilesAdapter.checkAll();
-                    mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
+                    showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 }
-                mIsChecked = !mIsChecked;
                 break;
         }
         return true;
