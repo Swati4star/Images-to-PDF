@@ -14,5 +14,6 @@
         <attr name="iconTintOnCard" format="color"/>
         <attr name="historyIconColor" format="color"/>
         <attr name="customDividerColor" format="color"/>
+        <attr name="navigationIconTint" format="color"/>
     </declare-styleable>
 </resources>
