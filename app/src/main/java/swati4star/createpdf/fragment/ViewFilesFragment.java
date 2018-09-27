@@ -504,4 +504,13 @@ public class ViewFilesFragment extends Fragment
             }
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        AppCompatActivity activity = ((AppCompatActivity)
+                Objects.requireNonNull(getActivity()));
+        ActionBar toolbar = activity.getSupportActionBar();
+        toolbar.setTitle(appName);
+    }
 }
