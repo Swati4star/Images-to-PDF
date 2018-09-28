@@ -3,9 +3,7 @@ package swati4star.createpdf.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +13,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.eftimoff.viewpagertransformers.DepthPageTransformer;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,10 +38,8 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
-                Constants.DEFAULT_THEME);
-        ThemeUtils.setThemeApp(themeName, this);
+
+        ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
 

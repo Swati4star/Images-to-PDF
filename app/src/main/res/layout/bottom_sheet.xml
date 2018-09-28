@@ -35,6 +35,7 @@
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/arrow_down"
             android:visibility="gone"
+            android:tint="?attr/bottomSheetTextColor"
             app:srcCompat="@drawable/ic_arrow_down_black_24dp" />
 
         <ImageView
@@ -43,6 +44,7 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/arrow_down"
+            android:tint="?attr/bottomSheetTextColor"
             app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
     </RelativeLayout>
 

@@ -66,10 +66,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/cornered_edges"
                 android:drawablePadding="5dp"
                 android:drawableStart="@drawable/baseline_share_24"
                 android:padding="15dp"
+                android:drawableTint="?attr/bottomSheetTextColor"
+                android:background="?attr/bottomSheetColor"
+                android:textColor="?attr/bottomSheetTextColor"
                 android:text="@string/share_files" />
 
             <Button
@@ -77,10 +79,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/cornered_edges"
                 android:drawablePadding="5dp"
                 android:drawableStart="@drawable/ic_menu_gallery"
                 android:padding="15dp"
+                android:drawableTint="?attr/bottomSheetTextColor"
+                android:background="?attr/bottomSheetColor"
+                android:textColor="?attr/bottomSheetTextColor"
                 android:text="@string/viewFiles" />
 
         </LinearLayout>

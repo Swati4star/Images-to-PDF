@@ -41,9 +41,7 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
-                Constants.DEFAULT_THEME);
-        ThemeUtils.setThemeApp(themeName, this);
+        ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rearrange_images);
 

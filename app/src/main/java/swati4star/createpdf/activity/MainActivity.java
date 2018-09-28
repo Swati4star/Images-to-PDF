@@ -33,7 +33,6 @@ import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
-import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
@@ -58,10 +57,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
-                Constants.DEFAULT_THEME);
-        ThemeUtils.setThemeApp(themeName, this);
+        ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -87,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0)
             mFeedbackUtils.rateUs();

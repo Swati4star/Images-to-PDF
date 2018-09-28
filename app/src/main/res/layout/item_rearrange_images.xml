@@ -28,6 +28,7 @@
         android:layout_marginTop="19dp"
         android:background="@drawable/circle_white"
         android:gravity="center"
+        android:textColor="@color/black"
         android:textStyle="bold"
         tools:targetApi="lollipop" />
 
@@ -76,5 +77,11 @@
             tools:targetApi="lollipop" />
 
     </LinearLayout>
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/customDividerColor" />
 
 </RelativeLayout>

@@ -3,11 +3,9 @@ package swati4star.createpdf.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +32,6 @@ import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
-import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.BrushUtils.getBrushItems;
@@ -76,10 +72,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
-                Constants.DEFAULT_THEME);
-        ThemeUtils.setThemeApp(themeName, this);
+
+        // Set selected theme
+        ThemeUtils.setThemeApp(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_editor);
         ButterKnife.bind(this);
