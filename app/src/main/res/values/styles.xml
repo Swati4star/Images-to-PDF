@@ -14,7 +14,7 @@
         <item name="historyIconColor">@color/black</item>
         <item name="customDividerColor">@color/black</item>
         <item name="navigationIconTint">@color/colorGray</item>
-        <item name="bottomSheetColor">?attr/android:windowBackground</item>
+        <item name="bottomSheetColor">?attr/colorPrimary</item>
         <item name="bottomSheetTextColor">@color/mb_white</item>
     </style>
 
@@ -76,7 +76,7 @@
         <item name="historyIconColor">@color/black</item>
         <item name="customDividerColor">@color/black</item>
         <item name="navigationIconTint">@color/colorGray</item>
-        <item name="bottomSheetColor">?attr/android:windowBackground</item>
+        <item name="bottomSheetColor">?attr/colorPrimary</item>
         <item name="bottomSheetTextColor">@color/mb_white</item>
     </style>
 
