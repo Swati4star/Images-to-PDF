@@ -14,23 +14,8 @@
         <item name="historyIconColor">@color/black</item>
         <item name="customDividerColor">@color/black</item>
         <item name="navigationIconTint">@color/colorGray</item>
-    </style>
-
-    <style name="AppThemeWhite.MorphingButton">
-        <item name="android:textColor">@color/mb_white</item>
-    </style>
-
-    <style name="AppThemeWhite.AboutUSTextViewMedium" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:drawableTint">@color/colorGray</item>
-    </style>
-
-    <style name="AppThemeWhite.AboutUSTextViewSmall" parent="TextAppearance.AppCompat.Small">
-        <item name="android:drawableTint">@color/colorGray</item>
-    </style>
-
-    <style name="AppThemeWhite.PDFconverter">
-        <item name="android:textColor">@color/mb_white</item>
-        <item name="colorAccent">@color/colorGray</item>
+        <item name="bottomSheetColor">?attr/colorPrimary</item>
+        <item name="bottomSheetTextColor">@color/mb_white</item>
     </style>
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
@@ -39,33 +24,11 @@
         <item name="iconTintOnCard">@color/mb_white</item>
         <item name="customDividerColor">@color/windowBackground_dark</item>
         <item name="navigationIconTint">@color/colorGray</item>
+        <item name="bottomSheetColor">@color/mb_white</item>
+        <item name="bottomSheetTextColor">@color/black</item>
     </style>
 
-    <!-- Light base activity theme -->
-    <style name="ActivityTheme.Primary.Base.Light" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:textColorSecondary">@color/mb_white</item>
-        <item name="primaryTextColor">@color/primaryTextColorLight</item>
-        <item name="secondaryTextColor">@color/secondaryTextColorLight</item>
-        <item name="backgroundCardColor">@color/backgroundCardColorLight</item>
-        <item name="dividerColor">@color/dividerColorLight</item>
-    </style>
-    <!-- Dark base activity theme -->
-    <style name="ActivityTheme.Primary.Base.Dark" parent="Theme.AppCompat.NoActionBar">
-
-        <item name="backgroundCardColor">@color/backgroundCardColorDark</item>
-        <item name="dividerColor">@color/dividerColorDark</item>
-    </style>
-
-    <!-- Specific Feed activity theme -->
-    <style name="ActivityThemeLight" parent="ActivityTheme.Primary.Base.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="titleToolbarTextColor">@color/mb_white</item>
-        <item name="android:windowBackground">@color/windowBackground_light</item>
-    </style>
-
-    <style name="ActivityThemeDark" parent="ActivityTheme.Primary.Base.Dark">
+    <style name="ActivityThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/windowBackground_dark</item>
         <item name="titleToolbarTextColor">@color/mb_white</item>
@@ -73,10 +36,29 @@
         <item name="historyIconColor">@color/black</item>
         <item name="customDividerColor">@color/black</item>
         <item name="navigationIconTint">@color/colorGray</item>
+        <item name="bottomSheetColor">?attr/colorPrimary</item>
+        <item name="bottomSheetTextColor">@color/mb_white</item>
     </style>
 
-    <style name="ActivityThemeDark.Toolbar">
+    <style name="ToolbarTheme">
         <item name="android:textColorSecondary">@color/mb_white</item>
+    </style>
+
+    <style name="MorphingButton">
+        <item name="android:textColor">@color/mb_white</item>
+    </style>
+
+    <style name="AboutUSTextViewMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:drawableTint">@color/colorGray</item>
+    </style>
+
+    <style name="AboutUSTextViewSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:drawableTint">@color/colorGray</item>
+    </style>
+
+    <style name="PDFconverter">
+        <item name="android:textColor">@color/mb_white</item>
+        <item name="colorAccent">@color/colorGray</item>
     </style>
 
 </resources>

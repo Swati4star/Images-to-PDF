@@ -6,14 +6,12 @@
     </declare-styleable>
 
     <declare-styleable name="CTAppTheme">
-        <attr name="primaryTextColor" format="color"/>
-        <attr name="secondaryTextColor" format="color"/>
-        <attr name="dividerColor" format="color"/>
-        <attr name="backgroundCardColor" format="color"/>
         <attr name="titleToolbarTextColor" format="color"/>
         <attr name="iconTintOnCard" format="color"/>
         <attr name="historyIconColor" format="color"/>
         <attr name="customDividerColor" format="color"/>
         <attr name="navigationIconTint" format="color"/>
+        <attr name="bottomSheetColor" format="color"/>
+        <attr name="bottomSheetTextColor" format="color"/>
     </declare-styleable>
 </resources>

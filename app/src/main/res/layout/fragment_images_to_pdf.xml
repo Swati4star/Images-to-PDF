@@ -26,7 +26,7 @@
 
                 <com.dd.morphingbutton.MorphingButton
                     android:id="@+id/addImages"
-                    style="@style/AppThemeWhite.MorphingButton"
+                    style="@style/MorphingButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -36,7 +36,7 @@
 
                 <com.dd.morphingbutton.MorphingButton
                     android:id="@+id/pdfOpen"
-                    style="@style/AppThemeWhite.MorphingButton"
+                    style="@style/MorphingButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -48,7 +48,7 @@
 
                 <com.dd.morphingbutton.MorphingButton
                     android:id="@+id/pdfCreate"
-                    style="@style/AppThemeWhite.MorphingButton"
+                    style="@style/MorphingButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
