@@ -47,11 +47,17 @@
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
 
     <string name="creating_pdf">Creating PDF</string>
+    <string name="qr_barcode_pdf">QR &amp; Barcodes</string>
     <string name="enter_file_name">Enter file name</string>
     <string name="example">Example : abc</string>
     <string name="snackbar_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
     <string name="sort">Sort</string>
+
+    <string name="scan_qrcode">Scan QR code</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="qrbarcodes_to_pdf">Create PDF from QR &amp; Barcode</string>
+    <string name="scan_cancelled">Cancelled Scan by user</string>
 
     <string name="set_password">パスワードを設定してください</string>
     <string name="enter_password">パスワードを入力する</string>

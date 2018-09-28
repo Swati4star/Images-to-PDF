@@ -48,11 +48,17 @@
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
 
     <string name="creating_pdf">Creando PDF</string>
+    <string name="qr_barcode_pdf">QR &amp; Barcodes</string>
     <string name="enter_file_name">Escribe un nombre de fichero</string>
     <string name="example">Ejemplo : abc</string>
     <string name="snackbar_no_pdf_app">No hay app para abrir ficheros PDF</string>
     <string name="open_file">Abrir Firchero</string>
     <string name="sort">Ordenar</string>
+
+    <string name="scan_qrcode">Scan QR code</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="qrbarcodes_to_pdf">Create PDF from QR &amp; Barcode</string>
+    <string name="scan_cancelled">Cancelled Scan by user</string>
 
     <string name="set_password">Configurar la clave</string>
     <string name="enter_password">Introducir la contraseña</string>
