@@ -14,6 +14,8 @@
         <item name="historyIconColor">@color/black</item>
         <item name="customDividerColor">@color/black</item>
         <item name="navigationIconTint">@color/colorGray</item>
+        <item name="bottomSheetColor">?attr/android:windowBackground</item>
+        <item name="bottomSheetTextColor">@color/mb_white</item>
     </style>
 
     <style name="AppThemeWhite.MorphingButton">
@@ -39,6 +41,8 @@
         <item name="iconTintOnCard">@color/mb_white</item>
         <item name="customDividerColor">@color/windowBackground_dark</item>
         <item name="navigationIconTint">@color/colorGray</item>
+        <item name="bottomSheetColor">@color/mb_white</item>
+        <item name="bottomSheetTextColor">@color/black</item>
     </style>
 
     <!-- Light base activity theme -->
@@ -51,7 +55,6 @@
     </style>
     <!-- Dark base activity theme -->
     <style name="ActivityTheme.Primary.Base.Dark" parent="Theme.AppCompat.NoActionBar">
-
         <item name="backgroundCardColor">@color/backgroundCardColorDark</item>
         <item name="dividerColor">@color/dividerColorDark</item>
     </style>
@@ -73,6 +76,8 @@
         <item name="historyIconColor">@color/black</item>
         <item name="customDividerColor">@color/black</item>
         <item name="navigationIconTint">@color/colorGray</item>
+        <item name="bottomSheetColor">?attr/android:windowBackground</item>
+        <item name="bottomSheetTextColor">@color/mb_white</item>
     </style>
 
     <style name="ActivityThemeDark.Toolbar">
