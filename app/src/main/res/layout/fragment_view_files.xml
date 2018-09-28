@@ -175,7 +175,7 @@
 
         <Button
             android:id="@+id/getStarted"
-            style="@style/AppThemeWhite.MorphingButton"
+            style="@style/MorphingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="150dp"

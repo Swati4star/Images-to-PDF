@@ -23,7 +23,7 @@
 
                 <com.dd.morphingbutton.MorphingButton
                     android:id="@+id/selectFile"
-                    style="@style/AppThemeWhite.MorphingButton"
+                    style="@style/MorphingButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
@@ -31,7 +31,7 @@
 
                 <com.dd.morphingbutton.MorphingButton
                     android:id="@+id/createtextpdf"
-                    style="@style/AppThemeWhite.MorphingButton"
+                    style="@style/MorphingButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
