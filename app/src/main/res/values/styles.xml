@@ -8,10 +8,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:iconTint">@color/colorGray</item>
-        <item name="android:textColorSecondary">@color/colorGray</item>
         <item name="android:windowBackground">@color/windowBackground_light</item>
         <item name="titleToolbarTextColor">@color/mb_white</item>
         <item name="iconTintOnCard">@color/colorPrimary</item>
+        <item name="historyIconColor">@color/black</item>
+        <item name="customDividerColor">@color/black</item>
+        <item name="navigationIconTint">@color/colorGray</item>
     </style>
 
     <style name="AppThemeWhite.MorphingButton">
@@ -33,11 +35,15 @@
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/colorBackground_black</item>
+        <item name="historyIconColor">@color/windowBackground_dark</item>
         <item name="iconTintOnCard">@color/mb_white</item>
+        <item name="customDividerColor">@color/windowBackground_dark</item>
+        <item name="navigationIconTint">@color/colorGray</item>
     </style>
 
     <!-- Light base activity theme -->
     <style name="ActivityTheme.Primary.Base.Light" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColorSecondary">@color/mb_white</item>
         <item name="primaryTextColor">@color/primaryTextColorLight</item>
         <item name="secondaryTextColor">@color/secondaryTextColorLight</item>
         <item name="backgroundCardColor">@color/backgroundCardColorLight</item>
@@ -45,8 +51,7 @@
     </style>
     <!-- Dark base activity theme -->
     <style name="ActivityTheme.Primary.Base.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="primaryTextColor">@color/primaryTextColorDark</item>
-        <item name="secondaryTextColor">@color/secondaryTextColorDark</item>
+
         <item name="backgroundCardColor">@color/backgroundCardColorDark</item>
         <item name="dividerColor">@color/dividerColorDark</item>
     </style>
@@ -65,6 +70,13 @@
         <item name="android:windowBackground">@color/windowBackground_dark</item>
         <item name="titleToolbarTextColor">@color/mb_white</item>
         <item name="iconTintOnCard">@color/mb_white</item>
+        <item name="historyIconColor">@color/black</item>
+        <item name="customDividerColor">@color/black</item>
+        <item name="navigationIconTint">@color/colorGray</item>
+    </style>
+
+    <style name="ActivityThemeDark.Toolbar">
+        <item name="android:textColorSecondary">@color/mb_white</item>
     </style>
 
 </resources>

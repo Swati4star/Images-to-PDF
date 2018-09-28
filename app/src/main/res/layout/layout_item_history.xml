@@ -24,6 +24,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:contentDescription="@string/default_content_description"
+                android:tint="?attr/historyIconColor"
                 app:srcCompat="@drawable/ic_compress_image" />
 
             <TextView
