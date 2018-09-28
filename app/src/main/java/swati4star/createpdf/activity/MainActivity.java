@@ -27,6 +27,7 @@ import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
+import swati4star.createpdf.fragment.QrBarcodeScanFragment;
 import swati4star.createpdf.fragment.RemovePagesFragment;
 import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
@@ -255,6 +256,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
+                break;
+            case R.id.nav_qrcode:
+                fragment = new QrBarcodeScanFragment();
                 break;
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();

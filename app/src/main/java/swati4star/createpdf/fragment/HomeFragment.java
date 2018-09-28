@@ -28,6 +28,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Activity mActivity;
     @BindView(R.id.images_to_pdf)
     MyCardView imagesToPdf;
+    @BindView(R.id.qr_barcode_to_pdf)
+    MyCardView qrbarcodeToPdf;
     @BindView(R.id.text_to_pdf)
     MyCardView textToPdf;
     @BindView(R.id.view_files)
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View rootview = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootview);
         imagesToPdf.setOnClickListener(this);
+        qrbarcodeToPdf.setOnClickListener(this);
         textToPdf.setOnClickListener(this);
         viewFiles.setOnClickListener(this);
         viewHistory.setOnClickListener(this);
@@ -90,6 +93,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.images_to_pdf:
                 fragment = new ImageToPdfFragment();
+                break;
+            case R.id.qr_barcode_to_pdf:
+                fragment = new QrBarcodeScanFragment();
                 break;
             case R.id.text_to_pdf:
                 fragment = new TextToPdfFragment();

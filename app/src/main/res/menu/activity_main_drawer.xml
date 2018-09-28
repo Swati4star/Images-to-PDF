@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/create_pdf" />
         <item
+            android:id="@+id/nav_qrcode"
+            android:icon="@drawable/ic_qrcode_24dp"
+            android:title="@string/qr_barcode_pdf" />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/viewFiles" />
