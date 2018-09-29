@@ -18,6 +18,7 @@
         <item name="bottomSheetTextColor">@color/mb_white</item>
         <item name="bannerBackgroundColor">@color/colorAccent</item>
         <item name="similarBgColor">@color/mb_white</item>
+        <item name="bottomSheetBgColor">@color/windowBackground_light</item>
     </style>
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
@@ -30,6 +31,7 @@
         <item name="bottomSheetTextColor">@color/black</item>
         <item name="bannerBackgroundColor">@color/windowBackground_dark</item>
         <item name="similarBgColor">@color/black</item>
+        <item name="bottomSheetBgColor">@color/colorBackground_black</item>
     </style>
 
     <style name="ActivityThemeDark" parent="Theme.AppCompat.NoActionBar">
@@ -44,6 +46,7 @@
         <item name="bottomSheetTextColor">@color/mb_white</item>
         <item name="bannerBackgroundColor">@color/colorAccent</item>
         <item name="similarBgColor">@color/black</item>
+        <item name="bottomSheetBgColor">@color/windowBackground_dark</item>
     </style>
 
     <style name="ToolbarTheme">

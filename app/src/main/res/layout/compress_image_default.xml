@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/compress_dialog_enter_prompt"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"

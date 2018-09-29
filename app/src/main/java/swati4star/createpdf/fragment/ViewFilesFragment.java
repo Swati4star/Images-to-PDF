@@ -365,10 +365,8 @@ public class ViewFilesFragment extends Fragment
         } else {
             final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
             for (File pdf : mDirectoryUtils.getPdfsFromPdfFolder(files)) {
-                if (filePath.contains(pdf.getPath())) {
-                    //remove the files already present in home directory
-                    filePath.remove(filePath.indexOf(pdf.getPath()));
-                }
+                //remove the files already present in home directory
+                filePath.remove(pdf.getPath());
             }
             new MoveFilesToDirectory(mActivity
                     , filePath

@@ -15,5 +15,6 @@
         <attr name="bottomSheetTextColor" format="color"/>
         <attr name="bannerBackgroundColor" format="color"/>
         <attr name="similarBgColor" format="color"/>
+        <attr name="bottomSheetBgColor" format="color"/>
     </declare-styleable>
 </resources>

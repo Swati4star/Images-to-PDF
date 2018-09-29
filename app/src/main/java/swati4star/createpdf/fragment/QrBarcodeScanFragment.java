@@ -112,11 +112,11 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
                 File mDir = getContext().getCacheDir();
                 File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
-                PrintWriter mWriter = null;
+                PrintWriter mWriter;
                 try {
                     mWriter = new PrintWriter(mTempFile);
                     mWriter.print("");
-                    mWriter.append("Result : " + result.getContents());
+                    mWriter.append("Result : ").append(result.getContents());
                     mWriter.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -170,7 +170,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     /**
      * Generate Result to PDF
-     * @param uri
+     * @param uri - uri where text is located
      */
     private void resultToTextPdf(Uri uri) {
         new MaterialDialog.Builder(getActivity())
@@ -199,7 +199,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * function to create PDF
      *
      * @param mFilename name of file to be created.
-     * @param uri
+     * @param uri - uri where text is located
      */
     private void createPdf(String mFilename, Uri uri) {
         String mPath = mSharedPreferences.getString(STORAGE_LOCATION,

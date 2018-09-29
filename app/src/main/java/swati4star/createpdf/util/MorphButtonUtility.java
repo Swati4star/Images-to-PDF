@@ -58,7 +58,7 @@ public class MorphButtonUtility {
                 .height(dimen(R.dimen.mb_height_56))
                 .color(color(R.color.mb_green))
                 .colorPressed(color(R.color.mb_green_dark))
-                .icon(R.drawable.ic_done);
+                .icon(R.drawable.ic_check_white_24dp);
         btnMorph.morph(circle);
     }
 

@@ -23,7 +23,6 @@
             android:maxWidth="30dp"
             android:padding="3dip"
             android:text="@string/merge_file_select"
-            app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,7 +39,8 @@
             android:hint="@string/prompt_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/compressionInfoText"
@@ -49,7 +49,6 @@
             android:padding="10dp"
             android:visibility="gone"
             android:text="@string/compress_info" />
-
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/pdfCreate"

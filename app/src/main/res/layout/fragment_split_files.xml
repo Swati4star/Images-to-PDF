@@ -35,7 +35,6 @@
             android:maxWidth="30dp"
             android:padding="3dip"
             android:text="@string/merge_file_select"
-            app:layout_constraintEnd_toStartOf="@+id/filetwobtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
