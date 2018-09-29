@@ -1,6 +1,7 @@
 package swati4star.createpdf.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,15 +62,10 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     private ImageToPDFOptions mPdfOptions;
     private SharedPreferences mSharedPreferences;
-    private String mHomePath;
-    private QrBarcodeScanFragment mActivity;
+    private Activity mActivity;
     private MaterialDialog mMaterialDialog;
-    private boolean mPermissionGranted = false;
     private String mPath;
     private FileUtils mFileUtils;
-    private int mFontSize = 0;
-    private String mPassword;
-    private boolean mPasswordProtected = false;
     private Font.FontFamily mFontFamily;
 
     @BindView(R.id.scan_qrcode)
@@ -81,9 +77,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_qrcode_barcode, container, false);
-        mActivity = this;
         // Initialize variables
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
         ButterKnife.bind(this, rootview);
         scanQrcode.setOnClickListener(this);
@@ -92,8 +87,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 Constants.DEFAULT_FONT_FAMILY));
         PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
                 Constants.DEFAULT_PAGE_SIZE);
-        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation());
 
         getRuntimePermissions();
 
@@ -105,12 +98,12 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(getActivity(), getActivity().getResources().
+                Toast.makeText(mActivity, mActivity.getResources().
                         getString(R.string.scan_cancelled), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getActivity(), "Scan Result: " +  result.getContents(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "Scan Result: " +  result.getContents(), Toast.LENGTH_SHORT).show();
 
-                File mDir = getContext().getCacheDir();
+                File mDir = mActivity.getCacheDir();
                 File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
                 PrintWriter mWriter;
                 try {
@@ -143,8 +136,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * Open camera for Barcode Scan
      */
     public void openCameraForBarcode() {
-        //IntentIntegrator integrator = new IntentIntegrator(activity.getActivity());
-        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(mActivity);
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         // use forSupportFragment or forFragment method to use fragments instead of activity
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         integrator.setPrompt(mActivity.getString(R.string.scan_barcode));
@@ -158,7 +150,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * Open camera for QRCode Scan
      */
     public void openCameraForQrcode() {
-        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(mActivity);
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         // use forSupportFragment or forFragment method to use fragments instead of activity
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         integrator.setPrompt(mActivity.getString(R.string.scan_qrcode));
@@ -173,18 +165,18 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * @param uri - uri where text is located
      */
     private void resultToTextPdf(Uri uri) {
-        new MaterialDialog.Builder(getActivity())
+        new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
                     if (StringUtils.isEmpty(input)) {
-                        showSnackbar(getActivity(), R.string.snackbar_name_not_blank);
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
                             createPdf(inputName, uri);
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(getActivity());
+                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> createPdf(inputName, uri))
                                     .onNegative((dialog1, which) -> resultToTextPdf(uri))
                                     .show();
@@ -202,16 +194,16 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * @param uri - uri where text is located
      */
     private void createPdf(String mFilename, Uri uri) {
-        String mPath = mSharedPreferences.getString(STORAGE_LOCATION,
+        mPath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
-            PDFUtils fileUtil = new PDFUtils(getActivity());
-            mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
-            fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, uri, mFontSize, mFontFamily));
+            PDFUtils fileUtil = new PDFUtils(mActivity);
+            int fontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+            fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, false,
+                    "", uri, fontSize, mFontFamily));
             final String finalMPath = mPath;
-            getSnackbarwithAction(getActivity(), R.string.snackbar_pdfCreated)
+            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
@@ -221,7 +213,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mFileUtils = new FileUtils(getActivity());
+        mActivity = (Activity) context;
+        mFileUtils = new FileUtils(mActivity);
     }
 
 
@@ -243,7 +236,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = createAnimationDialog(getActivity());
+        mMaterialDialog = createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 
@@ -251,11 +244,11 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     public void onPDFCreated(boolean success, String path) {
         mMaterialDialog.dismiss();
         if (!success) {
-            showSnackbar(getActivity(), R.string.snackbar_folder_not_created);
+            showSnackbar(mActivity, R.string.snackbar_folder_not_created);
             return;
         }
-        new DatabaseHelper(getActivity()).insertRecord(path, getActivity().getString(R.string.created));
-        getSnackbarwithAction(getActivity(), R.string.snackbar_pdfCreated)
+        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
+        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
         mPath = path;
         resetValues();
@@ -266,17 +259,15 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      */
     private void getRuntimePermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED)) {
                 requestPermissions(new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-                return;
             }
-            mPermissionGranted = true;
         }
     }
 }
