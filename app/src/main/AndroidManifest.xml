@@ -69,6 +69,7 @@
         <activity android:name=".activity.PreviewActivity"/>
         <activity android:name=".activity.RearrangeImages"/>
         <activity android:name=".activity.ImagesPreviewActivity"/>
+        <activity android:name=".activity.RearrangePdfPages"/>
 
     </application>
 

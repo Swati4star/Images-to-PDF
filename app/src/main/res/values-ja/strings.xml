@@ -103,7 +103,6 @@
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
     <string name="btn_sav_text">savText</string>
-    <string name="path_seperator">/</string>
     <string name="filter_images_Text">Filter Images</string>
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Image compression : %s%%</string>
@@ -256,7 +255,6 @@
     <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
     <string name="rate_us_never">Never</string>
     <string name="remove_pages">Remove Pages</string>
-    <string name="remove_pages_text">Enter the pages you want to keep in the PDF. For example, if you want pages 1 to 5 and 7 to 10, enter 1–5,7–10.</string>
     <string name="remove_pages_error">The input value is not valid</string>
     <string name="encrypted_pdf">PDF is password protected</string>
     <string name="error_occurred">Error Occurred</string>
@@ -267,7 +265,6 @@
     <string name="encrypted">Encrypted</string>
     <string name="decrypted">Decrypted</string>
     <string name="reorder_pages">Reorder Pages</string>
-    <string name="reorder_pages_text">Enter the order of the pages. For example, if you want to reorder a PDF with 5 pages, you may write 4–5,1–3. The output PDF with have page no. 4,5, and then, 1,2,3.</string>
     <string name="share_files">Share Files</string>
     <string name="images_rearranged">Images rearranged</string>
     <string name="compress_pdf">Compress PDF</string>
@@ -310,5 +307,6 @@
     <string name="theme_white">White</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
+    <string name="remove_page_message">Are you sure you want to remove this page?</string>
 
 </resources>
