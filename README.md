@@ -82,14 +82,21 @@ Go to Settings, and you can have three type of themes : Black, Dark, White
 ### Contributing
 
 #### Dependencies
++ [Butterknife](https://jakewharton.github.io/butterknife/)
++ [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
++ [Image-cropper](https://github.com/ArthurHub/Android-Image-Cropper)
 + [iTextG](http://developers.itextpdf.com/itextg-android)
-+ [Material Ripple](https://github.com/balysv/material-ripple)
-+ [Morphing Button](https://github.com/dmytrodanylyk/android-morphing-button)
++ [Lottie](https://github.com/airbnb/lottie-android)
 + [Matisse](https://github.com/zhihu/Matisse)
 + [Material Dialogs](https://github.com/afollestad/material-dialogs)
-+ [What's new](https://github.com/TonnyL/WhatsNew)
++ [Material Ripple](https://github.com/balysv/material-ripple)
++ [Morphing Button](https://github.com/dmytrodanylyk/android-morphing-button)
++ [Picasso](http://square.github.io/picasso/)
++ [Picasso-transformations](https://github.com/wasabeef/picasso-transformations)
 + [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
-+ [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
++ [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
++ [What's new](https://github.com/TonnyL/WhatsNew)
++ [zxing](https://github.com/zxing/zxing)
 
 #### Code & Issues
 If you are a developer and you wish to contribute to the app please fork the project
