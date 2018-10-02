@@ -3,11 +3,15 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +25,14 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.RearrangePdfPages;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
@@ -36,9 +43,12 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.FileUtils.getFormattedSize;
@@ -56,6 +66,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private BottomSheetUtils mBottomSheetUtils;
     private PDFUtils mPDFUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int INTENT_REQUEST_REARRANGE_PDF = 11;
     private String mOperation;
     private MaterialDialog mMaterialDialog;
 
@@ -91,7 +102,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         mOperation = getArguments().getString(BUNDLE_DATA);
         mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
                 mRecyclerViewFiles, this);
-
         resetValues();
         return rootview;
     }
@@ -111,12 +121,24 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (data == null || resultCode != RESULT_OK || data.getData() == null)
+        if (data == null || resultCode != RESULT_OK )
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
             setTextAndActivateButtons(getFilePath(data.getData()));
-    }
+        else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
+            String pages = data.getStringExtra(RESULT);
+            Log.v("output", pages + " ");
+            String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
+                    "_edited" + pages + mActivity.getString(R.string.pdf_ext));
+            if (mPDFUtils.isPDFEncrypted(mPath)) {
+                showSnackbar(mActivity, R.string.encrypted_pdf);
+                return;
+            }
 
+            mPDFUtils.reorderRemovePDF(mPath, outputPath, pages);
+            resetValues();
+        }
+    }
 
     @OnClick(R.id.pdfCreate)
     public void parse() {
@@ -126,16 +148,35 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             return;
         }
 
-        String pages = pagesInput.getText().toString();
-        String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
-                "_edited" + pages + mActivity.getString(R.string.pdf_ext));
-        if (mPDFUtils.isPDFEncrypted(mPath)) {
-            showSnackbar(mActivity, R.string.encrypted_pdf);
-            return;
-        }
+        // Render pdf pages as bitmap
+        ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        ParcelFileDescriptor fileDescriptor = null;
+        try {
+            fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+            PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+            final int pageCount = renderer.getPageCount();
+            for (int i = 0; i < pageCount; i++) {
+                PdfRenderer.Page page = renderer.openPage(i);
 
-        mPDFUtils.reorderRemovePDF(mPath, outputPath, pages);
-        resetValues();
+                Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
+                        Bitmap.Config.ARGB_8888);
+                // say we render for showing on the screen
+                page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+                // do stuff with the bitmap
+                bitmaps.add(bitmap);
+                // close the page
+                page.close();
+            }
+
+            // close the renderer
+            renderer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        RearrangePdfPages.mImages = bitmaps;
+        startActivityForResult(RearrangePdfPages.getStartIntent(mActivity),
+                INTENT_REQUEST_REARRANGE_PDF);
     }
 
     private void compressPDF() {
@@ -161,13 +202,13 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         mMorphButtonUtility.initializeButton(selectFileButton, createPdf);
         switch (mOperation) {
             case REORDER_PAGES:
-                mInfoText.setText(R.string.reorder_pages_text);
+            case REMOVE_PAGES:
+                mInfoText.setVisibility(View.GONE);
+                pagesInput.setVisibility(View.GONE);
                 break;
             case COMPRESS_PDF:
                 mInfoText.setText(R.string.compress_pdf_prompt);
                 break;
-            default:
-                mInfoText.setText(R.string.remove_pages_text);
         }
     }
 
