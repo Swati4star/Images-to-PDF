@@ -28,6 +28,7 @@ You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com
   - Encrypt PDF
   - Decrypt PDF
   - Rotate Pages
+- Different themes
 - Merge existing PDFs
 - Split existing PDFs
 - Convert text file to PDFs
@@ -63,6 +64,11 @@ Hurray! PDF files of selected images are created.
 ### Viewing the PDF files
 
 <img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
+
+### Different themes
+Go to Settings, and you can have three type of themes : Black, Dark, White
+
+<img src="./screenshots/home_theme_black.png" width="190px"> <img src="./screenshots/home_theme_dark.png" width="190px"> <img src="./screenshots/home_theme_white.png" width="190px">
 
 ### Merge PDF
 <img src="./screenshots/7_merge_pdf.png" width="190px">
