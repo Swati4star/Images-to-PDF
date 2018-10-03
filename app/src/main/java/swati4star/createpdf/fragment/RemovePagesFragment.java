@@ -174,9 +174,15 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         } catch (IOException e) {
             e.printStackTrace();
         }
-        RearrangePdfPages.mImages = bitmaps;
-        startActivityForResult(RearrangePdfPages.getStartIntent(mActivity),
-                INTENT_REQUEST_REARRANGE_PDF);
+
+        if (bitmaps.size() < 1) {
+            showSnackbar(mActivity, R.string.file_access_error);
+        } else {
+            RearrangePdfPages.mImages = bitmaps;
+            startActivityForResult(RearrangePdfPages.getStartIntent(mActivity),
+                    INTENT_REQUEST_REARRANGE_PDF);
+        }
+
     }
 
     private void compressPDF() {

@@ -1,6 +1,7 @@
 package swati4star.createpdf.adapter;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,22 +15,20 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.util.FileUtils;
 
+import static swati4star.createpdf.util.FileUtils.getFileName;
 import static swati4star.createpdf.util.ImageUtils.getRoundBitmapFromPath;
 
 public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdapter.ViewMergeFilesHolder> {
 
     private final ArrayList<String> mFilePaths;
     private final Activity mContext;
-    private final FileUtils mFileUtils;
     private final OnFileItemClickedListener mOnClickListener;
 
     public ExtractImagesAdapter(Activity mContext, ArrayList<String> mFilePaths,
                                 OnFileItemClickedListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
-        mFileUtils = new FileUtils(mContext);
         this.mOnClickListener = mOnClickListener;
     }
 
@@ -43,8 +42,10 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
-        holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
-        holder.mImagePreview.setImageBitmap(getRoundBitmapFromPath(mFilePaths.get(position)));
+        holder.mFileName.setText(getFileName(mFilePaths.get(position)));
+        Bitmap bitmap = getRoundBitmapFromPath(mFilePaths.get(position));
+        if (bitmap != null)
+            holder.mImagePreview.setImageBitmap(bitmap);
     }
 
     @Override

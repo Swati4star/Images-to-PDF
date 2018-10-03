@@ -330,6 +330,7 @@
     <string name="remove_pages">Remove Pages</string>
     <string name="remove_pages_error">The input value is not valid</string>
     <string name="encrypted_pdf">PDF is password protected</string>
+    <string name="file_access_error">We were unable to access PDF. Files may be encrypted or in the external storage.</string>
 
     <!-- Reorder Pages -->
     <string name="reorder_pages">Reorder Pages</string>
