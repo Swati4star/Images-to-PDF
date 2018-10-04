@@ -309,4 +309,8 @@ public class MainActivity extends AppCompatActivity
         }
         return true;
     }
+
+    public void setNavigationViewSelection(int index) {
+        mNavigationView.getMenu().getItem(index).setChecked(true);
+    }
 }
