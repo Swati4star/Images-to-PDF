@@ -9,12 +9,14 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 
 public class BottomSheetUtils implements BottomSheetPopulate {
 
     private Activity mContext;
+
 
     public BottomSheetUtils(Activity context) {
         this.mContext = context;
@@ -28,6 +30,7 @@ public class BottomSheetUtils implements BottomSheetPopulate {
         }
     }
 
+    private View mFetchingFilesLabel;
     RelativeLayout bottomSheetLayout;
     RecyclerView recyclerView;
     MergeFilesAdapter.OnClickListener listener;
@@ -38,6 +41,8 @@ public class BottomSheetUtils implements BottomSheetPopulate {
         this.bottomSheetLayout = bottomSheetLayout;
         this.recyclerView = recyclerView;
         this.listener = listener;
+        mFetchingFilesLabel = bottomSheetLayout.getRootView().findViewById(R.id.fetching);
+
         new PopulateBottomSheetList(this, new DirectoryUtils(mContext)).execute();
 
     }
@@ -56,6 +61,6 @@ public class BottomSheetUtils implements BottomSheetPopulate {
             recyclerView.setAdapter(mergeFilesAdapter);
             recyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(mContext));
         }
-
+        mFetchingFilesLabel.setVisibility(View.GONE);
     }
 }
