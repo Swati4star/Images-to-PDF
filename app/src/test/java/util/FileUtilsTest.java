@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import static swati4star.createpdf.util.FileUtils.getFileName;
 
 import java.io.File;
+import java.util.TimeZone;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,13 +31,14 @@ public class FileUtilsTest {
 
     @Before
     public void setUp() throws Exception {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         PowerMockito.whenNew(FileUtils.class).withAnyArguments().thenReturn(fileUtils);
     }
 
     @Test
     public void when_CallingGetFormattedDate_Expect_CorrectDateReturned() {
         when(file.lastModified()).thenReturn(0L);
-        assertThat(fileUtils.getFormattedDate(file), is("Thu, Jan 01 at 01:00"));
+        assertThat(fileUtils.getFormattedDate(file), is("Thu, Jan 01 at 00:00"));
     }
 
     @Test
