@@ -11,13 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import swati4star.createpdf.util.FileUtils;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({FileUtils.class})
+@RunWith(MockitoJUnitRunner.class)
 public class FileUtilsTest {
 
     private static final String FILE_PATH = "/a/b/";
@@ -32,7 +29,6 @@ public class FileUtilsTest {
     @Before
     public void setUp() throws Exception {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        PowerMockito.whenNew(FileUtils.class).withAnyArguments().thenReturn(fileUtils);
     }
 
     @Test
