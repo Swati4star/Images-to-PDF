@@ -9,29 +9,38 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.adapter.MergeSelectedFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.MergeFilesListener;
+import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
@@ -43,14 +52,16 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
+import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
-        MergeSelectedFilesAdapter.OnFileItemClickListener {
+        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner {
     private Activity mActivity;
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
@@ -61,6 +72,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private MergeSelectedFilesAdapter mMergeSelectedFilesAdapter;
     private MaterialDialog mMaterialDialog;
     private String mHomePath;
+    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList;
+    private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
+    private boolean mPasswordProtected = false;
+    private String mPassword;
 
     @BindView(R.id.mergebtn)
     MorphingButton mergeBtn;
@@ -79,6 +94,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     Button mSelectFiles;
     @BindView(R.id.selected_files)
     RecyclerView mSelectedFiles;
+    @BindView(R.id.enhancement_options_recycle_view)
+    RecyclerView mEnhancementOptionsRecycleView;
 
     public MergeFilesFragment() {
     }
@@ -88,6 +105,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
+        showEnhancementOptions();
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mFilePaths = new ArrayList<>();
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
@@ -105,6 +123,89 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         setMorphingButtonState(false);
 
         return root;
+    }
+
+    /**
+     * Function to show the enhancement options.
+     */
+    private void showEnhancementOptions() {
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
+        mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
+        mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        if (mFilePaths.size() == 0) {
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
+            return;
+        }
+        switch (position) {
+            case 0:
+                setPassword();
+                break;
+        }
+    }
+
+    private void setPassword() {
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+                R.string.set_password);
+        final MaterialDialog dialog = builder
+                .customView(R.layout.custom_dialog, true)
+                .neutralText(R.string.remove_dialog)
+                .build();
+
+        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        final View neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
+        final EditText passwordInput = Objects.requireNonNull(dialog.getCustomView()).findViewById(R.id.password);
+        passwordInput.setText(mPassword);
+        passwordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        if (StringUtils.isEmpty(input)) {
+                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+                        } else {
+                            mPassword = input.toString();
+                            mPasswordProtected = true;
+                            onPasswordAdded();
+                        }
+                    }
+                });
+        if (StringUtils.isNotEmpty(mPassword)) {
+            neutralAction.setOnClickListener(v -> {
+                mPassword = null;
+                onPasswordRemoved();
+                mPasswordProtected = false;
+                dialog.dismiss();
+                showSnackbar(mActivity, R.string.password_remove);
+            });
+        }
+        dialog.show();
+        positiveAction.setEnabled(false);
+    }
+
+    private void onPasswordAdded() {
+        mEnhancementOptionsEntityArrayList.get(0)
+                .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
+    private void onPasswordRemoved() {
+        mEnhancementOptionsEntityArrayList.get(0)
+                .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.viewFiles)
@@ -128,13 +229,14 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                     if (StringUtils.isEmpty(input)) {
                         showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
-                        final String inputName = input.toString();
-                        if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
-                            new MergePdf(input.toString(), mHomePath, this).execute(pdfpaths);
+                        if (!mFileUtils.isFileExist(input + getString(R.string.pdf_ext))) {
+                            new MergePdf(input.toString(), mHomePath, mPasswordProtected,
+                                    mPassword, this).execute(pdfpaths);
                         } else {
                             MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
-                                    mHomePath, this).execute(pdfpaths))
+                                    mHomePath, mPasswordProtected, mPassword,
+                                    this).execute(pdfpaths))
                                     .onNegative((dialog1, which) -> mergeFiles(view)).show();
                         }
                     }
