@@ -395,13 +395,13 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
 
     private void onPasswordAdded() {
         mTextEnhancementOptionsEntityArrayList.get(3)
-                .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
+                .setImage(mActivity.getResources().getDrawable(R.drawable.baseline_done_24));
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
     private void onPasswordRemoved() {
         mTextEnhancementOptionsEntityArrayList.get(3)
-                .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
+                .setImage(mActivity.getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 

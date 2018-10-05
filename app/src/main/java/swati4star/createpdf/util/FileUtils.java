@@ -195,7 +195,6 @@ public class FileUtils {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
         try {
             Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
             target.setDataAndType(uri, mContext.getString(R.string.pdf_type));
@@ -232,6 +231,10 @@ public class FileUtils {
      */
     public String getUriRealPath(Uri uri) {
         String ret;
+
+        if (uri == null)
+            return null;
+
         if (isWhatsappImage(uri.getAuthority())) {
             ret = null;
         } else {
