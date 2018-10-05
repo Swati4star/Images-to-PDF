@@ -341,9 +341,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     void setMorphingButtonState(Boolean enabled) {
         if (enabled)
-            mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
-        else
             mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
+        else
+            mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
 
         mergeBtn.setEnabled(enabled);
     }
