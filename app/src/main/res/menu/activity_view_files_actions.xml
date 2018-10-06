@@ -36,4 +36,12 @@
         android:orderInCategory="4"
         android:title="@string/share"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/item_merge"
+        android:icon="@drawable/ic_merge_type_black_24dp"
+        android:orderInCategory="5"
+        android:title="Merge"
+        app:showAsAction="never"
+        android:visible="false"/>
 </menu>

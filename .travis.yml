@@ -17,4 +17,3 @@ script:
    - chmod +x ./gradlew
    - ./gradlew assembleDebug assembleRelease
    - ./gradlew checkstyle
-   - ./gradlew test
