@@ -1,10 +1,12 @@
 package swati4star.createpdf.fragment;
 
 import android.app.Activity;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
@@ -91,6 +93,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     TextView mInfoText;
     @BindView(R.id.compressionInfoText)
     TextView mCompressionInfoText;
+    private Uri mUri;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -123,9 +126,10 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK )
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            mUri = data.getData();
             setTextAndActivateButtons(getFilePath(data.getData()));
-        else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
+        } else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
             String pages = data.getStringExtra(RESULT);
             Log.v("output", pages + " ");
             String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
@@ -152,7 +156,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
         ParcelFileDescriptor fileDescriptor = null;
         try {
-            fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+            fileDescriptor = getContext().getContentResolver().openFileDescriptor(mUri, "r");
             PdfRenderer renderer = new PdfRenderer(fileDescriptor);
             final int pageCount = renderer.getPageCount();
             for (int i = 0; i < pageCount; i++) {
