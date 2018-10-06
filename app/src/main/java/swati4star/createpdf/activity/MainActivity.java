@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
 
+
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0)
@@ -96,39 +98,43 @@ public class MainActivity extends AppCompatActivity
      * @return - instance of current fragment
      */
     private Fragment checkForAppShortcutClicked() {
-        Fragment fragment;
+        Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (Objects.requireNonNull(getIntent().getAction())) {
-            case ACTION_SELECT_IMAGES:
-                fragment = new ImageToPdfFragment();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(OPEN_SELECT_IMAGES, true);
-                fragment.setArguments(bundle);
-                break;
-            case ACTION_VIEW_FILES:
-                fragment = new ViewFilesFragment();
-                setDefaultMenuSelected(1);
-                break;
-            case ACTION_TEXT_TO_PDF:
-                fragment = new TextToPdfFragment();
-                setDefaultMenuSelected(4);
-                break;
-            case ACTION_MERGE_PDF:
-                fragment = new MergeFilesFragment();
-                setDefaultMenuSelected(2);
-                break;
-            default:
-                // Set default fragment
-                fragment = new HomeFragment();
-                break;
-        }
 
+        if (getIntent().getAction() != null) {
+            switch (Objects.requireNonNull(getIntent().getAction())) {
+                case ACTION_SELECT_IMAGES:
+                    fragment = new ImageToPdfFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(OPEN_SELECT_IMAGES, true);
+                    fragment.setArguments(bundle);
+                    break;
+                case ACTION_VIEW_FILES:
+                    fragment = new ViewFilesFragment();
+                    setDefaultMenuSelected(1);
+                    break;
+                case ACTION_TEXT_TO_PDF:
+                    fragment = new TextToPdfFragment();
+                    setDefaultMenuSelected(4);
+                    break;
+                case ACTION_MERGE_PDF:
+                    fragment = new MergeFilesFragment();
+                    setDefaultMenuSelected(2);
+                    break;
+                default:
+                    // Set default fragment
+                    fragment = new HomeFragment();
+                    break;
+            }
+        }
         if (areImagesRecevied())
             fragment = new ImageToPdfFragment();
 
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
         return fragment;
     }
+
 
     /**
      * Ininitializes default values
