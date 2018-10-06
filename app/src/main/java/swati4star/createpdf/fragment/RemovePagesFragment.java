@@ -134,7 +134,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             Log.v("output", pages + " ");
             String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
                     "_edited" + pages + mActivity.getString(R.string.pdf_ext));
-            if (mPDFUtils.isPDFEncrypted(mUri)) {
+            if (mPDFUtils.isPDFEncrypted(mPath)) {
                 showSnackbar(mActivity, R.string.encrypted_pdf);
                 return;
             }
