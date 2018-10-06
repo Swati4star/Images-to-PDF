@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -86,10 +87,14 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     }
 
     private void deleteHistory() {
-        MaterialDialog.Builder builder = createWarningDialog(mActivity,
-                R.string.delete_history_message);
-        builder.onPositive((dialog2, which) -> new DeleteHistory().execute())
-                .show();
+        if (mHistoryList != null && !mHistoryList.isEmpty()) {
+            MaterialDialog.Builder builder = createWarningDialog(mActivity,
+                    R.string.delete_history_message);
+            builder.onPositive((dialog2, which) -> new DeleteHistory().execute())
+                    .show();
+        } else {
+            Toast.makeText(mActivity, R.string.no_files_to_delete_message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.getStarted)
