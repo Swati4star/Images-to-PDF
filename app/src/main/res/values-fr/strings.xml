@@ -316,5 +316,15 @@
     <string name="bottom">Bottom</string>
     <string name="right">Right</string>
     <string name="left">Left</string>
+    <string name="welcome_create_pdf_message">Creating a PDF file</string>
+    <string name="welcome_create_pdf_info">View the PDF files previously created or create a new one!</string>
+    <string name="welcome_themes_title">Different themes</string>
+    <string name="welcome_themes_message">Go to Settings, and you can have three type of themes : Black, Dark, White</string>
+    <string name="welcome_merge_title">Merge PDF file</string>
+    <string name="welcome_merge_message">Merge different existing pdf in your phone in one file</string>
+    <string name="welcome_viewfiles_title">Viewing the PDF files</string>
+    <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your pdf file</string>
+    <string name="skip_text">Skip</string>
+    <string name="help">Help</string>
 
 </resources>
