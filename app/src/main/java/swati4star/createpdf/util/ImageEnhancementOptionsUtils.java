@@ -58,9 +58,7 @@ public class ImageEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 iconGrayscale,
                 context.getResources().getString(R.string.grayscale_images)));
-        options.add(new EnhancementOptionsEntity(
-                context.getResources().getDrawable(R.drawable.ic_page_size_24dp),
-                context.getString(R.string.add_margins)));
+
         //options.add(new EnhancementOptionsEntity(
         //      context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),
         //    context.getResources().getString(R.string.add_watermark)));

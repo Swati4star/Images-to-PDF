@@ -107,6 +107,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:padding="8dp"
+        android:background="?attr/similarBgColor"
         android:visibility="gone" />
 
 </RelativeLayout>

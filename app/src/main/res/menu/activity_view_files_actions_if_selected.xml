@@ -7,7 +7,14 @@
         android:icon="@drawable/ic_check_box_outline_blank_24dp"
         android:orderInCategory="1"
         android:title="@string/select_all"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/item_merge"
+        android:icon="@drawable/ic_merge_type_black_24dp"
+        android:orderInCategory="4"
+        android:title="Merge"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/item_delete"
@@ -22,4 +29,6 @@
         android:orderInCategory="3"
         android:title="@string/share"
         app:showAsAction="ifRoom" />
+
+
 </menu>

@@ -6,10 +6,6 @@ public class ImageToPDFOptions extends PDFOptions {
 
     private String mQualityString;
     private ArrayList<String> mImagesUri;
-    private int mMarginTop = 0;
-    private int mMarginBottom = 0;
-    private int mMarginRight = 0;
-    private int mMarginLeft = 0;
 
     public ImageToPDFOptions() {
         super();
@@ -39,28 +35,5 @@ public class ImageToPDFOptions extends PDFOptions {
 
     public void setImagesUri(ArrayList<String> mImagesUri) {
         this.mImagesUri = mImagesUri;
-    }
-
-    public void setMargins(int top, int bottom, int right, int left) {
-        mMarginTop = top;
-        mMarginBottom = bottom;
-        mMarginRight = right;
-        mMarginLeft = left;
-    }
-
-    public int getMarginTop() {
-        return mMarginTop;
-    }
-
-    public int getMarginBottom() {
-        return mMarginBottom;
-    }
-
-    public int getMarginRight() {
-        return mMarginRight;
-    }
-
-    public int getMarginLeft() {
-        return mMarginLeft;
     }
 }
