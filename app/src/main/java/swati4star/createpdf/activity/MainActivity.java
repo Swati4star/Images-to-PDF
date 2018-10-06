@@ -95,12 +95,8 @@ public class MainActivity extends AppCompatActivity
      * @return - instance of current fragment
      */
     private Fragment checkForAppShortcutClicked(Fragment fragment) {
-
-
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         if (getIntent() != null && getIntent().getAction() != null ) {
-
             switch (getIntent().getAction()) {
                 case ACTION_SELECT_IMAGES:
                     fragment = new ImageToPdfFragment();
