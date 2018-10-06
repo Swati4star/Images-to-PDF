@@ -15,4 +15,34 @@
 
     <color name="windowBackground_light">#F4F4F6</color>
     <color name="windowBackground_dark">#33343B</color>
+
+    <color name="dot_inactive">#4DF57C00</color>
+
+    <!-- DOTS COLOR -->
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#CFD8DC</color>
+    <color name="dot_dark_screen2">#CFD8DC</color>
+    <color name="dot_dark_screen3">#CFD8DC</color>
+    <color name="dot_dark_screen4">#CFD8DC</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#404B69</color>
+    <color name="dot_light_screen2">#404B69</color>
+    <color name="dot_light_screen3">#404B69</color>
+    <color name="dot_light_screen4">#404B69</color>
+
+    <array name="array_dot_active">
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_inactive</item>
+        <item>@color/dot_inactive</item>
+        <item>@color/dot_inactive</item>
+        <item>@color/dot_inactive</item>
+    </array>
+
 </resources>

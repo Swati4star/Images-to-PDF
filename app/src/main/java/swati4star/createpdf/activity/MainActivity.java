@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         initializeValues();
 
         // Check for app shortcuts & select default fragment
-        Fragment fragment = checkForAppShortcutClicked();
+        Fragment fragment = checkForAppShortcutClicked(new HomeFragment());
 
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
@@ -95,40 +94,48 @@ public class MainActivity extends AppCompatActivity
      *
      * @return - instance of current fragment
      */
-    private Fragment checkForAppShortcutClicked() {
-        Fragment fragment;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (Objects.requireNonNull(getIntent().getAction())) {
-            case ACTION_SELECT_IMAGES:
-                fragment = new ImageToPdfFragment();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(OPEN_SELECT_IMAGES, true);
-                fragment.setArguments(bundle);
-                break;
-            case ACTION_VIEW_FILES:
-                fragment = new ViewFilesFragment();
-                setDefaultMenuSelected(1);
-                break;
-            case ACTION_TEXT_TO_PDF:
-                fragment = new TextToPdfFragment();
-                setDefaultMenuSelected(4);
-                break;
-            case ACTION_MERGE_PDF:
-                fragment = new MergeFilesFragment();
-                setDefaultMenuSelected(2);
-                break;
-            default:
-                // Set default fragment
-                fragment = new HomeFragment();
-                break;
-        }
+    private Fragment checkForAppShortcutClicked(Fragment fragment) {
 
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (getIntent() != null && getIntent().getAction() != null ) {
+
+            switch (getIntent().getAction()) {
+                case ACTION_SELECT_IMAGES:
+                    fragment = new ImageToPdfFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(OPEN_SELECT_IMAGES, true);
+                    fragment.setArguments(bundle);
+                    break;
+                case ACTION_VIEW_FILES:
+                    fragment = new ViewFilesFragment();
+                    setDefaultMenuSelected(1);
+                    break;
+                case ACTION_TEXT_TO_PDF:
+                    fragment = new TextToPdfFragment();
+                    setDefaultMenuSelected(4);
+                    break;
+                case ACTION_MERGE_PDF:
+                    fragment = new MergeFilesFragment();
+                    setDefaultMenuSelected(2);
+                    break;
+                default:
+                    // Set default fragment
+                    fragment = new HomeFragment();
+                    break;
+            }
+        }
         if (areImagesRecevied())
             fragment = new ImageToPdfFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        if (fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        }
+
         return fragment;
     }
+
 
     /**
      * Ininitializes default values
