@@ -43,10 +43,10 @@ public class WelcomeActivity extends AppCompatActivity {
         // layouts of all welcome sliders
         // add few more layouts if you want
         mLayouts = new int[]{
-                R.layout.fragment_intro_1,
-                R.layout.fragment_intro_3,
-                R.layout.fragment_intro_4,
-                R.layout.fragment_intro_2 };
+                R.layout.fragment_step_create_pdf,
+                R.layout.fragment_step_view_file,
+                R.layout.fragment_step_merge_pdf,
+                R.layout.fragment_step_change_themes};
 
         // adding bottom dots
         addBottomDots(0);
@@ -61,6 +61,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
+    // adding bottom dots
     private void addBottomDots(int currentPage) {
         mDots = new TextView[mLayouts.length];
 

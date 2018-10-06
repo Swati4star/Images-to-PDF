@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
@@ -77,10 +78,12 @@ public class MainActivity extends AppCompatActivity
         initializeValues();
 
         // Check for app shortcuts & select default fragment
-        Fragment fragment = checkForAppShortcutClicked(new HomeFragment());
+        Fragment fragment = checkForAppShortcutClicked();
 
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
+
+
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
@@ -94,10 +97,12 @@ public class MainActivity extends AppCompatActivity
      *
      * @return - instance of current fragment
      */
-    private Fragment checkForAppShortcutClicked(Fragment fragment) {
+    private Fragment checkForAppShortcutClicked() {
+        Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (getIntent() != null && getIntent().getAction() != null ) {
-            switch (getIntent().getAction()) {
+
+        if (getIntent().getAction() != null) {
+            switch (Objects.requireNonNull(getIntent().getAction())) {
                 case ACTION_SELECT_IMAGES:
                     fragment = new ImageToPdfFragment();
                     Bundle bundle = new Bundle();
@@ -125,9 +130,7 @@ public class MainActivity extends AppCompatActivity
         if (areImagesRecevied())
             fragment = new ImageToPdfFragment();
 
-        if (fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-        }
+        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
 
         return fragment;
     }
