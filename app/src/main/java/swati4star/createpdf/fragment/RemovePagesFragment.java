@@ -1,7 +1,6 @@
 package swati4star.createpdf.fragment;
 
 import android.app.Activity;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -45,7 +44,6 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
