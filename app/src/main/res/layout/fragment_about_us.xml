@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".utilities.AboutUsFragment">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/default_content_description"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            style="AppThemeWhite.AboutUSTextViewSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/app_description"
+            android:textSize="13sp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_version_code"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_version_white_24dp"
+                    android:drawablePadding="15dp"
+                    android:drawableTint="?attr/historyIconColor"
+                    android:padding="8dp"
+                    android:text="@string/version"
+                    tools:targetApi="m" />
+
+                <TextView
+                    android:id="@+id/version_value"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_person_white_24dp"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/developer"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_email_24dp"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/mail"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_github"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_github"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/github_repo"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_contri"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_people_black_24dp"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/view_contributors"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_playstore"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_playstore"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/playstore"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_website"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_web"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/website"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_slack"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_slack"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/join_slack"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_lock_black_24dp"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/privacy_policy"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layout_license"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_license"
+                android:drawablePadding="15dp"
+                android:drawableTint="?attr/historyIconColor"
+                android:padding="8dp"
+                android:text="@string/license"
+                tools:targetApi="m" />
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</ScrollView>

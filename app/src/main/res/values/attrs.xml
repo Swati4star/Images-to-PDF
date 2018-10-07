@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyCardView">
+        <attr name="option_text" format="string"/>
+        <attr name="option_icon" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CTAppTheme">
+        <attr name="titleToolbarTextColor" format="color"/>
+        <attr name="iconTintOnCard" format="color"/>
+        <attr name="historyIconColor" format="color"/>
+        <attr name="customDividerColor" format="color"/>
+        <attr name="navigationIconTint" format="color"/>
+        <attr name="bottomSheetColor" format="color"/>
+        <attr name="bottomSheetTextColor" format="color"/>
+        <attr name="bannerBackgroundColor" format="color"/>
+        <attr name="similarBgColor" format="color"/>
+        <attr name="bottomSheetBgColor" format="color"/>
+        <attr name="lockIconTintColor" format="color"/>
+    </declare-styleable>
+</resources>

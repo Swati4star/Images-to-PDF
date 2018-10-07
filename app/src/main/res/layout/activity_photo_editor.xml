@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.ImageEditor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/resetCurrent"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/cornered_edges"
+            android:text="@string/reset"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/savecurrent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/cornered_edges"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:text="@string/save_current"
+            android:textAllCaps="false" />
+
+        <ImageButton
+            android:id="@+id/previousImageButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/ic_navigate_before_white_24dp"
+            android:contentDescription="@string/previous_image_content_desc"
+            android:gravity="center"
+            android:visibility="invisible"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:id="@+id/imagecount"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/showing_image" />
+
+        <ImageButton
+            android:id="@+id/nextimageButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_navigate_next_black_24dp"
+            android:contentDescription="@string/nextimage_contentdesc"
+            android:gravity="center"
+            tools:targetApi="lollipop" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollViewImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="25"
+        android:descendantFocusability="blocksDescendants">
+
+        <ja.burhanrashid52.photoeditor.PhotoEditorView
+            android:id="@+id/photoEditorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ja.burhanrashid52.photoeditor.PhotoEditorView>
+    </ScrollView>
+
+    <SeekBar
+        android:id="@+id/doodleSeekBar"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:max="100"
+        android:progress="30"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/doodle_colors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+</LinearLayout>

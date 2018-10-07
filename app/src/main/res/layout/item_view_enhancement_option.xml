@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/container_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <LinearLayout
+            android:id="@+id/passwordProtectedPDF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/option_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:contentDescription="@string/app_name"
+                android:tint="?attr/iconTintOnCard"
+                tools:srcCompat="@drawable/baseline_enhanced_encryption_24" />
+
+            <TextView
+                android:id="@+id/option_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:gravity="center_horizontal"
+                android:lines="2"
+                tools:text="@string/password_protect_pdf_text" />
+            
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

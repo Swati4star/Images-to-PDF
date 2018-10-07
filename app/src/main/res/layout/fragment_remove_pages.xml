@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:stretchColumns="*"
+        tools:context=".fragment.ExtractImagesFragment">
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/selectFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:maxWidth="30dp"
+            android:padding="3dip"
+            style="@style/MorphingButton"
+            android:text="@string/merge_file_select"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/compress_pdf_prompt" />
+
+        <EditText
+            android:labelFor="@id/infoText"
+            android:id="@+id/pages"
+            android:hint="@string/prompt_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/compressionInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:text="@string/compress_info" />
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/pdfCreate"
+            style="@style/MorphingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:layout_marginTop="112dp"
+            android:padding="10dp"
+            android:text="@string/create_pdf"
+            app:layout_constraintBottom_toTopOf="@id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    </LinearLayout>
+
+    <include layout="@layout/bottom_sheet" />
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        android:stretchColumns="*"
+        tools:context=".fragment.ExtractImagesFragment">
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/selectFile"
+            style="@style/MorphingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:maxWidth="30dp"
+            android:padding="3dip"
+            android:text="@string/merge_file_select" />
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/extractImages"
+            style="@style/MorphingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selectFile"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:padding="10dp"
+            android:text="@string/extract_images" />
+
+        <TextView
+            android:id="@+id/extractedimages_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/extractImages"
+            android:layout_margin="10dp"
+            android:text="@string/split_success"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/extracted_files"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/options"
+            android:layout_below="@id/extractedimages_text" />
+
+        <LinearLayout
+            android:id="@+id/options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/share_files"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/baseline_share_24"
+                android:padding="15dp"
+                android:drawableTint="?attr/bottomSheetTextColor"
+                android:background="?attr/bottomSheetColor"
+                android:textColor="?attr/bottomSheetTextColor"
+                android:text="@string/share_files" />
+
+            <Button
+                android:id="@+id/view_images"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_menu_gallery"
+                android:padding="15dp"
+                android:drawableTint="?attr/bottomSheetTextColor"
+                android:background="?attr/bottomSheetColor"
+                android:textColor="?attr/bottomSheetTextColor"
+                android:text="@string/viewFiles" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/bottom_sheet" />
+</android.support.design.widget.CoordinatorLayout>

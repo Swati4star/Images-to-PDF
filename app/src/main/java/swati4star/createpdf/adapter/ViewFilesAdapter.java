@@ -1,46 +1,44 @@
 package swati4star.createpdf.adapter;
 
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.os.ParcelFileDescriptor;
-import android.print.PageRange;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintDocumentInfo;
-import android.print.PrintManager;
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
-import android.support.v4.content.FileProvider;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.fragment.ViewFilesFragment;
+import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.interfaces.DataSetChanged;
+import swati4star.createpdf.interfaces.EmptyStateChangeListener;
+import swati4star.createpdf.interfaces.ItemSelectedListener;
+import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.PDFEncryptionUtility;
+import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.PopulateList;
 
+import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
+import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
+import static swati4star.createpdf.util.FileUtils.getFormattedDate;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 /**
  * Created by swati on 9/10/15.
@@ -48,80 +46,44 @@ import swati4star.createpdf.fragment.ViewFilesFragment;
  * An adapter to view the existing PDF files
  */
 
+public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder>
+        implements DataSetChanged, EmptyStateChangeListener {
 
-public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder> {
+    private final Activity mActivity;
+    private final EmptyStateChangeListener mEmptyStateChangeListener;
+    private final ItemSelectedListener mItemSelectedListener;
 
-    private final Context mContext;
     private ArrayList<File> mFileList;
-    private String mFileName;
-    private final ArrayList<Integer> mDeleteNames;
-    private final PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
+    private final ArrayList<Integer> mSelectedFiles;
 
-        @Override
-        public void onWrite(PageRange[] pages,
-                            ParcelFileDescriptor destination,
-                            CancellationSignal cancellationSignal,
-                            WriteResultCallback callback) {
-            InputStream input = null;
-            OutputStream output = null;
-            try {
-                input = new FileInputStream(mFileName);
-                output = new FileOutputStream(destination.getFileDescriptor());
-
-                byte[] buf = new byte[1024];
-                int bytesRead;
-
-                while ((bytesRead = input.read(buf)) > 0) {
-                    output.write(buf, 0, bytesRead);
-                }
-
-                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
-
-            } catch (Exception e) {
-                //Catch exception
-            } finally {
-                try {
-                    if (input != null) {
-                        input.close();
-                    }
-                    if (output != null) {
-                        output.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        @Override
-        public void onLayout(PrintAttributes oldAttributes,
-                             PrintAttributes newAttributes,
-                             CancellationSignal cancellationSignal,
-                             LayoutResultCallback callback,
-                             Bundle extras) {
-
-            if (cancellationSignal.isCanceled()) {
-                callback.onLayoutCancelled();
-                return;
-            }
-            PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
-                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                    .build();
-
-            callback.onLayoutFinished(pdi, true);
-        }
-    };
+    private final FileUtils mFileUtils;
+    private final PDFUtils mPDFUtils;
+    private final PDFEncryptionUtility mPDFEncryptionUtils;
+    private final DatabaseHelper mDatabaseHelper;
+    private final SharedPreferences mSharedPreferences;
 
     /**
      * Returns adapter instance
      *
-     * @param context   the context calling this adapter
-     * @param feedItems array list containing path of files
+     * @param activity                 the activity calling this adapter
+     * @param feedItems                array list containing path of files
+     * @param emptyStateChangeListener interface for empty state change
+     * @param itemSelectedListener     interface for monitoring the status of file selection
      */
-    public ViewFilesAdapter(Context context, ArrayList<File> feedItems) {
-        this.mContext = context;
+    public ViewFilesAdapter(Activity activity,
+                            ArrayList<File> feedItems,
+                            EmptyStateChangeListener emptyStateChangeListener,
+                            ItemSelectedListener itemSelectedListener) {
+        this.mActivity = activity;
+        this.mEmptyStateChangeListener = emptyStateChangeListener;
+        this.mItemSelectedListener = itemSelectedListener;
         this.mFileList = feedItems;
-        mDeleteNames = new ArrayList<>();
+        mSelectedFiles = new ArrayList<>();
+        mFileUtils = new FileUtils(activity);
+        mPDFUtils = new PDFUtils(activity);
+        mPDFEncryptionUtils = new PDFEncryptionUtility(activity);
+        mDatabaseHelper = new DatabaseHelper(mActivity);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
     }
 
     @NonNull
@@ -129,73 +91,107 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_file, parent, false);
-        return new ViewFilesHolder(itemView);
+        return new ViewFilesHolder(itemView, mItemSelectedListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewFilesHolder holder, int position) {
-        Log.d("logs", "getItemCount: " + mFileList.size());
-        // Extract file name from path
-        final String fileName = mFileList.get(position).getPath();
-        final int filePosition = position;
-        String[] name = fileName.split("/");
+    public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int pos) {
+        final int position = holder.getAdapterPosition();
+        final File file = mFileList.get(position);
 
-        holder.mFilename.setText(name[name.length - 1]);
-
-        if (mDeleteNames.contains(position))
-            holder.checkBox.setChecked(true);
-        else
-            holder.checkBox.setChecked(false);
-
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mDeleteNames.add(filePosition);
-                } else {
-                    mDeleteNames.remove(Integer.valueOf(filePosition));
-                }
-            }
+        boolean isEncrypted = mPDFUtils.isPDFEncrypted(file.getPath());
+        holder.mFilename.setText(file.getName());
+        holder.mFilesize.setText(FileUtils.getFormattedSize(file));
+        holder.mFiledate.setText(getFormattedDate(file));
+        holder.checkBox.setChecked(mSelectedFiles.contains(position));
+        holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.GONE);
+        holder.mRipple.setOnClickListener(view -> {
+            new MaterialDialog.Builder(mActivity)
+                    .title(R.string.title)
+                    .items(R.array.items)
+                    .itemsIds(R.array.itemIds)
+                    .itemsCallback((dialog, view1, which, text) -> performOperation(which, position, file))
+                    .show();
+            notifyDataSetChanged();
         });
+    }
 
-        holder.mRipple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialDialog.Builder(mContext)
-                        .title(R.string.title)
-                        .items(R.array.items)
-                        .itemsIds(R.array.itemIds)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+    /**
+     * Performs the required option on file
+     * as per user selction
+     *
+     * @param index    - index of operation performed
+     * @param position - position of item clicked
+     * @param file     - file object clicked
+     */
+    private void performOperation(int index, int position, File file) {
+        switch (index) {
+            case 0: //Open
+                mFileUtils.openFile(file.getPath());
+                break;
 
-                                switch (which) {
-                                    case 0: //Open
-                                        openFile(fileName);
-                                        break;
+            case 1: //delete
+                deleteFile(file.getPath(), position);
+                break;
 
-                                    case 1: //delete
-                                        deleteFile(fileName, filePosition);
-                                        break;
+            case 2: //rename
+                onRenameFileClick(position);
+                break;
 
-                                    case 2: //rename
-                                        renameFile(filePosition);
-                                        break;
+            case 3: //Print
+                mFileUtils.printFile(file);
+                break;
 
-                                    case 3: //Print
-                                        doPrint(fileName);
-                                        break;
+            case 4: //Email
+                mFileUtils.shareFile(file);
+                break;
 
-                                    case 4: //Email
-                                        shareFile(fileName);
-                                        break;
-                                }
-                            }
-                        })
-                        .show();
-                notifyDataSetChanged();
-            }
-        });
+            case 5: //Details
+                mPDFUtils.showDetails(file);
+                break;
+
+            case 6://Password Set
+                mPDFEncryptionUtils.setPassword(file.getPath(), ViewFilesAdapter.this, mFileList);
+                break;
+
+            case 7://Password Remove
+                mPDFEncryptionUtils.removePassword(file.getPath(), ViewFilesAdapter.this, mFileList);
+                break;
+
+            case 8://Rotate Pages
+                mPDFUtils.rotatePages(file.getPath(), ViewFilesAdapter.this);
+        }
+    }
+
+    /**
+     * Checks all the PDFs list
+     */
+    public void checkAll() {
+        mSelectedFiles.clear();
+        for (int i = 0; i < mFileList.size(); i++)
+            mSelectedFiles.add(i);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Unchecks every item in the item
+     */
+    public void unCheckAll() {
+        mSelectedFiles.clear();
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Returns path of selected files
+     *
+     * @return paths of files
+     */
+    public ArrayList<String> getSelectedFilePath() {
+        ArrayList<String> filePathList = new ArrayList<>();
+        for (int position : mSelectedFiles) {
+            filePathList.add(mFileList.get(position).getPath());
+        }
+        return filePathList;
     }
 
     @Override
@@ -218,124 +214,148 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         notifyDataSetChanged();
     }
 
-    public void openFile(String name) {
-        File file = new File(name);
-        Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", file);
-
-        target.setDataAndType(uri,  mContext.getString(R.string.pdf_type));
-        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        Intent intent = Intent.createChooser(target, mContext.getString(R.string.open_file));
-        try {
-            mContext.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(mContext, mContext.getString(R.string.toast_no_pdf_app), Toast.LENGTH_LONG).show();
-        }
+    /**
+     * Checks if any item is selected
+     *
+     * @return tru, if atleast one item is checked
+     */
+    public boolean areItemsSelected() {
+        return mSelectedFiles.size() > 0;
     }
 
-    public boolean areItemsForDeleteSelected() {
-        return mDeleteNames.size() > 0;
-    }
-
+    /**
+     * Delete the file
+     *
+     * @param name     - name of the file
+     * @param position - position of file in arraylist
+     */
     private void deleteFile(String name, int position) {
-        File fdelete = new File(name);
-        if (fdelete.exists()) {
-            if (fdelete.delete()) {
-                Toast.makeText(mContext, R.string.toast_file_deleted, Toast.LENGTH_LONG).show();
-                mFileList.remove(position);
-                notifyDataSetChanged();
-            } else {
-                Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
-            }
-        }
+        AtomicInteger undoClicked = new AtomicInteger();
+        final File fdelete = new File(name);
+        mFileList.remove(position);
+        notifyDataSetChanged();
+        getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
+                .setAction(R.string.snackbar_undoAction, v -> {
+                    if (mFileList.size() == 0) {
+                        mEmptyStateChangeListener.setEmptyStateInvisible();
+                    }
+                    updateDataset();
+                    undoClicked.set(1);
+                }).addCallback(new Snackbar.Callback() {
+                    @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            if (undoClicked.get() == 0) {
+                            fdelete.delete();
+                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                    mActivity.getString(R.string.deleted));
+                            }
+                    }
+                }).show();
         if (mFileList.size() == 0)
-            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
+            mEmptyStateChangeListener.setEmptyStateVisible();
     }
 
-    // iterate through filelist and remove all elements
+    /**
+     * iterate through filelist and remove all elements
+     */
     public void deleteFiles() {
-        for (int position : mDeleteNames) {
+
+        for (int position : mSelectedFiles) {
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
+            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
             if (fdelete.exists() && !fdelete.delete())
-                    Toast.makeText(mContext, R.string.toast_file_not_deleted, Toast.LENGTH_LONG).show();
+                showSnackbar(mActivity, R.string.snackbar_file_not_deleted);
         }
 
         ArrayList<File> newList = new ArrayList<>();
         for (int position = 0; position < mFileList.size(); position++)
-            if (!mDeleteNames.contains(position))
+            if (!mSelectedFiles.contains(position))
                 newList.add(mFileList.get(position));
 
-        mDeleteNames.clear();
+        mSelectedFiles.clear();
         if (newList.size() == 0)
-            ViewFilesFragment.emptyStatusTextView.setVisibility(View.VISIBLE);
+            mEmptyStateChangeListener.setEmptyStateVisible();
+
         setData(newList);
     }
 
-    private void renameFile(final int position) {
-        new MaterialDialog.Builder(mContext)
+    /**
+     * Opens file sharer for selected files
+     */
+    public void shareFiles() {
+        ArrayList<File> files = new ArrayList<>();
+        for (int position : mSelectedFiles) {
+            files.add(mFileList.get(position));
+        }
+        mFileUtils.shareMultipleFiles(files);
+    }
+
+    /**
+     * Renames the selected file
+     *
+     * @param position - position of file to be renamed
+     */
+    private void onRenameFileClick(final int position) {
+        new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(mContext.getString(R.string.example), null, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input == null || input.toString().trim().isEmpty())
-                            Toast.makeText(mContext, R.string.toast_name_not_blank, Toast.LENGTH_LONG).show();
-                        else {
-                            File oldfile = mFileList.get(position);
-                            String oldPath =   mFileList.get(position).getPath();
-                            int index = oldPath.lastIndexOf('/');
-                            String newfilename = oldPath.substring(0, index) + "/" + input.toString() +
-                                    mContext.getString(R.string.pdf_ext);
-
-                            File newfile = new File(newfilename);
-                            if (oldfile.renameTo(newfile)) {
-                                Toast.makeText(mContext, R.string.toast_file_renamed, Toast.LENGTH_LONG).show();
-                                mFileList.set(position, newfile);
-                                notifyDataSetChanged();
-                            } else
-                                Toast.makeText(mContext, R.string.toast_file_not_renamed, Toast.LENGTH_LONG).show();
+                .input(mActivity.getString(R.string.example), null, (dialog, input) -> {
+                    if (input == null || input.toString().trim().isEmpty())
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    else {
+                        if (!mFileUtils.isFileExist(input + mActivity.getString(R.string.pdf_ext))) {
+                            renameFile(position, input.toString());
+                        } else {
+                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            builder.onPositive((dialog2, which) -> renameFile(position, input.toString()))
+                                    .onNegative((dialog1, which) -> onRenameFileClick(position))
+                                    .show();
                         }
                     }
                 }).show();
     }
 
-    /**
-     * Prints a file
-     *
-     * @param fileName Path of file to be printed
-     */
-    private void doPrint(String fileName) {
-        PrintManager printManager = (PrintManager) mContext
-                .getSystemService(Context.PRINT_SERVICE);
-
-        mFileName = fileName;
-        String jobName = mContext.getString(R.string.app_name) + " Document";
-        if (printManager != null)
-            printManager.print(jobName, mPrintDocumentAdapter, null);
+    private void renameFile(int position, String newName) {
+        File oldfile = mFileList.get(position);
+        String oldPath = oldfile.getPath();
+        String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
+                + "/" + newName + mActivity.getString(R.string.pdf_ext);
+        File newfile = new File(newfilename);
+        if (oldfile.renameTo(newfile)) {
+            showSnackbar(mActivity, R.string.snackbar_file_renamed);
+            mFileList.set(position, newfile);
+            notifyDataSetChanged();
+            mDatabaseHelper.insertRecord(newfilename, mActivity.getString(R.string.renamed));
+        } else
+            showSnackbar(mActivity, R.string.snackbar_file_not_renamed);
     }
 
-    /**
-     * Emails the desired PDF using application of choice by user
-     *
-     * @author RakiRoad
-     */
-    private void shareFile(String name) {
-        Uri uri = FileProvider.getUriForFile(mContext, "com.swati4star.shareFile", new File(name));
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "I have attached a PDF to this message");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("application/pdf");
-        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
+    @Override
+    public void updateDataset() {
+        int index = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
+        new PopulateList(this, this,
+                new DirectoryUtils(mActivity), index).execute();
     }
 
-    public String string(@StringRes int resId) {
-        return mContext.getString(resId);
+    @Override
+    public void setEmptyStateVisible() {
+
+    }
+
+    @Override
+    public void setEmptyStateInvisible() {
+
+    }
+
+    @Override
+    public void showNoPermissionsView() {
+
+    }
+
+    @Override
+    public void hideNoPermissionsView() {
+
     }
 
     public class ViewFilesHolder extends RecyclerView.ViewHolder {
@@ -346,11 +366,26 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         TextView mFilename;
         @BindView(R.id.checkbox)
         CheckBox checkBox;
+        @BindView(R.id.fileDate)
+        TextView mFiledate;
+        @BindView(R.id.fileSize)
+        TextView mFilesize;
+        @BindView(R.id.encryptionImage)
+        ImageView mEncryptionImage;
 
-        ViewFilesHolder(View itemView) {
+        ViewFilesHolder(View itemView, ItemSelectedListener itemSelectedListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    if (!mSelectedFiles.contains(getAdapterPosition())) {
+                        mSelectedFiles.add(getAdapterPosition());
+                        itemSelectedListener.isSelected(true, mSelectedFiles.size());
+                    }
+                } else
+                    mSelectedFiles.remove(Integer.valueOf(getAdapterPosition()));
+                itemSelectedListener.isSelected(false, mSelectedFiles.size());
+            });
         }
     }
-
 }

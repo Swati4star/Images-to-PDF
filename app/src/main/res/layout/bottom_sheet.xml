@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/bottomSheetBgColor"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="40dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:background="?attr/bottomSheetColor"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/viewFiles"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:text="@string/viewFiles"
+            android:textColor="?attr/bottomSheetTextColor" />
+
+        <ImageView
+            android:id="@+id/downArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/arrow_down"
+            android:visibility="gone"
+            android:tint="?attr/bottomSheetTextColor"
+            app:srcCompat="@drawable/ic_arrow_down_black_24dp" />
+
+        <ImageView
+            android:id="@+id/upArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/arrow_down"
+            android:tint="?attr/bottomSheetTextColor"
+            app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="220dp"
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_progress"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_gravity="center"
+            app:lottie_rawRes="@raw/search_file"
+
+            />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewFiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+</LinearLayout>

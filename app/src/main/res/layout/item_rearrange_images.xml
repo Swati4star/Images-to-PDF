@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:layout_margin="8dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toStartOf="@id/linearLayout"
+        android:contentDescription="@string/selected_image"
+        android:src="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/pageNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/circle_white"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        tools:targetApi="lollipop" />
+
+    <ImageButton
+        android:id="@+id/removeImage"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/circle_white"
+        android:contentDescription="@string/delete"
+        android:padding="4dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_close_black_24dp"
+        tools:targetApi="lollipop" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/buttonUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/circle_white"
+            android:contentDescription="@string/arrow_up"
+            app:srcCompat="@drawable/ic_arrow_up_black_24dp"
+            tools:targetApi="lollipop" />
+
+        <ImageButton
+            android:id="@+id/buttonDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/circle_white"
+            android:contentDescription="@string/arrow_down"
+            app:srcCompat="@drawable/ic_arrow_down_black_24dp"
+            tools:targetApi="lollipop" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/customDividerColor" />
+
+</RelativeLayout>
