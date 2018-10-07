@@ -75,7 +75,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         View rootview = inflater.inflate(R.layout.fragment_split_files, container, false);
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
                 mRecyclerViewFiles, this);
         resetValues();

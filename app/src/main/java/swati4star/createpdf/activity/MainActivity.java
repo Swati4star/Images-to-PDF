@@ -46,6 +46,7 @@ import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -305,6 +306,10 @@ public class MainActivity extends AppCompatActivity
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
+            case R.id.nav_help:
+                Intent intent = new Intent(this, WelcomeActivity.class);
+                intent.putExtra(SHOW_WELCOME_ACT, true);
+                startActivity(intent);
         }
 
         try {

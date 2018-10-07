@@ -2,7 +2,10 @@ package swati4star.createpdf.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,32 +16,41 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 
+import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
+import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
+
 public class WelcomeActivity extends AppCompatActivity {
-    private ViewPager mViewPager;
-    private MyViewPagerAdapter mViewPagerAdapter;
-    private LinearLayout mDotsLayout;
-    private TextView[] mDots;
+
+    @BindView(R.id.view_pager)
+    public ViewPager mViewPager;
+    @BindView(R.id.layoutDots)
+    public LinearLayout mDotsLayout;
+    @BindView(R.id.btn_skip)
+    public Button mBtnSkip;
+
     private int[] mLayouts;
-    private final int mTimeDelay = 2000;
     private long mBackPressed;
-    private Button mBtnSkip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_welcome);
+        ButterKnife.bind(this);
 
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mDotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        mBtnSkip = findViewById(R.id.btn_skip);
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-
+        if (mSharedPreferences.getBoolean(IS_WELCOME_ACTIVITY_SHOWN, false) &&
+                !(getIntent() != null && getIntent().getBooleanExtra(SHOW_WELCOME_ACT, false)))
+                openMainActivity();
+        mSharedPreferences.edit().putBoolean(IS_WELCOME_ACTIVITY_SHOWN, true).apply();
 
         // layouts of all welcome sliders
         // add few more layouts if you want
@@ -51,19 +63,26 @@ public class WelcomeActivity extends AppCompatActivity {
         // adding bottom dots
         addBottomDots(0);
 
-        mViewPagerAdapter = new MyViewPagerAdapter();
-        mViewPager.setAdapter(mViewPagerAdapter);
+        MyViewPagerAdapter adapter = new MyViewPagerAdapter();
+        mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
-        mBtnSkip.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        });
     }
 
-    // adding bottom dots
+    @OnClick(R.id.btn_skip)
+    public void openMainActivity() {
+        if (!(getIntent() != null && getIntent().getBooleanExtra(SHOW_WELCOME_ACT, false))) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+        finish();
+    }
+
+    /**
+     * Add bottom dots & highligt the given one
+     * @param currentPage - current page to highlight
+     */
     private void addBottomDots(int currentPage) {
-        mDots = new TextView[mLayouts.length];
+        TextView[] mDots = new TextView[mLayouts.length];
 
         int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
         int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
@@ -81,11 +100,6 @@ public class WelcomeActivity extends AppCompatActivity {
             mDots[currentPage].setTextColor(colorsActive[currentPage]);
     }
 
-    private int getItem(int i) {
-        return mViewPager.getCurrentItem() + i;
-    }
-
-
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
@@ -96,14 +110,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-
         }
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-
         }
     };
+
 
     /**
      * View pager adapter
@@ -111,16 +124,15 @@ public class WelcomeActivity extends AppCompatActivity {
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater mLayoutInflater;
 
-        public MyViewPagerAdapter() {
+        MyViewPagerAdapter() {
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
             mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             View view = mLayoutInflater.inflate(mLayouts[position], container, false);
             container.addView(view);
-
             return view;
         }
 
@@ -130,13 +142,13 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object obj) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object obj) {
             return view == obj;
         }
 
 
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             View view = (View) object;
             container.removeView(view);
         }
@@ -145,12 +157,12 @@ public class WelcomeActivity extends AppCompatActivity {
     // Double tap to exit
     @Override
     public void onBackPressed() {
+        int mTimeDelay = 2000;
         if (mBackPressed + mTimeDelay > System.currentTimeMillis()) {
             super.onBackPressed();
         } else {
-            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+            showSnackbar(WelcomeActivity.this, R.string.confirm_exit_message);
         }
         mBackPressed = System.currentTimeMillis();
     }
-
 }

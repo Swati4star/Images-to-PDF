@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
@@ -15,12 +15,12 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_above="@id/tv_desc"
-        android:text="Viewing the PDF files"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/half_margin"
+        android:text="@string/welcome_viewfiles_title"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
@@ -30,10 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="45dp"
-        android:text="View, delete, rename, share and add password to your pdf file"
+        android:text="@string/welcome_viewfiles_message"
         android:textAlignment="center" />
-
-
-
 
 </RelativeLayout>

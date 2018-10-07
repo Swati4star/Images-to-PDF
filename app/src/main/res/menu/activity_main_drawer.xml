@@ -61,6 +61,10 @@
                 android:icon="@drawable/ic_settings_20px"
                 android:title="@string/settings"/>
             <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help_outline_black_24dp"
+                android:title="@string/help"/>
+            <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_about_us_24dp"
                 android:title="@string/about_us" />

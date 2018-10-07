@@ -101,7 +101,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         View rootview = inflater.inflate(R.layout.fragment_remove_pages, container, false);
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, mDownArrow));
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
         mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
                 mRecyclerViewFiles, this);

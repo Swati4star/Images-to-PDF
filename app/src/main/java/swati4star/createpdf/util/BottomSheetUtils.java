@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
@@ -30,7 +32,7 @@ public class BottomSheetUtils implements BottomSheetPopulate {
         }
     }
 
-    private View mFetchingFilesLabel;
+    private LottieAnimationView mLottieProgress;
     RelativeLayout bottomSheetLayout;
     RecyclerView recyclerView;
     MergeFilesAdapter.OnClickListener listener;
@@ -41,8 +43,11 @@ public class BottomSheetUtils implements BottomSheetPopulate {
         this.bottomSheetLayout = bottomSheetLayout;
         this.recyclerView = recyclerView;
         this.listener = listener;
-        mFetchingFilesLabel = bottomSheetLayout.getRootView().findViewById(R.id.fetching);
+        mLottieProgress = bottomSheetLayout.getRootView().findViewById(R.id.lottie_progress);
 
+
+        mLottieProgress.setVisibility(View.VISIBLE);
+        this.recyclerView.setVisibility(View.GONE);
         new PopulateBottomSheetList(this, new DirectoryUtils(mContext)).execute();
 
     }
@@ -54,6 +59,7 @@ public class BottomSheetUtils implements BottomSheetPopulate {
             bottomSheetLayout.setVisibility(View.GONE);
         } else {
             // Init recycler view
+            this.recyclerView.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mContext,
                     paths, listener);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
@@ -61,6 +67,6 @@ public class BottomSheetUtils implements BottomSheetPopulate {
             recyclerView.setAdapter(mergeFilesAdapter);
             recyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(mContext));
         }
-        mFetchingFilesLabel.setVisibility(View.GONE);
+        mLottieProgress.setVisibility(View.GONE);
     }
 }
