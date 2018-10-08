@@ -325,5 +325,6 @@
     <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your pdf file</string>
     <string name="skip_text">Skip</string>
     <string name="help">Help</string>
+    <string name="get_started_title">Get Started!</string>
 
 </resources>

@@ -66,6 +66,7 @@ public class WelcomeActivity extends AppCompatActivity {
         MyViewPagerAdapter adapter = new MyViewPagerAdapter();
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     @OnClick(R.id.btn_skip)
@@ -132,6 +133,16 @@ public class WelcomeActivity extends AppCompatActivity {
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = mLayoutInflater.inflate(mLayouts[position], container, false);
+            if (position == 3) {
+                Button btnGetStarted = view.findViewById(R.id.getStarted);
+                btnGetStarted.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openMainActivity();
+                    }
+                });
+            }
+
             container.addView(view);
             return view;
         }
