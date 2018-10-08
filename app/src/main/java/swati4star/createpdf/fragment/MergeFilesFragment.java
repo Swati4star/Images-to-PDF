@@ -118,7 +118,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
                 .getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
-        mLayout.setVisibility(View.GONE);
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
