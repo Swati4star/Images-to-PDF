@@ -298,22 +298,24 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public void onItemClick(View view, int position) {
         //setting mClicked true when none filter is selected otherwise false
         mClicked = position == 0;
-        // Brush effect is in second position
+        //Brush effect is in second position
         if (position == 1) {
             mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
 
             Log.i("Brush Effect", "Brush Effect Selected!");
-            mPhotoEditorView.setOnTouchListener(new View.OnTouchListener() {
+            //mPhotoEditorView.setOnTouchListener(new View.OnTouchListener() {
+            mPhotoScrollView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     Log.i("PhotoEditorView", "PhotoEditorView has been onTouched");
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    return false;
+                    //v.getParent().requestDisallowInterceptTouchEvent(true);
+                    //return false;
+                    return true;
                 }
             });
-
+            
             if (doodleSeekBar.getVisibility() == View.GONE && brushColorsView.getVisibility() == View.GONE) {
                 showBrushEffect();
             } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
