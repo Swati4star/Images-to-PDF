@@ -132,6 +132,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
                 Log.v("Stage 6", "Image path adding");
 
+                float pageWidth = document.getPageSize().getWidth() - (mMarginLeft + mMarginRight);
+                float pageHeight = document.getPageSize().getHeight() - (mMarginBottom + mMarginTop);
+                image.scaleToFit(pageWidth, pageHeight);
+
                 image.setAbsolutePosition(
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,
                         (documentRect.getHeight() - image.getScaledHeight()) / 2);
