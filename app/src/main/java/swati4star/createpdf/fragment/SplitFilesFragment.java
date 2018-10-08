@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
@@ -39,7 +41,7 @@ import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener {
+        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate {
 
     private Activity mActivity;
     private String mPath;
@@ -49,6 +51,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
 
+    @BindView(R.id.lottie_progress)
+    LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
     @BindView(R.id.splitFiles)
@@ -76,8 +80,10 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
-                mRecyclerViewFiles, this);
+        mLayout.setVisibility(View.GONE);
+        mLottieProgress.setVisibility(View.VISIBLE);
+        mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+
         resetValues();
         return rootview;
     }
@@ -155,5 +161,22 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public void onFileItemClick(String path) {
         mFileUtils.openFile(path);
+    }
+
+    @Override
+    public void onPopulate(ArrayList<String> paths) {
+        if (paths == null || paths.size() == 0) {
+            mLayout.setVisibility(View.GONE);
+        } else {
+            // Init recycler view
+            mRecyclerViewFiles.setVisibility(View.VISIBLE);
+            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
+                    paths, this::onFileItemClick);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
+            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        }
+        mLottieProgress.setVisibility(View.GONE);
     }
 }

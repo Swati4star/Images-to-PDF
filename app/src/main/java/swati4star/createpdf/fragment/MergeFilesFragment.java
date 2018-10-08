@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,6 +25,7 @@ import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.adapter.MergeSelectedFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
@@ -61,7 +64,7 @@ import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
-        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner {
+        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner, BottomSheetPopulate {
     private Activity mActivity;
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
@@ -77,6 +80,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private boolean mPasswordProtected = false;
     private String mPassword;
 
+    @BindView(R.id.lottie_progress)
+    LottieAnimationView mLottieProgress;
     @BindView(R.id.mergebtn)
     MorphingButton mergeBtn;
     @BindView(R.id.recyclerViewFiles)
@@ -113,8 +118,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
                 .getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
-        mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
-                mRecyclerViewFiles, this);
+        mLayout.setVisibility(View.GONE);
+        mLottieProgress.setVisibility(View.VISIBLE);
+        mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
         mSelectedFiles.setAdapter(mMergeSelectedFilesAdapter);
         mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
@@ -346,5 +352,22 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
 
         mergeBtn.setEnabled(enabled);
+    }
+
+    @Override
+    public void onPopulate(ArrayList<String> paths) {
+        if (paths == null || paths.size() == 0) {
+            mLayout.setVisibility(View.GONE);
+        } else {
+            // Init recycler view
+            mRecyclerViewFiles.setVisibility(View.VISIBLE);
+            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
+                    paths, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
+            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        }
+        mLottieProgress.setVisibility(View.GONE);
     }
 }
