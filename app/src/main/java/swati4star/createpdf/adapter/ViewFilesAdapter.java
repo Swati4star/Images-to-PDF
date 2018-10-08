@@ -189,7 +189,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public ArrayList<String> getSelectedFilePath() {
         ArrayList<String> filePathList = new ArrayList<>();
         for (int position : mSelectedFiles) {
-            filePathList.add(mFileList.get(position).getPath());
+            if (mFileList.size() > position)
+                filePathList.add(mFileList.get(position).getPath());
         }
         return filePathList;
     }
@@ -286,7 +287,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void shareFiles() {
         ArrayList<File> files = new ArrayList<>();
         for (int position : mSelectedFiles) {
-            files.add(mFileList.get(position));
+            if (mFileList.size() > position)
+                files.add(mFileList.get(position));
         }
         mFileUtils.shareMultipleFiles(files);
     }
