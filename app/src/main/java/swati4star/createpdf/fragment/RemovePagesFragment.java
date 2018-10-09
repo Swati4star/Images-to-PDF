@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -98,6 +99,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     TextView mInfoText;
     @BindView(R.id.compressionInfoText)
     TextView mCompressionInfoText;
+    @BindView(R.id.view_pdf)
+    Button mViewPdf;
     private Uri mUri;
 
     @Override
@@ -145,7 +148,9 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 return;
             }
 
-            mPDFUtils.reorderRemovePDF(mPath, outputPath, pages);
+            if (mPDFUtils.reorderRemovePDF(mPath, outputPath, pages)) {
+                viewPdfButton(outputPath);
+            }
             resetValues();
         }
     }
@@ -271,6 +276,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                     mActivity.getString(R.string.created));
             File input = new File(mPath);
             File output = new File(path);
+            viewPdfButton(path);
             mCompressionInfoText.setVisibility(View.VISIBLE);
             mCompressionInfoText.setText(String.format(mActivity.getString(R.string.compress_info),
                     getFormattedSize(input),
@@ -279,6 +285,16 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             showSnackbar(mActivity, R.string.encrypted_pdf);
         }
         resetValues();
+    }
+
+    private void viewPdfButton(String path) {
+        mViewPdf.setVisibility(View.VISIBLE);
+        mViewPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFileUtils.openFile(path);
+            }
+        });
     }
 
     @Override
