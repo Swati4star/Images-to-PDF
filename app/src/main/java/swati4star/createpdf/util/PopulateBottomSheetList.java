@@ -1,8 +1,6 @@
 package swati4star.createpdf.util;
 
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 
 import java.util.ArrayList;
 
@@ -11,31 +9,26 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 /**
  * AsyncTask used to populate the list of elements in the background
  */
-public class PopulateBottomSheetList extends AsyncTask<Void, Void, Void> {
+public class PopulateBottomSheetList extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private final BottomSheetPopulate mOnLoadListener;
-    private final Handler mHandler;
     private final DirectoryUtils mDirectoryUtils;
 
     PopulateBottomSheetList(BottomSheetPopulate listener,
                                    DirectoryUtils directoryUtils) {
         mOnLoadListener = listener;
         mDirectoryUtils = directoryUtils;
-        mHandler = new Handler(Looper.getMainLooper());
-
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
-        mHandler.postDelayed(this::populateListView, 1000);
-        return null;
+    protected ArrayList<String> doInBackground(Void... voids) {
+        return mDirectoryUtils.getAllPDFsOnDevice();
     }
 
-    /**
-     * Populate data into listView
-     */
-    private void populateListView() {
-        ArrayList<String> paths = mDirectoryUtils.getAllPDFsOnDevice();
+    @Override
+    protected void onPostExecute(ArrayList<String> paths) {
+        super.onPostExecute(paths);
         mOnLoadListener.onPopulate(paths);
     }
+
 }

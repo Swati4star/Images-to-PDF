@@ -190,7 +190,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 // close the renderer
                 renderer.close();
             }
-        } catch (IOException e) {
+        } catch (IOException | SecurityException e) {
             e.printStackTrace();
         }
 
