@@ -22,6 +22,7 @@
             android:layout_margin="24dp"
             android:maxWidth="30dp"
             android:padding="3dip"
+            style="@style/MorphingButton"
             android:text="@string/merge_file_select"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/remove_pages_text" />
+            android:text="@string/compress_pdf_prompt" />
 
         <EditText
             android:labelFor="@id/infoText"
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:inputType="text" />
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/compressionInfoText"
@@ -64,6 +65,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView" />
+
+        <Button
+            android:id="@+id/view_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View PDF"
+            android:layout_margin="16dp"
+            android:visibility="gone"
+            android:background="@color/mb_green"/>
 
     </LinearLayout>
 

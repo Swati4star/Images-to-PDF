@@ -66,7 +66,6 @@
     </string-array>
 
     <string name="pdf_ext" translatable="false">.pdf</string>
-    <string name="path_seperator">/</string>
     <string name="pdf_type" translatable="false">application/pdf</string>
 
     <string name="please_wait">Please Wait</string>
@@ -81,6 +80,7 @@
     <string name="viewFiles">View Files</string>
     <string name="extras">Extras</string>
     <string name="share">Share</string>
+    <string name="help">Help</string>
 
     <!--QR & Barcode Scan-->
     <string name="scan_qrcode">Scan QR code</string>
@@ -316,6 +316,7 @@
     <string name="filter_not_saved">Image could not be saved</string>
     <string name="remove_image_message">Are you sure you want to remove this image?</string>
     <string name="dont_show_again">Don\'t show again</string>
+    <string name="remove_page_message">Are you sure you want to remove this page?</string>
 
     <!-- Watermark Strings -->
     <string name="encrypted_file_text">encrypted file</string>
@@ -328,14 +329,12 @@
 
     <!-- Remove Pages -->
     <string name="remove_pages">Remove Pages</string>
-    <string name="remove_pages_text">Enter the pages you want to keep in the PDF. For example, if you want pages 1 to 5 and 7 to 10, enter 1–5,7–10.</string>
     <string name="remove_pages_error">The input value is not valid</string>
     <string name="encrypted_pdf">PDF is password protected</string>
+    <string name="file_access_error">We were unable to access PDF. Files may be encrypted or in the external storage.</string>
 
     <!-- Reorder Pages -->
     <string name="reorder_pages">Reorder Pages</string>
-    <string name="reorder_pages_text">Enter the order of the pages. For example, if you want to reorder a PDF with 5 pages,
-        you may write 4-5,1-3. The output PDF with have page no. 4,5, and then, 1,2,3. </string>
 
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
@@ -392,5 +391,22 @@
     <string name="viewfiles_addpassword">1. Select the PDF you wish to add password to. \n2. Select Add  Password. \n3. Type new password. Select OK. \n4. New PDF with password be created.</string>
     <string name="viewfiles_removepassword">1. Select the PDF you wish to remove password from. \n2. Select Remove Password. \n3. Type pdf password. Select OK. \n4. New PDF without PDF will be created.</string>
     <string name="grayscale_images">Create grayscale PDF</string>
+    <string name="add_margins">Add Margins</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
+
+    <!-- Welcome screens-->
+    <string name="welcome_create_pdf_message">Creating a PDF file</string>
+    <string name="welcome_create_pdf_info">View the PDF files previously created or create a new one!</string>
+    <string name="welcome_themes_title">Different themes</string>
+    <string name="welcome_themes_message">Go to Settings, and you can have three type of themes : Black, Dark, White</string>
+    <string name="welcome_merge_title">Merge PDF file</string>
+    <string name="welcome_merge_message">Merge different existing pdf in your phone in one file</string>
+    <string name="welcome_viewfiles_title">Viewing the PDF files</string>
+    <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your pdf file</string>
+    <string name="skip_text">Skip</string>
+    <string name="get_started_title">Get Started!</string>
 
 </resources>

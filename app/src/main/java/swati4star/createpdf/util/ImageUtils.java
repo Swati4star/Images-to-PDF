@@ -87,6 +87,7 @@ public class ImageUtils {
         File file = new File(path);
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
+        if (bitmap == null) return null;
         return ImageUtils.getRoundBitmap(bitmap);
     }
 }

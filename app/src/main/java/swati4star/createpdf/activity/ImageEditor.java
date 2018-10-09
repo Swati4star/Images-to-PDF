@@ -356,8 +356,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @Override
     public void onItemClick(int position) {
         int color = mBrushItems.get(position).getColor();
-        doodleSeekBar.setBackgroundColor(getResources().getColor(color));
-        mPhotoEditor.setBrushColor(getResources().getColor(color));
+        doodleSeekBar.setBackgroundColor(this.getResources().getColor(color));
+        mPhotoEditor.setBrushColor(this.getResources().getColor(color));
     }
 
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {

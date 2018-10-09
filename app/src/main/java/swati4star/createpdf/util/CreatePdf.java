@@ -37,6 +37,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final String mPageSize;
     private final boolean mPasswordProtected;
     private Boolean mAddWatermak;
+    private int mMarginTop;
+    private int mMarginBottom;
+    private int mMarginRight;
+    private int mMarginLeft;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -49,6 +53,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
         this.mBorderWidth = mImageToPDFOptions.getBorderWidth();
         this.mAddWatermak = mImageToPDFOptions.isAddWatermark();
+        this.mMarginTop = mImageToPDFOptions.getMarginTop();
+        this.mMarginBottom = mImageToPDFOptions.getMarginBottom();
+        this.mMarginRight = mImageToPDFOptions.getMarginRight();
+        this.mMarginLeft = mImageToPDFOptions.getMarginLeft();
         mPath = parentPath;
     }
 
@@ -73,10 +81,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Document document = new Document(PageSize.getRectangle(mPageSize), 38, 38, 50, 38);
-
+        Document document = new Document(PageSize.getRectangle(mPageSize),
+                mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
         Log.v("stage 2", "Document Created");
-
+        document.setMargins(mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
         Rectangle documentRect = document.getPageSize();
 
         try {
@@ -123,6 +131,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 image.scaleAbsolute(imageSize);
 
                 Log.v("Stage 6", "Image path adding");
+
+                float pageWidth = document.getPageSize().getWidth() - (mMarginLeft + mMarginRight);
+                float pageHeight = document.getPageSize().getHeight() - (mMarginBottom + mMarginTop);
+                image.scaleToFit(pageWidth, pageHeight);
 
                 image.setAbsolutePosition(
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,

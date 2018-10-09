@@ -5,7 +5,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -16,15 +15,6 @@ public class FileUriUtils {
     private static final String ISDOWNLOADDOC = "com.android.providers.downloads.documents";
     private static final String ISMEDIADOC = "com.android.providers.media.documents";
     private static final String ISGOOGLEPHOTODOC = "com.google.android.apps.photos.content";
-
-    /**
-     * Check whether current android os version is bigger than kitkat or not.
-     *
-     * @return - true if os version bigger than kitkat , else false
-     */
-    static boolean isAboveKitKat() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-    }
 
     /**
      * Check whether the image is whatsapp image
@@ -168,14 +158,6 @@ public class FileUriUtils {
             if (moveToFirst) {
                 // Get columns name by uri type.
                 String columnName = MediaStore.Images.Media.DATA;
-
-                if (uri == MediaStore.Images.Media.EXTERNAL_CONTENT_URI) {
-                    columnName = MediaStore.Images.Media.DATA;
-                } else if (uri == MediaStore.Audio.Media.EXTERNAL_CONTENT_URI) {
-                    columnName = MediaStore.Audio.Media.DATA;
-                } else if (uri == MediaStore.Video.Media.EXTERNAL_CONTENT_URI) {
-                    columnName = MediaStore.Video.Media.DATA;
-                }
 
                 // Get column index.
                 int imageColumnIndex = cursor.getColumnIndex(columnName);

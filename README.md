@@ -68,7 +68,9 @@ Hurray! PDF files of selected images are created.
 ### Different themes
 Go to Settings, and you can have three type of themes : Black, Dark, White
 
-<img src="./screenshots/home_theme_black.png" width="190px"> <img src="./screenshots/home_theme_dark.png" width="190px"> <img src="./screenshots/home_theme_white.png" width="190px">
+Black | Dark | White |
+--- | --- | --- |
+<img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> |  <img src="./screenshots/home_theme_white.png" width="190px"> |
 
 ### Merge PDF
 <img src="./screenshots/7_merge_pdf.png" width="190px">

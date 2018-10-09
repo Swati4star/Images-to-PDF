@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,8 +99,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(mActivity, mActivity.getResources().
-                        getString(R.string.scan_cancelled), Toast.LENGTH_SHORT).show();
+                showSnackbar(mActivity, R.string.scan_cancelled);
             } else {
                 Toast.makeText(mActivity, "Scan Result: " +  result.getContents(), Toast.LENGTH_SHORT).show();
 
@@ -109,7 +109,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 try {
                     mWriter = new PrintWriter(mTempFile);
                     mWriter.print("");
-                    mWriter.append("Result : ").append(result.getContents());
+                    mWriter.append(result.getContents());
                     mWriter.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -124,38 +124,24 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.scan_qrcode:
-                openCameraForQrcode();
+                openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
                 break;
             case R.id.scan_barcode:
-                openCameraForBarcode();
+                openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
                 break;
         }
     }
 
     /**
-     * Open camera for Barcode Scan
+     * Open scanner
+     * @param scannerType - type (qr code/bar code)
+     * @param promptId - string resource id for prompt
      */
-    public void openCameraForBarcode() {
+    public void openScanner(Collection<String> scannerType, int promptId) {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         // use forSupportFragment or forFragment method to use fragments instead of activity
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-        integrator.setPrompt(mActivity.getString(R.string.scan_barcode));
-        integrator.setScanningRectangle(1000, 450);
-        integrator.setResultDisplayDuration(0); // milliseconds to display result on screen after scan
-        integrator.setCameraId(0);  // Use a specific camera of the device
-        integrator.initiateScan();
-    }
-
-    /**
-     * Open camera for QRCode Scan
-     */
-    public void openCameraForQrcode() {
-        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
-        // use forSupportFragment or forFragment method to use fragments instead of activity
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        integrator.setPrompt(mActivity.getString(R.string.scan_qrcode));
-        integrator.setScanningRectangle(600, 600);
-        integrator.setResultDisplayDuration(0); // milliseconds to display result on screen after scan
+        integrator.setDesiredBarcodeFormats(scannerType);
+        integrator.setPrompt(mActivity.getString(promptId));
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.initiateScan();
     }
@@ -216,7 +202,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
     }
-
 
     /**
      * Resets pdf creation related values & show enhancement options

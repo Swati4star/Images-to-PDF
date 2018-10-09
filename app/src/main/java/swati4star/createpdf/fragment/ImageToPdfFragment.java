@@ -119,6 +119,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private ImageToPDFOptions mPdfOptions;
     private MaterialDialog mMaterialDialog;
     private String mHomePath;
+    private int mMarginTop = 50;
+    private int mMarginBottom = 38;
+    private int mMarginLeft = 50;
+    private int mMarginRight = 38;
 
     @Override
     public void onAttach(Context context) {
@@ -187,7 +191,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
      * Shows enhancement options
      */
     private void showEnhancementOptions() {
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         ArrayList<EnhancementOptionsEntity> list = getEnhancementOptions(mActivity, mPdfOptions);
         EnhancementOptionsAdapter adapter =
@@ -241,6 +245,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     void openPdf() {
         mFileUtils.openFile(mPath);
     }
+
+
 
     /**
      * Called after user is asked to grant permissions
@@ -378,6 +384,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 saveCurrentImage();
                 createPdf();
                 break;
+            case 9:
+                addMargins();
+                break;
         }
     }
 
@@ -389,7 +398,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
             dir.mkdirs();
-            Picasso picasso = Picasso.with(getContext());
+            Picasso picasso = Picasso.with(mActivity);
             Transformation transformation = new GrayscaleTransformation();
 
             for (int countElements = mImagesUri.size() - 1; countElements >= 0; countElements--) {
@@ -626,5 +635,47 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
             }
         };
+    }
+
+    void addMargins() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+                .title(R.string.add_margins)
+                .customView(R.layout.add_margins_dialog, false)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive(((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    EditText top = view.findViewById(R.id.topMarginEditText);
+                    EditText bottom = view.findViewById(R.id.bottomMarginEditText);
+                    EditText right = view.findViewById(R.id.rightMarginEditText);
+                    EditText left = view.findViewById(R.id.leftMarginEditText);
+                    if (top.getText().toString().isEmpty())
+                        mMarginTop = 0;
+                    else
+                        mMarginTop = Integer.parseInt(top.getText().toString());
+                    if (bottom.getText().toString().isEmpty())
+                        mMarginBottom = 0;
+                    else
+                        mMarginBottom = Integer.parseInt(bottom.getText().toString());
+                    if (right.getText().toString().isEmpty())
+                        mMarginRight = 0;
+                    else
+                        mMarginRight = Integer.parseInt(right.getText().toString());
+                    if (left.getText().toString().isEmpty())
+                        mMarginLeft = 0;
+                    else
+                        mMarginLeft = Integer.parseInt(left.getText().toString());
+                    mPdfOptions.setMargins(mMarginTop, mMarginBottom, mMarginRight, mMarginLeft);
+                })).build();
+        View view = materialDialog.getCustomView();
+        EditText top = view.findViewById(R.id.topMarginEditText);
+        EditText bottom = view.findViewById(R.id.bottomMarginEditText);
+        EditText right = view.findViewById(R.id.rightMarginEditText);
+        EditText left = view.findViewById(R.id.leftMarginEditText);
+        top.setText(Integer.toString(mMarginTop));
+        bottom.setText(Integer.toString(mMarginBottom));
+        right.setText(Integer.toString(mMarginRight));
+        left.setText(Integer.toString(mMarginLeft));
+        materialDialog.show();
     }
 }

@@ -46,6 +46,7 @@ import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
 
+
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0)
@@ -96,39 +99,43 @@ public class MainActivity extends AppCompatActivity
      * @return - instance of current fragment
      */
     private Fragment checkForAppShortcutClicked() {
-        Fragment fragment;
+        Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (Objects.requireNonNull(getIntent().getAction())) {
-            case ACTION_SELECT_IMAGES:
-                fragment = new ImageToPdfFragment();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(OPEN_SELECT_IMAGES, true);
-                fragment.setArguments(bundle);
-                break;
-            case ACTION_VIEW_FILES:
-                fragment = new ViewFilesFragment();
-                setDefaultMenuSelected(1);
-                break;
-            case ACTION_TEXT_TO_PDF:
-                fragment = new TextToPdfFragment();
-                setDefaultMenuSelected(4);
-                break;
-            case ACTION_MERGE_PDF:
-                fragment = new MergeFilesFragment();
-                setDefaultMenuSelected(2);
-                break;
-            default:
-                // Set default fragment
-                fragment = new HomeFragment();
-                break;
-        }
 
+        if (getIntent().getAction() != null) {
+            switch (Objects.requireNonNull(getIntent().getAction())) {
+                case ACTION_SELECT_IMAGES:
+                    fragment = new ImageToPdfFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(OPEN_SELECT_IMAGES, true);
+                    fragment.setArguments(bundle);
+                    break;
+                case ACTION_VIEW_FILES:
+                    fragment = new ViewFilesFragment();
+                    setDefaultMenuSelected(1);
+                    break;
+                case ACTION_TEXT_TO_PDF:
+                    fragment = new TextToPdfFragment();
+                    setDefaultMenuSelected(4);
+                    break;
+                case ACTION_MERGE_PDF:
+                    fragment = new MergeFilesFragment();
+                    setDefaultMenuSelected(2);
+                    break;
+                default:
+                    // Set default fragment
+                    fragment = new HomeFragment();
+                    break;
+            }
+        }
         if (areImagesRecevied())
             fragment = new ImageToPdfFragment();
 
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
         return fragment;
     }
+
 
     /**
      * Ininitializes default values
@@ -299,6 +306,10 @@ public class MainActivity extends AppCompatActivity
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
+            case R.id.nav_help:
+                Intent intent = new Intent(this, WelcomeActivity.class);
+                intent.putExtra(SHOW_WELCOME_ACT, true);
+                startActivity(intent);
         }
 
         try {
@@ -308,5 +319,9 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         return true;
+    }
+
+    public void setNavigationViewSelection(int index) {
+        mNavigationView.getMenu().getItem(index).setChecked(true);
     }
 }

@@ -86,6 +86,8 @@
                     android:id="@+id/enhancement_options_recycle_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:isScrollContainer="false"
                     android:layout_margin="4dp" />
             </LinearLayout>
 
@@ -107,7 +109,6 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:padding="8dp"
-        android:background="?attr/similarBgColor"
         android:visibility="gone" />
 
 </RelativeLayout>

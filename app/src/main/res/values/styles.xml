@@ -19,6 +19,7 @@
         <item name="bannerBackgroundColor">@color/colorAccent</item>
         <item name="similarBgColor">@color/mb_white</item>
         <item name="bottomSheetBgColor">@color/windowBackground_light</item>
+        <item name="lockIconTintColor">@color/black</item>
     </style>
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
@@ -32,6 +33,7 @@
         <item name="bannerBackgroundColor">@color/windowBackground_dark</item>
         <item name="similarBgColor">@color/black</item>
         <item name="bottomSheetBgColor">@color/colorBackground_black</item>
+        <item name="lockIconTintColor">@color/mb_white</item>
     </style>
 
     <style name="ActivityThemeDark" parent="Theme.AppCompat.NoActionBar">
@@ -47,6 +49,7 @@
         <item name="bannerBackgroundColor">@color/colorAccent</item>
         <item name="similarBgColor">@color/black</item>
         <item name="bottomSheetBgColor">@color/windowBackground_dark</item>
+        <item name="lockIconTintColor">@color/mb_white</item>
     </style>
 
     <style name="ToolbarTheme">

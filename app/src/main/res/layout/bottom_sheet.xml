@@ -48,9 +48,29 @@
             app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewFiles"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:minHeight="220dp"
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_progress"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_gravity="center"
+            app:lottie_rawRes="@raw/search_file"
+
+            />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewFiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </LinearLayout>

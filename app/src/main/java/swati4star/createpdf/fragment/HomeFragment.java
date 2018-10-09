@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
@@ -83,6 +84,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mActivity = (Activity) context;
     }
 
+    private void setNavigationViewSelection(int index) {
+        if (mActivity instanceof MainActivity)
+            ((MainActivity) mActivity).setNavigationViewSelection(index);
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -93,57 +99,71 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.images_to_pdf:
                 fragment = new ImageToPdfFragment();
+                setNavigationViewSelection(1);
                 break;
             case R.id.qr_barcode_to_pdf:
                 fragment = new QrBarcodeScanFragment();
+                setNavigationViewSelection(2);
                 break;
             case R.id.text_to_pdf:
                 fragment = new TextToPdfFragment();
+                setNavigationViewSelection(6);
                 break;
             case R.id.view_files:
                 fragment = new ViewFilesFragment();
+                setNavigationViewSelection(3);
                 break;
             case R.id.view_history:
                 fragment = new HistoryFragment();
+                setNavigationViewSelection(11);
                 break;
             case R.id.merge_pdf:
                 fragment = new MergeFilesFragment();
+                setNavigationViewSelection(4);
                 break;
             case R.id.split_pdf:
                 fragment = new SplitFilesFragment();
+                setNavigationViewSelection(5);
                 break;
             case R.id.compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
+                setNavigationViewSelection(7);
                 break;
             case R.id.extract_images:
                 fragment = new ExtractImagesFragment();
+                setNavigationViewSelection(10);
                 break;
             case R.id.remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
+                setNavigationViewSelection(8);
                 break;
             case R.id.rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
+                setNavigationViewSelection(9);
                 break;
             case R.id.add_password:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_PASSWORD);
                 fragment.setArguments(bundle);
+                setNavigationViewSelection(3);
                 break;
             case R.id.remove_password:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, REMOVE_PASSWORD);
                 fragment.setArguments(bundle);
+                setNavigationViewSelection(3);
                 break;
             case R.id.rotate_pages:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
+                setNavigationViewSelection(3);
                 break;
         }
 

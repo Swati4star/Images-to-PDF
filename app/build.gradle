@@ -7,11 +7,11 @@ android {
     defaultConfig {
         applicationId "swati4star.createpdf"
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion 19
+        minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 27
-        versionCode 53
-        versionName "8.0.0"
+        versionCode 61
+        versionName "8.3.4"
     }
     buildTypes {
         release {
@@ -32,8 +32,6 @@ android {
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
-    maven {
-        url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/" }
 }
 
 dependencies {
@@ -80,19 +78,11 @@ dependencies {
     implementation 'com.zhihu.android:matisse:0.5.2-beta2'
     implementation 'lib.kashif:folderpicker:2.4'
 
-    // Supports Android 4.0.3 and later (API level 15)
-    implementation 'com.embarkmobile:zxing-android-minimal:2.0.0@aar'
-    // Supports Android 2.1 and later (API level 7), but not optimal for later Android versions.
-    // If you only plan on supporting Android 4.0.3 and up, you don't need to include this.
-    implementation 'com.embarkmobile:zxing-android-legacy:2.0.0@aar'
-    // Convenience library to launch the scanning and encoding Activities.
-    // It automatically picks the best scanning library from the above two, depending on the
-    // Android version and what is available.
-    implementation 'com.embarkmobile:zxing-android-integration:2.0.0@aar'
-    // Version 3.0.x of zxing core contains some code that is not compatible on Android 2.2 and earlier.
-    // This mostly affects encoding, but you should test if you plan to support these versions.
-    // Older versions e.g. 2.2 may also work if you need support for older Android versions.
-    implementation 'com.google.zxing:core:3.0.1'
+    // Zxing - for scanning qr code
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+
+    testImplementation 'org.mockito:mockito-core:2.23.0'
 }
 
 preBuild.dependsOn('checkstyle')
