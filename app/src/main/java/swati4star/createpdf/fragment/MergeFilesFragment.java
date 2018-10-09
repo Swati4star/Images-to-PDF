@@ -134,7 +134,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
      * Function to show the enhancement options.
      */
     private void showEnhancementOptions() {
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
         mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
@@ -203,13 +203,15 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     private void onPasswordAdded() {
         mEnhancementOptionsEntityArrayList.get(0)
-                .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
+                .setImage(mActivity.getResources()
+                        .getDrawable(R.drawable.baseline_done_24));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
     private void onPasswordRemoved() {
         mEnhancementOptionsEntityArrayList.get(0)
-                .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
+                .setImage(mActivity.getResources()
+                        .getDrawable(R.drawable.baseline_enhanced_encryption_24));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 

@@ -48,6 +48,7 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
@@ -161,25 +162,29 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
         ParcelFileDescriptor fileDescriptor = null;
         try {
-            fileDescriptor = getContext().getContentResolver().openFileDescriptor(mUri, "r");
-            PdfRenderer renderer = new PdfRenderer(fileDescriptor);
-            final int pageCount = renderer.getPageCount();
-            for (int i = 0; i < pageCount; i++) {
-                PdfRenderer.Page page = renderer.openPage(i);
+            if (mUri != null)
+                fileDescriptor = mActivity.getContentResolver().openFileDescriptor(mUri, "r");
+            else if (mPath != null)
+                fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+            if (fileDescriptor != null) {
+                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+                final int pageCount = renderer.getPageCount();
+                for (int i = 0; i < pageCount; i++) {
+                    PdfRenderer.Page page = renderer.openPage(i);
+                    Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
+                            Bitmap.Config.ARGB_8888);
+                    // say we render for showing on the screen
+                    page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
-                Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
-                        Bitmap.Config.ARGB_8888);
-                // say we render for showing on the screen
-                page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+                    // do stuff with the bitmap
+                    bitmaps.add(bitmap);
+                    // close the page
+                    page.close();
+                }
 
-                // do stuff with the bitmap
-                bitmaps.add(bitmap);
-                // close the page
-                page.close();
+                // close the renderer
+                renderer.close();
             }
-
-            // close the renderer
-            renderer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
