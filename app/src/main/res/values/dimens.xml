@@ -10,6 +10,5 @@
     <dimen name="dots_height">30dp</dimen>
     <dimen name="half_margin">8dp</dimen>
     <dimen name="standard_margin">16dp</dimen>
-    <dimen name="double_margin">32dp</dimen>
 
 </resources>

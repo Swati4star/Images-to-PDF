@@ -110,7 +110,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
      * Function to show the enhancement options.
      */
     private void showEnhancementOptions() {
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         mTextEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);

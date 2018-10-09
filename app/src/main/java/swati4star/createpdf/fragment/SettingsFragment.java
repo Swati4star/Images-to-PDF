@@ -104,7 +104,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     }
 
     private void showSettingsOptions() {
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
         EnhancementOptionsAdapter adapter =

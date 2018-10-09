@@ -191,7 +191,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
      * Shows enhancement options
      */
     private void showEnhancementOptions() {
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         ArrayList<EnhancementOptionsEntity> list = getEnhancementOptions(mActivity, mPdfOptions);
         EnhancementOptionsAdapter adapter =
@@ -398,7 +398,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
             dir.mkdirs();
-            Picasso picasso = Picasso.with(getContext());
+            Picasso picasso = Picasso.with(mActivity);
             Transformation transformation = new GrayscaleTransformation();
 
             for (int countElements = mImagesUri.size() - 1; countElements >= 0; countElements--) {

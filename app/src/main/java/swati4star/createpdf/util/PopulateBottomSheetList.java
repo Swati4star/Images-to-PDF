@@ -27,7 +27,7 @@ public class PopulateBottomSheetList extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        mHandler.post(this::populateListView);
+        mHandler.postDelayed(this::populateListView, 1000);
         return null;
     }
 
