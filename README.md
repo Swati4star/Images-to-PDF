@@ -8,6 +8,9 @@
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/Swati4star/Images-to-PDF.svg?columns=all)](https://waffle.io/Swati4star/Images-to-PDF)
 
+[<img src="https://f-droid.org/badge/get-it-on.png"
+      alt="Get it on F-Droid"
+      height="80">](https://f-droid.org/app/swati4star.createpdf)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
