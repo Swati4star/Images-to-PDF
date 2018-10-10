@@ -73,18 +73,21 @@ public class PageSizeUtils {
 
     /**
      * Show a dialog to modify the page size
-     * @param layout - layout resoiurce id for dialog
      * @param saveValue - save the value in shared preferences
      * @return - dialog object
      */
-    public MaterialDialog showPageSizeDialog(int layout, boolean saveValue) {
-        MaterialDialog materialDialog = getPageSizeDialog(layout, saveValue);
+    public MaterialDialog showPageSizeDialog(boolean saveValue) {
+        MaterialDialog materialDialog = getPageSizeDialog(saveValue);
+
         View view = materialDialog.getCustomView();
         RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);
         Spinner spinnerA = view.findViewById(R.id.spinner_page_size_a0_a10);
         Spinner spinnerB = view.findViewById(R.id.spinner_page_size_b0_b10);
         RadioButton radioButtonDefault = view.findViewById(R.id.page_size_default);
         radioButtonDefault.setText(String.format(mActivity.getString(R.string.default_page_size), mDefaultPageSize));
+
+        if (saveValue)
+            view.findViewById(R.id.set_as_default).setVisibility(View.GONE);
 
         if (mPageSize.equals(mDefaultPageSize)) {
             radioGroup.check(R.id.page_size_default);
@@ -105,14 +108,13 @@ public class PageSizeUtils {
 
     /**
      * Private showpagesizeutils dialog
-     * @param layout - layout resource id
      * @param saveValue - save the value in shared prefs
      * @return - dialog object
      */
-    private MaterialDialog getPageSizeDialog(int layout, boolean saveValue) {
+    private MaterialDialog getPageSizeDialog(boolean saveValue) {
         MaterialDialog.Builder builder = createCustomDialogWithoutContent((Activity) mActivity,
                 R.string.set_page_size_text);
-        return builder.customView(layout, true)
+        return builder.customView(R.layout.set_page_size_dialog, true)
                 .onPositive((dialog1, which) -> {
                     View view = dialog1.getCustomView();
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_page_size);

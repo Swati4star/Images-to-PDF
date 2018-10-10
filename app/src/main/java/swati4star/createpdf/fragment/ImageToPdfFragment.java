@@ -70,9 +70,11 @@ import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALETYPE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
@@ -81,6 +83,8 @@ import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
+import static swati4star.createpdf.util.ImageUtils.mImageScaleType;
+import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -218,6 +222,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     void createPdf() {
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
+        mPdfOptions.setImageScaleType(mImageScaleType);
         MaterialDialog.Builder builder = createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
         builder.input(getString(R.string.example), null, (dialog, input) -> {
@@ -367,24 +372,27 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         INTENT_REQUEST_APPLY_FILTER);
                 break;
             case 4:
-                mPageSizeUtils.showPageSizeDialog(R.layout.set_page_size_dialog, false);
+                mPageSizeUtils.showPageSizeDialog(false);
                 break;
             case 5:
+                showImageScaleTypeDialog(mActivity, false);
+                break;
+            case 6:
                 startActivityForResult(PreviewActivity.getStartIntent(mActivity, mImagesUri),
                         INTENT_REQUEST_PREVIEW_IMAGE);
                 break;
-            case 6:
+            case 7:
                 addBorder();
                 break;
-            case 7:
+            case 8:
                 startActivityForResult(RearrangeImages.getStartIntent(mActivity, mImagesUri),
                         INTENT_REQUEST_REARRANGE_IMAGE);
                 break;
-            case 8:
+            case 9:
                 saveCurrentImage();
                 createPdf();
                 break;
-            case 9:
+            case 10:
                 addMargins();
                 break;
         }
@@ -602,6 +610,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImageCounter = 0;
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
+        mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
+                IMAGE_SCALE_TYPE_ASPECT_RATIO);
+        mPdfOptions.setMargins(0, 0, 0, 0);
     }
 
     /**
@@ -667,15 +678,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         mMarginLeft = Integer.parseInt(left.getText().toString());
                     mPdfOptions.setMargins(mMarginTop, mMarginBottom, mMarginRight, mMarginLeft);
                 })).build();
-        View view = materialDialog.getCustomView();
-        EditText top = view.findViewById(R.id.topMarginEditText);
-        EditText bottom = view.findViewById(R.id.bottomMarginEditText);
-        EditText right = view.findViewById(R.id.rightMarginEditText);
-        EditText left = view.findViewById(R.id.leftMarginEditText);
-        top.setText(Integer.toString(mMarginTop));
-        bottom.setText(Integer.toString(mMarginBottom));
-        right.setText(Integer.toString(mMarginRight));
-        left.setText(Integer.toString(mMarginLeft));
         materialDialog.show();
     }
 }

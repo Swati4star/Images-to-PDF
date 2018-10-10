@@ -170,7 +170,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
             // Init recycler view
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, this::onFileItemClick);
+                    paths, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);

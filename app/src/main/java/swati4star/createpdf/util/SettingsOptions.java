@@ -53,6 +53,10 @@ public class SettingsOptions {
                             sharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                                     Constants.DEFAULT_THEME))));
 
+            options.add(new EnhancementOptionsEntity(
+                    context.getResources().getDrawable(R.drawable.ic_aspect_ratio_black_24dp),
+                    context.getString(R.string.image_scale_type)));
+
             return options;
         }
     }

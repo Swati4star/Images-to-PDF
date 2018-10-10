@@ -10,6 +10,7 @@ public class ImageToPDFOptions extends PDFOptions {
     private int mMarginBottom = 0;
     private int mMarginRight = 0;
     private int mMarginLeft = 0;
+    private String mImageScaleType;
 
     public ImageToPDFOptions() {
         super();
@@ -62,5 +63,13 @@ public class ImageToPDFOptions extends PDFOptions {
 
     public int getMarginLeft() {
         return mMarginLeft;
+    }
+
+    public String getImageScaleType() {
+        return mImageScaleType;
+    }
+
+    public void setImageScaleType(String mImageScaleType) {
+        this.mImageScaleType = mImageScaleType;
     }
 }

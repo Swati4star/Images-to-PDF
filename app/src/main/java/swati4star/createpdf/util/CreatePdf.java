@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
@@ -41,6 +42,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private int mMarginBottom;
     private int mMarginRight;
     private int mMarginLeft;
+    private String mImagescaleType;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -57,6 +59,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mMarginBottom = mImageToPDFOptions.getMarginBottom();
         this.mMarginRight = mImageToPDFOptions.getMarginRight();
         this.mMarginLeft = mImageToPDFOptions.getMarginLeft();
+        this.mImagescaleType = mImageToPDFOptions.getImageScaleType();
         mPath = parentPath;
     }
 
@@ -126,21 +129,20 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);
 
-                Rectangle imageSize = ImageUtils.calculateFitSize(bitmap.getWidth() + mBorderWidth,
-                        bitmap.getHeight() + mBorderWidth, documentRect);
-                image.scaleAbsolute(imageSize);
-
                 Log.v("Stage 6", "Image path adding");
 
                 float pageWidth = document.getPageSize().getWidth() - (mMarginLeft + mMarginRight);
                 float pageHeight = document.getPageSize().getHeight() - (mMarginBottom + mMarginTop);
-                image.scaleToFit(pageWidth, pageHeight);
+                if (mImagescaleType.equals(IMAGE_SCALE_TYPE_ASPECT_RATIO))
+                    image.scaleToFit(pageWidth, pageHeight);
+                else
+                    image.scaleAbsolute(pageWidth, pageHeight);
 
                 image.setAbsolutePosition(
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,
                         (documentRect.getHeight() - image.getScaledHeight()) / 2);
-                Log.v("Stage 7", "Image Alignments");
 
+                Log.v("Stage 7", "Image Alignments");
                 document.add(image);
 
                 document.newPage();

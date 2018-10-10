@@ -326,5 +326,9 @@
     <string name="skip_text">Skip</string>
     <string name="help">Help</string>
     <string name="get_started_title">Get Started!</string>
+    <string name="image_scale_type">Set Image Scale Type</string>
+    <string name="select_scale_type">Select Image scaling type</string>
+    <string name="stretch_image">Stretch image to fit on page</string>
+    <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
 
 </resources>
