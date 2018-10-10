@@ -81,6 +81,12 @@
     <string name="extras">Extras</string>
     <string name="share">Share</string>
     <string name="help">Help</string>
+    
+    <!-- images to PDF -->
+    <string name="image_scale_type">Set Image Scale Type</string>
+    <string name="select_scale_type">Select Image scaling type</string>
+    <string name="stretch_image">Stretch image to fit on page</string>
+    <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
 
     <!--QR & Barcode Scan-->
     <string name="scan_qrcode">Scan QR code</string>
