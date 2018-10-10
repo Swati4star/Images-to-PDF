@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <RadioGroup
+        android:id="@+id/scale_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/aspect_ratio"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/maintain_aspect_ratio"/>
+
+        <RadioButton
+            android:id="@+id/stretch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stretch_image"/>
+
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/cbSetDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/set_as_default" />
+
+</LinearLayout>

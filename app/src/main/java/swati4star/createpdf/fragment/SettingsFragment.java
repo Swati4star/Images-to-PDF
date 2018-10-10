@@ -38,6 +38,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
+import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -95,8 +96,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     showSnackbar(mActivity, R.string.storage_location_modified);
                     storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
                             getDefaultStorageLocation()));
-                } else {
-                    showSnackbar(mActivity, R.string.error_occurred);
                 }
                 break;
         }
@@ -129,6 +128,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                 break;
             case 4:
                 setTheme();
+                break;
+            case 5:
+                showImageScaleTypeDialog(mActivity, true);
                 break;
         }
     }

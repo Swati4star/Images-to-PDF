@@ -41,6 +41,10 @@ public class ImageEnhancementOptionsUtils {
                 context.getResources().getString(R.string.set_page_size_text)));
 
         options.add(new EnhancementOptionsEntity(
+                context.getResources().getDrawable(R.drawable.ic_aspect_ratio_black_24dp),
+                context.getResources().getString(R.string.image_scale_type)));
+
+        options.add(new EnhancementOptionsEntity(
                 context.getResources().getDrawable(R.drawable.ic_play_circle_outline_black_24dp),
                 context.getResources().getString(R.string.preview_image_to_pdf)));
 
