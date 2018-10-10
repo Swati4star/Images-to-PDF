@@ -32,6 +32,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -42,25 +44,35 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
+import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileSortUtils;
+import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MoveFilesToDirectory;
 import swati4star.createpdf.util.PopulateList;
+import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
+import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.DialogUtils.showFilesInfoDialog;
 import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ViewFilesFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
         EmptyStateChangeListener,
-        ItemSelectedListener {
+        ItemSelectedListener, MergeFilesListener {
 
     // Directory operations constants
     public static final int NEW_DIR = 1;
@@ -93,6 +105,14 @@ public class ViewFilesFragment extends Fragment
     private boolean mCheckBoxChanged = false;
     private AlertDialog.Builder mAlertDialogBuilder;
 
+
+    private FileUtils mFileUtils;
+    private String mHomePath;
+    private boolean mPasswordProtected = false;
+    private String mPassword;
+    private int mCountFiles;
+    private MaterialDialog mMaterialDialog;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -112,6 +132,9 @@ public class ViewFilesFragment extends Fragment
         mViewFilesListRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
         mSwipeView.setOnRefreshListener(this);
 
+        mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
+                .getString(STORAGE_LOCATION,
+                        getDefaultStorageLocation());
         int dialogId;
         if (getArguments() != null) {
             dialogId = getArguments().getInt(BUNDLE_DATA);
@@ -153,6 +176,8 @@ public class ViewFilesFragment extends Fragment
             mSearchView.setIconifiedByDefault(true);
         } else {
             inflater.inflate(R.menu.activity_view_files_actions_if_selected, menu);
+            MenuItem item = menu.findItem(R.id.item_merge);
+            item.setVisible(mCountFiles > 1); // Show Merge icon when two or more files was selected
         }
     }
 
@@ -194,8 +219,62 @@ public class ViewFilesFragment extends Fragment
                     showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 }
                 break;
+            case R.id.item_merge:
+                if (mViewFilesAdapter.getItemCount() > 1) {
+                    showSnackbar(mActivity, "merged");
+                    mergeFiles();
+                }
+                break;
         }
         return true;
+    }
+
+    /**
+     * Merge the selected PDFs into a single PDF
+     * Show a dialog to allow user to enter file name
+     */
+    void mergeFiles() {
+        String[] pdfpaths =  mViewFilesAdapter.getSelectedFilePath().toArray(new String[0]);
+        new MaterialDialog.Builder(mActivity)
+                .title(R.string.creating_pdf)
+                .content(R.string.enter_file_name)
+                .input(getString(R.string.example), null, (dialog, input) -> {
+                    if (StringUtils.isEmpty(input)) {
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    } else {
+                        if (!mFileUtils.isFileExist(input + getString(R.string.pdf_ext))) {
+                            new MergePdf(input.toString(), mHomePath, mPasswordProtected,
+                                    mPassword, this).execute(pdfpaths);
+                        } else {
+                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
+                                    mHomePath, mPasswordProtected, mPassword,
+                                    this).execute(pdfpaths))
+                                    .onNegative((dialog1, which) -> mergeFiles()).show();
+                        }
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void resetValues(boolean isPDFMerged, String path) {
+        mMaterialDialog.dismiss();
+        if (isPDFMerged) {
+            getSnackbarwithAction(mActivity, R.string.pdf_merged)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
+            new DatabaseHelper(mActivity).insertRecord(path,
+                    mActivity.getString(R.string.created));
+        } else
+            showSnackbar(mActivity, R.string.pdf_merge_error);
+
+        mViewFilesAdapter.updateDataset();
+    }
+
+    @Override
+    public void mergeStarted() {
+        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog.show();
     }
 
     /**
@@ -471,6 +550,7 @@ public class ViewFilesFragment extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+        mFileUtils = new FileUtils(mActivity);
         mDirectoryUtils = new DirectoryUtils(mActivity);
     }
 
@@ -485,7 +565,7 @@ public class ViewFilesFragment extends Fragment
         AppCompatActivity activity = ((AppCompatActivity)
                 Objects.requireNonNull(mActivity));
         ActionBar toolbar = activity.getSupportActionBar();
-
+        mCountFiles = countFiles;
         if (toolbar != null) {
             if (countFiles == 0) {
                 toolbar.setTitle(appName);
@@ -501,6 +581,9 @@ public class ViewFilesFragment extends Fragment
                     mIsChecked = true;
                     activity.invalidateOptionsMenu();
                 }
+                if (countFiles == 1 || countFiles == 2)
+                    //When one or two files are selected refresh ActionBar: set Merge option invisible or visible
+                    activity.invalidateOptionsMenu();
             }
         }
     }
@@ -513,4 +596,6 @@ public class ViewFilesFragment extends Fragment
         ActionBar toolbar = activity.getSupportActionBar();
         toolbar.setTitle(appName);
     }
+
+
 }
