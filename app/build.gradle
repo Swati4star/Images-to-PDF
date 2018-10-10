@@ -10,8 +10,8 @@ android {
         minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 27
-        versionCode 58
-        versionName "8.3.1"
+        versionCode 63
+        versionName "8.3.6"
     }
     buildTypes {
         release {
@@ -32,8 +32,6 @@ android {
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
-    maven {
-        url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/" }
 }
 
 dependencies {

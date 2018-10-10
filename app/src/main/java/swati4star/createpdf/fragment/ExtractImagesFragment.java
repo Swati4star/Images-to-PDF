@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
@@ -30,6 +31,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.ImagesPreviewActivity;
 import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
@@ -44,7 +46,7 @@ import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        ExtractImagesAdapter.OnFileItemClickedListener, ExtractImagesListener {
+        ExtractImagesAdapter.OnFileItemClickedListener, ExtractImagesListener, BottomSheetPopulate {
 
     private Activity mActivity;
     private String mPath;
@@ -55,6 +57,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
     private ArrayList<String> mOutFilePaths;
     private MaterialDialog mMaterialDialog;
 
+    @BindView(R.id.lottie_progress)
+    LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
     @BindView(R.id.extractImages)
@@ -84,8 +88,8 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
-                mRecyclerViewFiles, this);
+        mLottieProgress.setVisibility(View.VISIBLE);
+        mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         resetView();
         return rootview;
     }
@@ -194,4 +198,20 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
         mExtractedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
     }
 
+    @Override
+    public void onPopulate(ArrayList<String> paths) {
+        if (paths == null || paths.size() == 0) {
+            mLayout.setVisibility(View.GONE);
+        } else {
+            // Init recycler view
+            mRecyclerViewFiles.setVisibility(View.VISIBLE);
+            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
+                    paths, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
+            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        }
+        mLottieProgress.setVisibility(View.GONE);
+    }
 }

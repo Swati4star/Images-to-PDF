@@ -11,11 +11,13 @@ import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
@@ -36,14 +39,17 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.RearrangePdfPages;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
@@ -57,7 +63,7 @@ import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        OnPDFCompressedInterface {
+        OnPDFCompressedInterface, BottomSheetPopulate {
 
     private Activity mActivity;
     private String mPath;
@@ -70,6 +76,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private String mOperation;
     private MaterialDialog mMaterialDialog;
 
+    @BindView(R.id.lottie_progress)
+    LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
     @BindView(R.id.pdfCreate)
@@ -91,6 +99,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     TextView mInfoText;
     @BindView(R.id.compressionInfoText)
     TextView mCompressionInfoText;
+    @BindView(R.id.view_pdf)
+    Button mViewPdf;
     private Uri mUri;
 
     @Override
@@ -101,8 +111,9 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
-        mBottomSheetUtils.populateBottomSheetWithPDFs(mLayout,
-                mRecyclerViewFiles, this);
+        mLottieProgress.setVisibility(View.VISIBLE);
+        mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+
         resetValues();
         return rootview;
     }
@@ -137,7 +148,9 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 return;
             }
 
-            mPDFUtils.reorderRemovePDF(mPath, outputPath, pages);
+            if (mPDFUtils.reorderRemovePDF(mPath, outputPath, pages)) {
+                viewPdfButton(outputPath);
+            }
             resetValues();
         }
     }
@@ -154,26 +167,30 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
         ParcelFileDescriptor fileDescriptor = null;
         try {
-            fileDescriptor = getContext().getContentResolver().openFileDescriptor(mUri, "r");
-            PdfRenderer renderer = new PdfRenderer(fileDescriptor);
-            final int pageCount = renderer.getPageCount();
-            for (int i = 0; i < pageCount; i++) {
-                PdfRenderer.Page page = renderer.openPage(i);
+            if (mUri != null)
+                fileDescriptor = mActivity.getContentResolver().openFileDescriptor(mUri, "r");
+            else if (mPath != null)
+                fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+            if (fileDescriptor != null) {
+                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+                final int pageCount = renderer.getPageCount();
+                for (int i = 0; i < pageCount; i++) {
+                    PdfRenderer.Page page = renderer.openPage(i);
+                    Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
+                            Bitmap.Config.ARGB_8888);
+                    // say we render for showing on the screen
+                    page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
-                Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
-                        Bitmap.Config.ARGB_8888);
-                // say we render for showing on the screen
-                page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+                    // do stuff with the bitmap
+                    bitmaps.add(bitmap);
+                    // close the page
+                    page.close();
+                }
 
-                // do stuff with the bitmap
-                bitmaps.add(bitmap);
-                // close the page
-                page.close();
+                // close the renderer
+                renderer.close();
             }
-
-            // close the renderer
-            renderer.close();
-        } catch (IOException e) {
+        } catch (IOException | SecurityException e) {
             e.printStackTrace();
         }
 
@@ -259,6 +276,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                     mActivity.getString(R.string.created));
             File input = new File(mPath);
             File output = new File(path);
+            viewPdfButton(path);
             mCompressionInfoText.setVisibility(View.VISIBLE);
             mCompressionInfoText.setText(String.format(mActivity.getString(R.string.compress_info),
                     getFormattedSize(input),
@@ -267,5 +285,32 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             showSnackbar(mActivity, R.string.encrypted_pdf);
         }
         resetValues();
+    }
+
+    private void viewPdfButton(String path) {
+        mViewPdf.setVisibility(View.VISIBLE);
+        mViewPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFileUtils.openFile(path);
+            }
+        });
+    }
+
+    @Override
+    public void onPopulate(ArrayList<String> paths) {
+        if (paths == null || paths.size() == 0) {
+            mLayout.setVisibility(View.GONE);
+        } else {
+            // Init recycler view
+            mRecyclerViewFiles.setVisibility(View.VISIBLE);
+            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
+                    paths, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
+            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        }
+        mLottieProgress.setVisibility(View.GONE);
     }
 }
