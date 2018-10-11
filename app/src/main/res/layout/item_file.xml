@@ -74,6 +74,7 @@
                             android:layout_marginEnd="10dp"
                             android:layout_marginStart="15dp"
                             android:contentDescription="@string/default_content_description"
+                            android:tint="?attr/lockIconTintColor"
                             app:srcCompat="@drawable/ic_lock_black_24dp" />
                     </LinearLayout>
 
