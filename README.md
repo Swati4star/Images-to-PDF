@@ -106,6 +106,7 @@ Black | Dark | White |
 #### Code & Issues
 If you are a developer and you wish to contribute to the app please fork the project
 and submit a pull request.
+Follow [Github Flow](https://help.github.com/articles/github-flow/) for collaboration!
 If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you want.
 [Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 
