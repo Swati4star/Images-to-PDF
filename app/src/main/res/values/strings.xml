@@ -287,6 +287,7 @@
     <string name="no_history_message">No history to show</string>
     <string name="view_history_here_message">View all your converted files history here!</string>
     <string name="delete_history_message">Are you sure you want to delete history ?</string>
+    <string name="no_files_to_delete_message">No files to delete</string>
 
     <!-- Extract images -->
     <string name="extract_images">Extract Images</string>
