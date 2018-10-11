@@ -8,6 +8,9 @@
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/Swati4star/Images-to-PDF.svg?columns=all)](https://waffle.io/Swati4star/Images-to-PDF)
 
+[<img src="https://f-droid.org/badge/get-it-on.png"
+      alt="Get it on F-Droid"
+      height="80">](https://f-droid.org/app/swati4star.createpdf)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
@@ -103,6 +106,7 @@ Black | Dark | White |
 #### Code & Issues
 If you are a developer and you wish to contribute to the app please fork the project
 and submit a pull request.
+Follow [Github Flow](https://help.github.com/articles/github-flow/) for collaboration!
 If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you want.
 [Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 

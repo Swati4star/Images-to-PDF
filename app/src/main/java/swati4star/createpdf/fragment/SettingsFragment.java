@@ -38,6 +38,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
+import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -95,8 +96,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     showSnackbar(mActivity, R.string.storage_location_modified);
                     storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
                             getDefaultStorageLocation()));
-                } else {
-                    showSnackbar(mActivity, R.string.error_occurred);
                 }
                 break;
         }
@@ -130,6 +129,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
             case 4:
                 setTheme();
                 break;
+            case 5:
+                showImageScaleTypeDialog(mActivity, true);
+                break;
         }
     }
 
@@ -138,8 +140,8 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      */
     private void changeCompressImage() {
 
-        createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
-                .customView(R.layout.compress_image_default, true)
+        MaterialDialog dialog = createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
+                .customView(R.layout.compress_image_dialog, true)
                 .onPositive((dialog1, which) -> {
                     final EditText qualityInput = dialog1.getCustomView().findViewById(R.id.quality);
                     int check;
@@ -156,7 +158,10 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     } catch (NumberFormatException e) {
                         showSnackbar(mActivity, R.string.invalid_entry);
                     }
-                }).show();
+                }).build();
+        View customView = dialog.getCustomView();
+        customView.findViewById(R.id.cbSetDefault).setVisibility(View.GONE);
+        dialog.show();
     }
 
 
@@ -166,9 +171,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     private void editFontSize() {
         MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
                 R.string.font_size_edit);
-        builder.customView(R.layout.dialog_font_size_default, true)
-                .onPositive((dialog, which) -> {
-                    final EditText fontInput = dialog.getCustomView().findViewById(R.id.fontInput);
+        MaterialDialog dialog = builder.customView(R.layout.dialog_font_size, true)
+                .onPositive((dialog1, which) -> {
+                    final EditText fontInput = dialog1.getCustomView().findViewById(R.id.fontInput);
                     try {
                         int check = Integer.parseInt(String.valueOf(fontInput.getText()));
                         if (check > 1000 || check < 0) {
@@ -185,7 +190,10 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                         showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 })
-                .show();
+                .build();
+        View customView = dialog.getCustomView();
+        customView.findViewById(R.id.cbSetFontDefault).setVisibility(View.GONE);
+        dialog.show();
     }
 
     /**
@@ -197,7 +205,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         int ordinal = Font.FontFamily.valueOf(fontFamily).ordinal();
         MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
                 R.string.font_family_edit);
-        MaterialDialog materialDialog = builder.customView(R.layout.dialog_font_family_default, true)
+        MaterialDialog materialDialog = builder.customView(R.layout.dialog_font_family, true)
                 .onPositive((dialog, which) -> {
                     View view = dialog.getCustomView();
                     RadioGroup radioGroup = view.findViewById(R.id.radio_group_font_family);
@@ -210,9 +218,11 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     showSettingsOptions();
                 })
                 .build();
-        RadioGroup radioGroup = materialDialog.getCustomView().findViewById(R.id.radio_group_font_family);
+        View customView = materialDialog.getCustomView();
+        RadioGroup radioGroup = customView.findViewById(R.id.radio_group_font_family);
         RadioButton rb = (RadioButton) radioGroup.getChildAt(ordinal);
         rb.setChecked(true);
+        customView.findViewById(R.id.cbSetDefault).setVisibility(View.GONE);
         materialDialog.show();
     }
 
@@ -221,7 +231,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      */
     public void setPageSize() {
         PageSizeUtils utils = new PageSizeUtils(mActivity);
-        MaterialDialog materialDialog = utils.showPageSizeDialog(R.layout.set_page_size_dialog_default, true);
+        MaterialDialog materialDialog = utils.showPageSizeDialog(true);
         materialDialog.setOnDismissListener(dialog -> showSettingsOptions());
     }
 
