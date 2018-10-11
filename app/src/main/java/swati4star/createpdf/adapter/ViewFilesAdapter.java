@@ -2,6 +2,7 @@ package swati4star.createpdf.adapter;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -32,6 +33,7 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PopulateList;
+import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -105,6 +107,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         holder.mFiledate.setText(getFormattedDate(file));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
         holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.GONE);
+        holder.mEncryptionImage.setColorFilter(
+                ThemeUtils.getSelectedThemePosition(mActivity) == 2 ? Color.BLACK : Color.WHITE);
         holder.mRipple.setOnClickListener(view -> {
             new MaterialDialog.Builder(mActivity)
                     .title(R.string.title)
