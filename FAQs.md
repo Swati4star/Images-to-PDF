@@ -18,6 +18,7 @@ Images-to-pdf is an Android utility software that can convert your image files t
 - Rearrange pages of a PDF
 - Extract images from PDF
 - History: View all the PDF related conversions
+- Convert QR code or Bar code scan results to PDF
 
 **What image file formats are supported?**
 
@@ -73,7 +74,7 @@ You can also mark multiple files to share at once.
 
 **Can I change the password of a PDF file?**
 
-- This cannot be directly done but can be manipulated. To change the password, you will first have to remove the existing password from the file and create a new anew password again.
+- This cannot be directly done but can be manipulated. To change the password, you will first have to remove the existing password from the file and create a new password again.
 
 **Can I set a password for multiple files at the same time?**
 
@@ -87,11 +88,11 @@ You can also mark multiple files to share at once.
 
 - No, the developer does not collect any information when the software is utilized because the developer does not have access to any such information. Read the [developer's privacy policy](https://sites.google.com/view/privacy-policy-image-to-pdf/home)
 
-Is Images-to-pdf software available to any other operating system?
+**Is Images-to-pdf software available to any other operating system?**
 
 - There is no intention to migrate this software to another operating system.
 
-Where can I download Images-to-pdf software?
+**Where can I download Images-to-pdf software?**
 
 The software can be downloaded from [Google Playstore](https://play.google.com/store/apps/details?id=swati4star.createpdf) and also on [F-droid](https://f-droid.org/app/swati4star.createpdf)
 
