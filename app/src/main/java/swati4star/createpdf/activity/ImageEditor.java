@@ -10,8 +10,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +64,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     SeekBar doodleSeekBar;
     @BindView(R.id.photoEditorView)
     PhotoEditorView mPhotoEditorView;
+    @BindView(R.id.scrollViewImage)
+    ScrollView mPhotoScrollView;
     @BindView(R.id.doodle_colors)
     RecyclerView brushColorsView;
 
@@ -293,11 +298,24 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public void onItemClick(View view, int position) {
         //setting mClicked true when none filter is selected otherwise false
         mClicked = position == 0;
-        // Brush effect is in second position
+        //Brush effect is in second position
         if (position == 1) {
             mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                     .setPinchTextScalable(true)
                     .build();
+
+            Log.i("Brush Effect", "Brush Effect Selected!");
+            //mPhotoEditorView.setOnTouchListener(new View.OnTouchListener() {
+            mPhotoScrollView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.i("PhotoEditorView", "PhotoEditorView has been onTouched");
+                    //v.getParent().requestDisallowInterceptTouchEvent(true);
+                    //return false;
+                    return true;
+                }
+            });
+            
             if (doodleSeekBar.getVisibility() == View.GONE && brushColorsView.getVisibility() == View.GONE) {
                 showBrushEffect();
             } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
