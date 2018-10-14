@@ -110,7 +110,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
      * Function to show the enhancement options.
      */
     private void showEnhancementOptions() {
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         mTextEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);
@@ -184,7 +184,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
 
     private void setPageSize() {
         PageSizeUtils utils = new PageSizeUtils(mActivity);
-        utils.showPageSizeDialog(R.layout.set_page_size_dialog, false);
+        utils.showPageSizeDialog(false);
     }
 
     /**
@@ -395,13 +395,13 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
 
     private void onPasswordAdded() {
         mTextEnhancementOptionsEntityArrayList.get(3)
-                .setImage(getResources().getDrawable(R.drawable.baseline_done_24));
+                .setImage(mActivity.getResources().getDrawable(R.drawable.baseline_done_24));
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
     private void onPasswordRemoved() {
         mTextEnhancementOptionsEntityArrayList.get(3)
-                .setImage(getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
+                .setImage(mActivity.getResources().getDrawable(R.drawable.baseline_enhanced_encryption_24));
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 

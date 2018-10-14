@@ -41,9 +41,7 @@ import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.FileUriUtils.getImageRealPath;
 import static swati4star.createpdf.util.FileUriUtils.getUriRealPathAboveKitkat;
-import static swati4star.createpdf.util.FileUriUtils.isAboveKitKat;
 import static swati4star.createpdf.util.FileUriUtils.isWhatsappImage;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -195,7 +193,6 @@ public class FileUtils {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
         try {
             Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
             target.setDataAndType(uri, mContext.getString(R.string.pdf_type));
@@ -232,16 +229,14 @@ public class FileUtils {
      */
     public String getUriRealPath(Uri uri) {
         String ret;
+
+        if (uri == null)
+            return null;
+
         if (isWhatsappImage(uri.getAuthority())) {
             ret = null;
         } else {
-            if (isAboveKitKat()) {
-                // Android OS above sdk version 19.
-                ret = getUriRealPathAboveKitkat(mContext, uri);
-            } else {
-                // Android OS below sdk version 19
-                ret = getImageRealPath(mContentResolver, uri, null);
-            }
+            ret = getUriRealPathAboveKitkat(mContext, uri);
         }
         return ret;
     }

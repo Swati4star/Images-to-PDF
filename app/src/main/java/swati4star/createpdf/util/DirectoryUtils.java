@@ -80,6 +80,8 @@ public class DirectoryUtils {
      */
     public ArrayList<File> getPdfsFromPdfFolder(File[] files) {
         ArrayList<File> pdfFiles = new ArrayList<>();
+        if (files == null)
+            return pdfFiles;
         for (File file : files) {
             if (isPDFAndNotDirectory(file))
                 pdfFiles.add(file);

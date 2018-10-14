@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,11 +52,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private String mFilterName;
 
     @BindView(R.id.nextimageButton)
-    ImageButton mNextButton;
+    ImageView mNextButton;
     @BindView(R.id.imagecount)
     TextView mImgcount;
     @BindView(R.id.previousImageButton)
-    ImageButton mPreviousButton;
+    ImageView mPreviousButton;
     @BindView(R.id.doodleSeekBar)
     SeekBar doodleSeekBar;
     @BindView(R.id.photoEditorView)
@@ -356,8 +356,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @Override
     public void onItemClick(int position) {
         int color = mBrushItems.get(position).getColor();
-        doodleSeekBar.setBackgroundColor(getResources().getColor(color));
-        mPhotoEditor.setBrushColor(getResources().getColor(color));
+        doodleSeekBar.setBackgroundColor(this.getResources().getColor(color));
+        mPhotoEditor.setBrushColor(this.getResources().getColor(color));
     }
 
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {

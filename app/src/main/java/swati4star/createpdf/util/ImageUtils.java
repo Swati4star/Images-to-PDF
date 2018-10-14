@@ -1,5 +1,8 @@
 package swati4star.createpdf.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,12 +11,25 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.RadioGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Rectangle;
 
 import java.io.File;
 
+import swati4star.createpdf.R;
+
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
+import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
+
 public class ImageUtils {
+
+    public static String mImageScaleType;
 
     /**
      * Calculates the optimum size for an image, such that it scales to fit whilst retaining its aspect ratio
@@ -89,5 +105,35 @@ public class ImageUtils {
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
         if (bitmap == null) return null;
         return ImageUtils.getRoundBitmap(bitmap);
+    }
+
+    public static void showImageScaleTypeDialog(Context context, Boolean saveValue) {
+
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent((Activity) context,
+                R.string.image_scale_type);
+        MaterialDialog materialDialog =
+                builder.customView(R.layout.image_scale_type_dialog, true)
+                .onPositive((dialog1, which) -> {
+                    View view = dialog1.getCustomView();
+                    RadioGroup radioGroup = view.findViewById(R.id.scale_type);
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    if (selectedId == R.id.aspect_ratio)
+                        mImageScaleType = IMAGE_SCALE_TYPE_ASPECT_RATIO;
+                    else
+                        mImageScaleType = IMAGE_SCALE_TYPE_STRETCH;
+
+                    CheckBox mSetAsDefault = view.findViewById(R.id.cbSetDefault);
+                    if (saveValue || mSetAsDefault.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putString(Constants.DEFAULT_IMAGE_SCALETYPE_TEXT, mImageScaleType);
+                        editor.apply();
+                    }
+                }).build();
+        if (saveValue) {
+            View customView = materialDialog.getCustomView();
+            customView.findViewById(R.id.cbSetDefault).setVisibility(View.GONE);
+        }
+        materialDialog.show();
     }
 }

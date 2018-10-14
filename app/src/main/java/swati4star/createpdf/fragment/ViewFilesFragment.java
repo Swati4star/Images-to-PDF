@@ -46,6 +46,7 @@ import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileSortUtils;
+import swati4star.createpdf.util.MergeHelper;
 import swati4star.createpdf.util.MoveFilesToDirectory;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
@@ -93,6 +94,10 @@ public class ViewFilesFragment extends Fragment
     private boolean mCheckBoxChanged = false;
     private AlertDialog.Builder mAlertDialogBuilder;
 
+
+    private int mCountFiles;
+    private MergeHelper mMergeHelper;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -119,6 +124,7 @@ public class ViewFilesFragment extends Fragment
         }
 
         checkIfListEmpty();
+        mMergeHelper = new MergeHelper(mActivity, mViewFilesAdapter);
         return root;
     }
 
@@ -153,6 +159,8 @@ public class ViewFilesFragment extends Fragment
             mSearchView.setIconifiedByDefault(true);
         } else {
             inflater.inflate(R.menu.activity_view_files_actions_if_selected, menu);
+            MenuItem item = menu.findItem(R.id.item_merge);
+            item.setVisible(mCountFiles > 1); // Show Merge icon when two or more files was selected
         }
     }
 
@@ -194,9 +202,15 @@ public class ViewFilesFragment extends Fragment
                     showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 }
                 break;
+            case R.id.item_merge:
+                if (mViewFilesAdapter.getItemCount() > 1) {
+                    mMergeHelper.mergeFiles();
+                }
+                break;
         }
         return true;
     }
+
 
     /**
      * Moves files from one directory to another
@@ -483,22 +497,27 @@ public class ViewFilesFragment extends Fragment
     @Override
     public void isSelected(Boolean isSelected, int countFiles) {
         AppCompatActivity activity = ((AppCompatActivity)
-                Objects.requireNonNull(getActivity()));
+                Objects.requireNonNull(mActivity));
         ActionBar toolbar = activity.getSupportActionBar();
-
+        mCountFiles = countFiles;
         if (toolbar != null) {
             if (countFiles == 0) {
                 toolbar.setTitle(appName);
                 if (mCheckBoxChanged) {
                     mCheckBoxChanged = false;
+                    mIsChecked = false;
                     activity.invalidateOptionsMenu();
                 }
             } else {
                 toolbar.setTitle(String.valueOf(countFiles));
                 if (!mCheckBoxChanged) {
                     mCheckBoxChanged = true;
+                    mIsChecked = true;
                     activity.invalidateOptionsMenu();
                 }
+                if (countFiles == 1 || countFiles == 2)
+                    //When one or two files are selected refresh ActionBar: set Merge option invisible or visible
+                    activity.invalidateOptionsMenu();
             }
         }
     }
@@ -511,4 +530,6 @@ public class ViewFilesFragment extends Fragment
         ActionBar toolbar = activity.getSupportActionBar();
         toolbar.setTitle(appName);
     }
+
+
 }

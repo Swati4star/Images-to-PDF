@@ -340,13 +340,13 @@ public class PDFUtils {
         }
     }
 
-    public void reorderRemovePDF(String inputPath, String output, String pages) {
+    public boolean reorderRemovePDF(String inputPath, String output, String pages) {
         try {
             PdfReader reader = new PdfReader(inputPath);
             reader.selectPages(pages);
             if (reader.getNumberOfPages() == 0) {
                 showSnackbar(mContext, R.string.remove_pages_error);
-                return;
+                return false;
             }
             //if (reader.getNumberOfPages() )
             PdfStamper pdfStamper = new PdfStamper(reader,
@@ -356,10 +356,12 @@ public class PDFUtils {
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
             new DatabaseHelper(mContext).insertRecord(output,
                     mContext.getString(R.string.created));
+            return true;
 
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
             showSnackbar(mContext, R.string.remove_pages_error);
+            return false;
         }
     }
 

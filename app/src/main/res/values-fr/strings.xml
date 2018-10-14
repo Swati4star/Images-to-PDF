@@ -310,11 +310,25 @@
     <string name="theme_black">Black</string>
     <string name="remove_page_message">Are you sure you want to remove this page?</string>
     <string name="file_access_error">We were unable to access PDF. Files may be encrypted or in the external storage.</string>
-    <string name="fetching_files">fetching files…</string>
     <string name="add_margins">Add Margins</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
     <string name="right">Right</string>
     <string name="left">Left</string>
+    <string name="welcome_create_pdf_message">Creating a PDF file</string>
+    <string name="welcome_create_pdf_info">View the PDF files previously created or create a new one!</string>
+    <string name="welcome_themes_title">Different themes</string>
+    <string name="welcome_themes_message">Go to Settings, and you can have three type of themes : Black, Dark, White</string>
+    <string name="welcome_merge_title">Merge PDF file</string>
+    <string name="welcome_merge_message">Merge different existing pdf in your phone in one file</string>
+    <string name="welcome_viewfiles_title">Viewing the PDF files</string>
+    <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your pdf file</string>
+    <string name="skip_text">Skip</string>
+    <string name="help">Help</string>
+    <string name="get_started_title">Get Started!</string>
+    <string name="image_scale_type">Set Image Scale Type</string>
+    <string name="select_scale_type">Select Image scaling type</string>
+    <string name="stretch_image">Stretch image to fit on page</string>
+    <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
 
 </resources>

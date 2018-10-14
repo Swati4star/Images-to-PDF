@@ -22,6 +22,9 @@ public class Constants {
     public static final int DEFAULT_QUALITY_VALUE = 30;
     public static final int DEFAULT_BORDER_WIDTH = 0;
     public static final String STORAGE_LOCATION = "storage_location";
+    public static final String DEFAULT_IMAGE_SCALETYPE_TEXT = "image_scale_type";
+    public static final String IMAGE_SCALE_TYPE_STRETCH = "stretch_image";
+    public static final String IMAGE_SCALE_TYPE_ASPECT_RATIO = "maintain_aspect_ratio";
 
     public static final String BUNDLE_DATA = "bundle_data";
     public static final String REORDER_PAGES = "reorder_pages";
@@ -46,4 +49,7 @@ public class Constants {
     public static final String THEME_WHITE = "White";
     public static final String THEME_BLACK = "Black";
     public static final String THEME_DARK = "Dark";
+
+    public static final String IS_WELCOME_ACTIVITY_SHOWN = "is_Welcome_activity_shown";
+    public static final String SHOW_WELCOME_ACT = "show_welcome_activity";
 }

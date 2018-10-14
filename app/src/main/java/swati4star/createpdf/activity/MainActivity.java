@@ -1,14 +1,18 @@
 package swati4star.createpdf.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -46,6 +50,9 @@ import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
+import static swati4star.createpdf.util.DialogUtils.ADD_PASSWORD;
+import static swati4star.createpdf.util.DialogUtils.REMOVE_PASSWORD;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -88,6 +95,8 @@ public class MainActivity extends AppCompatActivity
         if (count > 0 && count % 15 == 0)
             mFeedbackUtils.rateUs();
         mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+
+        getRuntimePermissions();
     }
 
     /**
@@ -96,39 +105,43 @@ public class MainActivity extends AppCompatActivity
      * @return - instance of current fragment
      */
     private Fragment checkForAppShortcutClicked() {
-        Fragment fragment;
+        Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (Objects.requireNonNull(getIntent().getAction())) {
-            case ACTION_SELECT_IMAGES:
-                fragment = new ImageToPdfFragment();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(OPEN_SELECT_IMAGES, true);
-                fragment.setArguments(bundle);
-                break;
-            case ACTION_VIEW_FILES:
-                fragment = new ViewFilesFragment();
-                setDefaultMenuSelected(1);
-                break;
-            case ACTION_TEXT_TO_PDF:
-                fragment = new TextToPdfFragment();
-                setDefaultMenuSelected(4);
-                break;
-            case ACTION_MERGE_PDF:
-                fragment = new MergeFilesFragment();
-                setDefaultMenuSelected(2);
-                break;
-            default:
-                // Set default fragment
-                fragment = new HomeFragment();
-                break;
-        }
 
+        if (getIntent().getAction() != null) {
+            switch (Objects.requireNonNull(getIntent().getAction())) {
+                case ACTION_SELECT_IMAGES:
+                    fragment = new ImageToPdfFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(OPEN_SELECT_IMAGES, true);
+                    fragment.setArguments(bundle);
+                    break;
+                case ACTION_VIEW_FILES:
+                    fragment = new ViewFilesFragment();
+                    setDefaultMenuSelected(1);
+                    break;
+                case ACTION_TEXT_TO_PDF:
+                    fragment = new TextToPdfFragment();
+                    setDefaultMenuSelected(4);
+                    break;
+                case ACTION_MERGE_PDF:
+                    fragment = new MergeFilesFragment();
+                    setDefaultMenuSelected(2);
+                    break;
+                default:
+                    // Set default fragment
+                    fragment = new HomeFragment();
+                    break;
+            }
+        }
         if (areImagesRecevied())
             fragment = new ImageToPdfFragment();
 
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
         return fragment;
     }
+
 
     /**
      * Ininitializes default values
@@ -272,6 +285,16 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_history:
                 fragment = new HistoryFragment();
                 break;
+            case R.id.nav_add_password:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ADD_PASSWORD);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_remove_password:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, REMOVE_PASSWORD);
+                fragment.setArguments(bundle);
+                break;
             case R.id.nav_share:
                 mFeedbackUtils.shareApplication();
                 break;
@@ -299,6 +322,10 @@ public class MainActivity extends AppCompatActivity
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
+            case R.id.nav_help:
+                Intent intent = new Intent(this, WelcomeActivity.class);
+                intent.putExtra(SHOW_WELCOME_ACT, true);
+                startActivity(intent);
         }
 
         try {
@@ -312,5 +339,24 @@ public class MainActivity extends AppCompatActivity
 
     public void setNavigationViewSelection(int index) {
         mNavigationView.getMenu().getItem(index).setChecked(true);
+    }
+
+    private boolean getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                requestPermissions(new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},
+                        0);
+                return false;
+            }
+        }
+        return true;
     }
 }
