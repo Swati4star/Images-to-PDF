@@ -49,6 +49,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView rearrangePages;
     @BindView(R.id.extract_images)
     MyCardView extractImages;
+    @BindView(R.id.pdf_to_images)
+    MyCardView mPdfToImages;
     @BindView(R.id.add_password)
     MyCardView addPassword;
     @BindView(R.id.remove_password)
@@ -72,6 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         removePages.setOnClickListener(this);
         rearrangePages.setOnClickListener(this);
         extractImages.setOnClickListener(this);
+        mPdfToImages.setOnClickListener(this);
         addPassword.setOnClickListener(this);
         removePassword.setOnClickListener(this);
         rotatePdf.setOnClickListener(this);
@@ -134,6 +137,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.extract_images:
                 fragment = new ExtractImagesFragment();
                 setNavigationViewSelection(10);
+                break;
+            case R.id.pdf_to_images:
+                fragment = new PdfToImageFragment();
+                setNavigationViewSelection(11);
                 break;
             case R.id.remove_pages:
                 fragment = new RemovePagesFragment();
