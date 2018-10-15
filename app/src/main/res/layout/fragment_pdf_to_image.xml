@@ -62,7 +62,7 @@
             android:visibility="gone">
 
             <Button
-                android:id="@+id/share_images"
+                android:id="@+id/shareImages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -75,7 +75,7 @@
                 android:text="@string/share_images" />
 
             <Button
-                android:id="@+id/view_images"
+                android:id="@+id/viewImages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"

@@ -36,6 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.ImagesPreviewActivity;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.util.BottomSheetCallback;
@@ -136,6 +137,22 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mLottieProgress.setVisibility(View.GONE);
     }
 
+    @OnClick(R.id.shareImages)
+    void onShareImagesClick() {
+        if (mOutputFilePaths != null) {
+            ArrayList<File> fileArrayList = new ArrayList<>();
+            for (String path : mOutputFilePaths) {
+                fileArrayList.add(new File(path));
+            }
+            mFileUtils.shareMultipleFiles(fileArrayList);
+        }
+    }
+
+    @OnClick(R.id.viewImages)
+    void onViewImagesClick() {
+        mActivity.startActivity(ImagesPreviewActivity.getStartIntent(mActivity, mOutputFilePaths));
+    }
+
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
         startActivityForResult(mFileUtils.getFileChooser(),
@@ -169,7 +186,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                     // say we render for showing on the screen
                     page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
-                    // do stuff with the bitmap
                     bitmaps.add(bitmap);
                     // close the page
                     page.close();
