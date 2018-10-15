@@ -4,12 +4,17 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.pdf.PdfRenderer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +23,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Queue;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +45,12 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
+import static swati4star.createpdf.util.FileUtils.saveImage;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +85,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     RelativeLayout mLayout;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
+    private Uri mUri;
+    private ArrayList<String> mOutputFilePaths;
+    private int mImagesCount;
+    private MaterialDialog mMaterialDialog;
 
     @Override
     public void onAttach(Context context) {
@@ -90,6 +108,11 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+        mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+        mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+
         resetView();
         return rootView;
     }
@@ -108,10 +131,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
                     paths, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
         }
         mLottieProgress.setVisibility(View.GONE);
     }
@@ -122,11 +142,82 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                 INTENT_REQUEST_PICKFILE_CODE);
     }
 
+    @OnClick(R.id.createImages)
+    public void createImages() {
+        Log.d(PdfToImageFragment.class.getSimpleName(), "Create Images");
+
+        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog.show();
+
+        mOutputFilePaths = new ArrayList<>();
+        mImagesCount = 0;
+        // Render pdf pages as bitmap
+        ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        ParcelFileDescriptor fileDescriptor = null;
+        try {
+            if (mUri != null)
+                fileDescriptor = mActivity.getContentResolver().openFileDescriptor(mUri, "r");
+            else if (mPath != null)
+                fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+            if (fileDescriptor != null) {
+                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+                final int pageCount = renderer.getPageCount();
+                for (int i = 0; i < pageCount; i++) {
+                    PdfRenderer.Page page = renderer.openPage(i);
+                    Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
+                            Bitmap.Config.ARGB_8888);
+                    // say we render for showing on the screen
+                    page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+                    // do stuff with the bitmap
+                    bitmaps.add(bitmap);
+                    // close the page
+                    page.close();
+
+                    String filename = getFileNameWithoutExtension(mPath) +
+                            "_" + Integer.toString(i + 1);
+                    String path = saveImage(filename, bitmap);
+                    if (path != null) {
+                        mOutputFilePaths.add(path);
+                        mImagesCount++;
+                    }
+                }
+
+                // close the renderer
+                renderer.close();
+            }
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+
+        if (bitmaps.size() < 1) {
+            showSnackbar(mActivity, R.string.file_access_error);
+        } else {
+            Log.d(PdfToImageFragment.class.getSimpleName(), mImagesCount + " images created");
+
+            mMaterialDialog.dismiss();
+            resetView();
+
+            if (mImagesCount == 0) {
+                showSnackbar(mActivity, R.string.extract_images_failed);
+                return;
+            }
+
+            String text = String.format(mActivity.getString(R.string.create_images_success), mImagesCount);
+            showSnackbar(mActivity, text);
+            mCreateImagesSuccessText.setText(text);
+            mCreateImagesSuccessText.setVisibility(View.VISIBLE);
+            options.setVisibility(View.VISIBLE);
+        }
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            mUri = data.getData();
             setTextAndActivateButtons(getFilePath(data.getData()));
+        }
     }
 
     @Override
