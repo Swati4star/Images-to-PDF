@@ -54,6 +54,8 @@
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+        <activity
+            android:name=".activity.CropImageActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
