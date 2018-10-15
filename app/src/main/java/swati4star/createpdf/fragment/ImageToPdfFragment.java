@@ -43,6 +43,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,6 +51,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.CropImageActivity;
 import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.activity.RearrangeImages;
@@ -112,14 +114,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
-    private ArrayList<String> mImagesUri = new ArrayList<>();
+    public static ArrayList<String> mImagesUri = new ArrayList<>();
     private String mPath;
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
     private FileUtils mFileUtils;
     private PageSizeUtils mPageSizeUtils;
     private int mButtonClicked = 0;
-    private static int mImageCounter;
     private ImageToPDFOptions mPdfOptions;
     private MaterialDialog mMaterialDialog;
     private String mHomePath;
@@ -314,13 +315,15 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 break;
 
             case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                Uri resultUri = result.getUri();
-                if (mImagesUri.size() > mImageCounter)
-                    mImagesUri.set(mImageCounter, resultUri.getPath());
-                showSnackbar(mActivity, R.string.snackbar_imagecropped);
-                mImageCounter++;
-                cropNextImage();
+                HashMap<Integer, Uri> croppedImageUris =
+                        (HashMap) data.getSerializableExtra(CropImage.CROP_IMAGE_EXTRA_RESULT);
+
+                for (int i = 0; i < mImagesUri.size(); i++)  {
+                    if (croppedImageUris.get(i) != null) {
+                        mImagesUri.set(i, croppedImageUris.get(i).getPath());
+                        showSnackbar(mActivity, R.string.snackbar_imagecropped);
+                    }
+                }
                 break;
 
             case INTENT_REQUEST_APPLY_FILTER:
@@ -362,7 +365,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 passwordProtectPDF();
                 break;
             case 1:
-                cropNextImage();
+                cropImage();
                 break;
             case 2:
                 compressImage();
@@ -546,17 +549,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         resetValues();
     }
 
-    private void cropNextImage() {
-        if (mImageCounter < mImagesUri.size()) {
-            CropImage.activity(Uri.fromFile(new File(mImagesUri.get(mImageCounter))))
-                    .setActivityMenuIconColor(mMorphButtonUtility.color(R.color.colorPrimary))
-                    .setInitialCropWindowPaddingRatio(0)
-                    .setAllowRotation(true)
-                    .setActivityTitle(getString(R.string.cropImage_activityTitle) + (mImageCounter + 1))
-                    .start(mActivity, this);
-        } else {
-            mImageCounter = 0;
-        }
+    private void cropImage() {
+        Intent intent = new Intent(mActivity, CropImageActivity.class);
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     private boolean getRuntimePermissions(boolean openImagesActivity) {
@@ -607,7 +602,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 DEFAULT_PAGE_SIZE));
         mPdfOptions.setPasswordProtected(false);
         mImagesUri.clear();
-        mImageCounter = 0;
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
         mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
