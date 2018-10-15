@@ -51,6 +51,14 @@
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_black_24dp"
             android:title="@string/history" />
+        <item
+            android:id="@+id/nav_add_password"
+            android:icon="@drawable/ic_lock_black_24dp"
+            android:title="@string/add_password" />
+        <item
+            android:id="@+id/nav_remove_password"
+            android:icon="@drawable/ic_lock_open_black_24dp"
+            android:title="@string/remove_password" />
 
     </group>
 
