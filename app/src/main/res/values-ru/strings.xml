@@ -1,0 +1,375 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">PDF Converter</string>
+    <string name="title">PDF Действия</string>
+
+    <string name="file_name_text">Наименование файла</string>
+    <string name="select_images_text">Выберите изображения</string>
+    <string name="password_protect_pdf_text">Файл PDF защищен паролем</string>
+    <string name="edit_images_text">Редактировать изображения</string>
+    <string name="open_pdf_text">Открыть файл PDF</string>
+    <string name="create_pdf_text">Создать PDF файл</string>
+    <string name="details"><b>Детали</b></string>
+    <string name="search_hint">Имя файла</string>
+    <string name="search">поиск</string>
+    <string name="set_page_size_text">Установить размер страницы</string>
+    <string name="preview_image_to_pdf">Просмотр PDF файла</string>
+
+    <string name="default_content_description">описание отсутствует</string>
+    <string name="prompt_input">Введите</string>
+    <array name="items">
+        <item>Открыть</item>
+        <item>Удалить</item>
+        <item>Переименовать</item>
+        <item>Печатать</item>
+        <item>Поделиться</item>
+        <item>Свойства</item>
+        <item>Установить пароль</item>
+        <item>Удалить пароль</item>
+        <item>Повернуть страницы</item>
+    </array>
+
+    <string name="please_wait">Подождите</string>
+
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">Извините, невозможно добавить изображения. Выберите их с помощью опции *Выбор изображений*</string>
+    <string name="successToast">Изображения добавлены.</string>
+
+    <!-- Navigation drawer strings -->
+    <string name="create_pdf">Создать PDF</string>
+    <string name="qr_barcode_pdf">QR &amp; штрихкоды</string>
+    <string name="viewFiles">Просмотреть файлы</string>
+    <string name="extras">Дополнительно</string>
+    <string name="share">Поделиться</string>
+    <string name="help">Помощь</string>
+
+    <!-- images to PDF -->
+    <string name="image_scale_type">Set Задать масштаб изображений</string>
+    <string name="select_scale_type">Выберите тип масштабирования</string>
+    <string name="stretch_image">Растянуть на всю страницу</string>
+    <string name="maintain_aspect_ratio">Сохранение пропорций изображения</string>
+
+    <!--QR & Barcode Scan-->
+    <string name="scan_qrcode">Сканировать QR код</string>
+    <string name="scan_barcode">Сканировать штрихкод</string>
+    <string name="qrbarcodes_to_pdf">Создать PDF файл из QR &amp; штрихкода</string>
+    <string name="scan_cancelled">Сканирование отменено пользователем</string>
+
+    <!--Snackbar strings -->
+    <string name="snackbar_no_images">Изображения не выбраны</string>
+    <string name="snackbar_no_pdfs_selected">Файлы PDF не выбраны</string>
+    <string name="snackbar_name_not_blank">Имя не может быть пустым</string>
+    <string name="snackbar_permissions_given">Разрешение предоставлено!</string>
+    <string name="snackbar_insufficient_permissions">Недостаточно разрешений!</string>
+    <string name="no_permissions">Для просмотра файлов разрешите доступ к памяти устройства.</string>
+    <string name="prompt_give_permission">Предоставить разрешение</string>
+    <string name="snackbar_images_added">Изображения добавлены</string>
+    <string name="snackbar_file_renamed">Файл переименован</string>
+    <string name="snackbar_file_not_renamed">Невозможно переименовать файл</string>
+    <string name="snackbar_file_deleted">Файл удален</string>
+    <string name="snackbar_file_not_deleted">Невозможно удалить файл.</string>
+    <string name="snackbar_folder_not_created">При создании директории произошла ошибка.</string>
+    <string name="pdf_merged">Файлы PDF объединены</string>
+    <string name="pdf_merge_error">Невозможно объединить файлы. Вероятно, они зашифрованы или находятся на внешнем носителе.</string>
+
+    <string name="creating_pdf">Создание PDF</string>
+    <string name="enter_file_name">Введите имя файла</string>
+    <string name="example">Пример : abc</string>
+    <string name="snackbar_no_pdf_app">Не найдено приложений для чтения PDF-файлов</string>
+    <string name="open_file">Открыть файл</string>
+    <string name="sort">Сортировать</string>
+
+    <string name="set_password">Установить пароль</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="snackbar_password_cannot_be_blank">Пароль не может быть пустым</string>
+    <string name="cannot_add_password">Данный файл нельзя защитить паролем. Пожалуйста, выберите другой.</string>
+
+    <string name="snackbar_imagecropped">Изображения кадрированы</string>
+    <string name="cropImage_activityTitle">Кадрирование изображения No.</string>
+    <string name="snackbar_pdfCreated">PDF файл создан!</string>
+    <string name="snackbar_viewAction">Просмотр</string>
+    <string name="more_options_text">Параметры</string>
+    <string name="delete">Удалить</string>
+
+    <!-- Share strings -->
+    <string name="share_chooser">Выберите приложение для отправки сообщения…</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_us_text">Привет! Я нашел это приложение в Play Store: https://play.google.com/store/apps/details?id=swati4star.createpdf . Оно легко конвертирует изображения в PDF :)</string>
+    <string name="snackbar_no_share_app">Нет приложений</string>
+
+    <!-- Select Images string -->
+    <string name="images_selected"> %1$d выбрано.</string>
+
+    <!-- Feedback Strings -->
+    <string name="feedback_subject">Предложения по улучшению программы Images To PDF Converter</string>
+    <string name="feedback_text">Пожалуйста, напишите отзыв или просто Привет! :)</string>
+    <string name="snackbar_no_email_clients">Нет установленного почтового клиента.</string>
+    <string name="feedback_chooser">"Отправить почту…"</string>
+    <string name="no_pdf">Нет PDF файлов</string>
+    <string name="get_started">Начать работу</string>
+    <string name="view_files_text">Просмотрите все конвертированные файлы здесь</string>
+    <string name="empty_image_description">NoPdfs</string>
+
+    <string name="enter_password_custom">Введите пароль</string>
+    <string name="example_pass_123">pass@123</string>
+    <string name="remove_dialog">Удалить</string>
+    <string name="password_remove">Пароль удален</string>
+
+    <string name="merge_pdf">Объединить PDF</string>
+    <string name="merge_file_select">Выберите файл</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">File Path for PDF two</string>
+    <string name="merge_files">Слить файлы</string>
+    <string name="file_date_text">Дата файла</string>
+    <string name="file_size_text">Размер файла</string>
+    <string name="password_added">Пароль добавлен</string>
+    <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">Я прикрепил файлы к этому сообщению</string>
+    <string name="btn_sav_text">savText</string>
+    <string name="filter_images_Text">Фильтр изображений \n</string>
+    <string name="nextimage_contentdesc">Следующее изображение</string>
+    <string name="compress_image">Сжатие : %s%%</string>
+    <string name="quality_image">Введите % сжатия изображения :</string>
+    <string name="invalid_entry">Ввод некорректен</string>
+    <string name="compress_dialog_enter_prompt">Введите</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">Установить по умолчанию</string>
+    <string name="decrypted_file">_unencrypted.pdf</string>
+    <string name="decrypt_message">Введите пароль</string>
+    <string name="not_encrypted">PDF не зашифрованd</string>
+    <string name="incorrect_passowrd">Неверный парольd</string>
+    <string name="save_current">Сохранить текущий</string>
+    <string name="save_first">Сохранить вначале текущее изображение</string>
+    <string name="Filter_name">Фильтр</string>
+    <string name="Filter_image_preview">Просмотр фильтра</string>
+    <string name="warning">Предупреждение</string>
+    <string name="overwrite_message">Файл с указанным именем уже существует. Перезаписать его?</string>
+    <string name="b0_to_b10">B0 в B10</string>
+    <string name="a0_to_a10">A0 в A10</string>
+    <string name="tabloid">TABLOID</string>
+    <string name="executive">EXECUTIVE</string>
+    <string name="ledger">LEDGER</string>
+    <string name="letter">LETTER</string>
+    <string name="legal">LEGAL</string>
+    <string name="a4">A4</string>
+    <string name="default_page_size">По умолчанию ( %s )</string>
+
+
+    <string name="delete_alert">Удалить все выбранные файлы?</string>
+    <string name="sort_by_title">Сортировка</string>
+
+    <!-- Directory Strings -->
+    <string name="directory">Директория</string>
+    <string name="moving_files">Перемещение ваших файлов</string>
+    <string name="success_move">Ваши файлы успешно перемещены</string>
+    <string name="delete_directory">Удалить директорию</string>
+    <string name="dir_does_not_exists">Директория не существует</string>
+    <string name="move_files_delete_dir">Перемещение файлов и удаление директории</string>
+    <string name="directory_deleted">Директория удалена</string>
+    <string name="success_delete_directory">Директория успешно удалена</string>
+    <string name="delete_dialog">Директория содержит файлы. Вы уверены, что хотите ее удалить?</string>
+    <string name="moved_files">Файлы удалены</string>
+    <string name="dialog_delete_dir">Введите имя удаляемой директории</string>
+    <string name="dialog_new_dir">Введите новое имя директории</string>
+    <string name="dialog_dir">Введите имя директории</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">OK</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="select_all">Выбрать все</string>
+    <string name="converting_file_message">Конвертация файлов в PDF</string>
+
+    <string name="select_text_file">Выберите текстовый файл</string>
+    <string name="install_file_manager">Установите менеджер файлов</string>
+    <string name="text_to_pdf">Текст в PDF</string>
+    <string name="text_file_selected">Текстовый файл выбран</string>
+    <string name="select_file">"Выберите файл для загрузки"</string>
+    <string name="text_type">text/plain</string>
+    <string name="new_directory">Новая директория</string>
+    <string name="move_n_files">Переместить файлы</string>
+    <string name="move_to_n_home_directory">Переместить в домашнюю директорию</string>
+    <string name="previous_image_content_desc">Предыдущее изображение</string>
+    <string name="text_file_name">"Текстовый файл : "</string>
+    <string name="edit_font_size">Размер шрифта (по умолчанию : %d)</string>
+    <string name="enter_font_size">Введите размер шрифта</string>
+    <string name="example_font">Например : 10</string>
+    <string name="font_size_changed">Размер шрифта изменен</string>
+    <string name="font_size">Размер шрифта : %1$s</string>
+    <string name="about_us">О нас</string>
+    <string name="app_description">Простое Android приложение для конвертации изображений в PDF.</string>
+    <string name="version">Версия : </string>
+    <string name="developer">Разработчик : Swati Garg</string>
+    <string name="github_repo">Github репозиторий</string>
+    <string name="view_contributors">Авторы</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="mail">Отправить сообщение</string>
+    <string name="join_slack">Присоединяйтесь к нам в Slack</string>
+    <string name="website">Посетите наш сайт</string>
+    <string name="license">Лицензия</string>
+    <string name="playstore">Оцените нас в Playstore</string>
+
+    <!-- Preview strings -->
+    <string name="swipe_to_view_next">Листайте влево</string>
+    <string name="showing_image">Изображение %1$d из %2$d</string>
+
+    <!-- Filter strings -->
+    <string name="filter_brush">Brush</string>
+    <string name="filter_none">None</string>
+    <string name="filter_autofix">Auto Fix</string>
+    <string name="filter_grayscale">GrayScale</string>
+    <string name="filter_brightness">Brightness</string>
+    <string name="filter_contrast">Contrast</string>
+    <string name="filter_cross">Cross Process</string>
+    <string name="filter_documentary">Documentary</string>
+    <string name="filter_duetone">Due Tone</string>
+    <string name="filter_filllight">Fill Light</string>
+    <string name="filter_filpver">Flip Vertical</string>
+    <string name="filter_fliphor">Flip Horizontal</string>
+    <string name="filter_grain">Grain</string>
+    <string name="filter_lomish">Lomish</string>
+    <string name="filter_negative">Negative</string>
+    <string name="filter_poster">Posterize</string>
+    <string name="filter_rotate">Rotate</string>
+    <string name="filter_saturate">Saturate</string>
+    <string name="filter_sepia">Sepia</string>
+    <string name="filter_sharpen">Sharpen</string>
+    <string name="filter_temp">Temperature</string>
+    <string name="filter_tint">Tint</string>
+    <string name="filter_vig">Vignette</string>
+    <string name="filter_saved">Image saved</string>
+    <string name="history">История</string>
+    <string name="created">Создан</string>
+    <string name="printed">Напечатан</string>
+    <string name="renamed">Переименован</string>
+    <string name="deleted">Удален</string>
+    <string name="rotated">Повернут</string>
+    <string name="encrypted">Зашифрован</string>
+    <string name="decrypted">Дешифрован</string>
+    <string name="no_history_message">История отсутствует</string>
+    <string name="view_history_here_message">Просмотрите историю всех ваших файлов!</string>
+    <string name="delete_history_message">Вы уверены, что хотите удалить историю?</string>
+
+    <!-- Extract images -->
+    <string name="extract_images">Извлечь изображения</string>
+    <string name="extract_images_failed">В указанном PDF-файле не найдено изображений</string>
+    <string name="extract_images_success">Обнаружено %1$d изображений у указанном файле. Они сохранены в папку PDF Files в корневой директории.</string>
+
+    <string name="file_info">\n  Файл : %1$s \n\n  Расположение : %2$s \n\n  Размер : %3$s \n\n  Дата изменения %4$s</string>
+    <string name="default_font_family_text">Установить шрифт (по умолчанию : %s)</string>
+    <string name="font_family_text">"Шрифт : "</string>
+    <string name="courier">COURIER</string>
+    <string name="helvetica">HELVETICA</string>
+    <string name="times_roman">TIMES_ROMAN</string>
+    <string name="symbol">SYMBOL</string>
+    <string name="zapfdingbats">ZAPFDINGBATS</string>
+    <string name="undefined">UNDEFINED</string>
+    <string name="selected_image">Выбранное изображение</string>
+    <string name="arrow_up">Стрелка вверх</string>
+    <string name="arrow_down">Стрелка вниз</string>
+    <string name="rearrange_images">Изменить порядок изображений</string>
+    <string name="rearrange_text">Изменить порядок</string>
+    <string name="images_rearranged">Порядок изображений изменен</string>
+    <string name="snackbar_undoAction">Отменить</string>
+    <string name="pdf_does_not_exist_message">Этот файл не существует</string>
+    <string name="image_rearranging_options">Опции изменения порядка изображений</string>
+    <string name="filter_file_name">%s_%s.jpg</string>
+    <string name="reset">Сброс</string>
+
+    <string name="confirm_exit_message">Для выхода вновь нажмите Назад</string>
+
+    <string name="border">Добавить рамку</string>
+    <string name="border_dialog_title">Ширина рамки : %d</string>
+    <string name="border_width_prompt">Введите ширину рамки</string>
+    <string name="filter_not_saved">Невозможно сохранить изображение</string>
+    <string name="remove_image_message">Уверены, что хотите удалить это изображение?</string>
+    <string name="dont_show_again">Не показывать снова</string>
+    <string name="remove_page_message">Уверены, что хотите удалить эту страницу?</string>
+
+    <!-- Watermark Strings -->
+    <string name="encrypted_file_text">Зашифрованный файл</string>
+
+    <!-- Split PDF -->
+    <string name="split_pdf">Разделить PDF</string>
+    <string name="split_error">Невозможно разделить PDF. Файл недоступен, зашифрован или находится на внешнем носителе.</string>
+    <string name="split_success">Выбранный PDF файл успешно разделен на %1$d </string>
+    <string name="split_info">PDF файл будел разделен на несколько одностраничных файлов.</string>
+
+    <!-- Remove Pages -->
+    <string name="remove_pages">Удалить страницы</string>
+    <string name="remove_pages_error">Некорректный ввод</string>
+    <string name="encrypted_pdf">PDF файл защищен паролем</string>
+    <string name="file_access_error">PDF файл недоступен, зашифрован или находится на внешнем носителе.</string>
+
+    <!-- Reorder Pages -->
+    <string name="reorder_pages">Поменять порядок страниц</string>
+
+    <!-- Compress PDF -->
+    <string name="compress_pdf">Сжатие PDF</string>
+    <string name="compress_pdf_prompt">Введите % сжатия PDF : </string>
+    <string name="compress_info">Ваш файл PDF успешно сжат: \n Размер исходного файла : %s \n Размер после сжатия: %s</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_positive">Оценить</string>
+    <string name="rate_negative">Не сейчас</string>
+    <string name="rate_title">Оцените нас!</string>
+    <string name="rate_dialog_text">Если вам понравилось приложение, пожалуйста, поставьте оценку. Это займет не более минуты. Спасибо за вашу поддержку! :)</string>
+    <string name="rate_us_never">Никогда</string>
+    <string name="error_occurred">Произошла ошибка</string>
+
+    <string name="rotate_pages">Повернуть страницы</string>
+    <string name="enter_rotation_angle">Введите угол поворота</string>
+    <string name="rotated_file_name">%s_rotated_%s%s</string>
+    <string name="share_files">Поделиться файлами</string>
+    <string name="pdf_removed_from_list">PDF удален из списка</string>
+    <string name="pdf_added_to_list">PDF добавлен в список.</string>
+    <string name="select_files">Выберите файлы</string>
+
+    <!-- Settings page -->
+    <string name="settings">Настройки</string>
+    <string name="compression_image_edit">Измененить процент сжатия изображения</string>
+    <string name="font_family_edit">Изменить шрифт</string>
+    <string name="font_size_edit">Изменить размер шрифта</string>
+    <string name="theme_edit">Изменить тему оформления</string>
+    <string name="image_compression_value_default">Величина сжатия изображения : %d %%</string>
+    <string name="theme_value_def">Тема оформления : %s </string>
+    <string name="page_size_value_def">Размер страницы : %s </string>
+    <string name="font_size_value_def">Размер шрифта : %d </string>
+    <string name="font_family_value_def">Шрифт : %s </string>
+    <string name="settings_info">Вы можете поменять значения по умолчанию для этих настроек</string>
+    <string name="storage_location_modified">Место хранения изменено</string>
+    <string name="storage_location_info">Изменить место хранения</string>
+    <string name="theme_white">Белая</string>
+    <string name="theme_dark">Темная</string>
+    <string name="theme_black">Черная</string>
+
+    <!-- Home page -->
+    <string name="home_page">На главную</string>
+    <string name="create_new_pdfs">Создание PDF</string>
+    <string name="view_pdfs">Просмотр PDF</string>
+    <string name="modify_existing_pdfs">Изменение PDF</string>
+    <string name="more_options">Дополнительно</string>
+    <string name="add_password">Добавить пароль</string>
+    <string name="remove_password">Удалить пароль</string>
+    <string name="enhance_created_pdfs">Редактирование PDF</string>
+    <string name="viewfiles_rotatepages">1. Выберите файл, который вы хотите повернуть. \n2. Выберите Повернуть Страницы. \n3. Выберите угол поворота и нажмите OK. \n4. Будет создан новый файл PDF.</string>
+    <string name="viewfiles_addpassword">1. Выберите файл, который вы хотите защитить паролем. \n2. Выберите Добавить пароль. \n3. Введите пароль и нажмите OK. \n4. Будет создан новый файл PDF с установленным паролем.</string>
+    <string name="viewfiles_removepassword">1. Выберите файл, который вы хотите защитить паролем. \n2. Выберите Удалить пароль. \n3. Введите пароль и нажмите OK. \n4. Будет создан новый файл PDF без установленного пароля.</string>
+    <string name="grayscale_images">Создать файл PDF в оттенках серого</string>
+    <string name="add_margins">Добавить поля</string>
+    <string name="top">Верх</string>
+    <string name="bottom">Низ</string>
+    <string name="right">Справа</string>
+    <string name="left">Слева</string>
+
+    <!-- Welcome screens-->
+    <string name="welcome_create_pdf_message">Создание файлов PDF</string>
+    <string name="welcome_create_pdf_info">Просматривайте имеющиеся файлы PDF или создавайте новые!</string>
+    <string name="welcome_themes_title">Темы оформления</string>
+    <string name="welcome_themes_message">Выберите в настройках одну из трех тем оформления: белую, темную или черную</string>
+    <string name="welcome_merge_title">Объединение файлов PDF</string>
+    <string name="welcome_merge_message">Объединяйте существующие файлы PDF в один</string>
+    <string name="welcome_viewfiles_title">Просмотр файлов PDF</string>
+    <string name="welcome_viewfiles_message">Легко просматривайте, удаляйте, переименовывайте, защищайте паролем и делитесь вашими файлами</string>
+    <string name="skip_text">Пропустить</string>
+    <string name="get_started_title">Начать работу</string>
+
+</resources>
