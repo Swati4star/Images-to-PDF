@@ -82,6 +82,13 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
 
+    /**
+     * inflates the layout for the fragment
+     * @param inflater reference to inflater object
+     * @param container parent for the inflated view
+     * @param savedInstanceState bundle with saved data, if any
+     * @return inflated view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,6 +102,9 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         return rootView;
     }
 
+    /**
+     * called when user chooses to share generated images
+     */
     @OnClick(R.id.shareImages)
     void onShareFilesClick() {
         if (mOutputFilePaths != null) {
@@ -106,22 +116,35 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         }
     }
 
+    /**
+     * called on click of bottom sheet
+     */
     @OnClick(R.id.viewFiles)
     void onViewFilesClick() {
         mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
+    /**
+     * called when user chooses to view generated images
+     */
     @OnClick(R.id.viewImages)
     void onViewImagesClicked() {
         mActivity.startActivity(ImagesPreviewActivity.getStartIntent(mActivity, mOutputFilePaths));
     }
 
+    /**
+     * invoked when user chooses to select a pdf file
+     * initiates an intent to pick a pdf file
+     */
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
         startActivityForResult(mFileUtils.getFileChooser(),
                 INTENT_REQUEST_PICKFILE_CODE);
     }
 
+    /**
+     * receives intent response for selecting a pdf file
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
@@ -131,6 +154,9 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         }
     }
 
+    /**
+     * invokes generation of images for pdf pages in the background
+     */
     @OnClick(R.id.createImages)
     public void parse() {
         new PdfToImages(mPath, mUri, this).execute();
@@ -145,6 +171,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
+    /**
+     * handles choosing a file from bottom sheet list
+     * @param path path of the file on the device
+     */
     @Override
     public void onItemClick(String path) {
         mUri = null;
@@ -152,6 +182,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         setTextAndActivateButtons(path);
     }
 
+    /**
+     * handles text and button states
+     * @param path path of the file on the device
+     */
     private void setTextAndActivateButtons(String path) {
         mCreatedImages.setVisibility(View.GONE);
         options.setVisibility(View.GONE);
@@ -161,23 +195,38 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                 mSelectFileButton, mCreateImagesButton);
     }
 
+    /**
+     * handles opening a generated image for the given pdf
+     * @param path path of the file on the device
+     */
     @Override
     public void onFileItemClick(String path) {
         mFileUtils.openImage(path);
     }
 
+    /**
+     * initializes interactive views
+     */
     @Override
     public void resetView() {
         mPath = null;
         mMorphButtonUtility.initializeButton(mSelectFileButton, mCreateImagesButton);
     }
 
+    /**
+     * displays progress indicator
+     */
     @Override
     public void extractionStarted() {
         mMaterialDialog = createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 
+    /**
+     * updates recycler view list items based with the generated images
+     * @param imageCount number of generated images
+     * @param outputFilePaths path for each generated image
+     */
     @Override
     public void updateView(int imageCount, ArrayList<String> outputFilePaths) {
 
@@ -194,25 +243,32 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         options.setVisibility(View.VISIBLE);
         mOutputFilePaths = outputFilePaths;
         ExtractImagesAdapter extractImagesAdapter = new ExtractImagesAdapter(mActivity, outputFilePaths, this);
+        // init recycler view for displaying generated image list
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
         mCreateImagesSuccessText.setText(text);
         mCreatedImages.setVisibility(View.VISIBLE);
         mCreatedImages.setLayoutManager(mLayoutManager);
+        // set up adapter
         mCreatedImages.setAdapter(extractImagesAdapter);
         mCreatedImages.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
     }
 
+    /**
+     * populates bottom sheet list with pdf files
+     * @param paths paths for pdf files on the device
+     */
     @Override
     public void onPopulate(ArrayList<String> paths) {
         if (paths == null || paths.size() == 0) {
             mLayout.setVisibility(View.GONE);
         } else {
-            // Init recycler view
+            // init recycler view for bottom sheet
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
                     paths, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             mRecyclerViewFiles.setLayoutManager(mLayoutManager);
+            // set up adapter
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
             mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
         }

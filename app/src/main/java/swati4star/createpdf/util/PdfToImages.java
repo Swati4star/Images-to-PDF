@@ -47,15 +47,18 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
         ParcelFileDescriptor fileDescriptor = null;
         try {
             if (mUri != null)
+                // resolve pdf file path based on uri
                 fileDescriptor = ((PdfToImageFragment) mExtractImagesListener).getContext()
                         .getContentResolver().openFileDescriptor(mUri, "r");
             else if (mPath != null)
+                // resolve pdf file path based on relative path
                 fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
             if (fileDescriptor != null) {
                 PdfRenderer renderer = new PdfRenderer(fileDescriptor);
                 final int pageCount = renderer.getPageCount();
                 for (int i = 0; i < pageCount; i++) {
                     PdfRenderer.Page page = renderer.openPage(i);
+                    // generate bitmaps for individual pdf pages
                     Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
                             Bitmap.Config.ARGB_8888);
                     // say we render for showing on the screen
@@ -64,6 +67,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
                     // close the page
                     page.close();
 
+                    // generate numbered image file names
                     String filename = getFileNameWithoutExtension(mPath) +
                             "_" + Integer.toString(i + 1);
                     String path = saveImage(filename, bitmap);
