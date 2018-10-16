@@ -50,7 +50,7 @@
 
         <item
             android:id="@+id/nav_pdf_to_images"
-            android:icon="@drawable/ic_broken_image_black_24dp"
+            android:icon="@drawable/ic_image_black_24dp"
             android:title="@string/pdf_to_images" />
 
         <item
