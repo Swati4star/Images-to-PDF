@@ -251,7 +251,7 @@
     <!-- Extract images -->
     <string name="extract_images">Извлечь изображения</string>
     <string name="extract_images_failed">В указанном PDF-файле не найдено изображений</string>
-    <string name="extract_images_success">Обнаружено %1$d изображений у указанном файле. Они сохранены в папку PDF Files в корневой директории.</string>
+    <string name="extract_images_success">Обнаружено %1$d изображений в указанном файле. Они сохранены в папку PDF Files в корневой директории.</string>
 
     <string name="file_info">\n  Файл : %1$s \n\n  Расположение : %2$s \n\n  Размер : %3$s \n\n  Дата изменения %4$s</string>
     <string name="default_font_family_text">Установить шрифт (по умолчанию : %s)</string>
@@ -305,7 +305,7 @@
     <!-- Compress PDF -->
     <string name="compress_pdf">Сжатие PDF</string>
     <string name="compress_pdf_prompt">Введите % сжатия PDF : </string>
-    <string name="compress_info">Ваш файл PDF успешно сжат: \n Размер исходного файла : %s \n Размер после сжатия: %s</string>
+    <string name="compress_info">Ваш файл PDF успешно сжат: \nРазмер исходного файла : %s \nРазмер после сжатия: %s</string>
 
     <!-- Rate us strings -->
     <string name="rate_positive">Оценить</string>
