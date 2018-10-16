@@ -109,11 +109,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
-
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-        mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-
         resetView();
         return rootView;
     }
@@ -132,7 +127,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
                     paths, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
+            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
         }
         mLottieProgress.setVisibility(View.GONE);
     }
@@ -224,6 +222,14 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             mCreateImagesSuccessText.setText(text);
             mCreateImagesSuccessText.setVisibility(View.VISIBLE);
             options.setVisibility(View.VISIBLE);
+
+            Log.d(PdfToImageFragment.class.getSimpleName(), "Size : " + mOutputFilePaths.size());
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+            mCreateImagesSuccessText.setText(text);
+            mCreatedImages.setVisibility(View.VISIBLE);
+            mCreatedImages.setLayoutManager(mLayoutManager);
+            mCreatedImages.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
         }
     }
 
@@ -232,17 +238,20 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             mUri = data.getData();
+            Log.d(PdfToImageFragment.class.getSimpleName(), "Uri is : " + mUri.toString());
             setTextAndActivateButtons(getFilePath(data.getData()));
         }
     }
 
     @Override
     public void onItemClick(String path) {
+        mUri = null;
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
 
     private void setTextAndActivateButtons(String path) {
+        Log.d(PdfToImageFragment.class.getSimpleName(), "Path : " + path);
         mCreatedImages.setVisibility(View.GONE);
         options.setVisibility(View.GONE);
         mCreateImagesSuccessText.setVisibility(View.GONE);
