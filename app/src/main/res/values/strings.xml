@@ -81,7 +81,7 @@
     <string name="extras">Extras</string>
     <string name="share">Share</string>
     <string name="help">Help</string>
-    
+
     <!-- images to PDF -->
     <string name="image_scale_type">Set Image Scale Type</string>
     <string name="select_scale_type">Select Image scaling type</string>
@@ -346,6 +346,14 @@
     <string name="compress_pdf">Compress PDF</string>
     <string name="compress_pdf_prompt">Enter % compression of PDF : </string>
     <string name="compress_info">Congratulations! Your PDF is compressed: \n Original PDF Size : %s \n Compressed PDF Size: %s</string>
+
+    <!-- PDF to Images string resources-->
+    <string name="pdf_to_images">PDF to Images</string>
+    <string name="create_images">Create Images</string>
+    <string name="select_pdf_file">Select PDF File</string>
+    <string name="create_images_success">%1$d image(s) have been generated for the selected PDF. They have been saved in the PDF Files root directory.</string>
+    <string name="share_images">Share Images</string>
+    <string name="view_images">View Images</string>
 
     <!-- Rate us strings -->
     <string name="rate_positive">Rate now</string>

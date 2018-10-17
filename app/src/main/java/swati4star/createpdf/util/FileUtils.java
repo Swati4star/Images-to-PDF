@@ -315,7 +315,7 @@ public class FileUtils {
      * @param filename - name of the file
      * @param finalBitmap - bitmap to save
      */
-    static String saveImage(String filename, Bitmap finalBitmap) {
+    public static String saveImage(String filename, Bitmap finalBitmap) {
 
         if (checkIfBitmapIsWhite(finalBitmap))
             return null;
