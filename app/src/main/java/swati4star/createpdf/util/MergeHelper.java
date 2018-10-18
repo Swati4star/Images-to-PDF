@@ -3,7 +3,9 @@ package swati4star.createpdf.util;
 import android.app.Activity;
 import android.content.Context;
 import android.preference.PreferenceManager;
+
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
