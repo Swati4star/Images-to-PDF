@@ -378,4 +378,9 @@
     <string name="share_images">" Поделиться изображениями"</string>
     <string name="view_images">Просмотр изображений</string>
 
+    <string name="crop">Crop</string>
+    <string name="rotate">Rotate</string>
+    <string name="done">Done</string>
+    <string name="image_successfully_cropped">Image successfully cropped</string>
+
 </resources>

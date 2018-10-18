@@ -334,6 +334,9 @@
     <string name="view_images">画像を見る</string>
     <string name="share_images">" 画像を共有する"</string>
     <string name="select_pdf_file">PDFファイルを選択</string>
-    <string name="pdf_to_images">PDF to Images</string>
+    <string name="pdf_to_images">PDF to Images</string>    <string name="crop">Crop</string>
+    <string name="rotate">Rotate</string>
+    <string name="done">Done</string>
+    <string name="image_successfully_cropped">Image successfully cropped</string>
 
 </resources>
