@@ -355,6 +355,7 @@
     <string name="viewfiles_removepassword">1. Выберите файл, который вы хотите защитить паролем. \n2. Выберите Удалить пароль. \n3. Введите пароль и нажмите OK. \n4. Будет создан новый файл PDF без установленного пароля.</string>
     <string name="grayscale_images">Создать файл PDF в оттенках серого</string>
     <string name="add_margins">Добавить поля</string>
+    <string name="show_pg_num">Показывать номера страниц</string>
     <string name="top">Верх</string>
     <string name="bottom">Низ</string>
     <string name="right">Справа</string>
