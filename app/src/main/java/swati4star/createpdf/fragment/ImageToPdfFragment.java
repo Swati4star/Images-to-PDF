@@ -685,10 +685,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void addPageNumbers() {
         MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
-                                            .title("Choose Page Number Style")
+                                            .title(R.string.choose_page_number_style)
                                             .customView(R.layout.add_pgnum_dialog, false)
-                                            .positiveText("OK")
-                                            .negativeText("Cancel")
+                                            .positiveText(R.string.ok)
+                                            .negativeText(R.string.cancel)
                 .onPositive(((dialog, which) -> {
                     View view = dialog.getCustomView();
                     RadioButton rbOpt1 = view.findViewById(R.id.page_num_opt1);

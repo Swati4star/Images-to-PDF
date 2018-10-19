@@ -356,6 +356,7 @@
     <string name="grayscale_images">Создать файл PDF в оттенках серого</string>
     <string name="add_margins">Добавить поля</string>
     <string name="show_pg_num">Показывать номера страниц</string>
+    <string name="choose_page_number_style">Выберите стиль номера страницы</string>
     <string name="top">Верх</string>
     <string name="bottom">Низ</string>
     <string name="right">Справа</string>

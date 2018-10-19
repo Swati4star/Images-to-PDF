@@ -312,6 +312,7 @@
     <string name="file_access_error">We were unable to access PDF. Files may be encrypted or in the external storage.</string>
     <string name="add_margins">Add Margins</string>
     <string name="show_pg_num">Show page numbers</string>
+    <string name="choose_page_number_style">Choose Page Number Style</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
     <string name="right">Right</string>
