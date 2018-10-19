@@ -11,6 +11,7 @@ public class ImageToPDFOptions extends PDFOptions {
     private int mMarginRight = 0;
     private int mMarginLeft = 0;
     private String mImageScaleType;
+    private String mPageNumStyle;
 
     public ImageToPDFOptions() {
         super();
@@ -71,5 +72,12 @@ public class ImageToPDFOptions extends PDFOptions {
 
     public void setImageScaleType(String mImageScaleType) {
         this.mImageScaleType = mImageScaleType;
+    }
+    public String getPageNumStyle() {
+        return mPageNumStyle;
+    }
+
+    public void setPageNumStyle(String mPageNumStyle) {
+        this.mPageNumStyle = mPageNumStyle;
     }
 }

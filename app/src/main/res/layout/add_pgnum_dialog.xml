@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    >
+
+
+    <RadioGroup
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:id="@+id/radioGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/page_num_opt1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/page_x_of_n"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/page_num_opt2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/page_x"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/page_num_opt3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/x"
+            android:textSize="18sp"/>
+    </RadioGroup>
+</RelativeLayout>

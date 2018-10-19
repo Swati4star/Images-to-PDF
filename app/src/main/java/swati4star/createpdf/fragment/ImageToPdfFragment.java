@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -127,6 +129,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginBottom = 38;
     private int mMarginLeft = 50;
     private int mMarginRight = 38;
+    private String mPageNumStyle = "";
 
     @Override
     public void onAttach(Context context) {
@@ -223,6 +226,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
         mPdfOptions.setImageScaleType(mImageScaleType);
+        mPdfOptions.setPageNumStyle(mPageNumStyle);
         MaterialDialog.Builder builder = createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
         builder.input(getString(R.string.example), null, (dialog, input) -> {
@@ -394,8 +398,12 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             case 10:
                 addMargins();
                 break;
+            case 11:
+                addPageNumbers();
+                break;
         }
     }
+
 
     /**
      * Saves Current Image with grayscale filter
@@ -668,6 +676,31 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         mMarginLeft = Integer.parseInt(left.getText().toString());
                     mPdfOptions.setMargins(mMarginTop, mMarginBottom, mMarginRight, mMarginLeft);
                 })).build();
+        materialDialog.show();
+    }
+
+    private void addPageNumbers() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+                                            .title(R.string.choose_page_number_style)
+                                            .customView(R.layout.add_pgnum_dialog, false)
+                                            .positiveText(R.string.ok)
+                                            .negativeText(R.string.cancel)
+                .onPositive(((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    RadioButton rbOpt1 = view.findViewById(R.id.page_num_opt1);
+                    RadioButton rbOpt2 = view.findViewById(R.id.page_num_opt2);
+                    RadioButton rbOpt3 = view.findViewById(R.id.page_num_opt3);
+                    RadioGroup rg = view.findViewById(R.id.radioGroup);
+                    int checkedRadioButtonId = rg.getCheckedRadioButtonId();
+                    if (checkedRadioButtonId == rbOpt1.getId()) {
+                        mPageNumStyle = Constants.PG_NUM_STYLE_PAGE_X_OF_N;
+                    } else if (checkedRadioButtonId == rbOpt2.getId()) {
+                        mPageNumStyle = Constants.PG_NUM_STYLE_X_OF_N;
+                    } else if (checkedRadioButtonId == rbOpt3.getId()) {
+                        mPageNumStyle = Constants.PG_NUM_STYLE_X;
+                    }
+                }))
+                .build();
         materialDialog.show();
     }
 }

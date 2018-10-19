@@ -65,6 +65,9 @@ public class ImageEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context.getResources().getDrawable(R.drawable.ic_page_size_24dp),
                 context.getString(R.string.add_margins)));
+        options.add(new EnhancementOptionsEntity(
+                context.getResources().getDrawable(R.drawable.ic_format_list_numbered_black_24dp),
+                context.getString(R.string.show_pg_num)));
         //options.add(new EnhancementOptionsEntity(
         //      context.getResources().getDrawable(R.drawable.ic_branding_watermark_black_24dp),
         //    context.getResources().getString(R.string.add_watermark)));

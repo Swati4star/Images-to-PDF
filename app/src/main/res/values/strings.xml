@@ -410,10 +410,15 @@
     <string name="viewfiles_removepassword">1. Select the PDF you wish to remove password from. \n2. Select Remove Password. \n3. Type pdf password. Select OK. \n4. New PDF without PDF will be created.</string>
     <string name="grayscale_images">Create grayscale PDF</string>
     <string name="add_margins">Add Margins</string>
+    <string name="choose_page_number_style">Choose Page Number Style</string>
+    <string name="show_pg_num">Show page numbers</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
     <string name="right">Right</string>
     <string name="left">Left</string>
+    <string name="page_x_of_n">Page X of N</string>
+    <string name="page_x">Page X</string>
+    <string name="x">X</string>
 
     <!-- Welcome screens-->
     <string name="welcome_create_pdf_message">Creating a PDF file</string>
@@ -426,5 +431,6 @@
     <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your pdf file</string>
     <string name="skip_text">Skip</string>
     <string name="get_started_title">Get Started!</string>
+
 
 </resources>
