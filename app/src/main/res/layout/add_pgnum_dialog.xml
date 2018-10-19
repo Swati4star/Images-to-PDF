@@ -18,21 +18,21 @@
             android:id="@+id/page_num_opt1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Page X of N"
+            android:text="@string/page_x_of_n"
             android:textSize="18sp"/>
 
         <RadioButton
             android:id="@+id/page_num_opt2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Page X"
+            android:text="@string/page_x"
             android:textSize="18sp"/>
 
         <RadioButton
             android:id="@+id/page_num_opt3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="X"
+            android:text="@string/x"
             android:textSize="18sp"/>
     </RadioGroup>
 </RelativeLayout>

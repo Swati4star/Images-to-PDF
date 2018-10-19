@@ -416,6 +416,9 @@
     <string name="bottom">Bottom</string>
     <string name="right">Right</string>
     <string name="left">Left</string>
+    <string name="page_x_of_n">Page X of N</string>
+    <string name="page_x">Page X</string>
+    <string name="x">X</string>
 
     <!-- Welcome screens-->
     <string name="welcome_create_pdf_message">Creating a PDF file</string>
@@ -428,5 +431,6 @@
     <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your pdf file</string>
     <string name="skip_text">Skip</string>
     <string name="get_started_title">Get Started!</string>
+
 
 </resources>

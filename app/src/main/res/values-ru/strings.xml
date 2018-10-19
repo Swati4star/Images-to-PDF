@@ -361,6 +361,9 @@
     <string name="bottom">Низ</string>
     <string name="right">Справа</string>
     <string name="left">Слева</string>
+    <string name="page_x_of_n">страница x of n</string>
+    <string name="page_x">страница x</string>
+    <string name="x">X</string>
 
     <!-- Welcome screens-->
     <string name="welcome_create_pdf_message">Создание файлов PDF</string>
