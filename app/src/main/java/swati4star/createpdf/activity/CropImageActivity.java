@@ -88,6 +88,16 @@ public class CropImageActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.previousImageButton)
+    public void prevImgBtnClicked() {
+        if (mCurrentImageIndex == 0) {
+
+            setImage(mImages.size() - 1);
+        } else {
+            setImage(mCurrentImageIndex - 1);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
