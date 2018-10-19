@@ -3,12 +3,16 @@ package swati4star.createpdf.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
@@ -43,6 +47,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private int mMarginRight;
     private int mMarginLeft;
     private String mImagescaleType;
+    private String mPageNumStyle;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -60,6 +65,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mMarginRight = mImageToPDFOptions.getMarginRight();
         this.mMarginLeft = mImageToPDFOptions.getMarginLeft();
         this.mImagescaleType = mImageToPDFOptions.getImageScaleType();
+        this.mPageNumStyle = mImageToPDFOptions.getPageNumStyle();
         mPath = parentPath;
     }
 
@@ -143,6 +149,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                         (documentRect.getHeight() - image.getScaledHeight()) / 2);
 
                 Log.v("Stage 7", "Image Alignments");
+                addPageNumber(documentRect, writer);
                 document.add(image);
 
                 document.newPage();
@@ -162,6 +169,30 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         }
 
         return null;
+    }
+
+    private void addPageNumber(Rectangle documentRect, PdfWriter writer) {
+        if (!mPageNumStyle.isEmpty()) {
+            ColumnText.showTextAligned(writer.getDirectContent(),
+                    Element.ALIGN_BOTTOM,
+                    getPhrase(writer, mPageNumStyle, mImagesUri.size()),
+                    ((documentRect.getRight() + documentRect.getLeft()) / 2),
+                    documentRect.getBottom() + 25, 0);
+        }
+    }
+
+    @NonNull
+    private Phrase getPhrase(PdfWriter writer, String pageNumStyle, int size) {
+        Phrase phrase;
+        if (pageNumStyle == Constants.PG_NUM_STYLE_PAGE_X_OF_N) {
+            phrase = new Phrase(String.format("Page %d of %d", writer.getPageNumber(), size));
+        } else if (pageNumStyle == Constants.PG_NUM_STYLE_X_OF_N) {
+            phrase = new Phrase(String.format("%d of %d", writer.getPageNumber(), size));
+        } else {
+            phrase = new Phrase(String.format("%d" , writer.getPageNumber()));
+
+        }
+        return phrase;
     }
 
     @Override

@@ -25,6 +25,9 @@ public class Constants {
     public static final String DEFAULT_IMAGE_SCALETYPE_TEXT = "image_scale_type";
     public static final String IMAGE_SCALE_TYPE_STRETCH = "stretch_image";
     public static final String IMAGE_SCALE_TYPE_ASPECT_RATIO = "maintain_aspect_ratio";
+    public static final String PG_NUM_STYLE_PAGE_X_OF_N = "pg_num_style_page_x_of_n";
+    public static final String PG_NUM_STYLE_X_OF_N = "pg_num_style_x_of_n";
+    public static final String PG_NUM_STYLE_X = "pg_num_style_x";
 
     public static final String BUNDLE_DATA = "bundle_data";
     public static final String REORDER_PAGES = "reorder_pages";
