@@ -44,7 +44,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -253,7 +252,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
 
-
     /**
      * Called after user is asked to grant permissions
      *
@@ -298,12 +296,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         switch (requestCode) {
             case INTENT_REQUEST_GET_IMAGES:
                 mImagesUri.clear();
-                List<Uri> imageUris = Matisse.obtainResult(data);
-                for (Uri uri : imageUris)
-                    mImagesUri.add(mFileUtils.getUriRealPath(uri));
-                if (imageUris.size() > 0) {
+                mImagesUri.addAll(Matisse.obtainPathResult(data));
+                if (mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
-                            .getString(R.string.images_selected), imageUris.size()));
+                            .getString(R.string.images_selected), mImagesUri.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
                     showSnackbar(mActivity, R.string.snackbar_images_added);
                     mCreatePdf.setEnabled(true);
@@ -318,7 +314,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 HashMap<Integer, Uri> croppedImageUris =
                         (HashMap) data.getSerializableExtra(CropImage.CROP_IMAGE_EXTRA_RESULT);
 
-                for (int i = 0; i < mImagesUri.size(); i++)  {
+                for (int i = 0; i < mImagesUri.size(); i++) {
                     if (croppedImageUris.get(i) != null) {
                         mImagesUri.set(i, croppedImageUris.get(i).getPath());
                         showSnackbar(mActivity, R.string.snackbar_imagecropped);
