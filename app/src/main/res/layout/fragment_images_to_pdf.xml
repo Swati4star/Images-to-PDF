@@ -109,6 +109,8 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:padding="8dp"
+        android:background="?attr/bottomSheetColor"
+        android:textColor="?attr/bottomSheetTextColor"
         android:visibility="gone" />
 
 </RelativeLayout>

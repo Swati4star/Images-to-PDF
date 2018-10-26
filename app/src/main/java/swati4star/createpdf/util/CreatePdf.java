@@ -172,7 +172,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     }
 
     private void addPageNumber(Rectangle documentRect, PdfWriter writer) {
-        if (!mPageNumStyle.isEmpty()) {
+        if (mPageNumStyle != null) {
             ColumnText.showTextAligned(writer.getDirectContent(),
                     Element.ALIGN_BOTTOM,
                     getPhrase(writer, mPageNumStyle, mImagesUri.size()),
@@ -184,13 +184,16 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     @NonNull
     private Phrase getPhrase(PdfWriter writer, String pageNumStyle, int size) {
         Phrase phrase;
-        if (pageNumStyle == Constants.PG_NUM_STYLE_PAGE_X_OF_N) {
-            phrase = new Phrase(String.format("Page %d of %d", writer.getPageNumber(), size));
-        } else if (pageNumStyle == Constants.PG_NUM_STYLE_X_OF_N) {
-            phrase = new Phrase(String.format("%d of %d", writer.getPageNumber(), size));
-        } else {
-            phrase = new Phrase(String.format("%d" , writer.getPageNumber()));
-
+        switch (pageNumStyle) {
+            case Constants.PG_NUM_STYLE_PAGE_X_OF_N:
+                phrase = new Phrase(String.format("Page %d of %d", writer.getPageNumber(), size));
+                break;
+            case Constants.PG_NUM_STYLE_X_OF_N:
+                phrase = new Phrase(String.format("%d of %d", writer.getPageNumber(), size));
+                break;
+            default:
+                phrase = new Phrase(String.format("%d", writer.getPageNumber()));
+                break;
         }
         return phrase;
     }

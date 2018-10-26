@@ -129,7 +129,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginBottom = 38;
     private int mMarginLeft = 50;
     private int mMarginRight = 38;
-    private String mPageNumStyle = "";
+    private String mPageNumStyle;
 
     @Override
     public void onAttach(Context context) {
@@ -221,8 +221,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     /**
      * Create Pdf of selected images
      */
-    @OnClick({R.id.pdfCreate})
-    void createPdf() {
+    @OnClick(R.id.pdfCreate)
+    void pdfCreateClicked() {
+        createPdf(false);
+    }
+
+
+    void createPdf(boolean isgrayScale) {
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
         mPdfOptions.setImageScaleType(mImageScaleType);
@@ -237,6 +242,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 FileUtils utils = new FileUtils(mActivity);
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                     mPdfOptions.setOutFileName(filename);
+
+                    if (isgrayScale)
+                        saveCurrentImageInGrayscale();
+
                     new CreatePdf(mPdfOptions, mHomePath,
                             ImageToPdfFragment.this).execute();
                 } else {
@@ -244,7 +253,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     builder2.onPositive((dialog2, which) -> {
                         mPdfOptions.setOutFileName(filename);
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
-                    }).onNegative((dialog1, which) -> createPdf()).show();
+                    }).onNegative((dialog1, which) -> createPdf(isgrayScale)).show();
                 }
             }
         }).show();
@@ -392,8 +401,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         INTENT_REQUEST_REARRANGE_IMAGE);
                 break;
             case 9:
-                saveCurrentImage();
-                createPdf();
+                saveCurrentImageInGrayscale();
+                createPdf(true);
                 break;
             case 10:
                 addMargins();
@@ -408,7 +417,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     /**
      * Saves Current Image with grayscale filter
      */
-    private void saveCurrentImage() {
+    private void saveCurrentImageInGrayscale() {
         try {
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
@@ -611,6 +620,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
+        mPageNumStyle = null;
     }
 
     /**
@@ -680,11 +690,12 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void addPageNumbers() {
-        MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                                             .title(R.string.choose_page_number_style)
                                             .customView(R.layout.add_pgnum_dialog, false)
                                             .positiveText(R.string.ok)
                                             .negativeText(R.string.cancel)
+                .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
                     View view = dialog.getCustomView();
                     RadioButton rbOpt1 = view.findViewById(R.id.page_num_opt1);
@@ -700,6 +711,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
                     }
                 }))
+                .onNeutral((((dialog, which) -> {
+                    mPageNumStyle = null;
+                })))
                 .build();
         materialDialog.show();
     }
