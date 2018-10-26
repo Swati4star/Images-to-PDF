@@ -262,6 +262,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void deleteFiles() {
 
         for (int position : mSelectedFiles) {
+
+            if (position >= mFileList.size())
+                continue;
+
             String fileName = mFileList.get(position).getPath();
             File fdelete = new File(fileName);
             mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));

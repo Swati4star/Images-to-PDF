@@ -67,6 +67,10 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     }
 
     void swap (int pos1, int pos2) {
+
+        if (pos1 >= mSequence.size())
+            return;
+
         int val = mSequence.get(pos1);
         mSequence.set(pos1, mSequence.get(pos2));
         mSequence.set(pos2, val);

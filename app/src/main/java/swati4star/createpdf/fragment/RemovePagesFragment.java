@@ -140,6 +140,10 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             setTextAndActivateButtons(getFilePath(data.getData()));
         } else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
             String pages = data.getStringExtra(RESULT);
+
+            if (mPath == null)
+                return;
+
             Log.v("output", pages + " ");
             String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
                     "_edited" + pages + mActivity.getString(R.string.pdf_ext));
@@ -190,7 +194,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 // close the renderer
                 renderer.close();
             }
-        } catch (IOException | SecurityException e) {
+        } catch (IOException | SecurityException | IllegalArgumentException e) {
             e.printStackTrace();
         }
 

@@ -417,7 +417,7 @@
     <string name="right">Right</string>
     <string name="left">Left</string>
     <string name="page_x_of_n">Page X of N</string>
-    <string name="page_x">Page X</string>
+    <string name="page_x">X of N</string>
     <string name="x">X</string>
 
     <!-- Welcome screens-->
