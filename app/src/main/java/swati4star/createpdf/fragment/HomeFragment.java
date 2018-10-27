@@ -61,6 +61,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView rotatePdf;
     @BindView(R.id.add_watermark)
     MyCardView addWatermark;
+    @BindView(R.id.remove_duplicates_pages_pdf)
+    MyCardView removeDuplicatePages;
     @BindView(R.id.add_images)
     MyCardView addImages;
     @Override
@@ -84,6 +86,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         removePassword.setOnClickListener(this);
         rotatePdf.setOnClickListener(this);
         addWatermark.setOnClickListener(this);
+        removeDuplicatePages.setOnClickListener(this);
         addImages.setOnClickListener(this);
         return rootview;
     }
@@ -107,6 +110,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Bundle bundle = new Bundle();
 
         switch (v.getId()) {
+            case R.id.remove_duplicates_pages_pdf:
+                fragment = new RemoveDuplicatePagesFragment();
+                setNavigationViewSelection(12);
+                break;
             case R.id.images_to_pdf:
                 fragment = new ImageToPdfFragment();
                 setNavigationViewSelection(1);

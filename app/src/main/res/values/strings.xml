@@ -356,6 +356,9 @@
     <!-- Reorder Pages -->
     <string name="reorder_pages">Reorder Pages</string>
 
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
     <string name="compress_pdf_prompt">Enter % compression of PDF : </string>
