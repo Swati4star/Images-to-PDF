@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
-import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class MergePdf extends AsyncTask<String, Void, Void> {
@@ -20,16 +19,17 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     private Boolean mIsPDFMerged;
     private String mFilename;
     private boolean mIsPasswordProtected;
-    private String mPassword;
+    private String mPassword, mMasterPwd;
     private final MergeFilesListener mMergeFilesListener;
 
     public MergePdf(String fileName, String homePath, boolean isPasswordProtected,
-                    String password, MergeFilesListener mergeFilesListener) {
+                    String password, MergeFilesListener mergeFilesListener, String masterpwd) {
         mFilename = fileName;
         mMergeFilesListener = mergeFilesListener;
         mFinPath = homePath;
         mIsPasswordProtected = isPasswordProtected;
         mPassword = password;
+        mMasterPwd = masterpwd;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
             // Open the document
             if (mIsPasswordProtected) {
                 copy.setEncryption(mPassword.getBytes(),
-                        appName.getBytes(),
+                        mMasterPwd.getBytes(),
                         PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
                         PdfWriter.ENCRYPTION_AES_128);
             }

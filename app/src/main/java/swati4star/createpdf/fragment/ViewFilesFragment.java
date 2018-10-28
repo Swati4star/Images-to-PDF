@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,8 +68,6 @@ public class ViewFilesFragment extends Fragment
 
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 10;
 
-    @BindView(R.id.layout_main)
-    public LinearLayout mainLayout;
     @BindView(R.id.getStarted)
     public Button getStarted;
     @BindView(R.id.filesRecyclerView)
@@ -326,21 +323,18 @@ public class ViewFilesFragment extends Fragment
     @Override
     public void setEmptyStateVisible() {
         emptyView.setVisibility(View.VISIBLE);
-        mainLayout.setVisibility(View.GONE);
         noPermissionsLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void setEmptyStateInvisible() {
         emptyView.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.VISIBLE);
         noPermissionsLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void showNoPermissionsView() {
         emptyView.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.GONE);
         noPermissionsLayout.setVisibility(View.VISIBLE);
     }
 
@@ -348,88 +342,6 @@ public class ViewFilesFragment extends Fragment
     public void hideNoPermissionsView() {
         noPermissionsLayout.setVisibility(View.GONE);
     }
-
-    // DIRECTORY OPERATIONS
-
-    @OnClick(R.id.new_dir)
-    void moveToNewDirectory() {
-        if (mViewFilesAdapter.areItemsSelected())
-            moveFilesToDirectory(NEW_DIR);
-        else
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
-    }
-
-    @OnClick(R.id.move_to_dir)
-    void moveToDirectory() {
-        if (mViewFilesAdapter.areItemsSelected())
-            moveFilesToDirectory(EXISTING_DIR);
-        else
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
-    }
-
-    @OnClick(R.id.move_to_home_dir)
-    void moveFilesToHomeDirectory() {
-        if (!mViewFilesAdapter.areItemsSelected()) {
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
-            return;
-        }
-        final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
-        if (filePath == null) {
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
-        } else {
-            final File[] files = mDirectoryUtils.getOrCreatePdfDirectory().listFiles();
-            for (File pdf : mDirectoryUtils.getPdfsFromPdfFolder(files)) {
-                //remove the files already present in home directory
-                filePath.remove(pdf.getPath());
-            }
-            new MoveFilesToDirectory(mActivity
-                    , filePath
-                    , null
-                    , MoveFilesToDirectory.HOME_DIRECTORY)
-                    .execute();
-            populatePdfList();
-        }
-    }
-
-    @OnClick(R.id.delete_dir)
-    void deleteDirectory() {
-        LayoutInflater inflater = getLayoutInflater();
-        View alertView = inflater.inflate(R.layout.directory_dialog, null);
-        final ArrayList<String> pdfFiles = new ArrayList<>();
-        final EditText input = alertView.findViewById(R.id.directory_editText);
-        TextView message = alertView.findViewById(R.id.directory_textView);
-        message.setText(R.string.dialog_delete_dir);
-        mAlertDialogBuilder.setTitle(R.string.delete_directory)
-                .setView(alertView)
-                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                    final String dirName = input.getText().toString();
-                    final File directory = mDirectoryUtils.getDirectory(dirName);
-                    if (directory == null || dirName.trim().isEmpty()) {
-                        showSnackbar(mActivity, R.string.dir_does_not_exists);
-                    } else {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                        builder.setTitle(R.string.delete)
-                                .setMessage(R.string.delete_dialog)
-                                .setCancelable(true)
-                                .setPositiveButton(R.string.yes, (dialogInterface1, i12) -> {
-                                    for (File pdf : directory.listFiles()) {
-                                        pdfFiles.add(pdf.getPath());
-                                    }
-                                    new MoveFilesToDirectory(mActivity, pdfFiles,
-                                            dirName, MoveFilesToDirectory.DELETE_DIRECTORY)
-                                            .execute();
-                                    populatePdfList();
-                                })
-                                .setNegativeButton(R.string.no, (dialog, i1) -> {
-                                    dialog.dismiss();
-                                    dialogInterface.dismiss();
-                                });
-                        builder.create().show();
-                    }
-                });
-        mAlertDialogBuilder.create().show();
-    }
-
 
     //When the "GET STARTED" button is clicked, the user is taken to home
     @OnClick(R.id.getStarted)

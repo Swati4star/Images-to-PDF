@@ -23,7 +23,6 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
-import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 /**
@@ -48,6 +47,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private int mMarginLeft;
     private String mImagescaleType;
     private String mPageNumStyle;
+    private String mMasterPwd;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -66,6 +66,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mMarginLeft = mImageToPDFOptions.getMarginLeft();
         this.mImagescaleType = mImageToPDFOptions.getImageScaleType();
         this.mPageNumStyle = mImageToPDFOptions.getPageNumStyle();
+        this.mMasterPwd = mImageToPDFOptions.getMasterPwd();
         mPath = parentPath;
     }
 
@@ -102,7 +103,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             Log.v("Stage 3", "Pdf writer");
 
             if (mPasswordProtected) {
-                writer.setEncryption(mPassword.getBytes(), appName.getBytes(),
+                writer.setEncryption(mPassword.getBytes(), mMasterPwd.getBytes(),
                         PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
                         PdfWriter.ENCRYPTION_AES_128);
 

@@ -12,6 +12,7 @@ public class ImageToPDFOptions extends PDFOptions {
     private int mMarginLeft = 0;
     private String mImageScaleType;
     private String mPageNumStyle;
+    private String mMasterPwd;
 
     public ImageToPDFOptions() {
         super();
@@ -21,10 +22,12 @@ public class ImageToPDFOptions extends PDFOptions {
 
     public ImageToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
                              String mPassword, String mQualityString, int mBorderWidth,
+                             String masterPwd,
                              ArrayList<String> mImagesUri) {
         super(mFileName, mPageSize, mPasswordProtected, mPassword, mBorderWidth);
         this.mQualityString = mQualityString;
         this.mImagesUri = mImagesUri;
+        this.mMasterPwd = masterPwd;
     }
 
     public String getQualityString() {
@@ -48,6 +51,10 @@ public class ImageToPDFOptions extends PDFOptions {
         mMarginBottom = bottom;
         mMarginRight = right;
         mMarginLeft = left;
+    }
+
+    public void setMasterPwd(String pwd) {
+        this.mMasterPwd = pwd;
     }
 
     public int getMarginTop() {
@@ -79,5 +86,9 @@ public class ImageToPDFOptions extends PDFOptions {
 
     public void setPageNumStyle(String mPageNumStyle) {
         this.mPageNumStyle = mPageNumStyle;
+    }
+
+    public String getMasterPwd() {
+        return mMasterPwd;
     }
 }

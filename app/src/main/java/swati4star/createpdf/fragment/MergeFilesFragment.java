@@ -3,6 +3,7 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -53,7 +54,9 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -79,6 +82,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private boolean mPasswordProtected = false;
     private String mPassword;
+    private SharedPreferences mSharedPrefs;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -115,8 +119,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mFilePaths = new ArrayList<>();
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
-                .getString(STORAGE_LOCATION,
+        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mHomePath = mSharedPrefs.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
@@ -229,6 +233,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     @OnClick(R.id.mergebtn)
     void mergeFiles(final View view) {
         String[] pdfpaths = mFilePaths.toArray(new String[0]);
+        String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -238,12 +243,12 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                     } else {
                         if (!mFileUtils.isFileExist(input + getString(R.string.pdf_ext))) {
                             new MergePdf(input.toString(), mHomePath, mPasswordProtected,
-                                    mPassword, this).execute(pdfpaths);
+                                    mPassword, this, masterpwd).execute(pdfpaths);
                         } else {
                             MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
                                     mHomePath, mPasswordProtected, mPassword,
-                                    this).execute(pdfpaths))
+                                    this, masterpwd).execute(pdfpaths))
                                     .onNegative((dialog1, which) -> mergeFiles(view)).show();
                         }
                     }

@@ -28,6 +28,7 @@ public class Constants {
     public static final String PG_NUM_STYLE_PAGE_X_OF_N = "pg_num_style_page_x_of_n";
     public static final String PG_NUM_STYLE_X_OF_N = "pg_num_style_x_of_n";
     public static final String PG_NUM_STYLE_X = "pg_num_style_x";
+    public static final String MASTER_PWD_STRING = "master_password";
 
     public static final String BUNDLE_DATA = "bundle_data";
     public static final String REORDER_PAGES = "reorder_pages";

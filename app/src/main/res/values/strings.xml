@@ -192,6 +192,7 @@
     <string name="legal">LEGAL</string>
     <string name="a4">A4</string>
     <string name="default_page_size">DEFAULT ( %s )</string>
+    <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
 
 
     <string name="delete_alert">Do you want to delete all selected files?</string>
@@ -395,6 +396,8 @@
     <string name="theme_white">White</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
+    <string name="change_master_pwd">Change Master password</string>
+    <string name="current_master_pwd">The current master password is \"%1$s\" for every encrypted PDF. You can change it here:</string>
 
     <!-- Home page -->
     <string name="home_page">Home</string>

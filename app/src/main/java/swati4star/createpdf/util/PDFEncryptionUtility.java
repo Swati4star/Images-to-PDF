@@ -1,6 +1,8 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,6 +27,8 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFEncryptionUtility {
@@ -33,11 +37,13 @@ public class PDFEncryptionUtility {
     private final FileUtils mFileUtils;
     private String mPassword;
 
+    private SharedPreferences mSharedPrefs;
     private final MaterialDialog mDialog;
 
     public PDFEncryptionUtility(Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(context);
+        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mDialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.custom_dialog, true)
                 .positiveText(android.R.string.ok)
@@ -99,6 +105,8 @@ public class PDFEncryptionUtility {
      */
     private String doEncryption(String path, String password,
                                 final ArrayList<File> mFileList) throws IOException, DocumentException {
+
+        String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
         String finalOutputFile = path.replace(mContext.getString(R.string.pdf_ext),
                 mContext.getString(R.string.encrypted_file));
         File file = new File(finalOutputFile);
@@ -110,7 +118,7 @@ public class PDFEncryptionUtility {
 
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
-        stamper.setEncryption(password.getBytes(), mContext.getString(R.string.app_name).getBytes(),
+        stamper.setEncryption(password.getBytes(), masterpwd.getBytes(),
                 PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY, PdfWriter.ENCRYPTION_AES_128);
         stamper.close();
         reader.close();
@@ -177,12 +185,23 @@ public class PDFEncryptionUtility {
         mDialog.show();
         mPositiveAction.setEnabled(false);
         mPositiveAction.setOnClickListener(v -> {
-            removePasswordUtil(file, dataSetChanged, mFileList, input_password);
+
+            // check for password
+            // our master password & their user password
+            // their master password
+
+            if (removePasswordUsingDefMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
+                showSnackbar(mContext, R.string.password_remove);
+            } else if (removePasswordUsingInputMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
+                showSnackbar(mContext, R.string.password_remove);
+            } else
+                showSnackbar(mContext, R.string.master_password_changed);
+
             mDialog.dismiss();
         });
     }
 
-    private void removePasswordUtil(final String file,
+    private boolean removePasswordUsingDefMasterPAssword(final String file,
                                     final DataSetChanged dataSetChanged,
                                     final ArrayList<File> mFileList,
                                     final String[] inputPassword) {
@@ -190,7 +209,8 @@ public class PDFEncryptionUtility {
         String finalOutputFile;
         PdfReader reader;
         try {
-            reader = new PdfReader(file, mContext.getString(R.string.app_name).getBytes());
+            String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
+            reader = new PdfReader(file, masterpwd.getBytes());
             byte[] password;
             finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
                     mContext.getString(R.string.decrypted_file));
@@ -205,16 +225,48 @@ public class PDFEncryptionUtility {
             if (Arrays.equals(input, password)) {
                 PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
                 stamper.close();
-                showSnackbar(mContext, R.string.password_remove);
                 reader.close();
                 dataSetChanged.updateDataset();
                 new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
-            } else {
-                showSnackbar(mContext, R.string.incorrect_passowrd);
+                return true;
             }
-        } catch (IOException | DocumentException e) {
+        } catch (DocumentException | IOException e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.error_occurred);
         }
+
+        return false;
+    }
+
+
+
+    private boolean removePasswordUsingInputMasterPAssword(final String file,
+                                                         final DataSetChanged dataSetChanged,
+                                                         final ArrayList<File> mFileList,
+                                                         final String[] inputPassword) {
+
+        String finalOutputFile;
+        PdfReader reader;
+        try {
+            reader = new PdfReader(file, inputPassword[0].getBytes());
+            finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
+                    mContext.getString(R.string.decrypted_file));
+            File temp = new File(finalOutputFile);
+            if (mFileUtils.isFileExist(temp.getName())) {
+                int append = mFileUtils.checkRepeat(finalOutputFile, mFileList);
+                finalOutputFile = finalOutputFile.replace(mContext.getResources().getString(R.string.pdf_ext),
+                        append + mContext.getResources().getString(R.string.pdf_ext));
+            }
+            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
+            stamper.close();
+            reader.close();
+            dataSetChanged.updateDataset();
+            new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
+            return true;
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
