@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
-import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class MergePdf extends AsyncTask<String, Void, Void> {

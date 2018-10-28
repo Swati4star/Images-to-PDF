@@ -23,7 +23,6 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
-import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 /**
