@@ -14,7 +14,7 @@
 
     <EditText
         android:id="@+id/value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/compress_dialog_enter_prompt"
         android:textSize="20sp" />

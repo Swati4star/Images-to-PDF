@@ -164,6 +164,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         TextView tv = view.findViewById(R.id.content);
         tv.setText(String.format(mActivity.getString(R.string.current_master_pwd),
                 mSharedPreferences.getString(MASTER_PWD_STRING, appName)));
+        materialDialog.show();
     }
 
     /**

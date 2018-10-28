@@ -397,7 +397,7 @@
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
     <string name="change_master_pwd">Change Master password</string>
-    <string name="current_master_pwd">The current master password is %1$s for every encrypted PDF. You can change it here:</string>
+    <string name="current_master_pwd">The current master password is \"%1$s\" for every encrypted PDF. You can change it here:</string>
 
     <!-- Home page -->
     <string name="home_page">Home</string>
