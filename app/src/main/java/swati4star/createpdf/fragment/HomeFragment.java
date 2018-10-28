@@ -16,12 +16,12 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 
+import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.DialogUtils.ADD_PASSWORD;
-import static swati4star.createpdf.util.DialogUtils.REMOVE_PASSWORD;
 import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -155,16 +155,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 setNavigationViewSelection(9);
                 break;
             case R.id.add_password:
-                fragment = new ViewFilesFragment();
-                bundle.putInt(BUNDLE_DATA, ADD_PASSWORD);
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(3);
+                setNavigationViewSelection(12);
                 break;
             case R.id.remove_password:
-                fragment = new ViewFilesFragment();
-                bundle.putInt(BUNDLE_DATA, REMOVE_PASSWORD);
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(3);
+                setNavigationViewSelection(13);
                 break;
             case R.id.rotate_pages:
                 fragment = new ViewFilesFragment();

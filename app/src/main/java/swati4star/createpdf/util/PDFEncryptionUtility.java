@@ -29,6 +29,7 @@ import swati4star.createpdf.interfaces.DataSetChanged;
 
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.appName;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFEncryptionUtility {
@@ -50,6 +51,7 @@ public class PDFEncryptionUtility {
                 .negativeText(android.R.string.cancel)
                 .build();
     }
+
 
     /**
      * Opens the password mDialog to set Password for an existing PDF file.
@@ -85,9 +87,11 @@ public class PDFEncryptionUtility {
         mPositiveAction.setEnabled(false);
         mPositiveAction.setOnClickListener(v -> {
             try {
-                doEncryption(filePath, mPassword, mFileList);
-                dataSetChanged.updateDataset();
-                showSnackbar(mContext, R.string.password_added);
+                String path = doEncryption(filePath, mPassword, mFileList);
+                getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                        .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(path)).show();
+                if (dataSetChanged != null)
+                    dataSetChanged.updateDataset();
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
                 showSnackbar(mContext, R.string.cannot_add_password);
@@ -190,12 +194,11 @@ public class PDFEncryptionUtility {
             // our master password & their user password
             // their master password
 
-            if (removePasswordUsingDefMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
-                showSnackbar(mContext, R.string.password_remove);
-            } else if (removePasswordUsingInputMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
-                showSnackbar(mContext, R.string.password_remove);
-            } else
-                showSnackbar(mContext, R.string.master_password_changed);
+            if (!removePasswordUsingDefMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
+                if (!removePasswordUsingInputMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
+                    showSnackbar(mContext, R.string.master_password_changed);
+                }
+            }
 
             mDialog.dismiss();
         });
@@ -226,8 +229,12 @@ public class PDFEncryptionUtility {
                 PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
                 stamper.close();
                 reader.close();
-                dataSetChanged.updateDataset();
+                if (dataSetChanged != null)
+                    dataSetChanged.updateDataset();
                 new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
+                final String filepath = finalOutputFile;
+                getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                        .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(filepath)).show();
                 return true;
             }
         } catch (DocumentException | IOException e) {
@@ -259,8 +266,12 @@ public class PDFEncryptionUtility {
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
             stamper.close();
             reader.close();
-            dataSetChanged.updateDataset();
+            if (dataSetChanged != null)
+                dataSetChanged.updateDataset();
             new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
+            final String filepath = finalOutputFile;
+            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                    .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(filepath)).show();
             return true;
 
         } catch (DocumentException | IOException e) {

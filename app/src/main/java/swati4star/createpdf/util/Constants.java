@@ -34,6 +34,8 @@ public class Constants {
     public static final String REORDER_PAGES = "reorder_pages";
     public static final String REMOVE_PAGES = "remove_pages";
     public static final String COMPRESS_PDF = "compress_pdf";
+    public static final String ADD_PWD = "add_pwd";
+    public static final String REMOVE_PWd = "remove_pwd";
 
     public static final String LAUNCH_COUNT = "launch_count";
 

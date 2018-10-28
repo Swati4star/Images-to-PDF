@@ -45,14 +45,17 @@ import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
@@ -167,6 +170,25 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             return;
         }
 
+        PDFEncryptionUtility pdfEncryptionUtility = new PDFEncryptionUtility(mActivity);
+        if (mOperation.equals(ADD_PWD)) {
+            if (!mPDFUtils.isPDFEncrypted(mPath)) {
+                pdfEncryptionUtility.setPassword(mPath, null, new ArrayList<>());
+            } else {
+                showSnackbar(mActivity, R.string.encrypted_pdf);
+            }
+            return;
+        }
+
+        if (mOperation.equals(REMOVE_PWd)) {
+            if (mPDFUtils.isPDFEncrypted(mPath)) {
+                pdfEncryptionUtility.removePassword(mPath, null, new ArrayList<>());
+            } else {
+                showSnackbar(mActivity, R.string.not_encrypted);
+            }
+            return;
+        }
+
         // Render pdf pages as bitmap
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
         ParcelFileDescriptor fileDescriptor = null;
@@ -232,6 +254,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         switch (mOperation) {
             case REORDER_PAGES:
             case REMOVE_PAGES:
+            case ADD_PWD:
+            case REMOVE_PWd:
                 mInfoText.setVisibility(View.GONE);
                 pagesInput.setVisibility(View.GONE);
                 break;

@@ -45,15 +45,15 @@ import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
+import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
-import static swati4star.createpdf.util.DialogUtils.ADD_PASSWORD;
-import static swati4star.createpdf.util.DialogUtils.REMOVE_PASSWORD;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -287,13 +287,13 @@ public class MainActivity extends AppCompatActivity
                 fragment = new HistoryFragment();
                 break;
             case R.id.nav_add_password:
-                fragment = new ViewFilesFragment();
-                bundle.putInt(BUNDLE_DATA, ADD_PASSWORD);
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_remove_password:
-                fragment = new ViewFilesFragment();
-                bundle.putInt(BUNDLE_DATA, REMOVE_PASSWORD);
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_share:
