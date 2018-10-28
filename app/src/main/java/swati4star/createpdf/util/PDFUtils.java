@@ -47,7 +47,9 @@ import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.model.TextToPDFOptions;
 
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
@@ -111,6 +113,7 @@ public class PDFUtils {
     public void createPdf(TextToPDFOptions mTextToPDFOptions)
             throws DocumentException, IOException {
 
+        String masterpwd = mSharedPreferences.getString(MASTER_PWD_STRING, appName);
         Document document = new Document(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
         String finalOutput = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation()) +
@@ -119,7 +122,7 @@ public class PDFUtils {
         writer.setPdfVersion(PdfWriter.VERSION_1_7);
         if (mTextToPDFOptions.isPasswordProtected()) {
             writer.setEncryption(mTextToPDFOptions.getPassword().getBytes(),
-                    mContext.getString(R.string.app_name).getBytes(),
+                    masterpwd.getBytes(),
                     PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
                     PdfWriter.ENCRYPTION_AES_128);
         }

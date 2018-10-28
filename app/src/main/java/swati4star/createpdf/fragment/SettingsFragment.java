@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -36,7 +39,11 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.PageSizeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
@@ -132,7 +139,36 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
             case 5:
                 showImageScaleTypeDialog(mActivity, true);
                 break;
+            case 6:
+                changeMasterPassword();
+                break;
         }
+    }
+
+    /**
+     * To modify master password of PDFs
+     */
+    private void changeMasterPassword() {
+
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+                R.string.change_master_pwd);
+        MaterialDialog materialDialog =
+                builder.customView(R.layout.dialog_change_master_pwd, true)
+                        .onPositive((dialog1, which) -> {
+                            View view = dialog1.getCustomView();
+                            EditText et = view.findViewById(R.id.value);
+                            String value = et.getText().toString();
+                            if (!value.isEmpty())
+                                mSharedPreferences.edit().putString(MASTER_PWD_STRING, value).apply();
+                            else
+                                showSnackbar(mActivity, R.string.invalid_entry);
+
+
+                        }).build();
+        View view = materialDialog.getCustomView();
+        TextView tv = view.findViewById(R.id.content);
+        tv.setText(String.format(mActivity.getString(R.string.current_master_pwd),
+                mSharedPreferences.getString(MASTER_PWD_STRING, appName)));
     }
 
     /**

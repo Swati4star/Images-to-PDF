@@ -57,6 +57,10 @@ public class SettingsOptions {
                     context.getResources().getDrawable(R.drawable.ic_aspect_ratio_black_24dp),
                     context.getString(R.string.image_scale_type)));
 
+            options.add(new EnhancementOptionsEntity(
+                    context.getResources().getDrawable(R.drawable.ic_lock_black_24dp),
+                    context.getString(R.string.change_master_pwd)));
+
             return options;
         }
     }

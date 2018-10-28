@@ -345,5 +345,8 @@
     <string name="page_x_of_n">Page X of N</string>
     <string name="page_x">X of N</string>
     <string name="x">X</string>
+    <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
+    <string name="current_master_pwd">The current master password is %1$s for every encrypted PDF. You can change it here:</string>
+    <string name="change_master_pwd">Change Master password</string>
 
 </resources>
