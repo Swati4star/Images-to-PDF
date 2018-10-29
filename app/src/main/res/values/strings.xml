@@ -358,6 +358,8 @@
 
     <!-- Remove Duplicate Pages -->
     <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate">Remove Duplicate Pages.</string>
 
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
