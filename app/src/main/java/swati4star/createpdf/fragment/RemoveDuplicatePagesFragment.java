@@ -2,6 +2,7 @@ package swati4star.createpdf.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
@@ -33,6 +35,9 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
+
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 
 public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate  {
@@ -81,6 +86,25 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         resetValues();
         return rootview;
     }
+    @OnClick(R.id.viewFiles)
+    void onViewFilesClick(View view) {
+        mBottomSheetUtils.showHideSheet(sheetBehavior);
+    }
+
+    /**
+     * Displays file chooser intent
+     */
+    @OnClick(R.id.selectFile)
+    public void showFileChooser() {
+        startActivityForResult(mFileUtils.getFileChooser(),
+                INTENT_REQUEST_PICKFILE_CODE);
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
+        if (data == null || resultCode != RESULT_OK || data.getData() == null)
+            return;
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
+            setTextAndActivateButtons(getFilePath(data.getData()));
+    }
 
 
 
@@ -92,8 +116,8 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     private void setTextAndActivateButtons(String path) {
         mPath = path;
        // mCompressionInfoText.setVisibility(View.GONE);
-      //  mMorphButtonUtility.setTextAndActivateButtons(path,
-        //        selectFileButton, createPdf);
+        mMorphButtonUtility.setTextAndActivateButtons(path,
+                selectFileButton, removeDuplicateButton);
     }
 
     @Override
