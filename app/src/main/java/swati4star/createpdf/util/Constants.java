@@ -58,4 +58,7 @@ public class Constants {
 
     public static final String IS_WELCOME_ACTIVITY_SHOWN = "is_Welcome_activity_shown";
     public static final String SHOW_WELCOME_ACT = "show_welcome_activity";
+
+    public static final String VERSION_NAME = "VERSION_NAME";
+
 }

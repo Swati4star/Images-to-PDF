@@ -435,5 +435,8 @@
     <string name="skip_text">Skip</string>
     <string name="get_started_title">Get Started!</string>
 
+    <!-- Whats New Dialog -->
+    <string name="whatsnew_continue">Continue</string>
+    <string name="whatsnew_title">What\'s New</string>
 
 </resources>

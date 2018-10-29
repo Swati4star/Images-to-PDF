@@ -22,8 +22,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.ExtractImagesFragment;
@@ -40,6 +42,7 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.ThemeUtils;
+import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
@@ -54,6 +57,7 @@ import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
+import static swati4star.createpdf.util.Constants.VERSION_NAME;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,11 @@ public class MainActivity extends AppCompatActivity
             mFeedbackUtils.rateUs();
         mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
 
+        String versionName = mSharedPreferences.getString(VERSION_NAME, BuildConfig.VERSION_NAME);
+        if (!versionName.equals(BuildConfig.VERSION_NAME)) {
+            WhatsNewUtils.displayDialog(this);
+        }
+        mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         getRuntimePermissions();
     }
 
