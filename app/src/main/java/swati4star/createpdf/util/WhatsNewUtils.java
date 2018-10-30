@@ -2,6 +2,8 @@ package swati4star.createpdf.util;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.WhatsNewAdapter;
+import swati4star.createpdf.model.WhatsNew;
 
 public class WhatsNewUtils {
 
@@ -27,28 +30,29 @@ public class WhatsNewUtils {
     public static void displayDialog(Context context) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.fragment_whats_new);
-        ListView lv = dialog.findViewById(R.id.whatsNewListView);
+        RecyclerView rv = dialog.findViewById(R.id.whatsNewListView);
         TextView title = dialog.findViewById(R.id.title);
         Button continueButton = dialog.findViewById(R.id.continueButton);
         continueButton.setText(R.string.whatsnew_continue);
         title.setText(R.string.whatsnew_title);
-        ArrayList<String> titleList = null;
-        ArrayList<String> contentList = null;
+        ArrayList<WhatsNew> whatsNewList = null;
         try {
             JSONObject obj = new JSONObject(loadJSONFromAsset(context));
             JSONArray data = obj.getJSONArray("data");
-            titleList = new ArrayList<String>();
-            contentList = new ArrayList<String>();
+            whatsNewList = new ArrayList<WhatsNew>();
 
             for (int i = 0; i < data.length(); i++) {
                 JSONObject jsonObject = data.getJSONObject(i);
                 String newTitle = jsonObject.getString("title");
                 String newContent = jsonObject.getString("content");
-                titleList.add(newTitle);
-                contentList.add(newContent);
+                String iconLocation = jsonObject.getString("icon");
+                WhatsNew whatsNew = new WhatsNew(newTitle, newContent, iconLocation);
+                whatsNewList.add(whatsNew);
             }
-            WhatsNewAdapter whatsNewAdapter = new WhatsNewAdapter(context, titleList, contentList);
-            lv.setAdapter(whatsNewAdapter);
+            WhatsNewAdapter whatsNewAdapter = new WhatsNewAdapter(context, whatsNewList);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            rv.setLayoutManager(layoutManager);
+            rv.setAdapter(whatsNewAdapter);
             dialog.show();
             continueButton.setOnClickListener(view -> dialog.dismiss());
         } catch (JSONException e) {

@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import swati4star.createpdf.BuildConfig;

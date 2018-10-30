@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:gravity="center_horizontal"
-        android:text="What's New"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -18,10 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/whatsNewListView"
             android:layout_width="match_parent"
-            android:layout_height="400dp"></ListView>
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
 
@@ -30,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        android:text="Continue"
         android:textAllCaps="false"/>
 
 </LinearLayout>
