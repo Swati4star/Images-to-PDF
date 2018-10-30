@@ -390,5 +390,7 @@
     <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
     <string name="current_master_pwd">The current master password is %1$s for every encrypted PDF. You can change it here:</string>
     <string name="change_master_pwd">Change Master password</string>
-
+    <!-- Whats New Dialog -->
+    <string name="whatsnew_continue">Continue</string>
+    <string name="whatsnew_title">What\'s New</string>
 </resources>
