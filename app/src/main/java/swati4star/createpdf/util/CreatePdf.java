@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
+import swati4star.createpdf.model.Watermark;
 
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.pdfExtension;
@@ -40,7 +41,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private String mPath;
     private final String mPageSize;
     private final boolean mPasswordProtected;
-    private Boolean mAddWatermak;
+    private Boolean mWatermarkAdded;
+    private Watermark mWatermark;
     private int mMarginTop;
     private int mMarginBottom;
     private int mMarginRight;
@@ -59,7 +61,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mPageSize = mImageToPDFOptions.getPageSize();
         this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
         this.mBorderWidth = mImageToPDFOptions.getBorderWidth();
-        this.mAddWatermak = mImageToPDFOptions.isAddWatermark();
+        this.mWatermarkAdded = mImageToPDFOptions.isWatermarkAdded();
+        this.mWatermark = mImageToPDFOptions.getWatermark();
         this.mMarginTop = mImageToPDFOptions.getMarginTop();
         this.mMarginBottom = mImageToPDFOptions.getMarginBottom();
         this.mMarginRight = mImageToPDFOptions.getMarginRight();
@@ -110,9 +113,11 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 Log.v("Stage 3.1", "Set Encryption");
             }
 
-            // TODO :: Uncomment below to add watermark
-            // if (mAddWatermak)
-            // writer.setPageEvent(new WatermarkPageEvent());
+            if (mWatermarkAdded) {
+                WatermarkPageEvent watermarkPageEvent = new WatermarkPageEvent();
+                watermarkPageEvent.setWatermark(mWatermark);
+                writer.setPageEvent(watermarkPageEvent);
+            }
 
             document.open();
 

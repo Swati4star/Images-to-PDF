@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -24,15 +25,20 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
+import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Font;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.squareup.picasso.Transformation;
@@ -62,10 +68,12 @@ import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.ImageToPDFOptions;
+import swati4star.createpdf.model.Watermark;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
@@ -413,6 +421,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             case 11:
                 addPageNumbers();
                 break;
+            case 12:
+                addWatermark();
+                break;
         }
     }
 
@@ -543,6 +554,118 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         positiveAction.setEnabled(false);
     }
 
+    private void addWatermark() {
+        final MaterialDialog dialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.add_watermark)
+                .customView(R.layout.add_watermark_dialog, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .neutralText(R.string.remove_dialog)
+                .build();
+
+        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        final View neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
+
+        final Watermark watermark = new Watermark();
+
+        final EditText watermarkTextInput = dialog.getCustomView().findViewById(R.id.watermarkText);
+        final EditText angleInput = dialog.getCustomView().findViewById(R.id.watermarkAngle);
+        final ColorPickerView colorPickerInput = dialog.getCustomView().findViewById(R.id.watermarkColor);
+        final EditText fontSizeInput = dialog.getCustomView().findViewById(R.id.watermarkFontSize);
+        final Spinner fontFamilyInput = dialog.getCustomView().findViewById(R.id.watermarkFontFamily);
+        final Spinner styleInput = dialog.getCustomView().findViewById(R.id.watermarkStyle);
+
+        ArrayAdapter fontFamilyAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_dropdown_item,
+                Font.FontFamily.values());
+        fontFamilyInput.setAdapter(fontFamilyAdapter);
+
+        ArrayAdapter styleAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_dropdown_item,
+                mActivity.getResources().getStringArray(R.array.fontStyles));
+        styleInput.setAdapter(styleAdapter);
+
+
+        if (mPdfOptions.isWatermarkAdded()) {
+            watermarkTextInput.setText(mPdfOptions.getWatermark().getWatermarkText());
+            angleInput.setText(String.valueOf(mPdfOptions.getWatermark().getRotationAngle()));
+            fontSizeInput.setText(String.valueOf(mPdfOptions.getWatermark().getTextSize()));
+            BaseColor color = this.mPdfOptions.getWatermark().getTextColor();
+            colorPickerInput.setColor(Color.argb(
+                    color.getAlpha(),
+                    color.getRed(),
+                    color.getGreen(),
+                    color.getBlue()
+            ));
+            fontFamilyInput.setSelection(fontFamilyAdapter.getPosition(mPdfOptions.getWatermark().getFontFamily()));
+            styleInput.setSelection(styleAdapter.getPosition(
+                    PDFUtils.getStyleNameFromFont(mPdfOptions.getWatermark().getFontStyle())));
+        } else {
+            angleInput.setText("0");
+            fontSizeInput.setText("50");
+        }
+        watermarkTextInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        if (StringUtils.isEmpty(input)) {
+                            showSnackbar(mActivity, R.string.snackbar_watermark_cannot_be_blank);
+                        } else {
+                            watermark.setWatermarkText(input.toString());
+                            showEnhancementOptions();
+                        }
+                    }
+                });
+
+        neutralAction.setEnabled(this.mPdfOptions.isWatermarkAdded());
+        positiveAction.setEnabled(this.mPdfOptions.isWatermarkAdded());
+
+        neutralAction.setOnClickListener(v -> {
+            mPdfOptions.setWatermarkAdded(false);
+            showEnhancementOptions();
+            dialog.dismiss();
+            showSnackbar(mActivity, R.string.watermark_remove);
+        });
+
+        positiveAction.setOnClickListener(v -> {
+            watermark.setWatermarkText(watermarkTextInput.getText().toString());
+            watermark.setFontFamily(((Font.FontFamily) fontFamilyInput.getSelectedItem()));
+            watermark.setFontStyle(PDFUtils.getStyleValueFromName(((String) styleInput.getSelectedItem())));
+
+            if (StringUtils.isEmpty(angleInput.getText())) {
+                watermark.setRotationAngle(0);
+            } else {
+                watermark.setRotationAngle(Integer.valueOf(angleInput.getText().toString()));
+            }
+
+            if (StringUtils.isEmpty(fontSizeInput.getText())) {
+                watermark.setTextSize(50);
+            } else {
+                watermark.setTextSize(Integer.valueOf(fontSizeInput.getText().toString()));
+            }
+
+            watermark.setTextColor((new BaseColor(
+                    Color.red(colorPickerInput.getColor()),
+                    Color.green(colorPickerInput.getColor()),
+                    Color.blue(colorPickerInput.getColor()),
+                    Color.alpha(colorPickerInput.getColor())
+            )));
+            mPdfOptions.setWatermark(watermark);
+            mPdfOptions.setWatermarkAdded(true);
+            showEnhancementOptions();
+            dialog.dismiss();
+            showSnackbar(mActivity, R.string.watermark_added);
+        });
+
+        dialog.show();
+    }
     @Override
     public void onPDFCreationStarted() {
         mMaterialDialog = createAnimationDialog(mActivity);
@@ -617,6 +740,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mPdfOptions.setPageSize(mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT,
                 DEFAULT_PAGE_SIZE));
         mPdfOptions.setPasswordProtected(false);
+        mPdfOptions.setWatermarkAdded(false);
         mImagesUri.clear();
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);

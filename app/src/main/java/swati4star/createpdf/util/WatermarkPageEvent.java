@@ -1,6 +1,5 @@
 package swati4star.createpdf.util;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -10,15 +9,28 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class WatermarkPageEvent extends PdfPageEventHelper {
+import swati4star.createpdf.model.Watermark;
 
-    private final Phrase mWatermark = new Phrase("WATERMARKWATERMARKWATERMARKWATERMARKWAT" +
-            "ERMARKWATERMARKWATERMARKWATERMARKWATERMARKWATERMARKWATERMARK",
-            new Font(Font.FontFamily.HELVETICA, 20, Font.NORMAL, BaseColor.GRAY));
+public class WatermarkPageEvent extends PdfPageEventHelper {
+    private Watermark mWatermark;
+    private Phrase mPhrase;
 
     @Override
     public void onEndPage(PdfWriter writer, Document document) {
         PdfContentByte canvas = writer.getDirectContent();
-        ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, mWatermark, 337, 500, 0);
+        float x = (document.getPageSize().getLeft() + document.getPageSize().getRight()) / 2;
+        float y = (document.getPageSize().getTop() + document.getPageSize().getBottom()) / 2;
+        ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, mPhrase, x, y, mWatermark.getRotationAngle());
+    }
+
+    public Watermark getWatermark() {
+        return mWatermark;
+    }
+
+    public void setWatermark(Watermark watermark) {
+        this.mWatermark = watermark;
+        this.mPhrase = new Phrase(mWatermark.getWatermarkText(),
+                new Font(mWatermark.getFontFamily(), mWatermark.getTextSize(),
+                        mWatermark.getFontStyle(), mWatermark.getTextColor()));
     }
 }

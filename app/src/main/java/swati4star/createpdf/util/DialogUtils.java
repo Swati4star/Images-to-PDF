@@ -11,6 +11,7 @@ public class DialogUtils {
     public static final int ROTATE_PAGES = 20;
     public static final int ADD_PASSWORD = 21;
     public static final int REMOVE_PASSWORD = 22;
+    public static final int ADD_WATERMARK = 23;
 
     /**
      * Creates a material dialog with `Warning` title
@@ -92,6 +93,9 @@ public class DialogUtils {
                 break;
             case ADD_PASSWORD:
                 stringId = R.string.viewfiles_addpassword;
+                break;
+            case ADD_WATERMARK:
+                stringId = R.string.viewfiles_addwatermark;
                 break;
         }
         new MaterialDialog.Builder(activity)

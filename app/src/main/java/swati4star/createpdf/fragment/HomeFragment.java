@@ -22,6 +22,7 @@ import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -57,6 +58,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView removePassword;
     @BindView(R.id.rotate_pages)
     MyCardView rotatePdf;
+    @BindView(R.id.add_watermark)
+    MyCardView addWatermark;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -78,6 +81,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         addPassword.setOnClickListener(this);
         removePassword.setOnClickListener(this);
         rotatePdf.setOnClickListener(this);
+        addWatermark.setOnClickListener(this);
         return rootview;
     }
 
@@ -169,6 +173,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.rotate_pages:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
+                fragment.setArguments(bundle);
+                setNavigationViewSelection(3);
+                break;
+            case R.id.add_watermark:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
                 setNavigationViewSelection(3);
                 break;
