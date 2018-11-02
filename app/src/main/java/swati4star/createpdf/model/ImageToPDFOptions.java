@@ -17,14 +17,15 @@ public class ImageToPDFOptions extends PDFOptions {
     public ImageToPDFOptions() {
         super();
         setPasswordProtected(false);
+        setWatermarkAdded(false);
         setBorderWidth(0);
     }
 
     public ImageToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
                              String mPassword, String mQualityString, int mBorderWidth,
-                             String masterPwd,
-                             ArrayList<String> mImagesUri) {
-        super(mFileName, mPageSize, mPasswordProtected, mPassword, mBorderWidth);
+                             String masterPwd, ArrayList<String> mImagesUri,
+                             boolean mWatermarkAdded, Watermark mWatermark) {
+        super(mFileName, mPageSize, mPasswordProtected, mPassword, mBorderWidth, mWatermarkAdded, mWatermark);
         this.mQualityString = mQualityString;
         this.mImagesUri = mImagesUri;
         this.mMasterPwd = masterPwd;

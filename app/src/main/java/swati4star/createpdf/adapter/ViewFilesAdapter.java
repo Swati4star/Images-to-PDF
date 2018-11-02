@@ -160,6 +160,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
             case 8://Rotate Pages
                 mPDFUtils.rotatePages(file.getPath(), ViewFilesAdapter.this);
+
+            case 9: // Add Watermark
+                mPDFUtils.setWatermark(file.getPath(), ViewFilesAdapter.this, mFileList);
+                break;
         }
     }
 

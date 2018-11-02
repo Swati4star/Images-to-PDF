@@ -7,18 +7,22 @@ public class PDFOptions {
     private String mPassword;
     private String mPageSize;
     private int mBorderWidth;
-    private boolean mAddWatermark;
+    private boolean mWatermarkAdded;
+    private Watermark mWatermark;
 
     PDFOptions() {
 
     }
 
-    PDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected, String mPassword, int mBorderWidth) {
+    PDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected, String mPassword,
+               int mBorderWidth, boolean mWatermarkAdded, Watermark mWatermark) {
         this.mOutFileName = mFileName;
         this.mPageSize = mPageSize;
         this.mPasswordProtected = mPasswordProtected;
         this.mPassword = mPassword;
         this.mBorderWidth = mBorderWidth;
+        this.mWatermarkAdded = mWatermarkAdded;
+        this.mWatermark = mWatermark;
     }
 
     public String getOutFileName() {
@@ -61,12 +65,20 @@ public class PDFOptions {
         this.mBorderWidth = mBorderWidth;
     }
 
-    public boolean isAddWatermark() {
-        return mAddWatermark;
+    public boolean isWatermarkAdded() {
+        return mWatermarkAdded;
     }
 
-    public void setAddWatermark(boolean mAddWatermark) {
-        this.mAddWatermark = mAddWatermark;
+    public void setWatermarkAdded(boolean mWatermarkAdded) {
+        this.mWatermarkAdded = mWatermarkAdded;
+    }
+
+    public Watermark getWatermark() {
+        return this.mWatermark;
+    }
+
+    public void setWatermark(Watermark mWatermark) {
+        this.mWatermark = mWatermark;
     }
 
 

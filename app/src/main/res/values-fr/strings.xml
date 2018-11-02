@@ -23,6 +23,7 @@
         <item>Ajouter mot de passe</item>
         <item>Supprimer le mot de</item>
         <item>Faire pivoter les pages</item>
+        <item>Add Watermark</item>
     </array>
 
     <string name="please_wait">Patientez</string>
@@ -351,4 +352,23 @@
     <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Continue</string>
     <string name="whatsnew_title">What's New</string>
+
+    <!--watermark strings -->
+    <string name="watermark_added">Watermark Added</string>
+    <string name="watermarked">Watermarked</string>
+    <string name="watermarked_file">_watermarked.pdf</string>
+    <string name="watermark_remove">Watermark Removed</string>
+    <string name="snackbar_watermark_cannot_be_blank">Text cannot be blank</string>
+    <string name="cannot_add_watermark">Watermark could not be added to the PDF. Please check the PDF again.</string>
+    <string name="add_watermark">Add Watermark</string>
+    <string name="enter_watermark_text">Enter text</string>
+    <string name="watermark_text">Text</string>
+    <string name="enter_watermark_angle">Enter angle</string>
+    <string name="watermark_angle">Angle</string>
+    <string name="choose_watermark_color">Choose color</string>
+    <string name="enter_watermark_font_size">Enter font size</string>
+    <string name="choose_watermark_font_family">Choose font family</string>
+    <string name="watermark_font_size">Font size</string>
+    <string name="choose_watermark_style">Choose style</string>
+    <string name="viewfiles_addwatermark">1. Select the PDF you wish to add watermark to. \n2. Select Add  Watermark. \n3. Fill the required information. Select OK. \n4. New PDF with watermark will be created.</string>
 </resources>
