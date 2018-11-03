@@ -292,11 +292,20 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onItemClick(String path) {
-        mFilePaths.add(path);
+        if (mFilePaths.contains(path)) {
+            mFilePaths.remove(path);
+            showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
+        } else {
+            mFilePaths.add(path);
+            showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
+        }
+
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
-        if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
-            setMorphingButtonState(true);
-        showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
+        if (mFilePaths.size() > 1) {
+            if (!mergeBtn.isEnabled()) setMorphingButtonState(true);
+        } else {
+            if (mergeBtn.isEnabled()) setMorphingButtonState(false);
+        }
     }
 
     /**

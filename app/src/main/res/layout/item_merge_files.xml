@@ -4,15 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/itemMerge_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_centerVertical="true"/>
+
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true">
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:layout_toEndOf="@id/itemMerge_checkbox">
 
         <TextView
             android:id="@+id/fileName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:padding="12dp"
             android:textSize="16sp"
             android:textStyle="bold" />

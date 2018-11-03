@@ -2,6 +2,7 @@ package swati4star.createpdf.adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
@@ -58,6 +60,8 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
         TextView mFileName;
         @BindView(R.id.encryptionImage)
         ImageView mEncryptionImage;
+        @BindView(R.id.itemMerge_checkbox)
+        AppCompatCheckBox mCheckbox;
 
         ViewMergeFilesHolder(View itemView) {
             super(itemView);
@@ -67,8 +71,15 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
 
         @Override
         public void onClick(View view) {
+            mCheckbox.toggle();
             mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
         }
+
+        @OnClick(R.id.itemMerge_checkbox)
+        public void onCheckboxClick() {
+            mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
+        }
+
     }
 
     public interface OnClickListener {
