@@ -377,7 +377,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             // Init recycler view
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, this);
+                    paths, true, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);

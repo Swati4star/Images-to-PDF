@@ -26,13 +26,16 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     private final FileUtils mFileUtils;
     private final OnClickListener mOnClickListener;
     private final PDFUtils mPDFUtils;
+    private final boolean mIsMergeFragment;
 
-    public MergeFilesAdapter(Activity mContext, ArrayList<String> mFilePaths, OnClickListener mOnClickListener) {
+    public MergeFilesAdapter(Activity mContext, ArrayList<String> mFilePaths,
+                             boolean mIsMergeFragment, OnClickListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         mFileUtils = new FileUtils(mContext);
         this.mOnClickListener = mOnClickListener;
         mPDFUtils = new PDFUtils(mContext);
+        this.mIsMergeFragment = mIsMergeFragment;
     }
 
     @NonNull
@@ -48,6 +51,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
         boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
         holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
         holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
+
     }
 
     @Override
@@ -67,11 +71,13 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
             super(itemView);
             ButterKnife.bind(this, itemView);
             mFileName.setOnClickListener(this);
+            if (mIsMergeFragment) mCheckbox.setVisibility(View.VISIBLE);
+            else mCheckbox.setVisibility(View.GONE);
         }
 
         @Override
         public void onClick(View view) {
-            mCheckbox.toggle();
+            if (mIsMergeFragment) mCheckbox.toggle();
             mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
         }
 

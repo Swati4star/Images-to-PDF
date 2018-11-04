@@ -264,8 +264,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         } else {
             // init recycler view for bottom sheet
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, this);
+            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, paths, false, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             // set up adapter
