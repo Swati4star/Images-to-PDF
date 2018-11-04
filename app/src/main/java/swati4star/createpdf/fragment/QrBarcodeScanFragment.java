@@ -172,7 +172,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 .show();
     }
 
-
     /**
      * function to create PDF
      *
@@ -187,7 +186,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             PDFUtils fileUtil = new PDFUtils(mActivity);
             int fontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
             fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, false,
-                    "", uri, fontSize, mFontFamily));
+                    "", uri, fontSize, mFontFamily), Constants.textExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();

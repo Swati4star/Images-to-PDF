@@ -46,6 +46,11 @@ import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.parser.PdfImageObject;
 
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -125,8 +130,9 @@ public class PDFUtils {
      * Create a PDF from a Text File
      *
      * @param mTextToPDFOptions TextToPDFOptions Object
+     * @param fileExtension file extension represented as string
      */
-    public void createPdf(TextToPDFOptions mTextToPDFOptions)
+    public void createPdf(TextToPDFOptions mTextToPDFOptions, String fileExtension)
             throws DocumentException, IOException {
 
         String masterpwd = mSharedPreferences.getString(MASTER_PWD_STRING, appName);
@@ -149,11 +155,85 @@ public class PDFUtils {
         myfont.setSize(mTextToPDFOptions.getFontSize());
 
         document.add(new Paragraph("\n"));
-        readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
+        switch (fileExtension) {
+            case Constants.textExtension:
+                readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
+                break;
+            case Constants.docExtension:
+                readDocFile(mTextToPDFOptions.getInFileUri(), document, myfont);
+                break;
+            case Constants.docxExtension:
+                readDocxFile(mTextToPDFOptions.getInFileUri(), document, myfont);
+                break;
+            default:
+                readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
+                break;
+        }
         document.close();
 
         new DatabaseHelper(mContext).insertRecord(finalOutput, mContext.getString(R.string.created));
     }
+
+    /**
+     * Read the .docx file and put it in document
+     *
+     * @param uri      URL to create PDF
+     * @param document PDF Document
+     * @param myfont   Font style in PDF
+     */
+    private void readDocxFile(Uri uri, Document document, Font myfont) {
+        InputStream inputStream;
+
+        try {
+            inputStream = mContext.getContentResolver().openInputStream(uri);
+            if (inputStream == null)
+                return;
+
+            XWPFDocument doc = new XWPFDocument(inputStream);
+            XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
+            String fileData = extractor.getText();
+
+            Paragraph documentParagraph = new Paragraph(fileData + "\n", myfont);
+            documentParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            document.add(documentParagraph);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Read the .doc file and put it in document
+     *
+     * @param uri      URL to create PDF
+     * @param document PDF Document
+     * @param myfont   Font style in PDF
+     */
+    private void readDocFile(Uri uri, Document document, Font myfont) {
+        InputStream inputStream;
+
+        try {
+            inputStream = mContext.getContentResolver().openInputStream(uri);
+            if (inputStream == null)
+                return;
+
+            HWPFDocument doc = new HWPFDocument(inputStream);
+            WordExtractor extractor = new WordExtractor(doc);
+            String fileData = extractor.getText();
+
+            Paragraph documentParagraph = new Paragraph(fileData + "\n", myfont);
+            documentParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            document.add(documentParagraph);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Read the Text File and put it in document
@@ -173,6 +253,7 @@ public class PDFUtils {
 
             String line;
             while ((line = reader.readLine()) != null) {
+                System.out.println("line = " + line);
                 Paragraph para = new Paragraph(line + "\n", myfont);
                 para.setAlignment(Element.ALIGN_JUSTIFIED);
                 document.add(para);
