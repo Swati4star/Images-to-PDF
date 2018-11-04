@@ -1,24 +1,25 @@
 {
   "data": [
     {
-      "title": "Nice Icons",
-      "content": "Completely customize colors,texts and icons.",
-      "icon": "golf"
+      "title": "Add watermark",
+      "content": "Now add watermark to PDFs while creating, or on created PDFs",
+      "icon": "ic_branding_watermark_black_24dp"
     },
     {
-      "title": "Such Easy",
-      "content": "Setting this up only takes 2 lines of code,impressive you say?",
-      "icon": "smile"
+      "title": "Adding or removing password made easy",
+      "content": "Now, easily add or remove password from the navigation drawer on left",
+      "icon": "ic_lock_open_black_24dp"
     },
     {
-      "title": "Very Sleep",
-      "content": "It helps you get more sleep by writing less code.",
-      "icon": ""
-    },
-    {
-      "title": "Text Only",
-      "content": "No icon? Just go with plain text.",
-      "icon": ""
+      "title": "Set master password yourself",
+      "content": "Go to settings -> you can change master password too :)",
+      "icon": "ic_lock_black_24dp"
     }
-  ]
+  ],
+  "old_data": {
+    "version_code": [
+      //paste old data here
+
+    ]
+  }
 }

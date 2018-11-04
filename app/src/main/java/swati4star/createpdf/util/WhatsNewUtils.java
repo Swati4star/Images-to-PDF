@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;

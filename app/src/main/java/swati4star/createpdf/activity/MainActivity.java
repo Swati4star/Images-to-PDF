@@ -101,11 +101,11 @@ public class MainActivity extends AppCompatActivity
             mFeedbackUtils.rateUs();
         mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
 
-        String versionName = mSharedPreferences.getString(VERSION_NAME, BuildConfig.VERSION_NAME);
+        String versionName = mSharedPreferences.getString(VERSION_NAME, "");
         if (!versionName.equals(BuildConfig.VERSION_NAME)) {
             WhatsNewUtils.displayDialog(this);
+            mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }
-        mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         getRuntimePermissions();
     }
 
