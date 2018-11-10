@@ -43,6 +43,9 @@ public class Constants {
     public static final String pdfExtension = ".pdf";
     public static final String appName = "PDF Converter";
     public static final String PATH_SEPERATOR = "/";
+    public static final String textExtension = ".txt";
+    public static final String docExtension = ".doc";
+    public static final String docxExtension = ".docx";
 
     public static final String AUTHORITY_APP = "com.swati4star.shareFile";
 

@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -67,6 +68,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private final int mFileSelectCode = 0;
     private Uri mTextFileUri = null;
     private String mFontTitle;
+    private String mFileExtension;
     private int mFontSize = 0;
     private int mButtonClicked = 0;
     private boolean mPasswordProtected = false;
@@ -315,7 +317,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
             PDFUtils fileUtil = new PDFUtils(mActivity);
             mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
             fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, mTextFileUri, mFontSize, mFontFamily));
+                    mPassword, mTextFileUri, mFontSize, mFontFamily), mFileExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
@@ -336,7 +338,11 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     public void selectTextFile() {
         if (mButtonClicked == 0) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType(getString(R.string.text_type));
+//            intent.setType(getString(R.string.text_type));
+            intent.setType("*/*");
+            String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    "application/msword", getString(R.string.text_type)};
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             try {
                 startActivityForResult(
@@ -358,6 +364,11 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     mTextFileUri = data.getData();
                     showSnackbar(mActivity, R.string.text_file_selected);
                     String fileName = mFileUtils.getFileName(mTextFileUri);
+                    if (fileName != null) {
+                        if (fileName.endsWith(Constants.textExtension)) mFileExtension = Constants.textExtension;
+                        else if (fileName.endsWith(Constants.docxExtension)) mFileExtension = Constants.docxExtension;
+                        else if (fileName.endsWith(Constants.docExtension)) mFileExtension = Constants.docExtension;
+                    }
                     fileName = getString(R.string.text_file_name) + fileName;
                     mTextView.setText(fileName);
                     mTextView.setVisibility(View.VISIBLE);
