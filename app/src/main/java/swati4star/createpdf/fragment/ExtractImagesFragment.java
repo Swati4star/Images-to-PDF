@@ -206,7 +206,7 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
             // Init recycler view
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, this);
+                    paths, false, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
