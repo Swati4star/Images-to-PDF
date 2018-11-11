@@ -1,25 +1,36 @@
 {
   "data": [
     {
-      "title": "Add watermark",
-      "content": "Now add watermark to PDFs while creating, or on created PDFs",
-      "icon": "ic_branding_watermark_black_24dp"
+      "title": "Merge PDF",
+      "content": "Easily select multiple PDF at once to merge",
+      "icon": "ic_merge_type_black_24dp"
     },
     {
-      "title": "Adding or removing password made easy",
-      "content": "Now, easily add or remove password from the navigation drawer on left",
-      "icon": "ic_lock_open_black_24dp"
-    },
-    {
-      "title": "Set master password yourself",
-      "content": "Go to settings -> you can change master password too :)",
-      "icon": "ic_lock_black_24dp"
+      "title": "Access doc & docx files",
+      "content": "Now, you can convert doc & docx files also to PDF",
+      "icon": "ic_text_format_black_24dp"
     }
   ],
   "old_data": {
     "version_code": [
       //paste old data here
-
+    ],
+    "72": [
+      {
+        "title": "Add watermark",
+        "content": "Now add watermark to PDFs while creating, or on created PDFs",
+        "icon": "ic_branding_watermark_black_24dp"
+      },
+      {
+        "title": "Adding or removing password made easy",
+        "content": "Now, easily add or remove password from the navigation drawer on left",
+        "icon": "ic_lock_open_black_24dp"
+      },
+      {
+        "title": "Set master password yourself",
+        "content": "Go to settings -> you can change master password too :)",
+        "icon": "ic_lock_black_24dp"
+      }
     ]
   }
 }
