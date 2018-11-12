@@ -27,6 +27,7 @@ import java.util.Objects;
 import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
+import swati4star.createpdf.fragment.AddImagesFragment;
 import swati4star.createpdf.fragment.ExtractImagesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
@@ -47,6 +48,7 @@ import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
+import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
@@ -341,6 +343,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_add_images:
+                fragment = new AddImagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_help:
