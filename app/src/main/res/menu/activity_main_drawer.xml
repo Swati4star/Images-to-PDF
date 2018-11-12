@@ -65,7 +65,10 @@
             android:id="@+id/nav_remove_password"
             android:icon="@drawable/ic_lock_open_black_24dp"
             android:title="@string/remove_password" />
-
+        <item
+            android:id="@+id/nav_add_images"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="@string/add_images" />
     </group>
 
     <item android:title="@string/extras">

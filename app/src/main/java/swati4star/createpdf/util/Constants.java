@@ -36,6 +36,7 @@ public class Constants {
     public static final String COMPRESS_PDF = "compress_pdf";
     public static final String ADD_PWD = "add_pwd";
     public static final String REMOVE_PWd = "remove_pwd";
+    public static final String ADD_IMAGES = "add_images";
 
     public static final String LAUNCH_COUNT = "launch_count";
 
