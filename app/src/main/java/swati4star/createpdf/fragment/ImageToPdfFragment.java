@@ -674,7 +674,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     @Override
     public void onPDFCreated(boolean success, String path) {
-        mMaterialDialog.dismiss();
+        if (mMaterialDialog != null && mMaterialDialog.isShowing())
+            mMaterialDialog.dismiss();
+
         if (!success) {
             showSnackbar(mActivity, R.string.snackbar_folder_not_created);
             return;

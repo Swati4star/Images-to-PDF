@@ -368,6 +368,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                         if (fileName.endsWith(Constants.textExtension)) mFileExtension = Constants.textExtension;
                         else if (fileName.endsWith(Constants.docxExtension)) mFileExtension = Constants.docxExtension;
                         else if (fileName.endsWith(Constants.docExtension)) mFileExtension = Constants.docExtension;
+                        else {
+                            showSnackbar(mActivity, R.string.extension_not_supported);
+                            return;
+                        }
                     }
                     fileName = getString(R.string.text_file_name) + fileName;
                     mTextView.setText(fileName);

@@ -51,7 +51,8 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-        initRecyclerView(mImages);
+        if (mImages == null || mImages.size() < 1)
+            initRecyclerView(mImages);
     }
 
     private void initRecyclerView(ArrayList<Bitmap> images) {

@@ -67,7 +67,11 @@ public class CropImageActivity extends AppCompatActivity {
     public void cropButtonClicked() {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
-        String fname = "cropped_" + FileUtils.getFileName(mCropImageView.getImageUri().getPath());
+        Uri uri = mCropImageView.getImageUri();
+        String path = uri.getPath();
+        String fname = "cropped_im";
+        if (path != null)
+            fname = "cropped_" + FileUtils.getFileName(path);
 
         File file = new File(myDir, fname);
 
