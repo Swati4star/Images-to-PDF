@@ -20,9 +20,11 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.RearrangeImagesAdapter;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.ImageSortUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
@@ -127,6 +129,25 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
         Intent intent = new Intent(context, RearrangeImages.class);
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;
+    }
+
+    private void sortImages() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.sort_by_title)
+                .items(R.array.sort_options_images)
+                .itemsCallback((dialog, itemView, position, text) -> {
+                    ImageSortUtils.performSortOperation(position, mImages);
+                    mRearrangeImagesAdapter.positionChanged(mImages);
+                })
+                .negativeText(R.string.cancel)
+                .show();
+    }
+
+
+
+    @OnClick(R.id.sort)
+    void sortImg() {
+        sortImages();
     }
 }
 
