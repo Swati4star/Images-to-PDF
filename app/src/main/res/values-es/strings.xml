@@ -5,7 +5,7 @@
 
     <string name="file_name_text">Nombre del archivo</string>
     <string name="select_images_text">Seleccionar Imágenes</string>
-    <string name="password_protect_pdf_text">Password Protect PDF</string>
+    <string name="password_protect_pdf_text">Proteger PDF con Contraseña</string>
     <string name="edit_images_text">Editar Imágenes</string>
     <string name="open_pdf_text">Abrir PDF</string>
     <string name="create_pdf_text">Crear PDF</string>
@@ -181,7 +181,7 @@
     <string name="mail">Envíenos un Correo</string>
     <string name="website">Visita nuestra Página Web</string>
     <string name="preview_image_to_pdf">Previsualizar PDF</string>
-    <string name="swipe_to_view_next">Deslize hacia la derecha para ver la siguiente imagen</string>
+    <string name="swipe_to_view_next">Deslice hacia la derecha para ver la siguiente imagen</string>
     <string name="showing_image">Mostrando %1$d de %2$d imágenes</string>
     <string name="filter_none">Ninguno</string>
     <string name="filter_autofix">Auto Corregir</string>
@@ -231,7 +231,7 @@
     <string name="rearrange_text">Reordenar</string>
     <string name="snackbar_undoAction">Deshacer</string>
     <string name="pdf_does_not_exist_message">El PDF no existe.</string>
-    <string name="image_rearranging_options">Optiones de Reordenado de Imagen</string>
+    <string name="image_rearranging_options">Opciones de Reordenado de Imagen</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reiniciar</string>
 
