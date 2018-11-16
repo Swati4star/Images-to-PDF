@@ -32,14 +32,14 @@
     <string name="viewFiles">Ver Archivos</string>
 
     <string name="bundleKey">ImageUri</string>
-    <string name="whatsappToast">Lo sentimos! Las imágenes no se pudieron agregar. Por favor seleccione las imágenes de la opción **Seleccionar Imágenes**.</string>
+    <string name="whatsappToast">¡Lo sentimos! Las imágenes no se pudieron agregar. Por favor seleccione las imágenes de la opción **Seleccionar Imágenes**.</string>
     <string name="successToast">Imágenes agregadas con éxito.</string>
 
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
     <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
-    <string name="snackbar_permissions_given">Permisos concedidos!</string>
-    <string name="snackbar_insufficient_permissions">Permisos insuficientes!</string>
+    <string name="snackbar_permissions_given">¡Permisos concedidos!</string>
+    <string name="snackbar_insufficient_permissions">¡Permisos insuficientes!</string>
     <string name="snackbar_images_added">Imágenes añadidas</string>
     <string name="snackbar_file_renamed">Archivo renombrado.</string>
     <string name="snackbar_file_not_renamed">El archivo no puede ser renombrado.</string>
@@ -67,22 +67,22 @@
 
     <string name="snackbar_imagecropped">Imágenes recortadas</string>
     <string name="cropImage_activityTitle">Recortar imagen No.</string>
-    <string name="snackbar_pdfCreated">PDF creado!</string>
+    <string name="snackbar_pdfCreated">¡PDF creado!</string>
     <string name="snackbar_viewAction">Ver</string>
     <string name="more_options_text">Más Opciones de Mejoras</string>
     <string name="delete">Borrar</string>
-    <string name="feedback_text">Amablemente escriba su anterior realimentación, o simplemente deje un Hola! :)</string>
+    <string name="feedback_text">Amablemente escriba su anterior realimentación, o simplemente deje un ¡Hola! :)</string>
     <string name="feedback_subject">Sugerencias para Images To PDF Converter</string>
     <string name="snackbar_no_email_clients">No hay ningún cliente de correo instalado.</string>
     <string name="share">Compartir</string>
-    <string name="rate_us_text">"Hola! acabo de checar esta app en la playstore. Pruébalo en : https://play.google.com/store/apps/details?id=swati4star.createpdf .     Convierte imágenes a PDF ágilmente. :) "</string>
+    <string name="rate_us_text">"¡Hola! acabo de checar esta app en la playstore. Pruébalo en : https://play.google.com/store/apps/details?id=swati4star.createpdf .     Convierte imágenes a PDF ágilmente. :) "</string>
     <string name="snackbar_no_share_app">Ninguna aplicación para compartir.</string>
     <string name="extras">Extras</string>
     <string name="share_chooser">Seleccione la app para enviar el mensaje…</string>
     <string name="feedback_chooser">Enviar correo…</string>
     <string name="no_pdf">Ningún PDF para mostrar</string>
     <string name="get_started">Comenzar Ahora Mismo</string>
-    <string name="view_files_text">Ve todos tus archivos convertidos aquí!</string>
+    <string name="view_files_text">¡Vea todos tus archivos convertidos aquí!</string>
     <string name="empty_image_description">NoPdfs</string>
     <string name="enter_password_custom">Ingresar Contraseña</string>
     <string name="example_pass_123">pass@123</string>
@@ -211,7 +211,7 @@
     <string name="renamed">Renombrado</string>
     <string name="deleted">Eliminado</string>
     <string name="no_history_message">Sin historial que mostrar</string>
-    <string name="view_history_here_message">Vea el historial de todos sus archivos convertidos aquí!</string>
+    <string name="view_history_here_message">¡Vea el historial de todos sus archivos convertidos aquí!</string>
     <string name="delete_history_message">¿Está seguro que quiere eliminar el historial?</string>
     <string name="file_info">"  Nombre del Archivo : %1$s    Ruta : %2$s    Tamaño : %3$s    Fehca de modificación %4$s"</string>
     <string name="default_font_family_text">Letra Fuente (Por defecto : %s)</string>
@@ -252,8 +252,8 @@
     <string name="split_success">El PDF seleccionado se dividió correctamente. Fue dividido en %1$d PDF(s)</string>
     <string name="rate_positive">Calificar ahora</string>
     <string name="rate_negative">No, gracias</string>
-    <string name="rate_title">Califíquenos!</string>
-    <string name="rate_dialog_text">Si usted está disfrutando de esta app, por favor tome un momento para calificar esta app. No tomará más de un minuto. Gracias por su ayuda! :)</string>
+    <string name="rate_title">¡Califíquenos!</string>
+    <string name="rate_dialog_text">Si usted está disfrutando de esta app, por favor tome un momento para calificar esta app. No tomará más de un minuto. ¡Gracias por su ayuda! :)</string>
     <string name="rate_us_never">Nunca</string>
     <string name="remove_pages">Remover Páginas</string>
     <string name="remove_pages_error">El valor de entrada no es válido</string>
@@ -273,7 +273,7 @@
     <string name="pdf_removed_from_list">PDF ha sido removido de la lista.</string>
     <string name="pdf_added_to_list">PDF ha sido agregado a la lista.</string>
     <string name="select_files">Seleccionar Archivos</string>
-    <string name="compress_info">Felicitaciones! Su PDF está comprimido:   Tamaño del PDF Original : %s   Tamaño del PDF Comprimido: %s</string>
+    <string name="compress_info">¡Felicitaciones! Su PDF está comprimido:   Tamaño del PDF Original : %s   Tamaño del PDF Comprimido: %s</string>
     <string name="settings">Ajustes</string>
     <string name="image_compression_value_default">Valor por defecto de Compresión de Imagen : %d %%</string>
     <string name="page_size_value_def">Valor por defecto del Tamaño de Página : %s</string>
@@ -318,7 +318,7 @@
     <string name="right">Derecha</string>
     <string name="left">Izquierda</string>
     <string name="welcome_create_pdf_message">Creando un archivo PDF</string>
-    <string name="welcome_create_pdf_info">Vea los archivos PDF anteriormente creados o cree uno nuevo!</string>
+    <string name="welcome_create_pdf_info">¡Vea los archivos PDF anteriormente creados o cree uno nuevo!</string>
     <string name="welcome_themes_title">Temas diferentes</string>
     <string name="welcome_themes_message">Vaya a Ajustes, usted puede tener tres tipos de temas : Negro, Obscuro, Blanco</string>
     <string name="welcome_merge_title">Unir archivo PDF</string>
@@ -327,7 +327,7 @@
     <string name="welcome_viewfiles_message">Vea, borre, renombre, comparta y agregue contraseña a su archivo PDF</string>
     <string name="skip_text">Omitir</string>
     <string name="help">Ayuda</string>
-    <string name="get_started_title">Comenzar Ahora!</string>
+    <string name="get_started_title">¡Comenzar Ahora!</string>
     <string name="image_scale_type">Tipo de Escalado de Imagen</string>
     <string name="select_scale_type">Seleccionar tipo de Escalado de Imagen</string>
     <string name="stretch_image">Estirar imagen para ajustar a página</string>
