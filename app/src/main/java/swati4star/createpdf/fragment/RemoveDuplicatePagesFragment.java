@@ -49,7 +49,7 @@ import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate,OnPDFCreatedInterface {
+        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -78,10 +78,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     RelativeLayout mLayout;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.splitted_files)
-    RecyclerView mSplittedFiles;
-    @BindView(R.id.splitfiles_text)
-    TextView splitFilesSuccessText;
     @BindView(R.id.view_pdf)
     Button mViewPdf;
 
