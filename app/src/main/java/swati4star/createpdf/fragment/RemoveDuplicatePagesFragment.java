@@ -12,11 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
@@ -28,19 +31,25 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
+import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate  {
+        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate,OnPDFCreatedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -49,13 +58,14 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     private PDFUtils mPDFUtils;
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private MaterialDialog mMaterialDialog;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
     //TODO id name
-    @BindView(R.id.Remove)
+    @BindView(R.id.remove)
     MorphingButton removeDuplicateButton;
     BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
@@ -72,6 +82,8 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     RecyclerView mSplittedFiles;
     @BindView(R.id.splitfiles_text)
     TextView splitFilesSuccessText;
+    @BindView(R.id.view_pdf)
+    Button mViewPdf;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -106,6 +118,12 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
             setTextAndActivateButtons(getFilePath(data.getData()));
     }
 
+
+    //On click remove duplicate button
+    @OnClick(R.id.remove)
+    public void parse() {
+        new RemoveDuplicates(mPath, this).execute();
+    }
 
 
     private void resetValues() {
@@ -156,6 +174,38 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     @Override
     public void onFileItemClick(String path) {
         mFileUtils.openFile(path);
+    }
+
+    private void viewPdfButton(String path) {
+        mViewPdf.setVisibility(View.VISIBLE);
+        mViewPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFileUtils.openFile(path);
+            }
+        });
+    }
+
+    @Override
+    public void onPDFCreationStarted() {
+        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog.show();
+    }
+
+    @Override
+    public void onPDFCreated(boolean success, String path) {
+//        mMaterialDialog.dismiss();
+//        if (!success) {
+//            showSnackbar(mActivity, R.string.snackbar_folder_not_created);
+//            return;
+//        }
+//        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
+//        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+//                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
+//        mOpenPdf.setVisibility(View.VISIBLE);
+//        mMorphButtonUtility.morphToSuccess(mCreatePdf);
+//        mPath = path;
+//        resetValues();
     }
 }
 

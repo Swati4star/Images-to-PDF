@@ -70,10 +70,10 @@
             android:id="@+id/view_pdf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View PDF"
             android:layout_margin="16dp"
-            android:visibility="gone"
-            android:background="@color/mb_green"/>
+            android:background="@color/mb_green"
+            android:text="View PDF"
+            android:visibility="gone" />
 
     </LinearLayout>
 
