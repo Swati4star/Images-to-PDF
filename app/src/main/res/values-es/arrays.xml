@@ -8,10 +8,10 @@
     </string-array>
 
     <string-array name="sort_options_images">
-        <item>Name ▲</item>
-        <item>Name ▼</item>
-        <item>Date ▲</item>
-        <item>Date ▼</item>
+        <item>Nombre ▲</item>
+        <item>Nombre ▼</item>
+        <item>Fecha ▲</item>
+        <item>Fecha ▼</item>
     </string-array>
 
 </resources>
