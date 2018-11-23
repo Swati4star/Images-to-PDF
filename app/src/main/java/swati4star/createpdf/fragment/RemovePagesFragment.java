@@ -297,7 +297,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public void pdfCompressionEnded(String path, Boolean success) {
         mMaterialDialog.dismiss();
-        if (success && path != null) {
+        if (success && path != null && mPath != null) {
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
             new DatabaseHelper(mActivity).insertRecord(path,

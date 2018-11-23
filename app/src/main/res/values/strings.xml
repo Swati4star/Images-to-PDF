@@ -119,7 +119,6 @@
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
     <string name="pdf_merged">PDFs Merged</string>
-    <string name="pdf_merge_error">Unable to Merge. Files may be encrypted or in the external storage. Files on SD card are supported only currently.</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>
@@ -144,7 +143,7 @@
     <string name="share_chooser">Select app to send message…</string>
 
     <!-- Rate us strings -->
-    <string name="rate_us_text">Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .It converts images to PDF so smoothly. :)</string>
+    <string name="rate_us_text">Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf . It converts images to PDF so smoothly. :)</string>
     <string name="snackbar_no_share_app">No application to share.</string>
 
     <!-- Select Images string -->
@@ -213,11 +212,11 @@
     <string name="moving_files">Moving your files</string>
     <string name="success_move">Successfully moved your files</string>
     <string name="delete_directory">Delete Directory</string>
-    <string name="dir_does_not_exists">Directory does not exists</string>
+    <string name="dir_does_not_exists">Directory does not exist</string>
     <string name="move_files_delete_dir">Moving files and deleting the directory</string>
     <string name="directory_deleted">Directory deleted</string>
     <string name="success_delete_directory">Successfully deleted the directory</string>
-    <string name="delete_dialog">This directory is not empty. Are you sure you want to delete it ?</string>
+    <string name="delete_dialog">This directory is not empty. Are you sure you want to delete it?</string>
     <string name="moved_files">Files successfully moved</string>
     <string name="dialog_delete_dir">Enter the name of directory to delete</string>
     <string name="dialog_new_dir">Enter new directory name</string>
@@ -237,7 +236,7 @@
     <string name="text_type">text/plain</string>
     <string name="new_directory">New Directory</string>
     <string name="move_n_files">Move Files</string>
-    <string name="move_to_n_home_directory">Move to  Home Directory</string>
+    <string name="move_to_n_home_directory">Move to Home Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
     <string name="extension_not_supported">Sorry! This file type is not supported currently.</string>
@@ -298,7 +297,7 @@
     <string name="decrypted">Decrypted</string>
     <string name="no_history_message">No history to show</string>
     <string name="view_history_here_message">View all your converted files history here!</string>
-    <string name="delete_history_message">Are you sure you want to delete history ?</string>
+    <string name="delete_history_message">Are you sure you want to delete history?</string>
 
     <!-- Extract images -->
     <string name="extract_images">Extract Images</string>
@@ -345,7 +344,6 @@
 
     <!-- Split PDF -->
     <string name="split_pdf">Split PDF</string>
-    <string name="split_error">We were unable to split PDF. Files may be encrypted or in the external storage.</string>
     <string name="split_success">The selected PDF was split successfully. It was split into %1$d PDF(s)</string>
     <string name="split_info">The PDF will be split into multiple PDFs of single page.</string>
 
@@ -367,7 +365,6 @@
     <string name="pdf_to_images">PDF to Images</string>
     <string name="create_images">Create Images</string>
     <string name="select_pdf_file">Select PDF File</string>
-    <string name="create_images_success">%1$d image(s) have been generated for the selected PDF. They have been saved in the PDF Files root directory.</string>
     <string name="share_images">Share Images</string>
     <string name="view_images">View Images</string>
 
@@ -420,8 +417,8 @@
     <string name="remove_password">Remove password</string>
     <string name="enhance_created_pdfs">Enhance Created PDFs</string>
     <string name="viewfiles_rotatepages">1. Select the PDF you wish to rotate. \n2. Select Rotate Pages. \n3. Select angle of rotation. Select OK. \n4. New rotated PDF will be created.</string>
-    <string name="viewfiles_addpassword">1. Select the PDF you wish to add password to. \n2. Select Add  Password. \n3. Type new password. Select OK. \n4. New PDF with password be created.</string>
-    <string name="viewfiles_removepassword">1. Select the PDF you wish to remove password from. \n2. Select Remove Password. \n3. Type pdf password. Select OK. \n4. New PDF without PDF will be created.</string>
+    <string name="viewfiles_addpassword">1. Select the PDF you wish to add password to. \n2. Select Add Password. \n3. Type new password. Select OK. \n4. New PDF with password be created.</string>
+    <string name="viewfiles_removepassword">1. Select the PDF you wish to remove password from. \n2. Select Remove Password. \n3. Type PDF password. Select OK. \n4. New PDF without PDF will be created.</string>
     <string name="grayscale_images">Create grayscale PDF</string>
     <string name="add_margins">Add Margins</string>
     <string name="choose_page_number_style">Choose Page Number Style</string>
@@ -438,11 +435,11 @@
     <string name="welcome_create_pdf_message">Creating a PDF file</string>
     <string name="welcome_create_pdf_info">View the PDF files previously created or create a new one!</string>
     <string name="welcome_themes_title">Different themes</string>
-    <string name="welcome_themes_message">Go to Settings, and you can have three type of themes : Black, Dark, White</string>
+    <string name="welcome_themes_message">Go to Settings, and you can choose from three type of themes : Black, Dark, White</string>
     <string name="welcome_merge_title">Merge PDF file</string>
-    <string name="welcome_merge_message">Merge different existing pdf in your phone in one file</string>
+    <string name="welcome_merge_message">Merge different existing PDF in your phone in one file</string>
     <string name="welcome_viewfiles_title">Viewing the PDF files</string>
-    <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your pdf file</string>
+    <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your PDF file</string>
     <string name="skip_text">Skip</string>
     <string name="get_started_title">Get Started!</string>
 
@@ -467,7 +464,7 @@
     <string name="choose_watermark_font_family">Choose font family</string>
     <string name="watermark_font_size">Font size</string>
     <string name="choose_watermark_style">Choose style</string>
-    <string name="viewfiles_addwatermark">1. Select the PDF you wish to add watermark to. \n2. Select Add  Watermark. \n3. Fill the required information. Select OK. \n4. New PDF with watermark will be created.</string>
+    <string name="viewfiles_addwatermark">1. Select the PDF you wish to add watermark to. \n2. Select Add Watermark. \n3. Fill the required information. Select OK. \n4. New PDF with watermark will be created.</string>
 
 
 </resources>

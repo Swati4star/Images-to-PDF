@@ -155,6 +155,10 @@ public class PDFUtils {
         myfont.setSize(mTextToPDFOptions.getFontSize());
 
         document.add(new Paragraph("\n"));
+
+        if (fileExtension == null)
+            throw new DocumentException();
+
         switch (fileExtension) {
             case Constants.textExtension:
                 readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);

@@ -332,7 +332,6 @@
     <string name="select_scale_type">Seleccionar tipo de Escalado de Imagen</string>
     <string name="stretch_image">Estirar imagen para ajustar a página</string>
     <string name="maintain_aspect_ratio">Mantener relación de aspecto de imágenes</string>
-    <string name="create_images_success">%1$d imágenes han sido generadas para el PDF seleccionado. Estas han sido guardadas en la carpeta de Archivos PDF en el directorio raíz.</string>
     <string name="create_images">"Crear Imágenes "</string>
     <string name="view_images">" Ver Imágenes"</string>
     <string name="share_images">Compartir Imágenes</string>

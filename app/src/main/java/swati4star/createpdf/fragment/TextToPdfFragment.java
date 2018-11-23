@@ -324,6 +324,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
             mTextView.setVisibility(View.GONE);
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
+            showSnackbar(mActivity, R.string.error_occurred);
         } finally {
             mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
             mCreateTextPdf.setEnabled(false);

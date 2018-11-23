@@ -333,7 +333,6 @@
     <string name="select_scale_type">Select Image scaling type</string>
     <string name="stretch_image">Stretch image to fit on page</string>
     <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
-    <string name="create_images_success">%1$d image(s) have been generated for the selected PDF. They have been saved in the PDF Files root directory.</string>
     <string name="create_images">" Créer des Images"</string>
     <string name="view_images">" Voir Les images"</string>
     <string name="share_images">" Partager des Images"</string>
