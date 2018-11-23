@@ -494,7 +494,7 @@ public class PDFUtils {
             }
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.split_error);
+            showSnackbar(mContext, R.string.file_access_error);
         }
         return outputPaths;
     }

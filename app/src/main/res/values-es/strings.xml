@@ -95,7 +95,6 @@
     <string name="merge_pdf">Unir PDF</string>
     <string name="merge_file_select">Seleccione un archivo</string>
     <string name="pdf_merged">PDFs Unidos</string>
-    <string name="pdf_merge_error">No se logró realizar la Unión. Quizá los archivos están encriptados o en el almacenamiento externo. Actualmente sólo hay soporte para los archivos en la tarjeta SD.</string>
     <string name="File_hint_two">Ruta del archivo para el PDF dos</string>
     <string name="merge_files">UNIR ARCHIVOS</string>
     <string name="file_date_text">Fecha del Archivo</string>
@@ -248,7 +247,6 @@
     <string name="dont_show_again">No mostrar de nuevo</string>
     <string name="encrypted_file_text">archivo encriptado</string>
     <string name="split_pdf">Dividir PDF</string>
-    <string name="split_error">No se logró dividir el PDF. Quizá los archivos están encriptados o en el almacenamiento externo.</string>
     <string name="split_success">El PDF seleccionado se dividió correctamente. Fue dividido en %1$d PDF(s)</string>
     <string name="rate_positive">Calificar ahora</string>
     <string name="rate_negative">No, gracias</string>

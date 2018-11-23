@@ -95,7 +95,6 @@
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
     <string name="pdf_merged">PDFs Merged</string>
-    <string name="pdf_merge_error">Unable to Merge. Files may be encrypted or in the external storage. Files on SD card are supported only currently.</string>
     <string name="File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>
     <string name="file_date_text">File Date</string>
@@ -248,7 +247,6 @@
     <string name="dont_show_again">Don\'t show again</string>
     <string name="encrypted_file_text">encrypted file</string>
     <string name="split_pdf">Split PDF</string>
-    <string name="split_error">We were unable to split PDF. Files may be encrypted or in the external storage.</string>
     <string name="split_success">The selected PDF was split successfully. It was split into %1$d PDF(s)</string>
     <string name="rate_positive">Rate now</string>
     <string name="rate_negative">No, thanks</string>
