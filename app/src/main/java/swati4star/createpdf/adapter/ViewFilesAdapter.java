@@ -235,6 +235,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * @param position - position of file in arraylist
      */
     private void deleteFile(String name, int position) {
+
+        if (position < 0 || position >= mFileList.size())
+            return;
+
         AtomicInteger undoClicked = new AtomicInteger();
         final File fdelete = new File(name);
         mFileList.remove(position);

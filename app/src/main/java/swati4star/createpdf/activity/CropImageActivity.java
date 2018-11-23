@@ -60,6 +60,9 @@ public class CropImageActivity extends AppCompatActivity {
 
         mImages = ImageToPdfFragment.mImagesUri;
 
+        if (mImages.size() == 0)
+            finish();
+
         setImage(0);
     }
 
@@ -143,6 +146,10 @@ public class CropImageActivity extends AppCompatActivity {
      * @param index - image index
      */
     private void setImage(int index) {
+
+        if (index < 0 || index >= mImages.size())
+            return;
+
         mImagecount.setText(getString(R.string.cropImage_activityTitle) + (index + 1));
         mCurrentImageIndex = index;
         mCropImageView.setImageUriAsync(Uri.fromFile(new File(mImages.get(index))));

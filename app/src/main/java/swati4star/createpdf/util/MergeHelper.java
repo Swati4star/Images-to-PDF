@@ -76,7 +76,7 @@ public class MergeHelper implements MergeFilesListener {
             new DatabaseHelper(mActivity).insertRecord(path,
                     mActivity.getString(R.string.created));
         } else
-            showSnackbar(mActivity, R.string.pdf_merge_error);
+            showSnackbar(mActivity, R.string.file_access_error);
         mViewFilesAdapter.updateDataset();
     }
 

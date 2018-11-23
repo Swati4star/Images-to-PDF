@@ -237,7 +237,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             return;
         }
 
-        String text = String.format(mActivity.getString(R.string.create_images_success), imageCount);
+        String text = String.format(mActivity.getString(R.string.extract_images_success), imageCount);
         showSnackbar(mActivity, text);
         mCreateImagesSuccessText.setVisibility(View.VISIBLE);
         options.setVisibility(View.VISIBLE);

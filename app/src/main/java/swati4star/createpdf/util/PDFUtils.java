@@ -155,6 +155,10 @@ public class PDFUtils {
         myfont.setSize(mTextToPDFOptions.getFontSize());
 
         document.add(new Paragraph("\n"));
+
+        if (fileExtension == null)
+            throw new DocumentException();
+
         switch (fileExtension) {
             case Constants.textExtension:
                 readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
@@ -490,7 +494,7 @@ public class PDFUtils {
             }
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.split_error);
+            showSnackbar(mContext, R.string.file_access_error);
         }
         return outputPaths;
     }

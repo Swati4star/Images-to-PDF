@@ -70,7 +70,6 @@
     <string name="snackbar_file_not_deleted">Невозможно удалить файл.</string>
     <string name="snackbar_folder_not_created">При создании директории произошла ошибка.</string>
     <string name="pdf_merged">Файлы PDF объединены</string>
-    <string name="pdf_merge_error">Невозможно объединить файлы. Вероятно, они зашифрованы или находятся на внешнем носителе.</string>
 
     <string name="creating_pdf">Создание PDF</string>
     <string name="enter_file_name">Введите имя файла</string>
@@ -290,7 +289,6 @@
 
     <!-- Split PDF -->
     <string name="split_pdf">Разделить PDF</string>
-    <string name="split_error">Невозможно разделить PDF. Файл недоступен, зашифрован или находится на внешнем носителе.</string>
     <string name="split_success">Выбранный PDF файл успешно разделен на %1$d </string>
     <string name="split_info">PDF файл будел разделен на несколько одностраничных файлов.</string>
 
@@ -378,7 +376,6 @@
     <string name="skip_text">Пропустить</string>
     <string name="get_started_title">Начать работу</string>
     <string name="pdf_to_images">PDF to Images</string>
-    <string name="create_images_success">%1$d image(s) have been generated for the selected PDF. They have been saved in the PDF Files root directory.</string>
     <string name="create_images">создавать изображения</string>
     <string name="select_pdf_file">выбрать файл pdf</string>
     <string name="share_images">" Поделиться изображениями"</string>

@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/createImages"
             android:layout_margin="10dp"
-            android:text="@string/create_images_success"
+            android:text="@string/extract_images_success"
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="gone" />
