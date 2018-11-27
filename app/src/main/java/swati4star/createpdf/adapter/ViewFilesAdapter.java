@@ -164,6 +164,9 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             case 9: // Add Watermark
                 mPDFUtils.setWatermark(file.getPath(), ViewFilesAdapter.this, mFileList);
                 break;
+            case 10: // Add Images
+                mPDFUtils.setImages();
+                break;
         }
     }
 

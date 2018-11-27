@@ -625,6 +625,14 @@ public class PDFUtils {
         });
         mDialog.show();
     }
+    public void setImages() {
+        new MaterialDialog.Builder(mContext)
+                .title(R.string.add_images)
+                .customView(R.layout.fragment_add_images, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
+    }
 
     public static int getStyleValueFromName(String name) {
         switch (name) {
