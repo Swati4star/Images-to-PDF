@@ -132,7 +132,13 @@
                 android:layout_weight="1.0"
                 app:option_icon="@drawable/ic_branding_watermark_black_24dp"
                 app:option_text="@string/add_watermark" />
-
+            <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/add_images"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/ic_add_black_24dp"
+                app:option_text="@string/add_images" />
         </LinearLayout>
 
         <TextView
