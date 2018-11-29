@@ -16,6 +16,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 
+import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
@@ -60,7 +61,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView rotatePdf;
     @BindView(R.id.add_watermark)
     MyCardView addWatermark;
-
+    @BindView(R.id.add_images)
+    MyCardView addImages;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         removePassword.setOnClickListener(this);
         rotatePdf.setOnClickListener(this);
         addWatermark.setOnClickListener(this);
+        addImages.setOnClickListener(this);
         return rootview;
     }
 
@@ -179,6 +182,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
+                fragment.setArguments(bundle);
+                setNavigationViewSelection(3);
+                break;
+            case R.id.add_images:
+                fragment = new AddImagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
                 setNavigationViewSelection(3);
                 break;

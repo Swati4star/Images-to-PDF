@@ -367,6 +367,13 @@
     <string name="watermark_font_size">Tamaño del texto</string>
     <string name="choose_watermark_style">Elegir estilo</string>
     <string name="viewfiles_addwatermark">1. Seleccione el PDF que desea agregarle una marca de agua. \n2. Seleccione Agregar Marca de Agua. \n3. LLene la información requerida. Seleccione OK. \n4. Se creará el nuevo PDF con marca de agua.</string>
+
     <string name="extension_not_supported">¡Lo sentimos! Actualmente no hay soporte para este tipo de archivo.</string>
+
+    <!--<nav add images>-->
+    <string name="add_images">Add Images</string>
+    <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
+    <string name="add_images_error">The input is not valid</string>
+    <string name="no_images_selected">No images selected</string>
 
 </resources>

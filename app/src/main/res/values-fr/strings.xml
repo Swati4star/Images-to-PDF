@@ -369,4 +369,11 @@
     <string name="choose_watermark_style">Choose style</string>
     <string name="viewfiles_addwatermark">1. Select the PDF you wish to add watermark to. \n2. Select Add  Watermark. \n3. Fill the required information. Select OK. \n4. New PDF with watermark will be created.</string>
     <string name="extension_not_supported">Sorry! This file type is not supported currently.</string>
+
+    <!--<nav add images>-->
+    <string name="add_images">Add Images</string>
+    <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
+    <string name="add_images_error">The input is not valid</string>
+    <string name="no_images_selected">No images selected</string>
+
 </resources>

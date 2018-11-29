@@ -1,13 +1,13 @@
 {
   "data": [
     {
-      "title": "Merge PDF",
-      "content": "Easily select multiple PDF at once to merge",
-      "icon": "ic_merge_type_black_24dp"
+      "title": "Modify Existing PDF",
+      "content": "Add images to existing PDF",
+      "icon": "ic_add_black_24dp"
     },
     {
-      "title": "Access doc & docx files",
-      "content": "Now, you can convert doc & docx files also to PDF",
+      "title": "Rearrange images while creating PDF",
+      "content": "Now, you can easily sort images while creating PDF using images",
       "icon": "ic_text_format_black_24dp"
     }
   ],
@@ -15,6 +15,20 @@
     "version_code": [
       //paste old data here
     ],
+
+    "74" : [
+      {
+        "title": "Merge PDF",
+        "content": "Easily select multiple PDF at once to merge",
+        "icon": "ic_merge_type_black_24dp"
+      },
+      {
+        "title": "Access doc & docx files",
+        "content": "Now, you can convert doc & docx files also to PDF",
+        "icon": "ic_text_format_black_24dp"
+      }
+    ],
+
     "72": [
       {
         "title": "Add watermark",

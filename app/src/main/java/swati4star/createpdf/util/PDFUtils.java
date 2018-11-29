@@ -29,6 +29,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
@@ -38,6 +39,7 @@ import com.itextpdf.text.pdf.PRStream;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfDictionary;
+import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfNumber;
 import com.itextpdf.text.pdf.PdfObject;
@@ -444,6 +446,57 @@ public class PDFUtils {
         }
     }
 
+    /**
+     * Main function to add images to PDF
+     * @param inputPath - path of input PDF
+     * @param output - path of output PDF
+     * @param imagesUri - list of images to add
+     * @return true, if succeeded, otherwise false
+     */
+    public boolean addImagesToPdf(String inputPath, String output, ArrayList<String> imagesUri) {
+        try {
+            PdfReader reader = new PdfReader(inputPath);
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(output));
+            Rectangle documentRect = document.getPageSize();
+            document.open();
+
+            int numOfPages = reader.getNumberOfPages();
+            PdfContentByte cb = writer.getDirectContent();
+            PdfImportedPage importedPage;
+            for (int page = 1; page <= numOfPages; page++) {
+                importedPage = writer.getImportedPage(reader, page);
+                document.newPage();
+                cb.addTemplate(importedPage, 0, 0);
+            }
+
+            for (int i = 0; i < imagesUri.size(); i++) {
+                document.newPage();
+                Image image = Image.getInstance(imagesUri.get(i));
+                image.setBorder(0);
+                float pageWidth = document.getPageSize().getWidth(); // - (mMarginLeft + mMarginRight);
+                float pageHeight = document.getPageSize().getHeight(); // - (mMarginBottom + mMarginTop);
+                image.scaleToFit(pageWidth, pageHeight);
+                image.setAbsolutePosition(
+                        (documentRect.getWidth() - image.getScaledWidth()) / 2,
+                        (documentRect.getHeight() - image.getScaledHeight()) / 2);
+                document.add(image);
+            }
+
+            document.close();
+
+            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
+            new DatabaseHelper(mContext).insertRecord(output, mContext.getString(R.string.created));
+
+            return true;
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+            showSnackbar(mContext, R.string.remove_pages_error);
+            return false;
+        }
+    }
+
     public boolean reorderRemovePDF(String inputPath, String output, String pages) {
         try {
             PdfReader reader = new PdfReader(inputPath);
@@ -581,6 +634,18 @@ public class PDFUtils {
             mDialog.dismiss();
         });
         mDialog.show();
+    }
+
+    /**
+     * Shows the dialog to allow users to add images
+     */
+    public void setImages() {
+        new MaterialDialog.Builder(mContext)
+                .title(R.string.add_images)
+                .customView(R.layout.fragment_add_images, true)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .build();
     }
 
     public static int getStyleValueFromName(String name) {
