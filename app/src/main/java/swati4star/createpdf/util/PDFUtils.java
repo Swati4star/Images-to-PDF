@@ -446,7 +446,13 @@ public class PDFUtils {
         }
     }
 
-
+    /**
+     * Main function to add images to PDF
+     * @param inputPath - path of input PDF
+     * @param output - path of output PDF
+     * @param imagesUri - list of images to add
+     * @return true, if succeeded, otherwise false
+     */
     public boolean addImagesToPdf(String inputPath, String output, ArrayList<String> imagesUri) {
         try {
             PdfReader reader = new PdfReader(inputPath);
@@ -629,6 +635,10 @@ public class PDFUtils {
         });
         mDialog.show();
     }
+
+    /**
+     * Shows the dialog to allow users to add images
+     */
     public void setImages() {
         new MaterialDialog.Builder(mContext)
                 .title(R.string.add_images)

@@ -185,7 +185,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
         hideKeyboard(mActivity);
         if (mOperation.equals(ADD_IMAGES)) {
             getFileName();
-            return;
         }
     }
 
@@ -199,7 +198,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
                 final String filename = input.toString();
                 FileUtils utils = new FileUtils(mActivity);
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
-//                    mPdfOptions.setOutFileName(filename);
                     this.addImagesToPdf(filename);
                 } else {
                     MaterialDialog.Builder builder2 = createOverwriteDialog(mActivity);
@@ -211,6 +209,10 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
         }).show();
     }
 
+    /**
+     * Adds images to existing PDF
+     * @param output - path of output PDF
+     */
     private void addImagesToPdf(String output) {
         int index = mPath.lastIndexOf("/");
         String outputPath = mPath.replace(mPath.substring(index + 1),
