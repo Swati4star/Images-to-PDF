@@ -34,11 +34,11 @@ public class WhatsNewUtils {
         Button continueButton = dialog.findViewById(R.id.continueButton);
         continueButton.setText(R.string.whatsnew_continue);
         title.setText(R.string.whatsnew_title);
-        ArrayList<WhatsNew> whatsNewList = null;
+        ArrayList<WhatsNew> whatsNewList;
         try {
             JSONObject obj = new JSONObject(loadJSONFromAsset(context));
             JSONArray data = obj.getJSONArray("data");
-            whatsNewList = new ArrayList<WhatsNew>();
+            whatsNewList = new ArrayList<>();
 
             for (int i = 0; i < data.length(); i++) {
                 JSONObject jsonObject = data.getJSONObject(i);
@@ -66,7 +66,7 @@ public class WhatsNewUtils {
      * @return - json
      */
     private static String loadJSONFromAsset(Context context) {
-        String json = null;
+        String json;
         try {
             InputStream is = context.getAssets().open("whatsnew.json");
             int size = is.available();

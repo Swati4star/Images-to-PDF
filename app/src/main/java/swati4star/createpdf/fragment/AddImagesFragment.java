@@ -5,12 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
@@ -20,8 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -35,45 +30,29 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-import swati4star.createpdf.activity.RearrangePdfPages;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
-import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
-import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
-import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
-import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
-import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
-import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PWd;
-import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
-import static swati4star.createpdf.util.FileUtils.getFormattedSize;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -89,7 +68,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private String mOperation;
     private MaterialDialog mMaterialDialog;
-    private boolean mOpenSelectImages = false;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
     private Uri mUri;
@@ -201,9 +179,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
                     this.addImagesToPdf(filename);
                 } else {
                     MaterialDialog.Builder builder2 = createOverwriteDialog(mActivity);
-                    builder2.onPositive((dialog2, which) -> {
-                        this.addImagesToPdf(filename);
-                    }).onNegative((dialog1, which) -> getFileName()).show();
+                    builder2.onPositive((dialog2, which) ->
+                            this.addImagesToPdf(filename)).onNegative((dialog1, which) -> getFileName()).show();
                 }
             }
         }).show();
@@ -254,7 +231,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
                             != PackageManager.PERMISSION_GRANTED) ||
                     (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED)) {
-                mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
                 requestPermissions(new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,

@@ -203,9 +203,7 @@ public class PDFUtils {
             documentParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
             document.add(documentParagraph);
             inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DocumentException e) {
+        } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
     }
@@ -233,9 +231,7 @@ public class PDFUtils {
             documentParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
             document.add(documentParagraph);
             inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DocumentException e) {
+        } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
     }

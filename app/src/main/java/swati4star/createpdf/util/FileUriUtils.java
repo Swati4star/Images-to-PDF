@@ -179,6 +179,8 @@ public class FileUriUtils {
      */
     public static String getFilePath(Uri uri) {
         String path = uri.getPath();
+        if (path == null)
+            return null;
         path =  path.replace("/document/raw:", "");
         return path;
     }

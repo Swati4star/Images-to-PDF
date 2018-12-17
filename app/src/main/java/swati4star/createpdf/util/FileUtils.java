@@ -262,6 +262,8 @@ public class FileUtils {
     public String getFileName(Uri uri) {
         String fileName = null;
         String scheme = uri.getScheme();
+        if (scheme == null)
+            return null;
         if (scheme.equals("file"))
             fileName = uri.getLastPathSegment();
         else if (scheme.equals("content")) {

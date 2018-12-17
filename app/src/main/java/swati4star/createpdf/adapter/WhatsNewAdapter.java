@@ -53,7 +53,7 @@ public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsN
         return mWhatsNewsList.size();
     }
 
-    public class WhatsNewViewHolder extends RecyclerView.ViewHolder {
+    class WhatsNewViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.title)
         TextView tvHeading;

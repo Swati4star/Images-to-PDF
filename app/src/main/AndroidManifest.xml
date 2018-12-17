@@ -1,24 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- suppress AndroidDomInspection -->
+<?xml version="1.0" encoding="utf-8"?><!-- suppress AndroidDomInspection -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="swati4star.createpdf">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="swati4star.createpdf">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera" />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
-        android:required="false"/>
+        android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
-        android:hardwareAccelerated="true"
         android:fullBackupContent="@xml/backup_descriptor"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
@@ -27,16 +26,16 @@
         tools:ignore="GoogleAppIndexingWarning,RtlEnabled">
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".activity.WelcomeActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
             <intent-filter>
@@ -51,11 +50,11 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
 
-            <meta-data android:name="android.app.shortcuts"
+            <meta-data
+                android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        <activity
-            android:name=".activity.CropImageActivity"/>
+        <activity android:name=".activity.CropImageActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -64,15 +63,15 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.ImageEditor"/>
-        <activity android:name=".activity.PreviewActivity"/>
-        <activity android:name=".activity.RearrangeImages"/>
-        <activity android:name=".activity.ImagesPreviewActivity"/>
-        <activity android:name=".activity.RearrangePdfPages"/>
+        <activity android:name=".activity.WelcomeActivity" />
+        <activity android:name=".activity.ImageEditor" />
+        <activity android:name=".activity.PreviewActivity" />
+        <activity android:name=".activity.RearrangeImages" />
+        <activity android:name=".activity.ImagesPreviewActivity" />
+        <activity android:name=".activity.RearrangePdfPages" />
 
     </application>
 

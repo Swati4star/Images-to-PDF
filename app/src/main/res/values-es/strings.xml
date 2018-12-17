@@ -99,7 +99,6 @@
     <string name="merge_files">UNIR ARCHIVOS</string>
     <string name="file_date_text">Fecha del Archivo</string>
     <string name="file_size_text">Peso del Archivo</string>
-    <string name="password_added">Contraseña agregada</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">He adjuntado PDF(s) a este mensaje</string>
     <string name="btn_sav_text">savText</string>
@@ -114,7 +113,6 @@
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Ingrese la contraseña para continuar</string>
     <string name="not_encrypted">PDF no está Encriptado</string>
-    <string name="incorrect_passowrd">Contraseña Incorrecta</string>
     <string name="save_current">Guardar Actual</string>
     <string name="save_first">Guardar Imagen Actual Primero</string>
     <string name="Filter_name">Filtro</string>
@@ -136,20 +134,16 @@
     <string name="directory">Directorio</string>
     <string name="moving_files">Moviendo sus archivos</string>
     <string name="success_move">Se movieron sus archivos con éxito</string>
-    <string name="delete_directory">Eliminar Directorio</string>
     <string name="dir_does_not_exists">El Directorio no existe</string>
     <string name="move_files_delete_dir">Moviendo archivos y eliminando el directorio</string>
     <string name="directory_deleted">Directorio eliminando</string>
     <string name="success_delete_directory">Se eliminó el directorio con éxito</string>
-    <string name="delete_dialog">Este directorio no está vacío. ¿Está seguro de querer eliminarlo?</string>
     <string name="moved_files">Los archivos se movieron con éxito</string>
-    <string name="dialog_delete_dir">Ingrese el nombre del directorio a eliminar</string>
     <string name="dialog_new_dir">Ingrese el nombre del nuevo directorio</string>
     <string name="dialog_dir">Ingrese el nombre del directorio</string>
     <string name="cancel">Cancelar</string>
     <string name="ok">OK</string>
     <string name="yes">Sí</string>
-    <string name="no">No</string>
     <string name="select_all">Seleccionar Todo</string>
     <string name="converting_file_message">Convirtiendo sus archivos a PDF.</string>
     <string name="select_text_file">Seleccione el Archivo de Texto</string>
@@ -158,8 +152,6 @@
     <string name="select_file">Seleccione un Archivo a Cargar</string>
     <string name="text_type">texto/plano</string>
     <string name="new_directory">Nuevo Directorio</string>
-    <string name="move_n_files">Mover Archivos</string>
-    <string name="move_to_n_home_directory">Mover a Directorio Home</string>
     <string name="previous_image_content_desc">Imagen Anterior</string>
     <string name="text_file_name">"Archivo de Texto : "</string>
     <string name="edit_font_size">Tamaño del Texto (Por defecto : %d)</string>
@@ -327,7 +319,6 @@
     <string name="help">Ayuda</string>
     <string name="get_started_title">¡Comenzar Ahora!</string>
     <string name="image_scale_type">Tipo de Escalado de Imagen</string>
-    <string name="select_scale_type">Seleccionar tipo de Escalado de Imagen</string>
     <string name="stretch_image">Estirar imagen para ajustar a página</string>
     <string name="maintain_aspect_ratio">Mantener relación de aspecto de imágenes</string>
     <string name="create_images">"Crear Imágenes "</string>
@@ -358,7 +349,6 @@
     <string name="cannot_add_watermark">La Marca de Agua no pudo ser agregada al PDF. Por favor revise el PDF.</string>
     <string name="add_watermark">Agregar Marca de Agua</string>
     <string name="enter_watermark_text">Ingresar Texto</string>
-    <string name="watermark_text">Texto</string>
     <string name="enter_watermark_angle">Ingresar Ángulo</string>
     <string name="watermark_angle">Ángulo</string>
     <string name="choose_watermark_color">Elegir color</string>
@@ -373,7 +363,6 @@
     <!--<nav add images>-->
     <string name="add_images">Add Images</string>
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
-    <string name="add_images_error">The input is not valid</string>
     <string name="no_images_selected">No images selected</string>
 
 </resources>

@@ -158,7 +158,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
-        mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
 
@@ -170,6 +169,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         // Check for the images received
         checkForImagesInBundle();
+
+        if (mImagesUri.size() > 0) {
+            mNoOfImages.setText(String.format(mActivity.getResources()
+                    .getString(R.string.images_selected), mImagesUri.size()));
+            mNoOfImages.setVisibility(View.VISIBLE);
+            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+            mCreatePdf.setEnabled(true);
+            showSnackbar(mActivity, R.string.successToast);
+        } else {
+            mNoOfImages.setVisibility(View.GONE);
+            mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+        }
 
         return root;
     }
@@ -191,14 +202,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     showSnackbar(mActivity, R.string.whatsappToast);
                 } else {
                     mImagesUri.add(mFileUtils.getUriRealPath(uri));
-                    if (mImagesUri.size() > 0) {
-                        mNoOfImages.setText(String.format(mActivity.getResources()
-                                .getString(R.string.images_selected), mImagesUri.size()));
-                        mNoOfImages.setVisibility(View.VISIBLE);
-                    } else {
-                        mNoOfImages.setVisibility(View.GONE);
-                    }
-                    showSnackbar(mActivity, R.string.successToast);
                 }
             }
         }
@@ -786,7 +789,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     void addMargins() {
-        MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.add_margins)
                 .customView(R.layout.add_margins_dialog, false)
                 .positiveText(R.string.ok)
@@ -840,9 +843,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
                     }
                 }))
-                .onNeutral((((dialog, which) -> {
-                    mPageNumStyle = null;
-                })))
+                .onNeutral((((dialog, which) -> mPageNumStyle = null)))
                 .build();
         materialDialog.show();
     }
