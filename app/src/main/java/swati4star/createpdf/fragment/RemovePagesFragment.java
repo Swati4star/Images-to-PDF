@@ -317,12 +317,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     private void viewPdfButton(String path) {
         mViewPdf.setVisibility(View.VISIBLE);
-        mViewPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFileUtils.openFile(path);
-            }
-        });
+        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path));
     }
 
     @Override

@@ -143,8 +143,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     }
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, RearrangePdfPages.class);
-        return intent;
+        return new Intent(context, RearrangePdfPages.class);
     }
 }
 

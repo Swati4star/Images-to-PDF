@@ -191,15 +191,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     showSnackbar(mActivity, R.string.whatsappToast);
                 } else {
                     mImagesUri.add(mFileUtils.getUriRealPath(uri));
-                    if (mImagesUri.size() > 0) {
-                        mNoOfImages.setText(String.format(mActivity.getResources()
-                                .getString(R.string.images_selected), mImagesUri.size()));
-                        mNoOfImages.setVisibility(View.VISIBLE);
-                    } else {
-                        mNoOfImages.setVisibility(View.GONE);
-                    }
-                    showSnackbar(mActivity, R.string.successToast);
                 }
+            }
+
+            if (mImagesUri.size() > 0) {
+                mNoOfImages.setText(String.format(mActivity.getResources()
+                        .getString(R.string.images_selected), mImagesUri.size()));
+                mNoOfImages.setVisibility(View.VISIBLE);
+                mCreatePdf.setEnabled(true);
+                mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+                showSnackbar(mActivity, R.string.successToast);
+            } else {
+                mNoOfImages.setVisibility(View.GONE);
             }
         }
     }
@@ -786,7 +789,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     void addMargins() {
-        MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.add_margins)
                 .customView(R.layout.add_margins_dialog, false)
                 .positiveText(R.string.ok)
@@ -840,9 +843,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
                     }
                 }))
-                .onNeutral((((dialog, which) -> {
-                    mPageNumStyle = null;
-                })))
+                .onNeutral((((dialog, which) -> mPageNumStyle = null)))
                 .build();
         materialDialog.show();
     }

@@ -34,7 +34,7 @@ public class CropImageActivity extends AppCompatActivity {
 
     private int mCurrentImageIndex = 0;
     private ArrayList<String> mImages;
-    private HashMap<Integer, Uri> mCroppedImageUris = new HashMap<Integer, Uri>();
+    private HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
 
     @BindView(R.id.imagecount)
     TextView mImagecount;

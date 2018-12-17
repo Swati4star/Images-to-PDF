@@ -52,6 +52,7 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
@@ -117,6 +118,20 @@ public class MainActivity extends AppCompatActivity
             mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }
         getRuntimePermissions();
+
+        //check for welcome activity
+        openWelcomeActivity();
+    }
+
+    /**
+     * if welcome activity isnt opened ever, it is shown
+     */
+    private void openWelcomeActivity() {
+        if (!mSharedPreferences.getBoolean(IS_WELCOME_ACTIVITY_SHOWN, false)) {
+            Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+            mSharedPreferences.edit().putBoolean(IS_WELCOME_ACTIVITY_SHOWN, true).apply();
+            startActivity(intent);
+        }
     }
 
     /**
