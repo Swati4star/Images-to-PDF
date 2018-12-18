@@ -10,8 +10,8 @@ android {
         minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 28
-        versionCode 77
-        versionName "8.5.0"
+        versionCode 79
+        versionName "8.5.2"
     }
     buildTypes {
         release {
