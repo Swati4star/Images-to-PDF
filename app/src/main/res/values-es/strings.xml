@@ -326,7 +326,6 @@
     <string name="share_images">Compartir Imágenes</string>
     <string name="select_pdf_file">" Seleccionar archivo PDF"</string>
     <string name="pdf_to_images">PDF a Imágenes</string>
-    <string name="crop">Recortar</string>
     <string name="rotate">Rotar</string>
     <string name="done">Terminar</string>
     <string name="image_successfully_cropped">Imagen correctamente recortada</string>

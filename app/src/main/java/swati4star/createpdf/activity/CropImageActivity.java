@@ -20,6 +20,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +55,7 @@ public class CropImageActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         setUpCropImageView();
 
