@@ -319,6 +319,9 @@ public class FileUtils {
      */
     public static String saveImage(String filename, Bitmap finalBitmap) {
 
+        if (finalBitmap == null)
+            return null;
+
         if (checkIfBitmapIsWhite(finalBitmap))
             return null;
 
@@ -346,6 +349,10 @@ public class FileUtils {
      * @return - true, if bitmap is all white
      */
     private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
+
+        if (bitmap == null)
+            return true;
+
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         for (int i =  0; i < w; i++) {

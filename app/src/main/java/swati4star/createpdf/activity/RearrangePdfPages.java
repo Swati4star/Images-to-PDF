@@ -13,6 +13,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -34,6 +36,8 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.sort)
+    Button sortButton;
 
     public static ArrayList<Bitmap> mImages;
     private RearrangePdfAdapter mRearrangeImagesAdapter;
@@ -49,9 +53,14 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-        if (mImages == null || mImages.size() < 1)
+
+        mSequence = new ArrayList<>();
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        sortButton.setVisibility(View.GONE);
+        if (mImages == null || mImages.size() < 1) {
+            finish();
+        } else
             initRecyclerView(mImages);
     }
 
