@@ -1,19 +1,29 @@
 {
   "data": [
+
     {
-      "title": "Modify Existing PDF",
-      "content": "Add images to existing PDF",
-      "icon": "ic_add_black_24dp"
-    },
-    {
-      "title": "Rearrange images while creating PDF",
-      "content": "Now, you can easily sort images while creating PDF using images",
-      "icon": "ic_text_format_black_24dp"
+      "title": "Reorder PDF pages",
+      "content": "Fixed errors in Reorder and Remove PDF pages.",
+      "icon": ""
     }
+
   ],
   "old_data": {
     //paste old data here
     "version_code": [
+    ],
+
+    "79" : [
+      {
+        "title": "Modify Existing PDF",
+        "content": "Add images to existing PDF",
+        "icon": "ic_add_black_24dp"
+      },
+      {
+        "title": "Rearrange images while creating PDF",
+        "content": "Now, you can easily sort images while creating PDF using images",
+        "icon": "ic_text_format_black_24dp"
+      }
     ],
 
     "74" : [
