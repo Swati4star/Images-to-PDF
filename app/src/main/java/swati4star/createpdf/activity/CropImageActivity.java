@@ -42,8 +42,8 @@ public class CropImageActivity extends AppCompatActivity {
     @BindView(R.id.cropImageView)
     CropImageView mCropImageView;
 
-    @BindView(R.id.cropButton)
-    Button cropImageButton;
+    @BindView(R.id.applyButton)
+    Button applyButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,9 @@ public class CropImageActivity extends AppCompatActivity {
 
         setUpCropImageView();
 
+        applyButton.setEnabled(false);
+        applyButton.setAlpha(0.5f);
+
         mImages = ImageToPdfFragment.mImagesUri;
 
         if (mImages.size() == 0)
@@ -66,8 +69,8 @@ public class CropImageActivity extends AppCompatActivity {
         setImage(0);
     }
 
-    @OnClick(R.id.cropButton)
-    public void cropButtonClicked() {
+    @OnClick(R.id.applyButton)
+    public void applyButtonClicked() {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
         Uri uri = mCropImageView.getImageUri();
@@ -84,6 +87,8 @@ public class CropImageActivity extends AppCompatActivity {
     @OnClick(R.id.rotateButton)
     public void rotateButtonClicked() {
         mCropImageView.rotateImage(90);
+        applyButton.setEnabled(true);
+        applyButton.setAlpha(1.0f);
     }
 
     @OnClick(R.id.nextimageButton)
@@ -93,6 +98,8 @@ public class CropImageActivity extends AppCompatActivity {
         } else {
             setImage(mCurrentImageIndex + 1);
         }
+        applyButton.setEnabled(false);
+        applyButton.setAlpha(0.5f);
     }
 
     @OnClick(R.id.previousImageButton)
@@ -103,6 +110,8 @@ public class CropImageActivity extends AppCompatActivity {
         } else {
             setImage(mCurrentImageIndex - 1);
         }
+        applyButton.setEnabled(false);
+        applyButton.setAlpha(0.5f);
     }
 
     @Override
@@ -135,9 +144,25 @@ public class CropImageActivity extends AppCompatActivity {
      * Initial setup of crop image view
      */
     private void setUpCropImageView() {
+        // Enables applyButton when crop window resized or rotated
+        mCropImageView.setOnCropWindowChangedListener(() -> {
+            applyButton.setEnabled(true);
+            applyButton.setAlpha(1.0f);
+        });
+
         mCropImageView.setOnCropImageCompleteListener((CropImageView view, CropImageView.CropResult result) -> {
             mCroppedImageUris.put(mCurrentImageIndex, result.getUri());
             Toast.makeText(CropImageActivity.this, R.string.image_successfully_cropped, Toast.LENGTH_SHORT).show();
+
+            // If all images have been cropped, exit. Otherwise, advance to next image.
+            if (mImages.size() == mCroppedImageUris.keySet().size()) {
+                Intent intent = new Intent();
+                intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, mCroppedImageUris);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            } else {
+                nextImageClicked();
+            }
         });
     }
 

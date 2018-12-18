@@ -28,10 +28,12 @@
         tools:context=".activity.CropImageActivity">
 
         <com.theartofdev.edmodo.cropper.CropImageView
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/cropImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            custom:cropInitialCropWindowPaddingRatio="0" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +42,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/cropButton"
+                android:id="@+id/applyButton"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

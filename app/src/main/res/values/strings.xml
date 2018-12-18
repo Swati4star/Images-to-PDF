@@ -315,7 +315,7 @@
     <string name="image_rearranging_options">Image Rearranging Options</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reset</string>
-    <string name="crop">Crop</string>
+    <string name="crop">Apply</string>
     <string name="rotate">Rotate</string>
     <string name="done">Done</string>
     <string name="image_successfully_cropped">Image successfully cropped</string>
