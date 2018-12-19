@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -105,6 +104,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mCreateTextPdf.setEnabled(false);
         PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
                 Constants.DEFAULT_PAGE_SIZE);
+        mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+
         return rootview;
     }
 
@@ -315,7 +316,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
-            mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
             fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                     mPassword, mTextFileUri, mFontSize, mFontFamily), mFileExtension);
             final String finalMPath = mPath;

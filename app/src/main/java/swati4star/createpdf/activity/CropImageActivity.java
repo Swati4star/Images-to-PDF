@@ -20,6 +20,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,12 +30,15 @@ import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.util.FileUtils;
 
 import static swati4star.createpdf.util.Constants.pdfDirectory;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class CropImageActivity extends AppCompatActivity {
 
     private int mCurrentImageIndex = 0;
     private ArrayList<String> mImages;
-    private HashMap<Integer, Uri> mCroppedImageUris = new HashMap<Integer, Uri>();
+    private HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
+    private boolean mCurrentImageEdited = false;
+    private boolean mFinishedclicked = false;
 
     @BindView(R.id.imagecount)
     TextView mImagecount;
@@ -54,11 +58,15 @@ public class CropImageActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         setUpCropImageView();
 
         mImages = ImageToPdfFragment.mImagesUri;
+        mFinishedclicked = false;
+
+        for (int i = 0; i < mImages.size(); i++)
+            mCroppedImageUris.put(i, Uri.fromFile(new File(mImages.get(i))));
 
         if (mImages.size() == 0)
             finish();
@@ -68,6 +76,7 @@ public class CropImageActivity extends AppCompatActivity {
 
     @OnClick(R.id.cropButton)
     public void cropButtonClicked() {
+        mCurrentImageEdited = false;
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
         Uri uri = mCropImageView.getImageUri();
@@ -83,25 +92,27 @@ public class CropImageActivity extends AppCompatActivity {
 
     @OnClick(R.id.rotateButton)
     public void rotateButtonClicked() {
+        mCurrentImageEdited = true;
         mCropImageView.rotateImage(90);
     }
 
     @OnClick(R.id.nextimageButton)
     public void nextImageClicked() {
-        if (mCurrentImageIndex == mImages.size() - 1) {
-            setImage(0);
+        if (!mCurrentImageEdited) {
+            mCurrentImageIndex = (mCurrentImageIndex + 1) % mImages.size();
+            setImage(mCurrentImageIndex);
         } else {
-            setImage(mCurrentImageIndex + 1);
+            showSnackbar(this, R.string.save_first);
         }
     }
 
     @OnClick(R.id.previousImageButton)
     public void prevImgBtnClicked() {
-        if (mCurrentImageIndex == 0) {
-
-            setImage(mImages.size() - 1);
+        if (!mCurrentImageEdited) {
+            mCurrentImageIndex = (mCurrentImageIndex - 1) % mImages.size();
+            setImage(mCurrentImageIndex);
         } else {
-            setImage(mCurrentImageIndex - 1);
+            showSnackbar(this, R.string.save_first);
         }
     }
 
@@ -122,10 +133,12 @@ public class CropImageActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_done:
-                Intent intent = new Intent();
-                intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, mCroppedImageUris);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
+                mFinishedclicked = true;
+                cropButtonClicked();
+                return true;
+            case R.id.action_skip:
+                mCurrentImageEdited = false;
+                nextImageClicked();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -138,6 +151,14 @@ public class CropImageActivity extends AppCompatActivity {
         mCropImageView.setOnCropImageCompleteListener((CropImageView view, CropImageView.CropResult result) -> {
             mCroppedImageUris.put(mCurrentImageIndex, result.getUri());
             Toast.makeText(CropImageActivity.this, R.string.image_successfully_cropped, Toast.LENGTH_SHORT).show();
+            mCropImageView.setImageUriAsync(mCroppedImageUris.get(mCurrentImageIndex));
+
+            if (mFinishedclicked) {
+                Intent intent = new Intent();
+                intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, mCroppedImageUris);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
         });
     }
 
@@ -147,11 +168,12 @@ public class CropImageActivity extends AppCompatActivity {
      */
     private void setImage(int index) {
 
+        mCurrentImageEdited = false;
+
         if (index < 0 || index >= mImages.size())
             return;
 
         mImagecount.setText(getString(R.string.cropImage_activityTitle) + (index + 1));
-        mCurrentImageIndex = index;
-        mCropImageView.setImageUriAsync(Uri.fromFile(new File(mImages.get(index))));
+        mCropImageView.setImageUriAsync(mCroppedImageUris.get(index));
     }
 }

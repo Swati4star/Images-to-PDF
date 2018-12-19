@@ -45,7 +45,6 @@
 
     <!-- images to PDF -->
     <string name="image_scale_type">Set Задать масштаб изображений</string>
-    <string name="select_scale_type">Выберите тип масштабирования</string>
     <string name="stretch_image">Растянуть на всю страницу</string>
     <string name="maintain_aspect_ratio">Сохранение пропорций изображения</string>
 
@@ -121,7 +120,6 @@
     <string name="merge_files">Слить файлы</string>
     <string name="file_date_text">Дата файла</string>
     <string name="file_size_text">Размер файла</string>
-    <string name="password_added">Пароль добавлен</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">Я прикрепил файлы к этому сообщению</string>
     <string name="btn_sav_text">savText</string>
@@ -136,7 +134,6 @@
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Введите пароль</string>
     <string name="not_encrypted">PDF не зашифрованd</string>
-    <string name="incorrect_passowrd">Неверный парольd</string>
     <string name="save_current">Сохранить текущий</string>
     <string name="save_first">Сохранить вначале текущее изображение</string>
     <string name="Filter_name">Фильтр</string>
@@ -161,20 +158,16 @@
     <string name="directory">Директория</string>
     <string name="moving_files">Перемещение ваших файлов</string>
     <string name="success_move">Ваши файлы успешно перемещены</string>
-    <string name="delete_directory">Удалить директорию</string>
     <string name="dir_does_not_exists">Директория не существует</string>
     <string name="move_files_delete_dir">Перемещение файлов и удаление директории</string>
     <string name="directory_deleted">Директория удалена</string>
     <string name="success_delete_directory">Директория успешно удалена</string>
-    <string name="delete_dialog">Директория содержит файлы. Вы уверены, что хотите ее удалить?</string>
     <string name="moved_files">Файлы удалены</string>
-    <string name="dialog_delete_dir">Введите имя удаляемой директории</string>
     <string name="dialog_new_dir">Введите новое имя директории</string>
     <string name="dialog_dir">Введите имя директории</string>
     <string name="cancel">Отмена</string>
     <string name="ok">OK</string>
     <string name="yes">Да</string>
-    <string name="no">Нет</string>
     <string name="select_all">Выбрать все</string>
     <string name="converting_file_message">Конвертация файлов в PDF</string>
 
@@ -185,8 +178,6 @@
     <string name="select_file">"Выберите файл для загрузки"</string>
     <string name="text_type">text/plain</string>
     <string name="new_directory">Новая директория</string>
-    <string name="move_n_files">Переместить файлы</string>
-    <string name="move_to_n_home_directory">Переместить в домашнюю директорию</string>
     <string name="previous_image_content_desc">Предыдущее изображение</string>
     <string name="text_file_name">"Текстовый файл : "</string>
     <string name="edit_font_size">Размер шрифта (по умолчанию : %d)</string>
@@ -380,8 +371,6 @@
     <string name="select_pdf_file">выбрать файл pdf</string>
     <string name="share_images">" Поделиться изображениями"</string>
     <string name="view_images">Просмотр изображений</string>
-
-    <string name="crop">Crop</string>
     <string name="rotate">Rotate</string>
     <string name="done">Done</string>
     <string name="image_successfully_cropped">Image successfully cropped</string>
@@ -401,7 +390,6 @@
     <string name="cannot_add_watermark">Watermark could not be added to the PDF. Please check the PDF again.</string>
     <string name="add_watermark">Add Watermark</string>
     <string name="enter_watermark_text">Enter text</string>
-    <string name="watermark_text">Text</string>
     <string name="enter_watermark_angle">Enter angle</string>
     <string name="watermark_angle">Angle</string>
     <string name="choose_watermark_color">Choose color</string>
@@ -415,6 +403,5 @@
     <!--<nav add images>-->
     <string name="add_images">Add Images</string>
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
-    <string name="add_images_error">The input is not valid</string>
     <string name="no_images_selected">No images selected</string>
 </resources>

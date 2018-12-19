@@ -1,10 +1,7 @@
 package swati4star.createpdf.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,10 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-
-import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
-import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -45,13 +38,6 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
 
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if (mSharedPreferences.getBoolean(IS_WELCOME_ACTIVITY_SHOWN, false) &&
-                !(getIntent() != null && getIntent().getBooleanExtra(SHOW_WELCOME_ACT, false)))
-                openMainActivity();
-        mSharedPreferences.edit().putBoolean(IS_WELCOME_ACTIVITY_SHOWN, true).apply();
-
         // layouts of all welcome sliders
         // add few more layouts if you want
         mLayouts = new int[]{
@@ -71,10 +57,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_skip)
     public void openMainActivity() {
-        if (!(getIntent() != null && getIntent().getBooleanExtra(SHOW_WELCOME_ACT, false))) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        }
         finish();
     }
 
@@ -135,14 +117,8 @@ public class WelcomeActivity extends AppCompatActivity {
             View view = mLayoutInflater.inflate(mLayouts[position], container, false);
             if (position == 3) {
                 Button btnGetStarted = view.findViewById(R.id.getStarted);
-                btnGetStarted.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openMainActivity();
-                    }
-                });
+                btnGetStarted.setOnClickListener(v -> openMainActivity());
             }
-
             container.addView(view);
             return view;
         }
@@ -163,17 +139,5 @@ public class WelcomeActivity extends AppCompatActivity {
             View view = (View) object;
             container.removeView(view);
         }
-    }
-
-    // Double tap to exit
-    @Override
-    public void onBackPressed() {
-        int mTimeDelay = 2000;
-        if (mBackPressed + mTimeDelay > System.currentTimeMillis()) {
-            super.onBackPressed();
-        } else {
-            showSnackbar(WelcomeActivity.this, R.string.confirm_exit_message);
-        }
-        mBackPressed = System.currentTimeMillis();
     }
 }
