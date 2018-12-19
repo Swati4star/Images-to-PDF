@@ -362,7 +362,6 @@
     <!--<nav add images>-->
     <string name="add_images">Agregar Imágenes</string>
     <string name="selected_images_text">Las imágenes que seleccione serán agregadas al final del PDF seleccionado.</string>
-    <string name="add_images_error">El input no es válido</string>
     <string name="no_images_selected">Ninguna imagen seleccionada</string>
 
 </resources>
