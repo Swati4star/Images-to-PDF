@@ -281,7 +281,7 @@
     <string name="font_family_edit">Cambiar valor de la letra fuente por defecto</string>
     <string name="font_size_edit">Cambiar valor del Tamaño del Texto por defecto</string>
     <string name="settings_info">Puede modificar los valores por defecto de varias opciones aquí.</string>
-    <string name="split_info">El PDF será dividido en múltiples PDFs de una sóla página.</string>
+    <string name="split_info">El PDF será dividido en múltiples PDFs de una sola página.</string>
     <string name="border_width_prompt">Ingrese unidades anchura del borde</string>
     <string name="default_content_description">sin descripción</string>
     <string name="prompt_input">Ingrese aquí</string>
