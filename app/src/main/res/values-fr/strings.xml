@@ -366,4 +366,9 @@
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
 
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate">Remove Duplicate Pages.</string>
+
 </resources>

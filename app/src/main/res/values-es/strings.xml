@@ -366,4 +366,9 @@
     <string name="selected_images_text">Las imágenes que seleccione serán agregadas al final del PDF seleccionado.</string>
     <string name="no_images_selected">Ninguna imagen seleccionada</string>
 
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate">Remove Duplicate Pages.</string>
+
 </resources>
