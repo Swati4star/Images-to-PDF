@@ -35,6 +35,8 @@
     <string name="whatsappToast">¡Lo sentimos! Las imágenes no se pudieron agregar. Por favor seleccione las imágenes de la opción **Seleccionar Imágenes**.</string>
     <string name="successToast">Imágenes agregadas con éxito.</string>
 
+    <string name="snackbar_no_duplicate_pdf">No se han encontrado páginas duplicadas. No se ha creado ningún nuevo PDF.</string>
+    <string name="snackbar_duplicate_removed">Se crea un nuevo PDF después de eliminar las páginas duplicadas.</string>
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
     <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
