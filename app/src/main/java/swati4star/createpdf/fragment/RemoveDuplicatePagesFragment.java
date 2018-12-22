@@ -62,7 +62,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
-    //TODO id name
     @BindView(R.id.remove)
     MorphingButton removeDuplicateButton;
     BottomSheetBehavior sheetBehavior;
@@ -127,7 +126,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
-       // mCompressionInfoText.setVisibility(View.GONE);
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, removeDuplicateButton);
     }

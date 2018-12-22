@@ -43,7 +43,6 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        //mImagesCount = 0;
         // Render pdf pages as bitmap
         ParcelFileDescriptor fileDescriptor = null;
         try {
@@ -60,7 +59,6 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
                     Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
                             Bitmap.Config.ARGB_8888);
                     // say we render for showing on the screen
-
                     page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
                     // close the page
                     page.close();
@@ -119,7 +117,6 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
             Log.e("create ", pages);
             PdfReader reader = new PdfReader(inputPath);
             reader.selectPages(pages);
-            //if (reader.getNumberOfPages() )
             PdfStamper pdfStamper = new PdfStamper(reader,
                     new FileOutputStream(output));
             pdfStamper.close();

@@ -370,6 +370,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(this, WelcomeActivity.class);
                 intent.putExtra(SHOW_WELCOME_ACT, true);
                 startActivity(intent);
+                break;
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
                 break;
