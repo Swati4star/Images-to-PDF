@@ -35,6 +35,8 @@
     <string name="whatsappToast">¡Lo sentimos! Las imágenes no se pudieron agregar. Por favor seleccione las imágenes de la opción **Seleccionar Imágenes**.</string>
     <string name="successToast">Imágenes agregadas con éxito.</string>
 
+    <string name="snackbar_no_duplicate_pdf">No se han encontrado páginas duplicadas. No se ha creado ningún nuevo PDF.</string>
+    <string name="snackbar_duplicate_removed">Se crea un nuevo PDF después de eliminar las páginas duplicadas.</string>
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
     <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
@@ -363,5 +365,10 @@
     <string name="add_images">Agregar Imágenes</string>
     <string name="selected_images_text">Las imágenes que seleccione serán agregadas al final del PDF seleccionado.</string>
     <string name="no_images_selected">Ninguna imagen seleccionada</string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate">Remove Duplicate Pages.</string>
 
 </resources>

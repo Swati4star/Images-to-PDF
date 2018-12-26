@@ -35,6 +35,8 @@
     <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
     <string name="successToast">Images successfully added.</string>
 
+    <string name="snackbar_no_duplicate_pdf">重複したページが見つかりません。新しいPDFは作成されません。</string>
+    <string name="snackbar_duplicate_removed">重複したページを削除した後に新しいPDFが作成されます。</string>
     <string name="snackbar_no_images">No Images selected</string>
     <string name="snackbar_no_pdfs_selected">選択されたPDFはありません</string>
     <string name="snackbar_name_not_blank">Name cannot be blank</string>
@@ -362,4 +364,9 @@
     <string name="add_images">Add Images</string>
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate">Remove Duplicate Pages.</string>
 </resources>

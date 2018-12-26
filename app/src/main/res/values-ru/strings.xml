@@ -55,6 +55,8 @@
     <string name="scan_cancelled">Сканирование отменено пользователем</string>
 
     <!--Snackbar strings -->
+    <string name="snackbar_no_duplicate_pdf">Дубликаты страниц не найдены. Новый PDF не создан.</string>
+    <string name="snackbar_duplicate_removed">Новый PDF создается после удаления дубликатов страниц.</string>
     <string name="snackbar_no_images">Изображения не выбраны</string>
     <string name="snackbar_no_pdfs_selected">Файлы PDF не выбраны</string>
     <string name="snackbar_name_not_blank">Имя не может быть пустым</string>
@@ -404,4 +406,9 @@
     <string name="add_images">Add Images</string>
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate">Remove Duplicate Pages.</string>
 </resources>

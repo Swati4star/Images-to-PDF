@@ -69,6 +69,10 @@
             android:id="@+id/nav_add_images"
             android:icon="@drawable/ic_add_black_24dp"
             android:title="@string/add_images" />
+        <item
+            android:id="@+id/nav_remove_duplicate_pages"
+            android:icon="@drawable/ic_arrow_upward_black_24dp"
+            android:title="@string/remove_duplicate_pages" />
     </group>
 
     <item android:title="@string/extras">

@@ -156,6 +156,14 @@
             android:orientation="horizontal">
 
             <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/remove_duplicates_pages_pdf"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/fp_ic_action_up"
+                app:option_text="@string/remove_duplicate_pages" />
+
+            <swati4star.createpdf.customviews.MyCardView
                 android:id="@+id/merge_pdf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
