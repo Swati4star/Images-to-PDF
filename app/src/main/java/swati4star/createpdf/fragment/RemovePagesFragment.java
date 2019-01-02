@@ -216,7 +216,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 // close the renderer
                 renderer.close();
             }
-        } catch (IOException | SecurityException | IllegalArgumentException e) {
+        } catch (IOException | SecurityException | IllegalArgumentException | OutOfMemoryError e) {
             e.printStackTrace();
         }
 
