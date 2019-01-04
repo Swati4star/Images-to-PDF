@@ -49,11 +49,7 @@ public class AboutUsFragment extends Fragment {
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"swati4star@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, mActivity.getResources().getString(R.string.feedback_subject));
         intent.putExtra(Intent.EXTRA_TEXT, mActivity.getResources().getString(R.string.feedback_text));
-        try {
-            mActivity.startActivity(Intent.createChooser(intent, mActivity.getString(R.string.feedback_chooser)));
-        } catch (android.content.ActivityNotFoundException ex) {
-            showSnackbar(mActivity, R.string.snackbar_no_email_clients);
-        }
+        mFeedbackUtils.openMailIntent(intent);
     }
 
     @OnClick(R.id.layout_website)

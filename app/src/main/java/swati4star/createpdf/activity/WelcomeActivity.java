@@ -29,7 +29,6 @@ public class WelcomeActivity extends AppCompatActivity {
     public Button mBtnSkip;
 
     private int[] mLayouts;
-    private long mBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

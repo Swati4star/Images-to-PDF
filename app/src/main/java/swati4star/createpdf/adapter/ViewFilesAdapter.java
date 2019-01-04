@@ -32,6 +32,7 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PopulateList;
+import swati4star.createpdf.util.WatermarkUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -58,6 +59,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
+    private final WatermarkUtils mWatermakrUtils;
     private final PDFEncryptionUtility mPDFEncryptionUtils;
     private final DatabaseHelper mDatabaseHelper;
     private final SharedPreferences mSharedPreferences;
@@ -82,6 +84,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
         mPDFEncryptionUtils = new PDFEncryptionUtility(activity);
+        mWatermakrUtils = new WatermarkUtils(activity);
         mDatabaseHelper = new DatabaseHelper(mActivity);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
     }
@@ -163,7 +166,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 9: // Add Watermark
-                mPDFUtils.setWatermark(file.getPath(), ViewFilesAdapter.this, mFileList);
+                mWatermakrUtils.setWatermark(file.getPath(), ViewFilesAdapter.this, mFileList);
                 break;
             case 10: // Add Images
                 mPDFUtils.setImages();

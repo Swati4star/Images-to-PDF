@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/compress_dialog_enter_prompt"
+        android:inputType="text"
         android:textSize="20sp" />
 
 </LinearLayout>
