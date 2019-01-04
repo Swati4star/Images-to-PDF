@@ -27,9 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +44,6 @@ import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileSortUtils;
 import swati4star.createpdf.util.MergeHelper;
-import swati4star.createpdf.util.MoveFilesToDirectory;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -61,10 +58,6 @@ public class ViewFilesFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
         EmptyStateChangeListener,
         ItemSelectedListener {
-
-    // Directory operations constants
-    public static final int NEW_DIR = 1;
-    public static final int EXISTING_DIR = 2;
 
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 10;
 
@@ -90,7 +83,6 @@ public class ViewFilesFragment extends Fragment
     private boolean mIsChecked = false;
     private boolean mCheckBoxChanged = false;
     private AlertDialog.Builder mAlertDialogBuilder;
-
 
     private int mCountFiles;
     private MergeHelper mMergeHelper;
@@ -209,54 +201,6 @@ public class ViewFilesFragment extends Fragment
     }
 
 
-    /**
-     * Moves files from one directory to another
-     *
-     * @param operation - type of operation to be performed
-     *                  (create new Directory or move to an existing directory)
-     */
-    private void moveFilesToDirectory(int operation) {
-        LayoutInflater inflater = getLayoutInflater();
-        View alertView = inflater.inflate(R.layout.directory_dialog, null);
-        final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
-        if (filePath == null) {
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
-        } else {
-            final EditText input = alertView.findViewById(R.id.directory_editText);
-            TextView message = alertView.findViewById(R.id.directory_textView);
-            if (operation == NEW_DIR) {
-                message.setText(R.string.dialog_new_dir);
-                mAlertDialogBuilder.setTitle(R.string.new_directory)
-                        .setView(alertView)
-                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                            String fileName = input.getText().toString();
-                            new MoveFilesToDirectory(mActivity
-                                    , filePath
-                                    , fileName
-                                    , MoveFilesToDirectory.MOVE_FILES)
-                                    .execute();
-                            populatePdfList();
-                        });
-            } else if (operation == EXISTING_DIR) {
-                message.setText(R.string.dialog_dir);
-                mAlertDialogBuilder.setTitle(R.string.directory)
-                        .setView(alertView)
-                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                            String fileName = input.getText().toString();
-                            File directory = mDirectoryUtils.getDirectory(fileName);
-                            if (directory != null) {
-                                new MoveFilesToDirectory(mActivity, filePath, fileName, MoveFilesToDirectory.MOVE_FILES)
-                                        .execute();
-                                populatePdfList();
-                            } else {
-                                showSnackbar(mActivity, R.string.dir_does_not_exists);
-                                dialogInterface.dismiss();
-                            }
-                        });
-            }
-            mAlertDialogBuilder.create().show();
-        }
-    }
 
     /**
      * Shows an alert to delete files
@@ -434,14 +378,51 @@ public class ViewFilesFragment extends Fragment
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        AppCompatActivity activity = ((AppCompatActivity)
-                Objects.requireNonNull(getActivity()));
-        ActionBar toolbar = activity.getSupportActionBar();
-        toolbar.setTitle(appName);
-    }
 
+
+    /*
+    Just for reference
+    private void moveFilesToDirectory(int operation) {
+        LayoutInflater inflater = getLayoutInflater();
+        View alertView = inflater.inflate(R.layout.directory_dialog, null);
+        final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
+        if (filePath == null) {
+            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
+        } else {
+            final EditText input = alertView.findViewById(R.id.directory_editText);
+            TextView message = alertView.findViewById(R.id.directory_textView);
+            if (operation == NEW_DIR) {
+                message.setText(R.string.dialog_new_dir);
+                mAlertDialogBuilder.setTitle(R.string.new_directory)
+                        .setView(alertView)
+                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                            String fileName = input.getText().toString();
+                            new MoveFilesToDirectory(mActivity
+                                    , filePath
+                                    , fileName
+                                    , MoveFilesToDirectory.MOVE_FILES)
+                                    .execute();
+                            populatePdfList();
+                        });
+            } else if (operation == EXISTING_DIR) {
+                message.setText(R.string.dialog_dir);
+                mAlertDialogBuilder.setTitle(R.string.directory)
+                        .setView(alertView)
+                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                            String fileName = input.getText().toString();
+                            File directory = mDirectoryUtils.getDirectory(fileName);
+                            if (directory != null) {
+                                new MoveFilesToDirectory(mActivity, filePath, fileName, MoveFilesToDirectory.MOVE_FILES)
+                                        .execute();
+                                populatePdfList();
+                            } else {
+                                showSnackbar(mActivity, R.string.dir_does_not_exists);
+                                dialogInterface.dismiss();
+                            }
+                        });
+            }
+            mAlertDialogBuilder.create().show();
+        }
+    }*/
 
 }

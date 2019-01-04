@@ -102,7 +102,6 @@ Black | Dark | White |
 + [Picasso-transformations](https://github.com/wasabeef/picasso-transformations)
 + [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
 + [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
-+ [What's new](https://github.com/TonnyL/WhatsNew)
 + [zxing](https://github.com/zxing/zxing)
 
 #### Code & Issues

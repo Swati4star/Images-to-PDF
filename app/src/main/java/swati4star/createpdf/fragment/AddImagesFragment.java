@@ -5,14 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +42,8 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
-import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
+import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
@@ -70,7 +68,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
     private MaterialDialog mMaterialDialog;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
-    private Uri mUri;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -152,7 +149,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 break;
             case INTENT_REQUEST_PICKFILE_CODE:
-                mUri = data.getData();
                 setTextAndActivateButtons(getFilePath(data.getData()));
                 break;
         }
@@ -219,11 +215,11 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (getRuntimePermissions(true))
+        if (getRuntimePermissions())
             selectImages();
     }
 
-    private boolean getRuntimePermissions(boolean openImagesActivity) {
+    private boolean getRuntimePermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) ||
@@ -280,18 +276,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        if (paths == null || paths.size() == 0) {
-            mLayout.setVisibility(View.GONE);
-        } else {
-            // Init recycler view
-            mRecyclerViewFiles.setVisibility(View.VISIBLE);
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, false, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        }
-        mLottieProgress.setVisibility(View.GONE);
+        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 }

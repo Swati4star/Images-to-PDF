@@ -2,9 +2,9 @@
   "data": [
 
     {
-      "title": "Reorder PDF pages",
-      "content": "Fixed errors in Reorder and Remove PDF pages.",
-      "icon": ""
+      "title": "Remove duplicate pages",
+      "content": "New feature: remove duplicate pages from PDF.",
+      "icon": "ic_remove_circle_black_24dp"
     }
 
   ],
@@ -13,6 +13,13 @@
     "version_code": [
     ],
 
+    "80" : [
+      {
+        "title": "Reorder PDF pages",
+        "content": "Fixed errors in Reorder and Remove PDF pages.",
+        "icon": ""
+      }
+    ],
     "79" : [
       {
         "title": "Modify Existing PDF",

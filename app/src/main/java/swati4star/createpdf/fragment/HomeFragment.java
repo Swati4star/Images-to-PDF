@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
@@ -20,6 +22,8 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
@@ -65,11 +69,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView addImages;
     @BindView(R.id.remove_duplicates_pages_pdf)
     MyCardView removeDuplicatePages;
+
+
+    private HashMap<Integer, Integer> mFragmentPositionMap;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootview);
+        fillMap();
         imagesToPdf.setOnClickListener(this);
         qrbarcodeToPdf.setOnClickListener(this);
         textToPdf.setOnClickListener(this);
@@ -91,6 +100,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return rootview;
     }
 
+    private void fillMap() {
+        mFragmentPositionMap = new HashMap<>();
+        mFragmentPositionMap.put(R.id.images_to_pdf, 1);
+        mFragmentPositionMap.put(R.id.qr_barcode_to_pdf, 2);
+        mFragmentPositionMap.put(R.id.view_files, 3);
+        mFragmentPositionMap.put(R.id.rotate_pages, 3);
+        mFragmentPositionMap.put(R.id.add_watermark, 3);
+        mFragmentPositionMap.put(R.id.merge_pdf, 4);
+        mFragmentPositionMap.put(R.id.split_pdf, 5);
+        mFragmentPositionMap.put(R.id.text_to_pdf, 6);
+        mFragmentPositionMap.put(R.id.compress_pdf, 7);
+        mFragmentPositionMap.put(R.id.remove_pages, 8);
+        mFragmentPositionMap.put(R.id.rearrange_pages, 9);
+        mFragmentPositionMap.put(R.id.extract_images, 10);
+        mFragmentPositionMap.put(R.id.view_history, 11);
+        mFragmentPositionMap.put(R.id.pdf_to_images, 11);
+        mFragmentPositionMap.put(R.id.add_password, 12);
+        mFragmentPositionMap.put(R.id.remove_password, 13);
+        mFragmentPositionMap.put(R.id.add_images, 14);
+        mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf, 15);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -108,95 +139,82 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
+        highLightNavigationDrawerItem(v);
 
         switch (v.getId()) {
             case R.id.images_to_pdf:
                 fragment = new ImageToPdfFragment();
-                setNavigationViewSelection(1);
                 break;
             case R.id.qr_barcode_to_pdf:
                 fragment = new QrBarcodeScanFragment();
-                setNavigationViewSelection(2);
                 break;
             case R.id.text_to_pdf:
                 fragment = new TextToPdfFragment();
-                setNavigationViewSelection(6);
                 break;
             case R.id.view_files:
                 fragment = new ViewFilesFragment();
-                setNavigationViewSelection(3);
                 break;
             case R.id.view_history:
                 fragment = new HistoryFragment();
-                setNavigationViewSelection(11);
                 break;
             case R.id.merge_pdf:
                 fragment = new MergeFilesFragment();
-                setNavigationViewSelection(4);
                 break;
             case R.id.split_pdf:
                 fragment = new SplitFilesFragment();
-                setNavigationViewSelection(5);
                 break;
             case R.id.compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(7);
                 break;
             case R.id.extract_images:
-                fragment = new ExtractImagesFragment();
-                setNavigationViewSelection(10);
+                fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
+                fragment.setArguments(bundle);
                 break;
             case R.id.pdf_to_images:
                 fragment = new PdfToImageFragment();
-                setNavigationViewSelection(11);
+                bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
+                fragment.setArguments(bundle);
                 break;
             case R.id.remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(8);
                 break;
             case R.id.rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(9);
                 break;
             case R.id.add_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(12);
                 break;
             case R.id.remove_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(13);
                 break;
             case R.id.rotate_pages:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(3);
                 break;
             case R.id.add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(3);
                 break;
             case R.id.add_images:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
-                setNavigationViewSelection(3);
                 break;
             case R.id.remove_duplicates_pages_pdf:
                 fragment = new RemoveDuplicatePagesFragment();
-                setNavigationViewSelection(12);
                 break;
         }
 
@@ -205,6 +223,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private void highLightNavigationDrawerItem(View v) {
+        if (mFragmentPositionMap.containsKey(v.getId())) {
+            setNavigationViewSelection(mFragmentPositionMap.get(v.getId()));
         }
     }
 }

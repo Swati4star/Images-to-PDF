@@ -2,7 +2,6 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,12 +48,10 @@ import static swati4star.createpdf.util.StringUtils.showSnackbar;
 public class FileUtils {
 
     private final Activity mContext;
-    private final ContentResolver mContentResolver;
     private final SharedPreferences mSharedPreferences;
 
     public FileUtils(Activity context) {
         this.mContext = context;
-        mContentResolver = mContext.getContentResolver();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
@@ -210,7 +207,7 @@ public class FileUtils {
      * @param mFile File List of all PDFs
      * @return Number to be added finally in the name to avoid overwrite
      */
-    public int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
+    private int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
         boolean flag = true;
         int append = 0;
         while (flag) {
@@ -327,13 +324,13 @@ public class FileUtils {
 
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
-        String fname = filename + ".jpg";
+        String fname = filename + ".png";
 
         File file = new File(myDir, fname);
         if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             Log.v("saving", fname);
             out.flush();
             out.close();
@@ -403,5 +400,16 @@ public class FileUtils {
         Uri myUri = Uri.parse(folderPath);
         intent.setDataAndType(myUri, mContext.getString(R.string.pdf_type));
         return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
+    }
+
+    String getUniqueFileName(String fileName, ArrayList<File> fileList) {
+        String outputFileName = fileName;
+        File file = new File(outputFileName);
+        if (isFileExist(file.getName())) {
+            int append = checkRepeat(outputFileName, fileList);
+            outputFileName = outputFileName.replace(mContext.getString(R.string.pdf_ext),
+                    append + mContext.getResources().getString(R.string.pdf_ext));
+        }
+        return outputFileName;
     }
 }
