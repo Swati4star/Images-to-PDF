@@ -327,13 +327,13 @@ public class FileUtils {
 
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
-        String fname = filename + ".jpg";
+        String fname = filename + ".png";
 
         File file = new File(myDir, fname);
         if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             Log.v("saving", fname);
             out.flush();
             out.close();
