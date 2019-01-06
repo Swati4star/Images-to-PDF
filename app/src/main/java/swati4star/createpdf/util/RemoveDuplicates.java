@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
@@ -24,7 +23,6 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
     private OnPDFCreatedInterface mOnPDFCreatedInterface;
     private ArrayList<Bitmap> mBitmaps;
     private ArrayList<Integer> mSequence;
-    private String mPages;
     private Boolean mIsNewPDFCreated;
     public RemoveDuplicates(String mPath, OnPDFCreatedInterface onPDFCreatedInterface) {
         this.mPath = mPath;
@@ -80,15 +78,18 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
                     }
 
                 }
+
                 // close the renderer
                 renderer.close();
+
                 if (mBitmaps.size() == pageCount) {
                     //No repetition found
+                    return null;
                 } else {
                     StringBuilder pages = new StringBuilder();
                     for ( int x : mSequence)
                         pages.append(x).append(",");
-                    mPages = pages.toString();
+                    String mPages = pages.toString();
                     String outputPath = mPath.replace(".pdf", "_edited_" + mPages + ".pdf");
                     if (createPDF(mPath, outputPath, mPages)) {
                         mPath = outputPath;
@@ -112,9 +113,9 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(avoid);
         mOnPDFCreatedInterface.onPDFCreated(mIsNewPDFCreated, mPath);
     }
-    public boolean createPDF(String inputPath, String output, String pages) {
+
+    private boolean createPDF(String inputPath, String output, String pages) {
         try {
-            Log.e("create ", pages);
             PdfReader reader = new PdfReader(inputPath);
             reader.selectPages(pages);
             PdfStamper pdfStamper = new PdfStamper(reader,

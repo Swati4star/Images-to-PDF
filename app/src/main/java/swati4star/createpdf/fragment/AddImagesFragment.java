@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -70,7 +69,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
     private MaterialDialog mMaterialDialog;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
-    private Uri mUri;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -152,7 +150,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 break;
             case INTENT_REQUEST_PICKFILE_CODE:
-                mUri = data.getData();
                 setTextAndActivateButtons(getFilePath(data.getData()));
                 break;
         }
@@ -219,11 +216,11 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (getRuntimePermissions(true))
+        if (getRuntimePermissions())
             selectImages();
     }
 
-    private boolean getRuntimePermissions(boolean openImagesActivity) {
+    private boolean getRuntimePermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) ||

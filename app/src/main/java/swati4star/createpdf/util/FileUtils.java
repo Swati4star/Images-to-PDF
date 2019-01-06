@@ -2,7 +2,6 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,12 +48,10 @@ import static swati4star.createpdf.util.StringUtils.showSnackbar;
 public class FileUtils {
 
     private final Activity mContext;
-    private final ContentResolver mContentResolver;
     private final SharedPreferences mSharedPreferences;
 
     public FileUtils(Activity context) {
         this.mContext = context;
-        mContentResolver = mContext.getContentResolver();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
