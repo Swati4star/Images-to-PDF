@@ -52,7 +52,6 @@ public class PDFEncryptionUtility {
                 .build();
     }
 
-
     /**
      * Opens the password mDialog to set Password for an existing PDF file.
      *
@@ -199,7 +198,6 @@ public class PDFEncryptionUtility {
                     showSnackbar(mContext, R.string.master_password_changed);
                 }
             }
-
             mDialog.dismiss();
         });
     }
@@ -208,12 +206,10 @@ public class PDFEncryptionUtility {
                                     final DataSetChanged dataSetChanged,
                                     final ArrayList<File> mFileList,
                                     final String[] inputPassword) {
-
         String finalOutputFile;
-        PdfReader reader;
         try {
             String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
-            reader = new PdfReader(file, masterpwd.getBytes());
+            PdfReader reader = new PdfReader(file, masterpwd.getBytes());
             byte[] password;
             finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
                     mContext.getString(R.string.decrypted_file));
@@ -250,11 +246,9 @@ public class PDFEncryptionUtility {
                                                          final DataSetChanged dataSetChanged,
                                                          final ArrayList<File> mFileList,
                                                          final String[] inputPassword) {
-
         String finalOutputFile;
-        PdfReader reader;
         try {
-            reader = new PdfReader(file, inputPassword[0].getBytes());
+            PdfReader reader = new PdfReader(file, inputPassword[0].getBytes());
             finalOutputFile = file.replace(mContext.getResources().getString(R.string.pdf_ext),
                     mContext.getString(R.string.decrypted_file));
             File temp = new File(finalOutputFile);
@@ -277,7 +271,6 @@ public class PDFEncryptionUtility {
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 }

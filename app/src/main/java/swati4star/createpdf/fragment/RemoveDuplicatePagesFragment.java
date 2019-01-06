@@ -36,7 +36,6 @@ import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
-import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -53,7 +52,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
-    private PDFUtils mPDFUtils;
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private MaterialDialog mMaterialDialog;
@@ -152,7 +150,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mPDFUtils = new PDFUtils(mActivity);
         mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
@@ -169,12 +166,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
 
     private void viewPdfButton(String path) {
         mViewPdf.setVisibility(View.VISIBLE);
-        mViewPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFileUtils.openFile(path);
-            }
-        });
+        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path));
     }
 
     @Override

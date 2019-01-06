@@ -18,6 +18,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:inputType="number"
             android:id="@+id/quality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
