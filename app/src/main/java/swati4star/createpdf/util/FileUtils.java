@@ -207,7 +207,7 @@ public class FileUtils {
      * @param mFile File List of all PDFs
      * @return Number to be added finally in the name to avoid overwrite
      */
-    public int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
+    private int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
         boolean flag = true;
         int append = 0;
         while (flag) {
@@ -400,5 +400,16 @@ public class FileUtils {
         Uri myUri = Uri.parse(folderPath);
         intent.setDataAndType(myUri, mContext.getString(R.string.pdf_type));
         return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
+    }
+
+    String getUniqueFileName(String fileName, ArrayList<File> fileList) {
+        String outputFileName = fileName;
+        File file = new File(outputFileName);
+        if (isFileExist(file.getName())) {
+            int append = checkRepeat(outputFileName, fileList);
+            outputFileName = outputFileName.replace(mContext.getString(R.string.pdf_ext),
+                    append + mContext.getResources().getString(R.string.pdf_ext));
+        }
+        return outputFileName;
     }
 }

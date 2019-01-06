@@ -37,6 +37,7 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PdfToImages;
@@ -233,25 +234,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
 
         mMaterialDialog.dismiss();
         resetView();
-        if (imageCount == 0) {
-            showSnackbar(mActivity, R.string.extract_images_failed);
-            return;
-        }
-
-        String text = String.format(mActivity.getString(R.string.extract_images_success), imageCount);
-        showSnackbar(mActivity, text);
-        mCreateImagesSuccessText.setVisibility(View.VISIBLE);
-        options.setVisibility(View.VISIBLE);
         mOutputFilePaths = outputFilePaths;
-        ExtractImagesAdapter extractImagesAdapter = new ExtractImagesAdapter(mActivity, outputFilePaths, this);
-        // init recycler view for displaying generated image list
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        mCreateImagesSuccessText.setText(text);
-        mCreatedImages.setVisibility(View.VISIBLE);
-        mCreatedImages.setLayoutManager(mLayoutManager);
-        // set up adapter
-        mCreatedImages.setAdapter(extractImagesAdapter);
-        mCreatedImages.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+
+        CommonCodeUtils.updateView(mActivity, imageCount, outputFilePaths,
+                mCreateImagesSuccessText, options, mCreatedImages, this::onFileItemClick);
     }
 
     /**

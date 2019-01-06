@@ -131,14 +131,8 @@ public class WatermarkUtils {
     }
 
     private String createWatermark(String path, final ArrayList<File> mFileList) throws IOException, DocumentException {
-        String finalOutputFile = path.replace(mContext.getString(R.string.pdf_ext),
-                mContext.getString(R.string.watermarked_file));
-        File file = new File(finalOutputFile);
-        if (mFileUtils.isFileExist(file.getName())) {
-            int append = mFileUtils.checkRepeat(finalOutputFile, mFileList);
-            finalOutputFile = finalOutputFile.replace(mContext.getString(R.string.pdf_ext),
-                    append + mContext.getResources().getString(R.string.pdf_ext));
-        }
+        String finalOutputFile = mFileUtils.getUniqueFileName(path.replace(mContext.getString(R.string.pdf_ext),
+                mContext.getString(R.string.watermarked_file)), mFileList);
 
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));

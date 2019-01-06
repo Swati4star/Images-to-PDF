@@ -35,6 +35,7 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -180,23 +181,11 @@ public class ExtractImagesFragment extends Fragment implements MergeFilesAdapter
 
         mMaterialDialog.dismiss();
         resetView();
-        if (imagecount == 0) {
-            showSnackbar(mActivity, R.string.extract_images_failed);
-            return;
-        }
-
-        String text = String.format(mActivity.getString(R.string.extract_images_success), imagecount);
-        showSnackbar(mActivity, text);
-        extractImagesSuccessText.setVisibility(View.VISIBLE);
-        options.setVisibility(View.VISIBLE);
         mOutFilePaths = outputFilePaths;
-        ExtractImagesAdapter extractImagesAdapter = new ExtractImagesAdapter(mActivity, outputFilePaths, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-        extractImagesSuccessText.setText(text);
-        mExtractedFiles.setVisibility(View.VISIBLE);
-        mExtractedFiles.setLayoutManager(mLayoutManager);
-        mExtractedFiles.setAdapter(extractImagesAdapter);
-        mExtractedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+
+        CommonCodeUtils.updateView(mActivity, imagecount, outputFilePaths,
+                extractImagesSuccessText, options, mExtractedFiles, this::onFileItemClick);
+
     }
 
     @Override
