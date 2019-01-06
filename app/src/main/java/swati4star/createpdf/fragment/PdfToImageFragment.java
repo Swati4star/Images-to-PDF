@@ -43,6 +43,7 @@ import swati4star.createpdf.util.PdfToImages;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -259,18 +260,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        if (paths == null || paths.size() == 0) {
-            mLayout.setVisibility(View.GONE);
-        } else {
-            // init recycler view for bottom sheet
-            mRecyclerViewFiles.setVisibility(View.VISIBLE);
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, paths, false, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-            // set up adapter
-            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        }
-        mLottieProgress.setVisibility(View.GONE);
+        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 }

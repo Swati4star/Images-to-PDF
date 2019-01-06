@@ -190,7 +190,5 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         viewPdfButton(path);
         resetValues();
     }
-
-
 }
 

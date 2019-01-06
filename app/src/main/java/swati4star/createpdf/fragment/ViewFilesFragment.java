@@ -59,10 +59,6 @@ public class ViewFilesFragment extends Fragment
         EmptyStateChangeListener,
         ItemSelectedListener {
 
-    // Directory operations constants
-    public static final int NEW_DIR = 1;
-    public static final int EXISTING_DIR = 2;
-
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 10;
 
     @BindView(R.id.getStarted)
@@ -87,7 +83,6 @@ public class ViewFilesFragment extends Fragment
     private boolean mIsChecked = false;
     private boolean mCheckBoxChanged = false;
     private AlertDialog.Builder mAlertDialogBuilder;
-
 
     private int mCountFiles;
     private MergeHelper mMergeHelper;
