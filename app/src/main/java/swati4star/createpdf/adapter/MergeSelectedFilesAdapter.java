@@ -42,7 +42,7 @@ public class MergeSelectedFilesAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull MergeSelectedFilesHolder holder, int position) {
-        holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
+        holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
     }
 
     @Override

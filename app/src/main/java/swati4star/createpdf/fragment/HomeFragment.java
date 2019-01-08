@@ -22,6 +22,8 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
@@ -167,10 +169,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 fragment.setArguments(bundle);
                 break;
             case R.id.extract_images:
-                fragment = new ExtractImagesFragment();
+                fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
+                fragment.setArguments(bundle);
                 break;
             case R.id.pdf_to_images:
                 fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
+                fragment.setArguments(bundle);
                 break;
             case R.id.remove_pages:
                 fragment = new RemovePagesFragment();

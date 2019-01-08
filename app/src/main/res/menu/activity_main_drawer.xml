@@ -71,7 +71,7 @@
             android:title="@string/add_images" />
         <item
             android:id="@+id/nav_remove_duplicate_pages"
-            android:icon="@drawable/ic_arrow_upward_black_24dp"
+            android:icon="@drawable/ic_remove_circle_black_24dp"
             android:title="@string/remove_duplicate_pages" />
     </group>
 

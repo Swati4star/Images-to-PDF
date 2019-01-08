@@ -92,6 +92,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         // Extract images
         mFilterUris = getIntent().getStringArrayListExtra(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
+        mFilterItems = getFiltersList(this);
+        mBrushItems = getBrushItems();
+        mImagepaths.addAll(mFilterUris);
+
         mPhotoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
         changeAndShowImageCount(0);
@@ -124,7 +128,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     void nextImg() {
         //Proceed to next if Save Current has been clicked
         if (mClicked) {
-            changeAndShowImageCount(mCurrentImage + 1);
+            changeAndShowImageCount((mCurrentImage + 1) % mDisplaySize);
         } else
             showSnackbar(this, R.string.save_first);
     }
@@ -133,13 +137,17 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     void previousImg() {
         //move to previous if Save Current has been clicked
         if (mClicked) {
-            changeAndShowImageCount(mCurrentImage - 1);
+            changeAndShowImageCount((mCurrentImage - 1 % mDisplaySize));
         } else
             showSnackbar(this, R.string.save_first);
     }
 
     // modify current image num & display in textview
     private void changeAndShowImageCount(int count) {
+
+        if (count < 0 || count >= mDisplaySize)
+            return;
+
         mCurrentImage = count % mDisplaySize;
         mPhotoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage)));
@@ -206,10 +214,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      * Initialize Recycler View
      */
     private void initRecyclerView() {
-
-        mFilterItems = getFiltersList(this);
-        mBrushItems = getBrushItems();
-        mImagepaths.addAll(mFilterUris);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);

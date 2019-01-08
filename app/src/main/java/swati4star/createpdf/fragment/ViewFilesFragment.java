@@ -380,13 +380,6 @@ public class ViewFilesFragment extends Fragment
 
 
 
-    /**
-     * Moves files from one directory to another
-     *
-     * @param operation - type of operation to be performed
-     *                  (create new Directory or move to an existing directory)
-     */
-
     /*
     Just for reference
     private void moveFilesToDirectory(int operation) {

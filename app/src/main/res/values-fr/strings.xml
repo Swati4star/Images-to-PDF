@@ -340,7 +340,7 @@
     <string name="change_master_pwd">Change Master password</string>
     <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Continue</string>
-    <string name="whatsnew_title">What's New</string>
+    <string name="whatsnew_title">What\'s New</string>
 
     <!--watermark strings -->
     <string name="watermark_added">Watermark Added</string>

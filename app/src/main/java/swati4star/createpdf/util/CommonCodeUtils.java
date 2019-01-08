@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;

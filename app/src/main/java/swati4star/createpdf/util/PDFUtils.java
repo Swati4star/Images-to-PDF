@@ -281,8 +281,8 @@ public class PDFUtils {
                 .onPositive((dialog, which) -> {
                     final RadioGroup angleInput = dialog.getCustomView().findViewById(R.id.rotation_angle);
                     int angle = mAngleRadioButton.get(angleInput.getCheckedRadioButtonId());
-                    String destFilePath = mFileUtils.getFileDirectoryPath(sourceFilePath);
-                    String fileName = mFileUtils.getFileName(sourceFilePath);
+                    String destFilePath = FileUtils.getFileDirectoryPath(sourceFilePath);
+                    String fileName = FileUtils.getFileName(sourceFilePath);
                     destFilePath += String.format(mContext.getString(R.string.rotated_file_name),
                             fileName.substring(0, fileName.lastIndexOf('.')),
                             Integer.toString(angle),
@@ -515,7 +515,7 @@ public class PDFUtils {
             int pages = reader.getNumberOfPages();
             for (int i = 1; i <= pages; i++) {
                 document = new Document();
-                String fileName = folderPath + mFileUtils.getFileName(path);
+                String fileName = folderPath + FileUtils.getFileName(path);
                 fileName = fileName.replace(mContext.getString(R.string.pdf_ext),
                         i + mContext.getString(R.string.pdf_ext));
                 Log.v("splitting", fileName);

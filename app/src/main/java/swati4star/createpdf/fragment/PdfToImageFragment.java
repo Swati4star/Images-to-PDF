@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,16 +37,17 @@ import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PdfToImages;
-import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener {
@@ -62,6 +62,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     private BottomSheetUtils mBottomSheetUtils;
     private ArrayList<String> mOutputFilePaths;
     private MaterialDialog mMaterialDialog;
+    private String mOperation;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -96,6 +97,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pdf_to_image, container, false);
         ButterKnife.bind(this, rootView);
+        mOperation = getArguments().getString(BUNDLE_DATA);
         mSheetBehavior = BottomSheetBehavior.from(mLayoutBottomSheet);
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
@@ -161,7 +163,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     @OnClick(R.id.createImages)
     public void parse() {
-        new PdfToImages(mPath, mUri, this).execute();
+        if (mOperation.equals(PDF_TO_IMAGES))
+            new PdfToImages(mPath, mUri, this).execute();
+        else
+            new ExtractImages(mPath, this).execute();
     }
 
     @Override
@@ -237,7 +242,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mOutputFilePaths = outputFilePaths;
 
         CommonCodeUtils.updateView(mActivity, imageCount, outputFilePaths,
-                mCreateImagesSuccessText, options, mCreatedImages, this::onFileItemClick);
+                mCreateImagesSuccessText, options, mCreatedImages, this);
     }
 
     /**

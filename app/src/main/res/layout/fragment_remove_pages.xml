@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:stretchColumns="*"
-        tools:context=".fragment.ExtractImagesFragment">
+        tools:context=".fragment.AddImagesFragment">
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFile"

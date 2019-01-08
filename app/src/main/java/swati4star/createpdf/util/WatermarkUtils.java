@@ -37,7 +37,7 @@ import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class WatermarkUtils {
 
-    private Activity mContext;
+    private final Activity mContext;
     private Watermark mWatermark;
     private FileUtils mFileUtils;
 
