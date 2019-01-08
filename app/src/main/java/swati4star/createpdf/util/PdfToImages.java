@@ -1,6 +1,8 @@
 package swati4star.createpdf.util;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -61,6 +63,9 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
                     // generate bitmaps for individual pdf pages
                     Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
                             Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(bitmap);
+                    canvas.drawColor(Color.WHITE);
+                    canvas.drawBitmap(bitmap, 0, 0, null);
                     // say we render for showing on the screen
                     page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
