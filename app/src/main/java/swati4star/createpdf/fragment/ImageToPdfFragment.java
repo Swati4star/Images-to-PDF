@@ -537,17 +537,23 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        if (StringUtils.isEmpty(input)) {
-                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
-                        } else {
-                            mPdfOptions.setPassword(input.toString());
-                            mPdfOptions.setPasswordProtected(true);
-                            showEnhancementOptions();
-                        }
                     }
                 });
+
+        positiveAction.setOnClickListener(v -> {
+            if (StringUtils.isEmpty(passwordInput.getText())) {
+                showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+            } else {
+                mPdfOptions.setPassword(passwordInput.getText().toString());
+                mPdfOptions.setPasswordProtected(true);
+                showEnhancementOptions();
+                dialog.dismiss();
+            }
+        });
+
         if (StringUtils.isNotEmpty(mPdfOptions.getPassword())) {
             neutralAction.setOnClickListener(v -> {
+                mPdfOptions.setPassword(null);
                 mPdfOptions.setPasswordProtected(false);
                 showEnhancementOptions();
                 dialog.dismiss();
