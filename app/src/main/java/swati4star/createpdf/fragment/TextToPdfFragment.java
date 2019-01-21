@@ -163,15 +163,20 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        if (StringUtils.isEmpty(input)) {
-                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
-                        } else {
-                            mPassword = input.toString();
-                            mPasswordProtected = true;
-                            onPasswordAdded();
-                        }
                     }
                 });
+
+        positiveAction.setOnClickListener(v -> {
+            if (StringUtils.isEmpty(passwordInput.getText())) {
+                showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+            } else {
+                mPassword = passwordInput.getText().toString();
+                mPasswordProtected = true;
+                onPasswordAdded();
+                dialog.dismiss();
+            }
+        });
+
         if (StringUtils.isNotEmpty(mPassword)) {
             neutralAction.setOnClickListener(v -> {
                 mPassword = null;
