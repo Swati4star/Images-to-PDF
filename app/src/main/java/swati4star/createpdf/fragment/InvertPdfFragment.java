@@ -35,6 +35,7 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.InvertPdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
@@ -113,7 +114,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     //On click remove duplicate button
     @OnClick(R.id.remove)
     public void parse() {
-        new RemoveDuplicates(mPath, this).execute();
+        new InvertPdf(mPath, this).execute();
     }
 
 
