@@ -22,7 +22,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:padding="5dp"
-            android:text="@string/remove_duplicate_info"
+            android:text="@string/invert_pdf_info"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
             android:layout_margin="16dp"
             android:layout_marginTop="112dp"
             android:padding="10dp"
-            android:text="@string/remove_duplicate"
+            android:text="@string/invert_pdf_title"
             app:layout_constraintBottom_toTopOf="@id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

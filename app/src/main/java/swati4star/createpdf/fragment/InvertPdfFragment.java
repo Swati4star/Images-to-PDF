@@ -79,7 +79,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_remove_duplicate_pages, container, false);
+        View rootview = inflater.inflate(R.layout.fragment_invert_pdf, container, false);
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));

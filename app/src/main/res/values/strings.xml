@@ -367,8 +367,8 @@
 
     <!-- Remove Duplicate Pages -->
     <string name="invert_pdf">Invert Pdf</string>
-    <string name="invert_pdf_info">The duplicate pages in the PDF will be removed.</string>
-    <string name="invert_pdf_title">Remove Duplicate Pages.</string>
+    <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
+    <string name="invert_pdf_title">Invert PDF</string>
 
     <!-- Rate us strings -->
     <string name="rate_positive">Rate now</string>
