@@ -80,6 +80,12 @@ public class CropImageActivity extends AppCompatActivity {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
         Uri uri = mCropImageView.getImageUri();
+
+        if (uri == null) {
+            showSnackbar(this, R.string.error_occurred);
+            return;
+        }
+
         String path = uri.getPath();
         String fname = "cropped_im";
         if (path != null)

@@ -28,13 +28,15 @@
 
     <string name="please_wait">Por favor espere</string>
 
-    <string name="create_pdf">Inicio</string>
+    <string name="create_pdf">Crear PDF</string>
     <string name="viewFiles">Ver Archivos</string>
 
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">¡Lo sentimos! Las imágenes no se pudieron agregar. Por favor seleccione las imágenes de la opción **Seleccionar Imágenes**.</string>
     <string name="successToast">Imágenes agregadas con éxito.</string>
 
+    <string name="snackbar_no_duplicate_pdf">No se han encontrado páginas duplicadas. No se ha creado ningún nuevo PDF.</string>
+    <string name="snackbar_duplicate_removed">Se crea un nuevo PDF después de eliminar las páginas duplicadas.</string>
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
     <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
@@ -48,16 +50,16 @@
     <string name="snackbar_folder_not_created">Error al crear la carpeta de aplicación.</string>
 
     <string name="creating_pdf">Creando PDF</string>
-    <string name="qr_barcode_pdf">QR &amp; Barcodes</string>
+    <string name="qr_barcode_pdf">Código QR o de Barras</string>
     <string name="enter_file_name">Escriba el nombre del archivo</string>
     <string name="example">Ejemplo : abc</string>
     <string name="snackbar_no_pdf_app">No hay app para abrir archivos PDF</string>
     <string name="open_file">Abrir Archivo</string>
     <string name="sort">Ordenar</string>
 
-    <string name="scan_qrcode">Escanear QR code</string>
-    <string name="scan_barcode">Escanear Barcode</string>
-    <string name="qrbarcodes_to_pdf">Crear PDF desde QR &amp; Barcode</string>
+    <string name="scan_qrcode">Escanear Código QR</string>
+    <string name="scan_barcode">Escanear Código de Barras</string>
+    <string name="qrbarcodes_to_pdf">Crear PDF desde un código QR o de Barras</string>
     <string name="scan_cancelled">Escaneo cancelado por el usuario</string>
 
     <string name="set_password">Configurar la clave</string>
@@ -66,13 +68,13 @@
     <string name="cannot_add_password">La contraseña no se pudo aplicar al PDF. Por favor revise el PDF nuevamente.</string>
 
     <string name="snackbar_imagecropped">Imágenes recortadas</string>
-    <string name="cropImage_activityTitle">Recortar imagen No.</string>
+    <string name="cropImage_activityTitle">Imagen N°</string>
     <string name="snackbar_pdfCreated">¡PDF creado!</string>
     <string name="snackbar_viewAction">Ver</string>
-    <string name="more_options_text">Más Opciones de Mejoras</string>
+    <string name="more_options_text">Más opciones de mejoramiento</string>
     <string name="delete">Borrar</string>
     <string name="feedback_text">Amablemente escriba su anterior realimentación, o simplemente deje un ¡Hola! :)</string>
-    <string name="feedback_subject">Sugerencias para Images To PDF Converter</string>
+    <string name="feedback_subject">Sugerencias para PDF Converter</string>
     <string name="snackbar_no_email_clients">No hay ningún cliente de correo instalado.</string>
     <string name="share">Compartir</string>
     <string name="rate_us_text">"¡Hola! acabo de checar esta app en la playstore. Pruébalo en : https://play.google.com/store/apps/details?id=swati4star.createpdf .     Convierte imágenes a PDF ágilmente. :) "</string>
@@ -82,7 +84,7 @@
     <string name="feedback_chooser">Enviar correo…</string>
     <string name="no_pdf">Ningún PDF para mostrar</string>
     <string name="get_started">Comenzar Ahora Mismo</string>
-    <string name="view_files_text">¡Vea todos tus archivos convertidos aquí!</string>
+    <string name="view_files_text">¡Vea todos sus archivos convertidos aquí!</string>
     <string name="empty_image_description">NoPdfs</string>
     <string name="enter_password_custom">Ingresar Contraseña</string>
     <string name="example_pass_123">pass@123</string>
@@ -104,7 +106,7 @@
     <string name="btn_sav_text">savText</string>
     <string name="filter_images_Text">Filtrar Imágenes</string>
     <string name="nextimage_contentdesc">Siguiente Imagen</string>
-    <string name="compress_image">Compresión de imagen : %s%%</string>
+    <string name="compress_image">Compresión de Imagen : %s%%</string>
     <string name="quality_image">Ingrese % de compresión de imagen :</string>
     <string name="invalid_entry">Entrada inválida</string>
     <string name="compress_dialog_enter_prompt">Ingrese aquí</string>
@@ -170,13 +172,13 @@
     <string name="license">Licencia</string>
     <string name="playstore">Califíquenos en Playstore</string>
     <string name="mail">Envíenos un Correo</string>
-    <string name="website">Visita nuestra Página Web</string>
+    <string name="website">Visite nuestra Página Web</string>
     <string name="preview_image_to_pdf">Previsualizar PDF</string>
     <string name="swipe_to_view_next">Deslice hacia la derecha para ver la siguiente imagen</string>
     <string name="showing_image">Mostrando %1$d de %2$d imágenes</string>
     <string name="filter_none">Ninguno</string>
     <string name="filter_autofix">Auto Corregir</string>
-    <string name="filter_grayscale">Escala De Grises</string>
+    <string name="filter_grayscale">Escala de Grises</string>
     <string name="filter_brightness">Brillo</string>
     <string name="filter_contrast">Contraste</string>
     <string name="filter_cross">Proceso Cruzado</string>
@@ -240,7 +242,7 @@
     <string name="encrypted_file_text">archivo encriptado</string>
     <string name="split_pdf">Dividir PDF</string>
     <string name="split_success">El PDF seleccionado se dividió correctamente. Fue dividido en %1$d PDF(s)</string>
-    <string name="rate_positive">Calificar ahora</string>
+    <string name="rate_positive">Calificar</string>
     <string name="rate_negative">No, gracias</string>
     <string name="rate_title">¡Califíquenos!</string>
     <string name="rate_dialog_text">Si usted está disfrutando de esta app, por favor tome un momento para calificar esta app. No tomará más de un minuto. ¡Gracias por su ayuda! :)</string>
@@ -272,8 +274,8 @@
     <string name="compression_image_edit">Cambiar valor de compresión de imagen</string>
     <string name="font_family_edit">Cambiar valor de la letra fuente por defecto</string>
     <string name="font_size_edit">Cambiar valor del Tamaño del Texto por defecto</string>
-    <string name="settings_info">Puede modificar los valores por defecto de varias optiones aquí.</string>
-    <string name="split_info">El PDF será dividido en múltiples PDFs de una sóla página.</string>
+    <string name="settings_info">Puede modificar los valores por defecto de varias opciones aquí.</string>
+    <string name="split_info">El PDF será dividido en múltiples PDFs de una sola página.</string>
     <string name="border_width_prompt">Ingrese unidades anchura del borde</string>
     <string name="default_content_description">sin descripción</string>
     <string name="prompt_input">Ingrese aquí</string>
@@ -288,11 +290,11 @@
     <string name="add_password">Agregar Contraseña</string>
     <string name="remove_password">Quitar Contraseña</string>
     <string name="enhance_created_pdfs">Mejorar PDFs creados</string>
-    <string name="viewfiles_rotatepages">1. Seleccione el PDF que desea rotar. \n2. Seleccione Rotar Páginas. \n3. Seleccionar el ángulo de rotación. Seleccione OK. \n4. Se creará el nuevo PDF rotado.</string>
-    <string name="viewfiles_addpassword">1. Seleccione el PDF que desea agregarle una contraseña. \n2. Seleccione Agregar contraseña. \n3. Escriba la nueva contraseña. Seleccione OK. \n4. Se creará el nuevo PDF con contraseña.</string>
-    <string name="viewfiles_removepassword">1. Seleccione el PDF que desea quitarle la contraseña. \n2. Seleccione Quitar contraseña. \n3. Escriba la contraseña del PDF. Seleccione OK. \n4. Se creará el nuevo PDF sin contraseña.</string>
+    <string name="viewfiles_rotatepages">1. Seleccione el PDF que desee rotar. \n2. Seleccione Rotar Páginas. \n3. Seleccionar el ángulo de rotación. Seleccione Aceptar. \n4. Se creará el nuevo PDF rotado.</string>
+    <string name="viewfiles_addpassword">1. Seleccione el PDF que desee agregarle una contraseña. \n2. Seleccione Agregar contraseña. \n3. Escriba la nueva contraseña. Seleccione Aceptar. \n4. Se creará el nuevo PDF con contraseña.</string>
+    <string name="viewfiles_removepassword">1. Seleccione el PDF que desee quitarle la contraseña. \n2. Seleccione Quitar contraseña. \n3. Escriba la contraseña del PDF. Seleccione Aceptar. \n4. Se creará el nuevo PDF sin contraseña.</string>
     <string name="home_page">Inicio</string>
-    <string name="grayscale_images">Crear PDF en Escala De Grises</string>
+    <string name="grayscale_images">Crear PDF en Escala de Grises</string>
     <string name="theme_edit">Cambiar tema por defecto</string>
     <string name="theme_value_def">Valor por defecto del Tema : %s</string>
     <string name="theme_white">Blanco</string>
@@ -301,13 +303,13 @@
     <string name="remove_page_message">¿Está seguro de que quiere remover esta página?</string>
     <string name="file_access_error">No se logró acceder al PDF. Quizá los archivos están encriptados o en el almacenamiento externo.</string>
     <string name="add_margins">Agregar Márgenes</string>
-    <string name="show_pg_num">Mostrar número de página</string>
+    <string name="show_pg_num">Mostrar Número de Página</string>
     <string name="choose_page_number_style">Elegir el Estilo de Número de Página</string>
     <string name="top">Arriba</string>
     <string name="bottom">Abajo</string>
     <string name="right">Derecha</string>
     <string name="left">Izquierda</string>
-    <string name="welcome_create_pdf_message">Creando un archivo PDF</string>
+    <string name="welcome_create_pdf_message">Crear un archivo PDF</string>
     <string name="welcome_create_pdf_info">¡Vea los archivos PDF anteriormente creados o cree uno nuevo!</string>
     <string name="welcome_themes_title">Temas diferentes</string>
     <string name="welcome_themes_message">Vaya a Ajustes, usted puede tener tres tipos de temas : Negro, Obscuro, Blanco</string>
@@ -333,8 +335,8 @@
     <string name="page_x">X de N</string>
     <string name="x">X</string>
     <string name="master_password_changed">La contraseña parece ser incorrecta. Quizá ha cambiado la contraseña maestra.</string>
-    <string name="current_master_pwd">La contraseña maestra actual es %1$s para cada PDF encriptado. Lo puedes cambiar aqui:</string>
-    <string name="change_master_pwd">Cambiar Contraseña maestra</string>
+    <string name="current_master_pwd">La contraseña maestra actual es %1$s para cada PDF encriptado. La puedes cambiar aquí:</string>
+    <string name="change_master_pwd">Cambiar la Contraseña Maestra</string>
     <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Continuar</string>
     <string name="whatsnew_title">Novedades</string>
@@ -355,13 +357,18 @@
     <string name="choose_watermark_font_family">Elegir letra fuente</string>
     <string name="watermark_font_size">Tamaño del texto</string>
     <string name="choose_watermark_style">Elegir estilo</string>
-    <string name="viewfiles_addwatermark">1. Seleccione el PDF que desea agregarle una marca de agua. \n2. Seleccione Agregar Marca de Agua. \n3. LLene la información requerida. Seleccione OK. \n4. Se creará el nuevo PDF con marca de agua.</string>
+    <string name="viewfiles_addwatermark">1. Seleccione el PDF que desee agregarle una marca de agua. \n2. Seleccione Agregar Marca de Agua. \n3. Llene la información requerida. Seleccione Aceptar. \n4. Se creará el nuevo PDF con marca de agua.</string>
 
     <string name="extension_not_supported">¡Lo sentimos! Actualmente no hay soporte para este tipo de archivo.</string>
 
     <!--<nav add images>-->
-    <string name="add_images">Add Images</string>
-    <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
-    <string name="no_images_selected">No images selected</string>
+    <string name="add_images">Agregar Imágenes</string>
+    <string name="selected_images_text">Las imágenes que seleccione serán agregadas al final del PDF seleccionado.</string>
+    <string name="no_images_selected">Ninguna imagen seleccionada</string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
+    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate">Remove Duplicate Pages.</string>
 
 </resources>

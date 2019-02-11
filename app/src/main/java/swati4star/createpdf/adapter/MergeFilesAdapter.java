@@ -49,7 +49,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
         boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
-        holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
+        holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
         holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
 
     }

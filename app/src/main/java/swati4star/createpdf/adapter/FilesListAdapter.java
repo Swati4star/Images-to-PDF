@@ -41,7 +41,7 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
-        holder.mFileName.setText(mFileUtils.getFileName(mFilePaths.get(position)));
+        holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
         holder.mEncryptionImage.setVisibility(View.GONE);
     }
 

@@ -28,13 +28,13 @@ import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
-import swati4star.createpdf.fragment.ExtractImagesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.PdfToImageFragment;
 import swati4star.createpdf.fragment.QrBarcodeScanFragment;
+import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
 import swati4star.createpdf.fragment.RemovePagesFragment;
 import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
@@ -52,9 +52,11 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
@@ -340,10 +342,14 @@ public class MainActivity extends AppCompatActivity
                 fragment = new SettingsFragment();
                 break;
             case R.id.nav_extract_images:
-                fragment = new ExtractImagesFragment();
+                fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
+                fragment.setArguments(bundle);
                 break;
             case R.id.nav_pdf_to_images:
                 fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
+                fragment.setArguments(bundle);
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
@@ -369,6 +375,10 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(this, WelcomeActivity.class);
                 intent.putExtra(SHOW_WELCOME_ACT, true);
                 startActivity(intent);
+                break;
+            case R.id.nav_remove_duplicate_pages:
+                fragment = new RemoveDuplicatePagesFragment();
+                break;
         }
 
         try {

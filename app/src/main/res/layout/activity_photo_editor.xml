@@ -43,7 +43,6 @@
             android:contentDescription="@string/previous_image_content_desc"
             android:gravity="center"
             android:tint="?attr/bottomSheetColor"
-            android:visibility="invisible"
             app:srcCompat="@drawable/ic_navigate_before_white_24dp"
             tools:targetApi="lollipop" />
 

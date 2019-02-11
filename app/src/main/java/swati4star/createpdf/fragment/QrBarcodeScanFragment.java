@@ -86,7 +86,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         scanBarcode.setOnClickListener(this);
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
-        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
 
         getRuntimePermissions();
@@ -97,26 +97,24 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                showSnackbar(mActivity, R.string.scan_cancelled);
-            } else {
-                Toast.makeText(mActivity, "Scan Result: " +  result.getContents(), Toast.LENGTH_SHORT).show();
+        if (result == null || result.getContents() == null)
+            showSnackbar(mActivity, R.string.scan_cancelled);
+        else {
+            Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
 
-                File mDir = mActivity.getCacheDir();
-                File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
-                PrintWriter mWriter;
-                try {
-                    mWriter = new PrintWriter(mTempFile);
-                    mWriter.print("");
-                    mWriter.append(result.getContents());
-                    mWriter.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                Uri uri = Uri.fromFile(mTempFile);
-                resultToTextPdf(uri);
+            File mDir = mActivity.getCacheDir();
+            File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
+            PrintWriter mWriter;
+            try {
+                mWriter = new PrintWriter(mTempFile);
+                mWriter.print("");
+                mWriter.append(result.getContents());
+                mWriter.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+            Uri uri = Uri.fromFile(mTempFile);
+            resultToTextPdf(uri);
         }
     }
 
@@ -134,8 +132,9 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     /**
      * Open scanner
+     *
      * @param scannerType - type (qr code/bar code)
-     * @param promptId - string resource id for prompt
+     * @param promptId    - string resource id for prompt
      */
     public void openScanner(Collection<String> scannerType, int promptId) {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
@@ -148,6 +147,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     /**
      * Generate Result to PDF
+     *
      * @param uri - uri where text is located
      */
     private void resultToTextPdf(Uri uri) {
@@ -176,7 +176,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * function to create PDF
      *
      * @param mFilename name of file to be created.
-     * @param uri - uri where text is located
+     * @param uri       - uri where text is located
      */
     private void createPdf(String mFilename, Uri uri) {
         mPath = mSharedPreferences.getString(STORAGE_LOCATION,

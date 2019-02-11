@@ -72,6 +72,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
 
     /**
      * Returns a list of options for preview activity
+     *
      * @return - list
      */
     private ArrayList<PreviewImageOptionItem> getOptions() {
@@ -123,17 +124,18 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK)
+            return;
+
         switch (requestCode) {
             case INTENT_REQUEST_REARRANGE_IMAGE:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        try {
-                            mImagesArrayList = data.getStringArrayListExtra(Constants.RESULT);
-                            mPreviewAdapter.setData(mImagesArrayList);
-                            mViewPager.setAdapter(mPreviewAdapter);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                try {
+                    mImagesArrayList = data.getStringArrayListExtra(Constants.RESULT);
+                    mPreviewAdapter.setData(mImagesArrayList);
+                    mViewPager.setAdapter(mPreviewAdapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }
@@ -144,7 +146,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         passUris();
     }
 
-    public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
+    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
         Intent intent = new Intent(context, PreviewActivity.class);
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;

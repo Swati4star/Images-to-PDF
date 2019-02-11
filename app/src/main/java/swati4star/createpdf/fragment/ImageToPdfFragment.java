@@ -73,7 +73,6 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
-import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
@@ -101,6 +100,8 @@ import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
+import static swati4star.createpdf.util.WatermarkUtils.getStyleNameFromFont;
+import static swati4star.createpdf.util.WatermarkUtils.getStyleValueFromName;
 
 /**
  * ImageToPdfFragment fragment to start with creating PDF
@@ -536,17 +537,23 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        if (StringUtils.isEmpty(input)) {
-                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
-                        } else {
-                            mPdfOptions.setPassword(input.toString());
-                            mPdfOptions.setPasswordProtected(true);
-                            showEnhancementOptions();
-                        }
                     }
                 });
+
+        positiveAction.setOnClickListener(v -> {
+            if (StringUtils.isEmpty(passwordInput.getText())) {
+                showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+            } else {
+                mPdfOptions.setPassword(passwordInput.getText().toString());
+                mPdfOptions.setPasswordProtected(true);
+                showEnhancementOptions();
+                dialog.dismiss();
+            }
+        });
+
         if (StringUtils.isNotEmpty(mPdfOptions.getPassword())) {
             neutralAction.setOnClickListener(v -> {
+                mPdfOptions.setPassword(null);
                 mPdfOptions.setPasswordProtected(false);
                 showEnhancementOptions();
                 dialog.dismiss();
@@ -600,7 +607,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             ));
             fontFamilyInput.setSelection(fontFamilyAdapter.getPosition(mPdfOptions.getWatermark().getFontFamily()));
             styleInput.setSelection(styleAdapter.getPosition(
-                    PDFUtils.getStyleNameFromFont(mPdfOptions.getWatermark().getFontStyle())));
+                    getStyleNameFromFont(mPdfOptions.getWatermark().getFontStyle())));
         } else {
             angleInput.setText("0");
             fontSizeInput.setText("50");
@@ -640,7 +647,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         positiveAction.setOnClickListener(v -> {
             watermark.setWatermarkText(watermarkTextInput.getText().toString());
             watermark.setFontFamily(((Font.FontFamily) fontFamilyInput.getSelectedItem()));
-            watermark.setFontStyle(PDFUtils.getStyleValueFromName(((String) styleInput.getSelectedItem())));
+            watermark.setFontStyle(getStyleValueFromName(((String) styleInput.getSelectedItem())));
 
             if (StringUtils.isEmpty(angleInput.getText())) {
                 watermark.setRotationAngle(0);
@@ -669,6 +676,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         dialog.show();
     }
+
     @Override
     public void onPDFCreationStarted() {
         mMaterialDialog = createAnimationDialog(mActivity);

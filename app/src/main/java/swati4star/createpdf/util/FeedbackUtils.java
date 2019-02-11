@@ -29,6 +29,10 @@ public class FeedbackUtils {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, mContext.getResources().getString(R.string.rate_us_text));
+        openMailIntent(intent);
+    }
+
+    public void openMailIntent(Intent intent) {
         try {
             mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {

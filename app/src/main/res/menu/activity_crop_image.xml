@@ -6,9 +6,9 @@
         android:icon="@drawable/ic_check_white_24dp"
         android:iconTint="@color/mb_white"
         android:title="@string/done"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_skip"
         android:title="@string/skip_text"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

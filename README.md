@@ -41,7 +41,9 @@ You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com
 - Extract images from PDF
 - History : View all the PDF related conversions
 
-<img src="./screenshots/0_navigation.png" width="190px">
+Here is a home page to get quick access to all the features "PDF Converter" provides:
+
+<img src="./screenshots/0_1_home.png" width="190px"> <img src="./screenshots/0_2_home.png" width="190px">
 
 ### Creating a PDF file
 
@@ -100,7 +102,6 @@ Black | Dark | White |
 + [Picasso-transformations](https://github.com/wasabeef/picasso-transformations)
 + [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
 + [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
-+ [What's new](https://github.com/TonnyL/WhatsNew)
 + [zxing](https://github.com/zxing/zxing)
 
 #### Code & Issues

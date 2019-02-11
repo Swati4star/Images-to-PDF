@@ -49,7 +49,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:padding="8dp"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/operationType"

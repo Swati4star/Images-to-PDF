@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 apply from: '../config/checkstyle.gradle'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "swati4star.createpdf"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 28
-        versionCode 80
-        versionName "8.5.3"
+        versionCode 83
+        versionName "8.5.6"
     }
     buildTypes {
         release {
