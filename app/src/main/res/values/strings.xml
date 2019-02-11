@@ -365,6 +365,11 @@
     <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
     <string name="remove_duplicate">Remove Duplicate Pages.</string>
 
+    <!-- Remove Duplicate Pages -->
+    <string name="invert_pdf">Invert Pdf</string>
+    <string name="invert_pdf_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="invert_pdf_title">Remove Duplicate Pages.</string>
+
     <!-- Rate us strings -->
     <string name="rate_positive">Rate now</string>
     <string name="rate_negative">No, thanks</string>

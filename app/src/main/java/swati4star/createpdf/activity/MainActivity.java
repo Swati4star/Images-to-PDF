@@ -31,6 +31,7 @@ import swati4star.createpdf.fragment.AddImagesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
+import swati4star.createpdf.fragment.InvertPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
 import swati4star.createpdf.fragment.PdfToImageFragment;
 import swati4star.createpdf.fragment.QrBarcodeScanFragment;
@@ -378,6 +379,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
+                break;
+            case R.id.nav__invert_pdf:
+                fragment = new InvertPdfFragment();
                 break;
         }
 

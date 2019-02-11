@@ -73,6 +73,10 @@
             android:id="@+id/nav_remove_duplicate_pages"
             android:icon="@drawable/ic_remove_circle_black_24dp"
             android:title="@string/remove_duplicate_pages" />
+        <item
+            android:id="@+id/nav__invert_pdf"
+            android:icon="@drawable/ic_remove_circle_black_24dp"
+            android:title="@string/invert_pdf" />
     </group>
 
     <item android:title="@string/extras">
