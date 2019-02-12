@@ -61,8 +61,8 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
-    @BindView(R.id.remove)
-    MorphingButton removeDuplicateButton;
+    @BindView(R.id.invert)
+    MorphingButton invertPdfButton;
     BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
@@ -111,8 +111,8 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     }
 
 
-    //On click remove duplicate button
-    @OnClick(R.id.remove)
+    //On click invert pdf
+    @OnClick(R.id.invert)
     public void parse() {
         new InvertPdf(mPath, this).execute();
     }
@@ -120,13 +120,13 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
 
     private void resetValues() {
         mPath = null;
-        mMorphButtonUtility.initializeButton(selectFileButton, removeDuplicateButton);
+        mMorphButtonUtility.initializeButton(selectFileButton, invertPdfButton);
     }
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, removeDuplicateButton);
+                selectFileButton, invertPdfButton);
     }
 
     @Override
@@ -180,12 +180,12 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     public void onPDFCreated(boolean isNewPdfCreated, String path) {
         mMaterialDialog.dismiss();
         if (!isNewPdfCreated) {
-            showSnackbar(mActivity, R.string.snackbar_no_duplicate_pdf);
+            showSnackbar(mActivity, R.string.snackbar_invert_unsuccessful);
             //Hiding View PDF button
             mViewPdf.setVisibility(View.GONE);
             return;
         }
-        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_no_duplicate_pdf));
+        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_invert_unsuccessful));
         getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
         viewPdfButton(path);

@@ -139,6 +139,8 @@
     <string name="delete">Delete</string>
     <string name="snackbar_no_duplicate_pdf">Duplicate pages not found.No new PDF created.</string>
     <string name="snackbar_duplicate_removed">A new PDF is created after removal of duplicate pages.</string>
+    <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
+    <string name="snackbar_invert_successfull">Inversion Successful.</string>
 
     <!-- Share strings -->
     <string name="share_chooser">Select app to send message…</string>

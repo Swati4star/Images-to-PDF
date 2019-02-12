@@ -16,7 +16,7 @@
         tools:context=".fragment.AddImagesFragment">
 
         <TextView
-            android:id="@+id/remove_duplicate_pages_info"
+            android:id="@+id/invert_pdf_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.dd.morphingbutton.MorphingButton
-            android:id="@+id/remove"
+            android:id="@+id/invert"
             style="@style/MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
