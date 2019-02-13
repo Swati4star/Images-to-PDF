@@ -12,6 +12,10 @@ import android.os.ParcelFileDescriptor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.GrayColor;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -20,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -59,37 +64,71 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
 
 
             if (fileDescriptor != null) {
-                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
-                final int pageCount = renderer.getPageCount();
-
-                for (int i = 0; i < pageCount; i++) {
-                    PdfRenderer.Page page = renderer.openPage(i);
-                    // generate bitmaps for individual pdf pages
-                    Bitmap currentBitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
-                            Bitmap.Config.ARGB_8888);
-                    // say we render for showing on the screen
-                    page.render(currentBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-                    // close the page
-                    page.close();
-
-                    //Inverting current Bitmap and adding it.
-                    Bitmap invertedBitmap = invertAndAdd(currentBitmap);
-                    mBitmaps.add(invertedBitmap);
-                }
-                // close the renderer
-                renderer.close();
+//                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+//                final int pageCount = renderer.getPageCount();
+//
+//                for (int i = 0; i < pageCount; i++) {
+//                    PdfRenderer.Page page = renderer.openPage(i);
+//                    // generate bitmaps for individual pdf pages
+//                    Bitmap currentBitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
+//                            Bitmap.Config.ARGB_8888);
+//                    // say we render for showing on the screen
+//                    page.render(currentBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+//                    // close the page
+//                    page.close();
+//
+//                    //Inverting current Bitmap and adding it.
+//                    Bitmap invertedBitmap = invertAndAdd(currentBitmap);
+//                    mBitmaps.add(invertedBitmap);
+//                }
+//                // close the renderer
+//                renderer.close();
                 String outputPath = mPath.replace(".pdf", "inverted" + ".pdf");
-                if (createPDF(outputPath, mBitmaps)) {
-                    mPath = outputPath;
-                    mIsNewPDFCreated = true;
-                }
+//                if (createPDF(outputPath, mBitmaps)) {
+//                    mPath = outputPath;
+//                    mIsNewPDFCreated = true;
+//                }
+                PdfReader reader = new PdfReader(mPath);
+                OutputStream os = new FileOutputStream(outputPath);
+                PdfStamper stamper = new PdfStamper(reader, os);
+                invert(stamper);
+                stamper.close();
+                os.close();
+                mPath = outputPath;
+                mIsNewPDFCreated = true;
             }
         } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+            mIsNewPDFCreated = false;
+        } catch (DocumentException e) {
             e.printStackTrace();
             mIsNewPDFCreated = false;
         }
 
         return null;
+    }
+
+    void invert(PdfStamper stamper) {
+        for (int i = stamper.getReader().getNumberOfPages(); i > 0; i--) {
+            invertPage(stamper, i);
+        }
+    }
+
+    void invertPage(PdfStamper stamper, int page) {
+        Rectangle rect = stamper.getReader().getPageSize(page);
+
+        PdfContentByte cb = stamper.getOverContent(page);
+        PdfGState gs = new PdfGState();
+        gs.setBlendMode(PdfGState.BM_DIFFERENCE);
+        cb.setGState(gs);
+        cb.setColorFill(new GrayColor(1.0f));
+        cb.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight());
+        cb.fill();
+
+        cb = stamper.getUnderContent(page);
+        cb.setColorFill(new GrayColor(1.0f));
+        cb.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight());
+        cb.fill();
     }
 
     public Bitmap invertAndAdd(Bitmap src) {
