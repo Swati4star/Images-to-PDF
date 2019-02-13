@@ -1,26 +1,14 @@
 package swati4star.createpdf.util;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,7 +43,6 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        // Render pdf pages as bitmap
         ParcelFileDescriptor fileDescriptor = null;
         try {
             if (mPath != null)
@@ -64,43 +51,14 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
 
 
             if (fileDescriptor != null) {
-//                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
-//                final int pageCount = renderer.getPageCount();
-//
-//                for (int i = 0; i < pageCount; i++) {
-//                    PdfRenderer.Page page = renderer.openPage(i);
-//                    // generate bitmaps for individual pdf pages
-//                    Bitmap currentBitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
-//                            Bitmap.Config.ARGB_8888);
-//                    // say we render for showing on the screen
-//                    page.render(currentBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-//                    // close the page
-//                    page.close();
-//
-//                    //Inverting current Bitmap and adding it.
-//                    Bitmap invertedBitmap = invertAndAdd(currentBitmap);
-//                    mBitmaps.add(invertedBitmap);
-//                }
-//                // close the renderer
-//                renderer.close();
-                String outputPath = mPath.replace(".pdf", "inverted" + ".pdf");
-//                if (createPDF(outputPath, mBitmaps)) {
-//                    mPath = outputPath;
-//                    mIsNewPDFCreated = true;
-//                }
-                PdfReader reader = new PdfReader(mPath);
-                OutputStream os = new FileOutputStream(outputPath);
-                PdfStamper stamper = new PdfStamper(reader, os);
-                invert(stamper);
-                stamper.close();
-                os.close();
-                mPath = outputPath;
-                mIsNewPDFCreated = true;
+                String outputPath = mPath.replace(".pdf", "_inverted" + ".pdf");
+                if (createPDF(mPath, outputPath)) {
+                    mPath = outputPath;
+                    mIsNewPDFCreated = true;
+                }
+
             }
         } catch (IOException | SecurityException e) {
-            e.printStackTrace();
-            mIsNewPDFCreated = false;
-        } catch (DocumentException e) {
             e.printStackTrace();
             mIsNewPDFCreated = false;
         }
@@ -131,77 +89,30 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
         cb.fill();
     }
 
-    public Bitmap invertAndAdd(Bitmap src) {
-        int height = src.getHeight();
-        int width = src.getWidth();
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-
-//        ColorMatrix matrixGrayscale = new ColorMatrix();
-//        matrixGrayscale.setSaturation(0);
-
-        ColorMatrix matrixInvert = new ColorMatrix();
-        matrixInvert.set(new float[]
-                {-1.0f, 0.0f, 0.0f, 0.0f, 255.0f,
-                        0.0f, -1.0f, 0.0f, 0.0f, 255.0f,
-                        0.0f, 0.0f, -1.0f, 0.0f, 255.0f,
-                        0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                });
-//        matrixInvert.preConcat(matrixGrayscale);
-
-        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrixInvert);
-        paint.setColorFilter(filter);
-        canvas.drawBitmap(src, 0, 0, paint);
-        return bitmap;
-    }
 
     @Override
     protected void onPostExecute(Void avoid) {
-        // execution of result of Long time consuming operation
+        // Execution of result of Long time consuming operation
         super.onPostExecute(avoid);
         mOnPDFCreatedInterface.onPDFCreated(mIsNewPDFCreated, mPath);
     }
 
-    private boolean createPDF(String output, ArrayList<Bitmap> bitmaps) {
-//        try {
-//            PdfReader reader = new PdfReader(inputPath);
-//            reader.selectPages(pages);
-//            PdfStamper pdfStamper = new PdfStamper(reader,
-//                    new FileOutputStream(output));
-//            pdfStamper.close();
-//            return true;
-//
-//        } catch (IOException | DocumentException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
+    private boolean createPDF(String mPath, String outputPath) {
+
         try {
-            Document document = new Document();
-
-            PdfWriter.getInstance(document, new FileOutputStream(output));
-            document.open();
-
-
-            for (Bitmap b : mBitmaps) {
-                Image image = Image.getInstance(getByteArray(b));
-                document.add(image);
-                document.newPage();
-            }
-            document.close();
+            PdfReader reader = new PdfReader(mPath);
+            OutputStream os = new FileOutputStream(outputPath);
+            PdfStamper stamper = new PdfStamper(reader, os);
+            invert(stamper);
+            stamper.close();
+            os.close();
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception er) {
+            er.printStackTrace();
             return false;
         }
 
     }
 
-    public byte[] getByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 1, bos);
-        return bos.toByteArray();
-    }
 
 }

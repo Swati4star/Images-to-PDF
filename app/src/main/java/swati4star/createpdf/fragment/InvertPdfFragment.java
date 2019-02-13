@@ -111,7 +111,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     }
 
 
-    //On click invert pdf
+//    Inverts colors in PDF
     @OnClick(R.id.invert)
     public void parse() {
         new InvertPdf(mPath, this).execute();
