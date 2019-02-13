@@ -185,7 +185,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_remove_circle_black_24dp"
+                app:option_icon="@drawable/ic_invert_color_24dp"
                 app:option_text="@string/invert_pdf" />
 
             <swati4star.createpdf.customviews.MyCardView
