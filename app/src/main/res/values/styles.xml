@@ -21,6 +21,7 @@
         <item name="bottomSheetBgColor">@color/windowBackground_light</item>
         <item name="lockIconTintColor">@color/black</item>
         <item name="actionMenuTextColor">@color/mb_white</item>
+        <item name="searchFileRaw">@raw/search_file_dark</item>
         <item name="android:actionMenuTextColor">@color/mb_white</item>
     </style>
 
@@ -37,6 +38,7 @@
         <item name="bottomSheetBgColor">@color/colorBackground_black</item>
         <item name="lockIconTintColor">@color/mb_white</item>
         <item name="actionMenuTextColor">@color/mb_white</item>
+        <item name="searchFileRaw">@raw/search_file_light</item>
         <item name="android:actionMenuTextColor">@color/mb_white</item>
     </style>
 
@@ -55,6 +57,7 @@
         <item name="bottomSheetBgColor">@color/windowBackground_dark</item>
         <item name="lockIconTintColor">@color/mb_white</item>
         <item name="actionMenuTextColor">@color/mb_white</item>
+        <item name="searchFileRaw">@raw/search_file_light</item>
         <item name="android:actionMenuTextColor">@color/mb_white</item>
     </style>
 

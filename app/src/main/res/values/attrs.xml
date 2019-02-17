@@ -17,5 +17,6 @@
         <attr name="similarBgColor" format="color"/>
         <attr name="bottomSheetBgColor" format="color"/>
         <attr name="lockIconTintColor" format="color"/>
+        <attr name="searchFileRaw" format="reference"/>
     </declare-styleable>
 </resources>
