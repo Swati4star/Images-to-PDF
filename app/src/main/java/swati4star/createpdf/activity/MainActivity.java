@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
                 break;
-            case R.id.nav__invert_pdf:
+            case R.id.nav_invert_pdf:
                 fragment = new InvertPdfFragment();
                 break;
         }
