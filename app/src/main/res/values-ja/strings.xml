@@ -369,4 +369,9 @@
     <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
     <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
     <string name="remove_duplicate">Remove Duplicate Pages.</string>
+    <string name="invert_pdf">Invert Pdf</string>
+    <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
+    <string name="invert_pdf_title">Invert PDF</string>
+    <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
+    <string name="snackbar_invert_successfull">Colors inverted successfully.</string>
 </resources>

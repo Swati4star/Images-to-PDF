@@ -181,6 +181,14 @@
             android:orientation="horizontal">
 
             <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/invert_pdf"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/ic_invert_color_24dp"
+                app:option_text="@string/invert_pdf" />
+
+            <swati4star.createpdf.customviews.MyCardView
                 android:id="@+id/compress_pdf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
