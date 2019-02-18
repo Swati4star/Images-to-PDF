@@ -62,7 +62,7 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             android:layout_gravity="center"
-            app:lottie_rawRes="@raw/search_file"
+            app:lottie_rawRes="?attr/searchFileRaw"
 
             />
 
