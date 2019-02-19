@@ -165,17 +165,22 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, splitFilesButton);
+        mSplitConfitEditText.setVisibility(View.VISIBLE);
         mSplitConfitEditText.setText(getDefaultSplitConfig(mPath));
     }
 
+    /**
+     * Gets the total number of pages in the
+     * selected PDF and returns them in
+     * default format for single page pdfs
+     * (1,2,3,4,5,)
+     */
     private String getDefaultSplitConfig(String mPath) {
         String splitConfig = "";
         ParcelFileDescriptor fileDescriptor = null;
         try {
             if (mPath != null)
-                // resolve pdf file path based on relative path
                 fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
-
             if (fileDescriptor != null) {
                 PdfRenderer renderer = new PdfRenderer(fileDescriptor);
                 final int pageCount = renderer.getPageCount();

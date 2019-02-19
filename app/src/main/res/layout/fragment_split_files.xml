@@ -32,7 +32,8 @@
             android:layout_margin="16dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="Name"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/split_info"
