@@ -69,6 +69,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView addImages;
     @BindView(R.id.remove_duplicates_pages_pdf)
     MyCardView removeDuplicatePages;
+    @BindView(R.id.invert_pdf)
+    MyCardView invertPdf;
 
 
     private HashMap<Integer, Integer> mFragmentPositionMap;
@@ -97,6 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         addWatermark.setOnClickListener(this);
         addImages.setOnClickListener(this);
         removeDuplicatePages.setOnClickListener(this);
+        invertPdf.setOnClickListener(this);
         return rootview;
     }
 
@@ -120,6 +123,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentPositionMap.put(R.id.remove_password, 13);
         mFragmentPositionMap.put(R.id.add_images, 14);
         mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf, 15);
+        mFragmentPositionMap.put(R.id.invert_pdf, 16);
+
     }
 
     @Override
@@ -215,6 +220,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.remove_duplicates_pages_pdf:
                 fragment = new RemoveDuplicatePagesFragment();
+                break;
+            case R.id.invert_pdf:
+                fragment = new InvertPdfFragment();
                 break;
         }
 
