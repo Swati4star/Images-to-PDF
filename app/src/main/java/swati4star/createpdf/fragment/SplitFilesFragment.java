@@ -120,7 +120,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.splitFiles)
     public void parse() {
-        ArrayList<String> outputFilePaths = mPDFUtils.splitPDF(mPath);
+        ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,
+                mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();
         if (numberOfPages > 0) {
             String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
@@ -184,7 +185,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
             if (fileDescriptor != null) {
                 PdfRenderer renderer = new PdfRenderer(fileDescriptor);
                 final int pageCount = renderer.getPageCount();
-                for (int i = 1; i < pageCount; i++) {
+                for (int i = 1; i <= pageCount; i++) {
                     splitConfig = splitConfig + i + ",";
                 }
             }

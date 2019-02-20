@@ -44,11 +44,13 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -59,6 +61,7 @@ import swati4star.createpdf.model.TextToPDFOptions;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
+import static swati4star.createpdf.util.Constants.pdfExtension;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
@@ -118,7 +121,7 @@ public class PDFUtils {
      * Create a PDF from a Text File
      *
      * @param mTextToPDFOptions TextToPDFOptions Object
-     * @param fileExtension file extension represented as string
+     * @param fileExtension     file extension represented as string
      */
     public void createPdf(TextToPDFOptions mTextToPDFOptions, String fileExtension)
             throws DocumentException, IOException {
@@ -430,8 +433,9 @@ public class PDFUtils {
 
     /**
      * Main function to add images to PDF
+     *
      * @param inputPath - path of input PDF
-     * @param output - path of output PDF
+     * @param output    - path of output PDF
      * @param imagesUri - list of images to add
      * @return true, if succeeded, otherwise false
      */
@@ -523,6 +527,65 @@ public class PDFUtils {
                 document.open();
                 copy.addPage(copy.getImportedPage(reader, i));
                 document.close();
+                outputPaths.add(fileName);
+                new DatabaseHelper(mContext).insertRecord(fileName,
+                        mContext.getString(R.string.created));
+            }
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+            showSnackbar(mContext, R.string.file_access_error);
+        }
+        return outputPaths;
+    }
+
+    public ArrayList<String> splitPDFByConfig(String path, String splitConfig) {
+        ArrayList<String> outputPaths = new ArrayList<>();
+        String delims = "[,]";
+        String[] ranges = splitConfig.split(delims);
+        Log.v("Ranges", Arrays.toString(ranges));
+        try {
+            String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
+                    getDefaultStorageLocation());
+            PdfReader reader = new PdfReader(path);
+            PdfCopy copy;
+            Document document;
+            for (String range : ranges) {
+                int startPage;
+                int endPage;
+
+                String fileName = folderPath + FileUtils.getFileName(path);
+
+                /**
+                 * If the pdf is single page only then convert whole range into int
+                 * else break the range on "-",where startpage will be substring
+                 * from first letter to "-" and endpage will be from "-" till last letter.
+                 *
+                 */
+                if (!range.contains("-")) {
+                    startPage = Integer.parseInt(range);
+                    document = new Document();
+                    fileName = fileName.replace(pdfExtension,
+                            "_" + startPage + pdfExtension);
+                    copy = new PdfCopy(document, new FileOutputStream(fileName));
+
+                    document.open();
+                    copy.addPage(copy.getImportedPage(reader, startPage));
+                    document.close();
+
+                } else {
+
+                    startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                    endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                    document = new Document();
+                    fileName = fileName.replace(pdfExtension,
+                            "_" + startPage + "-" + endPage + pdfExtension);
+                    copy = new PdfCopy(document, new FileOutputStream(fileName));
+                    document.open();
+                    for (int page = startPage; page <= endPage; page++) {
+                        copy.addPage(copy.getImportedPage(reader, page));
+                    }
+                    document.close();
+                }
                 outputPaths.add(fileName);
                 new DatabaseHelper(mContext).insertRecord(fileName,
                         mContext.getString(R.string.created));
