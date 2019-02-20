@@ -508,37 +508,15 @@ public class PDFUtils {
         }
     }
 
-    public ArrayList<String> splitPDF(String path) {
-        ArrayList<String> outputPaths = new ArrayList<>();
-        try {
-            String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
-                    getDefaultStorageLocation());
-            PdfReader reader = new PdfReader(path);
-            PdfCopy copy;
-            Document document;
-            int pages = reader.getNumberOfPages();
-            for (int i = 1; i <= pages; i++) {
-                document = new Document();
-                String fileName = folderPath + FileUtils.getFileName(path);
-                fileName = fileName.replace(mContext.getString(R.string.pdf_ext),
-                        i + mContext.getString(R.string.pdf_ext));
-                Log.v("splitting", fileName);
-                copy = new PdfCopy(document, new FileOutputStream(fileName));
-                document.open();
-                copy.addPage(copy.getImportedPage(reader, i));
-                document.close();
-                outputPaths.add(fileName);
-                new DatabaseHelper(mContext).insertRecord(fileName,
-                        mContext.getString(R.string.created));
-            }
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-            showSnackbar(mContext, R.string.file_access_error);
-        }
-        return outputPaths;
-    }
-
-    public ArrayList<String> splitPDFByConfig(String path, String splitConfig) {
+    /**
+     * Breaks up the splitDetail String into ranges where a ","
+     * is found
+     * @param path the input pdf path
+     * @param splitDetail string that contains split configuration
+     * @return
+     */
+    public ArrayList<String> splitPDFByConfig(String path, String splitDetail) {
+        String splitConfig = splitDetail.replaceAll("\\s+", "");
         ArrayList<String> outputPaths = new ArrayList<>();
         String delims = "[,]";
         String[] ranges = splitConfig.split(delims);
@@ -573,7 +551,6 @@ public class PDFUtils {
                     document.close();
 
                 } else {
-
                     startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
                     endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
                     document = new Document();
