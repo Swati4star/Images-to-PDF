@@ -283,7 +283,7 @@
     <!-- Split PDF -->
     <string name="split_pdf">Разделить PDF</string>
     <string name="split_success">Выбранный PDF файл успешно разделен на %1$d </string>
-    <string name="split_info">PDF файл будел разделен на несколько одностраничных файлов.</string>
+    <string name="split_info">The PDF will be split into multiple PDFs.Format example: 1&#8211;5,6&#8211;7,8,9</string>
 
     <!-- Remove Pages -->
     <string name="remove_pages">Удалить страницы</string>
