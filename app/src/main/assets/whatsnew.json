@@ -2,9 +2,21 @@
   "data": [
 
     {
-      "title": "Remove duplicate pages",
-      "content": "New feature: remove duplicate pages from PDF.",
-      "icon": "ic_remove_circle_black_24dp"
+      "title": "Invert PDF",
+      "content": "New feature to invert PDF colors",
+      "icon": "ic_invert_color_24dp"
+    },
+
+    {
+      "title": "Split PDF",
+      "content": "Added More ways to split PDF",
+      "icon": "ic_call_split_black_24dp"
+    },
+
+    {
+      "title": "Fixed Crashes",
+      "content": "Fixed crashes & PDF conversion performance",
+      "icon": ""
     }
 
   ],
@@ -13,6 +25,14 @@
     "version_code": [
     ],
 
+    "83" : [
+      {
+        "title": "Remove duplicate pages",
+        "content": "New feature: remove duplicate pages from PDF.",
+        "icon": "ic_remove_circle_black_24dp"
+      }
+
+    ],
     "80" : [
       {
         "title": "Reorder PDF pages",
