@@ -345,6 +345,15 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        AppCompatActivity activity = ((AppCompatActivity)
+                Objects.requireNonNull(mActivity));
+        ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle(appName);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
