@@ -58,37 +58,59 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <Button
-                android:id="@+id/shareImages"
+                android:id="@+id/viewImagesInGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:drawablePadding="5dp"
-                android:drawableStart="@drawable/baseline_share_24"
-                android:padding="15dp"
-                android:drawableTint="?attr/bottomSheetTextColor"
                 android:background="?attr/bottomSheetColor"
-                android:textColor="?attr/bottomSheetTextColor"
-                android:text="@string/share_images" />
-
-            <Button
-                android:id="@+id/viewImages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:drawablePadding="5dp"
                 android:drawableStart="@drawable/ic_menu_gallery"
-                android:padding="15dp"
+                android:drawablePadding="5dp"
                 android:drawableTint="?attr/bottomSheetTextColor"
-                android:background="?attr/bottomSheetColor"
-                android:textColor="?attr/bottomSheetTextColor"
-                android:text="@string/view_images" />
+                android:padding="15dp"
+                android:text="@string/view_in_gallery"
+                android:textColor="?attr/bottomSheetTextColor" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/shareImages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="?attr/bottomSheetColor"
+                    android:drawableStart="@drawable/baseline_share_24"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="?attr/bottomSheetTextColor"
+                    android:padding="15dp"
+                    android:text="@string/share_images"
+                    android:textColor="?attr/bottomSheetTextColor" />
+
+                <Button
+                    android:id="@+id/viewImages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="?attr/bottomSheetColor"
+                    android:drawableStart="@drawable/ic_menu_gallery"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="?attr/bottomSheetTextColor"
+                    android:padding="15dp"
+                    android:text="@string/view_images"
+                    android:textColor="?attr/bottomSheetTextColor" />
+
+            </LinearLayout>
         </LinearLayout>
-
 
     </RelativeLayout>
 

@@ -192,6 +192,7 @@
     <string name="version">Версия : </string>
     <string name="save">Save</string>
     <string name="choose_color_text">Choose a color :</string>
+    <string name="view_in_gallery">View Images in Gallery</string>
     <string name="developer">Разработчик : Swati Garg</string>
     <string name="github_repo">Github репозиторий</string>
     <string name="view_contributors">Авторы</string>
