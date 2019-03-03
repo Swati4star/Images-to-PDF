@@ -188,6 +188,8 @@
     <string name="decrypt_message">Enter the password to continue</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
     <string name="save_current">Save Current</string>
+    <string name="save">Save</string>
+    <string name="choose_color_text">Choose a color :</string>
     <string name="save_first">Save Current Image First</string>
     <string name="Filter_name">Filter</string>
     <string name="Filter_image_preview">Filter Image Preview</string>

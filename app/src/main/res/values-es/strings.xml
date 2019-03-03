@@ -189,6 +189,8 @@
     <string name="filter_fliphor">Girar Horizontalmente</string>
     <string name="filter_grain">Granular</string>
     <string name="filter_lomish">Lomish</string>
+    <string name="save">Save</string>
+    <string name="choose_color_text">Choose a color :</string>
     <string name="filter_negative">Negativo</string>
     <string name="filter_poster">Posterizar</string>
     <string name="filter_rotate">Rotar</string>
