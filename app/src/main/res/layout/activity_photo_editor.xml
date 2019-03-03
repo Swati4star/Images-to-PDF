@@ -25,13 +25,13 @@
 
         <Button
             android:id="@+id/savecurrent"
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@drawable/cornered_edges"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="@string/save_current"
+            android:text="@string/save"
             android:textAllCaps="false"
             android:textColor="?attr/bottomSheetTextColor" />
 
@@ -39,6 +39,7 @@
             android:id="@+id/previousImageButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
+
             android:layout_marginStart="5dp"
             android:contentDescription="@string/previous_image_content_desc"
             android:gravity="center"
