@@ -190,6 +190,8 @@
     <string name="about_us">О нас</string>
     <string name="app_description">Простое Android приложение для конвертации изображений в PDF.</string>
     <string name="version">Версия : </string>
+    <string name="save">Save</string>
+    <string name="choose_color_text">Choose a color :</string>
     <string name="developer">Разработчик : Swati Garg</string>
     <string name="github_repo">Github репозиторий</string>
     <string name="view_contributors">Авторы</string>

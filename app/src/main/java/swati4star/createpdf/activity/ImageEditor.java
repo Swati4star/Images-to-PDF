@@ -10,6 +10,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -81,7 +86,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         ButterKnife.bind(this);
 
         initValues();
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -300,8 +304,32 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @Override
     public void onItemClick(int position) {
         int color = mBrushItems.get(position).getColor();
-        doodleSeekBar.setBackgroundColor(this.getResources().getColor(color));
-        mPhotoEditor.setBrushColor(this.getResources().getColor(color));
+        if (position == mBrushItems.size() - 1) {
+            final MaterialDialog colorpallete = new MaterialDialog.Builder(this)
+                    .title(R.string.choose_color_text)
+                    .customView(R.layout.color_pallete_layout, true)
+                    .positiveText(R.string.ok)
+                    .negativeText(R.string.cancel)
+                    .build();
+            final View mPositiveAction = colorpallete.getActionButton(DialogAction.POSITIVE);
+            final ColorPickerView colorPickerInput = colorpallete.getCustomView().findViewById(R.id.color_pallete);
+
+            mPositiveAction.setEnabled(true);
+            mPositiveAction.setOnClickListener(v -> {
+                try {
+                    doodleSeekBar.setBackgroundColor(colorPickerInput.getColor());
+                    mPhotoEditor.setBrushColor(colorPickerInput.getColor());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                colorpallete.dismiss();
+            });
+            colorpallete.show();
+
+        } else {
+            doodleSeekBar.setBackgroundColor(this.getResources().getColor(color));
+            mPhotoEditor.setBrushColor(this.getResources().getColor(color));
+        }
     }
 
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
