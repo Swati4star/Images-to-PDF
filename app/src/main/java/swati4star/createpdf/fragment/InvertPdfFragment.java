@@ -185,7 +185,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
             mViewPdf.setVisibility(View.GONE);
             return;
         }
-        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_invert_unsuccessful));
+        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_invert_successfull));
         getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
         viewPdfButton(path);

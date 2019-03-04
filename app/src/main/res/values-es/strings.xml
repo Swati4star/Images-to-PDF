@@ -377,6 +377,6 @@
     <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
     <string name="invert_pdf_title">Invert PDF</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
-    <string name="snackbar_invert_successfull">Colors inverted successfully.</string>
+    <string name="snackbar_invert_successfull">Inverted</string>
 
 </resources>
