@@ -72,7 +72,7 @@
                     android:title="@string/compress_pdf"/>
                 <item
                     android:id="@+id/nav_invert_pdf"
-                    android:icon="@drawable/ic_remove_circle_black_24dp"
+                    android:icon="@drawable/ic_invert_color_24dp"
                     android:title="@string/invert_pdf" />
 
             </menu>
