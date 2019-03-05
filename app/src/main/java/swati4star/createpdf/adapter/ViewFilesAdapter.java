@@ -235,11 +235,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         return position;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
-
     /**
      * Sets pdf files
      *
