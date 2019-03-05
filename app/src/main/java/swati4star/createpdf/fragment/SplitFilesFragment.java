@@ -24,8 +24,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -46,6 +44,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -120,6 +119,9 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.splitFiles)
     public void parse() {
+        // hide the soft keyboard on click of this button
+        hideKeyboard(mActivity);
+
         ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,
                 mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();
