@@ -44,7 +44,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -509,9 +508,9 @@ public class PDFUtils {
     }
 
     /**
-     * Breaks up the splitDetail String into ranges where a ","
-     * is found
-     * @param path the input pdf path
+     * Breaks up the splitDetail String into ranges where a "," is found
+     *
+     * @param path        the input pdf path
      * @param splitDetail string that contains split configuration
      * @return
      */
@@ -521,6 +520,11 @@ public class PDFUtils {
         String delims = "[,]";
         String[] ranges = splitConfig.split(delims);
         Log.v("Ranges", Arrays.toString(ranges));
+
+        // if input is invalid then return empty arraylist
+        if (!isInputValid(path, ranges))
+            return outputPaths;
+
         try {
             String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
                     getDefaultStorageLocation());
@@ -572,6 +576,38 @@ public class PDFUtils {
             showSnackbar(mContext, R.string.file_access_error);
         }
         return outputPaths;
+    }
+
+    private boolean isInputValid(String path, String[] ranges) {
+        try {
+            PdfReader reader = new PdfReader(path);
+            int numOfPages = reader.getNumberOfPages();
+            int startPage;
+            int endPage;
+
+            for (String range : ranges) {
+                if (!range.contains("-")) {
+                    startPage = Integer.parseInt(range);
+                    if (startPage > numOfPages) {
+                        showSnackbar(mContext, R.string.error_page_number);
+                        return false;
+                    }
+                } else {
+                    startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                    endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                    if (startPage > numOfPages || endPage > numOfPages) {
+                        showSnackbar(mContext, R.string.error_page_number);
+                        return false;
+                    } else if (startPage >= endPage) {
+                        showSnackbar(mContext, R.string.error_page_range);
+                        return false;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     /**
