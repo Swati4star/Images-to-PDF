@@ -50,6 +50,7 @@ import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -260,7 +261,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-            mFilePaths.add(getFilePath(data.getData()));
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            mFilePaths.add(path);
             mMergeSelectedFilesAdapter.notifyDataSetChanged();
             showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
             if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
