@@ -119,7 +119,6 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.splitFiles)
     public void parse() {
-        // hide the soft keyboard on click of this button
         hideKeyboard(mActivity);
 
         ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,

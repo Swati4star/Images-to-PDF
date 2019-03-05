@@ -585,7 +585,6 @@ public class PDFUtils {
             int startPage;
             int endPage;
 
-
             for (String range : ranges) {
                 if (!range.contains("-")) {
                     startPage = Integer.parseInt(range);
