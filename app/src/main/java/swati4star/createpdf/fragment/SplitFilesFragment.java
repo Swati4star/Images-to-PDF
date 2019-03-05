@@ -3,7 +3,9 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,6 +23,9 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -37,6 +43,7 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -73,6 +80,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     RecyclerView mSplittedFiles;
     @BindView(R.id.splitfiles_text)
     TextView splitFilesSuccessText;
+    @BindView(R.id.split_config)
+    EditText mSplitConfitEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -111,7 +120,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.splitFiles)
     public void parse() {
-        ArrayList<String> outputFilePaths = mPDFUtils.splitPDF(mPath);
+        ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,
+                mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();
         if (numberOfPages > 0) {
             String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
@@ -156,6 +166,33 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, splitFilesButton);
+        mSplitConfitEditText.setVisibility(View.VISIBLE);
+        mSplitConfitEditText.setText(getDefaultSplitConfig(mPath));
+    }
+
+    /**
+     * Gets the total number of pages in the
+     * selected PDF and returns them in
+     * default format for single page pdfs
+     * (1,2,3,4,5,)
+     */
+    private String getDefaultSplitConfig(String mPath) {
+        String splitConfig = "";
+        ParcelFileDescriptor fileDescriptor = null;
+        try {
+            if (mPath != null)
+                fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+            if (fileDescriptor != null) {
+                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+                final int pageCount = renderer.getPageCount();
+                for (int i = 1; i <= pageCount; i++) {
+                    splitConfig = splitConfig + i + ",";
+                }
+            }
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+        return splitConfig;
     }
 
     @Override

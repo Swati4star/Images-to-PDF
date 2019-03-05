@@ -72,7 +72,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.invert_pdf)
     MyCardView invertPdf;
 
-
     private HashMap<Integer, Integer> mFragmentPositionMap;
 
     @Override
@@ -106,25 +105,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void fillMap() {
         mFragmentPositionMap = new HashMap<>();
         mFragmentPositionMap.put(R.id.images_to_pdf, 1);
-        mFragmentPositionMap.put(R.id.qr_barcode_to_pdf, 2);
-        mFragmentPositionMap.put(R.id.view_files, 3);
+        mFragmentPositionMap.put(R.id.qr_barcode_to_pdf, 1);
+        mFragmentPositionMap.put(R.id.view_files, 2);
         mFragmentPositionMap.put(R.id.rotate_pages, 3);
         mFragmentPositionMap.put(R.id.add_watermark, 3);
         mFragmentPositionMap.put(R.id.merge_pdf, 4);
-        mFragmentPositionMap.put(R.id.split_pdf, 5);
-        mFragmentPositionMap.put(R.id.text_to_pdf, 6);
-        mFragmentPositionMap.put(R.id.compress_pdf, 7);
-        mFragmentPositionMap.put(R.id.remove_pages, 8);
-        mFragmentPositionMap.put(R.id.rearrange_pages, 9);
-        mFragmentPositionMap.put(R.id.extract_images, 10);
-        mFragmentPositionMap.put(R.id.view_history, 11);
-        mFragmentPositionMap.put(R.id.pdf_to_images, 11);
-        mFragmentPositionMap.put(R.id.add_password, 12);
-        mFragmentPositionMap.put(R.id.remove_password, 13);
-        mFragmentPositionMap.put(R.id.add_images, 14);
-        mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf, 15);
-        mFragmentPositionMap.put(R.id.invert_pdf, 16);
-
+        mFragmentPositionMap.put(R.id.split_pdf, 4);
+        mFragmentPositionMap.put(R.id.text_to_pdf, 1);
+        mFragmentPositionMap.put(R.id.compress_pdf, 4);
+        mFragmentPositionMap.put(R.id.remove_pages, 5);
+        mFragmentPositionMap.put(R.id.rearrange_pages, 5);
+        mFragmentPositionMap.put(R.id.extract_images, 5);
+        mFragmentPositionMap.put(R.id.view_history, 2);
+        mFragmentPositionMap.put(R.id.pdf_to_images, 5);
+        mFragmentPositionMap.put(R.id.add_password, 3);
+        mFragmentPositionMap.put(R.id.remove_password, 3);
+        mFragmentPositionMap.put(R.id.add_images, 3);
+        mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf, 4);
+        mFragmentPositionMap.put(R.id.invert_pdf, 4);
     }
 
     @Override

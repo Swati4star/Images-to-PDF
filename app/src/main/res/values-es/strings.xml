@@ -189,6 +189,9 @@
     <string name="filter_fliphor">Girar Horizontalmente</string>
     <string name="filter_grain">Granular</string>
     <string name="filter_lomish">Lomish</string>
+    <string name="save">Save</string>
+    <string name="choose_color_text">Choose a color :</string>
+    <string name="view_in_gallery">View Images in Gallery</string>
     <string name="filter_negative">Negativo</string>
     <string name="filter_poster">Posterizar</string>
     <string name="filter_rotate">Rotar</string>
@@ -275,7 +278,7 @@
     <string name="font_family_edit">Cambiar valor de la letra fuente por defecto</string>
     <string name="font_size_edit">Cambiar valor del Tamaño del Texto por defecto</string>
     <string name="settings_info">Puede modificar los valores por defecto de varias opciones aquí.</string>
-    <string name="split_info">El PDF será dividido en múltiples PDFs de una sola página.</string>
+    <string name="split_info">The PDF will be split into multiple PDFs.Format example: 1&#8211;5,6&#8211;7,8,9</string>
     <string name="border_width_prompt">Ingrese unidades anchura del borde</string>
     <string name="default_content_description">sin descripción</string>
     <string name="prompt_input">Ingrese aquí</string>
@@ -374,6 +377,6 @@
     <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
     <string name="invert_pdf_title">Invert PDF</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
-    <string name="snackbar_invert_successfull">Colors inverted successfully.</string>
+    <string name="snackbar_invert_successfull">Inverted</string>
 
 </resources>

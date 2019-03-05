@@ -190,6 +190,9 @@
     <string name="about_us">О нас</string>
     <string name="app_description">Простое Android приложение для конвертации изображений в PDF.</string>
     <string name="version">Версия : </string>
+    <string name="save">Save</string>
+    <string name="choose_color_text">Choose a color :</string>
+    <string name="view_in_gallery">View Images in Gallery</string>
     <string name="developer">Разработчик : Swati Garg</string>
     <string name="github_repo">Github репозиторий</string>
     <string name="view_contributors">Авторы</string>
@@ -283,7 +286,7 @@
     <!-- Split PDF -->
     <string name="split_pdf">Разделить PDF</string>
     <string name="split_success">Выбранный PDF файл успешно разделен на %1$d </string>
-    <string name="split_info">PDF файл будел разделен на несколько одностраничных файлов.</string>
+    <string name="split_info">The PDF will be split into multiple PDFs.Format example: 1&#8211;5,6&#8211;7,8,9</string>
 
     <!-- Remove Pages -->
     <string name="remove_pages">Удалить страницы</string>
@@ -415,5 +418,5 @@
     <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
     <string name="invert_pdf_title">Invert PDF</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
-    <string name="snackbar_invert_successfull">Colors inverted successfully.</string>
+    <string name="snackbar_invert_successfull">Inverted</string>
 </resources>

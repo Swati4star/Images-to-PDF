@@ -5,26 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:stretchColumns="*"
         tools:context=".fragment.AddImagesFragment">
-
-        <TextView
-            android:id="@+id/split_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/split_info"/>
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFile"
@@ -37,6 +24,27 @@
             android:text="@string/merge_file_select"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/split_config"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/split_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/split_info"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/splitFiles"
