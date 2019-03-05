@@ -36,6 +36,7 @@ import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -105,8 +106,11 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
-            setTextAndActivateButtons(getFilePath(data.getData()));
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
+        }
     }
 
 
