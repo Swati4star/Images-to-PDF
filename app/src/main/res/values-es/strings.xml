@@ -189,6 +189,9 @@
     <string name="filter_fliphor">Girar Horizontalmente</string>
     <string name="filter_grain">Granular</string>
     <string name="filter_lomish">Lomish</string>
+    <string name="save">Save</string>
+    <string name="choose_color_text">Choose a color :</string>
+    <string name="view_in_gallery">View Images in Gallery</string>
     <string name="filter_negative">Negativo</string>
     <string name="filter_poster">Posterizar</string>
     <string name="filter_rotate">Rotar</string>
@@ -374,8 +377,8 @@
     <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
     <string name="invert_pdf_title">Invert PDF</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
-    <string name="snackbar_invert_successfull">Colors inverted successfully.</string>
+    <string name="snackbar_invert_successfull">Inverted</string>
+
     <string name="error_page_number">Invalid input, exceeds maximum number of pages in pdf</string>
     <string name="error_page_range">Invalid range input</string>
-
 </resources>

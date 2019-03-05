@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import android.support.design.widget.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
@@ -17,6 +19,7 @@ public class BrushUtils {
         brushItems.add(new BrushItem(R.color.colorAccent));
         brushItems.add(new BrushItem(R.color.light_gray));
         brushItems.add(new BrushItem(R.color.black));
+        brushItems.add(new BrushItem(R.drawable.color_palette));
         return brushItems;
     }
 }

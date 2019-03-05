@@ -41,7 +41,10 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
     @Override
     public void onBindViewHolder(@NonNull BrushItemViewHolder holder, int position) {
         int color = mBrushItems.get(position).getColor();
-        holder.Doodlebutton.setBackgroundColor(mContext.getResources().getColor(color));
+        if (position == mBrushItems.size() - 1)
+            holder.Doodlebutton.setBackground(mContext.getResources().getDrawable(color));
+        else
+            holder.Doodlebutton.setBackgroundColor(mContext.getResources().getColor(color));
     }
 
     @Override

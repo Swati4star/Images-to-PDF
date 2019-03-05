@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,8 +88,9 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
 
     /**
      * inflates the layout for the fragment
-     * @param inflater reference to inflater object
-     * @param container parent for the inflated view
+     *
+     * @param inflater           reference to inflater object
+     * @param container          parent for the inflated view
      * @param savedInstanceState bundle with saved data, if any
      * @return inflated view
      */
@@ -104,6 +106,16 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         resetView();
         return rootView;
+    }
+
+    @OnClick(R.id.viewImagesInGallery)
+    void onImagesInGalleryClick() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri imagesUri = Uri.parse("content:///storage/emulated/0/PDFfiles/");
+        intent.setDataAndType(imagesUri, "image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
     }
 
     /**
@@ -180,6 +192,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
 
     /**
      * handles choosing a file from bottom sheet list
+     *
      * @param path path of the file on the device
      */
     @Override
@@ -191,6 +204,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
 
     /**
      * handles text and button states
+     *
      * @param path path of the file on the device
      */
     private void setTextAndActivateButtons(String path) {
@@ -204,6 +218,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
 
     /**
      * handles opening a generated image for the given pdf
+     *
      * @param path path of the file on the device
      */
     @Override
@@ -231,7 +246,8 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
 
     /**
      * updates recycler view list items based with the generated images
-     * @param imageCount number of generated images
+     *
+     * @param imageCount      number of generated images
      * @param outputFilePaths path for each generated image
      */
     @Override
@@ -247,6 +263,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
 
     /**
      * populates bottom sheet list with pdf files
+     *
      * @param paths paths for pdf files on the device
      */
     @Override
