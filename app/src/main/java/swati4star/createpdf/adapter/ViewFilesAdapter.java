@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -190,6 +192,23 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void unCheckAll() {
         mSelectedFiles.clear();
         notifyDataSetChanged();
+        updateActionBarTitle();
+    }
+
+    /**
+     * Sets the action bar title to app name when all files have been unchecked
+     */
+    private void updateActionBarTitle() {
+        ActionBar actionBar = ((AppCompatActivity) mActivity).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.app_name);
+        }
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewFilesHolder holder) {
+        super.onViewRecycled(holder);
+        holder.checkBox.setChecked(false);
     }
 
     /**
