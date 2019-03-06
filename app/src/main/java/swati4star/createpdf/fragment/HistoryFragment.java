@@ -117,6 +117,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         });
 
         builder.setNeutralButton(getString(R.string.select_all), (dialogInterface, i) -> {
+            Arrays.fill(mFilterOptionState, Boolean.TRUE); //reset state 
             new LoadHistory(mActivity).execute(new String[0]);
         });
         builder.create().show();
