@@ -49,6 +49,10 @@
                     android:id="@+id/nav_add_images"
                     android:icon="@drawable/ic_add_black_24dp"
                     android:title="@string/add_images" />
+                <item
+                    android:id="@+id/nav_add_watermark"
+                    android:icon="@drawable/ic_branding_watermark_black_24dp"
+                    android:title="@string/add_watermark" />
 
             </menu>
         </item>
