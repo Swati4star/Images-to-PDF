@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -32,6 +33,8 @@ import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangeImages extends AppCompatActivity implements RearrangeImagesAdapter.OnClickListener {
+
+    private static final String LOG_TAG = RearrangeImages.class.getSimpleName();
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -80,9 +83,10 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
 
     @Override
     public void onRemoveClick(int position) {
-        if (mSharedPreferences.getBoolean(Constants.CHOICE_REMOVE_IMAGE, false)) {
+        if (mSharedPreferences.getBoolean(Constants.CHOICE_REMOVE_IMAGE, false))    {
             mImages.remove(position);
             mRearrangeImagesAdapter.positionChanged(mImages);
+            mRearrangeImagesAdapter.notifyItemRemoved(position);
         } else {
             MaterialDialog.Builder builder = createWarningDialog(this,
                     R.string.remove_image_message);
@@ -95,14 +99,19 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
                         }
                         mImages.remove(position);
                         mRearrangeImagesAdapter.positionChanged(mImages);
-
+                        mRearrangeImagesAdapter.notifyItemRemoved(position);
                     })
                     .show();
         }
+
     }
 
     private void passUris() {
         Intent returnIntent = new Intent();
+        if (mRearrangeImagesAdapter.getItemCount() == 0) {
+            mImages.clear();
+            mRearrangeImagesAdapter.notifyDataSetChanged();
+        }
         returnIntent.putStringArrayListExtra(Constants.RESULT, mImages);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
