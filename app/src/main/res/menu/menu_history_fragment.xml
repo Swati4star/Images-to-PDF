@@ -8,4 +8,10 @@
         android:orderInCategory="1"
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionFilterHistory"
+        android:icon="@drawable/ic_filter_list"
+        android:orderInCategory="2"
+        android:title="@string/Filter_name"
+        app:showAsAction="ifRoom" />
 </menu>

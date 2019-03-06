@@ -2,6 +2,7 @@ package swati4star.createpdf.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.view.ViewGroup;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,7 +69,8 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, root);
-        new LoadHistory(mActivity).execute();
+        // by default all operations should be shown, so pass empty array
+        new LoadHistory(mActivity).execute(new String[0]);
         return root;
     }
 
@@ -81,8 +85,38 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
             case R.id.actionDeleteHistory:
                 deleteHistory();
                 break;
+            case R.id.actionFilterHistory:
+                openFilterDialog();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openFilterDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+
+        String[] options = getResources().getStringArray(R.array.filter_options_history);
+        boolean[] states = new boolean[options.length];
+        Arrays.fill(states, Boolean.TRUE); //by default all options should be selected
+
+        builder.setMultiChoiceItems(options, states, (dialogInterface, index, isChecked) -> states[index] = isChecked);
+
+        builder.setTitle(getString(R.string.title_filter_history_dialog));
+
+        builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+            ArrayList<String> selectedOptions = new ArrayList<>();
+            for (int j = 0; j < states.length; j++) {
+                if (states[j]) { //only apply those operations whose state is true i.e selected checkbox
+                    selectedOptions.add(options[j]);
+                }
+            }
+            new LoadHistory(mActivity).execute(selectedOptions.toArray(new String[0]));
+        });
+
+        builder.setNeutralButton(getString(R.string.select_all), (dialogInterface, i) -> {
+            new LoadHistory(mActivity).execute(new String[0]);
+        });
+        builder.create().show();
     }
 
     private void deleteHistory() {
@@ -114,7 +148,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class LoadHistory extends AsyncTask<Void, Void, Void> {
+    private class LoadHistory extends AsyncTask<String[], Void, Void> {
         private final Context mContext;
 
         LoadHistory(Context mContext) {
@@ -122,9 +156,14 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String[]... args) {
             AppDatabase db = AppDatabase.getDatabase(mActivity.getApplicationContext());
-            mHistoryList = db.historyDao().getAllHistory();
+            if (args[0].length == 0) {
+                mHistoryList = db.historyDao().getAllHistory();
+            } else {
+                String[] filters = args[0];
+                mHistoryList = db.historyDao().getHistoryByOperationType(filters);
+            }
             return null;
         }
 
