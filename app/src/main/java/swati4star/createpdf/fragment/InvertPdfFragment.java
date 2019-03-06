@@ -3,12 +3,16 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -37,6 +42,7 @@ import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.InvertPdf;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -90,6 +96,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         resetValues();
         return rootview;
     }
+
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
         mBottomSheetUtils.showHideSheet(sheetBehavior);
@@ -103,15 +110,19 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         startActivityForResult(mFileUtils.getFileChooser(),
                 INTENT_REQUEST_PICKFILE_CODE);
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
-            setTextAndActivateButtons(getFilePath(data.getData()));
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
+        }
     }
 
 
-//    Inverts colors in PDF
+    //Inverts colors in PDF
     @OnClick(R.id.invert)
     public void parse() {
         new InvertPdf(mPath, this).execute();

@@ -46,6 +46,7 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
@@ -135,11 +136,13 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (data == null || resultCode != RESULT_OK )
+        if (data == null || resultCode != RESULT_OK)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             mUri = data.getData();
-            setTextAndActivateButtons(getFilePath(data.getData()));
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
         } else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
             String pages = data.getStringExtra(RESULT);
 

@@ -38,6 +38,7 @@ import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
@@ -113,8 +114,11 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
-            setTextAndActivateButtons(getFilePath(data.getData()));
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
+        }
     }
 
     @OnClick(R.id.splitFiles)
