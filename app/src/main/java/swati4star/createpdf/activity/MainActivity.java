@@ -43,6 +43,7 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.ThemeUtils;
+import swati4star.createpdf.util.WatermarkPageEvent;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
@@ -63,6 +64,7 @@ import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
+import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -382,6 +384,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_invert_pdf:
                 fragment = new InvertPdfFragment();
+                break;
+
+            case R.id.nav_add_watermark:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
+                fragment.setArguments(bundle);
                 break;
         }
 
