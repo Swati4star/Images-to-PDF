@@ -34,8 +34,6 @@ import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangeImages extends AppCompatActivity implements RearrangeImagesAdapter.OnClickListener {
 
-    private static final String LOG_TAG = RearrangeImages.class.getSimpleName();
-
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
@@ -86,7 +84,6 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
         if (mSharedPreferences.getBoolean(Constants.CHOICE_REMOVE_IMAGE, false))    {
             mImages.remove(position);
             mRearrangeImagesAdapter.positionChanged(mImages);
-            mRearrangeImagesAdapter.notifyItemRemoved(position);
         } else {
             MaterialDialog.Builder builder = createWarningDialog(this,
                     R.string.remove_image_message);
@@ -99,7 +96,6 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
                         }
                         mImages.remove(position);
                         mRearrangeImagesAdapter.positionChanged(mImages);
-                        mRearrangeImagesAdapter.notifyItemRemoved(position);
                     })
                     .show();
         }
@@ -108,10 +104,6 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
 
     private void passUris() {
         Intent returnIntent = new Intent();
-        if (mRearrangeImagesAdapter.getItemCount() == 0) {
-            mImages.clear();
-            mRearrangeImagesAdapter.notifyDataSetChanged();
-        }
         returnIntent.putStringArrayListExtra(Constants.RESULT, mImages);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();

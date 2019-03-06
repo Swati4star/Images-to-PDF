@@ -176,7 +176,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     .getString(R.string.images_selected), mImagesUri.size()));
             mNoOfImages.setVisibility(View.VISIBLE);
             mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
-//            mCreatePdf.setEnabled(true);
+            mCreatePdf.setEnabled(true);
             showSnackbar(mActivity, R.string.successToast);
         } else {
             mNoOfImages.setVisibility(View.GONE);
@@ -331,7 +331,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                             .getString(R.string.images_selected), mImagesUri.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
                     showSnackbar(mActivity, R.string.snackbar_images_added);
-//                    mCreatePdf.setEnabled(true);
+                    mCreatePdf.setEnabled(true);
                 }
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 mOpenPdf.setVisibility(View.GONE);
@@ -371,7 +371,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
             case INTENT_REQUEST_REARRANGE_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
-                /** Added by me **/
                 if (mImagesUri.size() > 0) {
                     showSnackbar(mActivity, R.string.images_rearranged);
                 } else {
