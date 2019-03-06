@@ -318,9 +318,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mButtonClicked = 0;
-        if (resultCode != Activity.RESULT_OK || data == null) {
+        if (resultCode != Activity.RESULT_OK || data == null)
             return;
-        }
 
         switch (requestCode) {
             case INTENT_REQUEST_GET_IMAGES:

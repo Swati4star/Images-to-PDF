@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -81,7 +80,7 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
 
     @Override
     public void onRemoveClick(int position) {
-        if (mSharedPreferences.getBoolean(Constants.CHOICE_REMOVE_IMAGE, false))    {
+        if (mSharedPreferences.getBoolean(Constants.CHOICE_REMOVE_IMAGE, false)) {
             mImages.remove(position);
             mRearrangeImagesAdapter.positionChanged(mImages);
         } else {
@@ -99,7 +98,6 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
                     })
                     .show();
         }
-
     }
 
     private void passUris() {
