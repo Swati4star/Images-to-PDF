@@ -14,4 +14,14 @@
         <item>Date ▼</item>
     </string-array>
 
+    <string-array name="filter_options_history">
+        <item>Created</item>
+        <item>Deleted</item>
+        <item>Renamed</item>
+        <item>Rotated</item>
+        <item>Printed</item>
+        <item>Decrypted</item>
+        <item>Encrypted</item>
+        <item>Inverted</item>
+    </string-array>
 </resources>
