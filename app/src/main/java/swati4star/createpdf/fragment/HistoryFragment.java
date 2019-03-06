@@ -50,6 +50,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private Activity mActivity;
     private List<History> mHistoryList;
     private HistoryAdapter mHistoryAdapter;
+    private boolean[] mFilterOptionState;
 
     @Override
     public void onAttach(Context context) {
@@ -69,6 +70,9 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, root);
+
+        mFilterOptionState = new boolean[getResources().getStringArray(R.array.filter_options_history).length];
+        Arrays.fill(mFilterOptionState, Boolean.TRUE); //by default all options should be selected
         // by default all operations should be shown, so pass empty array
         new LoadHistory(mActivity).execute(new String[0]);
         return root;
@@ -96,17 +100,16 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
 
         String[] options = getResources().getStringArray(R.array.filter_options_history);
-        boolean[] states = new boolean[options.length];
-        Arrays.fill(states, Boolean.TRUE); //by default all options should be selected
 
-        builder.setMultiChoiceItems(options, states, (dialogInterface, index, isChecked) -> states[index] = isChecked);
+        builder.setMultiChoiceItems(options, mFilterOptionState, (dialogInterface, index, isChecked) ->
+                mFilterOptionState[index] = isChecked);
 
         builder.setTitle(getString(R.string.title_filter_history_dialog));
 
         builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
             ArrayList<String> selectedOptions = new ArrayList<>();
-            for (int j = 0; j < states.length; j++) {
-                if (states[j]) { //only apply those operations whose state is true i.e selected checkbox
+            for (int j = 0; j < mFilterOptionState.length; j++) {
+                if (mFilterOptionState[j]) { //only apply those operations whose state is true i.e selected checkbox
                     selectedOptions.add(options[j]);
                 }
             }
