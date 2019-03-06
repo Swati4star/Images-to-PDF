@@ -326,7 +326,8 @@ public class PDFUtils {
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(destFilePath));
             stamper.close();
             reader.close();
-            showSnackbar(mContext, R.string.snackbar_pdfCreated);
+            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(destFilePath)).show();
             dataSetChanged.updateDataset();
             return true;
         } catch (Exception e) {
