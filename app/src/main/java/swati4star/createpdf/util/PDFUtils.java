@@ -578,34 +578,53 @@ public class PDFUtils {
         return outputPaths;
     }
 
+    /**
+     * checks if the user entered split ranges are valid or not
+     *
+     * @param path   the input pdf path
+     * @param ranges string array that contain page range, can be a single integer or range separated by dash like 2-5
+     * @return true if input is valid, otherwise false
+     */
     private boolean isInputValid(String path, String[] ranges) {
         try {
             PdfReader reader = new PdfReader(path);
             int numOfPages = reader.getNumberOfPages();
-            int startPage;
-            int endPage;
-
-            for (String range : ranges) {
-                if (!range.contains("-")) {
-                    startPage = Integer.parseInt(range);
-                    if (startPage > numOfPages) {
-                        showSnackbar(mContext, R.string.error_page_number);
-                        return false;
-                    }
-                } else {
-                    startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
-                    endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                    if (startPage > numOfPages || endPage > numOfPages) {
-                        showSnackbar(mContext, R.string.error_page_number);
-                        return false;
-                    } else if (startPage >= endPage) {
-                        showSnackbar(mContext, R.string.error_page_range);
-                        return false;
-                    }
-                }
-            }
+            return checkRangeValidity(numOfPages, ranges);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * checks if the user entered split ranges are valid or not
+     *
+     * @param numOfPages total number of pages of pdf
+     * @param ranges     string array that contain page range, can be a single integer or range separated by dash like 2-5
+     * @return true if all ranges are valid, otherwise false
+     */
+    private boolean checkRangeValidity(int numOfPages, String[] ranges) {
+        int startPage;
+        int endPage;
+
+        for (String range : ranges) {
+            if (!range.contains("-")) {
+                startPage = Integer.parseInt(range);
+                if (startPage > numOfPages) {
+                    showSnackbar(mContext, R.string.error_page_number);
+                    return false;
+                }
+            } else {
+                startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                if (startPage > numOfPages || endPage > numOfPages) {
+                    showSnackbar(mContext, R.string.error_page_number);
+                    return false;
+                } else if (startPage >= endPage) {
+                    showSnackbar(mContext, R.string.error_page_range);
+                    return false;
+                }
+            }
         }
         return true;
     }
