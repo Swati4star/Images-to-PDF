@@ -95,6 +95,7 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
                         }
                         mImages.remove(position);
                         mRearrangeImagesAdapter.positionChanged(mImages);
+
                     })
                     .show();
         }
