@@ -73,6 +73,9 @@ public class PDFUtils {
     private SparseIntArray mAngleRadioButton;
     private SharedPreferences mSharedPreferences;
 
+    private static final int ERROR_PAGE_NUMBER = 1;
+    private static final int ERROR_PAGE_RANGE = 2;
+
     public PDFUtils(Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(mContext);
@@ -589,7 +592,17 @@ public class PDFUtils {
         try {
             PdfReader reader = new PdfReader(path);
             int numOfPages = reader.getNumberOfPages();
-            return checkRangeValidity(numOfPages, ranges);
+            int result = checkRangeValidity(numOfPages, ranges);
+            switch (result) {
+                case ERROR_PAGE_NUMBER:
+                    showSnackbar(mContext, R.string.error_page_number);
+                    break;
+                case ERROR_PAGE_RANGE:
+                    showSnackbar(mContext, R.string.error_page_range);
+                    break;
+                default:
+                    return true;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -600,10 +613,13 @@ public class PDFUtils {
      * checks if the user entered split ranges are valid or not
      *
      * @param numOfPages total number of pages of pdf
-     * @param ranges     string array that contain page range, can be a single integer or range separated by dash like 2-5
-     * @return true if all ranges are valid, otherwise false
+     * @param ranges     string array that contain page range,
+     *                   can be a single integer or range separated by dash like 2-5
+     * @return 0 if all ranges are valid
+     * ERROR_PAGE_NUMBER if range greater than max number of pages
+     * ERROR_PAGE_RANGE if range is invalid like 9-4
      */
-    private boolean checkRangeValidity(int numOfPages, String[] ranges) {
+    private int checkRangeValidity(int numOfPages, String[] ranges) {
         int startPage;
         int endPage;
 
@@ -611,22 +627,19 @@ public class PDFUtils {
             if (!range.contains("-")) {
                 startPage = Integer.parseInt(range);
                 if (startPage > numOfPages) {
-                    showSnackbar(mContext, R.string.error_page_number);
-                    return false;
+                    return ERROR_PAGE_NUMBER;
                 }
             } else {
                 startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
                 endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
                 if (startPage > numOfPages || endPage > numOfPages) {
-                    showSnackbar(mContext, R.string.error_page_number);
-                    return false;
+                    return ERROR_PAGE_NUMBER;
                 } else if (startPage >= endPage) {
-                    showSnackbar(mContext, R.string.error_page_range);
-                    return false;
+                    return ERROR_PAGE_RANGE;
                 }
             }
         }
-        return true;
+        return 0;
     }
 
     /**
