@@ -24,8 +24,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -40,12 +38,14 @@ import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -114,12 +114,17 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE)
-            setTextAndActivateButtons(getFilePath(data.getData()));
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
+        }
     }
 
     @OnClick(R.id.splitFiles)
     public void parse() {
+        hideKeyboard(mActivity);
+
         ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,
                 mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();

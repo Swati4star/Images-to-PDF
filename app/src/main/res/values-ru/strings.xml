@@ -419,4 +419,8 @@
     <string name="invert_pdf_title">Invert PDF</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
     <string name="snackbar_invert_successfull">Inverted</string>
+
+    <string name="error_page_number">Invalid input, exceeds maximum number of pages in pdf</string>
+    <string name="error_page_range">Invalid range input</string>
+    <string name="title_filter_history_dialog">Filter by operation type</string>
 </resources>

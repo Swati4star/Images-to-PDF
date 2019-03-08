@@ -42,6 +42,7 @@ import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PdfToImages;
+import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
@@ -166,7 +167,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             mUri = data.getData();
-            setTextAndActivateButtons(getFilePath(data.getData()));
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
+
         }
     }
 

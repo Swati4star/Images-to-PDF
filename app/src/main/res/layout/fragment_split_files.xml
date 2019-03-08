@@ -31,8 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
+            android:inputType="number"
+            android:digits="0123456789-,"
             android:visibility="gone" />
 
         <TextView
