@@ -620,7 +620,7 @@ public class PDFUtils {
      * ERROR_PAGE_NUMBER if range greater than max number of pages
      * ERROR_PAGE_RANGE if range is invalid like 9-4
      */
-    private int checkRangeValidity(int numOfPages, String[] ranges) {
+    public static int checkRangeValidity(int numOfPages, String[] ranges) {
         int startPage;
         int endPage;
 
