@@ -68,7 +68,7 @@
                     android:title="@string/split_pdf"/>
                 <item
                     android:id="@+id/nav_remove_duplicate_pages"
-                    android:icon="@drawable/ic_remove_circle_black_24dp"
+                    android:icon="@drawable/ic_remove_duplicate_square_black"
                     android:title="@string/remove_duplicate_pages" />
                 <item
                     android:id="@+id/nav_compress_pdf"
