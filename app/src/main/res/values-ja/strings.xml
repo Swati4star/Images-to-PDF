@@ -327,6 +327,7 @@
     <string name="stretch_image">Stretch image to fit on page</string>
     <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
     <string name="create_images">" 画像を作成する"</string>
+    <string name="img_to_pdf">Images to PDF</string>
     <string name="view_images">画像を見る</string>
     <string name="share_images">" 画像を共有する"</string>
     <string name="select_pdf_file">PDFファイルを選択</string>

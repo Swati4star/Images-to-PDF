@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout android:id="@+id/favourites_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/images_to_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_menu_camera"
+                    app:option_text="Images to PDF" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/text_to_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_text_format_black_24dp"
+                    app:option_text="@string/text_to_pdf" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/qr_barcode_to_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_qrcode_24dp"
+                    app:option_text="@string/qr_barcode_pdf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/view_files_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_menu_gallery"
+                    app:option_text="@string/viewFiles" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/view_history_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_history_black_24dp"
+                    app:option_text="@string/history" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/add_password_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_lock_black_24dp"
+                    app:option_text="@string/add_password" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/remove_password_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_lock_open_black_24dp"
+                    app:option_text="@string/remove_password" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/rotate_pages_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/baseline_crop_rotate_24"
+                    app:option_text="@string/rotate_pages" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/add_watermark_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_branding_watermark_black_24dp"
+                    app:option_text="@string/add_watermark" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/add_images_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_add_black_24dp"
+                    app:option_text="@string/add_images" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/merge_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_merge_type_black_24dp"
+                    app:option_text="@string/merge_pdf" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/split_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_call_split_black_24dp"
+                    app:option_text="@string/split_pdf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/invert_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_invert_color_24dp"
+                    app:option_text="@string/invert_pdf" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/compress_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_compress_image"
+                    app:option_text="@string/compress_pdf" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/remove_duplicates_pages_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_remove_circle_black_24dp"
+                    app:option_text="@string/remove_duplicate_pages" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/remove_pages_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_remove_circle_black_24dp"
+                    app:option_text="@string/remove_pages" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/rearrange_pages_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_sort"
+                    app:option_text="@string/reorder_pages" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/extract_images_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_broken_image_black_24dp"
+                    app:option_text="@string/extract_images" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/pdf_to_images_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_image_black_24dp"
+                    app:option_text="@string/pdf_to_images" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fav_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_add_black_24dp"
+        android:clickable="true"
+        android:translationZ="12dp"
+        android:layout_marginBottom="16dp" />
+</android.support.design.widget.CoordinatorLayout>

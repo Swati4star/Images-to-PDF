@@ -15,9 +15,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
+import swati4star.createpdf.fragment.FavouritesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
@@ -126,6 +130,29 @@ public class MainActivity extends AppCompatActivity
 
         //check for welcome activity
         openWelcomeActivity();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_favourites, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_favourites_item) {
+            Fragment fragment = new FavouritesFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
