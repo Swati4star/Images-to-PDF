@@ -68,4 +68,6 @@ public class Constants {
 
     public static final String VERSION_NAME = "VERSION_NAME";
 
+    public static final String stateBottomSheet = "state_of_bottomsheet";
+
 }

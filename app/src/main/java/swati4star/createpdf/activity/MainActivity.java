@@ -64,6 +64,7 @@ import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
+import static swati4star.createpdf.util.Constants.stateBottomSheet;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 
 public class MainActivity extends AppCompatActivity
@@ -271,6 +272,10 @@ public class MainActivity extends AppCompatActivity
                     .findFragmentById(R.id.content);
             if (currentFragment instanceof HomeFragment) {
                 checkDoubleBackPress();
+            } else if (mSharedPreferences.getBoolean(stateBottomSheet, true)) {
+                getSupportFragmentManager().beginTransaction().detach(currentFragment)
+                        .attach(currentFragment).commit();
+                mSharedPreferences.edit().putBoolean(stateBottomSheet, false).apply();
             } else {
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
