@@ -75,6 +75,7 @@ public class PDFUtils {
 
     private static final int ERROR_PAGE_NUMBER = 1;
     private static final int ERROR_PAGE_RANGE = 2;
+    private static final int ERROR_INVALID_INPUT = 3;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
@@ -601,6 +602,9 @@ public class PDFUtils {
                 case ERROR_PAGE_RANGE:
                     showSnackbar(mContext, R.string.error_page_range);
                     break;
+                case ERROR_INVALID_INPUT:
+                    showSnackbar(mContext, R.string.error_invalid_input);
+                    break;
                 default:
                     return true;
             }
@@ -617,8 +621,9 @@ public class PDFUtils {
      * @param ranges     string array that contain page range,
      *                   can be a single integer or range separated by dash like 2-5
      * @return 0 if all ranges are valid
-     * ERROR_PAGE_NUMBER if range greater than max number of pages
-     * ERROR_PAGE_RANGE if range is invalid like 9-4
+     * ERROR_PAGE_NUMBER    if range greater than max number of pages
+     * ERROR_PAGE_RANGE     if range is invalid like 9-4
+     * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
      */
     public static int checkRangeValidity(int numOfPages, String[] ranges) {
         int startPage;
@@ -626,13 +631,26 @@ public class PDFUtils {
 
         for (String range : ranges) {
             if (!range.contains("-")) {
-                startPage = Integer.parseInt(range);
+                try {
+                    startPage = Integer.parseInt(range);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    return ERROR_INVALID_INPUT;
+                }
                 if (startPage > numOfPages) {
                     return ERROR_PAGE_NUMBER;
                 }
             } else {
-                startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
-                endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                try {
+                    startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                    endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    return ERROR_INVALID_INPUT;
+                } catch (StringIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    return ERROR_INVALID_INPUT;
+                }
                 if (startPage > numOfPages || endPage > numOfPages) {
                     return ERROR_PAGE_NUMBER;
                 } else if (startPage >= endPage) {
