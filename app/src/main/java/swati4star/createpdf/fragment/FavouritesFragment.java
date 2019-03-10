@@ -1,6 +1,5 @@
 package swati4star.createpdf.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,9 +21,6 @@ import swati4star.createpdf.customviews.MyCardView;
 
 public class FavouritesFragment extends Fragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private Activity mActivity;
-    private SharedPreferences mSharedPreferences;
 
     @BindView(R.id.fav_add_fab)
     FloatingActionButton mFab;
