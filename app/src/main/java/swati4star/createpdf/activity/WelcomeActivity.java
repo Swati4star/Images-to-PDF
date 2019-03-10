@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.ThemeUtils;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_welcome);

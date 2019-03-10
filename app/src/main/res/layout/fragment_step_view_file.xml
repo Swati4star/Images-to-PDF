@@ -19,7 +19,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/half_margin"
         android:text="@string/welcome_viewfiles_title"
-        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
