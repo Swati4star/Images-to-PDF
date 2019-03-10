@@ -72,6 +72,4 @@
     <CheckBoxPreference
         android:title="@string/pdf_to_images"
         android:key="@string/pdf_to_images"/>
-
-
 </PreferenceScreen>
