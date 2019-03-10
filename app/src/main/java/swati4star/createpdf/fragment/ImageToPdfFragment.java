@@ -127,6 +127,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
+    public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
@@ -324,7 +325,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         switch (requestCode) {
             case INTENT_REQUEST_GET_IMAGES:
                 mImagesUri.clear();
+                mUnarrangedImagesUri.clear();
                 mImagesUri.addAll(Matisse.obtainPathResult(data));
+                mUnarrangedImagesUri.addAll(mImagesUri);
                 if (mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
@@ -370,9 +373,12 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
             case INTENT_REQUEST_REARRANGE_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
-                if (mImagesUri.size() > 0) {
+                if (!mUnarrangedImagesUri.equals(mImagesUri) && mImagesUri.size() > 0) {
                     showSnackbar(mActivity, R.string.images_rearranged);
-                } else {
+                    mUnarrangedImagesUri.clear();
+                    mUnarrangedImagesUri.addAll(mImagesUri);
+                }
+                if (mImagesUri.size() == 0) {
                     mNoOfImages.setVisibility(View.GONE);
                     mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
                     mCreatePdf.setEnabled(false);
