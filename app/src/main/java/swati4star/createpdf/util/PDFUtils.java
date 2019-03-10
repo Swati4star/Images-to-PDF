@@ -637,7 +637,7 @@ public class PDFUtils {
                     e.printStackTrace();
                     return ERROR_INVALID_INPUT;
                 }
-                if (startPage > numOfPages) {
+                if (startPage > numOfPages || startPage == 0) {
                     return ERROR_PAGE_NUMBER;
                 }
             } else {
@@ -651,7 +651,7 @@ public class PDFUtils {
                     e.printStackTrace();
                     return ERROR_INVALID_INPUT;
                 }
-                if (startPage > numOfPages || endPage > numOfPages) {
+                if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
                     return ERROR_PAGE_NUMBER;
                 } else if (startPage >= endPage) {
                     return ERROR_PAGE_RANGE;
