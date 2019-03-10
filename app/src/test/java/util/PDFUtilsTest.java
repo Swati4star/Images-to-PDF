@@ -15,14 +15,14 @@ public class PDFUtilsTest {
     private static final int ERROR_INVALID_INPUT = 3;
 
     @Test
-    public void checkRange_CorrectRanges_Returns_NO_ERROR() {
+    public void checkRangeCorrectRangesReturnsNoError() {
         assertThat(PDFUtils.checkRangeValidity(NUM_OF_PAGES, new String[]{"1", "2", "3-8"}), is(NO_ERROR));
         assertThat(PDFUtils.checkRangeValidity(NUM_OF_PAGES, new String[]{"1", "2-6", "4-8"}), is(NO_ERROR));
         assertThat(PDFUtils.checkRangeValidity(NUM_OF_PAGES, new String[]{"1-5", "21-23"}), is(NO_ERROR));
     }
 
     @Test
-    public void checkRange_IncorrectPageNumber_Returns_ERROR_PAGE_NUMBER() {
+    public void checkRangeIncorrectPageNumberReturnsErrorPageNumber() {
         // 24>23
         assertThat(PDFUtils.checkRangeValidity(NUM_OF_PAGES, new String[]{"1", "2", "24"}), is(ERROR_PAGE_NUMBER));
         assertThat(PDFUtils.checkRangeValidity(NUM_OF_PAGES, new String[]{"1-8", "24"}), is(ERROR_PAGE_NUMBER));
@@ -41,13 +41,13 @@ public class PDFUtilsTest {
     }
 
     @Test
-    public void checkRange_IncorrectRange_Returns_ERROR_RANGE() {
+    public void checkRangeIncorrectRangeReturnsErrorRange() {
         //invalid range 3-1
         assertThat(PDFUtils.checkRangeValidity(NUM_OF_PAGES, new String[]{"1", "2", "3-1"}), is(ERROR_RANGE));
     }
 
     @Test
-    public void checkRange_InvalidInput_Returns_ERROR_INVALID_INPUT() {
+    public void checkRangeInvalidInputReturnsErrorInvalidInput() {
         // ""(empty) in invalid
         assertThat(PDFUtils.checkRangeValidity(
                 NUM_OF_PAGES,
