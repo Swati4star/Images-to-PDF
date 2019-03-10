@@ -72,6 +72,7 @@
         <activity android:name=".activity.RearrangeImages" />
         <activity android:name=".activity.ImagesPreviewActivity" />
         <activity android:name=".activity.RearrangePdfPages" />
+        <activity android:name=".activity.FavouritesActivity"/>
 
     </application>
 
