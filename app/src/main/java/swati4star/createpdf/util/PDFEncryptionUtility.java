@@ -16,10 +16,8 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -36,10 +34,9 @@ public class PDFEncryptionUtility {
 
     private final Activity mContext;
     private final FileUtils mFileUtils;
-    private String mPassword;
-
-    private SharedPreferences mSharedPrefs;
     private final MaterialDialog mDialog;
+    private String mPassword;
+    private SharedPreferences mSharedPrefs;
 
     public PDFEncryptionUtility(Activity context) {
         this.mContext = context;
@@ -57,8 +54,7 @@ public class PDFEncryptionUtility {
      *
      * @param filePath Path of file to be encrypted
      */
-    public void setPassword(final String filePath, final DataSetChanged dataSetChanged,
-                            final ArrayList<File> mFileList) {
+    public void setPassword(final String filePath, final DataSetChanged dataSetChanged) {
 
         mDialog.setTitle(R.string.set_password);
         final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
@@ -67,7 +63,8 @@ public class PDFEncryptionUtility {
         mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -86,7 +83,7 @@ public class PDFEncryptionUtility {
         mPositiveAction.setEnabled(false);
         mPositiveAction.setOnClickListener(v -> {
             try {
-                String path = doEncryption(filePath, mPassword, mFileList);
+                String path = doEncryption(filePath, mPassword);
                 getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                         .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(path)).show();
                 if (dataSetChanged != null)
@@ -106,12 +103,11 @@ public class PDFEncryptionUtility {
      * @param password - password to be encrypted with
      * @return string - path of output file
      */
-    private String doEncryption(String path, String password,
-                                final ArrayList<File> mFileList) throws IOException, DocumentException {
+    private String doEncryption(String path, String password) throws IOException, DocumentException {
 
         String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
         String finalOutputFile = mFileUtils.getUniqueFileName(path.replace(mContext.getString(R.string.pdf_ext),
-                mContext.getString(R.string.encrypted_file)), mFileList);
+                mContext.getString(R.string.encrypted_file)));
 
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
@@ -125,6 +121,7 @@ public class PDFEncryptionUtility {
 
     /**
      * Checks if PDf is encrpyted
+     *
      * @param file - path of PDF file
      * @return true, if PDF is encrypted, otherwise false
      */
@@ -151,8 +148,7 @@ public class PDFEncryptionUtility {
      * @param file Path of pdf file to be decrypted
      */
     public void removePassword(final String file,
-                               final DataSetChanged dataSetChanged,
-                               final ArrayList<File> mFileList) {
+                               final DataSetChanged dataSetChanged) {
 
         if (!isPDFEncrypted(file))
             return;
@@ -187,8 +183,8 @@ public class PDFEncryptionUtility {
             // our master password & their user password
             // their master password
 
-            if (!removePasswordUsingDefMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
-                if (!removePasswordUsingInputMasterPAssword(file, dataSetChanged, mFileList, input_password)) {
+            if (!removePasswordUsingDefMasterPAssword(file, dataSetChanged, input_password)) {
+                if (!removePasswordUsingInputMasterPAssword(file, dataSetChanged, input_password)) {
                     showSnackbar(mContext, R.string.master_password_changed);
                 }
             }
@@ -197,9 +193,8 @@ public class PDFEncryptionUtility {
     }
 
     private boolean removePasswordUsingDefMasterPAssword(final String file,
-                                    final DataSetChanged dataSetChanged,
-                                    final ArrayList<File> mFileList,
-                                    final String[] inputPassword) {
+                                                         final DataSetChanged dataSetChanged,
+                                                         final String[] inputPassword) {
         String finalOutputFile;
         try {
             String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
@@ -207,7 +202,7 @@ public class PDFEncryptionUtility {
             byte[] password;
             finalOutputFile = mFileUtils.getUniqueFileName
                     (file.replace(mContext.getResources().getString(R.string.pdf_ext),
-                    mContext.getString(R.string.decrypted_file)), mFileList);
+                            mContext.getString(R.string.decrypted_file)));
             password = reader.computeUserPassword();
             byte[] input = inputPassword[0].getBytes();
             if (Arrays.equals(input, password)) {
@@ -230,17 +225,15 @@ public class PDFEncryptionUtility {
     }
 
 
-
     private boolean removePasswordUsingInputMasterPAssword(final String file,
-                                                         final DataSetChanged dataSetChanged,
-                                                         final ArrayList<File> mFileList,
-                                                         final String[] inputPassword) {
+                                                           final DataSetChanged dataSetChanged,
+                                                           final String[] inputPassword) {
         String finalOutputFile;
         try {
             PdfReader reader = new PdfReader(file, inputPassword[0].getBytes());
             finalOutputFile = mFileUtils.getUniqueFileName(
                     file.replace(mContext.getResources().getString(R.string.pdf_ext),
-                    mContext.getString(R.string.decrypted_file)), mFileList);
+                            mContext.getString(R.string.decrypted_file)));
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
             stamper.close();
             reader.close();
