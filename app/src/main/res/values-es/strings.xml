@@ -93,7 +93,6 @@
 
     <!-- Select Images string -->
     <string name="images_selected">%1$d imágenes seleccionadas.</string>
-    <string name="img_to_pdf">Images to PDF</string>
     <string name="merge_pdf">Unir PDF</string>
     <string name="merge_file_select">Seleccione un archivo</string>
     <string name="pdf_merged">PDFs Unidos</string>

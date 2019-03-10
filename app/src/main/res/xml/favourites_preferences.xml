@@ -2,8 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:title="@string/img_to_pdf"
-        android:key="@string/img_to_pdf"/>
+        android:title="Images to PDF"
+        android:key="Images to PDF"/>
 
     <CheckBoxPreference
         android:title="@string/text_to_pdf"

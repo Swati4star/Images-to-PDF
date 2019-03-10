@@ -30,6 +30,25 @@ public class Constants {
     public static final String PG_NUM_STYLE_X = "pg_num_style_x";
     public static final String MASTER_PWD_STRING = "master_password";
 
+    public static final String IMAGE_TO_PDF_KEY = "Images to PDF";
+    public static final String TEXT_TO_PDF_KEY = "Text to PDF";
+    public static final String QR_BARCODE_KEY = "QR & Barcodes";
+    public static final String VIEW_FILES_KEY = "View Files";
+    public static final String HISTORY_KEY = "History";
+    public static final String ADD_PASSWORD_KEY = "Add password";
+    public static final String REMOVE_PASSWORD_KEY = "Remove password";
+    public static final String ROTATE_PAGES_KEY = "Rotate Pages";
+    public static final String ADD_WATERMARK_KEY = "Add Watermark";
+    public static final String ADD_IMAGES_KEY = "Add Images";
+    public static final String MERGE_PDF_KEY = "Merge PDF";
+    public static final String INVERT_PDF_KEY = "Invert Pdf";
+    public static final String COMPRESS_PDF_KEY = "Compress PDF";
+    public static final String REMOVE_DUPLICATE_PAGES_KEY = "Remove Duplicate Pages";
+    public static final String REMOVE_PAGES_KEY = "Remove Pages";
+    public static final String REORDER_PAGES_KEY = "Reorder pages";
+    public static final String EXTRACT_IMAGES_KEY = "Extract Images";
+    public static final String PDF_TO_IMAGES_KEY = "PDF to Images";
+
     public static final String BUNDLE_DATA = "bundle_data";
     public static final String REORDER_PAGES = "reorder_pages";
     public static final String REMOVE_PAGES = "remove_pages";

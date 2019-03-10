@@ -340,7 +340,6 @@
     <string name="home_page">На главную</string>
     <string name="create_new_pdfs">Создание PDF</string>
     <string name="view_pdfs">Просмотр PDF</string>
-    <string name="img_to_pdf">Images to PDF</string>
     <string name="modify_existing_pdfs">Изменение PDF</string>
     <string name="more_options">Дополнительно</string>
     <string name="add_password">Добавить пароль</string>

@@ -85,7 +85,6 @@
     <string name="successToast">Images successfully added.</string>
 
     <!-- Navigation drawer strings -->
-    <string name="img_to_pdf">Images to PDF</string>
     <string name="create_pdf">Create PDF</string>
     <string name="qr_barcode_pdf">QR &amp; Barcodes</string>
     <string name="viewFiles">View Files</string>
