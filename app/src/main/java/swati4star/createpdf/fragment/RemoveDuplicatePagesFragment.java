@@ -31,6 +31,7 @@ import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
@@ -47,7 +48,7 @@ import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface {
+        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -193,6 +194,17 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
         viewPdfButton(path);
         resetValues();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (checkSheetBehaviour())
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 }
 

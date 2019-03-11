@@ -35,6 +35,7 @@ import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
@@ -52,7 +53,7 @@ import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
-        ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener {
+        ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private Activity mActivity;
@@ -273,5 +274,16 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     @Override
     public void onPopulate(ArrayList<String> paths) {
         populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (checkSheetBehaviour())
+            mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return mSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 }

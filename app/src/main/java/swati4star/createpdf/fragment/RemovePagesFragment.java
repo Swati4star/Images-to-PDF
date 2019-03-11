@@ -39,6 +39,7 @@ import swati4star.createpdf.activity.RearrangePdfPages;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
@@ -66,7 +67,7 @@ import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        OnPDFCompressedInterface, BottomSheetPopulate {
+        OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -325,5 +326,16 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public void onPopulate(ArrayList<String> paths) {
         populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (checkSheetBehaviour())
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 }

@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
+    private Fragment mCurrentFragment;
 
 
     @Override
@@ -294,16 +295,67 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Fragment currentFragment = getSupportFragmentManager()
+            mCurrentFragment = getSupportFragmentManager()
                     .findFragmentById(R.id.content);
-            if (currentFragment instanceof HomeFragment) {
+            if (mCurrentFragment instanceof HomeFragment) {
                 checkDoubleBackPress();
-            } else {
+            } else if (checkFragmentBottomSheetBehavior())
+                closeFragmentBottomSheet();
+            else {
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 setDefaultMenuSelected(0);
             }
         }
+    }
+
+    public boolean checkFragmentBottomSheetBehavior() {
+        if (mCurrentFragment instanceof InvertPdfFragment )
+            return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof MergeFilesFragment )
+            return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+            return ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof RemovePagesFragment )
+            return ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof AddImagesFragment )
+            return ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof PdfToImageFragment )
+            return ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof SplitFilesFragment )
+            return ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        return false;
+    }
+
+    private void closeFragmentBottomSheet() {
+        if ( mCurrentFragment instanceof InvertPdfFragment)
+            ((InvertPdfFragment) mCurrentFragment).onBackPressed();
+
+        if (mCurrentFragment instanceof MergeFilesFragment)
+            ((MergeFilesFragment) mCurrentFragment).onBackPressed();
+
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+            ((RemoveDuplicatePagesFragment) mCurrentFragment).onBackPressed();
+
+        if (mCurrentFragment instanceof RemovePagesFragment)
+            ((RemovePagesFragment) mCurrentFragment).onBackPressed();
+
+        if (mCurrentFragment instanceof AddImagesFragment)
+            ((AddImagesFragment) mCurrentFragment).onBackPressed();
+
+        if (mCurrentFragment instanceof PdfToImageFragment)
+            ((PdfToImageFragment) mCurrentFragment).onBackPressed();
+
+        if (mCurrentFragment instanceof SplitFilesFragment)
+            ((SplitFilesFragment) mCurrentFragment).onBackPressed();
+
     }
 
     /**

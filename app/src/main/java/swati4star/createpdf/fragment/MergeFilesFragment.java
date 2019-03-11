@@ -43,6 +43,7 @@ import swati4star.createpdf.adapter.MergeSelectedFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.MergeFilesListener;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
@@ -68,7 +69,8 @@ import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
-        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner, BottomSheetPopulate {
+        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner,
+        BottomSheetPopulate, OnBackPressedInterface {
     private Activity mActivity;
     private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
@@ -387,5 +389,16 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
         }
         mLottieProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (checkSheetBehaviour())
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 }

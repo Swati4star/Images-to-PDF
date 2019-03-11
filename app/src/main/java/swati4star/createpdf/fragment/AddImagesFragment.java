@@ -36,6 +36,7 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
@@ -54,7 +55,8 @@ import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-public class AddImagesFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener {
+public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
+        MergeFilesAdapter.OnClickListener, OnBackPressedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -277,5 +279,16 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate, 
     @Override
     public void onPopulate(ArrayList<String> paths) {
         populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (checkSheetBehaviour())
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 }
