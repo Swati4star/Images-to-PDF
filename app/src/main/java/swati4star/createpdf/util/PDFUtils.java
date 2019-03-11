@@ -625,7 +625,7 @@ public class PDFUtils {
      * ERROR_PAGE_RANGE     if range is invalid like 9-4
      * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
      */
-    private int checkRangeValidity(int numOfPages, String[] ranges) {
+    public static int checkRangeValidity(int numOfPages, String[] ranges) {
         int startPage;
         int endPage;
 
@@ -637,7 +637,7 @@ public class PDFUtils {
                     e.printStackTrace();
                     return ERROR_INVALID_INPUT;
                 }
-                if (startPage > numOfPages) {
+                if (startPage > numOfPages || startPage == 0) {
                     return ERROR_PAGE_NUMBER;
                 }
             } else {
@@ -651,7 +651,7 @@ public class PDFUtils {
                     e.printStackTrace();
                     return ERROR_INVALID_INPUT;
                 }
-                if (startPage > numOfPages || endPage > numOfPages) {
+                if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
                     return ERROR_PAGE_NUMBER;
                 } else if (startPage >= endPage) {
                     return ERROR_PAGE_RANGE;
