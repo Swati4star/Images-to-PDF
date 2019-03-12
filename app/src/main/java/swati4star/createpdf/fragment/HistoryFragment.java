@@ -136,7 +136,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).setDefaultMenuSelected(0);
+            ((MainActivity) getActivity()).setNavigationViewSelection(R.id.nav_home);
         }
     }
 

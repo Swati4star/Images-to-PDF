@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
 
         // Set navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.app_name, R.string.app_name);
+                this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
 
         //Replaced setDrawerListener with addDrawerListener because it was deprecated.
         drawer.addDrawerListener(toggle);
@@ -185,15 +185,15 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case ACTION_VIEW_FILES:
                     fragment = new ViewFilesFragment();
-                    setDefaultMenuSelected(1);
+                    setNavigationViewSelection(R.id.nav_gallery);
                     break;
                 case ACTION_TEXT_TO_PDF:
                     fragment = new TextToPdfFragment();
-                    setDefaultMenuSelected(4);
+                    setNavigationViewSelection(R.id.nav_text_to_pdf);
                     break;
                 case ACTION_MERGE_PDF:
                     fragment = new MergeFilesFragment();
-                    setDefaultMenuSelected(2);
+                    setNavigationViewSelection(R.id.nav_merge);
                     break;
                 default:
                     // Set default fragment
@@ -217,18 +217,7 @@ public class MainActivity extends AppCompatActivity
         mFeedbackUtils = new FeedbackUtils(this);
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        setDefaultMenuSelected(0);
-    }
-
-    /*
-     * This will set default menu item selected at the position mentioned
-     */
-    public void setDefaultMenuSelected(int position) {
-        if (mNavigationView != null && mNavigationView.getMenu() != null &&
-                position < mNavigationView.getMenu().size()
-                && mNavigationView.getMenu().getItem(position) != null) {
-            mNavigationView.getMenu().getItem(position).setChecked(true);
-        }
+        mNavigationView.setCheckedItem(R.id.nav_home);
     }
 
     /**
@@ -301,7 +290,7 @@ public class MainActivity extends AppCompatActivity
             } else {
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                setDefaultMenuSelected(0);
+                setNavigationViewSelection(R.id.nav_home);
             }
         }
     }
@@ -429,8 +418,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void setNavigationViewSelection(int index) {
-        mNavigationView.getMenu().getItem(index).setChecked(true);
+    public void setNavigationViewSelection(int id) {
+        mNavigationView.setCheckedItem(id);
     }
 
     private boolean getRuntimePermissions() {
