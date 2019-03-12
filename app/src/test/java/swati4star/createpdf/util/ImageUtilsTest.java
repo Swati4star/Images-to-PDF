@@ -7,16 +7,20 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
 public class ImageUtilsTest {
-    private static final int NO_NORMAL_ERROR = 1;
-    private static final int NO_INVALID_ERROR = 2;
-    private static final int NO_NEGATIVE_LENGTH_ERROR = 3;
-    private static final int NO_POINT_ERROR = 4;
-    private static final int NO_LINE_ERROR = 5;
+    private static final Rectangle NO_NORMAL_ERROR =
+            new Rectangle(5.0f, 5.0f, 5.0f, 5.0f);
+    private static final Rectangle NO_INVALID_ERROR =
+            new Rectangle(-5.0f, 5.0f, -5.0f, 5.0f);
+    private static final Rectangle NO_NEGATIVE_LENGTH_ERROR =
+            new Rectangle(5.0f, 5.0f, 5.0f, 5.0f);
+    private static final Rectangle NO_POINT_ERROR =
+            new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
+    private static final Rectangle NO_LINE_ERROR =
+            new Rectangle(5.0f, 5.0f, 0.0f, 0.0f);
 
     @Test
-    public void testCalculateFitSizeMethodForErrors() {
+    public void testcalculateFitSize() {
         float testWidth = 8.0f;
         float testHeight = 12.0f;
         Rectangle testDocumentSize = new Rectangle(5.0f, 5.0f, 5.0f, 5.0f);
