@@ -39,7 +39,7 @@ public class ImageUtils {
      * @param documentSize   a rectangle specifying the width and height that the image must fit within
      * @return a rectangle that provides the scaled width and height of the image
      */
-    public Rectangle calculateFitSize(float originalWidth, float originalHeight, Rectangle documentSize) {
+    public static Rectangle calculateFitSize(float originalWidth, float originalHeight, Rectangle documentSize) {
         float widthChange = (originalWidth - documentSize.getWidth()) / originalWidth;
         float heightChange = (originalHeight - documentSize.getHeight()) / originalHeight;
 
