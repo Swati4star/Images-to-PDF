@@ -44,44 +44,6 @@ public class WatermarkUtils {
         mFileUtils = new FileUtils(context);
     }
 
-    public static int getStyleValueFromName(String name) {
-        switch (name) {
-            case "NORMAL":
-                return Font.NORMAL;
-            case "BOLD":
-                return Font.BOLD;
-            case "ITALIC":
-                return Font.ITALIC;
-            case "UNDERLINE":
-                return Font.UNDERLINE;
-            case "STRIKETHRU":
-                return Font.STRIKETHRU;
-            case "BOLDITALIC":
-                return Font.BOLDITALIC;
-            default:
-                return Font.NORMAL;
-        }
-    }
-
-    public static String getStyleNameFromFont(int font) {
-        switch (font) {
-            case Font.NORMAL:
-                return "NORMAL";
-            case Font.BOLD:
-                return "BOLD";
-            case Font.ITALIC:
-                return "ITALIC";
-            case Font.UNDERLINE:
-                return "UNDERLINE";
-            case Font.STRIKETHRU:
-                return "STRIKETHRU";
-            case Font.BOLDITALIC:
-                return "BOLDITALIC";
-            default:
-                return "NORMAL";
-        }
-    }
-
     public void setWatermark(String path, final DataSetChanged dataSetChanged) {
 
         final MaterialDialog mDialog = new MaterialDialog.Builder(mContext)
@@ -195,6 +157,44 @@ public class WatermarkUtils {
         reader.close();
         new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.watermarked));
         return finalOutputFile;
+    }
+
+    public static int getStyleValueFromName(String name) {
+        switch (name) {
+            case "NORMAL":
+                return Font.NORMAL;
+            case "BOLD":
+                return Font.BOLD;
+            case "ITALIC":
+                return Font.ITALIC;
+            case "UNDERLINE":
+                return Font.UNDERLINE;
+            case "STRIKETHRU":
+                return Font.STRIKETHRU;
+            case "BOLDITALIC":
+                return Font.BOLDITALIC;
+            default:
+                return Font.NORMAL;
+        }
+    }
+
+    public static String getStyleNameFromFont(int font) {
+        switch (font) {
+            case Font.NORMAL:
+                return "NORMAL";
+            case Font.BOLD:
+                return "BOLD";
+            case Font.ITALIC:
+                return "ITALIC";
+            case Font.UNDERLINE:
+                return "UNDERLINE";
+            case Font.STRIKETHRU:
+                return "STRIKETHRU";
+            case Font.BOLDITALIC:
+                return "BOLDITALIC";
+            default:
+                return "NORMAL";
+        }
     }
 
 }
