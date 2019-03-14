@@ -51,6 +51,8 @@ import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
@@ -60,7 +62,6 @@ import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.FileUtils.getFormattedSize;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
@@ -329,13 +330,12 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onBackPressed() {
-        if (checkSheetBehaviour())
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    public void closeBottomSheet() {
+        closeBottomSheetUtil(sheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
+        return checkSheetBehaviourUtil(sheetBehavior);
     }
 }

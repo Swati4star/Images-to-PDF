@@ -3,16 +3,12 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +21,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -44,12 +39,12 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.InvertPdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
-import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -204,15 +199,12 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         resetValues();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (checkSheetBehaviour())
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    public void closeBottomSheet() {
+        closeBottomSheetUtil(sheetBehavior);
     }
 
-    @Override
     public boolean checkSheetBehaviour() {
-        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
+        return checkSheetBehaviourUtil(sheetBehavior);
     }
 }
 

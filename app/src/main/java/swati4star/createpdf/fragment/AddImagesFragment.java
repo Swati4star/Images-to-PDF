@@ -44,6 +44,8 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.StringUtils;
 
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
@@ -282,13 +284,12 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     @Override
-    public void onBackPressed() {
-        if (checkSheetBehaviour())
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    public void closeBottomSheet() {
+        closeBottomSheetUtil(sheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
+        return checkSheetBehaviourUtil(sheetBehavior);
     }
 }

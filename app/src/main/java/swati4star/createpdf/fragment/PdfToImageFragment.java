@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,11 +45,12 @@ import swati4star.createpdf.util.PdfToImages;
 import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
@@ -277,13 +277,12 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     }
 
     @Override
-    public void onBackPressed() {
-        if (checkSheetBehaviour())
-            mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    public void closeBottomSheet() {
+        closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return mSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
+        return checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

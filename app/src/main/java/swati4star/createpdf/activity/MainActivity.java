@@ -20,7 +20,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -47,7 +46,6 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.ThemeUtils;
-import swati4star.createpdf.util.WatermarkPageEvent;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
@@ -336,25 +334,25 @@ public class MainActivity extends AppCompatActivity
 
     private void closeFragmentBottomSheet() {
         if ( mCurrentFragment instanceof InvertPdfFragment)
-            ((InvertPdfFragment) mCurrentFragment).onBackPressed();
+            ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof MergeFilesFragment)
-            ((MergeFilesFragment) mCurrentFragment).onBackPressed();
+            ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
-            ((RemoveDuplicatePagesFragment) mCurrentFragment).onBackPressed();
+            ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof RemovePagesFragment)
-            ((RemovePagesFragment) mCurrentFragment).onBackPressed();
+            ((RemovePagesFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof AddImagesFragment)
-            ((AddImagesFragment) mCurrentFragment).onBackPressed();
+            ((AddImagesFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof PdfToImageFragment)
-            ((PdfToImageFragment) mCurrentFragment).onBackPressed();
+            ((PdfToImageFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof SplitFilesFragment)
-            ((SplitFilesFragment) mCurrentFragment).onBackPressed();
+            ((SplitFilesFragment) mCurrentFragment).closeBottomSheet();
 
     }
 

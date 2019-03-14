@@ -1,6 +1,6 @@
 package swati4star.createpdf.interfaces;
 
 public interface OnBackPressedInterface {
-    void onBackPressed();
+    void closeBottomSheet();
     boolean checkSheetBehaviour();
 }

@@ -1,6 +1,7 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -70,5 +71,13 @@ public class CommonCodeUtils {
         // set up adapter
         mCreatedImages.setAdapter(extractImagesAdapter);
         mCreatedImages.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+    }
+
+    public static void closeBottomSheetUtil(BottomSheetBehavior sheetBehavior) {
+        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+    public static boolean checkSheetBehaviourUtil(BottomSheetBehavior sheetBehavior) {
+        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 }
