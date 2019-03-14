@@ -175,7 +175,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         PDFEncryptionUtility pdfEncryptionUtility = new PDFEncryptionUtility(mActivity);
         if (mOperation.equals(ADD_PWD)) {
             if (!mPDFUtils.isPDFEncrypted(mPath)) {
-                pdfEncryptionUtility.setPassword(mPath, null, new ArrayList<>());
+                pdfEncryptionUtility.setPassword(mPath, null);
             } else {
                 showSnackbar(mActivity, R.string.encrypted_pdf);
             }
@@ -184,7 +184,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
         if (mOperation.equals(REMOVE_PWd)) {
             if (mPDFUtils.isPDFEncrypted(mPath)) {
-                pdfEncryptionUtility.removePassword(mPath, null, new ArrayList<>());
+                pdfEncryptionUtility.removePassword(mPath, null);
             } else {
                 showSnackbar(mActivity, R.string.not_encrypted);
             }

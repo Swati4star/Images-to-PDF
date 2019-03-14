@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.widget.RadioGroup;
@@ -265,12 +266,17 @@ public class PDFUtils {
      * @param path - path of PDF
      * @return true - if encrypted otherwise false
      */
+    @WorkerThread
     public boolean isPDFEncrypted(String path) {
-        boolean isEncrypted = false;
+        boolean isEncrypted;
+        PdfReader pdfReader = null;
         try {
-            new PdfReader(path);
+            pdfReader = new PdfReader(path);
+            isEncrypted = pdfReader.isEncrypted();
         } catch (IOException e) {
             isEncrypted = true;
+        } finally {
+            if (pdfReader != null) pdfReader.close();
         }
         return isEncrypted;
     }
@@ -514,6 +520,7 @@ public class PDFUtils {
 
     /**
      * Breaks up the splitDetail String into ranges where a "," is found
+     *
      *
      * @param path        the input pdf path
      * @param splitDetail string that contains split configuration

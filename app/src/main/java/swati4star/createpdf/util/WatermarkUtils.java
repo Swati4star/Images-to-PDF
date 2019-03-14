@@ -23,10 +23,8 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
@@ -46,7 +44,7 @@ public class WatermarkUtils {
         mFileUtils = new FileUtils(context);
     }
 
-    public void setWatermark(String path, final DataSetChanged dataSetChanged, final ArrayList<File> mFileList) {
+    public void setWatermark(String path, final DataSetChanged dataSetChanged) {
 
         final MaterialDialog mDialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.add_watermark)
@@ -118,7 +116,7 @@ public class WatermarkUtils {
                         Color.blue(colorPickerInput.getColor()),
                         Color.alpha(colorPickerInput.getColor())
                 )));
-                createWatermark(path, mFileList);
+                createWatermark(path);
                 dataSetChanged.updateDataset();
                 showSnackbar(mContext, R.string.watermark_added);
             } catch (IOException | DocumentException e) {
@@ -130,9 +128,9 @@ public class WatermarkUtils {
         mDialog.show();
     }
 
-    private String createWatermark(String path, final ArrayList<File> mFileList) throws IOException, DocumentException {
+    private String createWatermark(String path) throws IOException, DocumentException {
         String finalOutputFile = mFileUtils.getUniqueFileName(path.replace(mContext.getString(R.string.pdf_ext),
-                mContext.getString(R.string.watermarked_file)), mFileList);
+                mContext.getString(R.string.watermarked_file)));
 
         PdfReader reader = new PdfReader(path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
@@ -160,7 +158,6 @@ public class WatermarkUtils {
         new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.watermarked));
         return finalOutputFile;
     }
-
 
     public static int getStyleValueFromName(String name) {
         switch (name) {
