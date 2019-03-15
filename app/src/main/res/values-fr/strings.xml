@@ -383,7 +383,5 @@
     <string name="error_page_range">Invalid range input</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
     <string name="error_invalid_input">Invalid input</string>
-    <string name="drawer_open">drawer open</string>
-    <string name="drawer_close">drawer close</string>
 
 </resources>

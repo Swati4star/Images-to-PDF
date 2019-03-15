@@ -20,7 +20,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -47,7 +46,6 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.ThemeUtils;
-import swati4star.createpdf.util.WatermarkPageEvent;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
@@ -92,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         // Set navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+                this, drawer, toolbar, R.string.app_name, R.string.app_name);
 
         //Replaced setDrawerListener with addDrawerListener because it was deprecated.
         drawer.addDrawerListener(toggle);
@@ -415,7 +413,8 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        // if help or share is clicked then return false, as we don't want them to be selected
+        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help;
     }
 
     public void setNavigationViewSelection(int id) {

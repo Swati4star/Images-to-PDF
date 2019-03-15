@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,12 +71,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.invert_pdf)
     MyCardView invertPdf;
 
+    private SparseIntArray mFragmentPositionMap;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootview);
-
+        fillMap();
         imagesToPdf.setOnClickListener(this);
         qrbarcodeToPdf.setOnClickListener(this);
         textToPdf.setOnClickListener(this);
@@ -100,6 +101,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return rootview;
     }
 
+    private void fillMap() {
+        mFragmentPositionMap = new SparseIntArray();
+        mFragmentPositionMap.append(R.id.images_to_pdf, R.id.nav_camera);
+        mFragmentPositionMap.append(R.id.qr_barcode_to_pdf, R.id.nav_qrcode);
+        mFragmentPositionMap.append(R.id.view_files, R.id.nav_gallery);
+        mFragmentPositionMap.append(R.id.rotate_pages, R.id.nav_gallery);
+        mFragmentPositionMap.append(R.id.add_watermark, R.id.nav_add_watermark);
+        mFragmentPositionMap.append(R.id.merge_pdf, R.id.nav_merge);
+        mFragmentPositionMap.append(R.id.split_pdf, R.id.nav_split);
+        mFragmentPositionMap.append(R.id.text_to_pdf, R.id.nav_text_to_pdf);
+        mFragmentPositionMap.append(R.id.compress_pdf, R.id.nav_compress_pdf);
+        mFragmentPositionMap.append(R.id.remove_pages, R.id.nav_remove_pages);
+        mFragmentPositionMap.append(R.id.rearrange_pages, R.id.nav_rearrange_pages);
+        mFragmentPositionMap.append(R.id.extract_images, R.id.nav_extract_images);
+        mFragmentPositionMap.append(R.id.view_history, R.id.nav_history);
+        mFragmentPositionMap.append(R.id.pdf_to_images, R.id.nav_pdf_to_images);
+        mFragmentPositionMap.append(R.id.add_password, R.id.nav_add_password);
+        mFragmentPositionMap.append(R.id.remove_password, R.id.nav_remove_password);
+        mFragmentPositionMap.append(R.id.add_images, R.id.nav_add_images);
+        mFragmentPositionMap.append(R.id.remove_duplicates_pages_pdf, R.id.nav_remove_duplicate_pages);
+        mFragmentPositionMap.append(R.id.invert_pdf, R.id.nav_invert_pdf);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -112,103 +136,85 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
+        highlightNavigationDrawerItem(mFragmentPositionMap.get(v.getId()));
 
         switch (v.getId()) {
             case R.id.images_to_pdf:
                 fragment = new ImageToPdfFragment();
-                highLightNavigationDrawerItem(R.id.nav_camera);
                 break;
             case R.id.qr_barcode_to_pdf:
                 fragment = new QrBarcodeScanFragment();
-                highLightNavigationDrawerItem(R.id.nav_qrcode);
                 break;
             case R.id.text_to_pdf:
                 fragment = new TextToPdfFragment();
-                highLightNavigationDrawerItem(R.id.nav_text_to_pdf);
                 break;
             case R.id.view_files:
                 fragment = new ViewFilesFragment();
-                highLightNavigationDrawerItem(R.id.nav_gallery);
                 break;
             case R.id.view_history:
                 fragment = new HistoryFragment();
-                highLightNavigationDrawerItem(R.id.nav_history);
                 break;
             case R.id.merge_pdf:
                 fragment = new MergeFilesFragment();
-                highLightNavigationDrawerItem(R.id.nav_merge);
                 break;
             case R.id.split_pdf:
                 fragment = new SplitFilesFragment();
-                highLightNavigationDrawerItem(R.id.nav_split);
                 break;
             case R.id.compress_pdf:
                 fragment = new RemovePagesFragment();
-                highLightNavigationDrawerItem(R.id.nav_compress_pdf);
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
             case R.id.extract_images:
                 fragment = new PdfToImageFragment();
-                highLightNavigationDrawerItem(R.id.nav_extract_images);
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.pdf_to_images:
                 fragment = new PdfToImageFragment();
-                highLightNavigationDrawerItem(R.id.nav_pdf_to_images);
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.remove_pages:
                 fragment = new RemovePagesFragment();
-                highLightNavigationDrawerItem(R.id.nav_remove_pages);
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.rearrange_pages:
                 fragment = new RemovePagesFragment();
-                highLightNavigationDrawerItem(R.id.nav_rearrange_pages);
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.add_password:
                 fragment = new RemovePagesFragment();
-                highLightNavigationDrawerItem(R.id.nav_add_password);
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
                 break;
             case R.id.remove_password:
                 fragment = new RemovePagesFragment();
-                highLightNavigationDrawerItem(R.id.nav_remove_password);
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
                 break;
             case R.id.rotate_pages:
                 fragment = new ViewFilesFragment();
-                highLightNavigationDrawerItem(R.id.nav_gallery);
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.add_watermark:
                 fragment = new ViewFilesFragment();
-                highLightNavigationDrawerItem(R.id.nav_add_watermark);
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
                 break;
             case R.id.add_images:
                 fragment = new AddImagesFragment();
-                highLightNavigationDrawerItem(R.id.nav_add_images);
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
                 break;
             case R.id.remove_duplicates_pages_pdf:
                 fragment = new RemoveDuplicatePagesFragment();
-                highLightNavigationDrawerItem(R.id.nav_remove_duplicate_pages);
                 break;
             case R.id.invert_pdf:
                 fragment = new InvertPdfFragment();
-                highLightNavigationDrawerItem(R.id.nav_invert_pdf);
                 break;
         }
 
@@ -221,7 +227,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void highLightNavigationDrawerItem(int id) {
+    private void highlightNavigationDrawerItem(int id) {
         if (mActivity instanceof MainActivity)
             ((MainActivity) mActivity).setNavigationViewSelection(id);
     }
