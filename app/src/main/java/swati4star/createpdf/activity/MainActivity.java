@@ -20,7 +20,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -47,7 +46,6 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.ThemeUtils;
-import swati4star.createpdf.util.WatermarkPageEvent;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
@@ -185,15 +183,15 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case ACTION_VIEW_FILES:
                     fragment = new ViewFilesFragment();
-                    setDefaultMenuSelected(1);
+                    setNavigationViewSelection(R.id.nav_gallery);
                     break;
                 case ACTION_TEXT_TO_PDF:
                     fragment = new TextToPdfFragment();
-                    setDefaultMenuSelected(4);
+                    setNavigationViewSelection(R.id.nav_text_to_pdf);
                     break;
                 case ACTION_MERGE_PDF:
                     fragment = new MergeFilesFragment();
-                    setDefaultMenuSelected(2);
+                    setNavigationViewSelection(R.id.nav_merge);
                     break;
                 default:
                     // Set default fragment
@@ -217,18 +215,7 @@ public class MainActivity extends AppCompatActivity
         mFeedbackUtils = new FeedbackUtils(this);
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        setDefaultMenuSelected(0);
-    }
-
-    /*
-     * This will set default menu item selected at the position mentioned
-     */
-    public void setDefaultMenuSelected(int position) {
-        if (mNavigationView != null && mNavigationView.getMenu() != null &&
-                position < mNavigationView.getMenu().size()
-                && mNavigationView.getMenu().getItem(position) != null) {
-            mNavigationView.getMenu().getItem(position).setChecked(true);
-        }
+        mNavigationView.setCheckedItem(R.id.nav_home);
     }
 
     /**
@@ -301,7 +288,7 @@ public class MainActivity extends AppCompatActivity
             } else {
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                setDefaultMenuSelected(0);
+                setNavigationViewSelection(R.id.nav_home);
             }
         }
     }
@@ -426,11 +413,12 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        // if help or share is clicked then return false, as we don't want them to be selected
+        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help;
     }
 
-    public void setNavigationViewSelection(int index) {
-        mNavigationView.getMenu().getItem(index).setChecked(true);
+    public void setNavigationViewSelection(int id) {
+        mNavigationView.setCheckedItem(id);
     }
 
     private boolean getRuntimePermissions() {

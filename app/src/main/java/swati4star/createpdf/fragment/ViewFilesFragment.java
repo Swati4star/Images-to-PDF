@@ -293,7 +293,7 @@ public class ViewFilesFragment extends Fragment
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         //Set default item selected
         if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).setDefaultMenuSelected(0);
+            ((MainActivity) mActivity).setNavigationViewSelection(R.id.nav_home);
         }
     }
 
