@@ -72,11 +72,17 @@ public class CommonCodeUtils {
         mCreatedImages.setAdapter(extractImagesAdapter);
         mCreatedImages.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
     }
+    /**
+     * Closes the bottom sheet if it is expanded
+     */
 
     public static void closeBottomSheetUtil(BottomSheetBehavior sheetBehavior) {
         if (checkSheetBehaviourUtil(sheetBehavior))
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
+    /**
+     * Checks whether the bottom sheet is expanded or collapsed
+     */
     public static boolean checkSheetBehaviourUtil(BottomSheetBehavior sheetBehavior) {
         return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
