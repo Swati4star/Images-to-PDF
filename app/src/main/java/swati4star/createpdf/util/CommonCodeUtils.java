@@ -74,7 +74,7 @@ public class CommonCodeUtils {
     }
 
     public static void closeBottomSheetUtil(BottomSheetBehavior sheetBehavior) {
-        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+        if (checkSheetBehaviourUtil(sheetBehavior))
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
     public static boolean checkSheetBehaviourUtil(BottomSheetBehavior sheetBehavior) {
