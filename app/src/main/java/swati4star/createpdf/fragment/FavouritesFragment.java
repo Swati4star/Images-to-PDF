@@ -9,7 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -92,12 +96,19 @@ public class FavouritesFragment extends Fragment
         mSharedpreferences = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.hide();
+//        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+//        actionBar.hide();
         mFab.setOnClickListener(v ->
                 startActivity(new Intent(this.getContext(), FavouritesActivity.class))
         );
+        setHasOptionsMenu(true);
         return rootview;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_favourites_item).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
     }
 
     /**
