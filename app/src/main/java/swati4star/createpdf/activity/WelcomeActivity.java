@@ -45,6 +45,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.fragment_step_create_pdf,
                 R.layout.fragment_step_view_file,
                 R.layout.fragment_step_merge_pdf,
+                R.layout.fragment_step_text_to_pdf,
+                R.layout.fragment_step_qrcode_to_pdf,
+                R.layout.fragment_step_remove_pages,
+                R.layout.fragment_step_reorder_pages,
+                R.layout.fragment_step_extract_images,
                 R.layout.fragment_step_change_themes};
 
         // adding bottom dots
@@ -116,7 +121,7 @@ public class WelcomeActivity extends AppCompatActivity {
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = mLayoutInflater.inflate(mLayouts[position], container, false);
-            if (position == 3) {
+            if (position == 8) {
                 Button btnGetStarted = view.findViewById(R.id.getStarted);
                 btnGetStarted.setOnClickListener(v -> openMainActivity());
             }
