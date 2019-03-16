@@ -41,6 +41,7 @@ public class Constants {
     public static final String ADD_WATERMARK_KEY = "Add Watermark";
     public static final String ADD_IMAGES_KEY = "Add Images";
     public static final String MERGE_PDF_KEY = "Merge PDF";
+    public static final String SPLIT_PDF_KEY = "Split PDF";
     public static final String INVERT_PDF_KEY = "Invert Pdf";
     public static final String COMPRESS_PDF_KEY = "Compress PDF";
     public static final String REMOVE_DUPLICATE_PAGES_KEY = "Remove Duplicate Pages";

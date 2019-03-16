@@ -3,73 +3,96 @@
 
     <CheckBoxPreference
         android:title="Images to PDF"
-        android:key="Images to PDF"/>
+        android:key="Images to PDF"
+        android:icon="@drawable/ic_menu_camera"/>
 
     <CheckBoxPreference
         android:title="@string/text_to_pdf"
-        android:key="@string/text_to_pdf"/>
+        android:key="@string/text_to_pdf"
+        android:icon="@drawable/ic_text_format_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/qr_barcode_pdf"
-        android:key="@string/qr_barcode_pdf"/>
+        android:key="@string/qr_barcode_pdf"
+        android:icon="@drawable/ic_qrcode_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/viewFiles"
-        android:key="@string/viewFiles"/>
+        android:key="@string/viewFiles"
+        android:icon="@drawable/ic_menu_gallery"/>
 
     <CheckBoxPreference
         android:title="@string/history"
-        android:key="@string/history"/>
+        android:key="@string/history"
+        android:icon="@drawable/ic_history_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/add_password"
-        android:key="@string/add_password"/>
+        android:key="@string/add_password"
+        android:icon="@drawable/ic_lock_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/remove_password"
-        android:key="@string/remove_password"/>
+        android:key="@string/remove_password"
+        android:icon="@drawable/ic_lock_open_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/rotate_pages"
-        android:key="@string/rotate_pages"/>
+        android:key="@string/rotate_pages"
+        android:icon="@drawable/baseline_crop_rotate_24"/>
 
     <CheckBoxPreference
         android:title="@string/add_watermark"
-        android:key="@string/add_watermark"/>
+        android:key="@string/add_watermark"
+        android:icon="@drawable/ic_branding_watermark_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/add_images"
-        android:key="@string/add_images"/>
+        android:key="@string/add_images"
+        android:icon="@drawable/ic_add_black_24dp" />
 
     <CheckBoxPreference
         android:title="@string/merge_pdf"
-        android:key="@string/merge_pdf"/>
+        android:key="@string/merge_pdf"
+        android:icon="@drawable/ic_merge_type_black_24dp"/>
+
+    <CheckBoxPreference
+        android:title="@string/split_pdf"
+        android:key="@string/split_pdf"
+        android:icon="@drawable/ic_call_split_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/invert_pdf"
-        android:key="@string/invert_pdf"/>
+        android:key="@string/invert_pdf"
+        android:icon="@drawable/ic_invert_color_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/compress_pdf"
-        android:key="@string/compress_pdf"/>
+        android:key="@string/compress_pdf"
+        android:icon="@drawable/ic_compress_image"/>
 
     <CheckBoxPreference
         android:title="@string/remove_duplicate_pages"
-        android:key="@string/remove_duplicate_pages"/>
+        android:key="@string/remove_duplicate_pages"
+        android:icon="@drawable/ic_remove_duplicate_square_black"/>
 
     <CheckBoxPreference
         android:title="@string/remove_pages"
-        android:key="@string/remove_pages"/>
+        android:key="@string/remove_pages"
+        android:icon="@drawable/ic_remove_circle_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/reorder_pages"
-        android:key="@string/reorder_pages"/>
+        android:key="@string/reorder_pages"
+        android:icon="@drawable/ic_sort"/>
 
     <CheckBoxPreference
         android:title="@string/extract_images"
-        android:key="@string/extract_images"/>
+        android:key="@string/extract_images"
+        android:icon="@drawable/ic_broken_image_black_24dp"/>
 
     <CheckBoxPreference
         android:title="@string/pdf_to_images"
-        android:key="@string/pdf_to_images"/>
+        android:key="@string/pdf_to_images"
+        android:icon="@drawable/ic_image_black_24dp"/>
 </PreferenceScreen>
