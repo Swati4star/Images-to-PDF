@@ -273,6 +273,7 @@ public class MainActivity extends AppCompatActivity
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 setDefaultMenuSelected(0);
+                setTitle(R.string.app_name);
             }
         }
     }
@@ -301,87 +302,109 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
+                setTitle(R.string.app_name);
                 break;
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
+                setTitle(R.string.create_pdf);
                 break;
             case R.id.nav_qrcode:
                 fragment = new QrBarcodeScanFragment();
+                setTitle(R.string.qr_barcode_pdf);
                 break;
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();
+                setTitle(R.string.viewFiles);
                 break;
             case R.id.nav_merge:
                 fragment = new MergeFilesFragment();
+                setTitle(R.string.merge_pdf);
                 break;
             case R.id.nav_split:
                 fragment = new SplitFilesFragment();
+                setTitle(R.string.split_pdf);
                 break;
             case R.id.nav_text_to_pdf:
                 fragment = new TextToPdfFragment();
+                setTitle(R.string.text_to_pdf);
                 break;
             case R.id.nav_history:
                 fragment = new HistoryFragment();
+                setTitle(R.string.history);
                 break;
             case R.id.nav_add_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
+                setTitle(R.string.add_password);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_remove_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
+                setTitle(R.string.remove_password);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_share:
                 mFeedbackUtils.shareApplication();
+                setTitle(R.string.share);
                 break;
             case R.id.nav_about:
                 fragment = new AboutUsFragment();
+                setTitle(R.string.about_us);
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
+                setTitle(R.string.settings);
                 break;
             case R.id.nav_extract_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
+                setTitle(R.string.extract_images);
                 break;
             case R.id.nav_pdf_to_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
+                setTitle(R.string.pdf_to_images);
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
+                setTitle(R.string.remove_pages);
                 break;
             case R.id.nav_rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
+                setTitle(R.string.reorder_pages);
                 break;
             case R.id.nav_compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
+                setTitle(R.string.compress_pdf);
                 break;
             case R.id.nav_add_images:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
+                setTitle(R.string.add_images);
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(this, WelcomeActivity.class);
                 intent.putExtra(SHOW_WELCOME_ACT, true);
                 startActivity(intent);
+                setTitle(R.string.help);
                 break;
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
+                setTitle(R.string.remove_duplicate_pages);
                 break;
             case R.id.nav_invert_pdf:
                 fragment = new InvertPdfFragment();
+                setTitle(R.string.invert_pdf);
                 break;
         }
 
