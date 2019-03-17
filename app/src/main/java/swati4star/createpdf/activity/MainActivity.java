@@ -44,7 +44,9 @@ import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
+import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.util.FeedbackUtils;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
@@ -128,6 +130,13 @@ public class MainActivity extends AppCompatActivity
 
         //check for welcome activity
         openWelcomeActivity();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // clear the temp directory on app exit
+        new FileUtils(this).makeAndClearTemp();
     }
 
     @Override
@@ -405,6 +414,9 @@ public class MainActivity extends AppCompatActivity
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
                 break;
+            case R.id.nav_zip_to_pdf:
+                fragment = new ZipToPdfFragment();
+                break;
         }
 
         try {
@@ -438,5 +450,13 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return true;
+    }
+
+    public void convertZipToPdf(ArrayList<Uri> imageUris) {
+        Fragment fragment = new ImageToPdfFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 }

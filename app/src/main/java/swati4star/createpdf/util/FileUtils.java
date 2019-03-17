@@ -57,25 +57,26 @@ public class FileUtils {
     }
 
     // GET PDF DETAILS
+
     /**
      * Gives a formatted last modified date for pdf ListView
-     * @param file file object whose last modified date is to be returned
      *
+     * @param file file object whose last modified date is to be returned
      * @return String date modified in formatted form
      **/
     public static String getFormattedDate(File file) {
         Date lastModDate = new Date(file.lastModified());
         String[] formatdate = lastModDate.toString().split(" ");
         String time = formatdate[3];
-        String[] formattime =  time.split(":");
+        String[] formattime = time.split(":");
         String date = formattime[0] + ":" + formattime[1];
         return formatdate[0] + ", " + formatdate[1] + " " + formatdate[2] + " at " + date;
     }
 
     /**
      * Gives a formatted size in MB for every pdf in pdf ListView
-     * @param file file object whose size is to be returned
      *
+     * @param file file object whose size is to be returned
      * @return String Size of pdf in formatted form
      */
     public static String getFormattedSize(File file) {
@@ -84,6 +85,7 @@ public class FileUtils {
 
     /**
      * Prints a file
+     *
      * @param file the file to be printed
      */
     public void printFile(final File file) {
@@ -146,7 +148,7 @@ public class FileUtils {
     /**
      * Emails the desired PDF using application of choice by user
      *
-     * @param  file - the file to be shared
+     * @param file - the file to be shared
      */
     public void shareFile(File file) {
         Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
@@ -158,11 +160,11 @@ public class FileUtils {
     /**
      * Share the desired PDFs using application of choice by user
      *
-     * @param  files - the list of files to be shared
+     * @param files - the list of files to be shared
      */
     public void shareMultipleFiles(List<File> files) {
         ArrayList<Uri> uris = new ArrayList<>();
-        for (File file: files) {
+        for (File file : files) {
             Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
             uris.add(uri);
         }
@@ -171,6 +173,7 @@ public class FileUtils {
 
     /**
      * Emails the desired PDF using application of choice by user
+     *
      * @param uris - list of uris to be shared
      */
     private void shareFile(ArrayList<Uri> uris) {
@@ -185,6 +188,7 @@ public class FileUtils {
 
     /**
      * opens a file in appropriate application
+     *
      * @param path - path of the file to be opened
      */
     public void openFile(String path) {
@@ -205,7 +209,7 @@ public class FileUtils {
      * Checks if the new file already exists.
      *
      * @param finalOutputFile Path of pdf file to check
-     * @param mFile File List of all PDFs
+     * @param mFile           File List of all PDFs
      * @return Number to be added finally in the name to avoid overwrite
      */
     private int checkRepeat(String finalOutputFile, final List<File> mFile) {
@@ -222,8 +226,9 @@ public class FileUtils {
 
     /**
      * Get real image path from uri.
+     *
      * @param uri - uri of the image
-     * @return  - real path of the image file on device
+     * @return - real path of the image file on device
      */
     public String getUriRealPath(Uri uri) {
         String ret;
@@ -254,6 +259,7 @@ public class FileUtils {
 
     /**
      * Extracts file name from the URI
+     *
      * @param uri - file uri
      * @return - extracted filename
      */
@@ -312,7 +318,8 @@ public class FileUtils {
 
     /**
      * Saves bitmap to external storage
-     * @param filename - name of the file
+     *
+     * @param filename    - name of the file
      * @param finalBitmap - bitmap to save
      */
     public static String saveImage(String filename, Bitmap finalBitmap) {
@@ -343,6 +350,7 @@ public class FileUtils {
 
     /**
      * Checks of the bitmap is just all white pixels
+     *
      * @param bitmap - input bitmap
      * @return - true, if bitmap is all white
      */
@@ -353,9 +361,9 @@ public class FileUtils {
 
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
-        for (int i =  0; i < w; i++) {
+        for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
-                int pixel =  bitmap.getPixel(i, j);
+                int pixel = bitmap.getPixel(i, j);
                 if (pixel != Color.WHITE) {
                     return false;
                 }
@@ -366,6 +374,7 @@ public class FileUtils {
 
     /**
      * Opens image in a gallery application
+     *
      * @param path - image path
      */
     public void openImage(String path) {
@@ -373,13 +382,14 @@ public class FileUtils {
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
-        target.setDataAndType(uri,  "image/*");
+        target.setDataAndType(uri, "image/*");
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
     }
 
     /**
      * Opens the targeted intent (if possible), otherwise show a snackbar
+     *
      * @param intent - input intent
      */
     private void openIntent(Intent intent) {
@@ -392,6 +402,7 @@ public class FileUtils {
 
     /**
      * Returns file chooser intent
+     *
      * @return - intent
      */
     public Intent getFileChooser() {
@@ -418,5 +429,16 @@ public class FileUtils {
             }
         }
         return outputFileName;
+    }
+
+    public void makeAndClearTemp() {
+        String dest = Environment.getExternalStorageDirectory().toString() +
+                Constants.pdfDirectory + Constants.tempDirectory;
+        File fileName = new File(dest);
+        fileName.mkdir();
+        // clear all the files in it, if any
+        for (File child : fileName.listFiles()) {
+            child.delete();
+        }
     }
 }

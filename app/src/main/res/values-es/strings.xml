@@ -382,4 +382,7 @@
     <string name="error_page_range">Invalid range input</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
     <string name="error_invalid_input">Invalid input</string>
+    <string name="zip_to_pdf">zip to pdf</string>
+    <string name="convert_to_pdf">convert to pdf</string>
+    <string name="extracting_images_message">extracting images</string>
 </resources>
