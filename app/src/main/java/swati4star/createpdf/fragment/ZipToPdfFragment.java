@@ -43,7 +43,6 @@ public class ZipToPdfFragment extends Fragment {
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private String mPath;
     private Activity mActivity;
-    private FileUtils mFileUtils;
 
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
@@ -57,7 +56,6 @@ public class ZipToPdfFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_zip_to_pdf, container, false);
         ButterKnife.bind(this, rootview);
         mActivity = getActivity();
-        mFileUtils = new FileUtils(mActivity);
         return rootview;
     }
 
@@ -95,7 +93,7 @@ public class ZipToPdfFragment extends Fragment {
         BufferedOutputStream bufferedOutputStream;
         FileInputStream fileInputStream;
         ArrayList<Uri> imageUris = new ArrayList<>();
-        mFileUtils.makeAndClearTemp();
+        FileUtils.makeAndClearTemp();
         String dest = Environment.getExternalStorageDirectory().toString() +
                 Constants.pdfDirectory + Constants.tempDirectory;
 

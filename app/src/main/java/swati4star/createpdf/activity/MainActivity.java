@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         // clear the temp directory on app exit
-        new FileUtils(this).makeAndClearTemp();
+        FileUtils.makeAndClearTemp();
     }
 
     @Override
