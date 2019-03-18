@@ -39,6 +39,7 @@ import swati4star.createpdf.activity.RearrangePdfPages;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
@@ -46,9 +47,12 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
@@ -58,14 +62,13 @@ import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.FileUtils.getFormattedSize;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        OnPDFCompressedInterface, BottomSheetPopulate {
+        OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -135,11 +138,13 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (data == null || resultCode != RESULT_OK )
+        if (data == null || resultCode != RESULT_OK)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             mUri = data.getData();
-            setTextAndActivateButtons(getFilePath(data.getData()));
+            //Getting Absolute Path
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
         } else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
             String pages = data.getStringExtra(RESULT);
 
@@ -172,7 +177,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         PDFEncryptionUtility pdfEncryptionUtility = new PDFEncryptionUtility(mActivity);
         if (mOperation.equals(ADD_PWD)) {
             if (!mPDFUtils.isPDFEncrypted(mPath)) {
-                pdfEncryptionUtility.setPassword(mPath, null, new ArrayList<>());
+                pdfEncryptionUtility.setPassword(mPath, null);
             } else {
                 showSnackbar(mActivity, R.string.encrypted_pdf);
             }
@@ -181,7 +186,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
         if (mOperation.equals(REMOVE_PWd)) {
             if (mPDFUtils.isPDFEncrypted(mPath)) {
-                pdfEncryptionUtility.removePassword(mPath, null, new ArrayList<>());
+                pdfEncryptionUtility.removePassword(mPath, null);
             } else {
                 showSnackbar(mActivity, R.string.not_encrypted);
             }
@@ -322,5 +327,15 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public void onPopulate(ArrayList<String> paths) {
         populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+    }
+
+    @Override
+    public void closeBottomSheet() {
+        closeBottomSheetUtil(sheetBehavior);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return checkSheetBehaviourUtil(sheetBehavior);
     }
 }

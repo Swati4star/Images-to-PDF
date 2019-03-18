@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:title="Images to PDF"
+        android:key="Images to PDF"/>
+
+    <CheckBoxPreference
+        android:title="@string/text_to_pdf"
+        android:key="@string/text_to_pdf"/>
+
+    <CheckBoxPreference
+        android:title="@string/qr_barcode_pdf"
+        android:key="@string/qr_barcode_pdf"/>
+
+    <CheckBoxPreference
+        android:title="@string/viewFiles"
+        android:key="@string/viewFiles"/>
+
+    <CheckBoxPreference
+        android:title="@string/history"
+        android:key="@string/history"/>
+
+    <CheckBoxPreference
+        android:title="@string/add_password"
+        android:key="@string/add_password"/>
+
+    <CheckBoxPreference
+        android:title="@string/remove_password"
+        android:key="@string/remove_password"/>
+
+    <CheckBoxPreference
+        android:title="@string/rotate_pages"
+        android:key="@string/rotate_pages"/>
+
+    <CheckBoxPreference
+        android:title="@string/add_watermark"
+        android:key="@string/add_watermark"/>
+
+    <CheckBoxPreference
+        android:title="@string/add_images"
+        android:key="@string/add_images"/>
+
+    <CheckBoxPreference
+        android:title="@string/merge_pdf"
+        android:key="@string/merge_pdf"/>
+
+    <CheckBoxPreference
+        android:title="@string/invert_pdf"
+        android:key="@string/invert_pdf"/>
+
+    <CheckBoxPreference
+        android:title="@string/compress_pdf"
+        android:key="@string/compress_pdf"/>
+
+    <CheckBoxPreference
+        android:title="@string/remove_duplicate_pages"
+        android:key="@string/remove_duplicate_pages"/>
+
+    <CheckBoxPreference
+        android:title="@string/remove_pages"
+        android:key="@string/remove_pages"/>
+
+    <CheckBoxPreference
+        android:title="@string/reorder_pages"
+        android:key="@string/reorder_pages"/>
+
+    <CheckBoxPreference
+        android:title="@string/extract_images"
+        android:key="@string/extract_images"/>
+
+    <CheckBoxPreference
+        android:title="@string/pdf_to_images"
+        android:key="@string/pdf_to_images"/>
+</PreferenceScreen>

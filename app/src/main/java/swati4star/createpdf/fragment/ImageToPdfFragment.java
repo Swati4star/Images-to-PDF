@@ -127,6 +127,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
+    public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
@@ -185,6 +186,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         return root;
     }
+
+    @OnClick(R.id.tvNoOfImages)
+    public void onClick() { }
 
     /**
      * Adds images (if any) received in the bundle
@@ -324,15 +328,15 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         switch (requestCode) {
             case INTENT_REQUEST_GET_IMAGES:
                 mImagesUri.clear();
+                mUnarrangedImagesUri.clear();
                 mImagesUri.addAll(Matisse.obtainPathResult(data));
+                mUnarrangedImagesUri.addAll(mImagesUri);
                 if (mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
                     showSnackbar(mActivity, R.string.snackbar_images_added);
                     mCreatePdf.setEnabled(true);
-                } else {
-                    mNoOfImages.setVisibility(View.GONE);
                 }
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 mOpenPdf.setVisibility(View.GONE);
@@ -372,7 +376,16 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
             case INTENT_REQUEST_REARRANGE_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
-                showSnackbar(mActivity, R.string.images_rearranged);
+                if (!mUnarrangedImagesUri.equals(mImagesUri) && mImagesUri.size() > 0) {
+                    showSnackbar(mActivity, R.string.images_rearranged);
+                    mUnarrangedImagesUri.clear();
+                    mUnarrangedImagesUri.addAll(mImagesUri);
+                }
+                if (mImagesUri.size() == 0) {
+                    mNoOfImages.setVisibility(View.GONE);
+                    mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+                    mCreatePdf.setEnabled(false);
+                }
                 break;
         }
     }

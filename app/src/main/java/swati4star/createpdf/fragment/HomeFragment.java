@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,8 +71,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.invert_pdf)
     MyCardView invertPdf;
 
-
-    private HashMap<Integer, Integer> mFragmentPositionMap;
+    private SparseIntArray mFragmentPositionMap;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -104,27 +102,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void fillMap() {
-        mFragmentPositionMap = new HashMap<>();
-        mFragmentPositionMap.put(R.id.images_to_pdf, 1);
-        mFragmentPositionMap.put(R.id.qr_barcode_to_pdf, 2);
-        mFragmentPositionMap.put(R.id.view_files, 3);
-        mFragmentPositionMap.put(R.id.rotate_pages, 3);
-        mFragmentPositionMap.put(R.id.add_watermark, 3);
-        mFragmentPositionMap.put(R.id.merge_pdf, 4);
-        mFragmentPositionMap.put(R.id.split_pdf, 5);
-        mFragmentPositionMap.put(R.id.text_to_pdf, 6);
-        mFragmentPositionMap.put(R.id.compress_pdf, 7);
-        mFragmentPositionMap.put(R.id.remove_pages, 8);
-        mFragmentPositionMap.put(R.id.rearrange_pages, 9);
-        mFragmentPositionMap.put(R.id.extract_images, 10);
-        mFragmentPositionMap.put(R.id.view_history, 11);
-        mFragmentPositionMap.put(R.id.pdf_to_images, 11);
-        mFragmentPositionMap.put(R.id.add_password, 12);
-        mFragmentPositionMap.put(R.id.remove_password, 13);
-        mFragmentPositionMap.put(R.id.add_images, 14);
-        mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf, 15);
-        mFragmentPositionMap.put(R.id.invert_pdf, 16);
-
+        mFragmentPositionMap = new SparseIntArray();
+        mFragmentPositionMap.append(R.id.images_to_pdf, R.id.nav_camera);
+        mFragmentPositionMap.append(R.id.qr_barcode_to_pdf, R.id.nav_qrcode);
+        mFragmentPositionMap.append(R.id.view_files, R.id.nav_gallery);
+        mFragmentPositionMap.append(R.id.rotate_pages, R.id.nav_gallery);
+        mFragmentPositionMap.append(R.id.add_watermark, R.id.nav_add_watermark);
+        mFragmentPositionMap.append(R.id.merge_pdf, R.id.nav_merge);
+        mFragmentPositionMap.append(R.id.split_pdf, R.id.nav_split);
+        mFragmentPositionMap.append(R.id.text_to_pdf, R.id.nav_text_to_pdf);
+        mFragmentPositionMap.append(R.id.compress_pdf, R.id.nav_compress_pdf);
+        mFragmentPositionMap.append(R.id.remove_pages, R.id.nav_remove_pages);
+        mFragmentPositionMap.append(R.id.rearrange_pages, R.id.nav_rearrange_pages);
+        mFragmentPositionMap.append(R.id.extract_images, R.id.nav_extract_images);
+        mFragmentPositionMap.append(R.id.view_history, R.id.nav_history);
+        mFragmentPositionMap.append(R.id.pdf_to_images, R.id.nav_pdf_to_images);
+        mFragmentPositionMap.append(R.id.add_password, R.id.nav_add_password);
+        mFragmentPositionMap.append(R.id.remove_password, R.id.nav_remove_password);
+        mFragmentPositionMap.append(R.id.add_images, R.id.nav_add_images);
+        mFragmentPositionMap.append(R.id.remove_duplicates_pages_pdf, R.id.nav_remove_duplicate_pages);
+        mFragmentPositionMap.append(R.id.invert_pdf, R.id.nav_invert_pdf);
     }
 
     @Override
@@ -133,18 +130,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mActivity = (Activity) context;
     }
 
-    private void setNavigationViewSelection(int index) {
-        if (mActivity instanceof MainActivity)
-            ((MainActivity) mActivity).setNavigationViewSelection(index);
-    }
-
     @Override
     public void onClick(View v) {
 
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
-        highLightNavigationDrawerItem(v);
+        highlightNavigationDrawerItem(mFragmentPositionMap.get(v.getId()));
 
         switch (v.getId()) {
             case R.id.images_to_pdf:
@@ -235,9 +227,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void highLightNavigationDrawerItem(View v) {
-        if (mFragmentPositionMap.containsKey(v.getId())) {
-            setNavigationViewSelection(mFragmentPositionMap.get(v.getId()));
-        }
+    private void highlightNavigationDrawerItem(int id) {
+        if (mActivity instanceof MainActivity)
+            ((MainActivity) mActivity).setNavigationViewSelection(id);
     }
 }

@@ -30,7 +30,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -42,7 +41,6 @@ import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DirectoryUtils;
-import swati4star.createpdf.util.FileSortUtils;
 import swati4star.createpdf.util.MergeHelper;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
@@ -142,7 +140,7 @@ public class ViewFilesFragment extends Fragment
                 }
             });
             mSearchView.setOnCloseListener(() -> {
-                populatePdfList();
+                populatePdfList(null);
                 return false;
             });
             mSearchView.setIconifiedByDefault(true);
@@ -154,9 +152,7 @@ public class ViewFilesFragment extends Fragment
     }
 
     private void setDataForQueryChange(String s) {
-        ArrayList<File> searchResult = mDirectoryUtils.searchPDF(s);
-        mViewFilesAdapter.setData(searchResult);
-        mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
+        populatePdfList(s);
     }
 
     @Override
@@ -201,7 +197,6 @@ public class ViewFilesFragment extends Fragment
     }
 
 
-
     /**
      * Shows an alert to delete files
      * and delete files on positive response
@@ -243,23 +238,26 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void onRefresh() {
-        populatePdfList();
+        populatePdfList(null);
         mSwipeView.setRefreshing(false);
     }
 
-    private void populatePdfList() {
+    /**
+     * populate pdf files with search query
+     *
+     * @param query to filter pdf files, {@code null} to get all
+     */
+    private void populatePdfList(@Nullable String query) {
         new PopulateList(mViewFilesAdapter, this,
-                new DirectoryUtils(mActivity), mCurrentSortingIndex).execute();
+                new DirectoryUtils(mActivity), mCurrentSortingIndex, query).execute();
     }
 
     private void displaySortDialog() {
         mAlertDialogBuilder.setTitle(R.string.sort_by_title)
                 .setItems(R.array.sort_options, (dialog, which) -> {
-                    ArrayList<File> allPdfs = mDirectoryUtils.getPdfFromOtherDirectories();
-                    FileSortUtils.performSortOperation(which, allPdfs);
-                    mViewFilesAdapter.setData(allPdfs);
                     mCurrentSortingIndex = which;
                     mSharedPreferences.edit().putInt(SORTING_INDEX, which).apply();
+                    populatePdfList(null);
                 });
         mAlertDialogBuilder.create().show();
     }
@@ -290,12 +288,12 @@ public class ViewFilesFragment extends Fragment
     //When the "GET STARTED" button is clicked, the user is taken to home
     @OnClick(R.id.getStarted)
     public void loadHome() {
-        Fragment fragment = new ImageToPdfFragment();
+        Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         //Set default item selected
         if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).setDefaultMenuSelected(0);
+            ((MainActivity) mActivity).setNavigationViewSelection(R.id.nav_home);
         }
     }
 

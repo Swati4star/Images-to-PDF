@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
@@ -27,6 +30,7 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
+import swati4star.createpdf.model.PDFFile;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
@@ -53,10 +57,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final Activity mActivity;
     private final EmptyStateChangeListener mEmptyStateChangeListener;
     private final ItemSelectedListener mItemSelectedListener;
-
-    private ArrayList<File> mFileList;
     private final ArrayList<Integer> mSelectedFiles;
-
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
     private final WatermarkUtils mWatermakrUtils;
@@ -64,16 +65,18 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final DatabaseHelper mDatabaseHelper;
     private final SharedPreferences mSharedPreferences;
 
+    private List<PDFFile> mFileList;
+
     /**
      * Returns adapter instance
      *
      * @param activity                 the activity calling this adapter
-     * @param feedItems                array list containing path of files
+     * @param feedItems                list containing {@link PDFFile}
      * @param emptyStateChangeListener interface for empty state change
      * @param itemSelectedListener     interface for monitoring the status of file selection
      */
     public ViewFilesAdapter(Activity activity,
-                            ArrayList<File> feedItems,
+                            List<PDFFile> feedItems,
                             EmptyStateChangeListener emptyStateChangeListener,
                             ItemSelectedListener itemSelectedListener) {
         this.mActivity = activity;
@@ -100,20 +103,20 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewFilesHolder holder, final int pos) {
         final int position = holder.getAdapterPosition();
-        final File file = mFileList.get(position);
+        final PDFFile pdfFile = mFileList.get(position);
 
-        boolean isEncrypted = mPDFUtils.isPDFEncrypted(file.getPath());
-        holder.mFilename.setText(file.getName());
-        holder.mFilesize.setText(FileUtils.getFormattedSize(file));
-        holder.mFiledate.setText(getFormattedDate(file));
+        holder.mFilename.setText(pdfFile.getPdfFile().getName());
+        holder.mFilesize.setText(FileUtils.getFormattedSize(pdfFile.getPdfFile()));
+        holder.mFiledate.setText(getFormattedDate(pdfFile.getPdfFile()));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
-        holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.GONE);
+        holder.mEncryptionImage.setVisibility(pdfFile.isEncrypted() ? View.VISIBLE : View.GONE);
         holder.mRipple.setOnClickListener(view -> {
             new MaterialDialog.Builder(mActivity)
                     .title(R.string.title)
                     .items(R.array.items)
                     .itemsIds(R.array.itemIds)
-                    .itemsCallback((dialog, view1, which, text) -> performOperation(which, position, file))
+                    .itemsCallback((dialog, view1, which, text)
+                            -> performOperation(which, position, pdfFile.getPdfFile()))
                     .show();
             notifyDataSetChanged();
         });
@@ -154,11 +157,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 6://Password Set
-                mPDFEncryptionUtils.setPassword(file.getPath(), ViewFilesAdapter.this, mFileList);
+                mPDFEncryptionUtils.setPassword(file.getPath(), ViewFilesAdapter.this);
                 break;
 
             case 7://Password Remove
-                mPDFEncryptionUtils.removePassword(file.getPath(), ViewFilesAdapter.this, mFileList);
+                mPDFEncryptionUtils.removePassword(file.getPath(), ViewFilesAdapter.this);
                 break;
 
             case 8://Rotate Pages
@@ -166,7 +169,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 9: // Add Watermark
-                mWatermakrUtils.setWatermark(file.getPath(), ViewFilesAdapter.this, mFileList);
+                mWatermakrUtils.setWatermark(file.getPath(), ViewFilesAdapter.this);
                 break;
             case 10: // Add Images
                 mPDFUtils.setImages();
@@ -190,6 +193,23 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void unCheckAll() {
         mSelectedFiles.clear();
         notifyDataSetChanged();
+        updateActionBarTitle();
+    }
+
+    /**
+     * Sets the action bar title to app name when all files have been unchecked
+     */
+    private void updateActionBarTitle() {
+        ActionBar actionBar = ((AppCompatActivity) mActivity).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.app_name);
+        }
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewFilesHolder holder) {
+        super.onViewRecycled(holder);
+        holder.checkBox.setChecked(false);
     }
 
     /**
@@ -201,7 +221,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         ArrayList<String> filePathList = new ArrayList<>();
         for (int position : mSelectedFiles) {
             if (mFileList.size() > position)
-                filePathList.add(mFileList.get(position).getPath());
+                filePathList.add(mFileList.get(position).getPdfFile().getPath());
         }
         return filePathList;
     }
@@ -219,11 +239,20 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     /**
      * Sets pdf files
      *
-     * @param pdfFiles array list containing path of files
+     * @param pdfFiles list containing {@link PDFFile}
      */
-    public void setData(ArrayList<File> pdfFiles) {
+    public void setData(List<PDFFile> pdfFiles) {
         mFileList = pdfFiles;
         notifyDataSetChanged();
+    }
+
+    /**
+     * get {@link PDFUtils} bound with this adapter
+     *
+     * @return the Pdf Utils
+     */
+    public PDFUtils getPDFUtils() {
+        return mPDFUtils;
     }
 
     /**
@@ -250,23 +279,22 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         final File fdelete = new File(name);
         mFileList.remove(position);
         notifyDataSetChanged();
-        getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
-                .setAction(R.string.snackbar_undoAction, v -> {
-                    if (mFileList.size() == 0) {
-                        mEmptyStateChangeListener.setEmptyStateInvisible();
-                    }
-                    updateDataset();
-                    undoClicked.set(1);
-                }).addCallback(new Snackbar.Callback() {
-                    @Override
-                        public void onDismissed(Snackbar snackbar, int event) {
-                            if (undoClicked.get() == 0) {
-                            fdelete.delete();
-                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
-                                    mActivity.getString(R.string.deleted));
-                            }
-                    }
-                }).show();
+        getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted).setAction(R.string.snackbar_undoAction, v -> {
+            if (mFileList.size() == 0) {
+                mEmptyStateChangeListener.setEmptyStateInvisible();
+            }
+            updateDataset();
+            undoClicked.set(1);
+        }).addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                if (undoClicked.get() == 0) {
+                    fdelete.delete();
+                    mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                            mActivity.getString(R.string.deleted));
+                }
+            }
+        }).show();
         if (mFileList.size() == 0)
             mEmptyStateChangeListener.setEmptyStateVisible();
     }
@@ -281,14 +309,14 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             if (position >= mFileList.size())
                 continue;
 
-            String fileName = mFileList.get(position).getPath();
+            String fileName = mFileList.get(position).getPdfFile().getPath();
             File fdelete = new File(fileName);
             mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
             if (fdelete.exists() && !fdelete.delete())
                 showSnackbar(mActivity, R.string.snackbar_file_not_deleted);
         }
 
-        ArrayList<File> newList = new ArrayList<>();
+        ArrayList<PDFFile> newList = new ArrayList<>();
         for (int position = 0; position < mFileList.size(); position++)
             if (!mSelectedFiles.contains(position))
                 newList.add(mFileList.get(position));
@@ -307,7 +335,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         ArrayList<File> files = new ArrayList<>();
         for (int position : mSelectedFiles) {
             if (mFileList.size() > position)
-                files.add(mFileList.get(position));
+                files.add(mFileList.get(position).getPdfFile());
         }
         mFileUtils.shareMultipleFiles(files);
     }
@@ -338,14 +366,15 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     private void renameFile(int position, String newName) {
-        File oldfile = mFileList.get(position);
+        PDFFile pdfFile = mFileList.get(position);
+        File oldfile = pdfFile.getPdfFile();
         String oldPath = oldfile.getPath();
         String newfilename = oldPath.substring(0, oldPath.lastIndexOf('/'))
                 + "/" + newName + mActivity.getString(R.string.pdf_ext);
         File newfile = new File(newfilename);
         if (oldfile.renameTo(newfile)) {
             showSnackbar(mActivity, R.string.snackbar_file_renamed);
-            mFileList.set(position, newfile);
+            pdfFile.setPdfFile(newfile);
             notifyDataSetChanged();
             mDatabaseHelper.insertRecord(newfilename, mActivity.getString(R.string.renamed));
         } else
@@ -356,7 +385,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void updateDataset() {
         int index = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
         new PopulateList(this, this,
-                new DirectoryUtils(mActivity), index).execute();
+                new DirectoryUtils(mActivity), index, null).execute();
     }
 
     @Override
