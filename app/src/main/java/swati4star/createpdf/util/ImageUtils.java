@@ -34,9 +34,9 @@ public class ImageUtils {
     /**
      * Calculates the optimum size for an image, such that it scales to fit whilst retaining its aspect ratio
      *
-     * @param originalWidth the original width of the image
+     * @param originalWidth  the original width of the image
      * @param originalHeight the original height of the image
-     * @param documentSize a rectangle specifying the width and height that the image must fit within
+     * @param documentSize   a rectangle specifying the width and height that the image must fit within
      * @return a rectangle that provides the scaled width and height of the image
      */
     public static Rectangle calculateFitSize(float originalWidth, float originalHeight, Rectangle documentSize) {
@@ -57,6 +57,7 @@ public class ImageUtils {
 
     /**
      * Creates a rounded bitmap from any bitmap
+     *
      * @param bmp - input bitmap
      * @return - output bitmap
      */
@@ -96,6 +97,7 @@ public class ImageUtils {
 
     /**
      * Get round bitmap from file path
+     *
      * @param path - file path
      * @return - output round bitmap
      */

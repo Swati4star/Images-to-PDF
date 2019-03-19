@@ -93,7 +93,6 @@
 
     <!-- Select Images string -->
     <string name="images_selected">%1$d imágenes seleccionadas.</string>
-
     <string name="merge_pdf">Unir PDF</string>
     <string name="merge_file_select">Seleccione un archivo</string>
     <string name="pdf_merged">PDFs Unidos</string>
@@ -317,6 +316,16 @@
     <string name="welcome_themes_title">Temas diferentes</string>
     <string name="welcome_themes_message">Vaya a Ajustes, usted puede tener tres tipos de temas : Negro, Obscuro, Blanco</string>
     <string name="welcome_merge_title">Unir archivo PDF</string>
+    <string name="welcome_text_to_pdf">Text to PDF</string>
+    <string name="welcome_text_to_pdf_message">Convert your text files into your most desired PDFs at ease</string>
+    <string name="welcome_qrcode_to_pdf">QR Code to PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">Convert QR Codes and Barcodes to PDF in a simplistic manner</string>
+    <string name="welcome_remove_pages">Remove Pages</string>
+    <string name="welcome_remove_pages_message">Remove the unwanted pages you do not need anymore</string>
+    <string name="welcome_reorder_pages">Reorder Pages</string>
+    <string name="welcome_reorder_pages_message">Reorder and rearrange the pages in a way you desire</string>
+    <string name="welcome_extract_images">Extract Images from PDF</string>
+    <string name="welcome_extract_images_message">Extract all possible images from your PDFs at a go</string>
     <string name="welcome_merge_message">Una distintos archivos PDFs de su celular en uno solo.</string>
     <string name="welcome_viewfiles_title">Ver archivos PDF</string>
     <string name="welcome_viewfiles_message">Vea, borre, renombre, comparta y agregue contraseña a su archivo PDF</string>
@@ -379,4 +388,8 @@
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
     <string name="snackbar_invert_successfull">Inverted</string>
 
+    <string name="error_page_number">Invalid page number</string>
+    <string name="error_page_range">Invalid range input</string>
+    <string name="title_filter_history_dialog">Filter by operation type</string>
+    <string name="error_invalid_input">Invalid input</string>
 </resources>

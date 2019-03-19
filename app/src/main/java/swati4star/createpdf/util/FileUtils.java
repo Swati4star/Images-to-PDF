@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -207,7 +208,7 @@ public class FileUtils {
      * @param mFile File List of all PDFs
      * @return Number to be added finally in the name to avoid overwrite
      */
-    private int checkRepeat(String finalOutputFile, final ArrayList<File> mFile) {
+    private int checkRepeat(String finalOutputFile, final List<File> mFile) {
         boolean flag = true;
         int append = 0;
         while (flag) {
@@ -402,13 +403,19 @@ public class FileUtils {
         return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
     }
 
-    String getUniqueFileName(String fileName, ArrayList<File> fileList) {
+    String getUniqueFileName(String fileName) {
         String outputFileName = fileName;
         File file = new File(outputFileName);
-        if (isFileExist(file.getName())) {
-            int append = checkRepeat(outputFileName, fileList);
-            outputFileName = outputFileName.replace(mContext.getString(R.string.pdf_ext),
-                    append + mContext.getResources().getString(R.string.pdf_ext));
+        if (!isFileExist(file.getName())) return outputFileName;
+
+        File parentFile = file.getParentFile();
+        if (parentFile != null) {
+            File[] listFiles = parentFile.listFiles();
+            if (listFiles != null) {
+                int append = checkRepeat(outputFileName, Arrays.asList(listFiles));
+                outputFileName = outputFileName.replace(mContext.getString(R.string.pdf_ext),
+                        append + mContext.getResources().getString(R.string.pdf_ext));
+            }
         }
         return outputFileName;
     }

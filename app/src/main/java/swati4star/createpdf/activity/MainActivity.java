@@ -15,9 +15,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
+import swati4star.createpdf.fragment.FavouritesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
@@ -63,6 +66,7 @@ import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
+import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
+    private Fragment mCurrentFragment;
 
 
     @Override
@@ -126,6 +131,29 @@ public class MainActivity extends AppCompatActivity
         openWelcomeActivity();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_favourites, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_favourites_item) {
+            Fragment fragment = new FavouritesFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * if welcome activity isnt opened ever, it is shown
      */
@@ -156,15 +184,15 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case ACTION_VIEW_FILES:
                     fragment = new ViewFilesFragment();
-                    setDefaultMenuSelected(1);
+                    setNavigationViewSelection(R.id.nav_gallery);
                     break;
                 case ACTION_TEXT_TO_PDF:
                     fragment = new TextToPdfFragment();
-                    setDefaultMenuSelected(4);
+                    setNavigationViewSelection(R.id.nav_text_to_pdf);
                     break;
                 case ACTION_MERGE_PDF:
                     fragment = new MergeFilesFragment();
-                    setDefaultMenuSelected(2);
+                    setNavigationViewSelection(R.id.nav_merge);
                     break;
                 default:
                     // Set default fragment
@@ -188,18 +216,7 @@ public class MainActivity extends AppCompatActivity
         mFeedbackUtils = new FeedbackUtils(this);
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        setDefaultMenuSelected(0);
-    }
-
-    /*
-     * This will set default menu item selected at the position mentioned
-     */
-    public void setDefaultMenuSelected(int position) {
-        if (mNavigationView != null && mNavigationView.getMenu() != null &&
-                position < mNavigationView.getMenu().size()
-                && mNavigationView.getMenu().getItem(position) != null) {
-            mNavigationView.getMenu().getItem(position).setChecked(true);
-        }
+        mNavigationView.setCheckedItem(R.id.nav_home);
     }
 
     /**
@@ -265,17 +282,67 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Fragment currentFragment = getSupportFragmentManager()
+            mCurrentFragment = getSupportFragmentManager()
                     .findFragmentById(R.id.content);
-            if (currentFragment instanceof HomeFragment) {
+            if (mCurrentFragment instanceof HomeFragment) {
                 checkDoubleBackPress();
-            } else {
+            } else if (checkFragmentBottomSheetBehavior())
+                closeFragmentBottomSheet();
+            else {
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                setDefaultMenuSelected(0);
-                setTitle(R.string.app_name);
+                setNavigationViewSelection(R.id.nav_home);
             }
         }
+    }
+
+    public boolean checkFragmentBottomSheetBehavior() {
+        if (mCurrentFragment instanceof InvertPdfFragment )
+            return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof MergeFilesFragment )
+            return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+            return ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof RemovePagesFragment )
+            return ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof AddImagesFragment )
+            return ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof PdfToImageFragment )
+            return ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof SplitFilesFragment )
+            return ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        return false;
+    }
+
+    private void closeFragmentBottomSheet() {
+        if ( mCurrentFragment instanceof InvertPdfFragment)
+            ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof MergeFilesFragment)
+            ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+            ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof RemovePagesFragment)
+            ((RemovePagesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof AddImagesFragment)
+            ((AddImagesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof PdfToImageFragment)
+            ((PdfToImageFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof SplitFilesFragment)
+            ((SplitFilesFragment) mCurrentFragment).closeBottomSheet();
+
     }
 
     /**
@@ -302,109 +369,93 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
-                setTitle(R.string.app_name);
                 break;
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
-                setTitle(R.string.create_pdf);
                 break;
             case R.id.nav_qrcode:
                 fragment = new QrBarcodeScanFragment();
-                setTitle(R.string.qr_barcode_pdf);
                 break;
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();
-                setTitle(R.string.viewFiles);
                 break;
             case R.id.nav_merge:
                 fragment = new MergeFilesFragment();
-                setTitle(R.string.merge_pdf);
                 break;
             case R.id.nav_split:
                 fragment = new SplitFilesFragment();
-                setTitle(R.string.split_pdf);
                 break;
             case R.id.nav_text_to_pdf:
                 fragment = new TextToPdfFragment();
-                setTitle(R.string.text_to_pdf);
                 break;
             case R.id.nav_history:
                 fragment = new HistoryFragment();
-                setTitle(R.string.history);
                 break;
             case R.id.nav_add_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
-                setTitle(R.string.add_password);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_remove_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
-                setTitle(R.string.remove_password);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_share:
                 mFeedbackUtils.shareApplication();
-                setTitle(R.string.share);
                 break;
             case R.id.nav_about:
                 fragment = new AboutUsFragment();
-                setTitle(R.string.about_us);
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
-                setTitle(R.string.settings);
                 break;
             case R.id.nav_extract_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.extract_images);
                 break;
             case R.id.nav_pdf_to_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.pdf_to_images);
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.remove_pages);
                 break;
             case R.id.nav_rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.reorder_pages);
                 break;
             case R.id.nav_compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
-                setTitle(R.string.compress_pdf);
                 break;
             case R.id.nav_add_images:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.add_images);
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(this, WelcomeActivity.class);
                 intent.putExtra(SHOW_WELCOME_ACT, true);
                 startActivity(intent);
-                setTitle(R.string.help);
                 break;
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
-                setTitle(R.string.remove_duplicate_pages);
                 break;
             case R.id.nav_invert_pdf:
                 fragment = new InvertPdfFragment();
-                setTitle(R.string.invert_pdf);
+                break;
+
+            case R.id.nav_add_watermark:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
+                fragment.setArguments(bundle);
                 break;
         }
 
@@ -414,11 +465,12 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        // if help or share is clicked then return false, as we don't want them to be selected
+        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help;
     }
 
-    public void setNavigationViewSelection(int index) {
-        mNavigationView.getMenu().getItem(index).setChecked(true);
+    public void setNavigationViewSelection(int id) {
+        mNavigationView.setCheckedItem(id);
     }
 
     private boolean getRuntimePermissions() {
