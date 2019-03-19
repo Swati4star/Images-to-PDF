@@ -3,12 +3,18 @@ package swati4star.createpdf.util;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
+import swati4star.createpdf.model.PDFFile;
 
 /**
  * AsyncTask used to populate the list of elements in the background
@@ -20,28 +26,32 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
     private final DirectoryUtils mDirectoryUtils;
     private final ViewFilesAdapter mAdapter;
     private final Handler mHandler;
+    @Nullable
+    private String mQuery;
 
     /**
      * Instantiates populate list object
      *
-     * @param adapter - mAdapter to be notified with new data
+     * @param adapter                  - mAdapter to be notified with new data
      * @param emptyStateChangeListener - set appropriate view on no results
-     * @param directoryUtils - directory utils object
-     * @param index - sorting order
+     * @param directoryUtils           - directory utils object
+     * @param index                    - sorting order
+     * @param mQuery                   - to filter pdf files, {@code null} to get all
      */
     public PopulateList(ViewFilesAdapter adapter,
                         EmptyStateChangeListener emptyStateChangeListener,
-                        DirectoryUtils directoryUtils, int index) {
+                        DirectoryUtils directoryUtils, int index, @Nullable String mQuery) {
         this.mAdapter = adapter;
         mCurrentSortingIndex = index;
         mEmptyStateChangeListener = emptyStateChangeListener;
+        this.mQuery = mQuery;
         mHandler = new Handler(Looper.getMainLooper());
         mDirectoryUtils = directoryUtils;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-        mHandler.post(this::populateListView);
+        populateListView();
         return null;
     }
 
@@ -49,16 +59,36 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
      * Populate data into listView
      */
     private void populateListView() {
-        ArrayList<File> pdfFiles = mDirectoryUtils.getPdfFromOtherDirectories();
-
-        if (pdfFiles == null)
-            mEmptyStateChangeListener.showNoPermissionsView();
-        else if (pdfFiles.size() == 0) {
-            mEmptyStateChangeListener.setEmptyStateVisible();
+        ArrayList<File> pdfFiles;
+        if (TextUtils.isEmpty(mQuery)) {
+            pdfFiles = mDirectoryUtils.getPdfFromOtherDirectories();
         } else {
-            mEmptyStateChangeListener.hideNoPermissionsView();
-            FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
-            mAdapter.setData(pdfFiles);
+            pdfFiles = mDirectoryUtils.searchPDF(mQuery);
         }
+        if (pdfFiles == null)
+            mHandler.post(mEmptyStateChangeListener::showNoPermissionsView);
+        else if (pdfFiles.size() == 0) {
+            mHandler.post(mEmptyStateChangeListener::setEmptyStateVisible);
+        } else {
+            FileSortUtils.performSortOperation(mCurrentSortingIndex, pdfFiles);
+            List<PDFFile> pdfFilesWithEncryptionStatus = getPdfFilesWithEncryptionStatus(pdfFiles);
+            mHandler.post(mEmptyStateChangeListener::hideNoPermissionsView);
+            mHandler.post(() -> mAdapter.setData(pdfFilesWithEncryptionStatus));
+        }
+    }
+
+    /**
+     * checks the encryption status of the files using {@link PDFUtils#isPDFEncrypted(String)}
+     *
+     * @param files files to get statuses
+     * @return new list of {@link PDFFile} with encrypted status set
+     */
+    @WorkerThread
+    private List<PDFFile> getPdfFilesWithEncryptionStatus(@NonNull List<File> files) {
+        List<PDFFile> pdfFiles = new ArrayList<>(files.size());
+        for (File file : files) {
+            pdfFiles.add(new PDFFile(file, mAdapter.getPDFUtils().isPDFEncrypted(file.getPath())));
+        }
+        return pdfFiles;
     }
 }

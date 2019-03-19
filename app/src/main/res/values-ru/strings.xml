@@ -366,6 +366,16 @@
     <string name="welcome_themes_title">Темы оформления</string>
     <string name="welcome_themes_message">Выберите в настройках одну из трех тем оформления: белую, темную или черную</string>
     <string name="welcome_merge_title">Объединение файлов PDF</string>
+    <string name="welcome_text_to_pdf">Text to PDF</string>
+    <string name="welcome_text_to_pdf_message">Convert your text files into your most desired PDFs at ease</string>
+    <string name="welcome_qrcode_to_pdf">QR Code to PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">Convert QR Codes and Barcodes to PDF in a simplistic manner</string>
+    <string name="welcome_remove_pages">Remove Pages</string>
+    <string name="welcome_remove_pages_message">Remove the unwanted pages you do not need anymore</string>
+    <string name="welcome_reorder_pages">Reorder Pages</string>
+    <string name="welcome_reorder_pages_message">Reorder and rearrange the pages in a way you desire</string>
+    <string name="welcome_extract_images">Extract Images from PDF</string>
+    <string name="welcome_extract_images_message">Extract all possible images from your PDFs at a go</string>
     <string name="welcome_merge_message">Объединяйте существующие файлы PDF в один</string>
     <string name="welcome_viewfiles_title">Просмотр файлов PDF</string>
     <string name="welcome_viewfiles_message">Легко просматривайте, удаляйте, переименовывайте, защищайте паролем и делитесь вашими файлами</string>
@@ -419,4 +429,9 @@
     <string name="invert_pdf_title">Invert PDF</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
     <string name="snackbar_invert_successfull">Inverted</string>
+
+    <string name="error_page_number">Invalid page number</string>
+    <string name="error_page_range">Invalid range input</string>
+    <string name="title_filter_history_dialog">Filter by operation type</string>
+    <string name="error_invalid_input">Invalid input</string>
 </resources>
