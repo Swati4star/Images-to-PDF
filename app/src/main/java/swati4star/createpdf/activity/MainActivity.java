@@ -291,6 +291,7 @@ public class MainActivity extends AppCompatActivity
             else {
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                setTitle(R.string.app_name);
                 setNavigationViewSelection(R.id.nav_home);
             }
         }
