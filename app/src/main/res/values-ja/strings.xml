@@ -384,5 +384,4 @@
     <string name="error_invalid_input">Invalid input</string>
     <string name="zip_to_pdf">zip to pdf</string>
     <string name="convert_to_pdf">convert to pdf</string>
-    <string name="extracting_images_message">extracting images</string>
 </resources>

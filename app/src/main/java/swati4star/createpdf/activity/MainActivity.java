@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // clear the temp directory on app exit
         FileUtils.makeAndClearTemp();
     }
 
@@ -452,6 +451,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * puts image uri's in a bundle and start ImageToPdf fragment with this bundle
+     * as argument
+     * @param imageUris - ArrayList of image uri's in temp directory
+     */
     public void convertZipToPdf(ArrayList<Uri> imageUris) {
         Fragment fragment = new ImageToPdfFragment();
         Bundle bundle = new Bundle();

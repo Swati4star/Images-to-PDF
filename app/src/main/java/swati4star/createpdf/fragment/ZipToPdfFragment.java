@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.dd.morphingbutton.MorphingButton;
 
@@ -48,6 +48,8 @@ public class ZipToPdfFragment extends Fragment {
     MorphingButton selectFileButton;
     @BindView(R.id.zip_to_pdf)
     MorphingButton convertButton;
+    @BindView(R.id.progressBar)
+    ProgressBar extractionProgress;
 
     @Nullable
     @Override
@@ -85,10 +87,9 @@ public class ZipToPdfFragment extends Fragment {
     @OnClick(R.id.zip_to_pdf)
     public void convertZipToPdf() {
         final int BUFFER_SIZE = 4096;
-
-        Snackbar extractingSnackbar = StringUtils.showIndefiniteSnackbar(mActivity,
-                getString(R.string.extracting_images_message));
-        extractingSnackbar.show();
+        extractionProgress.setVisibility(View.VISIBLE);
+        selectFileButton.blockTouch();
+        convertButton.blockTouch();
 
         BufferedOutputStream bufferedOutputStream;
         FileInputStream fileInputStream;
@@ -139,7 +140,6 @@ public class ZipToPdfFragment extends Fragment {
                 }
             }
             zipInputStream.close();
-            extractingSnackbar.dismiss();
 
             /*once we have extracted images out of zip, now we will pass
              * image uri's and to main activity which will then be used to
@@ -147,12 +147,14 @@ public class ZipToPdfFragment extends Fragment {
             ((MainActivity) getActivity()).convertZipToPdf(imageUris);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            extractingSnackbar.dismiss();
             StringUtils.showSnackbar(mActivity, R.string.error_occurred);
         } catch (IOException e) {
             e.printStackTrace();
-            extractingSnackbar.dismiss();
             StringUtils.showSnackbar(mActivity, R.string.error_occurred);
+        } finally {
+            extractionProgress.setVisibility(View.GONE);
+            selectFileButton.unblockTouch();
+            convertButton.unblockTouch();
         }
     }
 }

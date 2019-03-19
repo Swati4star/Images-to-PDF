@@ -40,5 +40,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyle"
+            android:visibility="invisible" />
+
     </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>
