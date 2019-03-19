@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.widget.RadioGroup;
@@ -44,7 +45,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,6 +73,10 @@ public class PDFUtils {
     private final FileUtils mFileUtils;
     private SparseIntArray mAngleRadioButton;
     private SharedPreferences mSharedPreferences;
+
+    private static final int ERROR_PAGE_NUMBER = 1;
+    private static final int ERROR_PAGE_RANGE = 2;
+    private static final int ERROR_INVALID_INPUT = 3;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
@@ -262,12 +266,17 @@ public class PDFUtils {
      * @param path - path of PDF
      * @return true - if encrypted otherwise false
      */
+    @WorkerThread
     public boolean isPDFEncrypted(String path) {
-        boolean isEncrypted = false;
+        boolean isEncrypted;
+        PdfReader pdfReader = null;
         try {
-            new PdfReader(path);
+            pdfReader = new PdfReader(path);
+            isEncrypted = pdfReader.isEncrypted();
         } catch (IOException e) {
             isEncrypted = true;
+        } finally {
+            if (pdfReader != null) pdfReader.close();
         }
         return isEncrypted;
     }
@@ -327,7 +336,8 @@ public class PDFUtils {
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(destFilePath));
             stamper.close();
             reader.close();
-            showSnackbar(mContext, R.string.snackbar_pdfCreated);
+            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(destFilePath)).show();
             dataSetChanged.updateDataset();
             return true;
         } catch (Exception e) {
@@ -509,9 +519,10 @@ public class PDFUtils {
     }
 
     /**
-     * Breaks up the splitDetail String into ranges where a ","
-     * is found
-     * @param path the input pdf path
+     * Breaks up the splitDetail String into ranges where a "," is found
+     *
+     *
+     * @param path        the input pdf path
      * @param splitDetail string that contains split configuration
      * @return
      */
@@ -521,6 +532,11 @@ public class PDFUtils {
         String delims = "[,]";
         String[] ranges = splitConfig.split(delims);
         Log.v("Ranges", Arrays.toString(ranges));
+
+        // if input is invalid then return empty arraylist
+        if (!isInputValid(path, ranges))
+            return outputPaths;
+
         try {
             String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
                     getDefaultStorageLocation());
@@ -572,6 +588,84 @@ public class PDFUtils {
             showSnackbar(mContext, R.string.file_access_error);
         }
         return outputPaths;
+    }
+
+    /**
+     * checks if the user entered split ranges are valid or not
+     *
+     * @param path   the input pdf path
+     * @param ranges string array that contain page range, can be a single integer or range separated by dash like 2-5
+     * @return true if input is valid, otherwise false
+     */
+    private boolean isInputValid(String path, String[] ranges) {
+        try {
+            PdfReader reader = new PdfReader(path);
+            int numOfPages = reader.getNumberOfPages();
+            int result = checkRangeValidity(numOfPages, ranges);
+            switch (result) {
+                case ERROR_PAGE_NUMBER:
+                    showSnackbar(mContext, R.string.error_page_number);
+                    break;
+                case ERROR_PAGE_RANGE:
+                    showSnackbar(mContext, R.string.error_page_range);
+                    break;
+                case ERROR_INVALID_INPUT:
+                    showSnackbar(mContext, R.string.error_invalid_input);
+                    break;
+                default:
+                    return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * checks if the user entered split ranges are valid or not
+     *
+     * @param numOfPages total number of pages of pdf
+     * @param ranges     string array that contain page range,
+     *                   can be a single integer or range separated by dash like 2-5
+     * @return 0 if all ranges are valid
+     * ERROR_PAGE_NUMBER    if range greater than max number of pages
+     * ERROR_PAGE_RANGE     if range is invalid like 9-4
+     * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
+     */
+    public static int checkRangeValidity(int numOfPages, String[] ranges) {
+        int startPage;
+        int endPage;
+
+        for (String range : ranges) {
+            if (!range.contains("-")) {
+                try {
+                    startPage = Integer.parseInt(range);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    return ERROR_INVALID_INPUT;
+                }
+                if (startPage > numOfPages || startPage == 0) {
+                    return ERROR_PAGE_NUMBER;
+                }
+            } else {
+                try {
+                    startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                    endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    return ERROR_INVALID_INPUT;
+                } catch (StringIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    return ERROR_INVALID_INPUT;
+                }
+                if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
+                    return ERROR_PAGE_NUMBER;
+                } else if (startPage >= endPage) {
+                    return ERROR_PAGE_RANGE;
+                }
+            }
+        }
+        return 0;
     }
 
     /**

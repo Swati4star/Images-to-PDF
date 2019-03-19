@@ -23,9 +23,19 @@
         <item>@color/colorPrimaryDark</item>
         <item>@color/colorPrimaryDark</item>
         <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
     </array>
 
     <array name="array_dot_inactive">
+        <item>@color/dot_inactive</item>
+        <item>@color/dot_inactive</item>
+        <item>@color/dot_inactive</item>
+        <item>@color/dot_inactive</item>
+        <item>@color/dot_inactive</item>
         <item>@color/dot_inactive</item>
         <item>@color/dot_inactive</item>
         <item>@color/dot_inactive</item>

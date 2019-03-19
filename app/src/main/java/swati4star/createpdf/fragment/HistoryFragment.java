@@ -2,6 +2,7 @@ package swati4star.createpdf.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.view.ViewGroup;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,6 +50,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private Activity mActivity;
     private List<History> mHistoryList;
     private HistoryAdapter mHistoryAdapter;
+    private boolean[] mFilterOptionState;
 
     @Override
     public void onAttach(Context context) {
@@ -66,7 +70,11 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, root);
-        new LoadHistory(mActivity).execute();
+
+        mFilterOptionState = new boolean[getResources().getStringArray(R.array.filter_options_history).length];
+        Arrays.fill(mFilterOptionState, Boolean.TRUE); //by default all options should be selected
+        // by default all operations should be shown, so pass empty array
+        new LoadHistory(mActivity).execute(new String[0]);
         return root;
     }
 
@@ -81,8 +89,38 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
             case R.id.actionDeleteHistory:
                 deleteHistory();
                 break;
+            case R.id.actionFilterHistory:
+                openFilterDialog();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openFilterDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+
+        String[] options = getResources().getStringArray(R.array.filter_options_history);
+
+        builder.setMultiChoiceItems(options, mFilterOptionState, (dialogInterface, index, isChecked) ->
+                mFilterOptionState[index] = isChecked);
+
+        builder.setTitle(getString(R.string.title_filter_history_dialog));
+
+        builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+            ArrayList<String> selectedOptions = new ArrayList<>();
+            for (int j = 0; j < mFilterOptionState.length; j++) {
+                if (mFilterOptionState[j]) { //only apply those operations whose state is true i.e selected checkbox
+                    selectedOptions.add(options[j]);
+                }
+            }
+            new LoadHistory(mActivity).execute(selectedOptions.toArray(new String[0]));
+        });
+
+        builder.setNeutralButton(getString(R.string.select_all), (dialogInterface, i) -> {
+            Arrays.fill(mFilterOptionState, Boolean.TRUE); //reset state 
+            new LoadHistory(mActivity).execute(new String[0]);
+        });
+        builder.create().show();
     }
 
     private void deleteHistory() {
@@ -94,11 +132,11 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
 
     @OnClick(R.id.getStarted)
     public void loadHome() {
-        Fragment fragment = new ImageToPdfFragment();
+        Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).setDefaultMenuSelected(0);
+            ((MainActivity) getActivity()).setNavigationViewSelection(R.id.nav_home);
         }
     }
 
@@ -114,7 +152,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class LoadHistory extends AsyncTask<Void, Void, Void> {
+    private class LoadHistory extends AsyncTask<String[], Void, Void> {
         private final Context mContext;
 
         LoadHistory(Context mContext) {
@@ -122,9 +160,14 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String[]... args) {
             AppDatabase db = AppDatabase.getDatabase(mActivity.getApplicationContext());
-            mHistoryList = db.historyDao().getAllHistory();
+            if (args[0].length == 0) {
+                mHistoryList = db.historyDao().getAllHistory();
+            } else {
+                String[] filters = args[0];
+                mHistoryList = db.historyDao().getHistoryByOperationType(filters);
+            }
             return null;
         }
 
