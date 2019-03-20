@@ -85,7 +85,7 @@ public class ZipToPdfFragment extends Fragment {
     }
 
     @OnClick(R.id.zip_to_pdf)
-    public void convertZipToPdf() {
+    public void processZipFiles() {
         final int BUFFER_SIZE = 4096;
         extractionProgress.setVisibility(View.VISIBLE);
         selectFileButton.blockTouch();
@@ -141,6 +141,10 @@ public class ZipToPdfFragment extends Fragment {
             }
             zipInputStream.close();
 
+            if (imageUris.size() == 0) {
+                StringUtils.showSnackbar(mActivity, R.string.error_no_image_in_zip);
+                return;
+            }
             /*once we have extracted images out of zip, now we will pass
              * image uri's and to main activity which will then be used to
              * to start images to pdf fragment*/
