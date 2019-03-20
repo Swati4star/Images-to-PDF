@@ -178,7 +178,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 .setImageBitmap(BitmapFactory.decodeFile(originalPath));
         mPhotoEditor.clearAllViews();
         mPhotoEditor.undo();
-
     }
 
 
