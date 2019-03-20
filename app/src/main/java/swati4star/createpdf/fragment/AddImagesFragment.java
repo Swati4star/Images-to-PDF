@@ -122,7 +122,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     public void showFileChooser() {
         startActivityForResult(mFileUtils.getFileChooser(),
                 INTENT_REQUEST_PICKFILE_CODE);
-
     }
 
     /**
