@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
+import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 
@@ -68,6 +69,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private final int mFileSelectCode = 0;
     private Uri mTextFileUri = null;
     private String mFontTitle;
+    private int mFontColor;
     private String mFileExtension;
     private int mFontSize = 0;
     private int mButtonClicked = 0;
@@ -98,12 +100,14 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
+        mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
+                Constants.DEFAULT_FONT_COLOR);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);
-        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
 
@@ -136,6 +140,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
             case 3:
                 setPassword();
                 break;
+            case 4:
+                setFontColor();
         }
     }
 
@@ -227,6 +233,29 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         RadioGroup radioGroup = materialDialog.getCustomView().findViewById(R.id.radio_group_font_family);
         RadioButton rb = (RadioButton) radioGroup.getChildAt(ordinal);
         rb.setChecked(true);
+        materialDialog.show();
+    }
+
+    private void setFontColor() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.font_color)
+                .customView(R.layout.dialog_color_chooser, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
+                    CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
+                    mFontColor = colorPickerView.getColor();
+                    if (defaultCheckbox.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putInt(Constants.DEFAULT_FONT_COLOR_TEXT, mFontColor);
+                        editor.apply();
+                    }
+                })
+                .build();
+        ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
+        colorPickerView.setColor(mFontColor);
         materialDialog.show();
     }
 
@@ -323,7 +352,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
             fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, mTextFileUri, mFontSize, mFontFamily), mFileExtension);
+                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor), mFileExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
@@ -373,9 +402,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     showSnackbar(mActivity, R.string.text_file_selected);
                     String fileName = mFileUtils.getFileName(mTextFileUri);
                     if (fileName != null) {
-                        if (fileName.endsWith(Constants.textExtension)) mFileExtension = Constants.textExtension;
-                        else if (fileName.endsWith(Constants.docxExtension)) mFileExtension = Constants.docxExtension;
-                        else if (fileName.endsWith(Constants.docExtension)) mFileExtension = Constants.docExtension;
+                        if (fileName.endsWith(Constants.textExtension))
+                            mFileExtension = Constants.textExtension;
+                        else if (fileName.endsWith(Constants.docxExtension))
+                            mFileExtension = Constants.docxExtension;
+                        else if (fileName.endsWith(Constants.docExtension))
+                            mFileExtension = Constants.docExtension;
                         else {
                             showSnackbar(mActivity, R.string.extension_not_supported);
                             return;

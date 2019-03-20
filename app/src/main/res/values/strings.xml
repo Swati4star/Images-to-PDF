@@ -14,6 +14,8 @@
     <string name="set_page_size_text">Set Page Size</string>
     <string name="preview_image_to_pdf">Preview PDF</string>
 
+    <string name="font_color">Font Color</string>
+
     <string name="default_content_description">no description</string>
     <string name="prompt_input">Enter here</string>
     <array name="items">
