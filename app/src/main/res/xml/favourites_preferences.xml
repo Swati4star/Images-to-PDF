@@ -3,7 +3,7 @@
 
     <CheckBoxPreference
         android:title="Images to PDF"
-        android:key="Images to PDF"
+        android:key="@string/images_to_pdf"
         android:icon="@drawable/ic_menu_camera"/>
 
     <CheckBoxPreference

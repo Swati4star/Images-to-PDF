@@ -31,7 +31,7 @@ public class Constants {
     public static final String MASTER_PWD_STRING = "master_password";
 
     public static final String IMAGE_TO_PDF_KEY = "Images to PDF";
-    public static final String TEXT_TO_PDF_KEY = "Text to PDF";
+    public static final String TEXT_TO_PDF_KEY = "Text To PDF";
     public static final String QR_BARCODE_KEY = "QR & Barcodes";
     public static final String VIEW_FILES_KEY = "View Files";
     public static final String HISTORY_KEY = "History";
