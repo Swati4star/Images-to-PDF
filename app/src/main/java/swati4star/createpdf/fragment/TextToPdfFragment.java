@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -343,9 +344,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
         if (mButtonClicked == 0) {
+            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//            intent.setType(getString(R.string.text_type));
-            intent.setType("*/*");
+//          intent.setType(getString(R.string.text_type));
+            intent.setDataAndType(uri, "*/*");
             String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     "application/msword", getString(R.string.text_type)};
             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
