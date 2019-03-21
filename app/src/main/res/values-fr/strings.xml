@@ -395,4 +395,6 @@
     <string name="error_invalid_input">Invalid input</string>
     <string name="font_color">Font Color</string>
 
+    <string name="images_to_pdf">Images to PDF</string>
+
 </resources>
