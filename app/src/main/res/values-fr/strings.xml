@@ -394,4 +394,6 @@
     <string name="title_filter_history_dialog">Filter by operation type</string>
     <string name="error_invalid_input">Invalid input</string>
 
+    <string name="images_to_pdf">Images to PDF</string>
+
 </resources>

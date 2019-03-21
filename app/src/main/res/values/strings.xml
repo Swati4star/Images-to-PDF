@@ -93,6 +93,7 @@
     <string name="help">Help</string>
 
     <!-- images to PDF -->
+    <string name="images_to_pdf">Images to PDF</string>
     <string name="image_scale_type">Set Image Scale Type</string>
     <string name="stretch_image">Stretch image to fit on page</string>
     <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>

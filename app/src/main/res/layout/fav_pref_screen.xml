@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment android:id="@+id/activity_settings"
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+       <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+           android:theme="@style/ToolbarTheme"
+           app:titleTextColor="?attr/titleToolbarTextColor"
+           android:layout_width="match_parent"
+           android:layout_height="?android:attr/actionBarSize"
+           xmlns:android="http://schemas.android.com/apk/res/android"
+           xmlns:app="http://schemas.android.com/apk/res-auto" />
+    </android.support.design.widget.AppBarLayout>
+    <fragment android:id="@+id/activity_settings"
     android:name="swati4star.createpdf.fragment.FavouritesPref"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android" />
+</LinearLayout>
