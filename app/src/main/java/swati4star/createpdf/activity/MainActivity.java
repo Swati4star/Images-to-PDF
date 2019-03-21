@@ -456,7 +456,7 @@ public class MainActivity extends AppCompatActivity
      * as argument
      * @param imageUris - ArrayList of image uri's in temp directory
      */
-    public void convertZipToPdf(ArrayList<Uri> imageUris) {
+    public void convertImagesToPdf(ArrayList<Uri> imageUris) {
         Fragment fragment = new ImageToPdfFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);

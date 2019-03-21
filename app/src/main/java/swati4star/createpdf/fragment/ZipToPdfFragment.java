@@ -1,14 +1,18 @@
 package swati4star.createpdf.fragment;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +42,14 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ZipToPdfFragment extends Fragment {
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 145;
     private String mPath;
     private Activity mActivity;
+    private boolean mPermissionGranted = false;
 
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
@@ -58,11 +65,15 @@ public class ZipToPdfFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_zip_to_pdf, container, false);
         ButterKnife.bind(this, rootview);
         mActivity = getActivity();
+        mPermissionGranted = isPermissionGranted();
         return rootview;
     }
 
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
+        if (!mPermissionGranted) {
+            getRuntimePermissions();
+        }
         String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -85,7 +96,7 @@ public class ZipToPdfFragment extends Fragment {
     }
 
     @OnClick(R.id.zip_to_pdf)
-    public void processZipFiles() {
+    public void convertZipToPdf() {
         final int BUFFER_SIZE = 4096;
         extractionProgress.setVisibility(View.VISIBLE);
         selectFileButton.blockTouch();
@@ -148,7 +159,7 @@ public class ZipToPdfFragment extends Fragment {
             /*once we have extracted images out of zip, now we will pass
              * image uri's and to main activity which will then be used to
              * to start images to pdf fragment*/
-            ((MainActivity) getActivity()).convertZipToPdf(imageUris);
+            ((MainActivity) getActivity()).convertImagesToPdf(imageUris);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             StringUtils.showSnackbar(mActivity, R.string.error_occurred);
@@ -159,6 +170,48 @@ public class ZipToPdfFragment extends Fragment {
             extractionProgress.setVisibility(View.GONE);
             selectFileButton.unblockTouch();
             convertButton.unblockTouch();
+        }
+    }
+
+    private boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                requestPermissions(new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length < 1)
+            return;
+        switch (requestCode) {
+            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mPermissionGranted = true;
+                    showFileChooser();
+                } else
+                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+            }
         }
     }
 }
