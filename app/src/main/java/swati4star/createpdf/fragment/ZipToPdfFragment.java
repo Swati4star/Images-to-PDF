@@ -73,6 +73,7 @@ public class ZipToPdfFragment extends Fragment {
     public void showFileChooser() {
         if (!mPermissionGranted) {
             getRuntimePermissions();
+            return;
         }
         String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();

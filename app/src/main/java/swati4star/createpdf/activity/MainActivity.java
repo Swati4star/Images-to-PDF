@@ -135,7 +135,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FileUtils.makeAndClearTemp();
+        if (isStoragePermissionGranted()) {
+            FileUtils.makeAndClearTemp();
+        }
     }
 
     @Override
@@ -451,9 +453,22 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * puts image uri's in a bundle and start ImageToPdf fragment with this bundle
      * as argument
+     *
      * @param imageUris - ArrayList of image uri's in temp directory
      */
     public void convertImagesToPdf(ArrayList<Uri> imageUris) {
