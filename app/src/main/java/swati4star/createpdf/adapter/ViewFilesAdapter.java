@@ -206,12 +206,6 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         }
     }
 
-    @Override
-    public void onViewRecycled(@NonNull ViewFilesHolder holder) {
-        super.onViewRecycled(holder);
-        holder.checkBox.setChecked(false);
-    }
-
     /**
      * Returns path of selected files
      *

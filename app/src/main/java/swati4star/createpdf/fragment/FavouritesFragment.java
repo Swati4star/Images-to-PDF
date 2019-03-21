@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,27 +19,40 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
 import swati4star.createpdf.customviews.MyCardView;
 
+import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
+import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF_KEY;
+import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.HISTORY_KEY;
 import static swati4star.createpdf.util.Constants.IMAGE_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.INVERT_PDF_KEY;
 import static swati4star.createpdf.util.Constants.MERGE_PDF_KEY;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.QR_BARCODE_KEY;
 import static swati4star.createpdf.util.Constants.REMOVE_DUPLICATE_PAGES_KEY;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD_KEY;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
+import static swati4star.createpdf.util.Constants.SPLIT_PDF_KEY;
 import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
+import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
+import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class FavouritesFragment extends Fragment
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+        implements SharedPreferences.OnSharedPreferenceChangeListener,
+        View.OnClickListener {
     private SharedPreferences mSharedpreferences;
 
     @BindView(R.id.fav_add_fab)
@@ -92,12 +105,37 @@ public class FavouritesFragment extends Fragment
         mSharedpreferences = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.hide();
+        checkFavs(mSharedpreferences);
         mFab.setOnClickListener(v ->
                 startActivity(new Intent(this.getContext(), FavouritesActivity.class))
         );
+        pref_img_to_pdf.setOnClickListener(this);
+        pref_text_to_pdf.setOnClickListener(this);
+        pref_qr_barcode.setOnClickListener(this);
+        pref_view_files.setOnClickListener(this);
+        pref_history.setOnClickListener(this);
+        pref_split_pdf.setOnClickListener(this);
+        pref_merge_pdf.setOnClickListener(this);
+        pref_compress.setOnClickListener(this);
+        pref_remove_pages.setOnClickListener(this);
+        pref_reorder_pages.setOnClickListener(this);
+        pref_extract_img.setOnClickListener(this);
+        pref_pdf_to_img.setOnClickListener(this);
+        pref_add_password.setOnClickListener(this);
+        pref_rem_pass.setOnClickListener(this);
+        pref_rot_pages.setOnClickListener(this);
+        pref_add_watermark.setOnClickListener(this);
+        pref_add_images.setOnClickListener(this);
+        pref_rem_dup_pages.setOnClickListener(this);
+        pref_invert_pdf.setOnClickListener(this);
+        setHasOptionsMenu(true);
         return rootview;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_favourites_item).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
     }
 
     /**
@@ -119,6 +157,7 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_add_watermark, ADD_WATERMARK_KEY);
         viewVisibility(pref_add_images, ADD_IMAGES_KEY);
         viewVisibility(pref_merge_pdf, MERGE_PDF_KEY);
+        viewVisibility(pref_split_pdf, SPLIT_PDF_KEY);
         viewVisibility(pref_invert_pdf, INVERT_PDF_KEY);
         viewVisibility(pref_compress, COMPRESS_PDF_KEY);
         viewVisibility(pref_rem_dup_pages, REMOVE_DUPLICATE_PAGES_KEY);
@@ -144,5 +183,98 @@ public class FavouritesFragment extends Fragment
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         checkFavs(sharedPreferences);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = null;
+        FragmentManager fragmentManager = getFragmentManager();
+        Bundle bundle = new Bundle();
+
+        switch (v.getId()) {
+            case R.id.images_to_pdf_fav:
+                fragment = new ImageToPdfFragment();
+                break;
+            case R.id.qr_barcode_to_pdf_fav:
+                fragment = new QrBarcodeScanFragment();
+                break;
+            case R.id.text_to_pdf_fav:
+                fragment = new TextToPdfFragment();
+                break;
+            case R.id.view_files_fav:
+                fragment = new ViewFilesFragment();
+                break;
+            case R.id.view_history_fav:
+                fragment = new HistoryFragment();
+                break;
+            case R.id.merge_pdf_fav:
+                fragment = new MergeFilesFragment();
+                break;
+            case R.id.split_pdf_fav:
+                fragment = new SplitFilesFragment();
+                break;
+            case R.id.compress_pdf_fav:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.extract_images_fav:
+                fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.pdf_to_images_fav:
+                fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.remove_pages_fav:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.rearrange_pages_fav:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REORDER_PAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.add_password_fav:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_PWD);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.remove_password_fav:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PWd);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.rotate_pages_fav:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.add_watermark_fav:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.add_images_fav:
+                fragment = new AddImagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_IMAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.remove_duplicates_pages_pdf_fav:
+                fragment = new RemoveDuplicatePagesFragment();
+                break;
+            case R.id.invert_pdf_fav:
+                fragment = new InvertPdfFragment();
+                break;
+        }
+        try {
+            if (fragment != null && fragmentManager != null)
+                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

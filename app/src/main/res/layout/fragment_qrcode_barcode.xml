@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         tools:context=".QrBarcodeScanFragment"
         android:orientation="vertical"
-        android:paddingTop="50dp"
-        android:paddingBottom="30dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
