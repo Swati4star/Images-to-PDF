@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment mCurrentFragment;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.setThemeApp(this);
@@ -376,7 +377,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
-                setTitle(R.string.create_pdf);
+                setTitle(R.string.images_to_pdf);
                 break;
             case R.id.nav_qrcode:
                 fragment = new QrBarcodeScanFragment();
