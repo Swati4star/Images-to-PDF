@@ -493,4 +493,9 @@
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
+
+    <!--zip to pdf-->
+    <string name="zip_to_pdf">ZIP to PDF</string>
+    <string name="convert_to_pdf">convert to PDF</string>
+    <string name="error_no_image_in_zip">ZIP file contains no image</string>
 </resources>
