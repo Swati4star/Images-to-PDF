@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/fav_action_done"
+        android:icon="@drawable/ic_check_white_24dp"
+        android:iconTint="@color/mb_white"
+        android:title="@string/done"
+        app:showAsAction="always" />
+
+</menu>

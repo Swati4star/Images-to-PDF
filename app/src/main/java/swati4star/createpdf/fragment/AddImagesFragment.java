@@ -147,6 +147,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                             .getString(R.string.images_selected), mImagesUri.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
                     showSnackbar(mActivity, R.string.snackbar_images_added);
+                    mCreatePdf.setEnabled(true);
                 } else {
                     mNoOfImages.setVisibility(View.GONE);
                 }
@@ -211,6 +212,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mPath = null;
         mImagesUri.clear();
         mMorphButtonUtility.initializeButton(selectFileButton, mCreatePdf);
+        mMorphButtonUtility.initializeButton(selectFileButton, addImages);
         mNoOfImages.setVisibility(View.GONE);
     }
 
@@ -275,7 +277,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private void setTextAndActivateButtons(String path) {
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, mCreatePdf);
+                selectFileButton, addImages);
     }
 
     @Override
