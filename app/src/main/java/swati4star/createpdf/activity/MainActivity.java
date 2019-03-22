@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 import swati4star.createpdf.BuildConfig;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
     private Fragment mCurrentFragment;
+
 
 
     @Override
@@ -293,6 +295,7 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 setTitle(R.string.app_name);
                 setNavigationViewSelection(R.id.nav_home);
+
             }
         }
     }
@@ -374,7 +377,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
-                setTitle(R.string.create_pdf);
+                setTitle(R.string.images_to_pdf);
                 break;
             case R.id.nav_qrcode:
                 fragment = new QrBarcodeScanFragment();
