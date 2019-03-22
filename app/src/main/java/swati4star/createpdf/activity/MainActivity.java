@@ -118,9 +118,12 @@ public class MainActivity extends AppCompatActivity
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
-        if (count > 0 && count % 15 == 0)
+        if (count > 0 && count % 15 == 0) {
             mFeedbackUtils.rateUs();
-        mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+        }
+        if (count != -1) {
+            mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+        }
 
         String versionName = mSharedPreferences.getString(VERSION_NAME, "");
         if (!versionName.equals(BuildConfig.VERSION_NAME)) {
