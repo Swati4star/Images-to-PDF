@@ -8,13 +8,15 @@ public class TextToPDFOptions extends PDFOptions {
     private final Uri mInFileUri;
     private final int mFontSize;
     private final Font.FontFamily mFontFamily;
+    private final int mFontColor;
 
     public TextToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
-                            String mPassword, Uri mInFileUri, int mFontSize, Font.FontFamily mFontFamily) {
+                            String mPassword, Uri mInFileUri, int mFontSize, Font.FontFamily mFontFamily, int color) {
         super(mFileName, mPageSize, mPasswordProtected, mPassword, 0, false, null);
         this.mInFileUri = mInFileUri;
         this.mFontSize = mFontSize;
         this.mFontFamily = mFontFamily;
+        this.mFontColor = color;
     }
 
     public Uri getInFileUri() {
@@ -27,5 +29,9 @@ public class TextToPDFOptions extends PDFOptions {
 
     public Font.FontFamily getFontFamily() {
         return mFontFamily;
+    }
+
+    public int getmFontColor() {
+        return mFontColor;
     }
 }

@@ -398,4 +398,6 @@
     <string name="error_no_image_in_zip">ZIP file contains no image</string>
 
     <string name="images_to_pdf">Images to PDF</string>
+
+    <string name="font_color">Font Color</string>
 </resources>
