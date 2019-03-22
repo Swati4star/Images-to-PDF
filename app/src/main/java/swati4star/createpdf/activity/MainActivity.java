@@ -470,6 +470,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_zip_to_pdf:
                 fragment = new ZipToPdfFragment();
                 break;
+            case R.id.nav_whatsNew:
+                WhatsNewUtils.displayDialog(this);
+                break;
         }
 
         try {

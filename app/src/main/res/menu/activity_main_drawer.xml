@@ -133,6 +133,10 @@
                         android:id="@+id/nav_share"
                         android:icon="@drawable/baseline_share_24"
                         android:title="@string/share" />
+                    <item
+                        android:id="@+id/nav_whatsNew"
+                        android:icon="@drawable/ic_whats_new_black_24dp"
+                        android:title="@string/whatsnew_title" />
                 </group>
             </menu>
         </item>
