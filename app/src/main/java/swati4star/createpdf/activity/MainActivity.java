@@ -473,6 +473,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_zip_to_pdf:
                 fragment = new ZipToPdfFragment();
                 break;
+            case R.id.nav_whatsNew:
+                WhatsNewUtils.displayDialog(this);
+                break;
         }
 
         try {
@@ -481,8 +484,10 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // if help or share is clicked then return false, as we don't want them to be selected
-        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help;
+        // if help or share or what's new is clicked then return false, as we don't want
+        // them to be selected
+        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help
+                && item.getItemId() != R.id.nav_whatsNew;
     }
 
     public void setNavigationViewSelection(int id) {
