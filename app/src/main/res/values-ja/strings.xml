@@ -400,4 +400,6 @@
     <string name="images_to_pdf">Images to PDF</string>
 
     <string name="font_color">Font Color</string>
+
+    <string name="drive_selection">Select from Drive</string>
 </resources>

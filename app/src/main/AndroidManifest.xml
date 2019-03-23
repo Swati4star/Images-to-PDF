@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -24,6 +25,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeWhite"
         tools:ignore="GoogleAppIndexingWarning,RtlEnabled">
+        <meta-data
+            android:name="com.google.android.apps.drive.
+            387849404801-r4notopkkhuith55c84273mr3a9k3e5a.apps.googleusercontent.com"
+            android:value="id=1234567890" />
+
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -34,7 +40,9 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.google.android.apps.drive.DRIVE_OPEN" />
 
+                <data android:mimeType="application/vnd.google-apps.drive-sdk.1234567890" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -72,7 +80,7 @@
         <activity android:name=".activity.RearrangeImages" />
         <activity android:name=".activity.ImagesPreviewActivity" />
         <activity android:name=".activity.RearrangePdfPages" />
-        <activity android:name=".activity.FavouritesActivity"/>
+        <activity android:name=".activity.FavouritesActivity" />
 
     </application>
 
