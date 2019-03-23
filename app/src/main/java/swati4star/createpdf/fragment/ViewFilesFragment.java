@@ -347,8 +347,6 @@ public class ViewFilesFragment extends Fragment
         super.onStop();
         AppCompatActivity activity = ((AppCompatActivity)
                 Objects.requireNonNull(mActivity));
-        ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle(appName);
     }
 
     @Override

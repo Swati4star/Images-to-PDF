@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 import swati4star.createpdf.BuildConfig;
@@ -77,8 +76,6 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
     private Fragment mCurrentFragment;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,7 +292,6 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 setTitle(R.string.app_name);
                 setNavigationViewSelection(R.id.nav_home);
-
             }
         }
     }
@@ -477,7 +473,6 @@ public class MainActivity extends AppCompatActivity
                 fragment = new InvertPdfFragment();
                 setTitle(R.string.invert_pdf);
                 break;
-
             case R.id.nav_add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
