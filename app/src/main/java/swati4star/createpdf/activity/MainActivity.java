@@ -44,6 +44,7 @@ import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
+import swati4star.createpdf.fragment.WhatsNewFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FileUtils;
@@ -482,7 +483,8 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         // if help or share is clicked then return false, as we don't want them to be selected
-        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help;
+        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help
+                && item.getItemId() != R.id.nav_whatsNew;
     }
 
     public void setNavigationViewSelection(int id) {
