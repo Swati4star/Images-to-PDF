@@ -259,7 +259,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @OnClick(R.id.addImagesFromDrive)
     void openDriveFilePicker() {
         requestSignIn();
-        openFilePicker();
     }
 
     private void openFileFromFilePicker(Uri uri) {
@@ -271,12 +270,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     .addOnSuccessListener(nameAndContent -> {
                         String name = nameAndContent.first;
                         String content = nameAndContent.second;
-
-//                        mFileTitleEditText.setText(name);
-//                        mDocContentEditText.setText(content);
-
-                        // Files opened through SAF cannot be modified.
-//                        setReadOnlyMode();
                     })
                     .addOnFailureListener(exception ->
                             Log.e(TAG, "Unable to open file from picker.", exception));
@@ -299,12 +292,15 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                                     AndroidHttp.newCompatibleTransport(),
                                     new GsonFactory(),
                                     credential)
-                                    .setApplicationName("Drive API Migration")
+                                    .setApplicationName("ImagesToPdf")
                                     .build();
 
                     // The DriveServiceHelper encapsulates all REST API and SAF functionality.
                     // Its instantiation is required before handling any onClick actions.
                     mDriveServiceHelper = new DriveServiceHelper(googleDriveService);
+                    if (mDriveServiceHelper != null) {
+                        openFilePicker();
+                    }
                 })
                 .addOnFailureListener(exception -> Log.e(TAG, "Unable to sign in.", exception));
     }

@@ -43,7 +43,11 @@ repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
 }
-
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
+}
 dependencies {
     def room_version = "1.1.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
