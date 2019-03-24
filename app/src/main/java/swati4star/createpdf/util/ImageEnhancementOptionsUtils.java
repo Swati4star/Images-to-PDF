@@ -66,6 +66,9 @@ public class ImageEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context, R.drawable.ic_branding_watermark_black_24dp, R.string.add_watermark));
 
+        options.add(new EnhancementOptionsEntity(
+                context, R.drawable.ic_color, R.string.page_color));
+
         return options;
     }
 }

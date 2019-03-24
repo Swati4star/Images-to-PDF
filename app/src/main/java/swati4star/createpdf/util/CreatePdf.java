@@ -2,10 +2,12 @@ package swati4star.createpdf.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
@@ -50,6 +52,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private String mImagescaleType;
     private String mPageNumStyle;
     private String mMasterPwd;
+    private int mPageColor;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -70,6 +73,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mImagescaleType = mImageToPDFOptions.getImageScaleType();
         this.mPageNumStyle = mImageToPDFOptions.getPageNumStyle();
         this.mMasterPwd = mImageToPDFOptions.getMasterPwd();
+        this.mPageColor = mImageToPDFOptions.getmPageColor();
         mPath = parentPath;
     }
 
@@ -94,7 +98,9 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Document document = new Document(PageSize.getRectangle(mPageSize),
+        Rectangle pageSize = new Rectangle(PageSize.getRectangle(mPageSize));
+        pageSize.setBackgroundColor(getBaseColor(mPageColor));
+        Document document = new Document(pageSize,
                 mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
         Log.v("stage 2", "Document Created");
         document.setMargins(mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
@@ -208,6 +214,19 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         mOnPDFCreatedInterface.onPDFCreated(mSuccess, mPath);
+    }
+
+    /**
+     * Read the BaseColor of passed color
+     *
+     * @param color value of color in int
+     */
+    private BaseColor getBaseColor(int color) {
+        return new BaseColor(
+                Color.red(color),
+                Color.green(color),
+                Color.blue(color)
+        );
     }
 }
 

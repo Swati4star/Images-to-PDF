@@ -99,6 +99,7 @@
     <string name="image_scale_type">Set Image Scale Type</string>
     <string name="stretch_image">Stretch image to fit on page</string>
     <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
+    <string name="page_color">Page Color</string>
 
     <!--QR & Barcode Scan-->
     <string name="scan_qrcode">Scan QR code</string>

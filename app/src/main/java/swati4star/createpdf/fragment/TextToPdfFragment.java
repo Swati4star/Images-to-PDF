@@ -70,6 +70,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private Uri mTextFileUri = null;
     private String mFontTitle;
     private int mFontColor;
+    private int mPageColor;
     private String mFileExtension;
     private int mFontSize = 0;
     private int mButtonClicked = 0;
@@ -102,6 +103,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 Constants.DEFAULT_FONT_FAMILY));
         mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
                 Constants.DEFAULT_FONT_COLOR);
+        mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
+                Constants.DEFAULT_PAGE_COLOR);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
@@ -142,6 +145,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 break;
             case 4:
                 setFontColor();
+                break;
+            case 5:
+                setPageColor();
+                break;
         }
     }
 
@@ -255,7 +262,30 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 })
                 .build();
         ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
-        colorPickerView.setColor(mFontColor);
+        colorPickerView.setColor(mPageColor);
+        materialDialog.show();
+    }
+
+    private void setPageColor() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.page_color)
+                .customView(R.layout.dialog_color_chooser, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
+                    CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
+                    mPageColor = colorPickerView.getColor();
+                    if (defaultCheckbox.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putInt(Constants.DEFAULT_PAGE_COLOR_TTP, mPageColor);
+                        editor.apply();
+                    }
+                })
+                .build();
+        ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
+        colorPickerView.setColor(mPageColor);
         materialDialog.show();
     }
 
@@ -352,7 +382,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
             fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor), mFileExtension);
+                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor), mFileExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();

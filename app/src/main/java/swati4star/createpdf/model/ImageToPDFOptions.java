@@ -13,6 +13,7 @@ public class ImageToPDFOptions extends PDFOptions {
     private String mImageScaleType;
     private String mPageNumStyle;
     private String mMasterPwd;
+    private int mPageColor;
 
     public ImageToPDFOptions() {
         super();
@@ -91,5 +92,13 @@ public class ImageToPDFOptions extends PDFOptions {
 
     public String getMasterPwd() {
         return mMasterPwd;
+    }
+
+    public int getmPageColor() {
+        return mPageColor;
+    }
+
+    public void setmPageColor(int mPageColor) {
+        this.mPageColor = mPageColor;
     }
 }
