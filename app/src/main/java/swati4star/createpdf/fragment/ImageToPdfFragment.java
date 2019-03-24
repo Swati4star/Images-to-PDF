@@ -377,6 +377,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             case INTENT_REQUEST_REARRANGE_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
                 if (!mUnarrangedImagesUri.equals(mImagesUri) && mImagesUri.size() > 0) {
+                    mNoOfImages.setText(String.format(mActivity.getResources()
+                            .getString(R.string.images_selected), mImagesUri.size()));
                     showSnackbar(mActivity, R.string.images_rearranged);
                     mUnarrangedImagesUri.clear();
                     mUnarrangedImagesUri.addAll(mImagesUri);
