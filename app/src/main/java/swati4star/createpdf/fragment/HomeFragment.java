@@ -145,99 +145,99 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.images_to_pdf:
                 fragment = new ImageToPdfFragment();
-                getActivity().setTitle(R.string.images_to_pdf);
+                mActivity.setTitle(R.string.images_to_pdf);
                 break;
             case R.id.qr_barcode_to_pdf:
                 fragment = new QrBarcodeScanFragment();
-                getActivity().setTitle(R.string.qr_barcode_pdf);
+                mActivity.setTitle(R.string.qr_barcode_pdf);
                 break;
             case R.id.text_to_pdf:
                 fragment = new TextToPdfFragment();
-                getActivity().setTitle(R.string.text_to_pdf);
+                mActivity.setTitle(R.string.text_to_pdf);
                 break;
             case R.id.view_files:
                 fragment = new ViewFilesFragment();
-                getActivity().setTitle(R.string.viewFiles);
+                mActivity.setTitle(R.string.viewFiles);
                 break;
             case R.id.view_history:
                 fragment = new HistoryFragment();
-                getActivity().setTitle(R.string.history);
+                mActivity.setTitle(R.string.history);
                 break;
             case R.id.merge_pdf:
                 fragment = new MergeFilesFragment();
-                getActivity().setTitle(R.string.merge_pdf);
+                mActivity.setTitle(R.string.merge_pdf);
                 break;
             case R.id.split_pdf:
                 fragment = new SplitFilesFragment();
-                getActivity().setTitle(R.string.split_pdf);
+                mActivity.setTitle(R.string.split_pdf);
                 break;
             case R.id.compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.compress_pdf);
+                mActivity.setTitle(R.string.compress_pdf);
                 break;
             case R.id.extract_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.extract_images);
+                mActivity.setTitle(R.string.extract_images);
                 break;
             case R.id.pdf_to_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.pdf_to_images);
+                mActivity.setTitle(R.string.pdf_to_images);
                 break;
             case R.id.remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.remove_pages);
+                mActivity.setTitle(R.string.remove_pages);
                 break;
             case R.id.rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.reorder_pages);
+                mActivity.setTitle(R.string.reorder_pages);
                 break;
             case R.id.add_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.add_password);
+                mActivity.setTitle(R.string.add_password);
                 break;
             case R.id.remove_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.remove_password);
+                mActivity.setTitle(R.string.remove_password);
                 break;
             case R.id.rotate_pages:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.rotate_pages);
+                mActivity.setTitle(R.string.rotate_pages);
                 break;
             case R.id.add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.add_watermark);
+                mActivity.setTitle(R.string.add_watermark);
                 break;
             case R.id.add_images:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
-                getActivity().setTitle(R.string.add_images);
+                mActivity.setTitle(R.string.add_images);
                 break;
             case R.id.remove_duplicates_pages_pdf:
                 fragment = new RemoveDuplicatePagesFragment();
-                getActivity().setTitle(R.string.remove_duplicate_pages);
+                mActivity.setTitle(R.string.remove_duplicate_pages);
                 break;
             case R.id.invert_pdf:
                 fragment = new InvertPdfFragment();
-                getActivity().setTitle(R.string.invert_pdf);
+                mActivity.setTitle(R.string.invert_pdf);
                 break;
             case R.id.zip_to_pdf:
                 fragment = new ZipToPdfFragment();

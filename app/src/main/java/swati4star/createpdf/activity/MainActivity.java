@@ -426,7 +426,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_share:
                 mFeedbackUtils.shareApplication();
-                setTitle(R.string.share);
                 break;
             case R.id.nav_about:
                 fragment = new AboutUsFragment();
@@ -476,7 +475,6 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(this, WelcomeActivity.class);
                 intent.putExtra(SHOW_WELCOME_ACT, true);
                 startActivity(intent);
-                setTitle(R.string.help);
                 break;
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
