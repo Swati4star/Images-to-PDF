@@ -14,6 +14,8 @@
     <string name="set_page_size_text">Set Page Size</string>
     <string name="preview_image_to_pdf">Preview PDF</string>
 
+    <string name="font_color">Font Color</string>
+
     <string name="default_content_description">no description</string>
     <string name="prompt_input">Enter here</string>
     <array name="items">
@@ -133,7 +135,7 @@
     <string name="cannot_add_password">Password could not be applied to the PDF. Please check the PDF again.</string>
 
     <string name="snackbar_imagecropped">Images cropped</string>
-    <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>
@@ -188,7 +190,7 @@
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Enter the password to continue</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
-    <string name="save_current">Save Current</string>
+    <string name="save_current">Save</string>
     <string name="save">Save</string>
     <string name="choose_color_text">Choose a color :</string>
     <string name="save_first">Save Current Image First</string>
@@ -491,4 +493,9 @@
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
+
+    <!--zip to pdf-->
+    <string name="zip_to_pdf">ZIP to PDF</string>
+    <string name="convert_to_pdf">convert to PDF</string>
+    <string name="error_no_image_in_zip">ZIP file contains no image</string>
 </resources>
