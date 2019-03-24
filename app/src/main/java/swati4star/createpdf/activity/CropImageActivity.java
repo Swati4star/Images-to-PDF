@@ -180,7 +180,7 @@ public class CropImageActivity extends AppCompatActivity {
         if (index < 0 || index >= mImages.size())
             return;
 
-        mImagecount.setText(getString(R.string.cropImage_activityTitle) + (index + 1) + " of " + mImages.size());
+        mImagecount.setText(getString(R.string.cropImage_activityTitle) + " " + (index + 1) + " of " + mImages.size());
         mCropImageView.setImageUriAsync(mCroppedImageUris.get(index));
     }
 }
