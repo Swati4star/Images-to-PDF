@@ -136,7 +136,7 @@
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Введите пароль</string>
     <string name="not_encrypted">PDF не зашифрованd</string>
-    <string name="save_current">Сохранить текущий</string>
+    <string name="save_current">Сохранить</string>
     <string name="save_first">Сохранить вначале текущее изображение</string>
     <string name="Filter_name">Фильтр</string>
     <string name="Filter_image_preview">Просмотр фильтра</string>
