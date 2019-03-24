@@ -68,7 +68,7 @@
     <string name="cannot_add_password">パスワードをPDFに適用できませんでした。 PDFをもう一度チェックしてください。</string>
 
     <string name="snackbar_imagecropped">Images cropped</string>
-    <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="cropImage_activityTitle">Crop image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>

@@ -67,7 +67,7 @@
     <string name="cannot_add_password">Le mot de passe n\'a pas pu être appliqué au fichier PDF. Veuillez vérifier le PDF à nouveau.</string>
 
     <string name="snackbar_imagecropped">Images cropped</string>
-    <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="cropImage_activityTitle">Crop image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>

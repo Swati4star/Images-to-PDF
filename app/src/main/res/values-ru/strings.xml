@@ -85,7 +85,7 @@
     <string name="cannot_add_password">Данный файл нельзя защитить паролем. Пожалуйста, выберите другой.</string>
 
     <string name="snackbar_imagecropped">Изображения кадрированы</string>
-    <string name="cropImage_activityTitle">Кадрирование изображения No.</string>
+    <string name="cropImage_activityTitle">Кадрирование изображения</string>
     <string name="snackbar_pdfCreated">PDF файл создан!</string>
     <string name="snackbar_viewAction">Просмотр</string>
     <string name="more_options_text">Параметры</string>

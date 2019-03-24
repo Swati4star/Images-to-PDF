@@ -44,7 +44,9 @@
             <Button
                 android:id="@+id/cropButton"
                 android:layout_width="wrap_content"
+                android:minWidth="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/cornered_edges"
                 android:text="@string/save_current"
@@ -54,7 +56,9 @@
             <Button
                 android:id="@+id/rotateButton"
                 android:layout_width="wrap_content"
+                android:minWidth="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/cornered_edges"
                 android:paddingStart="2dp"
