@@ -207,9 +207,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     @OnClick(R.id.tvNoOfImages)
-    public void onClick() {
-    }
-
+    public void onClick() { }
+                
     /**
      * Adds images (if any) received in the bundle
      */
