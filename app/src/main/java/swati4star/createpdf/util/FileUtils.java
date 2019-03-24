@@ -419,4 +419,15 @@ public class FileUtils {
         }
         return outputFileName;
     }
+
+    public static void makeAndClearTemp() {
+        String dest = Environment.getExternalStorageDirectory().toString() +
+                Constants.pdfDirectory + Constants.tempDirectory;
+        File fileName = new File(dest);
+        fileName.mkdir();
+        // clear all the files in it, if any
+        for (File child : fileName.listFiles()) {
+            child.delete();
+        }
+    }
 }

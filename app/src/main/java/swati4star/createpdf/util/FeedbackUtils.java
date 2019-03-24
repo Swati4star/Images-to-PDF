@@ -48,7 +48,10 @@ public class FeedbackUtils {
         builder.setTitle(mContext.getString(R.string.rate_title))
                 .setMessage(mContext.getString(R.string.rate_dialog_text))
                 .setNegativeButton(mContext.getString(R.string.rate_negative),
-                        (dialogInterface, i) -> dialogInterface.cancel())
+                        (dialogInterface, i) -> {
+                            mSharedPreferences.edit().putInt(LAUNCH_COUNT, 0).apply();
+                            dialogInterface.cancel();
+                        })
                 .setPositiveButton(mContext.getString(R.string.rate_positive),
                         (dialogInterface, i) -> {
                             try {
@@ -58,6 +61,7 @@ public class FeedbackUtils {
                             } catch (Exception e) {
                                 openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
                             }
+                            mSharedPreferences.edit().putInt(LAUNCH_COUNT, -1).apply();
                             dialogInterface.dismiss();
 
                         })

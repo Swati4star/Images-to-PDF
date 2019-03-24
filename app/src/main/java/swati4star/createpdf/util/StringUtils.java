@@ -34,6 +34,11 @@ public class StringUtils {
                 resID, Snackbar.LENGTH_LONG).show();
     }
 
+    public static Snackbar showIndefiniteSnackbar(Activity context, String resID) {
+        return Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
+                resID, Snackbar.LENGTH_INDEFINITE);
+    }
+
     public static Snackbar getSnackbarwithAction(Activity context, int resID) {
         return Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG);
