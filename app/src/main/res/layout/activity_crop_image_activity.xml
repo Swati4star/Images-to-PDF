@@ -44,7 +44,7 @@
             <Button
                 android:id="@+id/cropButton"
                 android:layout_width="wrap_content"
-                android:minWidth="0dp"
+                android:minWidth="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_weight="1"
@@ -75,6 +75,7 @@
                 android:layout_weight="3"
                 android:contentDescription="@string/previous_image_content_desc"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:tint="?attr/bottomSheetColor"
                 app:srcCompat="@drawable/ic_navigate_before_white_24dp"
                 tools:targetApi="lollipop" />
@@ -94,6 +95,7 @@
                 android:layout_weight="3"
                 android:contentDescription="@string/nextimage_contentdesc"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:tint="?attr/bottomSheetColor"
                 app:srcCompat="@drawable/ic_navigate_next_black_24dp"
                 tools:targetApi="lollipop" />
