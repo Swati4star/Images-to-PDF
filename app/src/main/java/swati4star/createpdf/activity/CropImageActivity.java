@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -115,6 +114,9 @@ public class CropImageActivity extends AppCompatActivity {
     @OnClick(R.id.previousImageButton)
     public void prevImgBtnClicked() {
         if (!mCurrentImageEdited) {
+            if (mCurrentImageIndex == 0) {
+                mCurrentImageIndex = mImages.size();
+            }
             mCurrentImageIndex = (mCurrentImageIndex - 1) % mImages.size();
             setImage(mCurrentImageIndex);
         } else {
@@ -156,7 +158,6 @@ public class CropImageActivity extends AppCompatActivity {
     private void setUpCropImageView() {
         mCropImageView.setOnCropImageCompleteListener((CropImageView view, CropImageView.CropResult result) -> {
             mCroppedImageUris.put(mCurrentImageIndex, result.getUri());
-            Toast.makeText(CropImageActivity.this, R.string.image_successfully_cropped, Toast.LENGTH_SHORT).show();
             mCropImageView.setImageUriAsync(mCroppedImageUris.get(mCurrentImageIndex));
 
             if (mFinishedclicked) {
@@ -179,7 +180,7 @@ public class CropImageActivity extends AppCompatActivity {
         if (index < 0 || index >= mImages.size())
             return;
 
-        mImagecount.setText(getString(R.string.cropImage_activityTitle) + (index + 1));
+        mImagecount.setText(getString(R.string.cropImage_activityTitle) + " " + (index + 1) + " of " + mImages.size());
         mCropImageView.setImageUriAsync(mCroppedImageUris.get(index));
     }
 }

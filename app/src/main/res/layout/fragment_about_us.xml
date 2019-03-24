@@ -49,6 +49,7 @@
                 android:layout_height="50dp">
 
                 <TextView
+                    android:id="@+id/version_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -58,13 +59,6 @@
                     android:padding="8dp"
                     android:text="@string/version"
                     tools:targetApi="m" />
-
-                <TextView
-                    android:id="@+id/version_value"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
 
             </LinearLayout>
 

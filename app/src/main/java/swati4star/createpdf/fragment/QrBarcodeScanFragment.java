@@ -68,6 +68,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private String mPath;
     private FileUtils mFileUtils;
     private Font.FontFamily mFontFamily;
+    private int mFontColor;
 
     @BindView(R.id.scan_qrcode)
     MyCardView scanQrcode;
@@ -86,6 +87,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         scanBarcode.setOnClickListener(this);
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
+        mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
+                Constants.DEFAULT_FONT_COLOR);
         PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
 
@@ -186,7 +189,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             PDFUtils fileUtil = new PDFUtils(mActivity);
             int fontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
             fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, false,
-                    "", uri, fontSize, mFontFamily), Constants.textExtension);
+                    "", uri, fontSize, mFontFamily, mFontColor), Constants.textExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();

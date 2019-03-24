@@ -45,7 +45,9 @@ import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
+import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.util.FeedbackUtils;
+import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
@@ -118,9 +120,12 @@ public class MainActivity extends AppCompatActivity
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
-        if (count > 0 && count % 15 == 0)
+        if (count > 0 && count % 15 == 0) {
             mFeedbackUtils.rateUs();
-        mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+        }
+        if (count != -1) {
+            mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+        }
 
         String versionName = mSharedPreferences.getString(VERSION_NAME, "");
         if (!versionName.equals(BuildConfig.VERSION_NAME)) {
@@ -131,6 +136,14 @@ public class MainActivity extends AppCompatActivity
 
         //check for welcome activity
         openWelcomeActivity();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isStoragePermissionGranted()) {
+            FileUtils.makeAndClearTemp();
+        }
     }
 
     @Override
@@ -484,6 +497,12 @@ public class MainActivity extends AppCompatActivity
                 setTitle(R.string.add_watermark);
                 fragment.setArguments(bundle);
                 break;
+            case R.id.nav_zip_to_pdf:
+                fragment = new ZipToPdfFragment();
+                break;
+            case R.id.nav_whatsNew:
+                WhatsNewUtils.displayDialog(this);
+                break;
         }
 
         try {
@@ -492,8 +511,10 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // if help or share is clicked then return false, as we don't want them to be selected
-        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help;
+        // if help or share or what's new is clicked then return false, as we don't want
+        // them to be selected
+        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help
+                && item.getItemId() != R.id.nav_whatsNew;
     }
 
     public void setNavigationViewSelection(int id) {
@@ -517,5 +538,31 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return true;
+    }
+
+    private boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * puts image uri's in a bundle and start ImageToPdf fragment with this bundle
+     * as argument
+     *
+     * @param imageUris - ArrayList of image uri's in temp directory
+     */
+    public void convertImagesToPdf(ArrayList<Uri> imageUris) {
+        Fragment fragment = new ImageToPdfFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 }
