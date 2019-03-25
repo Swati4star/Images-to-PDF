@@ -56,7 +56,7 @@ public class FavouritesFragment extends Fragment
         implements SharedPreferences.OnSharedPreferenceChangeListener,
         View.OnClickListener {
     private SharedPreferences mSharedpreferences;
-    private boolean mDoesFavouritesExist = false;
+    private boolean mDoesFavouritesExist;
 
     @BindView(R.id.fav_add_fab)
     FloatingActionButton mFab;
