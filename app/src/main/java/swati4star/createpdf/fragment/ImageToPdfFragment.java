@@ -81,6 +81,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALETYPE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
@@ -162,7 +163,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
-                Color.WHITE);
+                DEFAULT_PAGE_COLOR);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
 
@@ -254,7 +255,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mPdfOptions.setImageScaleType(mImageScaleType);
         mPdfOptions.setPageNumStyle(mPageNumStyle);
         mPdfOptions.setMasterPwd(mSharedPreferences.getString(MASTER_PWD_STRING, appName));
-        mPdfOptions.setmPageColor(mPageColor);
+        mPdfOptions.setPageColor(mPageColor);
 
         MaterialDialog.Builder builder = createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);

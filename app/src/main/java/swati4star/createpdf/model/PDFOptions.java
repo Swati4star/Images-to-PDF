@@ -16,7 +16,7 @@ public class PDFOptions {
     }
 
     PDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected, String mPassword,
-               int mBorderWidth, boolean mWatermarkAdded, Watermark mWatermark) {
+               int mBorderWidth, boolean mWatermarkAdded, Watermark mWatermark, int pageColor) {
         this.mOutFileName = mFileName;
         this.mPageSize = mPageSize;
         this.mPasswordProtected = mPasswordProtected;
@@ -24,6 +24,7 @@ public class PDFOptions {
         this.mBorderWidth = mBorderWidth;
         this.mWatermarkAdded = mWatermarkAdded;
         this.mWatermark = mWatermark;
+        this.mPageColor = pageColor;
     }
 
     public String getOutFileName() {
@@ -82,11 +83,11 @@ public class PDFOptions {
         this.mWatermark = mWatermark;
     }
 
-    public int getmPageColor() {
+    public int getPageColor() {
         return mPageColor;
     }
 
-    public void setmPageColor(int pageColor) {
+    public void setPageColor(int pageColor) {
         this.mPageColor = pageColor;
     }
 }

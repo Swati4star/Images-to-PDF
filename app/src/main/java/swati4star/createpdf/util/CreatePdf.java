@@ -73,7 +73,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mImagescaleType = mImageToPDFOptions.getImageScaleType();
         this.mPageNumStyle = mImageToPDFOptions.getPageNumStyle();
         this.mMasterPwd = mImageToPDFOptions.getMasterPwd();
-        this.mPageColor = mImageToPDFOptions.getmPageColor();
+        this.mPageColor = mImageToPDFOptions.getPageColor();
         mPath = parentPath;
     }
 

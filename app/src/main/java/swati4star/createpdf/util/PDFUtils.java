@@ -135,7 +135,7 @@ public class PDFUtils {
         String masterpwd = mSharedPreferences.getString(MASTER_PWD_STRING, appName);
 
         Rectangle pageSize = new Rectangle(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
-        pageSize.setBackgroundColor(getBaseColor(mTextToPDFOptions.getmPageColor()));
+        pageSize.setBackgroundColor(getBaseColor(mTextToPDFOptions.getPageColor()));
         Document document = new Document(pageSize);
 
         String finalOutput = mSharedPreferences.getString(STORAGE_LOCATION,

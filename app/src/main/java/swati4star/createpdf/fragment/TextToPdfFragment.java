@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +53,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -105,7 +105,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
                 Constants.DEFAULT_FONT_COLOR);
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
-                Color.WHITE);
+                DEFAULT_PAGE_COLOR);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
@@ -383,8 +383,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
             TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor);
-            options.setmPageColor(mPageColor);
+                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
             fileUtil.createPdf(options, mFileExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)

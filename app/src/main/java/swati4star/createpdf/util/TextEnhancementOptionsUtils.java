@@ -29,7 +29,7 @@ public class TextEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context, R.drawable.ic_color, R.string.font_color));
         options.add(new EnhancementOptionsEntity(
-                context, R.drawable.ic_color, R.string.page_color));
+                context, R.drawable.ic_page_color, R.string.page_color));
         return options;
     }
 }
