@@ -18,7 +18,6 @@ public class Constants {
     public static final String DEFAULT_PAGE_COLOR_TTP = "DefaultPageColorTTP";
     // key for images to pdf (ITP) page color
     public static final String DEFAULT_PAGE_COLOR_ITP = "DefaultPageColorITP";
-    public static final int DEFAULT_PAGE_COLOR = 0;
     public static final String DEFAULT_THEME_TEXT = "DefaultTheme";
     public static final String DEFAULT_THEME = "White";
     public static final String DEFAULT_IMAGE_BORDER_TEXT = "Image_border_text";

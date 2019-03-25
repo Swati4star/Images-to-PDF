@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -104,7 +105,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
                 Constants.DEFAULT_FONT_COLOR);
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
-                Constants.DEFAULT_PAGE_COLOR);
+                Color.WHITE);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
@@ -262,7 +263,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 })
                 .build();
         ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
-        colorPickerView.setColor(mPageColor);
+        colorPickerView.setColor(mFontColor);
         materialDialog.show();
     }
 
@@ -381,8 +382,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
-            fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor), mFileExtension);
+            TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
+                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor);
+            options.setmPageColor(mPageColor);
+            fileUtil.createPdf(options, mFileExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();

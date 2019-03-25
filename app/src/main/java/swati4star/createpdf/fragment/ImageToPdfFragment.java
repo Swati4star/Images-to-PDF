@@ -162,7 +162,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
-                Constants.DEFAULT_PAGE_COLOR);
+                Color.WHITE);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
 

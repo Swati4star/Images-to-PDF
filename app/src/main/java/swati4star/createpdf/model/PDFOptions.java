@@ -9,6 +9,7 @@ public class PDFOptions {
     private int mBorderWidth;
     private boolean mWatermarkAdded;
     private Watermark mWatermark;
+    private int mPageColor;
 
     PDFOptions() {
 
@@ -81,5 +82,11 @@ public class PDFOptions {
         this.mWatermark = mWatermark;
     }
 
+    public int getmPageColor() {
+        return mPageColor;
+    }
 
+    public void setmPageColor(int pageColor) {
+        this.mPageColor = pageColor;
+    }
 }
