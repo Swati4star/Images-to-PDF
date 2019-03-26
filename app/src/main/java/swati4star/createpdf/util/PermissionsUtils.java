@@ -9,7 +9,6 @@ import android.util.Log;
 
 public class PermissionsUtils {
     private static final String TAG = "PermissionsUtils";
-    private static Activity mActivity;
 
     /**
      * checkRuntimePermissions takes in multiple permissions or an array of permissions
@@ -21,14 +20,13 @@ public class PermissionsUtils {
      * @return
      */
     public static boolean checkRuntimePermissions(Activity activity, String... permissions) {
-        mActivity = activity;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (int i = 0; i < permissions.length; i++) {
                 try {
                     if ((ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                             permissions[i])
                             != PackageManager.PERMISSION_GRANTED)) {
-                        requestRuntimePermissions(permissions[i]);
+                        requestRuntimePermissions(permissions[i], activity);
                         return false;
                     }
                 } catch (Exception e) {
@@ -46,7 +44,7 @@ public class PermissionsUtils {
      *
      * @param permission
      */
-    public static void requestRuntimePermissions(String permission) {
-        ActivityCompat.requestPermissions(mActivity, new String[]{permission}, 0);
+    public static void requestRuntimePermissions(String permission, Activity activity) {
+        ActivityCompat.requestPermissions(activity, new String[]{permission}, 0);
     }
 }
