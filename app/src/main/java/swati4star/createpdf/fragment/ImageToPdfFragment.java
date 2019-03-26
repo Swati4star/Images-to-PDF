@@ -22,6 +22,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,15 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
 import com.squareup.picasso.Picasso;
@@ -51,12 +61,14 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation;
+import swati4star.createpdf.DriveServiceHelper;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.CropImageActivity;
 import swati4star.createpdf.activity.ImageEditor;
@@ -74,8 +86,10 @@ import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
+import static android.support.constraint.Constraints.TAG;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
@@ -117,6 +131,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     @BindView(R.id.pdfCreate)
     MorphingButton mCreatePdf;
+    @BindView(R.id.addImagesFromDrive)
+    MorphingButton mDriveImages;
     @BindView(R.id.pdfOpen)
     MorphingButton mOpenPdf;
     @BindView(R.id.enhancement_options_recycle_view)
@@ -142,6 +158,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginLeft = 50;
     private int mMarginRight = 38;
     private String mPageNumStyle;
+    private DriveServiceHelper mDriveServiceHelper;
+
+    private static final int REQUEST_CODE_SIGN_IN = 1;
+    private static final int REQUEST_CODE_OPEN_DOCUMENT = 2;
 
     @Override
     public void onAttach(Context context) {
@@ -188,7 +208,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     @OnClick(R.id.tvNoOfImages)
-    public void onClick() { }
+    public void onClick() {
+    }
 
     /**
      * Adds images (if any) received in the bundle
@@ -233,6 +254,81 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             if (getRuntimePermissions(true))
                 selectImages();
             mButtonClicked = 1;
+        }
+    }
+
+    @OnClick(R.id.addImagesFromDrive)
+    void openDriveFilePicker() {
+        requestSignIn();
+    }
+
+    private void openFileFromFilePicker(Uri uri) {
+        if (mDriveServiceHelper != null) {
+            Log.d(TAG, "Opening " + uri.getPath());
+
+            mDriveServiceHelper.openFileUsingStorageAccessFramework(getContext()
+                    .getContentResolver(), uri)
+                    .addOnSuccessListener(nameAndContent -> {
+                        String name = nameAndContent.first;
+                        String content = nameAndContent.second;
+                    })
+                    .addOnFailureListener(exception ->
+                            Log.e(TAG, "Unable to open file from picker.", exception));
+        }
+    }
+
+    private void handleSignInResult(Intent result) {
+        GoogleSignIn.getSignedInAccountFromIntent(result)
+                .addOnSuccessListener(googleAccount -> {
+                    Log.d(TAG, "Signed in as " + googleAccount.getEmail());
+
+                    // Use the authenticated account to sign in to the Drive service.
+                    GoogleAccountCredential credential =
+                            GoogleAccountCredential.usingOAuth2(
+                                    this.getContext(),
+                                    Collections.singleton(DriveScopes.DRIVE_FILE));
+                    credential.setSelectedAccount(googleAccount.getAccount());
+                    Drive googleDriveService =
+                            new Drive.Builder(
+                                    AndroidHttp.newCompatibleTransport(),
+                                    new GsonFactory(),
+                                    credential)
+                                    .setApplicationName("ImagesToPdf")
+                                    .build();
+
+                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
+                    // Its instantiation is required before handling any onClick actions.
+                    mDriveServiceHelper = new DriveServiceHelper(googleDriveService);
+                    if (mDriveServiceHelper != null) {
+                        openFilePicker();
+                    }
+                })
+                .addOnFailureListener(exception -> Log.e(TAG, "Unable to sign in.", exception));
+    }
+
+
+    private void requestSignIn() {
+        Log.d(TAG, "Requesting sign-in");
+
+        GoogleSignInOptions signInOptions =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .requestScopes(new Scope(DriveScopes.DRIVE_FILE))
+                        .build();
+        GoogleSignInClient client = GoogleSignIn.getClient(this.getContext(), signInOptions);
+
+        // The result of the sign-in Intent is handled in onActivityResult.
+        startActivityForResult(client.getSignInIntent(), REQUEST_CODE_SIGN_IN);
+    }
+
+    private void openFilePicker() {
+        if (mDriveServiceHelper != null) {
+            Log.d(TAG, "Opening file picker.");
+
+            Intent pickerIntent = mDriveServiceHelper.createFilePickerIntent();
+
+            // The result of the SAF Intent is handled in onActivityResult.
+            startActivityForResult(pickerIntent, REQUEST_CODE_OPEN_DOCUMENT);
         }
     }
 
@@ -326,6 +422,20 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             return;
 
         switch (requestCode) {
+            case REQUEST_CODE_SIGN_IN:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    handleSignInResult(data);
+                }
+                break;
+
+            case REQUEST_CODE_OPEN_DOCUMENT:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    Uri uri = data.getData();
+                    if (uri != null) {
+                        openFileFromFilePicker(uri);
+                    }
+                }
+                break;
             case INTENT_REQUEST_GET_IMAGES:
                 mImagesUri.clear();
                 mUnarrangedImagesUri.clear();
@@ -720,23 +830,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private boolean getRuntimePermissions(boolean openImagesActivity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
-                requestPermissions(new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-                return false;
-            }
-        }
-        return true;
+        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA);
+        if (!permission)
+            mOpenSelectImages = openImagesActivity;
+        return permission;
     }
 
     /**
@@ -844,10 +944,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void addPageNumbers() {
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
-                                            .title(R.string.choose_page_number_style)
-                                            .customView(R.layout.add_pgnum_dialog, false)
-                                            .positiveText(R.string.ok)
-                                            .negativeText(R.string.cancel)
+                .title(R.string.choose_page_number_style)
+                .customView(R.layout.add_pgnum_dialog, false)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
                     View view = dialog.getCustomView();

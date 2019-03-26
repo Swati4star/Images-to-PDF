@@ -42,6 +42,7 @@ import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.MergeHelper;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -299,13 +300,10 @@ public class ViewFilesFragment extends Fragment
 
     @OnClick(R.id.provide_permissions)
     public void providePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA},
-                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-        }
+        PermissionsUtils.checkRuntimePermissions(mActivity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA);
     }
 
     /**

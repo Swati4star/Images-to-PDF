@@ -7,6 +7,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PermissionsUtils {
     private static final String TAG = "PermissionsUtils";
 
@@ -20,19 +23,21 @@ public class PermissionsUtils {
      * @return
      */
     public static boolean checkRuntimePermissions(Activity activity, String... permissions) {
+        List<String> listPermissionsNeeded = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (int i = 0; i < permissions.length; i++) {
-                try {
-                    if ((ContextCompat.checkSelfPermission(activity.getApplicationContext(),
-                            permissions[i])
-                            != PackageManager.PERMISSION_GRANTED)) {
-                        requestRuntimePermissions(activity, permissions[i]);
-                        return false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.d(TAG, "Faulty permission passed");
+                if ((ContextCompat.checkSelfPermission(activity.getApplicationContext(),
+                        permissions[i])
+                        != PackageManager.PERMISSION_GRANTED)) {
+                    listPermissionsNeeded.add(permissions[i]);
                 }
+            }
+            try {
+                requestRuntimePermissions(activity, listPermissionsNeeded);
+                return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(TAG, "Faulty permission passed");
             }
         }
         return true;
@@ -42,9 +47,10 @@ public class PermissionsUtils {
      * requestRuntimePermissions request for the required permission
      * if not granted.
      *
-     * @param permission
+     * @param permissions
      */
-    public static void requestRuntimePermissions(Activity activity, String permission) {
-        ActivityCompat.requestPermissions(activity, new String[]{permission}, 0);
+    public static void requestRuntimePermissions(Activity activity, List<String> permissions) {
+        ActivityCompat.requestPermissions(activity,
+                permissions.toArray(new String[permissions.size()]), 0);
     }
 }
