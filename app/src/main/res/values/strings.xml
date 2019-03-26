@@ -498,4 +498,6 @@
     <string name="zip_to_pdf">ZIP to PDF</string>
     <string name="convert_to_pdf">convert to PDF</string>
     <string name="error_no_image_in_zip">ZIP file contains no image</string>
+
+    <string name="drive_selection">Select from Drive</string>
 </resources>
