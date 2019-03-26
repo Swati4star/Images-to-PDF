@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
@@ -54,6 +56,7 @@ public class FavouritesFragment extends Fragment
         implements SharedPreferences.OnSharedPreferenceChangeListener,
         View.OnClickListener {
     private SharedPreferences mSharedpreferences;
+    private boolean mDoesFavouritesExist;
 
     @BindView(R.id.fav_add_fab)
     FloatingActionButton mFab;
@@ -95,6 +98,8 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_extract_img;
     @BindView(R.id.pdf_to_images_fav)
     MyCardView pref_pdf_to_img;
+    @BindView(R.id.favourites)
+    LottieAnimationView favouritesAnimation;
 
     @Nullable
     @Override
@@ -141,9 +146,14 @@ public class FavouritesFragment extends Fragment
     /**
      * This method checks for the favourites from preferences list
      * and passes them to another method for dealing with the required view.
+     *
      * @param sharedPreferences
      */
     private void checkFavs(SharedPreferences sharedPreferences) {
+        // set this to false by default
+        // it'll be set to true by below calls if any favourites exists
+        mDoesFavouritesExist = false;
+
         // assigned due to onSharedPreferenceChanged
         mSharedpreferences = sharedPreferences;
         viewVisibility(pref_img_to_pdf, IMAGE_TO_PDF_KEY);
@@ -165,16 +175,26 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_reorder_pages, REORDER_PAGES_KEY);
         viewVisibility(pref_extract_img, EXTRACT_IMAGES_KEY);
         viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
+
+        // if there are no favourites then show favourites animation
+        if (!mDoesFavouritesExist) {
+            favouritesAnimation.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
      * This method toggles the visibility of the passed view.
+     *
      * @param view
      * @param id
      */
     private void viewVisibility(View view, String id) {
         if (mSharedpreferences.getBoolean(id, false)) {
             view.setVisibility(View.VISIBLE);
+            // if any favourites exists set mDoesFavouritesExist to true
+            mDoesFavouritesExist = true;
+            // & disable favourites animation
+            favouritesAnimation.setVisibility(View.GONE);
         } else {
             view.setVisibility(View.GONE);
         }
