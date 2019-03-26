@@ -11,8 +11,9 @@ public class TextToPDFOptions extends PDFOptions {
     private final int mFontColor;
 
     public TextToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
-                            String mPassword, Uri mInFileUri, int mFontSize, Font.FontFamily mFontFamily, int color) {
-        super(mFileName, mPageSize, mPasswordProtected, mPassword, 0, false, null);
+                            String mPassword, Uri mInFileUri, int mFontSize, Font.FontFamily mFontFamily, int color,
+                            int pageColor) {
+        super(mFileName, mPageSize, mPasswordProtected, mPassword, 0, false, null, pageColor);
         this.mInFileUri = mInFileUri;
         this.mFontSize = mFontSize;
         this.mFontFamily = mFontFamily;

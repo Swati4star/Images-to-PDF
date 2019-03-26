@@ -81,6 +81,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALETYPE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
@@ -133,6 +134,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private SharedPreferences mSharedPreferences;
     private FileUtils mFileUtils;
     private PageSizeUtils mPageSizeUtils;
+    private int mPageColor;
     private int mButtonClicked = 0;
     private ImageToPDFOptions mPdfOptions;
     private MaterialDialog mMaterialDialog;
@@ -160,6 +162,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
+        mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
+                DEFAULT_PAGE_COLOR);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
 
@@ -251,6 +255,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mPdfOptions.setImageScaleType(mImageScaleType);
         mPdfOptions.setPageNumStyle(mPageNumStyle);
         mPdfOptions.setMasterPwd(mSharedPreferences.getString(MASTER_PWD_STRING, appName));
+        mPdfOptions.setPageColor(mPageColor);
+
         MaterialDialog.Builder builder = createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
         builder.input(getString(R.string.example), null, (dialog, input) -> {
@@ -442,6 +448,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 break;
             case 12:
                 addWatermark();
+                break;
+            case 13:
+                setPageColor();
                 break;
         }
     }
@@ -690,6 +699,29 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         });
 
         dialog.show();
+    }
+
+    private void setPageColor() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.page_color)
+                .customView(R.layout.dialog_color_chooser, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
+                    CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
+                    mPageColor = colorPickerView.getColor();
+                    if (defaultCheckbox.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putInt(Constants.DEFAULT_PAGE_COLOR_ITP, mPageColor);
+                        editor.apply();
+                    }
+                })
+                .build();
+        ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
+        colorPickerView.setColor(mPageColor);
+        materialDialog.show();
     }
 
     @Override
