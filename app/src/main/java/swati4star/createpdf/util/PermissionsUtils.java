@@ -26,7 +26,7 @@ public class PermissionsUtils {
                     if ((ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                             permissions[i])
                             != PackageManager.PERMISSION_GRANTED)) {
-                        requestRuntimePermissions(permissions[i], activity);
+                        requestRuntimePermissions(activity, permissions[i]);
                         return false;
                     }
                 } catch (Exception e) {
@@ -44,7 +44,7 @@ public class PermissionsUtils {
      *
      * @param permission
      */
-    public static void requestRuntimePermissions(String permission, Activity activity) {
+    public static void requestRuntimePermissions(Activity activity, String permission) {
         ActivityCompat.requestPermissions(activity, new String[]{permission}, 0);
     }
 }
