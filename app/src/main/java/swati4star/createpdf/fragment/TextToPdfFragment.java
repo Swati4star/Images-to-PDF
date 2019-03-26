@@ -403,12 +403,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     showSnackbar(mActivity, R.string.text_file_selected);
                     String fileName = mFileUtils.getFileName(mTextFileUri);
                     if (fileName != null) {
-                        if (fileName.endsWith(Constants.textExtension))
-                            mFileExtension = Constants.textExtension;
-                        else if (fileName.endsWith(Constants.docxExtension))
-                            mFileExtension = Constants.docxExtension;
-                        else if (fileName.endsWith(Constants.docExtension))
-                            mFileExtension = Constants.docExtension;
+                        if (fileName.endsWith(Constants.textExtension)) mFileExtension = Constants.textExtension;
+                        else if (fileName.endsWith(Constants.docxExtension)) mFileExtension = Constants.docxExtension;
+                        else if (fileName.endsWith(Constants.docExtension)) mFileExtension = Constants.docExtension;
                         else {
                             showSnackbar(mActivity, R.string.extension_not_supported);
                             return;
@@ -463,6 +460,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
 
     private void getRuntimePermissions() {
         boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permission)

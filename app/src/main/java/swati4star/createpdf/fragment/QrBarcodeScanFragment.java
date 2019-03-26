@@ -247,6 +247,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      */
     private void getRuntimePermissions() {
         PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
     }

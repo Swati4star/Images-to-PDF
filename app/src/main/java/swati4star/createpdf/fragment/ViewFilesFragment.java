@@ -301,6 +301,7 @@ public class ViewFilesFragment extends Fragment
     @OnClick(R.id.provide_permissions)
     public void providePermissions() {
         PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA);
