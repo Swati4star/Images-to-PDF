@@ -22,7 +22,7 @@ public class PermissionsUtils {
      * @param permissions
      * @return
      */
-    public static boolean checkRuntimePermissions(Activity activity, String... permissions) {
+    public static boolean checkRuntimePermissions(Activity activity, int requestCode, String... permissions) {
         List<String> listPermissionsNeeded = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (int i = 0; i < permissions.length; i++) {
@@ -33,7 +33,7 @@ public class PermissionsUtils {
                 }
             }
             try {
-                requestRuntimePermissions(activity, listPermissionsNeeded);
+                requestRuntimePermissions(activity, listPermissionsNeeded, requestCode);
                 return false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -49,8 +49,9 @@ public class PermissionsUtils {
      *
      * @param permissions
      */
-    public static void requestRuntimePermissions(Activity activity, List<String> permissions) {
+    public static void requestRuntimePermissions(Activity activity, List<String> permissions,
+                                                 int requestCode) {
         ActivityCompat.requestPermissions(activity,
-                permissions.toArray(new String[permissions.size()]), 0);
+                permissions.toArray(new String[permissions.size()]), requestCode);
     }
 }

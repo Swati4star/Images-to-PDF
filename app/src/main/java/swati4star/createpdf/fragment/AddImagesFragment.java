@@ -229,6 +229,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
     private boolean getRuntimePermissions() {
         boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA);

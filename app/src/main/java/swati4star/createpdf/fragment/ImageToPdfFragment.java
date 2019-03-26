@@ -20,7 +20,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation;
-import swati4star.createpdf.DriveServiceHelper;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.CropImageActivity;
 import swati4star.createpdf.activity.ImageEditor;
@@ -77,7 +75,6 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
-import static android.support.constraint.Constraints.TAG;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
@@ -190,8 +187,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     @OnClick(R.id.tvNoOfImages)
-    public void onClick() {
-    }
+    public void onClick() { }
 
     /**
      * Adds images (if any) received in the bundle
@@ -724,6 +720,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private boolean getRuntimePermissions(boolean openImagesActivity) {
         boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA);
