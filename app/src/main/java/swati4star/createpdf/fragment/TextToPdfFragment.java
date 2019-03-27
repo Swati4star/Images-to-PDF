@@ -465,6 +465,5 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permission)
             mPermissionGranted = true;
-        else return;
     }
 }
