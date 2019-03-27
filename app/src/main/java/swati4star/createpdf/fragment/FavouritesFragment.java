@@ -1,5 +1,7 @@
 package swati4star.createpdf.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.preference.PreferenceManager;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -19,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
+import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
@@ -57,6 +61,8 @@ public class FavouritesFragment extends Fragment
         View.OnClickListener {
     private SharedPreferences mSharedpreferences;
     private boolean mDoesFavouritesExist;
+    private Activity mActivity;
+    private SparseIntArray mFragmentPositionMap;
 
     @BindView(R.id.fav_add_fab)
     FloatingActionButton mFab;
@@ -107,8 +113,9 @@ public class FavouritesFragment extends Fragment
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.favourites_fragment, container, false);
         ButterKnife.bind(this, rootview);
+        fillMap();
         mSharedpreferences = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
+                .getDefaultSharedPreferences(mActivity);
         mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
         checkFavs(mSharedpreferences);
         mFab.setOnClickListener(v ->
@@ -180,6 +187,35 @@ public class FavouritesFragment extends Fragment
         if (!mDoesFavouritesExist) {
             favouritesAnimation.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void fillMap() {
+        mFragmentPositionMap = new SparseIntArray();
+        mFragmentPositionMap.append(R.id.images_to_pdf_fav, R.id.nav_camera);
+        mFragmentPositionMap.append(R.id.qr_barcode_to_pdf_fav, R.id.nav_qrcode);
+        mFragmentPositionMap.append(R.id.view_files_fav, R.id.nav_gallery);
+        mFragmentPositionMap.append(R.id.rotate_pages_fav, R.id.nav_gallery);
+        mFragmentPositionMap.append(R.id.add_watermark_fav, R.id.nav_add_watermark);
+        mFragmentPositionMap.append(R.id.merge_pdf_fav, R.id.nav_merge);
+        mFragmentPositionMap.append(R.id.split_pdf_fav, R.id.nav_split);
+        mFragmentPositionMap.append(R.id.text_to_pdf_fav, R.id.nav_text_to_pdf);
+        mFragmentPositionMap.append(R.id.compress_pdf_fav, R.id.nav_compress_pdf);
+        mFragmentPositionMap.append(R.id.remove_pages_fav, R.id.nav_remove_pages);
+        mFragmentPositionMap.append(R.id.rearrange_pages_fav, R.id.nav_rearrange_pages);
+        mFragmentPositionMap.append(R.id.extract_images_fav, R.id.nav_extract_images);
+        mFragmentPositionMap.append(R.id.view_history_fav, R.id.nav_history);
+        mFragmentPositionMap.append(R.id.pdf_to_images_fav, R.id.nav_pdf_to_images);
+        mFragmentPositionMap.append(R.id.add_password_fav, R.id.nav_add_password);
+        mFragmentPositionMap.append(R.id.remove_password_fav, R.id.nav_remove_password);
+        mFragmentPositionMap.append(R.id.add_images_fav, R.id.nav_add_images);
+        mFragmentPositionMap.append(R.id.remove_duplicates_pages_pdf_fav, R.id.nav_remove_duplicate_pages);
+        mFragmentPositionMap.append(R.id.invert_pdf_fav, R.id.nav_invert_pdf);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 
     /**
@@ -291,8 +327,10 @@ public class FavouritesFragment extends Fragment
                 break;
         }
         try {
-            if (fragment != null && fragmentManager != null)
+            if (fragment != null && fragmentManager != null) {
+                ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(v.getId()));
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
