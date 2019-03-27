@@ -45,10 +45,14 @@ public class PermissionsUtils {
     }
 
     /**
-     * requestRuntimePermissions request for the required permission
-     * if not granted.
+     * requestRuntimePermissions takes in an Activity instance, a list of permissions and
+     * a permission request code and requests for the permission after converting the list
+     * of permissions to an array of same.
      *
+     * @param activity
      * @param permissions
+     * @param requestCode
+     * @return
      */
     public static void requestRuntimePermissions(Activity activity, List<String> permissions,
                                                  int requestCode) {
