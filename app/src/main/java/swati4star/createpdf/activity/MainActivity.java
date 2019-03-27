@@ -309,38 +309,38 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean checkFragmentBottomSheetBehavior() {
-        if (mCurrentFragment instanceof InvertPdfFragment)
+        if (mCurrentFragment instanceof InvertPdfFragment )
             return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof MergeFilesFragment)
+        if (mCurrentFragment instanceof MergeFilesFragment )
             return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment)
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
             return ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof RemovePagesFragment)
+        if (mCurrentFragment instanceof RemovePagesFragment )
             return ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof AddImagesFragment)
+        if (mCurrentFragment instanceof AddImagesFragment )
             return ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof PdfToImageFragment)
+        if (mCurrentFragment instanceof PdfToImageFragment )
             return ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof SplitFilesFragment)
+        if (mCurrentFragment instanceof SplitFilesFragment )
             return ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
 
         return false;
     }
 
     private void closeFragmentBottomSheet() {
-        if (mCurrentFragment instanceof InvertPdfFragment)
+        if ( mCurrentFragment instanceof InvertPdfFragment)
             ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof MergeFilesFragment)
             ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
 
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment)
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
             ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof RemovePagesFragment)
