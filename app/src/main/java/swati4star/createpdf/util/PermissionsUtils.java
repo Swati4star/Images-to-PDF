@@ -14,11 +14,12 @@ public class PermissionsUtils {
     private static final String TAG = "PermissionsUtils";
 
     /**
-     * checkRuntimePermissions takes in multiple permissions or an array of permissions
-     * and checks for if the permission is granted and if not it requests for the desired
-     * permissions. The try and catch block checks for invalid permissions passed.
-     *
+     * checkRuntimePermissions takes in an Activity instance, a permission request code and
+     * multiple permissions or an array of permission and checks for if the permission is
+     * granted and if not it requests for the desired permissions as a group. The try and
+     * catch block checks for invalid permissions passed.
      * @param activity
+     * @param requestCode
      * @param permissions
      * @return
      */

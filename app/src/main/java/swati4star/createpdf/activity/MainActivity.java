@@ -494,7 +494,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.checkRuntimePermissions(this, 0,
+        PermissionsUtils.checkRuntimePermissions(this,
+                PERMISSION_REQUEST_CODE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA);
