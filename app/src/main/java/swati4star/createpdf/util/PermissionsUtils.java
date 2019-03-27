@@ -18,6 +18,7 @@ public class PermissionsUtils {
      * multiple permissions or an array of permission and checks for if the permission is
      * granted and if not it requests for the desired permissions as a group. The try and
      * catch block checks for invalid permissions passed.
+     *
      * @param activity
      * @param requestCode
      * @param permissions
