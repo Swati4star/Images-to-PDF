@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -132,7 +133,11 @@ public class PDFUtils {
             throws DocumentException, IOException {
 
         String masterpwd = mSharedPreferences.getString(MASTER_PWD_STRING, appName);
-        Document document = new Document(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
+
+        Rectangle pageSize = new Rectangle(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
+        pageSize.setBackgroundColor(getBaseColor(mTextToPDFOptions.getPageColor()));
+        Document document = new Document(pageSize);
+
         String finalOutput = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation()) +
                 mTextToPDFOptions.getOutFileName() + ".pdf";
@@ -146,15 +151,11 @@ public class PDFUtils {
         }
 
         document.open();
+
         Font myfont = new Font(mTextToPDFOptions.getFontFamily());
-        int color = mTextToPDFOptions.getmFontColor();
         myfont.setStyle(Font.NORMAL);
         myfont.setSize(mTextToPDFOptions.getFontSize());
-        myfont.setColor(
-                Color.red(color),
-                Color.green(color),
-                Color.blue(color)
-        );
+        myfont.setColor(getBaseColor(mTextToPDFOptions.getmFontColor()));
 
         document.add(new Paragraph("\n"));
 
@@ -178,6 +179,19 @@ public class PDFUtils {
         document.close();
 
         new DatabaseHelper(mContext).insertRecord(finalOutput, mContext.getString(R.string.created));
+    }
+
+    /**
+     * Read the BaseColor of passed color
+     *
+     * @param color value of color in int
+     */
+    private BaseColor getBaseColor(int color) {
+        return new BaseColor(
+                Color.red(color),
+                Color.green(color),
+                Color.blue(color)
+        );
     }
 
     /**

@@ -24,8 +24,9 @@ public class ImageToPDFOptions extends PDFOptions {
     public ImageToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
                              String mPassword, String mQualityString, int mBorderWidth,
                              String masterPwd, ArrayList<String> mImagesUri,
-                             boolean mWatermarkAdded, Watermark mWatermark) {
-        super(mFileName, mPageSize, mPasswordProtected, mPassword, mBorderWidth, mWatermarkAdded, mWatermark);
+                             boolean mWatermarkAdded, Watermark mWatermark, int pageColor) {
+        super(mFileName, mPageSize, mPasswordProtected, mPassword, mBorderWidth, mWatermarkAdded, mWatermark,
+                pageColor);
         this.mQualityString = mQualityString;
         this.mImagesUri = mImagesUri;
         this.mMasterPwd = masterPwd;
