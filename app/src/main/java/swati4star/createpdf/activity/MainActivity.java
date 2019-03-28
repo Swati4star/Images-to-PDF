@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -78,11 +79,14 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
     private Fragment mCurrentFragment;
+    private SparseIntArray mFragmentPositionMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
+
+        fillMap();
 
         setContentView(R.layout.activity_main);
 
@@ -369,6 +373,31 @@ public class MainActivity extends AppCompatActivity
         this.mDoubleBackToExitPressedOnce = true;
         Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
     }
+    private void fillMap() {
+        mFragmentPositionMap = new SparseIntArray();
+        mFragmentPositionMap.append(R.id.nav_home, R.string.app_name);
+        mFragmentPositionMap.append(R.id.nav_camera, R.string.images_to_pdf);
+        mFragmentPositionMap.append(R.id.nav_qrcode, R.string.qr_barcode_pdf);
+        mFragmentPositionMap.append(R.id.nav_gallery, R.string.viewFiles);
+        mFragmentPositionMap.append(R.id.nav_merge, R.string.merge_pdf);
+        mFragmentPositionMap.append(R.id.nav_split, R.string.split_pdf);
+        mFragmentPositionMap.append(R.id.nav_text_to_pdf, R.string.text_to_pdf);
+        mFragmentPositionMap.append(R.id.nav_history, R.string.history);
+        mFragmentPositionMap.append(R.id.nav_add_password, R.string.add_password);
+        mFragmentPositionMap.append(R.id.nav_remove_password, R.string.remove_password);
+        mFragmentPositionMap.append(R.id.nav_about, R.string.about_us);
+        mFragmentPositionMap.append(R.id.nav_settings, R.string.settings);
+        mFragmentPositionMap.append(R.id.nav_extract_images, R.string.extract_images);
+        mFragmentPositionMap.append(R.id.nav_pdf_to_images, R.string.pdf_to_images);
+        mFragmentPositionMap.append(R.id.nav_remove_pages, R.string.remove_pages);
+        mFragmentPositionMap.append(R.id.nav_rearrange_pages, R.string.reorder_pages);
+        mFragmentPositionMap.append(R.id.nav_compress_pdf, R.string.compress_pdf);
+        mFragmentPositionMap.append(R.id.nav_add_images, R.string.add_images);
+        mFragmentPositionMap.append(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages);
+        mFragmentPositionMap.append(R.id.nav_invert_pdf, R.string.invert_pdf);
+        mFragmentPositionMap.append(R.id.nav_add_watermark, R.string.add_watermark);
+        mFragmentPositionMap.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -378,50 +407,41 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
+        setTitleFragment(mFragmentPositionMap.get(item.getItemId()));
 
         switch (item.getItemId()) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
-                setTitle(R.string.app_name);
                 break;
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
-                setTitle(R.string.images_to_pdf);
                 break;
             case R.id.nav_qrcode:
                 fragment = new QrBarcodeScanFragment();
-                setTitle(R.string.qr_barcode_pdf);
                 break;
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();
-                setTitle(R.string.viewFiles);
                 break;
             case R.id.nav_merge:
                 fragment = new MergeFilesFragment();
-                setTitle(R.string.merge_pdf);
                 break;
             case R.id.nav_split:
                 fragment = new SplitFilesFragment();
-                setTitle(R.string.split_pdf);
                 break;
             case R.id.nav_text_to_pdf:
                 fragment = new TextToPdfFragment();
-                setTitle(R.string.text_to_pdf);
                 break;
             case R.id.nav_history:
                 fragment = new HistoryFragment();
-                setTitle(R.string.history);
                 break;
             case R.id.nav_add_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
-                setTitle(R.string.add_password);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_remove_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
-                setTitle(R.string.remove_password);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_share:
@@ -429,47 +449,39 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_about:
                 fragment = new AboutUsFragment();
-                setTitle(R.string.about_us);
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
-                setTitle(R.string.settings);
                 break;
             case R.id.nav_extract_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.extract_images);
                 break;
             case R.id.nav_pdf_to_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.pdf_to_images);
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.remove_pages);
                 break;
             case R.id.nav_rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.reorder_pages);
                 break;
             case R.id.nav_compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
-                setTitle(R.string.compress_pdf);
                 break;
             case R.id.nav_add_images:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
-                setTitle(R.string.add_images);
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(this, WelcomeActivity.class);
@@ -478,16 +490,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
-                setTitle(R.string.remove_duplicate_pages);
                 break;
             case R.id.nav_invert_pdf:
                 fragment = new InvertPdfFragment();
-                setTitle(R.string.invert_pdf);
                 break;
             case R.id.nav_add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
-                setTitle(R.string.add_watermark);
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_zip_to_pdf:
@@ -557,5 +566,8 @@ public class MainActivity extends AppCompatActivity
         bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+    }
+    private void setTitleFragment(int title) {
+        setTitle(title);
     }
 }

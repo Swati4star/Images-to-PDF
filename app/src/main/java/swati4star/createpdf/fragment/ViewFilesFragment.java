@@ -344,10 +344,6 @@ public class ViewFilesFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
-//        AppCompatActivity activity = ((AppCompatActivity)
-//                Objects.requireNonNull(mActivity));
-//        ActionBar actionBar = activity.getSupportActionBar();
-//        actionBar.setTitle(appName);
         mActivity.setTitle(appName);
     }
 
@@ -366,7 +362,6 @@ public class ViewFilesFragment extends Fragment
 
         if (toolbar != null) {
             if (countFiles == 0) {
-//                toolbar.setTitle(appName);
                 mActivity.setTitle(appName);
                 if (mCheckBoxChanged) {
                     mCheckBoxChanged = false;
@@ -374,7 +369,6 @@ public class ViewFilesFragment extends Fragment
                     activity.invalidateOptionsMenu();
                 }
             } else {
-//                toolbar.setTitle(String.valueOf(countFiles));
                 mActivity.setTitle(String.valueOf(countFiles));
                 if (!mCheckBoxChanged) {
                     mCheckBoxChanged = true;

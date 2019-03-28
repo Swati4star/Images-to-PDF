@@ -241,6 +241,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.zip_to_pdf:
                 fragment = new ZipToPdfFragment();
+                mActivity.setTitle(R.string.zip_to_pdf);
                 break;
         }
 
