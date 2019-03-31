@@ -402,4 +402,6 @@
 
     <string name="font_color">Font Color</string>
     <string name="page_color">Page Color</string>
+    <string name="excel_selected">Excel file selected: </string>
+    <string name="excel_to_pdf">Excel to Pdf</string>
 </resources>
