@@ -27,6 +27,7 @@ import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
+import swati4star.createpdf.fragment.ExceltoPdfFragment;
 import swati4star.createpdf.fragment.FavouritesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
@@ -431,6 +432,9 @@ public class MainActivity extends AppCompatActivity
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
+                break;
+            case R.id.nav_excel_to_pdf:
+                fragment = new ExceltoPdfFragment();
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();

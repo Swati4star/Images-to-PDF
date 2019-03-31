@@ -28,12 +28,27 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
+}
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
 }
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven { url "https://repository.aspose.com/repo/" }
 }
-
 dependencies {
     def room_version = "1.1.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -49,7 +64,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:preference-v7:28.0.0'
-
+    implementation 'com.grapecity.documents:gcexcel:2.1.1'
     // butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -101,4 +116,3 @@ dependencies {
 preBuild.dependsOn('checkstyle')
 assemble.dependsOn('lint')
 check.dependsOn('checkstyle')
-

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ExceltoPdfFragment">
+
+    <LinearLayout
+        android:id="@+id/buttonLayoutNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/select_excel_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/MorphingButton"
+            android:padding="10dp"
+            android:text="Select a Excel file" />
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/create_excel_to_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/MorphingButton"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="Excel to pdf" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_excel_file_name_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:padding="8dp"
+        android:text="@string/text_file_name"
+        android:visibility="gone"  />
+
+</RelativeLayout>
