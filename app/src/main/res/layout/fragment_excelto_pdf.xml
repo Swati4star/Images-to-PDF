@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             style="@style/MorphingButton"
             android:padding="10dp"
-            android:text="Select a Excel file" />
+            android:text="@string/select_file" />
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/create_excel_to_pdf"
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:padding="10dp"
-            android:text="Excel to pdf" />
+            android:text="@string/excel_to_pdf" />
     </LinearLayout>
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:padding="8dp"
-        android:text="@string/text_file_name"
+        android:text="@string/excel_tv_view_text"
         android:visibility="gone"  />
 
 </RelativeLayout>

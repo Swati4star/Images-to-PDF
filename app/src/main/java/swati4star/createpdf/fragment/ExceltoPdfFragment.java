@@ -12,16 +12,15 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.aspose.cells.FileFormatType;
+import com.aspose.cells.Workbook;
 import com.dd.morphingbutton.MorphingButton;
-import com.grapecity.documents.excel.SaveFileFormat;
-import com.grapecity.documents.excel.Workbook;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -193,9 +192,8 @@ public class ExceltoPdfFragment extends Fragment {
         String mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
         Workbook workbook;
         try {
-            workbook = new Workbook();
-            workbook.open(mRealPath);
-            workbook.save(mPath, SaveFileFormat.Pdf);
+            workbook = new Workbook(mRealPath);
+            workbook.save(mPath, FileFormatType.PDF);
 
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
