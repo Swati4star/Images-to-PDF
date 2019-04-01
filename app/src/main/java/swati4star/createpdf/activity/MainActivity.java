@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity
         if (item.getItemId() == R.id.menu_favourites_item) {
             Fragment fragment = new FavouritesFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
+            setTitle("Favourites");
             fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         }
         return super.onOptionsItemSelected(item);
@@ -557,6 +558,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
     private void setTitleFragment(int title) {
-        setTitle(title);
+        if (title != 0)
+            setTitle(title);
     }
 }

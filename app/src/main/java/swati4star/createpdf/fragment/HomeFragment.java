@@ -147,6 +147,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentSelectedMap.append(R.id.remove_pages, R.string.remove_pages);
         mFragmentSelectedMap.append(R.id.rearrange_pages, R.string.reorder_pages);
         mFragmentSelectedMap.append(R.id.compress_pdf, R.string.compress_pdf);
+        mFragmentSelectedMap.append(R.id.rotate_pages, R.string.rotate_pages);
         mFragmentSelectedMap.append(R.id.add_images, R.string.add_images);
         mFragmentSelectedMap.append(R.id.remove_duplicates_pages_pdf, R.string.remove_duplicate_pages);
         mFragmentSelectedMap.append(R.id.invert_pdf, R.string.invert_pdf);
@@ -266,6 +267,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             ((MainActivity) mActivity).setNavigationViewSelection(id);
     }
     private void setTitleFragment(int title) {
-        mActivity.setTitle(title);
+        if (title != 0)
+           mActivity.setTitle(title);
     }
 }

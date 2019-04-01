@@ -341,12 +341,6 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        mActivity.setTitle(appName);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
