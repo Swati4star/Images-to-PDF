@@ -148,7 +148,7 @@ public class WatermarkUtils {
             pagesize = reader.getPageSizeWithRotation(i);
             x = (pagesize.getLeft() + pagesize.getRight()) / 2;
             y = (pagesize.getTop() + pagesize.getBottom()) / 2;
-            over = stamper.getUnderContent(i);
+            over = stamper.getOverContent(i);
 
             ColumnText.showTextAligned(over, Element.ALIGN_CENTER, p, x, y, this.mWatermark.getRotationAngle());
         }
