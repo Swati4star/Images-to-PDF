@@ -117,10 +117,10 @@ public class WatermarkUtils {
                         Color.blue(colorPickerInput.getColor()),
                         Color.alpha(colorPickerInput.getColor())
                 )));
-                String fileFath = createWatermark(path);
+                String filePath = createWatermark(path);
                 dataSetChanged.updateDataset();
                 getSnackbarwithAction(mContext, R.string.watermark_added).setAction("View", v1 -> {
-                    mFileUtils.openFile(fileFath);
+                    mFileUtils.openFile(filePath);
                 }).show();
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
