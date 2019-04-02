@@ -63,6 +63,7 @@ public class FavouritesFragment extends Fragment
     private boolean mDoesFavouritesExist;
     private Activity mActivity;
     private SparseIntArray mFragmentPositionMap;
+    private SparseIntArray mFragmentSelectedMap;
 
     @BindView(R.id.fav_add_fab)
     FloatingActionButton mFab;
@@ -114,6 +115,7 @@ public class FavouritesFragment extends Fragment
         View rootview = inflater.inflate(R.layout.favourites_fragment, container, false);
         ButterKnife.bind(this, rootview);
         fillMap();
+        titleMap();
         mSharedpreferences = PreferenceManager
                 .getDefaultSharedPreferences(mActivity);
         mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
@@ -212,6 +214,29 @@ public class FavouritesFragment extends Fragment
         mFragmentPositionMap.append(R.id.invert_pdf_fav, R.id.nav_invert_pdf);
     }
 
+    private void titleMap() {
+        mFragmentSelectedMap = new SparseIntArray();
+        mFragmentSelectedMap.append(R.id.images_to_pdf_fav, R.string.images_to_pdf);
+        mFragmentSelectedMap.append(R.id.qr_barcode_to_pdf_fav, R.string.qr_barcode_pdf);
+        mFragmentSelectedMap.append(R.id.view_files_fav, R.string.viewFiles);
+        mFragmentSelectedMap.append(R.id.rotate_pages_fav, R.string.rotate_pages);
+        mFragmentSelectedMap.append(R.id.add_watermark_fav, R.string.add_watermark);
+        mFragmentSelectedMap.append(R.id.merge_pdf_fav, R.string.merge_pdf);
+        mFragmentSelectedMap.append(R.id.split_pdf_fav, R.string.split_pdf);
+        mFragmentSelectedMap.append(R.id.text_to_pdf_fav, R.string.text_to_pdf);
+        mFragmentSelectedMap.append(R.id.compress_pdf_fav, R.string.compress_pdf);
+        mFragmentSelectedMap.append(R.id.remove_pages_fav, R.string.remove_pages);
+        mFragmentSelectedMap.append(R.id.rearrange_pages_fav, R.string.reorder_pages);
+        mFragmentSelectedMap.append(R.id.extract_images_fav, R.string.extract_images);
+        mFragmentSelectedMap.append(R.id.view_history_fav, R.string.history);
+        mFragmentSelectedMap.append(R.id.pdf_to_images_fav, R.string.pdf_to_images);
+        mFragmentSelectedMap.append(R.id.add_password_fav, R.string.add_password);
+        mFragmentSelectedMap.append(R.id.remove_password_fav, R.string.remove_password);
+        mFragmentSelectedMap.append(R.id.add_images_fav, R.string.add_images);
+        mFragmentSelectedMap.append(R.id.remove_duplicates_pages_pdf_fav, R.string.remove_duplicate_pages);
+        mFragmentSelectedMap.append(R.id.invert_pdf_fav, R.string.invert_pdf);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -246,6 +271,7 @@ public class FavouritesFragment extends Fragment
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
+        setTitleFragment(mFragmentSelectedMap.get(v.getId()));
 
         switch (v.getId()) {
             case R.id.images_to_pdf_fav:
@@ -334,5 +360,9 @@ public class FavouritesFragment extends Fragment
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void setTitleFragment(int title) {
+        if (title != 0)
+            mActivity.setTitle(title);
     }
 }

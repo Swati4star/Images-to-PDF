@@ -499,4 +499,8 @@
     <string name="zip_to_pdf">ZIP to PDF</string>
     <string name="convert_to_pdf">convert to PDF</string>
     <string name="error_no_image_in_zip">ZIP file contains no image</string>
+
+    <!--favourite fragment-->
+    <string name="favourites">Favourites</string>
+    <string name="add_to_favourite">Add to Favourite</string>
 </resources>
