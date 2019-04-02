@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity
 
     private static final int PERMISSION_REQUEST_CODE = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.setThemeApp(this);
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         if (item.getItemId() == R.id.menu_favourites_item) {
             Fragment fragment = new FavouritesFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            setTitle("Favourites");
+            setTitle(R.string.favourites);
             fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         }
         return super.onOptionsItemSelected(item);
@@ -223,7 +222,6 @@ public class MainActivity extends AppCompatActivity
 
         return fragment;
     }
-
 
     /**
      * Ininitializes default values
@@ -309,7 +307,6 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 setTitle(R.string.app_name);
                 setNavigationViewSelection(R.id.nav_home);
-
             }
         }
     }
