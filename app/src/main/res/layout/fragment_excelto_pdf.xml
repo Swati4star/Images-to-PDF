@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             style="@style/MorphingButton"
             android:padding="10dp"
-            android:text="@string/select_file" />
+            android:text="@string/select_excel_file" />
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/create_excel_to_pdf"
             android:layout_width="match_parent"

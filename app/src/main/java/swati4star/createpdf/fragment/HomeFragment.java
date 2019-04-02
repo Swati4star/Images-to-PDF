@@ -72,6 +72,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView invertPdf;
     @BindView(R.id.zip_to_pdf)
     MyCardView zipToPdf;
+    @BindView(R.id.excel_to_pdf)
+    MyCardView excelToPdf;
 
     private SparseIntArray mFragmentPositionMap;
 
@@ -101,6 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         removeDuplicatePages.setOnClickListener(this);
         invertPdf.setOnClickListener(this);
         zipToPdf.setOnClickListener(this);
+        excelToPdf.setOnClickListener(this);
         return rootview;
     }
 
@@ -108,6 +111,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentPositionMap = new SparseIntArray();
         mFragmentPositionMap.append(R.id.images_to_pdf, R.id.nav_camera);
         mFragmentPositionMap.append(R.id.qr_barcode_to_pdf, R.id.nav_qrcode);
+        mFragmentPositionMap.append(R.id.excel_to_pdf, R.id.nav_excel_to_pdf);
         mFragmentPositionMap.append(R.id.view_files, R.id.nav_gallery);
         mFragmentPositionMap.append(R.id.rotate_pages, R.id.nav_gallery);
         mFragmentPositionMap.append(R.id.add_watermark, R.id.nav_add_watermark);
@@ -222,6 +226,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.zip_to_pdf:
                 fragment = new ZipToPdfFragment();
+                break;
+            case R.id.excel_to_pdf:
+                fragment = new ExceltoPdfFragment();
                 break;
         }
 

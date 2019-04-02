@@ -404,4 +404,5 @@
     <string name="excel_selected">Excel file selected</string>
     <string name="excel_to_pdf">Excel to PDF</string>
     <string name="excel_tv_view_text">Excel file selected: </string>
+    <string name="select_excel_file">Select Excel file</string>
 </resources>
