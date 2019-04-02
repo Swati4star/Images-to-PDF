@@ -69,6 +69,7 @@ import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
+import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -510,6 +511,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_whatsNew:
                 WhatsNewUtils.displayDialog(this);
+                break;
+            case R.id.nav_rotate_pages:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
+                fragment.setArguments(bundle);
                 break;
         }
 
