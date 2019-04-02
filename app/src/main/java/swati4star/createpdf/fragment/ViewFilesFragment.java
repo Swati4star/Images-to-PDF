@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -342,15 +341,6 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        AppCompatActivity activity = ((AppCompatActivity)
-                Objects.requireNonNull(mActivity));
-        ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle(appName);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -362,16 +352,17 @@ public class ViewFilesFragment extends Fragment
                 Objects.requireNonNull(mActivity));
         ActionBar toolbar = activity.getSupportActionBar();
         mCountFiles = countFiles;
+
         if (toolbar != null) {
             if (countFiles == 0) {
-                toolbar.setTitle(appName);
+                mActivity.setTitle(appName);
                 if (mCheckBoxChanged) {
                     mCheckBoxChanged = false;
                     mIsChecked = false;
                     activity.invalidateOptionsMenu();
                 }
             } else {
-                toolbar.setTitle(String.valueOf(countFiles));
+                mActivity.setTitle(String.valueOf(countFiles));
                 if (!mCheckBoxChanged) {
                     mCheckBoxChanged = true;
                     mIsChecked = true;
