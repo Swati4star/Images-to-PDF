@@ -229,6 +229,10 @@
     <string name="image_rearranging_options">Opciones de Reordenado de Imagen</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reiniciar</string>
+    <string name="excel_selected">Excel file selected</string>
+    <string name="excel_to_pdf">Excel to PDF</string>
+    <string name="excel_tv_view_text">Excel file selected: </string>
+    <string name="select_excel_file">Select Excel file</string>
 
     <string name="confirm_exit_message">Presione de nuevo para salir</string>
     <string name="border">Agregar Borde a Imagen</string>

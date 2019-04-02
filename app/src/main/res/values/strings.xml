@@ -122,6 +122,10 @@
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
     <string name="pdf_merged">PDFs Merged</string>
+    <string name="excel_selected">Excel file selected</string>
+    <string name="excel_to_pdf">Excel to PDF</string>
+    <string name="excel_tv_view_text">Excel file selected: </string>
+    <string name="select_excel_file">Select Excel file</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="enter_file_name">Enter file name</string>

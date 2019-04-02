@@ -20,6 +20,10 @@
                         android:id="@+id/nav_qrcode"
                         android:icon="@drawable/ic_qrcode_24dp"
                         android:title="@string/qr_barcode_pdf" />
+                    <item
+                        android:id="@+id/nav_excel_to_pdf"
+                        android:icon="@drawable/ic_excel"
+                        android:title="@string/excel_to_pdf" />
                 </group>
             </menu>
         </item>
