@@ -39,6 +39,7 @@ public class FavouritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Add to Favourite");
         mSharedpreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         setContentView(R.layout.fav_pref_screen);

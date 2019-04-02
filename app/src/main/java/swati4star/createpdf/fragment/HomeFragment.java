@@ -132,7 +132,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void titleMap() {
         mFragmentSelectedMap = new SparseIntArray();
-        mFragmentSelectedMap.append(R.id.nav_home, R.string.app_name);
         mFragmentSelectedMap.append(R.id.images_to_pdf, R.string.images_to_pdf);
         mFragmentSelectedMap.append(R.id.qr_barcode_to_pdf, R.string.qr_barcode_pdf);
         mFragmentSelectedMap.append(R.id.view_files, R.string.viewFiles);
