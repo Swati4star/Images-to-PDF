@@ -69,6 +69,7 @@ import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
+import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -400,6 +401,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentSelectedMap.append(R.id.nav_invert_pdf, R.string.invert_pdf);
         mFragmentSelectedMap.append(R.id.nav_add_watermark, R.string.add_watermark);
         mFragmentSelectedMap.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
+        mFragmentSelectedMap.append(R.id.nav_rotate_pages, R.string.rotate_pages);
     }
 
     @Override
@@ -510,6 +512,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_whatsNew:
                 WhatsNewUtils.displayDialog(this);
+                break;
+            case R.id.nav_rotate_pages:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
+                fragment.setArguments(bundle);
                 break;
         }
 
