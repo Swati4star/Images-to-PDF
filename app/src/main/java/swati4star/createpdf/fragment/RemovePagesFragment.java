@@ -147,6 +147,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             setTextAndActivateButtons(path);
         } else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
             String pages = data.getStringExtra(RESULT);
+            boolean sameFile = data.getBooleanExtra("SameFile", false);
 
             if (mPath == null)
                 return;
@@ -160,7 +161,12 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             }
 
             if (mPDFUtils.reorderRemovePDF(mPath, outputPath, pages)) {
-                viewPdfButton(outputPath);
+                if (sameFile) {
+                    showSnackbar(mActivity, R.string.file_order);
+                    return;
+                } else {
+                    viewPdfButton(outputPath);
+                }
             }
             resetValues();
         }
@@ -288,6 +294,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private void setTextAndActivateButtons(String path) {
         mPath = path;
         mCompressionInfoText.setVisibility(View.GONE);
+        mViewPdf.setVisibility(View.GONE);
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, createPdf);
     }

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     public static ArrayList<Bitmap> mImages;
     private RearrangePdfAdapter mRearrangeImagesAdapter;
     private SharedPreferences mSharedPreferences;
-    private ArrayList<Integer> mSequence;
+    private ArrayList<Integer> mSequence, mInitialSequence;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         ButterKnife.bind(this);
 
         mSequence = new ArrayList<>();
+        mInitialSequence = new ArrayList<>();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         sortButton.setVisibility(View.GONE);
         if (mImages == null || mImages.size() < 1) {
@@ -72,8 +74,10 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         mRearrangeImagesAdapter = new RearrangePdfAdapter(this, images, this);
         recyclerView.setAdapter(mRearrangeImagesAdapter);
         mSequence = new ArrayList<>();
-        for ( int i = 0; i < images.size(); i++)
+        for ( int i = 0; i < images.size(); i++) {
             mSequence.add(i + 1);
+        }
+        mInitialSequence.addAll(mSequence);
     }
 
     void swap (int pos1, int pos2) {
@@ -130,6 +134,9 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         for ( int x : mSequence)
             result.append(x).append(",");
         returnIntent.putExtra(RESULT, result.toString());
+        boolean sameFile = mInitialSequence.equals(mSequence);
+        Log.e("TAG", "" + mInitialSequence + ":" + mSequence + ":" + sameFile);
+        returnIntent.putExtra("SameFile", sameFile);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -154,5 +161,19 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     public static Intent getStartIntent(Context context) {
         return new Intent(context, RearrangePdfPages.class);
     }
+
+//    public boolean sameSize() {
+//        int i = 0;
+//        boolean mSameSize = true;
+//        if (mInitialSequence.size() == mSequence.size()) {
+//            while (i < mSequence.size()) {
+//                if (!(mInitialSequence.get(i).equals(mSequence.get(i))))
+//                    mSameSize = false;
+//            }
+//        } else {
+//            mSameSize = false;
+//        }
+//        return mSameSize;
+//    }
 }
 

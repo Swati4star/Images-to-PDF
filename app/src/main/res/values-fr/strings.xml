@@ -393,5 +393,6 @@
     <string name="error_page_range">Invalid range input</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
     <string name="error_invalid_input">Invalid input</string>
+    <string name="file_order">Aucune modification apportée au fichier</string>
 
 </resources>

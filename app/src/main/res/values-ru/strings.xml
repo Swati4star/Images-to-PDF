@@ -293,6 +293,7 @@
     <string name="remove_pages_error">Некорректный ввод</string>
     <string name="encrypted_pdf">PDF файл защищен паролем</string>
     <string name="file_access_error">PDF файл недоступен, зашифрован или находится на внешнем носителе.</string>
+    <string name="file_order">В файл не внесены изменения</string>
 
     <!-- Reorder Pages -->
     <string name="reorder_pages">Поменять порядок страниц</string>

@@ -351,6 +351,7 @@
     <string name="remove_pages_error">The input value is not valid</string>
     <string name="encrypted_pdf">PDF is password protected</string>
     <string name="file_access_error">We were unable to access PDF. Files may be encrypted or in the external storage.</string>
+    <string name="file_order">No changes made in the file</string>
 
     <!-- Reorder Pages -->
     <string name="reorder_pages">Reorder Pages</string>
@@ -490,4 +491,6 @@
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
+
+
 </resources>
