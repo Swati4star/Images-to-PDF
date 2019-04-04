@@ -276,6 +276,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     MaterialDialog.Builder builder2 = createOverwriteDialog(mActivity);
                     builder2.onPositive((dialog2, which) -> {
                         mPdfOptions.setOutFileName(filename);
+                        if (isgrayScale)
+                            saveCurrentImageInGrayscale();
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
                     }).onNegative((dialog1, which) -> createPdf(isgrayScale)).show();
                 }
@@ -436,7 +438,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         INTENT_REQUEST_REARRANGE_IMAGE);
                 break;
             case 9:
-                saveCurrentImageInGrayscale();
                 createPdf(true);
                 break;
             case 10:
