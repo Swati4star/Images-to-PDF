@@ -31,6 +31,7 @@ import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.Constants.SAMEFILE;
 import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
@@ -136,7 +137,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         returnIntent.putExtra(RESULT, result.toString());
         boolean sameFile = mInitialSequence.equals(mSequence);
         Log.e("TAG", "" + mInitialSequence + ":" + mSequence + ":" + sameFile);
-        returnIntent.putExtra("SameFile", sameFile);
+        returnIntent.putExtra(SAMEFILE, sameFile);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -161,19 +162,5 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     public static Intent getStartIntent(Context context) {
         return new Intent(context, RearrangePdfPages.class);
     }
-
-//    public boolean sameSize() {
-//        int i = 0;
-//        boolean mSameSize = true;
-//        if (mInitialSequence.size() == mSequence.size()) {
-//            while (i < mSequence.size()) {
-//                if (!(mInitialSequence.get(i).equals(mSequence.get(i))))
-//                    mSameSize = false;
-//            }
-//        } else {
-//            mSameSize = false;
-//        }
-//        return mSameSize;
-//    }
 }
 
