@@ -131,7 +131,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
                 mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();
         if (numberOfPages == 1) {
-            showSnackbar(getActivity(), "Selected PDF can\'t be split because it has only 1 page!");
+            showSnackbar(getActivity(), R.string.split_one_page_pdf_alert);
             return;
         }
         if (numberOfPages > 0) {
