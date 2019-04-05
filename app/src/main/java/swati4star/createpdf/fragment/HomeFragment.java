@@ -70,8 +70,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView removeDuplicatePages;
     @BindView(R.id.invert_pdf)
     MyCardView invertPdf;
+    @BindView(R.id.zip_to_pdf)
+    MyCardView zipToPdf;
+    @BindView(R.id.excel_to_pdf)
+    MyCardView excelToPdf;
 
     private SparseIntArray mFragmentPositionMap;
+    private SparseIntArray mFragmentSelectedMap;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -79,6 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View rootview = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootview);
         fillMap();
+        titleMap();
         imagesToPdf.setOnClickListener(this);
         qrbarcodeToPdf.setOnClickListener(this);
         textToPdf.setOnClickListener(this);
@@ -98,6 +104,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         addImages.setOnClickListener(this);
         removeDuplicatePages.setOnClickListener(this);
         invertPdf.setOnClickListener(this);
+        zipToPdf.setOnClickListener(this);
+        excelToPdf.setOnClickListener(this);
         return rootview;
     }
 
@@ -105,6 +113,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentPositionMap = new SparseIntArray();
         mFragmentPositionMap.append(R.id.images_to_pdf, R.id.nav_camera);
         mFragmentPositionMap.append(R.id.qr_barcode_to_pdf, R.id.nav_qrcode);
+        mFragmentPositionMap.append(R.id.excel_to_pdf, R.id.nav_excel_to_pdf);
         mFragmentPositionMap.append(R.id.view_files, R.id.nav_gallery);
         mFragmentPositionMap.append(R.id.rotate_pages, R.id.nav_gallery);
         mFragmentPositionMap.append(R.id.add_watermark, R.id.nav_add_watermark);
@@ -122,6 +131,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentPositionMap.append(R.id.add_images, R.id.nav_add_images);
         mFragmentPositionMap.append(R.id.remove_duplicates_pages_pdf, R.id.nav_remove_duplicate_pages);
         mFragmentPositionMap.append(R.id.invert_pdf, R.id.nav_invert_pdf);
+        mFragmentPositionMap.append(R.id.zip_to_pdf, R.id.nav_zip_to_pdf);
+    }
+
+    private void titleMap() {
+        mFragmentSelectedMap = new SparseIntArray();
+        mFragmentSelectedMap.append(R.id.images_to_pdf, R.string.images_to_pdf);
+        mFragmentSelectedMap.append(R.id.qr_barcode_to_pdf, R.string.qr_barcode_pdf);
+        mFragmentSelectedMap.append(R.id.view_files, R.string.viewFiles);
+        mFragmentSelectedMap.append(R.id.merge_pdf, R.string.merge_pdf);
+        mFragmentSelectedMap.append(R.id.split_pdf, R.string.split_pdf);
+        mFragmentSelectedMap.append(R.id.text_to_pdf, R.string.text_to_pdf);
+        mFragmentSelectedMap.append(R.id.view_history, R.string.history);
+        mFragmentSelectedMap.append(R.id.add_password, R.string.add_password);
+        mFragmentSelectedMap.append(R.id.remove_password, R.string.remove_password);
+        mFragmentSelectedMap.append(R.id.extract_images, R.string.extract_images);
+        mFragmentSelectedMap.append(R.id.pdf_to_images, R.string.pdf_to_images);
+        mFragmentSelectedMap.append(R.id.remove_pages, R.string.remove_pages);
+        mFragmentSelectedMap.append(R.id.rearrange_pages, R.string.reorder_pages);
+        mFragmentSelectedMap.append(R.id.compress_pdf, R.string.compress_pdf);
+        mFragmentSelectedMap.append(R.id.rotate_pages, R.string.rotate_pages);
+        mFragmentSelectedMap.append(R.id.add_images, R.string.add_images);
+        mFragmentSelectedMap.append(R.id.remove_duplicates_pages_pdf, R.string.remove_duplicate_pages);
+        mFragmentSelectedMap.append(R.id.invert_pdf, R.string.invert_pdf);
+        mFragmentSelectedMap.append(R.id.add_watermark, R.string.add_watermark);
+        mFragmentSelectedMap.append(R.id.zip_to_pdf, R.string.zip_to_pdf);
     }
 
     @Override
@@ -137,6 +171,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
         highlightNavigationDrawerItem(mFragmentPositionMap.get(v.getId()));
+        setTitleFragment(mFragmentSelectedMap.get(v.getId()));
 
         switch (v.getId()) {
             case R.id.images_to_pdf:
@@ -216,6 +251,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.invert_pdf:
                 fragment = new InvertPdfFragment();
                 break;
+            case R.id.zip_to_pdf:
+                fragment = new ZipToPdfFragment();
+                break;
+            case R.id.excel_to_pdf:
+                fragment = new ExceltoPdfFragment();
+                break;
         }
 
         try {
@@ -230,5 +271,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void highlightNavigationDrawerItem(int id) {
         if (mActivity instanceof MainActivity)
             ((MainActivity) mActivity).setNavigationViewSelection(id);
+    }
+    private void setTitleFragment(int title) {
+        if (title != 0)
+           mActivity.setTitle(title);
     }
 }

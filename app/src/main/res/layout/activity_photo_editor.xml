@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +8,10 @@
     tools:context=".activity.ImageEditor">
 
     <LinearLayout
+        android:id="@+id/controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
@@ -66,51 +68,49 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollViewImage"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    <ja.burhanrashid52.photoeditor.PhotoEditorView
+        android:id="@+id/photoEditorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/filters"
+        android:layout_below="@id/controls"
         android:layout_marginTop="10dp"
-        android:layout_weight="25"
-        android:descendantFocusability="blocksDescendants">
+        android:visibility="visible">
+    </ja.burhanrashid52.photoeditor.PhotoEditorView>
 
-        <ja.burhanrashid52.photoeditor.PhotoEditorView
-            android:id="@+id/photoEditorView"
-            android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <SeekBar
+            android:id="@+id/doodleSeekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:max="100"
+            android:progress="30"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/doodle_colors"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-        </ja.burhanrashid52.photoeditor.PhotoEditorView>
-    </ScrollView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-    <SeekBar
-        android:id="@+id/doodleSeekBar"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:max="100"
-        android:progress="30"
-        android:visibility="gone" />
+    </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/doodle_colors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
-</LinearLayout>
+</RelativeLayout>

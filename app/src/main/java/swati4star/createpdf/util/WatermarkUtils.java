@@ -31,6 +31,7 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.model.Watermark;
 
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class WatermarkUtils {
@@ -116,9 +117,11 @@ public class WatermarkUtils {
                         Color.blue(colorPickerInput.getColor()),
                         Color.alpha(colorPickerInput.getColor())
                 )));
-                createWatermark(path);
+                String filePath = createWatermark(path);
                 dataSetChanged.updateDataset();
-                showSnackbar(mContext, R.string.watermark_added);
+                getSnackbarwithAction(mContext, R.string.watermark_added).setAction("View", v1 -> {
+                    mFileUtils.openFile(filePath);
+                }).show();
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
                 showSnackbar(mContext, R.string.cannot_add_watermark);
@@ -148,7 +151,7 @@ public class WatermarkUtils {
             pagesize = reader.getPageSizeWithRotation(i);
             x = (pagesize.getLeft() + pagesize.getRight()) / 2;
             y = (pagesize.getTop() + pagesize.getBottom()) / 2;
-            over = stamper.getUnderContent(i);
+            over = stamper.getOverContent(i);
 
             ColumnText.showTextAligned(over, Element.ALIGN_CENTER, p, x, y, this.mWatermark.getRotationAngle());
         }

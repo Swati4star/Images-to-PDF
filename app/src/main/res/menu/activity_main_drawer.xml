@@ -20,6 +20,10 @@
                         android:id="@+id/nav_qrcode"
                         android:icon="@drawable/ic_qrcode_24dp"
                         android:title="@string/qr_barcode_pdf" />
+                    <item
+                        android:id="@+id/nav_excel_to_pdf"
+                        android:icon="@drawable/ic_excel"
+                        android:title="@string/excel_to_pdf" />
                 </group>
             </menu>
         </item>
@@ -58,6 +62,10 @@
                         android:id="@+id/nav_add_watermark"
                         android:icon="@drawable/ic_branding_watermark_black_24dp"
                         android:title="@string/add_watermark" />
+                    <item
+                        android:id="@+id/nav_rotate_pages"
+                        android:icon="@drawable/baseline_crop_rotate_24"
+                        android:title="@string/rotate_pages" />
                 </group>
             </menu>
         </item>
@@ -106,6 +114,11 @@
                         android:id="@+id/nav_pdf_to_images"
                         android:icon="@drawable/ic_image_black_24dp"
                         android:title="@string/pdf_to_images" />
+                    <!--TODO change icon-->
+                    <item
+                        android:id="@+id/nav_zip_to_pdf"
+                        android:icon="@drawable/ic_image_black_24dp"
+                        android:title="@string/zip_to_pdf" />
                 </group>
             </menu>
         </item>
@@ -117,6 +130,14 @@
                         android:icon="@drawable/ic_settings_20px"
                         android:title="@string/settings" />
                     <item
+                        android:id="@+id/nav_whatsNew"
+                        android:icon="@drawable/ic_whats_new_black_24dp"
+                        android:title="@string/whatsnew_title" />
+                    <item
+                        android:id="@+id/nav_share"
+                        android:icon="@drawable/baseline_share_24"
+                        android:title="@string/share" />
+                    <item
                         android:id="@+id/nav_help"
                         android:icon="@drawable/ic_help_outline_black_24dp"
                         android:title="@string/help" />
@@ -124,10 +145,6 @@
                         android:id="@+id/nav_about"
                         android:icon="@drawable/ic_about_us_24dp"
                         android:title="@string/about_us" />
-                    <item
-                        android:id="@+id/nav_share"
-                        android:icon="@drawable/baseline_share_24"
-                        android:title="@string/share" />
                 </group>
             </menu>
         </item>

@@ -114,7 +114,7 @@
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Ingrese la contraseña para continuar</string>
     <string name="not_encrypted">PDF no está Encriptado</string>
-    <string name="save_current">Guardar Actual</string>
+    <string name="save_current">Guardar</string>
     <string name="save_first">Guardar Imagen Actual Primero</string>
     <string name="Filter_name">Filtro</string>
     <string name="Filter_image_preview">Previsualizar Filtro de Imagen</string>
@@ -229,6 +229,10 @@
     <string name="image_rearranging_options">Opciones de Reordenado de Imagen</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reiniciar</string>
+    <string name="excel_selected">Excel file selected</string>
+    <string name="excel_to_pdf">Excel to PDF</string>
+    <string name="excel_tv_view_text">Excel file selected: </string>
+    <string name="select_excel_file">Select Excel file</string>
 
     <string name="confirm_exit_message">Presione de nuevo para salir</string>
     <string name="border">Agregar Borde a Imagen</string>
@@ -393,4 +397,14 @@
     <string name="title_filter_history_dialog">Filter by operation type</string>
     <string name="error_invalid_input">Invalid input</string>
     <string name="file_order">No se han realizado cambios en el archivo.</string>
+    <string name="zip_to_pdf">ZIP to PDF</string>
+    <string name="convert_to_pdf">convert to PDF</string>
+    <string name="error_no_image_in_zip">ZIP file contains no image</string>
+
+    <string name="images_to_pdf">Images to PDF</string>
+  
+    <string name="font_color">Font Color</string>
+    <string name="page_color">Page Color</string>
+    <string name="add_to_favourite">Add to Favourite</string>
+    <string name="favourites">Favourites</string>
 </resources>

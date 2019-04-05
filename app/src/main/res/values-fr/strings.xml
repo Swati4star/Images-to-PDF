@@ -67,7 +67,7 @@
     <string name="cannot_add_password">Le mot de passe n\'a pas pu être appliqué au fichier PDF. Veuillez vérifier le PDF à nouveau.</string>
 
     <string name="snackbar_imagecropped">Images cropped</string>
-    <string name="cropImage_activityTitle">Crop image No.</string>
+    <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>
@@ -115,7 +115,7 @@
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Enter the password to continue</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
-    <string name="save_current">Save Current</string>
+    <string name="save_current">Save</string>
     <string name="save_first">Save Current Image First</string>
     <string name="Filter_name">Filter</string>
     <string name="Filter_image_preview">Filter Image Preview</string>
@@ -395,4 +395,18 @@
     <string name="error_invalid_input">Invalid input</string>
     <string name="file_order">Aucune modification apportée au fichier</string>
 
+    <string name="zip_to_pdf">ZIP to PDF</string>
+    <string name="convert_to_pdf">convert to PDF</string>
+    <string name="error_no_image_in_zip">ZIP file contains no image</string>
+
+    <string name="images_to_pdf">Images to PDF</string>
+
+    <string name="font_color">Font Color</string>
+    <string name="page_color">Page Color</string>
+    <string name="excel_selected">Excel file selected</string>
+    <string name="excel_to_pdf">Excel to PDF</string>
+    <string name="excel_tv_view_text">Excel file selected: </string>
+    <string name="select_excel_file">Select Excel file</string>
+    <string name="add_to_favourite">Add to Favourite</string>
+    <string name="favourites">Favourites</string>
 </resources>

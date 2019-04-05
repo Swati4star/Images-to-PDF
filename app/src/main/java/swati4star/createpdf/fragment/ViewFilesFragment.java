@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -42,6 +41,7 @@ import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.MergeHelper;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -288,7 +288,7 @@ public class ViewFilesFragment extends Fragment
     //When the "GET STARTED" button is clicked, the user is taken to home
     @OnClick(R.id.getStarted)
     public void loadHome() {
-        Fragment fragment = new ImageToPdfFragment();
+        Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         //Set default item selected
@@ -299,13 +299,11 @@ public class ViewFilesFragment extends Fragment
 
     @OnClick(R.id.provide_permissions)
     public void providePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA},
-                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-        }
+        PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA);
     }
 
     /**
@@ -343,15 +341,6 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        AppCompatActivity activity = ((AppCompatActivity)
-                Objects.requireNonNull(mActivity));
-        ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle(appName);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -363,16 +352,17 @@ public class ViewFilesFragment extends Fragment
                 Objects.requireNonNull(mActivity));
         ActionBar toolbar = activity.getSupportActionBar();
         mCountFiles = countFiles;
+
         if (toolbar != null) {
             if (countFiles == 0) {
-                toolbar.setTitle(appName);
+                mActivity.setTitle(appName);
                 if (mCheckBoxChanged) {
                     mCheckBoxChanged = false;
                     mIsChecked = false;
                     activity.invalidateOptionsMenu();
                 }
             } else {
-                toolbar.setTitle(String.valueOf(countFiles));
+                mActivity.setTitle(String.valueOf(countFiles));
                 if (!mCheckBoxChanged) {
                     mCheckBoxChanged = true;
                     mIsChecked = true;

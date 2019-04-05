@@ -3,22 +3,20 @@ package swati4star.createpdf.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -30,6 +28,7 @@ import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
+import swati4star.createpdf.fragment.ExceltoPdfFragment;
 import swati4star.createpdf.fragment.FavouritesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
@@ -44,7 +43,10 @@ import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
+import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.util.FeedbackUtils;
+import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
@@ -67,6 +69,7 @@ import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
+import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -76,13 +79,15 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private boolean mDoubleBackToExitPressedOnce = false;
     private Fragment mCurrentFragment;
+    private SparseIntArray mFragmentSelectedMap;
 
+    private static final int PERMISSION_REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
-
+        titleMap();
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -116,9 +121,12 @@ public class MainActivity extends AppCompatActivity
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
-        if (count > 0 && count % 15 == 0)
+        if (count > 0 && count % 15 == 0) {
             mFeedbackUtils.rateUs();
-        mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+        }
+        if (count != -1) {
+            mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
+        }
 
         String versionName = mSharedPreferences.getString(VERSION_NAME, "");
         if (!versionName.equals(BuildConfig.VERSION_NAME)) {
@@ -129,6 +137,14 @@ public class MainActivity extends AppCompatActivity
 
         //check for welcome activity
         openWelcomeActivity();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isStoragePermissionGranted()) {
+            FileUtils.makeAndClearTemp();
+        }
     }
 
     @Override
@@ -149,6 +165,7 @@ public class MainActivity extends AppCompatActivity
         if (item.getItemId() == R.id.menu_favourites_item) {
             Fragment fragment = new FavouritesFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
+            setTitle(R.string.favourites);
             fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
         }
         return super.onOptionsItemSelected(item);
@@ -207,7 +224,6 @@ public class MainActivity extends AppCompatActivity
 
         return fragment;
     }
-
 
     /**
      * Ininitializes default values
@@ -291,6 +307,7 @@ public class MainActivity extends AppCompatActivity
             else {
                 Fragment fragment = new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                setTitle(R.string.app_name);
                 setNavigationViewSelection(R.id.nav_home);
             }
         }
@@ -357,6 +374,36 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     *  Hashmap for setting title
+     * */
+    private void titleMap() {
+        mFragmentSelectedMap = new SparseIntArray();
+        mFragmentSelectedMap.append(R.id.nav_home, R.string.app_name);
+        mFragmentSelectedMap.append(R.id.nav_camera, R.string.images_to_pdf);
+        mFragmentSelectedMap.append(R.id.nav_qrcode, R.string.qr_barcode_pdf);
+        mFragmentSelectedMap.append(R.id.nav_gallery, R.string.viewFiles);
+        mFragmentSelectedMap.append(R.id.nav_merge, R.string.merge_pdf);
+        mFragmentSelectedMap.append(R.id.nav_split, R.string.split_pdf);
+        mFragmentSelectedMap.append(R.id.nav_text_to_pdf, R.string.text_to_pdf);
+        mFragmentSelectedMap.append(R.id.nav_history, R.string.history);
+        mFragmentSelectedMap.append(R.id.nav_add_password, R.string.add_password);
+        mFragmentSelectedMap.append(R.id.nav_remove_password, R.string.remove_password);
+        mFragmentSelectedMap.append(R.id.nav_about, R.string.about_us);
+        mFragmentSelectedMap.append(R.id.nav_settings, R.string.settings);
+        mFragmentSelectedMap.append(R.id.nav_extract_images, R.string.extract_images);
+        mFragmentSelectedMap.append(R.id.nav_pdf_to_images, R.string.pdf_to_images);
+        mFragmentSelectedMap.append(R.id.nav_remove_pages, R.string.remove_pages);
+        mFragmentSelectedMap.append(R.id.nav_rearrange_pages, R.string.reorder_pages);
+        mFragmentSelectedMap.append(R.id.nav_compress_pdf, R.string.compress_pdf);
+        mFragmentSelectedMap.append(R.id.nav_add_images, R.string.add_images);
+        mFragmentSelectedMap.append(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages);
+        mFragmentSelectedMap.append(R.id.nav_invert_pdf, R.string.invert_pdf);
+        mFragmentSelectedMap.append(R.id.nav_add_watermark, R.string.add_watermark);
+        mFragmentSelectedMap.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
+        mFragmentSelectedMap.append(R.id.nav_rotate_pages, R.string.rotate_pages);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -365,6 +412,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
+        setTitleFragment(mFragmentSelectedMap.get(item.getItemId()));
 
         switch (item.getItemId()) {
             case R.id.nav_home:
@@ -420,6 +468,9 @@ public class MainActivity extends AppCompatActivity
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+            case R.id.nav_excel_to_pdf:
+                fragment = new ExceltoPdfFragment();
+                break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
@@ -451,10 +502,20 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_invert_pdf:
                 fragment = new InvertPdfFragment();
                 break;
-
             case R.id.nav_add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_zip_to_pdf:
+                fragment = new ZipToPdfFragment();
+                break;
+            case R.id.nav_whatsNew:
+                WhatsNewUtils.displayDialog(this);
+                break;
+            case R.id.nav_rotate_pages:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
                 break;
         }
@@ -465,30 +526,47 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // if help or share is clicked then return false, as we don't want them to be selected
-        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help;
+        // if help or share or what's new is clicked then return false, as we don't want
+        // them to be selected
+        return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help
+                && item.getItemId() != R.id.nav_whatsNew;
     }
 
     public void setNavigationViewSelection(int id) {
         mNavigationView.setCheckedItem(id);
     }
 
-    private boolean getRuntimePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                requestPermissions(new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA},
-                        0);
-                return false;
-            }
-        }
-        return true;
+    private void getRuntimePermissions() {
+        PermissionsUtils.checkRuntimePermissions(this,
+                PERMISSION_REQUEST_CODE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA);
+    }
+
+    private boolean isStoragePermissionGranted() {
+        boolean permission = PermissionsUtils.checkRuntimePermissions(this,
+                PERMISSION_REQUEST_CODE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permission;
+    }
+
+    /**
+     * puts image uri's in a bundle and start ImageToPdf fragment with this bundle
+     * as argument
+     *
+     * @param imageUris - ArrayList of image uri's in temp directory
+     */
+    public void convertImagesToPdf(ArrayList<Uri> imageUris) {
+        Fragment fragment = new ImageToPdfFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+    }
+    private void setTitleFragment(int title) {
+        if (title != 0)
+            setTitle(title);
     }
 }

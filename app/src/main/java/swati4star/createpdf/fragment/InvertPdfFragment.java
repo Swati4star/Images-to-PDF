@@ -132,6 +132,8 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
+        // Remove stale "View PDF" button
+        mViewPdf.setVisibility(View.GONE);
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, invertPdfButton);
     }
@@ -188,8 +190,6 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         mMaterialDialog.dismiss();
         if (!isNewPdfCreated) {
             showSnackbar(mActivity, R.string.snackbar_invert_unsuccessful);
-            //Hiding View PDF button
-            mViewPdf.setVisibility(View.GONE);
             return;
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_invert_successfull));
@@ -207,5 +207,4 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         return checkSheetBehaviourUtil(sheetBehavior);
     }
 }
-
 

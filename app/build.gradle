@@ -28,12 +28,30 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+}
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
 }
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven { url "https://repository.aspose.com/repo/" }
 }
-
 dependencies {
     def room_version = "1.1.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -101,4 +119,3 @@ dependencies {
 preBuild.dependsOn('checkstyle')
 assemble.dependsOn('lint')
 check.dependsOn('checkstyle')
-

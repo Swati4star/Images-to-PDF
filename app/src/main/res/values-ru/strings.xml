@@ -85,7 +85,7 @@
     <string name="cannot_add_password">Данный файл нельзя защитить паролем. Пожалуйста, выберите другой.</string>
 
     <string name="snackbar_imagecropped">Изображения кадрированы</string>
-    <string name="cropImage_activityTitle">Кадрирование изображения No.</string>
+    <string name="cropImage_activityTitle">Кадрирование изображения</string>
     <string name="snackbar_pdfCreated">PDF файл создан!</string>
     <string name="snackbar_viewAction">Просмотр</string>
     <string name="more_options_text">Параметры</string>
@@ -136,7 +136,7 @@
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Введите пароль</string>
     <string name="not_encrypted">PDF не зашифрованd</string>
-    <string name="save_current">Сохранить текущий</string>
+    <string name="save_current">Сохранить</string>
     <string name="save_first">Сохранить вначале текущее изображение</string>
     <string name="Filter_name">Фильтр</string>
     <string name="Filter_image_preview">Просмотр фильтра</string>
@@ -435,4 +435,19 @@
     <string name="error_page_range">Invalid range input</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
     <string name="error_invalid_input">Invalid input</string>
+
+    <string name="zip_to_pdf">ZIP to PDF</string>
+    <string name="convert_to_pdf">convert to PDF</string>
+    <string name="error_no_image_in_zip">ZIP file contains no image</string>
+
+    <string name="images_to_pdf">Images to PDF</string>
+
+    <string name="font_color">Font Color</string>
+    <string name="page_color">Page Color</string>
+    <string name="excel_selected">Excel file selected</string>
+    <string name="excel_to_pdf">Excel to PDF</string>
+    <string name="excel_tv_view_text">Excel file selected: </string>
+    <string name="select_excel_file">Select Excel file</string>
+    <string name="add_to_favourite">Add to Favourite</string>
+    <string name="favourites">Favourites</string>
 </resources>

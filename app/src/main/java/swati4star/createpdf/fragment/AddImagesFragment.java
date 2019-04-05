@@ -42,6 +42,7 @@ import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
@@ -147,6 +148,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                             .getString(R.string.images_selected), mImagesUri.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
                     showSnackbar(mActivity, R.string.snackbar_images_added);
+                    mCreatePdf.setEnabled(true);
                 } else {
                     mNoOfImages.setVisibility(View.GONE);
                 }
@@ -188,6 +190,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
     /**
      * Adds images to existing PDF
+     *
      * @param output - path of output PDF
      */
     private void addImagesToPdf(String output) {
@@ -211,6 +214,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mPath = null;
         mImagesUri.clear();
         mMorphButtonUtility.initializeButton(selectFileButton, mCreatePdf);
+        mMorphButtonUtility.initializeButton(selectFileButton, addImages);
         mNoOfImages.setVisibility(View.GONE);
     }
 
@@ -224,22 +228,12 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     private boolean getRuntimePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                requestPermissions(new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-                return false;
-            }
-        }
-        return true;
+        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA);
+        return permission;
     }
 
     /**
@@ -275,7 +269,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private void setTextAndActivateButtons(String path) {
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, mCreatePdf);
+                selectFileButton, addImages);
     }
 
     @Override

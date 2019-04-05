@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
+import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 
@@ -48,9 +50,11 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PageSizeUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -67,6 +71,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private final int mFileSelectCode = 0;
     private Uri mTextFileUri = null;
     private String mFontTitle;
+    private int mFontColor;
+    private int mPageColor;
     private String mFileExtension;
     private int mFontSize = 0;
     private int mButtonClicked = 0;
@@ -92,17 +98,22 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
+        mPermissionGranted = isPermissionGranted();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mFontTitle = String.format(getString(R.string.edit_font_size),
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
+        mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
+                Constants.DEFAULT_FONT_COLOR);
+        mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
+                DEFAULT_PAGE_COLOR);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);
-        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT ,
+        PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
 
@@ -134,6 +145,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                 break;
             case 3:
                 setPassword();
+                break;
+            case 4:
+                setFontColor();
+                break;
+            case 5:
+                setPageColor();
                 break;
         }
     }
@@ -229,6 +246,52 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         materialDialog.show();
     }
 
+    private void setFontColor() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.font_color)
+                .customView(R.layout.dialog_color_chooser, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
+                    CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
+                    mFontColor = colorPickerView.getColor();
+                    if (defaultCheckbox.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putInt(Constants.DEFAULT_FONT_COLOR_TEXT, mFontColor);
+                        editor.apply();
+                    }
+                })
+                .build();
+        ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
+        colorPickerView.setColor(mFontColor);
+        materialDialog.show();
+    }
+
+    private void setPageColor() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.page_color)
+                .customView(R.layout.dialog_color_chooser, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
+                    CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
+                    mPageColor = colorPickerView.getColor();
+                    if (defaultCheckbox.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putInt(Constants.DEFAULT_PAGE_COLOR_TTP, mPageColor);
+                        editor.apply();
+                    }
+                })
+                .build();
+        ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
+        colorPickerView.setColor(mPageColor);
+        materialDialog.show();
+    }
+
     /**
      * Function to take the font size of pdf as user input
      */
@@ -321,8 +384,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             PDFUtils fileUtil = new PDFUtils(mActivity);
-            fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, mTextFileUri, mFontSize, mFontFamily), mFileExtension);
+            TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
+                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
+            fileUtil.createPdf(options, mFileExtension);
             final String finalMPath = mPath;
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
@@ -343,9 +407,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
         if (mButtonClicked == 0) {
+            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//            intent.setType(getString(R.string.text_type));
-            intent.setType("*/*");
+//          intent.setType(getString(R.string.text_type));
+            intent.setDataAndType(uri, "*/*");
             String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     "application/msword", getString(R.string.text_type)};
             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
@@ -427,18 +492,23 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     }
 
     private void getRuntimePermissions() {
+        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission)
+            mPermissionGranted = true;
+    }
+
+    private boolean isPermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) &&
                     (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED)) {
-                requestPermissions(new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-                return;
+                return false;
             }
-            mPermissionGranted = true;
         }
+        return true;
     }
 }

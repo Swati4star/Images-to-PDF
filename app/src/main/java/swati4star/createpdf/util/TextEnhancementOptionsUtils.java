@@ -26,6 +26,10 @@ public class TextEnhancementOptionsUtils {
                 context, R.drawable.ic_page_size_24dp, R.string.set_page_size_text));
         options.add(new EnhancementOptionsEntity(
                 context, R.drawable.baseline_enhanced_encryption_24, R.string.set_password));
+        options.add(new EnhancementOptionsEntity(
+                context, R.drawable.ic_color, R.string.font_color));
+        options.add(new EnhancementOptionsEntity(
+                context, R.drawable.ic_page_color, R.string.page_color));
         return options;
     }
 }

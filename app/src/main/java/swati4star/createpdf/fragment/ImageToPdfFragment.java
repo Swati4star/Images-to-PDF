@@ -10,14 +10,12 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -74,6 +72,7 @@ import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
@@ -81,6 +80,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALETYPE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
@@ -133,6 +133,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private SharedPreferences mSharedPreferences;
     private FileUtils mFileUtils;
     private PageSizeUtils mPageSizeUtils;
+    private int mPageColor;
     private int mButtonClicked = 0;
     private ImageToPDFOptions mPdfOptions;
     private MaterialDialog mMaterialDialog;
@@ -160,6 +161,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
+        mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
+                DEFAULT_PAGE_COLOR);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
 
@@ -251,6 +254,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mPdfOptions.setImageScaleType(mImageScaleType);
         mPdfOptions.setPageNumStyle(mPageNumStyle);
         mPdfOptions.setMasterPwd(mSharedPreferences.getString(MASTER_PWD_STRING, appName));
+        mPdfOptions.setPageColor(mPageColor);
+
         MaterialDialog.Builder builder = createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
         builder.input(getString(R.string.example), null, (dialog, input) -> {
@@ -377,6 +382,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             case INTENT_REQUEST_REARRANGE_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
                 if (!mUnarrangedImagesUri.equals(mImagesUri) && mImagesUri.size() > 0) {
+                    mNoOfImages.setText(String.format(mActivity.getResources()
+                            .getString(R.string.images_selected), mImagesUri.size()));
                     showSnackbar(mActivity, R.string.images_rearranged);
                     mUnarrangedImagesUri.clear();
                     mUnarrangedImagesUri.addAll(mImagesUri);
@@ -440,6 +447,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 break;
             case 12:
                 addWatermark();
+                break;
+            case 13:
+                setPageColor();
                 break;
         }
     }
@@ -690,6 +700,29 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         dialog.show();
     }
 
+    private void setPageColor() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
+                .title(R.string.page_color)
+                .customView(R.layout.dialog_color_chooser, true)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive((dialog, which) -> {
+                    View view = dialog.getCustomView();
+                    ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
+                    CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
+                    mPageColor = colorPickerView.getColor();
+                    if (defaultCheckbox.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putInt(Constants.DEFAULT_PAGE_COLOR_ITP, mPageColor);
+                        editor.apply();
+                    }
+                })
+                .build();
+        ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
+        colorPickerView.setColor(mPageColor);
+        materialDialog.show();
+    }
+
     @Override
     public void onPDFCreationStarted() {
         mMaterialDialog = createAnimationDialog(mActivity);
@@ -720,23 +753,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private boolean getRuntimePermissions(boolean openImagesActivity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                mOpenSelectImages = openImagesActivity; // if We want next activity to open after getting permissions
-                requestPermissions(new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA},
-                        PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-                return false;
-            }
-        }
-        return true;
+        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA);
+        if (!permission)
+            mOpenSelectImages = openImagesActivity;
+        return permission;
     }
 
     /**
@@ -844,10 +868,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void addPageNumbers() {
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
-                                            .title(R.string.choose_page_number_style)
-                                            .customView(R.layout.add_pgnum_dialog, false)
-                                            .positiveText(R.string.ok)
-                                            .negativeText(R.string.cancel)
+                .title(R.string.choose_page_number_style)
+                .customView(R.layout.add_pgnum_dialog, false)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
                     View view = dialog.getCustomView();

@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import android.graphics.Color;
+
 public class Constants {
 
     public static final String DEFAULT_COMPRESSION = "DefaultCompression";
@@ -12,6 +14,13 @@ public class Constants {
     public static final String DATABASE_NAME = "ImagesToPdfDB.db";
     public static final String DEFAULT_FONT_FAMILY_TEXT = "DefaultFontFamily";
     public static final String DEFAULT_FONT_FAMILY = "TIMES_ROMAN";
+    public static final String DEFAULT_FONT_COLOR_TEXT = "DefaultFontColor";
+    public static final int DEFAULT_FONT_COLOR = -16777216;
+    // key for text to pdf (TTP) page color
+    public static final String DEFAULT_PAGE_COLOR_TTP = "DefaultPageColorTTP";
+    // key for images to pdf (ITP) page color
+    public static final String DEFAULT_PAGE_COLOR_ITP = "DefaultPageColorITP";
+    public static final int DEFAULT_PAGE_COLOR = Color.WHITE;
     public static final String DEFAULT_THEME_TEXT = "DefaultTheme";
     public static final String DEFAULT_THEME = "White";
     public static final String DEFAULT_IMAGE_BORDER_TEXT = "Image_border_text";
@@ -31,7 +40,7 @@ public class Constants {
     public static final String MASTER_PWD_STRING = "master_password";
 
     public static final String IMAGE_TO_PDF_KEY = "Images to PDF";
-    public static final String TEXT_TO_PDF_KEY = "Text to PDF";
+    public static final String TEXT_TO_PDF_KEY = "Text To PDF";
     public static final String QR_BARCODE_KEY = "QR & Barcodes";
     public static final String VIEW_FILES_KEY = "View Files";
     public static final String HISTORY_KEY = "History";
@@ -41,11 +50,12 @@ public class Constants {
     public static final String ADD_WATERMARK_KEY = "Add Watermark";
     public static final String ADD_IMAGES_KEY = "Add Images";
     public static final String MERGE_PDF_KEY = "Merge PDF";
+    public static final String SPLIT_PDF_KEY = "Split PDF";
     public static final String INVERT_PDF_KEY = "Invert Pdf";
     public static final String COMPRESS_PDF_KEY = "Compress PDF";
     public static final String REMOVE_DUPLICATE_PAGES_KEY = "Remove Duplicate Pages";
     public static final String REMOVE_PAGES_KEY = "Remove Pages";
-    public static final String REORDER_PAGES_KEY = "Reorder pages";
+    public static final String REORDER_PAGES_KEY = "Reorder Pages";
     public static final String EXTRACT_IMAGES_KEY = "Extract Images";
     public static final String PDF_TO_IMAGES_KEY = "PDF to Images";
 
@@ -67,8 +77,11 @@ public class Constants {
     public static final String appName = "PDF Converter";
     public static final String PATH_SEPERATOR = "/";
     public static final String textExtension = ".txt";
+    public static final String excelExtension = ".xls";
+    public static final String excelWorkbookExtension = ".xlsx";
     public static final String docExtension = ".doc";
     public static final String docxExtension = ".docx";
+    public static final String tempDirectory = "temp";
 
     public static final String AUTHORITY_APP = "com.swati4star.shareFile";
 
