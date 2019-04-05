@@ -179,6 +179,9 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
                 selectFileButton, splitFilesButton);
         mSplitConfitEditText.setVisibility(View.VISIBLE);
         mSplitConfitEditText.setText(getDefaultSplitConfig(mPath));
+        if (mPDFUtils.splitPDFByConfig(mPath, mSplitConfitEditText.getText().toString()).size() == 1) {
+            showSnackbar(getActivity(), R.string.split_one_page_pdf_alert);
+        }
     }
 
     /**
