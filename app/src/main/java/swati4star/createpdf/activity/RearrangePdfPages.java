@@ -30,6 +30,7 @@ import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.Constants.SAMEFILE;
 import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
@@ -42,7 +43,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     public static ArrayList<Bitmap> mImages;
     private RearrangePdfAdapter mRearrangeImagesAdapter;
     private SharedPreferences mSharedPreferences;
-    private ArrayList<Integer> mSequence;
+    private ArrayList<Integer> mSequence, mInitialSequence;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         ButterKnife.bind(this);
 
         mSequence = new ArrayList<>();
+        mInitialSequence = new ArrayList<>();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         sortButton.setVisibility(View.GONE);
         if (mImages == null || mImages.size() < 1) {
@@ -72,8 +74,10 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         mRearrangeImagesAdapter = new RearrangePdfAdapter(this, images, this);
         recyclerView.setAdapter(mRearrangeImagesAdapter);
         mSequence = new ArrayList<>();
-        for ( int i = 0; i < images.size(); i++)
+        for ( int i = 0; i < images.size(); i++) {
             mSequence.add(i + 1);
+        }
+        mInitialSequence.addAll(mSequence);
     }
 
     void swap (int pos1, int pos2) {
@@ -130,6 +134,8 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         for ( int x : mSequence)
             result.append(x).append(",");
         returnIntent.putExtra(RESULT, result.toString());
+        boolean sameFile = mInitialSequence.equals(mSequence);
+        returnIntent.putExtra(SAMEFILE, sameFile);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
