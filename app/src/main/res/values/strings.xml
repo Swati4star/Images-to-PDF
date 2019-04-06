@@ -353,7 +353,6 @@
     <string name="error_page_number">Invalid page number</string>
     <string name="error_page_range">Invalid range input</string>
     <string name="error_invalid_input">Invalid input</string>
-    <string name="split_one_page_pdf_alert">Selected PDF can\'t be split because it has only 1 page!</string>
 
     <!-- Remove Pages -->
     <string name="remove_pages">Remove Pages</string>
