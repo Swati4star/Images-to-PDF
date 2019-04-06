@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -136,7 +135,6 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
             result.append(x).append(",");
         returnIntent.putExtra(RESULT, result.toString());
         boolean sameFile = mInitialSequence.equals(mSequence);
-        Log.e("TAG", "" + mInitialSequence + ":" + mSequence + ":" + sameFile);
         returnIntent.putExtra(SAMEFILE, sameFile);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
