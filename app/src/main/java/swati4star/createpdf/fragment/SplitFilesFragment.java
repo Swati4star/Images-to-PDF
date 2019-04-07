@@ -185,7 +185,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     /**
-         * Gets the total number of pages in the
+     * Gets the total number of pages in the
      * selected PDF and returns them in
      * default format for single page pdfs
      * (1,2,3,4,5,)
