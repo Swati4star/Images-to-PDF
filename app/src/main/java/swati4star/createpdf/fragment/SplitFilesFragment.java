@@ -130,6 +130,10 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,
                 mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();
+        if (numberOfPages == 1) {
+            showSnackbar(getActivity(), R.string.split_one_page_pdf_alert);
+            return;
+        }
         if (numberOfPages > 0) {
             String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
             showSnackbar(mActivity, output);
@@ -175,6 +179,9 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
                 selectFileButton, splitFilesButton);
         mSplitConfitEditText.setVisibility(View.VISIBLE);
         mSplitConfitEditText.setText(getDefaultSplitConfig(mPath));
+        if (mPDFUtils.splitPDFByConfig(mPath, mSplitConfitEditText.getText().toString()).size() == 1) {
+            showSnackbar(getActivity(), R.string.split_one_page_pdf_alert);
+        }
     }
 
     /**
