@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.aspose.slides.Presentation;
 import com.aspose.slides.SaveFormat;
 import com.dd.morphingbutton.MorphingButton;
-import com.itextpdf.awt.geom.AffineTransform;
-import com.itextpdf.awt.geom.Dimension;
-import com.itextpdf.awt.geom.Rectangle2D;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import org.apache.poi.hslf.usermodel.SlideShow;
-import org.apache.poi.sl.usermodel.Slide;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -185,20 +169,23 @@ public class PPTtoPdfFragment extends Fragment {
                 getDefaultStorageLocation());
         String mPath = destinationPath + mFilename
                 + mActivity.getString(R.string.pdf_ext);
-        try {
-            Presentation presentation = new Presentation(mRealPath);
-            presentation.save(mPath, SaveFormat.Pdf);
-            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
-            mTextView.setVisibility(View.GONE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            showSnackbar(mActivity, R.string.error_occurred);
-        } finally {
-            mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
-            mCreatePdf.setEnabled(false);
-            mPPTFileUri = null;
-        }
+        AsyncTask.execute(() -> {
+            try {
+                Presentation presentation = new Presentation(mRealPath);
+                presentation.save(mPath, SaveFormat.Pdf);
+                getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+                        .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
+                mTextView.setVisibility(View.GONE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showSnackbar(mActivity, R.string.error_occurred);
+            } finally {
+                mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+                mCreatePdf.setEnabled(false);
+                mPPTFileUri = null;
+            }
+        });
+
     }
 
     private void getRuntimePermissions() {
