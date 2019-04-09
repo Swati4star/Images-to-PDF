@@ -405,6 +405,10 @@
     <string name="excel_to_pdf">Excel to PDF</string>
     <string name="excel_tv_view_text">Excel file selected: </string>
     <string name="select_excel_file">Select Excel file</string>
+    <string name="ppt_selected">PPT file selected</string>
+    <string name="ppt_to_pdf">PPT to PDF</string>
+    <string name="ppt_tv_view_text">PPT file selected: </string>
+    <string name="select_ppt_file">Select PPT file</string>
     <string name="add_to_favourite">Add to Favourite</string>
     <string name="favourites">Favourites</string>
     <string name="split_one_page_pdf_alert">選択したPDFは1ページしかないため分割できません。</string>
