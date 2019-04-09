@@ -149,7 +149,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
             if (mPath == null)
                 return;
-            String outputPath = "";
+            String outputPath;
 
             if (pages.length() > 50) {
                 outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
