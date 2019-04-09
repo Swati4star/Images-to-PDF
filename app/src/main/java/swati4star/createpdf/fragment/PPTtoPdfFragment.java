@@ -89,10 +89,10 @@ public class PPTtoPdfFragment extends Fragment {
                 startActivityForResult(
                         Intent.createChooser(intent, String.valueOf(R.string.select_file)),
                         mFileSelectCode);
+                mButtonClicked = true;
             } catch (android.content.ActivityNotFoundException ex) {
                 showSnackbar(mActivity, R.string.install_file_manager);
             }
-            mButtonClicked = true;
         }
     }
 
