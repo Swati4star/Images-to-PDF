@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
+import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
@@ -119,7 +120,7 @@ public class FavouritesFragment extends Fragment
         fillMap();
         titleMap();
         mSharedpreferences = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
+                .getDefaultSharedPreferences(mActivity);
         mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
         checkFavs(mSharedpreferences);
         mFab.setOnClickListener(v ->
@@ -361,8 +362,10 @@ public class FavouritesFragment extends Fragment
                 fragment = new PPTtoPdfFragment();
         }
         try {
-            if (fragment != null && fragmentManager != null)
+            if (fragment != null && fragmentManager != null) {
+                ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(v.getId()));
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
