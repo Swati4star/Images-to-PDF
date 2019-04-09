@@ -51,8 +51,8 @@ import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
@@ -70,17 +70,8 @@ import static swati4star.createpdf.util.StringUtils.showSnackbar;
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface {
 
-    private Activity mActivity;
-    private String mPath;
-    private MorphButtonUtility mMorphButtonUtility;
-    private FileUtils mFileUtils;
-    private BottomSheetUtils mBottomSheetUtils;
-    private PDFUtils mPDFUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private static final int INTENT_REQUEST_REARRANGE_PDF = 11;
-    private String mOperation;
-    private MaterialDialog mMaterialDialog;
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
@@ -106,6 +97,14 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     TextView mCompressionInfoText;
     @BindView(R.id.view_pdf)
     Button mViewPdf;
+    private Activity mActivity;
+    private String mPath;
+    private MorphButtonUtility mMorphButtonUtility;
+    private FileUtils mFileUtils;
+    private BottomSheetUtils mBottomSheetUtils;
+    private PDFUtils mPDFUtils;
+    private String mOperation;
+    private MaterialDialog mMaterialDialog;
     private Uri mUri;
 
     @Override
@@ -150,10 +149,16 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
             if (mPath == null)
                 return;
+            String outputPath = "";
 
-            Log.v("output", pages + " ");
-            String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
-                    "_edited" + pages + mActivity.getString(R.string.pdf_ext));
+            if (pages.length() > 50) {
+                outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
+                        "_edited" + mActivity.getString(R.string.pdf_ext));
+            } else {
+                outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
+                        "_edited" + pages + mActivity.getString(R.string.pdf_ext));
+
+            }
             if (mPDFUtils.isPDFEncrypted(mPath)) {
                 showSnackbar(mActivity, R.string.encrypted_pdf);
                 return;
@@ -239,11 +244,12 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         int check;
         try {
             check = Integer.parseInt(String.valueOf(input));
-            if (check > 100 || check <= 0) {
+            if (check > 1000 || check <= 0) {
                 showSnackbar(mActivity, R.string.invalid_entry);
             } else {
                 String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
                         "_edited" + check + mActivity.getString(R.string.pdf_ext));
+                Log.d("outputPath", outputPath);
                 mPDFUtils.compressPDF(mPath, outputPath, 100 - check, this);
             }
         } catch (NumberFormatException e) {

@@ -33,6 +33,7 @@ import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
+    //TODO rearrange pdfs.
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;

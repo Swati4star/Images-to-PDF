@@ -523,6 +523,7 @@ public class PDFUtils {
                 return false;
             }
             //if (reader.getNumberOfPages() )
+            //TODO fix crash on rearranging.
             PdfStamper pdfStamper = new PdfStamper(reader,
                     new FileOutputStream(output));
             pdfStamper.close();

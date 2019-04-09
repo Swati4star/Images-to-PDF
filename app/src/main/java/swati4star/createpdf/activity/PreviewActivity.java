@@ -134,7 +134,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
                     mImagesArrayList = data.getStringArrayListExtra(Constants.RESULT);
                     mPreviewAdapter.setData(mImagesArrayList);
                     mViewPager.setAdapter(mPreviewAdapter);
-                } catch (Exception e) {
+                }  catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
