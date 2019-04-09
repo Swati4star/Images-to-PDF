@@ -74,6 +74,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView zipToPdf;
     @BindView(R.id.excel_to_pdf)
     MyCardView excelToPdf;
+    @BindView(R.id.ppt_to_pdf)
+    MyCardView pptToPdf;
 
     private SparseIntArray mFragmentPositionMap;
     private SparseIntArray mFragmentSelectedMap;
@@ -106,6 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         invertPdf.setOnClickListener(this);
         zipToPdf.setOnClickListener(this);
         excelToPdf.setOnClickListener(this);
+        pptToPdf.setOnClickListener(this);
         return rootview;
     }
 
@@ -114,6 +117,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentPositionMap.append(R.id.images_to_pdf, R.id.nav_camera);
         mFragmentPositionMap.append(R.id.qr_barcode_to_pdf, R.id.nav_qrcode);
         mFragmentPositionMap.append(R.id.excel_to_pdf, R.id.nav_excel_to_pdf);
+        mFragmentPositionMap.append(R.id.ppt_to_pdf, R.id.nav_ppt_to_pdf);
         mFragmentPositionMap.append(R.id.view_files, R.id.nav_gallery);
         mFragmentPositionMap.append(R.id.rotate_pages, R.id.nav_gallery);
         mFragmentPositionMap.append(R.id.add_watermark, R.id.nav_add_watermark);
@@ -256,6 +260,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.excel_to_pdf:
                 fragment = new ExceltoPdfFragment();
+                break;
+            case R.id.ppt_to_pdf:
+                fragment = new PPTtoPdfFragment();
                 break;
         }
 

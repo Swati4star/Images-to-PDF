@@ -24,43 +24,59 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <swati4star.createpdf.customviews.MyCardView
-                android:id="@+id/images_to_pdf"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_menu_camera"
-                app:option_text="Images to PDF" />
-
-            <swati4star.createpdf.customviews.MyCardView
-                android:id="@+id/text_to_pdf"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_text_format_black_24dp"
-                app:option_text="@string/text_to_pdf" />
-
-            <swati4star.createpdf.customviews.MyCardView
-                android:id="@+id/qr_barcode_to_pdf"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_qrcode_24dp"
-                app:option_text="@string/qr_barcode_pdf" />
-
-        </LinearLayout>
-
-            <swati4star.createpdf.customviews.MyCardView
-                android:id="@+id/excel_to_pdf"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:option_icon="@drawable/ic_excel"
-                app:option_text="@string/excel_to_pdf" />
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/images_to_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    app:option_icon="@drawable/ic_menu_camera"
+                    app:option_text="Images to PDF" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/text_to_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    app:option_icon="@drawable/ic_text_format_black_24dp"
+                    app:option_text="@string/text_to_pdf" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/qr_barcode_to_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    app:option_icon="@drawable/ic_qrcode_24dp"
+                    app:option_text="@string/qr_barcode_pdf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/excel_to_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:option_icon="@drawable/ic_excel"
+                    app:option_text="@string/excel_to_pdf" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/ppt_to_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:option_icon="@drawable/ic_slideshow_black_24dp"
+                    app:option_text="@string/ppt_to_pdf" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <TextView

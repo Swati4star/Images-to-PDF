@@ -35,6 +35,7 @@ import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.InvertPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
+import swati4star.createpdf.fragment.PPTtoPdfFragment;
 import swati4star.createpdf.fragment.PdfToImageFragment;
 import swati4star.createpdf.fragment.QrBarcodeScanFragment;
 import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
@@ -470,6 +471,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_excel_to_pdf:
                 fragment = new ExceltoPdfFragment();
+                break;
+            case R.id.nav_ppt_to_pdf:
+                fragment = new PPTtoPdfFragment();
                 break;
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();

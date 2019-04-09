@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
-import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
@@ -41,6 +40,7 @@ import static swati4star.createpdf.util.Constants.INVERT_PDF_KEY;
 import static swati4star.createpdf.util.Constants.MERGE_PDF_KEY;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES_KEY;
+import static swati4star.createpdf.util.Constants.PPT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.QR_BARCODE_KEY;
 import static swati4star.createpdf.util.Constants.REMOVE_DUPLICATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
@@ -105,6 +105,8 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_extract_img;
     @BindView(R.id.pdf_to_images_fav)
     MyCardView pref_pdf_to_img;
+    @BindView(R.id.ppt_to_pdf_fav)
+    MyCardView pref_ppt_pdf;
     @BindView(R.id.favourites)
     LottieAnimationView favouritesAnimation;
 
@@ -117,7 +119,7 @@ public class FavouritesFragment extends Fragment
         fillMap();
         titleMap();
         mSharedpreferences = PreferenceManager
-                .getDefaultSharedPreferences(mActivity);
+                .getDefaultSharedPreferences(getActivity());
         mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
         checkFavs(mSharedpreferences);
         mFab.setOnClickListener(v ->
@@ -142,6 +144,7 @@ public class FavouritesFragment extends Fragment
         pref_add_images.setOnClickListener(this);
         pref_rem_dup_pages.setOnClickListener(this);
         pref_invert_pdf.setOnClickListener(this);
+        pref_ppt_pdf.setOnClickListener(this);
         setHasOptionsMenu(true);
         return rootview;
     }
@@ -184,6 +187,7 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_reorder_pages, REORDER_PAGES_KEY);
         viewVisibility(pref_extract_img, EXTRACT_IMAGES_KEY);
         viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
+        viewVisibility(pref_ppt_pdf, PPT_TO_PDF_KEY);
 
         // if there are no favourites then show favourites animation
         if (!mDoesFavouritesExist) {
@@ -212,6 +216,7 @@ public class FavouritesFragment extends Fragment
         mFragmentPositionMap.append(R.id.add_images_fav, R.id.nav_add_images);
         mFragmentPositionMap.append(R.id.remove_duplicates_pages_pdf_fav, R.id.nav_remove_duplicate_pages);
         mFragmentPositionMap.append(R.id.invert_pdf_fav, R.id.nav_invert_pdf);
+        mFragmentPositionMap.append(R.id.ppt_to_pdf_fav, R.id.nav_ppt_to_pdf);
     }
 
     private void titleMap() {
@@ -235,6 +240,7 @@ public class FavouritesFragment extends Fragment
         mFragmentSelectedMap.append(R.id.add_images_fav, R.string.add_images);
         mFragmentSelectedMap.append(R.id.remove_duplicates_pages_pdf_fav, R.string.remove_duplicate_pages);
         mFragmentSelectedMap.append(R.id.invert_pdf_fav, R.string.invert_pdf);
+        mFragmentSelectedMap.append(R.id.ppt_to_pdf_fav, R.string.ppt_to_pdf);
     }
 
     @Override
@@ -351,12 +357,12 @@ public class FavouritesFragment extends Fragment
             case R.id.invert_pdf_fav:
                 fragment = new InvertPdfFragment();
                 break;
+            case R.id.ppt_to_pdf_fav:
+                fragment = new PPTtoPdfFragment();
         }
         try {
-            if (fragment != null && fragmentManager != null) {
-                ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(v.getId()));
+            if (fragment != null && fragmentManager != null)
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

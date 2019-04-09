@@ -40,6 +40,15 @@
                     app:option_text="@string/text_to_pdf" />
 
                 <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/ppt_to_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:option_text="@string/ppt_to_pdf"
+                    app:option_icon="@drawable/ic_slideshow_black_24dp"/>
+
+                <swati4star.createpdf.customviews.MyCardView
                     android:id="@+id/qr_barcode_to_pdf_fav"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

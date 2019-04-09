@@ -17,6 +17,11 @@
         android:icon="@drawable/ic_qrcode_24dp"/>
 
     <CheckBoxPreference
+        android:title="@string/ppt_to_pdf"
+        android:key="@string/ppt_to_pdf"
+        android:icon="@drawable/ic_slideshow_black_24dp" />
+
+    <CheckBoxPreference
         android:title="@string/viewFiles"
         android:key="@string/viewFiles"
         android:icon="@drawable/ic_menu_gallery"/>
