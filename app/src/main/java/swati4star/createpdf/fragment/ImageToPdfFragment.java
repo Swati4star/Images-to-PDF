@@ -127,6 +127,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
+    private static ArrayList<String> tempImageUri;
     public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private boolean mOpenSelectImages = false;
@@ -460,6 +461,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
      * Saves Current Image with grayscale filter
      */
     private void saveCurrentImageInGrayscale() {
+        tempImageUri = new ArrayList<>();
         try {
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
@@ -467,16 +469,17 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             Picasso picasso = Picasso.with(mActivity);
             Transformation transformation = new GrayscaleTransformation();
 
-            for (int countElements = mImagesUri.size() - 1; countElements >= 0; countElements--) {
+            for (int i = mImagesUri.size() - 1; i >= 0; i--) {
                 String fileName = String.format(getString(R.string.filter_file_name),
-                        String.valueOf(System.currentTimeMillis()), "grayscale");
+                        String.valueOf(System.currentTimeMillis()), i + "_grayscale");
                 File outFile = new File(dir, fileName);
                 String imagePath = outFile.getAbsolutePath();
-                picasso.load(new File(mImagesUri.get(countElements)))
+                picasso.load(new File(mImagesUri.get(i)))
                         .transform(transformation)
                         .into(getTarget(imagePath));
-                mImagesUri.remove(countElements);
             }
+            mImagesUri.clear();
+            mImagesUri.addAll(tempImageUri);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -817,7 +820,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
                     ostream.flush();
                     ostream.close();
-                    mImagesUri.add(url);
+                    tempImageUri.add(url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
