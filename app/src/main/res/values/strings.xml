@@ -188,7 +188,7 @@
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Image compression : %s%%</string>
     <string name="quality_image">Enter % compression of image :</string>
-    <string name="invalid_entry">Invaid Entry</string>
+    <string name="invalid_entry">Invalid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Set as default</string>
