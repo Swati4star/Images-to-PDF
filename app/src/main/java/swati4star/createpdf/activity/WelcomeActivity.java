@@ -50,6 +50,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.fragment_step_remove_pages,
                 R.layout.fragment_step_reorder_pages,
                 R.layout.fragment_step_extract_images,
+                R.layout.fragment_step_excel_to_pdf,
                 R.layout.fragment_step_change_themes};
 
         // adding bottom dots
