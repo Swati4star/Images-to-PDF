@@ -15,6 +15,7 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF_KEY;
+import static swati4star.createpdf.util.Constants.EXCEL_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.HISTORY_KEY;
 import static swati4star.createpdf.util.Constants.IMAGE_TO_PDF_KEY;
@@ -34,7 +35,7 @@ import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
 public class FavouritesActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedpreferences;
-    private boolean[] mKeyState = new boolean[19];
+    private boolean[] mKeyState = new boolean[20];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class FavouritesActivity extends AppCompatActivity {
         mKeyState[16] = mSharedpreferences.getBoolean(REORDER_PAGES_KEY, false);
         mKeyState[17] = mSharedpreferences.getBoolean(EXTRACT_IMAGES_KEY, false);
         mKeyState[18] = mSharedpreferences.getBoolean(PDF_TO_IMAGES_KEY, false);
+        mKeyState[19] = mSharedpreferences.getBoolean(EXCEL_TO_PDF_KEY, false);
     }
     /**
      * Restore the intial state if user
@@ -125,5 +127,6 @@ public class FavouritesActivity extends AppCompatActivity {
         mSharedpreferences.edit().putBoolean(REORDER_PAGES_KEY, mKeyState[16] ).apply();
         mSharedpreferences.edit().putBoolean(EXTRACT_IMAGES_KEY, mKeyState[17] ).apply();
         mSharedpreferences.edit().putBoolean(PDF_TO_IMAGES_KEY, mKeyState[18] ).apply();
+        mSharedpreferences.edit().putBoolean(EXCEL_TO_PDF_KEY, mKeyState[19] ).apply();
     }
 }
