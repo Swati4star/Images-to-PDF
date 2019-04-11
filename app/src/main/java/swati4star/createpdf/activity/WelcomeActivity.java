@@ -122,7 +122,7 @@ public class WelcomeActivity extends AppCompatActivity {
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = mLayoutInflater.inflate(mLayouts[position], container, false);
-            if (position == 8) {
+            if (position == 9) {
                 Button btnGetStarted = view.findViewById(R.id.getStarted);
                 btnGetStarted.setOnClickListener(v -> openMainActivity());
             }
