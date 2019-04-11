@@ -47,6 +47,9 @@ public class RealPathUtil {
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
+                if ("home".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
 
             } else if (isDownloadsDocument(uri)) {
 
