@@ -409,4 +409,5 @@
     <string name="select_excel_file">Select Excel file</string>
     <string name="add_to_favourite">Add to Favourite</string>
     <string name="favourites">Favourites</string>
+    <string name="favourites_text">Sélectionnez l'icône + pour ajouter vos fonctionnalités préférées!</string>
 </resources>
