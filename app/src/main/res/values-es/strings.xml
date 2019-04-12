@@ -407,5 +407,7 @@
     <string name="page_color">Page Color</string>
     <string name="add_to_favourite">Add to Favourite</string>
     <string name="favourites">Favourites</string>
+
     <string name="favourites_text">Selecciona el ícono + para agregar tus funciones favoritas!</string>
+    <string name="split_one_page_pdf_alert">¡El PDF seleccionado no se puede dividir porque solo tiene 1 página!</string>
 </resources>

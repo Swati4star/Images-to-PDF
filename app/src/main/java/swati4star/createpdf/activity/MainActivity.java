@@ -402,6 +402,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentSelectedMap.append(R.id.nav_add_watermark, R.string.add_watermark);
         mFragmentSelectedMap.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
         mFragmentSelectedMap.append(R.id.nav_rotate_pages, R.string.rotate_pages);
+        mFragmentSelectedMap.append(R.id.nav_excel_to_pdf, R.string.excel_to_pdf);
     }
 
     @Override

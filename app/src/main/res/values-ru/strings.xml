@@ -451,4 +451,5 @@
     <string name="add_to_favourite">Add to Favourite</string>
     <string name="favourites">Favourites</string>
     <string name="favourites_text">Выберите значок +, чтобы добавить свои любимые функции!</string>
+    <string name="split_one_page_pdf_alert">Выбранный PDF не может быть разделен, потому что он имеет только 1 страницу!</string>
 </resources>

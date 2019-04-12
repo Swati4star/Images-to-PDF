@@ -156,6 +156,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentSelectedMap.append(R.id.invert_pdf, R.string.invert_pdf);
         mFragmentSelectedMap.append(R.id.add_watermark, R.string.add_watermark);
         mFragmentSelectedMap.append(R.id.zip_to_pdf, R.string.zip_to_pdf);
+        mFragmentSelectedMap.append(R.id.excel_to_pdf, R.string.excel_to_pdf);
     }
 
     @Override
