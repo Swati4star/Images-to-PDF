@@ -72,7 +72,7 @@ public class RealPathUtil {
             }
         } else {
             StringBuilder path = new StringBuilder(uri.getPath());
-            path.insert(0, "/storage/emulated/0");
+            path.insert(0, Environment.getExternalStorageDirectory());
             return path.toString();
         }
         return null;
