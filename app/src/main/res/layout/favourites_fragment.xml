@@ -264,6 +264,19 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/favourites" />
 
+    <TextView
+        android:id="@+id/favourites_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/favourites_text"
+        android:textSize="16sp"
+        app:layout_anchor="@id/favourites"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:textStyle="bold"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fav_add_fab"
         android:layout_width="wrap_content"

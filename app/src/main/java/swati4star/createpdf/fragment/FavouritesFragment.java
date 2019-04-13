@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -110,6 +111,8 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_excel_to_pdf;
     @BindView(R.id.favourites)
     LottieAnimationView favouritesAnimation;
+    @BindView(R.id.favourites_text)
+    TextView favouritesText;
 
     @Nullable
     @Override
@@ -190,9 +193,10 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
         viewVisibility(pref_excel_to_pdf, EXCEL_TO_PDF_KEY);
 
-        // if there are no favourites then show favourites animation
+        // if there are no favourites then show favourites animation and text
         if (!mDoesFavouritesExist) {
             favouritesAnimation.setVisibility(View.VISIBLE);
+            favouritesText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -262,8 +266,9 @@ public class FavouritesFragment extends Fragment
             view.setVisibility(View.VISIBLE);
             // if any favourites exists set mDoesFavouritesExist to true
             mDoesFavouritesExist = true;
-            // & disable favourites animation
+            // & disable favourites animation and text
             favouritesAnimation.setVisibility(View.GONE);
+            favouritesText.setVisibility(View.GONE);
         } else {
             view.setVisibility(View.GONE);
         }
