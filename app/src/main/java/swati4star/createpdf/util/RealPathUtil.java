@@ -70,6 +70,10 @@ public class RealPathUtil {
                     }
                 }
             }
+        } else {
+            StringBuilder path = new StringBuilder(uri.getPath());
+            path.insert(0, "/storage/emulated/0");
+            return path.toString();
         }
         return null;
     }
