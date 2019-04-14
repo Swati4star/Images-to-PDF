@@ -233,9 +233,12 @@
     <string name="excel_to_pdf">Excel to PDF</string>
     <string name="excel_tv_view_text">Excel file selected: </string>
     <string name="select_excel_file">Select Excel file</string>
+    <string name="pdf_selected">PDF file selected: </string>
 
     <string name="confirm_exit_message">Presione de nuevo para salir</string>
     <string name="border">Agregar Borde a Imagen</string>
+    <string name="extract_text">Extract Text</string>
+    <string name="snackbar_txtExtracted">Text extracted!</string>
     <string name="filter_brush">Pincel</string>
     <string name="filter_saved">Imagen guardada</string>
     <string name="filter_not_saved">No se pudo guardar la imagen</string>
