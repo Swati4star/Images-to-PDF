@@ -122,8 +122,8 @@ public class RealPathUtil {
 
     public static StringBuilder trimExternal(String path) {
         StringBuilder trimmedPath = new StringBuilder();
-        String[] tempPath = path.split("/");
-        trimmedPath.append(tempPath[1]);
+        int tempPath = path.indexOf('/');
+        trimmedPath.append(path.substring(tempPath+1));
         return trimmedPath;
     }
 
