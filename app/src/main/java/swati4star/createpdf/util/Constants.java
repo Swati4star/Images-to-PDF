@@ -59,6 +59,7 @@ public class Constants {
     public static final String REORDER_PAGES_KEY = "Reorder Pages";
     public static final String EXTRACT_IMAGES_KEY = "Extract Images";
     public static final String PDF_TO_IMAGES_KEY = "PDF to Images";
+    public static final String PPT_TO_PDF_KEY = "PPT to PDF";
 
     public static final String BUNDLE_DATA = "bundle_data";
     public static final String REORDER_PAGES = "reorder_pages";
