@@ -24,6 +24,10 @@
                         android:id="@+id/nav_excel_to_pdf"
                         android:icon="@drawable/ic_excel"
                         android:title="@string/excel_to_pdf" />
+                    <item
+                        android:id="@+id/nav_text_extract"
+                        android:icon="@drawable/ic_extract_text"
+                        android:title="Extract Text" />
                 </group>
             </menu>
         </item>
