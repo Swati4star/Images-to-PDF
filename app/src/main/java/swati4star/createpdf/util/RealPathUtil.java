@@ -71,7 +71,7 @@ public class RealPathUtil {
                 }
             }
         } else {
-            StringBuilder path = trimExternal(uri.getPath().substring(1));
+            StringBuilder path = StringUtils.trimExternal(uri.getPath().substring(1));
             path.insert(0, Environment.getExternalStorageDirectory() + "/");
             return path.toString();
         }
@@ -118,13 +118,6 @@ public class RealPathUtil {
      */
     public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
-    }
-
-    public static StringBuilder trimExternal(String path) {
-        StringBuilder trimmedPath = new StringBuilder();
-        int tempPath = path.indexOf('/');
-        trimmedPath.append(path.substring(tempPath+1));
-        return trimmedPath;
     }
 
     /**
