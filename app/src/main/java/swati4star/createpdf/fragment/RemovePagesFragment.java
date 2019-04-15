@@ -151,10 +151,9 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
             if (mPath == null)
                 return;
+            String outputPath;
 
-            Log.v("output", pages + " ");
-            String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
-                    "_edited" + pages + mActivity.getString(R.string.pdf_ext));
+            outputPath = setPath(pages);
             if (mPDFUtils.isPDFEncrypted(mPath)) {
                 showSnackbar(mActivity, R.string.encrypted_pdf);
                 return;
@@ -170,6 +169,24 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             }
             resetValues();
         }
+    }
+
+    /**
+     * This method returns new  pdf name.
+     * @param pages The pages String that contains page numbers
+     * @return Returns the new pdf name
+     */
+    private String setPath(String pages) {
+        String outputPath;
+        if (pages.length() > 50) {
+            outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
+                    "_edited" + mActivity.getString(R.string.pdf_ext));
+        } else {
+            outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
+                    "_edited" + pages + mActivity.getString(R.string.pdf_ext));
+
+        }
+        return outputPath;
     }
 
     @OnClick(R.id.pdfCreate)

@@ -37,6 +37,9 @@ public class RealPathUtil {
 
     public static String getRealPathFromURI_API19(final Context context, final Uri uri) {
         // DocumentProvider
+        if (isDriveFile(uri)) {
+            return null;
+        }
         if (DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
@@ -45,6 +48,9 @@ public class RealPathUtil {
                 final String type = split[0];
 
                 if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+                if ("home".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
 
@@ -67,6 +73,10 @@ public class RealPathUtil {
                     }
                 }
             }
+        } else {
+            StringBuilder path = StringUtils.trimExternal(uri.getPath().substring(1));
+            path.insert(0, Environment.getExternalStorageDirectory() + "/");
+            return path.toString();
         }
         return null;
     }
@@ -111,6 +121,20 @@ public class RealPathUtil {
      */
     public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * This function is used to check for a drive file URI.
+     *
+     * @param uri
+     * @return
+     */
+    public static boolean isDriveFile(Uri uri) {
+        if ("com.google.android.apps.docs.storage".equals(uri.getAuthority()))
+            return true;
+        if ("com.google.android.apps.docs.storage.legacy".equals(uri.getAuthority()))
+            return true;
+        return false;
     }
 
     /**

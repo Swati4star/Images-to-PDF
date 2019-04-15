@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mb_white">
 
     <ImageView
         android:layout_width="match_parent"
@@ -9,7 +10,7 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="48dp"
         android:scaleType="centerInside"
-        android:src="@drawable/action_file" />
+        android:src="@drawable/view_pdf" />
 
     <TextView
         android:id="@+id/tv_title"

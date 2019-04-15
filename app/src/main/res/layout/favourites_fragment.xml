@@ -249,6 +249,15 @@
                     android:visibility="gone"
                     app:option_icon="@drawable/ic_image_black_24dp"
                     app:option_text="@string/pdf_to_images" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/excel_to_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_excel"
+                    app:option_text="@string/excel_to_pdf" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -263,6 +272,19 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/favourites" />
+
+    <TextView
+        android:id="@+id/favourites_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/favourites_text"
+        android:textSize="16sp"
+        app:layout_anchor="@id/favourites"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:textStyle="bold"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fav_add_fab"

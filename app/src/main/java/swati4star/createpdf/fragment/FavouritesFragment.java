@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -33,6 +34,7 @@ import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF_KEY;
+import static swati4star.createpdf.util.Constants.EXCEL_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.EXTRACT_TEXT_KEY;
@@ -108,8 +110,12 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_pdf_to_img;
     @BindView(R.id.extract_text_fav)
     MyCardView pref_extract_txt;
+    @BindView(R.id.excel_to_pdf)
+    MyCardView pref_excel_to_pdf;
     @BindView(R.id.favourites)
     LottieAnimationView favouritesAnimation;
+    @BindView(R.id.favourites_text)
+    TextView favouritesText;
 
     @Nullable
     @Override
@@ -146,6 +152,7 @@ public class FavouritesFragment extends Fragment
         pref_add_images.setOnClickListener(this);
         pref_rem_dup_pages.setOnClickListener(this);
         pref_invert_pdf.setOnClickListener(this);
+        pref_excel_to_pdf.setOnClickListener(this);
         setHasOptionsMenu(true);
         return rootview;
     }
@@ -189,10 +196,12 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_extract_txt, EXTRACT_TEXT_KEY);
         viewVisibility(pref_extract_img, EXTRACT_IMAGES_KEY);
         viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
+        viewVisibility(pref_excel_to_pdf, EXCEL_TO_PDF_KEY);
 
-        // if there are no favourites then show favourites animation
+        // if there are no favourites then show favourites animation and text
         if (!mDoesFavouritesExist) {
             favouritesAnimation.setVisibility(View.VISIBLE);
+            favouritesText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -218,6 +227,7 @@ public class FavouritesFragment extends Fragment
         mFragmentPositionMap.append(R.id.add_images_fav, R.id.nav_add_images);
         mFragmentPositionMap.append(R.id.remove_duplicates_pages_pdf_fav, R.id.nav_remove_duplicate_pages);
         mFragmentPositionMap.append(R.id.invert_pdf_fav, R.id.nav_invert_pdf);
+        mFragmentPositionMap.append(R.id.excel_to_pdf, R.id.nav_excel_to_pdf);
     }
 
     private void titleMap() {
@@ -242,6 +252,8 @@ public class FavouritesFragment extends Fragment
         mFragmentSelectedMap.append(R.id.add_images_fav, R.string.add_images);
         mFragmentSelectedMap.append(R.id.remove_duplicates_pages_pdf_fav, R.string.remove_duplicate_pages);
         mFragmentSelectedMap.append(R.id.invert_pdf_fav, R.string.invert_pdf);
+        mFragmentSelectedMap.append(R.id.excel_to_pdf, R.string.excel_to_pdf);
+
     }
 
     @Override
@@ -261,8 +273,9 @@ public class FavouritesFragment extends Fragment
             view.setVisibility(View.VISIBLE);
             // if any favourites exists set mDoesFavouritesExist to true
             mDoesFavouritesExist = true;
-            // & disable favourites animation
+            // & disable favourites animation and text
             favouritesAnimation.setVisibility(View.GONE);
+            favouritesText.setVisibility(View.GONE);
         } else {
             view.setVisibility(View.GONE);
         }
@@ -360,6 +373,9 @@ public class FavouritesFragment extends Fragment
                 break;
             case R.id.extract_text_fav:
                 fragment = new ExtractTextFragment();
+                break;
+            case R.id.excel_to_pdf:
+                fragment = new ExceltoPdfFragment();
                 break;
         }
         try {
