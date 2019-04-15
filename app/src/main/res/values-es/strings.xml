@@ -239,6 +239,8 @@
     <string name="border">Agregar Borde a Imagen</string>
     <string name="extract_text">Extract Text</string>
     <string name="snackbar_txtExtracted">Text extracted!</string>
+    <string name="snackbar_pdfselected">PDF file selected!</string>
+    <string name="creating_txt">Creating Text File</string>
     <string name="filter_brush">Pincel</string>
     <string name="filter_saved">Imagen guardada</string>
     <string name="filter_not_saved">No se pudo guardar la imagen</string>

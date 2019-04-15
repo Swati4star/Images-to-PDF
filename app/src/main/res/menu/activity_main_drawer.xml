@@ -24,10 +24,6 @@
                         android:id="@+id/nav_excel_to_pdf"
                         android:icon="@drawable/ic_excel"
                         android:title="@string/excel_to_pdf" />
-                    <item
-                        android:id="@+id/nav_text_extract"
-                        android:icon="@drawable/ic_extract_text"
-                        android:title="Extract Text" />
                 </group>
             </menu>
         </item>
@@ -102,6 +98,10 @@
         <item android:title="@string/more_options">
             <menu>
                 <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_text_extract"
+                        android:icon="@drawable/ic_text_format_black_24dp"
+                        android:title="@string/extract_text" />
                     <item
                         android:id="@+id/nav_remove_pages"
                         android:icon="@drawable/ic_remove_circle_black_24dp"

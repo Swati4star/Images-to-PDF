@@ -14,7 +14,6 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -155,7 +154,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                 if (resultCode == RESULT_OK) {
                     mExcelFileUri = data.getData();
                     mRealPath = RealPathUtil.getRealPath(getContext(), data.getData());
-                    showSnackbar(mActivity, getResources().getString(R.string.pdf_selected));
+                    showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
                     fileName = mFileUtils.getFileName(mExcelFileUri);
                     if (fileName != null) {
                         if (fileName.endsWith(Constants.pdfExtension))
@@ -205,7 +204,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             return;
         }
         new MaterialDialog.Builder(mActivity)
-                .title(R.string.creating_pdf)
+                .title(R.string.creating_txt)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
                     if (StringUtils.isEmpty(input)) {
@@ -254,7 +253,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             mTextView.setVisibility(View.GONE);
             mButtonClicked = false;
         } catch (Exception e) {
-            Log.d("Error message", "" + e);
             e.printStackTrace();
         } finally {
             mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());

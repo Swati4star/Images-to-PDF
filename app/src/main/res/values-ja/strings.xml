@@ -401,6 +401,8 @@
     <string name="extract_text">Extract Text</string>
     <string name="pdf_selected">PDF file selected: </string>
     <string name="snackbar_txtExtracted">Text extracted!</string>
+    <string name="snackbar_pdfselected">PDF file selected!</string>
+    <string name="creating_txt">Creating Text File</string>
 
     <string name="font_color">Font Color</string>
     <string name="page_color">Page Color</string>

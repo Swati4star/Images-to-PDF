@@ -85,14 +85,6 @@
                 app:option_text="@string/viewFiles" />
 
             <swati4star.createpdf.customviews.MyCardView
-                android:id="@+id/extract_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_extract_text"
-                app:option_text="@string/extract_text" />
-
-            <swati4star.createpdf.customviews.MyCardView
                 android:id="@+id/view_history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -285,6 +277,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/extract_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/ic_text_format_black_24dp"
+                app:option_text="@string/extract_text" />
 
             <swati4star.createpdf.customviews.MyCardView
                 android:id="@+id/zip_to_pdf"
