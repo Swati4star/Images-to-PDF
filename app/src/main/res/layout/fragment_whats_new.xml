@@ -15,6 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_marginBottom="50dp">
 
         <android.support.v7.widget.RecyclerView
@@ -23,7 +24,6 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
 
     <Button
         android:id="@+id/continueButton"

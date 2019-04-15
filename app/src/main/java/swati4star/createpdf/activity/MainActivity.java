@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         String versionName = mSharedPreferences.getString(VERSION_NAME, "");
-        if (!versionName.equals(BuildConfig.VERSION_NAME)) {
+        if (versionName != null && !versionName.equals(BuildConfig.VERSION_NAME)) {
             WhatsNewUtils.displayDialog(this);
             mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }

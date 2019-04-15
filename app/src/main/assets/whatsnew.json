@@ -2,27 +2,56 @@
   "data": [
 
     {
-      "title": "Invert PDF",
-      "content": "New feature to invert PDF colors",
-      "icon": "ic_invert_color_24dp"
-    },
-
-    {
-      "title": "Split PDF",
-      "content": "Added More ways to split PDF",
+      "title": "Favourites Section",
+      "content": "You can now add your favourite features & get easy access to those.",
       "icon": "ic_call_split_black_24dp"
     },
 
     {
-      "title": "Fixed Crashes",
-      "content": "Fixed crashes & PDF conversion performance",
-      "icon": ""
+      "title": "View History",
+      "content": "Enhanced filters to view your history conversions",
+      "icon": "ic_history_black_24dp"
+    },
+
+
+    {
+      "title": "Excel to PDF",
+      "content": "You can now convert your excel files to PDF too!",
+      "icon": "ic_excel"
+    },
+
+    {
+      "title": "Zip to PDF",
+      "content": "You can now convert your images zip files to PDF too!",
+      "icon": "ic_broken_image_black_24dp"
     }
 
   ],
   "old_data": {
     //paste old data here
     "version_code": [
+    ],
+
+    "84": [
+
+      {
+        "title": "Invert PDF",
+        "content": "New feature to invert PDF colors",
+        "icon": "ic_invert_color_24dp"
+      },
+
+      {
+        "title": "Split PDF",
+        "content": "Added More ways to split PDF",
+        "icon": "ic_call_split_black_24dp"
+      },
+
+      {
+        "title": "Fixed Crashes",
+        "content": "Fixed crashes & PDF conversion performance",
+        "icon": ""
+      }
+
     ],
 
     "83" : [

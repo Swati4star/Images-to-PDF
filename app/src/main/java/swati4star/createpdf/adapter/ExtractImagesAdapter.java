@@ -67,7 +67,8 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
 
         @Override
         public void onClick(View view) {
-            mOnClickListener.onFileItemClick(mFilePaths.get(getAdapterPosition()));
+            if (getAdapterPosition() < mFilePaths.size())
+                mOnClickListener.onFileItemClick(mFilePaths.get(getAdapterPosition()));
         }
     }
 
