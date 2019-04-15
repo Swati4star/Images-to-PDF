@@ -35,6 +35,7 @@ import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF_KEY;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES_KEY;
+import static swati4star.createpdf.util.Constants.EXTRACT_TEXT_KEY;
 import static swati4star.createpdf.util.Constants.HISTORY_KEY;
 import static swati4star.createpdf.util.Constants.IMAGE_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.INVERT_PDF_KEY;
@@ -105,6 +106,8 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_extract_img;
     @BindView(R.id.pdf_to_images_fav)
     MyCardView pref_pdf_to_img;
+    @BindView(R.id.extract_text_fav)
+    MyCardView pref_extract_txt;
     @BindView(R.id.favourites)
     LottieAnimationView favouritesAnimation;
 
@@ -128,6 +131,7 @@ public class FavouritesFragment extends Fragment
         pref_qr_barcode.setOnClickListener(this);
         pref_view_files.setOnClickListener(this);
         pref_history.setOnClickListener(this);
+        pref_extract_txt.setOnClickListener(this);
         pref_split_pdf.setOnClickListener(this);
         pref_merge_pdf.setOnClickListener(this);
         pref_compress.setOnClickListener(this);
@@ -182,6 +186,7 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_rem_dup_pages, REMOVE_DUPLICATE_PAGES_KEY);
         viewVisibility(pref_remove_pages, REMOVE_PAGES_KEY);
         viewVisibility(pref_reorder_pages, REORDER_PAGES_KEY);
+        viewVisibility(pref_extract_txt, EXTRACT_TEXT_KEY);
         viewVisibility(pref_extract_img, EXTRACT_IMAGES_KEY);
         viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
 
@@ -203,6 +208,7 @@ public class FavouritesFragment extends Fragment
         mFragmentPositionMap.append(R.id.text_to_pdf_fav, R.id.nav_text_to_pdf);
         mFragmentPositionMap.append(R.id.compress_pdf_fav, R.id.nav_compress_pdf);
         mFragmentPositionMap.append(R.id.remove_pages_fav, R.id.nav_remove_pages);
+        mFragmentPositionMap.append(R.id.extract_text_fav, R.id.nav_text_extract);
         mFragmentPositionMap.append(R.id.rearrange_pages_fav, R.id.nav_rearrange_pages);
         mFragmentPositionMap.append(R.id.extract_images_fav, R.id.nav_extract_images);
         mFragmentPositionMap.append(R.id.view_history_fav, R.id.nav_history);
@@ -221,6 +227,7 @@ public class FavouritesFragment extends Fragment
         mFragmentSelectedMap.append(R.id.view_files_fav, R.string.viewFiles);
         mFragmentSelectedMap.append(R.id.rotate_pages_fav, R.string.rotate_pages);
         mFragmentSelectedMap.append(R.id.add_watermark_fav, R.string.add_watermark);
+        mFragmentSelectedMap.append(R.id.extract_text_fav, R.string.extract_text);
         mFragmentSelectedMap.append(R.id.merge_pdf_fav, R.string.merge_pdf);
         mFragmentSelectedMap.append(R.id.split_pdf_fav, R.string.split_pdf);
         mFragmentSelectedMap.append(R.id.text_to_pdf_fav, R.string.text_to_pdf);
@@ -350,6 +357,9 @@ public class FavouritesFragment extends Fragment
                 break;
             case R.id.invert_pdf_fav:
                 fragment = new InvertPdfFragment();
+                break;
+            case R.id.extract_text_fav:
+                fragment = new ExtractTextFragment();
                 break;
         }
         try {
