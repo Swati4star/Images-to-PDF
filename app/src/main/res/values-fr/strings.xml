@@ -47,6 +47,7 @@
     <string name="snackbar_file_deleted">Fichier supprimé.</string>
     <string name="snackbar_file_not_deleted">Le fichier ne peut pas être supprimé.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
+    <string name="snackbar_color_too_close">Votre coleur de fond et coleur de texte sont trop similaires</string>
 
     <string name="creating_pdf">Créant PDF</string>
     <string name="qr_barcode_pdf">QR &amp; Barcodes</string>
