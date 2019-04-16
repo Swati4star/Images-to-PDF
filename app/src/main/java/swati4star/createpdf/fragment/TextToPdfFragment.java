@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +45,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
+import swati4star.createpdf.util.ColorUtils;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -96,13 +95,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private Font.FontFamily mFontFamily;
     private MorphButtonUtility mMorphButtonUtility;
 
-
-    private int mFontColorRed;
-    private int mFontColorBlue;
-    private int mFontColorGreen;
-    private int mPageColorRed;
-    private int mPageColorBlue;
-    private int mPageColorGreen;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -266,14 +258,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mFontColor = colorPickerView.getColor();
-                    int alpha = Color.alpha(mFontColor);
-                    mFontColorRed = Color.red(mFontColor);
-                    mFontColorBlue = Color.blue(mFontColor);
-                    mFontColorGreen = Color.green(mFontColor);
-                    double colorDif = Math.sqrt((Math.pow((mFontColorRed - mPageColorRed), 2) +
-                            Math.pow((mFontColorBlue - mPageColorBlue), 2)
-                            + Math.pow((mFontColorGreen - mPageColorGreen), 2)));
-                    if (colorDif < 30) {
+                    if (ColorUtils.colorSimilarCheck(mFontColor, mPageColor)) {
                         showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
@@ -299,15 +284,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mPageColor = colorPickerView.getColor();
-                    int alpha = Color.alpha(mPageColor);
-                    mPageColorRed = Color.red(mPageColor);
-                    mPageColorBlue = Color.blue(mPageColor);
-                    mPageColorGreen = Color.green(mPageColor);
-
-                    double colorDif = Math.sqrt((Math.pow((mFontColorRed - mPageColorRed), 2) +
-                            Math.pow((mFontColorBlue - mPageColorBlue), 2)
-                            + Math.pow((mFontColorGreen - mPageColorGreen), 2)));
-                    if (colorDif < 30) {
+                    if (ColorUtils.colorSimilarCheck(mFontColor, mPageColor)) {
                         showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
