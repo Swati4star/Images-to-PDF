@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ExtractTextFragment">
+    <LinearLayout
+        android:id="@+id/buttonLayoutExtract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/select_pdf_file"
+            style="@style/MorphingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/select_pdf_file" />
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/extract_text"
+            style="@style/MorphingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="@string/extract_text" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_extract_text_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:gravity="center_horizontal"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/excel_tv_view_text"
+        android:visibility="gone"/>
+
+    <include layout="@layout/bottom_sheet" />
+</android.support.design.widget.CoordinatorLayout>

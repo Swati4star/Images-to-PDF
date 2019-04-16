@@ -57,6 +57,7 @@ public class Constants {
     public static final String REMOVE_DUPLICATE_PAGES_KEY = "Remove Duplicate Pages";
     public static final String REMOVE_PAGES_KEY = "Remove Pages";
     public static final String REORDER_PAGES_KEY = "Reorder Pages";
+    public static final String EXTRACT_TEXT_KEY = "Extract Text";
     public static final String EXTRACT_IMAGES_KEY = "Extract Images";
     public static final String PDF_TO_IMAGES_KEY = "PDF to Images";
     public static final String EXCEL_TO_PDF_KEY = "Excel to PDF";

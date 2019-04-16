@@ -79,6 +79,7 @@
 
     <string name="pdf_ext" translatable="false">.pdf</string>
     <string name="pdf_type" translatable="false">application/pdf</string>
+    <string name="txt_type" translatable="false">text/*</string>
 
     <string name="please_wait">Please Wait</string>
 
@@ -123,11 +124,13 @@
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
     <string name="pdf_merged">PDFs Merged</string>
     <string name="excel_selected">Excel file selected</string>
+    <string name="pdf_selected">PDF file selected: </string>
     <string name="excel_to_pdf">Excel to PDF</string>
     <string name="excel_tv_view_text">Excel file selected: </string>
     <string name="select_excel_file">Select Excel file</string>
 
     <string name="creating_pdf">Creating PDF</string>
+    <string name="creating_txt">Creating Text File</string>
     <string name="enter_file_name">Enter file name</string>
     <string name="example">Example : abc</string>
     <string name="snackbar_no_pdf_app">No app to read PDF File</string>
@@ -142,6 +145,8 @@
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snackbar_txtExtracted">Text extracted!</string>
+    <string name="snackbar_pdfselected">PDF file selected!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>
     <string name="delete">Delete</string>
@@ -306,6 +311,7 @@
 
     <!-- Extract images -->
     <string name="extract_images">Extract Images</string>
+    <string name="extract_text">Extract Text</string>
     <string name="extract_images_failed">We couldn\'t find any images in the selected PDF.</string>
     <string name="extract_images_success">We found %1$d image(s) in the selected PDF. They have been saved in the PDF Files folder in root directory.</string>
 

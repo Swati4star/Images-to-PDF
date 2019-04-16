@@ -74,6 +74,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView zipToPdf;
     @BindView(R.id.excel_to_pdf)
     MyCardView excelToPdf;
+    @BindView(R.id.extract_text)
+    MyCardView extractText;
 
     private SparseIntArray mFragmentPositionMap;
     private SparseIntArray mFragmentSelectedMap;
@@ -106,6 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         invertPdf.setOnClickListener(this);
         zipToPdf.setOnClickListener(this);
         excelToPdf.setOnClickListener(this);
+        extractText.setOnClickListener(this);
         return rootview;
     }
 
@@ -116,6 +119,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentPositionMap.append(R.id.excel_to_pdf, R.id.nav_excel_to_pdf);
         mFragmentPositionMap.append(R.id.view_files, R.id.nav_gallery);
         mFragmentPositionMap.append(R.id.rotate_pages, R.id.nav_gallery);
+        mFragmentPositionMap.append(R.id.extract_text, R.id.nav_text_extract);
         mFragmentPositionMap.append(R.id.add_watermark, R.id.nav_add_watermark);
         mFragmentPositionMap.append(R.id.merge_pdf, R.id.nav_merge);
         mFragmentPositionMap.append(R.id.split_pdf, R.id.nav_split);
@@ -141,6 +145,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mFragmentSelectedMap.append(R.id.view_files, R.string.viewFiles);
         mFragmentSelectedMap.append(R.id.merge_pdf, R.string.merge_pdf);
         mFragmentSelectedMap.append(R.id.split_pdf, R.string.split_pdf);
+        mFragmentSelectedMap.append(R.id.extract_text, R.string.extract_text);
         mFragmentSelectedMap.append(R.id.text_to_pdf, R.string.text_to_pdf);
         mFragmentSelectedMap.append(R.id.view_history, R.string.history);
         mFragmentSelectedMap.append(R.id.add_password, R.string.add_password);
@@ -258,6 +263,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.excel_to_pdf:
                 fragment = new ExceltoPdfFragment();
                 break;
+            case R.id.extract_text:
+                fragment = new ExtractTextFragment();
         }
 
         try {

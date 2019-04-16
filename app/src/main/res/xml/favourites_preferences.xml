@@ -47,6 +47,11 @@
         android:icon="@drawable/baseline_crop_rotate_24"/>
 
     <CheckBoxPreference
+        android:title="@string/extract_text"
+        android:key="@string/extract_text"
+        android:icon="@drawable/ic_text_format_black_24dp"/>
+
+    <CheckBoxPreference
         android:title="@string/add_watermark"
         android:key="@string/add_watermark"
         android:icon="@drawable/ic_branding_watermark_black_24dp"/>

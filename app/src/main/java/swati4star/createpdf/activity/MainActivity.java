@@ -29,6 +29,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
 import swati4star.createpdf.fragment.ExceltoPdfFragment;
+import swati4star.createpdf.fragment.ExtractTextFragment;
 import swati4star.createpdf.fragment.FavouritesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
@@ -518,6 +519,9 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
+                break;
+            case R.id.nav_text_extract:
+                fragment = new ExtractTextFragment();
                 break;
         }
 

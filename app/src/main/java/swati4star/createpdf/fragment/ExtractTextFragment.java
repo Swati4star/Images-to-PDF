@@ -1,0 +1,299 @@
+package swati4star.createpdf.fragment;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.Fragment;
+import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
+import com.dd.morphingbutton.MorphingButton;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.interfaces.BottomSheetPopulate;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
+import swati4star.createpdf.util.BottomSheetCallback;
+import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PermissionsUtils;
+import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.StringUtils;
+
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.textExtension;
+import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
+import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
+import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
+
+public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
+        BottomSheetPopulate, OnBackPressedInterface {
+
+    private Activity mActivity;
+    private FileUtils mFileUtils;
+    private Uri mExcelFileUri;
+    private String mRealPath;
+    private String mFileExtension;
+    private BottomSheetUtils mBottomSheetUtils;
+
+    @BindView(R.id.tv_extract_text_bottom)
+    TextView mTextView;
+    @BindView(R.id.extract_text)
+    MorphingButton extractText;
+    BottomSheetBehavior sheetBehavior;
+    @BindView(R.id.bottom_sheet)
+    LinearLayout layoutBottomSheet;
+    @BindView(R.id.recyclerViewFiles)
+    RecyclerView mRecyclerViewFiles;
+    @BindView(R.id.upArrow)
+    ImageView mUpArrow;
+    @BindView(R.id.downArrow)
+    ImageView mDownArrow;
+    @BindView(R.id.layout)
+    RelativeLayout mLayout;
+    @BindView(R.id.lottie_progress)
+    LottieAnimationView mLottieProgress;
+
+
+    private SharedPreferences mSharedPreferences;
+    private MorphButtonUtility mMorphButtonUtility;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private boolean mPermissionGranted = false;
+    private boolean mButtonClicked = false;
+    private ArrayList<String> mFilePaths;
+    private String mFileName;
+    private final int mFileSelectCode = 0;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootview = inflater.inflate(R.layout.fragment_extract_text, container,
+                false);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mMorphButtonUtility = new MorphButtonUtility(mActivity);
+        ButterKnife.bind(this, rootview);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());
+        extractText.setEnabled(false);
+        mFilePaths = new ArrayList<>();
+        mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+        mLottieProgress.setVisibility(View.VISIBLE);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        return rootview;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+        mFileUtils = new FileUtils(mActivity);
+        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+    }
+
+    @OnClick(R.id.viewFiles)
+    void onViewFilesClick(View view) {
+        mBottomSheetUtils.showHideSheet(sheetBehavior);
+    }
+
+    @OnClick(R.id.select_pdf_file)
+    public void selectPdfFile() {
+        if (!mButtonClicked) {
+            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setDataAndType(uri, "*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            try {
+                startActivityForResult(
+                        Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                        mFileSelectCode);
+                mButtonClicked = true;
+            } catch (android.content.ActivityNotFoundException ex) {
+                showSnackbar(mActivity, R.string.install_file_manager);
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mButtonClicked = false;
+        switch (requestCode) {
+            case mFileSelectCode:
+                if (resultCode == RESULT_OK) {
+                    mExcelFileUri = data.getData();
+                    mRealPath = RealPathUtil.getRealPath(getContext(), data.getData());
+                    showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
+                    mFileName = mFileUtils.getFileName(mExcelFileUri);
+                    if (mFileName != null) {
+                        if (mFileName.endsWith(Constants.pdfExtension))
+                            mFileExtension = Constants.pdfExtension;
+                        else {
+                            showSnackbar(mActivity, R.string.extension_not_supported);
+                            return;
+                        }
+                    }
+                    mFileName = getResources().getString(R.string.pdf_selected)
+                            + mFileName;
+                    mTextView.setText(mFileName);
+                    mTextView.setVisibility(View.VISIBLE);
+                    extractText.setEnabled(true);
+                    mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length < 1)
+            return;
+        switch (requestCode) {
+            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mPermissionGranted = true;
+                    openExtractText();
+                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                } else
+                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+            }
+        }
+    }
+
+    /**
+     * This function is used to open up the Dialog box to enter the
+     * file name.
+     */
+    @OnClick(R.id.extract_text)
+    public void openExtractText() {
+        getRuntimePermissions();
+
+        new MaterialDialog.Builder(mActivity)
+                .title(R.string.creating_txt)
+                .content(R.string.enter_file_name)
+                .input(getString(R.string.example), null, (dialog, input) -> {
+                    if (StringUtils.isEmpty(input)) {
+                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    } else {
+                        final String inputName = input.toString();
+                        if (!mFileUtils.isFileExist(inputName + textExtension)) {
+                            extractTextfromPdf(inputName);
+                        } else {
+                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            builder.onPositive((dialog12, which) -> extractTextfromPdf(inputName))
+                                    .onNegative((dialog1, which) -> openExtractText())
+                                    .show();
+                        }
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * This function is used to extract the text from a PDF and store
+     * it in a new text file.
+     * @param inputName
+     */
+    private void extractTextfromPdf(String inputName) {
+        String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation());
+        String mPath = mStorePath + inputName + textExtension;
+        try {
+            StringBuilder parsedText = new StringBuilder();
+            PdfReader reader = new PdfReader(mRealPath);
+            int n = reader.getNumberOfPages();
+            for (int i = 0; i < n; i++) {
+                parsedText.append(PdfTextExtractor.getTextFromPage(reader, i + 1)
+                        .trim() + "\n"); //Extracting the content from the different pages
+            }
+            reader.close();
+            File textFile = new File(mStorePath, inputName + textExtension);
+            FileWriter writer = new FileWriter(textFile);
+            writer.append(parsedText.toString());
+            writer.flush();
+            writer.close();
+            getSnackbarwithAction(mActivity, R.string.snackbar_txtExtracted)
+                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openTextFile(mPath))
+                    .show();
+            mTextView.setVisibility(View.GONE);
+            mButtonClicked = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());
+            extractText.setEnabled(false);
+            mRealPath = null;
+            mExcelFileUri = null;
+        }
+    }
+
+    private void getRuntimePermissions() {
+        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission)
+            mPermissionGranted = true;
+    }
+
+    @Override
+    public void onPopulate(ArrayList<String> paths) {
+        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+    }
+
+    @Override
+    public void onItemClick(String path) {
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mRealPath = path;
+        mFileName = mFileUtils.getFileName(path);
+        mFileName = getResources().getString(R.string.pdf_selected)
+                + mFileName;
+        mTextView.setText(mFileName);
+        mTextView.setVisibility(View.VISIBLE);
+        extractText.setEnabled(true);
+        mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
+    }
+
+    @Override
+    public void closeBottomSheet() {
+        closeBottomSheetUtil(sheetBehavior);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return checkSheetBehaviourUtil(sheetBehavior);
+    }
+}

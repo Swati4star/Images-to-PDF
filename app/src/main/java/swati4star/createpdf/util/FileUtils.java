@@ -202,6 +202,25 @@ public class FileUtils {
     }
 
     /**
+     * This function is used to open the created text file with Text editing/viewing
+     * applications on the device.
+     * @param path
+     */
+    public void openTextFile(String path) {
+        File file = new File(path);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        try {
+            Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
+            target.setDataAndType(uri, mContext.getString(R.string.txt_type));
+            target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
+        } catch (Exception e) {
+            showSnackbar(mContext, R.string.error_occurred);
+        }
+    }
+
+    /**
      * Checks if the new file already exists.
      *
      * @param finalOutputFile Path of pdf file to check
