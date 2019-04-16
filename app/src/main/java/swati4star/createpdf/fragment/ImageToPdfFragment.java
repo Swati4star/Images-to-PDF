@@ -1,6 +1,7 @@
 package swati4star.createpdf.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,14 +21,17 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -75,6 +79,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
+import static android.content.Context.MODE_PRIVATE;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
@@ -124,6 +129,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @BindView(R.id.tvNoOfImages)
     TextView mNoOfImages;
 
+    public static int choosePageStyle;
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
@@ -142,7 +148,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginBottom = 38;
     private int mMarginLeft = 50;
     private int mMarginRight = 38;
-    private String mPageNumStyle;
+    private String mPageNumStyle = null;
+    private int mChoseId;
+    SharedPreferences pref;
 
     @Override
     public void onAttach(Context context) {
@@ -153,6 +161,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        pref = mActivity.getApplicationContext ().getSharedPreferences("MyPref", MODE_PRIVATE);
+        mPageNumStyle = pref.getString ("pre", null);
         View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
         ButterKnife.bind(this, root);
 
@@ -264,9 +274,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             } else {
                 final String filename = input.toString();
                 FileUtils utils = new FileUtils(mActivity);
-                if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
-                    mPdfOptions.setOutFileName(filename);
 
+                if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
+
+                    mPdfOptions.setOutFileName(filename);
                     if (isgrayScale)
                         saveCurrentImageInGrayscale();
 
@@ -279,6 +290,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
                     }).onNegative((dialog1, which) -> createPdf(isgrayScale)).show();
                 }
+
+
+
             }
         }).show();
     }
@@ -797,7 +811,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
-        mPageNumStyle = null;
+
     }
 
     /**
@@ -866,27 +880,59 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         materialDialog.show();
     }
 
+
     private void addPageNumbers() {
+
+        SharedPreferences.Editor editor = pref.edit();
+
+        mPageNumStyle = pref.getString ("pre", null);
+        mChoseId = pref.getInt ("id", -1);
+
+
+        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
+                .inflate (R.layout.add_pgnum_dialog, null);
+
+        RadioButton rbOpt1 = dialogLayout.findViewById(R.id.page_num_opt1);
+        RadioButton rbOpt2 = dialogLayout.findViewById(R.id.page_num_opt2);
+        RadioButton rbOpt3 = dialogLayout.findViewById(R.id.page_num_opt3);
+        RadioGroup rg = dialogLayout.findViewById(R.id.radioGroup);
+        CheckBox cbDefault = dialogLayout.findViewById (R.id.set_as_default);
+
+        if (mChoseId > 0) {
+            cbDefault.setChecked (true);
+            rg.clearCheck ();
+            rg.check (mChoseId);
+        }
+
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.choose_page_number_style)
-                .customView(R.layout.add_pgnum_dialog, false)
+                .customView(dialogLayout, false)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
-                    View view = dialog.getCustomView();
-                    RadioButton rbOpt1 = view.findViewById(R.id.page_num_opt1);
-                    RadioButton rbOpt2 = view.findViewById(R.id.page_num_opt2);
-                    RadioButton rbOpt3 = view.findViewById(R.id.page_num_opt3);
-                    RadioGroup rg = view.findViewById(R.id.radioGroup);
-                    int checkedRadioButtonId = rg.getCheckedRadioButtonId();
-                    if (checkedRadioButtonId == rbOpt1.getId()) {
+
+
+                    int checkedRadioButtonId = rg.getCheckedRadioButtonId ();
+                    mChoseId = checkedRadioButtonId;
+                    if (checkedRadioButtonId == rbOpt1.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_PAGE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt2.getId()) {
+                    } else if (checkedRadioButtonId == rbOpt2.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt3.getId()) {
+                    } else if (checkedRadioButtonId == rbOpt3.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
                     }
+                    if (cbDefault.isChecked ()) {
+
+                        editor.putString ("pre", mPageNumStyle);
+                        editor.putInt ("id", mChoseId);
+                        editor.commit ();
+                    } else {
+
+                        editor.clear ();
+                        editor.commit ();
+                    }
+
                 }))
                 .onNeutral((((dialog, which) -> mPageNumStyle = null)))
                 .build();
