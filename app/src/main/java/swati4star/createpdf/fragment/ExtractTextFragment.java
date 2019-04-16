@@ -200,7 +200,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     @OnClick(R.id.extract_text)
     public void openExtractText() {
         getRuntimePermissions();
-        mPermissionGranted = true;
 
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_txt)
