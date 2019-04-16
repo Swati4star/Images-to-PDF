@@ -94,7 +94,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private boolean mPermissionGranted = false;
     private boolean mButtonClicked = false;
     private ArrayList<String> mFilePaths;
-    private String fileName;
+    private String mFileName;
     private final int mFileSelectCode = 0;
 
     @Override
@@ -155,18 +155,18 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                     mExcelFileUri = data.getData();
                     mRealPath = RealPathUtil.getRealPath(getContext(), data.getData());
                     showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
-                    fileName = mFileUtils.getFileName(mExcelFileUri);
-                    if (fileName != null) {
-                        if (fileName.endsWith(Constants.pdfExtension))
+                    mFileName = mFileUtils.getFileName(mExcelFileUri);
+                    if (mFileName != null) {
+                        if (mFileName.endsWith(Constants.pdfExtension))
                             mFileExtension = Constants.pdfExtension;
                         else {
                             showSnackbar(mActivity, R.string.extension_not_supported);
                             return;
                         }
                     }
-                    fileName = getResources().getString(R.string.pdf_selected)
-                            + fileName;
-                    mTextView.setText(fileName);
+                    mFileName = getResources().getString(R.string.pdf_selected)
+                            + mFileName;
+                    mTextView.setText(mFileName);
                     mTextView.setVisibility(View.VISIBLE);
                     extractText.setEnabled(true);
                     mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
@@ -278,10 +278,10 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     public void onItemClick(String path) {
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mRealPath = path;
-        fileName = mFileUtils.getFileName(path);
-        fileName = getResources().getString(R.string.pdf_selected)
-                + fileName;
-        mTextView.setText(fileName);
+        mFileName = mFileUtils.getFileName(path);
+        mFileName = getResources().getString(R.string.pdf_selected)
+                + mFileName;
+        mTextView.setText(mFileName);
         mTextView.setVisibility(View.VISIBLE);
         extractText.setEnabled(true);
         mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
