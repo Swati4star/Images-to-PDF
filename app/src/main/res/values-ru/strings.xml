@@ -73,8 +73,6 @@
     <string name="pdf_merged">Файлы PDF объединены</string>
     <string name="snackbar_color_too_close">Ваш цвет шрифта и цвет текста слишком похожи</string>
 
-
-
     <string name="creating_pdf">Создание PDF</string>
     <string name="enter_file_name">Введите имя файла</string>
     <string name="example">Пример : abc</string>
