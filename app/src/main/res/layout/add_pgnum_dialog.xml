@@ -32,4 +32,16 @@
             android:text="@string/x"
             android:textSize="18sp"/>
     </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/set_as_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/radioGroup"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="126dp"
+        android:checked="false"
+        android:text="@string/set_as_default"
+        android:textSize="18sp" />
+
 </RelativeLayout>

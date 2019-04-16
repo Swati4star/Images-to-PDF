@@ -28,6 +28,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -145,6 +146,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginLeft = 50;
     private int mMarginRight = 38;
     private String mPageNumStyle;
+    private int mChoseId;
+
 
     @Override
     public void onAttach(Context context) {
@@ -267,8 +270,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 final String filename = input.toString();
                 FileUtils utils = new FileUtils(mActivity);
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
-                    mPdfOptions.setOutFileName(filename);
 
+                    mPdfOptions.setOutFileName(filename);
                     if (isgrayScale)
                         saveImagesInGrayscale();
 
@@ -817,7 +820,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
-        mPageNumStyle = null;
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
     }
 
     void addMargins() {
@@ -853,26 +856,55 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         materialDialog.show();
     }
 
+
     private void addPageNumbers() {
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
+        mChoseId = mSharedPreferences.getInt (Constants.PREF_PAGE_STYLE_ID, -1);
+
+        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
+                .inflate (R.layout.add_pgnum_dialog, null);
+
+        RadioButton rbOpt1 = dialogLayout.findViewById(R.id.page_num_opt1);
+        RadioButton rbOpt2 = dialogLayout.findViewById(R.id.page_num_opt2);
+        RadioButton rbOpt3 = dialogLayout.findViewById(R.id.page_num_opt3);
+        RadioGroup rg = dialogLayout.findViewById(R.id.radioGroup);
+        CheckBox cbDefault = dialogLayout.findViewById (R.id.set_as_default);
+
+        if (mChoseId > 0) {
+            cbDefault.setChecked (true);
+            rg.clearCheck ();
+            rg.check (mChoseId);
+        }
+
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.choose_page_number_style)
-                .customView(R.layout.add_pgnum_dialog, false)
+                .customView(dialogLayout, false)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
-                    View view = dialog.getCustomView();
-                    RadioButton rbOpt1 = view.findViewById(R.id.page_num_opt1);
-                    RadioButton rbOpt2 = view.findViewById(R.id.page_num_opt2);
-                    RadioButton rbOpt3 = view.findViewById(R.id.page_num_opt3);
-                    RadioGroup rg = view.findViewById(R.id.radioGroup);
-                    int checkedRadioButtonId = rg.getCheckedRadioButtonId();
-                    if (checkedRadioButtonId == rbOpt1.getId()) {
+
+                    int checkedRadioButtonId = rg.getCheckedRadioButtonId ();
+                    mChoseId = checkedRadioButtonId;
+                    if (checkedRadioButtonId == rbOpt1.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_PAGE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt2.getId()) {
+                    } else if (checkedRadioButtonId == rbOpt2.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt3.getId()) {
+                    } else if (checkedRadioButtonId == rbOpt3.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
+                    }
+                    if (cbDefault.isChecked ()) {
+
+                        editor.putString (Constants.PREF_PAGE_STYLE, mPageNumStyle);
+                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, mChoseId);
+                        editor.commit ();
+                    } else {
+
+                        editor.putString (Constants.PREF_PAGE_STYLE, null);
+                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, -1);
+                        editor.commit ();
                     }
                 }))
                 .onNeutral((((dialog, which) -> mPageNumStyle = null)))
