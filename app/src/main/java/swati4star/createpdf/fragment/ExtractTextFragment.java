@@ -94,7 +94,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private boolean mPermissionGranted = false;
     private boolean mButtonClicked = false;
     private ArrayList<String> mFilePaths;
-    String fileName;
+    private String fileName;
     private final int mFileSelectCode = 0;
 
     @Override
