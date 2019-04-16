@@ -77,7 +77,7 @@ public class CropImageActivity extends AppCompatActivity {
     public void cropButtonClicked() {
         mCurrentImageEdited = false;
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + pdfDirectory);
+        File folder = new File(root + pdfDirectory);
         Uri uri = mCropImageView.getImageUri();
 
         if (uri == null) {
@@ -86,11 +86,11 @@ public class CropImageActivity extends AppCompatActivity {
         }
 
         String path = uri.getPath();
-        String fname = "cropped_im";
+        String filename = "cropped_im";
         if (path != null)
-            fname = "cropped_" + FileUtils.getFileName(path);
+            filename = "cropped_" + FileUtils.getFileName(path);
 
-        File file = new File(myDir, fname);
+        File file = new File(folder, filename);
 
         mCropImageView.saveCroppedImageAsync(Uri.fromFile(file));
     }
@@ -176,7 +176,6 @@ public class CropImageActivity extends AppCompatActivity {
     private void setImage(int index) {
 
         mCurrentImageEdited = false;
-
         if (index < 0 || index >= mImages.size())
             return;
 

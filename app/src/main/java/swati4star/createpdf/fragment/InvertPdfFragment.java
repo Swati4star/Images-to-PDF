@@ -42,8 +42,8 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;

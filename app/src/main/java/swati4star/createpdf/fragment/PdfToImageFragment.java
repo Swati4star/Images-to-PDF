@@ -45,8 +45,8 @@ import swati4star.createpdf.util.PdfToImages;
 import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;

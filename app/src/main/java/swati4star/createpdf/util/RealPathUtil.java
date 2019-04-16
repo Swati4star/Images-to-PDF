@@ -1,29 +1,27 @@
 package swati4star.createpdf.util;
 
-import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
 import android.text.TextUtils;
-
-import static com.zhihu.matisse.internal.utils.PathUtils.getDataColumn;
-import static com.zhihu.matisse.internal.utils.PathUtils.isDownloadsDocument;
-import static com.zhihu.matisse.internal.utils.PathUtils.isExternalStorageDocument;
+import android.util.Log;
 
 public class RealPathUtil {
 
+    /**
+     * Returns actual path from uri
+     * @param context - current context
+     * @param fileUri - uri of file
+     * @return - actual path
+     */
     public static String getRealPath(Context context, Uri fileUri) {
         String realPath;
         realPath = RealPathUtil.getRealPathFromURI_API19(context, fileUri);
         return realPath;
     }
-
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -32,10 +30,8 @@ public class RealPathUtil {
      *
      * @param context The context.
      * @param uri     The Uri to query.
-     * @author paulburke
      */
-
-    public static String getRealPathFromURI_API19(final Context context, final Uri uri) {
+    private static String getRealPathFromURI_API19(final Context context, final Uri uri) {
         // DocumentProvider
         if (isDriveFile(uri)) {
             return null;
@@ -91,25 +87,21 @@ public class RealPathUtil {
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+    private static String getDataColumn(Context context, Uri uri, String selection,
+                                        String[] selectionArgs) {
 
-        Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
                 column
         };
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(index);
             }
-        } finally {
-            if (cursor != null)
-                cursor.close();
+        } catch (Exception e) {
+            Log.e("Error", " " + e.getMessage());
         }
         return null;
     }
@@ -119,17 +111,17 @@ public class RealPathUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    public static boolean isExternalStorageDocument(Uri uri) {
+    private static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
     /**
      * This function is used to check for a drive file URI.
      *
-     * @param uri
-     * @return
+     * @param uri - input uri
+     * @return true, if is google drive uri, otherwise false
      */
-    public static boolean isDriveFile(Uri uri) {
+    private static boolean isDriveFile(Uri uri) {
         if ("com.google.android.apps.docs.storage".equals(uri.getAuthority()))
             return true;
         if ("com.google.android.apps.docs.storage.legacy".equals(uri.getAuthority()))
@@ -141,8 +133,7 @@ public class RealPathUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
-    public static boolean isDownloadsDocument(Uri uri) {
+    private static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
-
 }

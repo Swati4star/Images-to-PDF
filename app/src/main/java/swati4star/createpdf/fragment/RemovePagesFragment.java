@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +50,8 @@ import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;

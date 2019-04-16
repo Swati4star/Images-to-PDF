@@ -143,8 +143,6 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
                 .show();
     }
 
-
-
     @OnClick(R.id.sort)
     void sortImg() {
         sortImages();

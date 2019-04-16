@@ -44,7 +44,9 @@ public class FavouritesActivity extends AppCompatActivity {
         mSharedpreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         setContentView(R.layout.fav_pref_screen);
+
         storeInitialState();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

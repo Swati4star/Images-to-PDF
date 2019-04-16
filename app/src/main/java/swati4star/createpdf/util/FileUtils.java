@@ -314,9 +314,12 @@ public class FileUtils {
      * @return - extracted filename without extension
      */
     public static String getFileNameWithoutExtension(String path) {
-        String p = path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
-        p = p.replace(pdfExtension, "");
-        return p;
+        if (path == null || path.lastIndexOf(PATH_SEPERATOR) == -1)
+            return path;
+
+        String filename = path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
+        filename = filename.replace(pdfExtension, "");
+        return filename;
     }
 
     /**
@@ -439,6 +442,9 @@ public class FileUtils {
         return outputFileName;
     }
 
+    /**
+     * creates new folder for temp files
+     */
     public static void makeAndClearTemp() {
         String dest = Environment.getExternalStorageDirectory().toString() +
                 Constants.pdfDirectory + Constants.tempDirectory;

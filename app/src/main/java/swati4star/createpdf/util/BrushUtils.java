@@ -1,7 +1,5 @@
 package swati4star.createpdf.util;
 
-import android.support.design.widget.FloatingActionButton;
-
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;

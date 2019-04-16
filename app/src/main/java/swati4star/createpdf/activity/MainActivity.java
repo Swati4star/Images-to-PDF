@@ -152,7 +152,8 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.show();
+        if (actionBar != null)
+            actionBar.show();
     }
 
     @Override
@@ -550,11 +551,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean isStoragePermissionGranted() {
-        boolean permission = PermissionsUtils.checkRuntimePermissions(this,
+        return PermissionsUtils.checkRuntimePermissions(this,
                 PERMISSION_REQUEST_CODE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
-        return permission;
     }
 
     /**
@@ -570,6 +570,11 @@ public class MainActivity extends AppCompatActivity
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
+
+    /**
+     * Sets fragment title
+     * @param title - string resource id
+     */
     private void setTitleFragment(int title) {
         if (title != 0)
             setTitle(title);

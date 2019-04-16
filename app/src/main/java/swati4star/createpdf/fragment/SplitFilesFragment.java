@@ -44,8 +44,8 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
