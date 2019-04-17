@@ -13,10 +13,6 @@ android {
         versionCode 90
         versionName "8.6.3"
     }
-    lintOptions {
-        abortOnError false
-    }
-
 
     buildTypes {
         release {

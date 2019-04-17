@@ -21,13 +21,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -150,7 +148,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginRight = 38;
     private String mPageNumStyle = null;
     private int mChoseId;
-    SharedPreferences pref;
+    private SharedPreferences mPref;
 
     @Override
     public void onAttach(Context context) {
@@ -161,8 +159,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        pref = mActivity.getApplicationContext ().getSharedPreferences("MyPref", MODE_PRIVATE);
-        mPageNumStyle = pref.getString ("pre", null);
+        mPref = mActivity.getSharedPreferences("MyPref", MODE_PRIVATE);
+        mPageNumStyle = mPref.getString (Constants.PREFSTYLE, null);
         View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
         ButterKnife.bind(this, root);
 
@@ -883,10 +881,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void addPageNumbers() {
 
-        SharedPreferences.Editor editor = pref.edit();
+        SharedPreferences.Editor editor = mPref.edit();
 
-        mPageNumStyle = pref.getString ("pre", null);
-        mChoseId = pref.getInt ("id", -1);
+        mPageNumStyle = mPref.getString (Constants.PREFSTYLE, null);
+        mChoseId = mPref.getInt (Constants.PREFID, -1);
 
 
         RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
@@ -924,8 +922,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     }
                     if (cbDefault.isChecked ()) {
 
-                        editor.putString ("pre", mPageNumStyle);
-                        editor.putInt ("id", mChoseId);
+                        editor.putString (Constants.PREFSTYLE, mPageNumStyle);
+                        editor.putInt (Constants.PREFID, mChoseId);
                         editor.commit ();
                     } else {
 

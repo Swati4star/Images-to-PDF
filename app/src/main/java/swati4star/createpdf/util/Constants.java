@@ -102,4 +102,8 @@ public class Constants {
 
     public static final String VERSION_NAME = "VERSION_NAME";
 
+    public static final String PREFSTYLE = "pref";
+    public static final String PREFID = "id";
+
+
 }
