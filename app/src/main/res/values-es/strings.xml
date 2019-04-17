@@ -48,6 +48,7 @@
     <string name="snackbar_file_deleted">Archivo borrado.</string>
     <string name="snackbar_file_not_deleted">El archivo no puede ser borrado.</string>
     <string name="snackbar_folder_not_created">Error al crear la carpeta de aplicación.</string>
+    <string name="snackbar_color_too_close">El color de la fuente y el color del texto son demasiado similares.</string>
 
     <string name="creating_pdf">Creando PDF</string>
     <string name="qr_barcode_pdf">Código QR o de Barras</string>

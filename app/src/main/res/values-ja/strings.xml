@@ -48,6 +48,7 @@
     <string name="snackbar_file_deleted">File deleted.</string>
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
+    <string name="snackbar_color_too_close">フォントの色とテキストの色が似すぎている</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="qr_barcode_pdf">QR &amp; Barcodes</string>

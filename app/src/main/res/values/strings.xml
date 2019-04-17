@@ -154,6 +154,7 @@
     <string name="snackbar_duplicate_removed">A new PDF is created after removal of duplicate pages.</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
     <string name="snackbar_invert_successfull">Inverted</string>
+    <string name="snackbar_color_too_close">Your font color and background color are too similar</string>
 
     <!-- Share strings -->
     <string name="share_chooser">Select app to send message…</string>
