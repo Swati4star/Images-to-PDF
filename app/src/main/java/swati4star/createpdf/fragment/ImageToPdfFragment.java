@@ -1,7 +1,6 @@
 package swati4star.createpdf.fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -77,7 +76,6 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
-import static android.content.Context.MODE_PRIVATE;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
@@ -127,7 +125,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @BindView(R.id.tvNoOfImages)
     TextView mNoOfImages;
 
-    public static int choosePageStyle;
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
@@ -146,9 +143,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginBottom = 38;
     private int mMarginLeft = 50;
     private int mMarginRight = 38;
-    private String mPageNumStyle = null;
+    private String mPageNumStyle;
     private int mChoseId;
-    private SharedPreferences mPref;
+
 
     @Override
     public void onAttach(Context context) {
@@ -159,8 +156,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mPref = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mPageNumStyle = mPref.getString (Constants.PREFSTYLE, null);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
         View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
         ButterKnife.bind(this, root);
 
@@ -878,9 +875,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     private void addPageNumbers() {
 
-        SharedPreferences.Editor editor = mPref.edit();
-        mPageNumStyle = mPref.getString (Constants.PREFSTYLE, null);
-        mChoseId = mPref.getInt (Constants.PREFID, -1);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
+        mChoseId = mSharedPreferences.getInt (Constants.PREF_PAGE_STYLE_ID, -1);
 
         RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
                 .inflate (R.layout.add_pgnum_dialog, null);
@@ -916,12 +913,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     }
                     if (cbDefault.isChecked ()) {
 
-                        editor.putString (Constants.PREFSTYLE, mPageNumStyle);
-                        editor.putInt (Constants.PREFID, mChoseId);
+                        editor.putString (Constants.PREF_PAGE_STYLE, mPageNumStyle);
+                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, mChoseId);
                         editor.commit ();
                     } else {
 
-                        editor.clear ();
+                        editor.putString (Constants.PREF_PAGE_STYLE, null);
+                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, -1);
                         editor.commit ();
                     }
                 }))

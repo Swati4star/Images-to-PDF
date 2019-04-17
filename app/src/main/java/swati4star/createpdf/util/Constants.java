@@ -102,8 +102,8 @@ public class Constants {
 
     public static final String VERSION_NAME = "VERSION_NAME";
 
-    public static final String PREFSTYLE = "pref_page_style";
-    public static final String PREFID = "id";
+    public static final String PREF_PAGE_STYLE = "pref_page_number_style";
+    public static final String PREF_PAGE_STYLE_ID = "pref_page_number_style_rb_id";
 
 
 }
