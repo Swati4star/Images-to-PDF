@@ -13,7 +13,6 @@ android {
         versionCode 90
         versionName "8.6.3"
     }
-
     buildTypes {
         release {
             minifyEnabled false

@@ -159,7 +159,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mPref = mActivity.getSharedPreferences("MyPref", MODE_PRIVATE);
+        mPref = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mPageNumStyle = mPref.getString (Constants.PREFSTYLE, null);
         View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
         ButterKnife.bind(this, root);
@@ -288,9 +288,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
                     }).onNegative((dialog1, which) -> createPdf(isgrayScale)).show();
                 }
-
-
-
             }
         }).show();
     }
@@ -882,10 +879,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private void addPageNumbers() {
 
         SharedPreferences.Editor editor = mPref.edit();
-
         mPageNumStyle = mPref.getString (Constants.PREFSTYLE, null);
         mChoseId = mPref.getInt (Constants.PREFID, -1);
-
 
         RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
                 .inflate (R.layout.add_pgnum_dialog, null);
@@ -910,7 +905,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
 
-
                     int checkedRadioButtonId = rg.getCheckedRadioButtonId ();
                     mChoseId = checkedRadioButtonId;
                     if (checkedRadioButtonId == rbOpt1.getId ()) {
@@ -930,7 +924,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                         editor.clear ();
                         editor.commit ();
                     }
-
                 }))
                 .onNeutral((((dialog, which) -> mPageNumStyle = null)))
                 .build();
