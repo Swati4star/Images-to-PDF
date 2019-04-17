@@ -416,7 +416,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
         if (mButtonClicked == 0) {
             Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//          intent.setType(getString(R.string.text_type));
             intent.setDataAndType(uri, "*/*");
             String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     "application/msword", getString(R.string.text_type)};

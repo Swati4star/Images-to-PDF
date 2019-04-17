@@ -51,6 +51,7 @@ import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
+import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
@@ -213,6 +214,11 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * @param path path of the file on the device
      */
     private void setTextAndActivateButtons(String path) {
+        if (path == null) {
+            showSnackbar(mActivity, R.string.error_occurred);
+            resetView();
+            return;
+        }
         mCreatedImages.setVisibility(View.GONE);
         options.setVisibility(View.GONE);
         mCreateImagesSuccessText.setVisibility(View.GONE);

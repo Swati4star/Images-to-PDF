@@ -178,10 +178,11 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, splitFilesButton);
         mSplitConfitEditText.setVisibility(View.VISIBLE);
-        mSplitConfitEditText.setText(getDefaultSplitConfig(mPath));
-        if (mPDFUtils.splitPDFByConfig(mPath, mSplitConfitEditText.getText().toString()).size() == 1) {
-            showSnackbar(getActivity(), R.string.split_one_page_pdf_alert);
-        }
+        String defaultSplitConfig = getDefaultSplitConfig(mPath);
+        if (defaultSplitConfig != null)
+            mSplitConfitEditText.setText(defaultSplitConfig);
+        else
+            resetValues();
     }
 
     /**
@@ -191,7 +192,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
      * (1,2,3,4,5,)
      */
     private String getDefaultSplitConfig(String mPath) {
-        String splitConfig = "";
+        StringBuilder splitConfig = new StringBuilder();
         ParcelFileDescriptor fileDescriptor = null;
         try {
             if (mPath != null)
@@ -200,13 +201,15 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
                 PdfRenderer renderer = new PdfRenderer(fileDescriptor);
                 final int pageCount = renderer.getPageCount();
                 for (int i = 1; i <= pageCount; i++) {
-                    splitConfig = splitConfig + i + ",";
+                    splitConfig.append(i).append(",");
                 }
             }
         } catch (Exception er) {
             er.printStackTrace();
+            showSnackbar(mActivity, R.string.encrypted_pdf);
+            return null;
         }
-        return splitConfig;
+        return splitConfig.toString();
     }
 
     @Override

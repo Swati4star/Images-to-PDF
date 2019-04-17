@@ -570,7 +570,7 @@ public class PDFUtils {
 
                 String fileName = folderPath + FileUtils.getFileName(path);
 
-                /**
+                /*
                  * If the pdf is single page only then convert whole range into int
                  * else break the range on "-",where startpage will be substring
                  * from first letter to "-" and endpage will be from "-" till last letter.
@@ -656,6 +656,9 @@ public class PDFUtils {
     public static int checkRangeValidity(int numOfPages, String[] ranges) {
         int startPage;
         int endPage;
+
+        if (ranges.length == 0)
+            return ERROR_INVALID_INPUT;
 
         for (String range : ranges) {
             if (!range.contains("-")) {

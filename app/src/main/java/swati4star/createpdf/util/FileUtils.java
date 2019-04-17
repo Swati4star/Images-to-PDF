@@ -303,7 +303,12 @@ public class FileUtils {
      * @return - extracted filename
      */
     public static String getFileName(String path) {
-        return path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
+        if (path == null)
+            return null;
+        int index = path.lastIndexOf(PATH_SEPERATOR);
+        if (index < path.length())
+            return path.substring( index + 1);
+        return null;
     }
 
 
@@ -448,11 +453,14 @@ public class FileUtils {
     public static void makeAndClearTemp() {
         String dest = Environment.getExternalStorageDirectory().toString() +
                 Constants.pdfDirectory + Constants.tempDirectory;
-        File fileName = new File(dest);
-        fileName.mkdir();
+        File folder = new File(dest);
+        Boolean result = folder.mkdir();
         // clear all the files in it, if any
-        for (File child : fileName.listFiles()) {
-            child.delete();
+        if (result && folder.isDirectory()) {
+            String[] children = folder.list();
+            for (int i = 0; i < children.length; i++) {
+                new File(folder, children[i]).delete();
+            }
         }
     }
 }

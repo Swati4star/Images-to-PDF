@@ -103,11 +103,55 @@ public class ImageUtils {
      */
     public static Bitmap getRoundBitmapFromPath(String path) {
         File file = new File(path);
+
+        // First decode with inJustDecodeBounds=true to check dimensions
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
-        if (bitmap == null) return null;
-        return ImageUtils.getRoundBitmap(bitmap);
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
+
+        // Calculate inSampleSize
+        bmOptions.inSampleSize = calculateInSampleSize(bmOptions, 500, 500);
+
+        // Decode bitmap with actual size
+        bmOptions.inJustDecodeBounds = false;
+        Bitmap smallBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
+        if (smallBitmap == null) return null;
+
+        return ImageUtils.getRoundBitmap(smallBitmap);
     }
+
+
+    /**
+     * Calculate the inSampleSize value for given bitmap options & image dimensions
+     * @param options - bitmap options
+     * @param reqWidth - width
+     * @param reqHeight - height
+     * @return inSampleSize value
+     * https://developer.android.com/topic/performance/graphics/load-bitmap.html#java
+     */
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+
 
     public static void showImageScaleTypeDialog(Context context, Boolean saveValue) {
 
