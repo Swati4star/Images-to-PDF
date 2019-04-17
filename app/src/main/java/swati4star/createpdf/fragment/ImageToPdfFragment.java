@@ -156,8 +156,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
         View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
         ButterKnife.bind(this, root);
 
@@ -170,6 +168,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 DEFAULT_PAGE_COLOR);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
 
         // Get runtime permissions if build version >= Android M
         getRuntimePermissions(false);
@@ -269,7 +268,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             } else {
                 final String filename = input.toString();
                 FileUtils utils = new FileUtils(mActivity);
-
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
 
                     mPdfOptions.setOutFileName(filename);
