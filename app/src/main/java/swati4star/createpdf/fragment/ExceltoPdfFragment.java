@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,7 +140,7 @@ public class ExceltoPdfFragment extends Fragment {
             case mFileSelectCode:
                 if (resultCode == RESULT_OK) {
                     mExcelFileUri = data.getData();
-                    mRealPath = RealPathUtil.getRealPath(getContext(), data.getData());
+                    mRealPath = RealPathUtil.getRealPath(getContext(), mExcelFileUri);
                     showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
                     String fileName = mFileUtils.getFileName(mExcelFileUri);
                     if (fileName != null) {
@@ -190,23 +192,33 @@ public class ExceltoPdfFragment extends Fragment {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         String mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
-        Workbook workbook;
-        try {
-            workbook = new Workbook(mRealPath);
-            workbook.save(mPath, FileFormatType.PDF);
 
-            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
-            mTextView.setVisibility(View.GONE);
+        new AsyncTask<Void, Void, Void>() {
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            showSnackbar(mActivity, R.string.error_occurred);
-        } finally {
-            mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
-            mCreateExcelPdf.setEnabled(false);
-            mExcelFileUri = null;
-        }
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    final Workbook workbook = new Workbook(mRealPath);
+                    workbook.save(mPath, FileFormatType.PDF);
+                } catch (Exception e) {
+                    Log.d("Error message", "" + e);
+                    e.printStackTrace();
+                    showSnackbar(mActivity, R.string.error_occurred);
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+                        .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
+                        .show();
+                mTextView.setVisibility(View.GONE);
+                mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
+                mCreateExcelPdf.setEnabled(false);
+                mExcelFileUri = null;
+            }
+        }.execute();
 
     }
 
