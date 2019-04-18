@@ -8,11 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -74,6 +70,7 @@ import swati4star.createpdf.model.Watermark;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -481,7 +478,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 File f = new File(mImagesUri.get(i));
                 FileInputStream fis = new FileInputStream(f);
                 Bitmap bitmap = BitmapFactory.decodeStream(fis);
-                Bitmap grayScaleBitmap = toGrayscale(bitmap);
+                Bitmap grayScaleBitmap = ImageUtils.toGrayscale(bitmap);
 
                 File file = new File(imagePath);
                 file.createNewFile();
@@ -502,27 +499,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * convert a bitmap to grayscale and return it
-     * @param bmpOriginal original bitmap which is converted to a new
-     *                    grayscale bitmap
-     */
-    private Bitmap toGrayscale(Bitmap bmpOriginal) {
-        int width, height;
-        height = bmpOriginal.getHeight();
-        width = bmpOriginal.getWidth();
-
-        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, bmpOriginal.getConfig());
-        Canvas c = new Canvas(bmpGrayscale);
-        Paint paint = new Paint();
-        ColorMatrix cm = new ColorMatrix();
-        cm.setSaturation(0);
-        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
-        paint.setColorFilter(f);
-        c.drawBitmap(bmpOriginal, 0, 0, paint);
-        return bmpGrayscale;
     }
 
     private void addBorder() {
