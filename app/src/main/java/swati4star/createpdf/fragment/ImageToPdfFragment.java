@@ -7,8 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -37,24 +41,24 @@ import com.dd.morphingbutton.MorphingButton;
 import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-import com.squareup.picasso.Transformation;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.picasso.transformations.GrayscaleTransformation;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.CropImageActivity;
 import swati4star.createpdf.activity.ImageEditor;
@@ -127,7 +131,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
-    private static ArrayList<String> tempImageUri;
+    private static ArrayList<String> tempImageUri = new ArrayList<>();
     public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private boolean mOpenSelectImages = false;
@@ -269,7 +273,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     mPdfOptions.setOutFileName(filename);
 
                     if (isgrayScale)
-                        saveCurrentImageInGrayscale();
+                        saveImagesInGrayscale();
 
                     new CreatePdf(mPdfOptions, mHomePath,
                             ImageToPdfFragment.this).execute();
@@ -278,7 +282,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     builder2.onPositive((dialog2, which) -> {
                         mPdfOptions.setOutFileName(filename);
                         if (isgrayScale)
-                            saveCurrentImageInGrayscale();
+                            saveImagesInGrayscale();
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
                     }).onNegative((dialog1, which) -> createPdf(isgrayScale)).show();
                 }
@@ -458,31 +462,67 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
 
     /**
-     * Saves Current Image with grayscale filter
+     * Saves Images with grayscale filter
      */
-    private void saveCurrentImageInGrayscale() {
+    private void saveImagesInGrayscale() {
         tempImageUri = new ArrayList<>();
         try {
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
             dir.mkdirs();
-            Picasso picasso = Picasso.with(mActivity);
-            Transformation transformation = new GrayscaleTransformation();
 
-            for (int i = mImagesUri.size() - 1; i >= 0; i--) {
+            int size = mImagesUri.size();
+            for (int i = 0; i < size; i++) {
                 String fileName = String.format(getString(R.string.filter_file_name),
                         String.valueOf(System.currentTimeMillis()), i + "_grayscale");
                 File outFile = new File(dir, fileName);
                 String imagePath = outFile.getAbsolutePath();
-                picasso.load(new File(mImagesUri.get(i)))
-                        .transform(transformation)
-                        .into(getTarget(imagePath));
+
+                File f = new File(mImagesUri.get(i));
+                FileInputStream fis = new FileInputStream(f);
+                Bitmap bitmap = BitmapFactory.decodeStream(fis);
+                Bitmap grayScaleBitmap = toGrayscale(bitmap);
+
+                File file = new File(imagePath);
+                file.createNewFile();
+                FileOutputStream ostream = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(ostream, 1024 * 8);
+                grayScaleBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                bos.flush();
+                bos.close();
+                ostream.close();
+                tempImageUri.add(imagePath);
             }
             mImagesUri.clear();
             mImagesUri.addAll(tempImageUri);
         } catch (SecurityException e) {
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    /**
+     * convert a bitmap to grayscale and return it
+     * @param bmpOriginal original bitmap which is converted to a new
+     *                    grayscale bitmap
+     */
+    private Bitmap toGrayscale(Bitmap bmpOriginal) {
+        int width, height;
+        height = bmpOriginal.getHeight();
+        width = bmpOriginal.getWidth();
+
+        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, bmpOriginal.getConfig());
+        Canvas c = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(f);
+        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        return bmpGrayscale;
     }
 
     private void addBorder() {
@@ -802,39 +842,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
         mPageNumStyle = null;
-    }
-
-    /**
-     * Target need to save the for picasso
-     */
-
-    private Target getTarget(final String url) {
-        return new Target() {
-
-            @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                File file = new File(url);
-                try {
-                    file.createNewFile();
-                    FileOutputStream ostream = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
-                    ostream.flush();
-                    ostream.close();
-                    tempImageUri.add(url);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
     }
 
     void addMargins() {
