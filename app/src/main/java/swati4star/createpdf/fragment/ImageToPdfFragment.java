@@ -160,7 +160,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         ButterKnife.bind(this, root);
 
         // Initialize variables
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
@@ -795,6 +794,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 DEFAULT_PAGE_SIZE));
         mPdfOptions.setPasswordProtected(false);
         mPdfOptions.setWatermarkAdded(false);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mImagesUri.clear();
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
