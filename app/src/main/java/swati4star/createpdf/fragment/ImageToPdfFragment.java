@@ -167,7 +167,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 DEFAULT_PAGE_COLOR);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
-        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
 
         // Get runtime permissions if build version >= Android M
         getRuntimePermissions(false);
@@ -784,6 +783,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
      * Resets pdf creation related values & show enhancement options
      */
     private void resetValues() {
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
         mPdfOptions = new ImageToPDFOptions();
         mPdfOptions.setBorderWidth(mSharedPreferences.getInt(DEFAULT_IMAGE_BORDER_TEXT,
                 DEFAULT_BORDER_WIDTH));
