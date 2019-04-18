@@ -308,6 +308,11 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     private void setTextAndActivateButtons(String path) {
+        if (path == null) {
+            showSnackbar(mActivity, R.string.file_access_error);
+            resetValues();
+            return;
+        }
         mPath = path;
         mCompressionInfoText.setVisibility(View.GONE);
         mViewPdf.setVisibility(View.GONE);
