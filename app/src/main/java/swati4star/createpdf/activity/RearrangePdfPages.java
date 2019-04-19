@@ -109,6 +109,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         if (mSharedPreferences.getBoolean(Constants.CHOICE_REMOVE_IMAGE, false)) {
             mImages.remove(position);
             mRearrangeImagesAdapter.positionChanged(mImages);
+            mSequence.remove(position);
         } else {
             MaterialDialog.Builder builder = createWarningDialog(this,
                     R.string.remove_page_message);
@@ -121,11 +122,10 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
                         }
                         mImages.remove(position);
                         mRearrangeImagesAdapter.positionChanged(mImages);
-
+                        mSequence.remove(position);
                     })
                     .show();
         }
-        mSequence.remove(position);
     }
 
     private void passUris() {
