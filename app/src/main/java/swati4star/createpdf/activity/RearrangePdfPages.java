@@ -121,11 +121,15 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
                         }
                         mImages.remove(position);
                         mRearrangeImagesAdapter.positionChanged(mImages);
+                        mSequence.remove(position);
+
+                    })
+                    .onNegative((dialog, which) -> {
 
                     })
                     .show();
         }
-        mSequence.remove(position);
+
     }
 
     private void passUris() {
