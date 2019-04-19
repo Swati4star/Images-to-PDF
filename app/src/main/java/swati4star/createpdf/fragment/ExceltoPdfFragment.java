@@ -37,6 +37,7 @@ import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
@@ -60,6 +61,7 @@ public class ExceltoPdfFragment extends Fragment {
     private boolean mPermissionGranted = false;
     private boolean mButtonClicked = false;
     private final int mFileSelectCode = 0;
+    private MaterialDialog mMaterialDialog;
 
     public ExceltoPdfFragment() {
     }
@@ -192,11 +194,13 @@ public class ExceltoPdfFragment extends Fragment {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         String mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
+        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog.show();
 
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask() {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Object doInBackground(Object[] objects) {
                 try {
                     final Workbook workbook = new Workbook(mRealPath);
                     workbook.save(mPath, FileFormatType.PDF);
@@ -209,7 +213,9 @@ public class ExceltoPdfFragment extends Fragment {
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(Object o) {
+                if (mMaterialDialog != null && mMaterialDialog.isShowing())
+                    mMaterialDialog.dismiss();
                 getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                         .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
                         .show();
