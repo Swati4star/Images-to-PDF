@@ -15,9 +15,9 @@ public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
     /**
      * This public constructor is responsible for initializing the path of actual file,
      * the destination path and the onPDFCreatedInterface instance.
-     * @param parentPath
-     * @param destPath
-     * @param onPDFCreated
+     * @param parentPath is the path of the actual excel file to be converted.
+     * @param destPath is the path of the destination pdf file.
+     * @param onPDFCreated is the onPDFCreatedInterface instance.
      */
     public ExcelToPDFAsync(String parentPath, String destPath,
                            OnPDFCreatedInterface onPDFCreated) {
