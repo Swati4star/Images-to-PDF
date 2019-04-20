@@ -654,42 +654,43 @@ public class PDFUtils {
      * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
      */
     public static int checkRangeValidity(int numOfPages, String[] ranges) {
-        int startPage;
-        int endPage;
-
+        int startPage = -1;
+        int endPage = -1;
+        int returnValue = 0;
         if (ranges.length == 0)
-            return ERROR_INVALID_INPUT;
-
-        for (String range : ranges) {
-            if (!range.contains("-")) {
-                try {
-                    startPage = Integer.parseInt(range);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    return ERROR_INVALID_INPUT;
-                }
-                if (startPage > numOfPages || startPage == 0) {
-                    return ERROR_PAGE_NUMBER;
-                }
-            } else {
-                try {
-                    startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
-                    endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    return ERROR_INVALID_INPUT;
-                } catch (StringIndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                    return ERROR_INVALID_INPUT;
-                }
-                if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
-                    return ERROR_PAGE_NUMBER;
-                } else if (startPage >= endPage) {
-                    return ERROR_PAGE_RANGE;
+            returnValue = ERROR_INVALID_INPUT;
+        else { 
+            for (String range : ranges) {
+                if (!range.contains("-")) {
+                    try {
+                        startPage = Integer.parseInt(range);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        returnValue = ERROR_INVALID_INPUT;
+                    }
+                    if (startPage > numOfPages || startPage == 0) {
+                        returnValue = ERROR_PAGE_NUMBER;
+                    }
+                } else {
+                    try {
+                        startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                        endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        returnValue = ERROR_INVALID_INPUT;
+                    } catch (StringIndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                        returnValue = ERROR_INVALID_INPUT;
+                    }
+                    if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
+                        returnValue = ERROR_PAGE_NUMBER;
+                    } else if (startPage >= endPage) {
+                        returnValue = ERROR_PAGE_RANGE;
+                    }
                 }
             }
         }
-        return 0;
+        return returnValue;
     }
 
     /**
