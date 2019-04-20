@@ -7,28 +7,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.aspose.cells.FileFormatType;
-import com.aspose.cells.Workbook;
 import com.dd.morphingbutton.MorphingButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.ExcelToPDFAsync;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -43,12 +41,13 @@ import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-public class ExceltoPdfFragment extends Fragment {
+public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterface {
     private Activity mActivity;
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
     private String mRealPath;
     private String mFileExtension;
+    private String mPath;
 
     @BindView(R.id.tv_excel_file_name_bottom)
     TextView mTextView;
@@ -193,38 +192,9 @@ public class ExceltoPdfFragment extends Fragment {
     private void convertToPdf(String mFilename) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
-        String mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
-        mMaterialDialog = createAnimationDialog(mActivity);
-        mMaterialDialog.show();
+        mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
 
-        new AsyncTask() {
-
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
-                    final Workbook workbook = new Workbook(mRealPath);
-                    workbook.save(mPath, FileFormatType.PDF);
-                } catch (Exception e) {
-                    Log.d("Error message", "" + e);
-                    e.printStackTrace();
-                    showSnackbar(mActivity, R.string.error_occurred);
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                if (mMaterialDialog != null && mMaterialDialog.isShowing())
-                    mMaterialDialog.dismiss();
-                getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                        .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
-                        .show();
-                mTextView.setVisibility(View.GONE);
-                mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
-                mCreateExcelPdf.setEnabled(false);
-                mExcelFileUri = null;
-            }
-        }.execute();
+        new ExcelToPDFAsync(mRealPath, mPath, ExceltoPdfFragment.this).execute();
 
     }
 
@@ -235,5 +205,32 @@ public class ExceltoPdfFragment extends Fragment {
                 Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permission)
             mPermissionGranted = true;
+    }
+
+    @Override
+    public void onPDFCreationStarted() {
+        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog.show();
+    }
+
+    @Override
+    public void onPDFCreated(boolean success, String path) {
+        if (mMaterialDialog != null && mMaterialDialog.isShowing())
+            mMaterialDialog.dismiss();
+        if (!success) {
+            showSnackbar(mActivity, R.string.error_occurred);
+            mTextView.setVisibility(View.GONE);
+            mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
+            mCreateExcelPdf.setEnabled(false);
+            mExcelFileUri = null;
+            return;
+        }
+        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
+                .show();
+        mTextView.setVisibility(View.GONE);
+        mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
+        mCreateExcelPdf.setEnabled(false);
+        mExcelFileUri = null;
     }
 }
