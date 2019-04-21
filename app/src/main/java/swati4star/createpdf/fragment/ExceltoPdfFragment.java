@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -198,6 +199,7 @@ public class ExceltoPdfFragment extends Fragment {
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
             mTextView.setVisibility(View.GONE);
+            new DatabaseHelper(getContext()).insertRecord(mPath, "created");
 
         } catch (Exception e) {
             e.printStackTrace();
