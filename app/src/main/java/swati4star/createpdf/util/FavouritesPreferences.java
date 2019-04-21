@@ -1,4 +1,4 @@
-package swati4star.createpdf.fragment;
+package swati4star.createpdf.util;
 
 
 import android.content.SharedPreferences;
@@ -7,7 +7,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import swati4star.createpdf.R;
 
-public class FavouritesPref extends PreferenceFragmentCompat
+public class FavouritesPreferences extends PreferenceFragmentCompat
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override

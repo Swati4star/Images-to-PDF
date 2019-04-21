@@ -52,6 +52,7 @@ import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
+import static swati4star.createpdf.util.ResultUtils.checkResultValidity;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -67,7 +68,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private String mOperation;
-    private MaterialDialog mMaterialDialog;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
 
@@ -133,13 +133,15 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode != Activity.RESULT_OK || data == null)
+        if (!checkResultValidity(resultCode, data))
             return;
 
         switch (requestCode) {
+
             case INTENT_REQUEST_GET_IMAGES:
                 mImagesUri.clear();
                 mImagesUri.addAll(Matisse.obtainPathResult(data));
+
                 if (mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
@@ -149,8 +151,10 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                 } else {
                     mNoOfImages.setVisibility(View.GONE);
                 }
+
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 break;
+
             case INTENT_REQUEST_PICKFILE_CODE:
                 setTextAndActivateButtons(getFilePath(data.getData()));
                 break;
@@ -196,12 +200,12 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                 output + mActivity.getString(R.string.pdf_ext));
 
         if (mImagesUri.size() > 0) {
-            mMaterialDialog = createAnimationDialog(mActivity);
-            mMaterialDialog.show();
+            MaterialDialog progressDialog = createAnimationDialog(mActivity);
+            progressDialog.show();
             mPDFUtils.addImagesToPdf(mPath, outputPath, mImagesUri);
             mMorphButtonUtility.morphToSuccess(mCreatePdf);
             resetValues();
-            mMaterialDialog.dismiss();
+            progressDialog.dismiss();
         } else {
             showSnackbar(mActivity, R.string.no_images_selected);
         }

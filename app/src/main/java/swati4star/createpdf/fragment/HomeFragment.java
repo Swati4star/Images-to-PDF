@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
+import swati4star.createpdf.model.HomePageItem;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
@@ -77,8 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.extract_text)
     MyCardView extractText;
 
-    private SparseIntArray mFragmentPositionMap;
-    private SparseIntArray mFragmentSelectedMap;
+    private Map<Integer, HomePageItem> mFragmentPositionMap;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -86,7 +88,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View rootview = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootview);
         fillMap();
-        titleMap();
+
         imagesToPdf.setOnClickListener(this);
         qrbarcodeToPdf.setOnClickListener(this);
         textToPdf.setOnClickListener(this);
@@ -109,59 +111,56 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         zipToPdf.setOnClickListener(this);
         excelToPdf.setOnClickListener(this);
         extractText.setOnClickListener(this);
+
         return rootview;
     }
 
     private void fillMap() {
-        mFragmentPositionMap = new SparseIntArray();
-        mFragmentPositionMap.append(R.id.images_to_pdf, R.id.nav_camera);
-        mFragmentPositionMap.append(R.id.qr_barcode_to_pdf, R.id.nav_qrcode);
-        mFragmentPositionMap.append(R.id.excel_to_pdf, R.id.nav_excel_to_pdf);
-        mFragmentPositionMap.append(R.id.view_files, R.id.nav_gallery);
-        mFragmentPositionMap.append(R.id.rotate_pages, R.id.nav_gallery);
-        mFragmentPositionMap.append(R.id.extract_text, R.id.nav_text_extract);
-        mFragmentPositionMap.append(R.id.add_watermark, R.id.nav_add_watermark);
-        mFragmentPositionMap.append(R.id.merge_pdf, R.id.nav_merge);
-        mFragmentPositionMap.append(R.id.split_pdf, R.id.nav_split);
-        mFragmentPositionMap.append(R.id.text_to_pdf, R.id.nav_text_to_pdf);
-        mFragmentPositionMap.append(R.id.compress_pdf, R.id.nav_compress_pdf);
-        mFragmentPositionMap.append(R.id.remove_pages, R.id.nav_remove_pages);
-        mFragmentPositionMap.append(R.id.rearrange_pages, R.id.nav_rearrange_pages);
-        mFragmentPositionMap.append(R.id.extract_images, R.id.nav_extract_images);
-        mFragmentPositionMap.append(R.id.view_history, R.id.nav_history);
-        mFragmentPositionMap.append(R.id.pdf_to_images, R.id.nav_pdf_to_images);
-        mFragmentPositionMap.append(R.id.add_password, R.id.nav_add_password);
-        mFragmentPositionMap.append(R.id.remove_password, R.id.nav_remove_password);
-        mFragmentPositionMap.append(R.id.add_images, R.id.nav_add_images);
-        mFragmentPositionMap.append(R.id.remove_duplicates_pages_pdf, R.id.nav_remove_duplicate_pages);
-        mFragmentPositionMap.append(R.id.invert_pdf, R.id.nav_invert_pdf);
-        mFragmentPositionMap.append(R.id.zip_to_pdf, R.id.nav_zip_to_pdf);
-    }
-
-    private void titleMap() {
-        mFragmentSelectedMap = new SparseIntArray();
-        mFragmentSelectedMap.append(R.id.images_to_pdf, R.string.images_to_pdf);
-        mFragmentSelectedMap.append(R.id.qr_barcode_to_pdf, R.string.qr_barcode_pdf);
-        mFragmentSelectedMap.append(R.id.view_files, R.string.viewFiles);
-        mFragmentSelectedMap.append(R.id.merge_pdf, R.string.merge_pdf);
-        mFragmentSelectedMap.append(R.id.split_pdf, R.string.split_pdf);
-        mFragmentSelectedMap.append(R.id.extract_text, R.string.extract_text);
-        mFragmentSelectedMap.append(R.id.text_to_pdf, R.string.text_to_pdf);
-        mFragmentSelectedMap.append(R.id.view_history, R.string.history);
-        mFragmentSelectedMap.append(R.id.add_password, R.string.add_password);
-        mFragmentSelectedMap.append(R.id.remove_password, R.string.remove_password);
-        mFragmentSelectedMap.append(R.id.extract_images, R.string.extract_images);
-        mFragmentSelectedMap.append(R.id.pdf_to_images, R.string.pdf_to_images);
-        mFragmentSelectedMap.append(R.id.remove_pages, R.string.remove_pages);
-        mFragmentSelectedMap.append(R.id.rearrange_pages, R.string.reorder_pages);
-        mFragmentSelectedMap.append(R.id.compress_pdf, R.string.compress_pdf);
-        mFragmentSelectedMap.append(R.id.rotate_pages, R.string.rotate_pages);
-        mFragmentSelectedMap.append(R.id.add_images, R.string.add_images);
-        mFragmentSelectedMap.append(R.id.remove_duplicates_pages_pdf, R.string.remove_duplicate_pages);
-        mFragmentSelectedMap.append(R.id.invert_pdf, R.string.invert_pdf);
-        mFragmentSelectedMap.append(R.id.add_watermark, R.string.add_watermark);
-        mFragmentSelectedMap.append(R.id.zip_to_pdf, R.string.zip_to_pdf);
-        mFragmentSelectedMap.append(R.id.excel_to_pdf, R.string.excel_to_pdf);
+        mFragmentPositionMap = new HashMap<>();
+        mFragmentPositionMap.put(R.id.images_to_pdf,
+                new HomePageItem(R.id.nav_camera, R.string.images_to_pdf));
+        mFragmentPositionMap.put(R.id.qr_barcode_to_pdf,
+                new HomePageItem(R.id.nav_qrcode, R.string.qr_barcode_pdf));
+        mFragmentPositionMap.put(R.id.excel_to_pdf,
+                new HomePageItem(R.id.nav_excel_to_pdf, R.string.excel_to_pdf));
+        mFragmentPositionMap.put(R.id.view_files,
+                new HomePageItem(R.id.nav_gallery, R.string.viewFiles));
+        mFragmentPositionMap.put(R.id.rotate_pages,
+                new HomePageItem(R.id.nav_gallery, R.string.rotate_pages));
+        mFragmentPositionMap.put(R.id.extract_text,
+                new HomePageItem(R.id.nav_text_extract, R.string.extract_text));
+        mFragmentPositionMap.put(R.id.add_watermark,
+                new HomePageItem(R.id.nav_add_watermark, R.string.add_watermark));
+        mFragmentPositionMap.put(R.id.merge_pdf,
+                new HomePageItem(R.id.nav_merge, R.string.merge_pdf));
+        mFragmentPositionMap.put(R.id.split_pdf,
+                new HomePageItem(R.id.nav_split, R.string.split_pdf));
+        mFragmentPositionMap.put(R.id.text_to_pdf,
+                new HomePageItem(R.id.nav_text_to_pdf, R.string.text_to_pdf));
+        mFragmentPositionMap.put(R.id.compress_pdf,
+                new HomePageItem(R.id.nav_compress_pdf, R.string.compress_pdf));
+        mFragmentPositionMap.put(R.id.remove_pages,
+                new HomePageItem(R.id.nav_remove_pages, R.string.remove_pages));
+        mFragmentPositionMap.put(R.id.rearrange_pages,
+                new HomePageItem(R.id.nav_rearrange_pages, R.string.reorder_pages));
+        mFragmentPositionMap.put(R.id.extract_images,
+                new HomePageItem(R.id.nav_extract_images, R.string.extract_images));
+        mFragmentPositionMap.put(R.id.view_history,
+                new HomePageItem(R.id.nav_history, R.string.history));
+        mFragmentPositionMap.put(R.id.pdf_to_images,
+                new HomePageItem(R.id.nav_pdf_to_images, R.string.pdf_to_images));
+        mFragmentPositionMap.put(R.id.add_password,
+                new HomePageItem(R.id.nav_add_password, R.string.add_password));
+        mFragmentPositionMap.put(R.id.remove_password,
+                new HomePageItem(R.id.nav_remove_password, R.string.remove_password));
+        mFragmentPositionMap.put(R.id.add_images,
+                new HomePageItem(R.id.nav_add_images, R.string.add_images));
+        mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf,
+                new HomePageItem(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages));
+        mFragmentPositionMap.put(R.id.invert_pdf,
+                new HomePageItem(R.id.nav_invert_pdf, R.string.invert_pdf));
+        mFragmentPositionMap.put(R.id.zip_to_pdf,
+                new HomePageItem(R.id.nav_zip_to_pdf, R.string.zip_to_pdf));
     }
 
     @Override
@@ -176,8 +175,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
-        highlightNavigationDrawerItem(mFragmentPositionMap.get(v.getId()));
-        setTitleFragment(mFragmentSelectedMap.get(v.getId()));
+        highlightNavigationDrawerItem(mFragmentPositionMap.get(v.getId()).getNavigationItemId());
+        setTitleFragment(mFragmentPositionMap.get(v.getId()).getTitleString());
 
         switch (v.getId()) {
             case R.id.images_to_pdf:
@@ -276,12 +275,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    /**
+     * Highligh navigation drawer item
+     * @param id - item id to be hjighlighted
+     */
     private void highlightNavigationDrawerItem(int id) {
         if (mActivity instanceof MainActivity)
             ((MainActivity) mActivity).setNavigationViewSelection(id);
     }
+
+    /**
+     * Sets the title on action bar
+     * @param title - title of string to be shown
+     */
     private void setTitleFragment(int title) {
         if (title != 0)
-           mActivity.setTitle(title);
+            mActivity.setTitle(title);
     }
 }
