@@ -109,10 +109,9 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
      */
     @OnClick(R.id.create_excel_to_pdf)
     public void openExcelToPdf() {
-        if (!mPermissionGranted) {
+        if (!mPermissionGranted)
             getRuntimePermissions();
-            return;
-        }
+
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
