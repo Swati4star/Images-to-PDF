@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.ExcelToPDFAsync;
@@ -227,6 +228,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
                 .show();
+        new DatabaseHelper(getContext()).insertRecord(mPath,"created");
         mTextView.setVisibility(View.GONE);
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
         mCreateExcelPdf.setEnabled(false);
