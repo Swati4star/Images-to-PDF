@@ -76,6 +76,7 @@ public class PDFUtils {
     private SparseIntArray mAngleRadioButton;
     private SharedPreferences mSharedPreferences;
 
+    private static final int NO_ERROR = 0;
     private static final int ERROR_PAGE_NUMBER = 1;
     private static final int ERROR_PAGE_RANGE = 2;
     private static final int ERROR_INVALID_INPUT = 3;
@@ -654,9 +655,9 @@ public class PDFUtils {
      * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
      */
     public static int checkRangeValidity(int numOfPages, String[] ranges) {
-        int startPage = -1;
-        int endPage = -1;
-        int returnValue = 0;
+        int startPage = 0;
+        int endPage = 0;
+        int returnValue = NO_ERROR;
         if (ranges.length == 0)
             returnValue = ERROR_INVALID_INPUT;
         else { 
@@ -667,9 +668,11 @@ public class PDFUtils {
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                         returnValue = ERROR_INVALID_INPUT;
+                        break;
                     }
                     if (startPage > numOfPages || startPage == 0) {
                         returnValue = ERROR_PAGE_NUMBER;
+                        break;
                     }
                 } else {
                     try {
@@ -678,14 +681,18 @@ public class PDFUtils {
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                         returnValue = ERROR_INVALID_INPUT;
+                        break;
                     } catch (StringIndexOutOfBoundsException e) {
                         e.printStackTrace();
                         returnValue = ERROR_INVALID_INPUT;
+                        break;
                     }
                     if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
                         returnValue = ERROR_PAGE_NUMBER;
+                        break;
                     } else if (startPage >= endPage) {
                         returnValue = ERROR_PAGE_RANGE;
+                        break;
                     }
                 }
             }
