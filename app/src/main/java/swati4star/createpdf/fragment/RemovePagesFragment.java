@@ -158,13 +158,12 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 return;
             }
 
-            if (mPDFUtils.reorderRemovePDF(mPath, outputPath, pages)) {
-                if (sameFile) {
-                    showSnackbar(mActivity, R.string.file_order);
-                    return;
-                } else {
+            if (!sameFile) {
+                if (mPDFUtils.reorderRemovePDF(mPath, outputPath, pages)) {
                     viewPdfButton(outputPath);
                 }
+            } else {
+                showSnackbar(mActivity, R.string.file_order);
             }
             resetValues();
         }
