@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -31,10 +29,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
 import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -43,6 +39,7 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.ColorUtils;
@@ -53,10 +50,12 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
+import swati4star.createpdf.util.TextToPdfAsync;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
@@ -64,7 +63,7 @@ import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
-public class TextToPdfFragment extends Fragment implements OnItemClickListner {
+public class TextToPdfFragment extends Fragment implements OnItemClickListner, OnPDFCreatedInterface {
 
     private Activity mActivity;
     private FileUtils mFileUtils;
@@ -81,6 +80,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private String mPassword;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private boolean mPermissionGranted = false;
+    private MaterialDialog mMaterialDialog;
 
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
@@ -94,12 +94,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
     private SharedPreferences mSharedPreferences;
     private Font.FontFamily mFontFamily;
     private MorphButtonUtility mMorphButtonUtility;
+    private String mPath;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
-        mPermissionGranted = isPermissionGranted();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mFontTitle = String.format(getString(R.string.edit_font_size),
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
@@ -386,26 +386,15 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
      * @param mFilename name of file to be created.
      */
     private void createPdf(String mFilename) {
-        String mPath = mSharedPreferences.getString(STORAGE_LOCATION,
+        mPath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
-        try {
-            PDFUtils fileUtil = new PDFUtils(mActivity);
-            TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
-                    mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
-            fileUtil.createPdf(options, mFileExtension);
-            final String finalMPath = mPath;
-            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
-            mTextView.setVisibility(View.GONE);
-        } catch (DocumentException | IOException e) {
-            e.printStackTrace();
-            showSnackbar(mActivity, R.string.error_occurred);
-        } finally {
-            mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
-            mCreateTextPdf.setEnabled(false);
-            mTextFileUri = null;
-        }
+        TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
+                mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
+        PDFUtils fileUtil = new PDFUtils(mActivity);
+
+        new TextToPdfAsync(mTextFileUri.toString(), fileUtil, options, mFileExtension,
+                TextToPdfFragment.this);
     }
 
     /**
@@ -442,9 +431,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
                     showSnackbar(mActivity, R.string.text_file_selected);
                     String fileName = mFileUtils.getFileName(mTextFileUri);
                     if (fileName != null) {
-                        if (fileName.endsWith(Constants.textExtension)) mFileExtension = Constants.textExtension;
-                        else if (fileName.endsWith(Constants.docxExtension)) mFileExtension = Constants.docxExtension;
-                        else if (fileName.endsWith(Constants.docExtension)) mFileExtension = Constants.docExtension;
+                        if (fileName.endsWith(Constants.textExtension))
+                            mFileExtension = Constants.textExtension;
+                        else if (fileName.endsWith(Constants.docxExtension))
+                            mFileExtension = Constants.docxExtension;
+                        else if (fileName.endsWith(Constants.docExtension))
+                            mFileExtension = Constants.docExtension;
                         else {
                             showSnackbar(mActivity, R.string.extension_not_supported);
                             return;
@@ -506,15 +498,27 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner {
             mPermissionGranted = true;
     }
 
-    private boolean isPermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                return false;
-            }
+    @Override
+    public void onPDFCreationStarted() {
+        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog.show();
+    }
+
+    @Override
+    public void onPDFCreated(boolean success, String path) {
+        if (mMaterialDialog != null && mMaterialDialog.isShowing())
+            mMaterialDialog.dismiss();
+        if (!success) {
+            showSnackbar(mActivity, R.string.error_occurred);
+            mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
+            mCreateTextPdf.setEnabled(false);
+            mTextFileUri = null;
+            mButtonClicked = 0;
+            return;
         }
-        return true;
+        final String finalMPath = mPath;
+        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
+        mTextView.setVisibility(View.GONE);
     }
 }
