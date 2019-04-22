@@ -1,6 +1,5 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -49,6 +48,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
+import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -245,9 +245,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * check runtime permission in Android M
      */
     private void getRuntimePermissions() {
-        PermissionsUtils.checkRuntimePermissions(mActivity,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
+        PermissionsUtils.requestRuntimePermissions(this,
+                READ_WRITE_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }

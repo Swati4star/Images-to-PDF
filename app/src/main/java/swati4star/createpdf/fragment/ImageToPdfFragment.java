@@ -1,6 +1,5 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -89,6 +88,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
@@ -115,7 +115,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private static final int REQUEST_PERMISSIONS_CODE = 124;
 
     @BindView(R.id.pdfCreate)
     MorphingButton mCreatePdf;
@@ -132,12 +132,11 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private static ArrayList<String> tempImageUri = new ArrayList<>();
     public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
-    private boolean mOpenSelectImages = false;
     private SharedPreferences mSharedPreferences;
     private FileUtils mFileUtils;
     private PageSizeUtils mPageSizeUtils;
     private int mPageColor;
-    private int mButtonClicked = 0;
+    private boolean mIsButtonAlreadyClicked = false;
     private ImageToPDFOptions mPdfOptions;
     private MaterialDialog mMaterialDialog;
     private String mHomePath;
@@ -147,6 +146,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private int mMarginRight = 38;
     private String mPageNumStyle;
     private int mChoseId;
+    private boolean mPermissionGranted = false;
 
 
     @Override
@@ -163,6 +163,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPageSizeUtils = new PageSizeUtils(mActivity);
@@ -170,9 +172,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 DEFAULT_PAGE_COLOR);
         mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
-
-        // Get runtime permissions if build version >= Android M
-        getRuntimePermissions(false);
 
         // Get default values & show enhancement options
         resetValues();
@@ -237,10 +236,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (mButtonClicked == 0) {
-            if (getRuntimePermissions(true))
-                selectImages();
-            mButtonClicked = 1;
+        if (!mPermissionGranted) {
+            getRuntimePermissions();
+            return;
+        }
+        if (!mIsButtonAlreadyClicked) {
+            selectImages();
+            mIsButtonAlreadyClicked = true;
         }
     }
 
@@ -312,10 +314,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             return;
 
         switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
+            case REQUEST_PERMISSIONS_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (mOpenSelectImages)
-                        selectImages();
+                    mPermissionGranted = true;
+                    selectImages();
                     showSnackbar(mActivity, R.string.snackbar_permissions_given);
                 } else
                     showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
@@ -333,7 +335,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mButtonClicked = 0;
+        mIsButtonAlreadyClicked = false;
         if (resultCode != Activity.RESULT_OK || data == null)
             return;
 
@@ -775,15 +777,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
-    private boolean getRuntimePermissions(boolean openImagesActivity) {
-        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA);
-        if (!permission)
-            mOpenSelectImages = openImagesActivity;
-        return permission;
+    private void getRuntimePermissions() {
+        PermissionsUtils.requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                REQUEST_PERMISSIONS_CODE);
     }
 
     /**

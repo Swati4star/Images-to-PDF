@@ -1,63 +1,62 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.support.v7.app.AppCompatActivity;
 
 public class PermissionsUtils {
-    private static final String TAG = "PermissionsUtils";
 
     /**
-     * checkRuntimePermissions takes in an Activity instance, a permission request code and
-     * multiple permissions or an array of permission and checks for if the permission is
-     * granted and if not it requests for the desired permissions as a group. The try and
-     * catch block checks for invalid permissions passed.
+     * checkRuntimePermissions takes in an Object instance(can be of type Activity or Fragment),
+     * an array of permission and checks for if all the permissions are granted ot not
      *
-     * @param activity
-     * @param requestCode
-     * @param permissions
-     * @return
+     * @param context     can be of type Activity or Fragment
+     * @param permissions string array of permissions
+     * @return true if all permissions are granted, otherwise false
      */
-    public static boolean checkRuntimePermissions(Activity activity, int requestCode, String... permissions) {
-        List<String> listPermissionsNeeded = new ArrayList<>();
+    public static boolean checkRuntimePermissions(Object context, String[] permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            for (int i = 0; i < permissions.length; i++) {
-                if ((ContextCompat.checkSelfPermission(activity.getApplicationContext(),
-                        permissions[i])
+            for (String permission : permissions) {
+                if ((ContextCompat.checkSelfPermission(retrieveContext(context),
+                        permission)
                         != PackageManager.PERMISSION_GRANTED)) {
-                    listPermissionsNeeded.add(permissions[i]);
+                    return false;
                 }
-            }
-            try {
-                requestRuntimePermissions(activity, listPermissionsNeeded, requestCode);
-                return false;
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.d(TAG, "Faulty permission passed");
             }
         }
         return true;
     }
 
     /**
-     * requestRuntimePermissions takes in an Activity instance, a list of permissions and
-     * a permission request code and requests for the permission after converting the list
-     * of permissions to an array of same.
+     * requestRuntimePermissions takes in an Object instance(can be of type Activity or Fragment),
+     * a String array of permissions and
+     * a permission request code and requests for the permission
      *
-     * @param activity
-     * @param permissions
-     * @param requestCode
-     * @return
+     * @param context     can be of type Activity or Fragment
+     * @param permissions string array of permissions
+     * @param requestCode permission request code
      */
-    public static void requestRuntimePermissions(Activity activity, List<String> permissions,
+    public static void requestRuntimePermissions(Object context, String[] permissions,
                                                  int requestCode) {
-        ActivityCompat.requestPermissions(activity,
-                permissions.toArray(new String[permissions.size()]), requestCode);
+        if (context instanceof Activity) {
+            ActivityCompat.requestPermissions((AppCompatActivity) context,
+                    permissions, requestCode);
+        } else if (context instanceof Fragment) {
+            ((Fragment) context).requestPermissions(permissions, requestCode);
+        }
+    }
+
+    private static Context retrieveContext(@NonNull Object context) {
+        if (context instanceof AppCompatActivity) {
+            return ((AppCompatActivity) context).getApplicationContext();
+        } else {
+            return ((Fragment) context).requireActivity();
+        }
     }
 }
