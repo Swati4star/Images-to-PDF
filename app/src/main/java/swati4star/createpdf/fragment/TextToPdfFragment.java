@@ -41,7 +41,7 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListner;
-import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+import swati4star.createpdf.interfaces.OnTextToPdfInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.ColorUtils;
@@ -66,7 +66,7 @@ import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
 public class TextToPdfFragment extends Fragment implements OnItemClickListner,
-        OnPDFCreatedInterface {
+        OnTextToPdfInterface {
 
     private Activity mActivity;
     private FileUtils mFileUtils;
@@ -103,6 +103,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
+        mPermissionGranted = isPermissionGranted();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mFontTitle = String.format(getString(R.string.edit_font_size),
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
@@ -510,7 +511,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -520,7 +521,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     @Override
-    public void onPDFCreated(boolean success, String path) {
+    public void onPDFCreated(boolean success) {
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
@@ -531,9 +532,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
             mButtonClicked = 0;
             return;
         }
-        final String finalMPath = mPath;
         getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
+                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
         mTextView.setVisibility(View.GONE);
+        mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
+        mCreateTextPdf.setEnabled(false);
+        mTextFileUri = null;
+        mButtonClicked = 0;
     }
 }
