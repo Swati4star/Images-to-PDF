@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -63,7 +65,8 @@ import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
-public class TextToPdfFragment extends Fragment implements OnItemClickListner, OnPDFCreatedInterface {
+public class TextToPdfFragment extends Fragment implements OnItemClickListner,
+        OnPDFCreatedInterface {
 
     private Activity mActivity;
     private FileUtils mFileUtils;
@@ -394,7 +397,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner, O
         PDFUtils fileUtil = new PDFUtils(mActivity);
 
         new TextToPdfAsync(mTextFileUri.toString(), fileUtil, options, mFileExtension,
-                TextToPdfFragment.this);
+                TextToPdfFragment.this).execute();
     }
 
     /**
@@ -496,6 +499,18 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner, O
                 Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permission)
             mPermissionGranted = true;
+    }
+
+    private boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)) {
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
