@@ -12,6 +12,16 @@ public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private boolean mSuccess;
 
+    /**
+     * This is a public constructor responsible for initializing the path of the actual
+     * file, the PDFUtils instance for the file, the options for text to Pdf, the file
+     * extension, and the onPDFCreatedInterface instance.
+     * @param realpath is the path of the actual file.
+     * @param fileutil is the PDFUtils instance for the file.
+     * @param textToPDFOptions is the options for text to Pdf.
+     * @param fileextension is the file extension name string.
+     * @param onPDFCreatedInterface is the onPDFCreatedInterface instance.
+     */
     public TextToPdfAsync(String realpath, PDFUtils fileutil, TextToPDFOptions textToPDFOptions,
                           String fileextension, OnPDFCreatedInterface onPDFCreatedInterface) {
         this.mFileUtil = fileutil;
