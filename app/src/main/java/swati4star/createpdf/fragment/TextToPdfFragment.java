@@ -52,6 +52,7 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.TextToPdfAsync;
 
 import static android.app.Activity.RESULT_OK;
+import static com.itextpdf.text.factories.RomanNumberFactory.getString;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
@@ -357,6 +358,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
 
     @OnClick(R.id.createtextpdf)
     public void openCreateTextPdf() {
+        if (!mPermissionGranted)
+            getRuntimePermissions();
+
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -433,9 +437,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     showSnackbar(mActivity, R.string.text_file_selected);
                     String fileName = mFileUtils.getFileName(mTextFileUri);
                     if (fileName != null) {
-                        if (fileName.endsWith(Constants.textExtension)) mFileExtension = Constants.textExtension;
-                        else if (fileName.endsWith(Constants.docxExtension)) mFileExtension = Constants.docxExtension;
-                        else if (fileName.endsWith(Constants.docExtension)) mFileExtension = Constants.docExtension;
+                        if (fileName.endsWith(Constants.textExtension))
+                            mFileExtension = Constants.textExtension;
+                        else if (fileName.endsWith(Constants.docxExtension))
+                            mFileExtension = Constants.docxExtension;
+                        else if (fileName.endsWith(Constants.docExtension))
+                            mFileExtension = Constants.docExtension;
                         else {
                             showSnackbar(mActivity, R.string.extension_not_supported);
                             return;
