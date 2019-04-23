@@ -657,40 +657,50 @@ public class PDFUtils {
     public static int checkRangeValidity(int numOfPages, String[] ranges) {
         int startPage = 0;
         int endPage = 0;
+       
+       //the returnValue is initialized with NO_ERROR
         int returnValue = NO_ERROR;
+        
+        //if no range is given, ERROR_INVALID_INPUT is returned
         if (ranges.length == 0)
             returnValue = ERROR_INVALID_INPUT;
         else { 
+        //for all the given ranges, if single page (starting page) is only given (non-hyphenated range) then we fetch the starting page
             for (String range : ranges) {
                 if (!range.contains("-")) {
                     try {
                         startPage = Integer.parseInt(range);
-                    } catch (NumberFormatException e) {
+                    } 
+                    //if starting page is not a number then exception is caught and ERROR_INVALID_INPUT is returned
+                    catch (NumberFormatException e) {
                         e.printStackTrace();
                         returnValue = ERROR_INVALID_INPUT;
                         break;
                     }
+                    //if the starting page is greater than number of pages or is 0 then ERROR_PAGE_NUMBER is returned
                     if (startPage > numOfPages || startPage == 0) {
                         returnValue = ERROR_PAGE_NUMBER;
                         break;
                     }
                 } else {
+                    //for hyphenated ranges, e.g 4-8, the start and end page are read
                     try {
                         startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
                         endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                        returnValue = ERROR_INVALID_INPUT;
-                        break;
-                    } catch (StringIndexOutOfBoundsException e) {
+                    } 
+                    //if the start or end page are not valid numbers then ERROR_INVALID_INPUT is returned
+                    catch (NumberFormatException | StringIndexOutOfBoundsException e) {
                         e.printStackTrace();
                         returnValue = ERROR_INVALID_INPUT;
                         break;
                     }
+                    //if the start and end page are out of range then ERROR_PAGE_NUMBER is returned
                     if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
                         returnValue = ERROR_PAGE_NUMBER;
                         break;
-                    } else if (startPage >= endPage) {
+                    } 
+                    //if the start page is greater than end page then the range is invalid so ERROR_PAGE_RANGE is returned
+                    else if (startPage >= endPage) {
                         returnValue = ERROR_PAGE_RANGE;
                         break;
                     }
