@@ -10,6 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+/**
+ * !! IMPORTANT !!
+ * permission arrays are defined in Constants.java file. we have two types of permissions:
+ * READ_WRITE_PERMISSIONS and READ_WRITE_CAMERA_PERMISSIONS 
+ * use these constants in project whenever required.
+ */
 public class PermissionsUtils {
 
     /**
