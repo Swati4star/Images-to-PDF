@@ -1,19 +1,16 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -56,6 +53,7 @@ import swati4star.createpdf.util.TextToPdfAsync;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
+import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
@@ -103,7 +101,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
-        mPermissionGranted = isPermissionGranted();
+        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mFontTitle = String.format(getString(R.string.edit_font_size),
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
@@ -359,10 +357,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
 
     @OnClick(R.id.createtextpdf)
     public void openCreateTextPdf() {
-        if (!mPermissionGranted) {
-            getRuntimePermissions();
-            return;
-        }
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -406,6 +400,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
      */
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
+        if (!mPermissionGranted) {
+            getRuntimePermissions();
+            return;
+        }
         if (mButtonClicked == 0) {
             Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -470,7 +468,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
             case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mPermissionGranted = true;
-                    openCreateTextPdf();
+                    selectTextFile();
                     showSnackbar(mActivity, R.string.snackbar_permissions_given);
                 } else
                     showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
@@ -491,24 +489,11 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void getRuntimePermissions() {
-        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permission)
-            mPermissionGranted = true;
-    }
-
-    private boolean isPermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED)) {
-                return false;
-            }
-        }
-        return true;
+        PermissionsUtils.requestRuntimePermissions(
+                mActivity,
+                READ_WRITE_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT
+        );
     }
 
     @Override

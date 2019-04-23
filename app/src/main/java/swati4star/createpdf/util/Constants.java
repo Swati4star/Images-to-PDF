@@ -1,5 +1,6 @@
 package swati4star.createpdf.util;
 
+import android.Manifest;
 import android.graphics.Color;
 
 public class Constants {
@@ -106,5 +107,14 @@ public class Constants {
     public static final String PREF_PAGE_STYLE = "pref_page_number_style";
     public static final String PREF_PAGE_STYLE_ID = "pref_page_number_style_rb_id";
 
+    public static final String[] READ_WRITE_PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+    public static final String[] READ_WRITE_CAMERA_PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
 }
