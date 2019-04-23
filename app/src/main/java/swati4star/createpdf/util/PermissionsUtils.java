@@ -52,6 +52,12 @@ public class PermissionsUtils {
         }
     }
 
+    /**
+     * retrieves context of passed in non-null object, context can be of type
+     * AppCompatActivity or Fragment
+     *
+     * @param context     can be of type AppCompatActivity or Fragment
+     */
     private static Context retrieveContext(@NonNull Object context) {
         if (context instanceof AppCompatActivity) {
             return ((AppCompatActivity) context).getApplicationContext();
