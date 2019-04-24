@@ -141,6 +141,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                 break;
             case 7:
                 setShowPageNumber();
+                break;
         }
     }
 
