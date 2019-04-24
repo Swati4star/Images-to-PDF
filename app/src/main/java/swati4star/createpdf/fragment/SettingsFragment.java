@@ -299,21 +299,21 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      */
     private void setShowPageNumber() {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        int currChoseId = mSharedPreferences.getInt (Constants.PREF_PAGE_STYLE_ID, -1);
+        int currChoseId = mSharedPreferences.getInt(Constants.PREF_PAGE_STYLE_ID, -1);
 
-        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
-                .inflate (R.layout.add_pgnum_dialog, null);
+        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater()
+                .inflate(R.layout.add_pgnum_dialog, null);
 
         RadioButton rbOpt1 = dialogLayout.findViewById(R.id.page_num_opt1);
         RadioButton rbOpt2 = dialogLayout.findViewById(R.id.page_num_opt2);
         RadioButton rbOpt3 = dialogLayout.findViewById(R.id.page_num_opt3);
         RadioGroup rg = dialogLayout.findViewById(R.id.radioGroup);
-        CheckBox cbDefault = dialogLayout.findViewById (R.id.set_as_default);
+        CheckBox cbDefault = dialogLayout.findViewById(R.id.set_as_default);
 
         if (currChoseId > 0) {
-            cbDefault.setChecked (true);
-            rg.clearCheck ();
-            rg.check (currChoseId);
+            cbDefault.setChecked(true);
+            rg.clearCheck();
+            rg.check(currChoseId);
         }
 
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
@@ -324,23 +324,23 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
 
-                    int id = rg.getCheckedRadioButtonId ();
+                    int id = rg.getCheckedRadioButtonId();
                     String style = null;
-                    if (id == rbOpt1.getId ()) {
+                    if (id == rbOpt1.getId()) {
                         style = Constants.PG_NUM_STYLE_PAGE_X_OF_N;
-                    } else if (id == rbOpt2.getId ()) {
+                    } else if (id == rbOpt2.getId()) {
                         style = Constants.PG_NUM_STYLE_X_OF_N;
-                    } else if (id == rbOpt3.getId ()) {
+                    } else if (id == rbOpt3.getId()) {
                         style = Constants.PG_NUM_STYLE_X;
                     }
-                    if (cbDefault.isChecked ()) {
-                        editor.putString (Constants.PREF_PAGE_STYLE, style);
-                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, id);
-                        editor.commit ();
+                    if (cbDefault.isChecked()) {
+                        editor.putString(Constants.PREF_PAGE_STYLE, style);
+                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, id);
+                        editor.commit();
                     } else {
-                        editor.putString (Constants.PREF_PAGE_STYLE, null);
-                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, -1);
-                        editor.commit ();
+                        editor.putString(Constants.PREF_PAGE_STYLE, null);
+                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, -1);
+                        editor.commit();
                     }
                 }))
                 .build();
