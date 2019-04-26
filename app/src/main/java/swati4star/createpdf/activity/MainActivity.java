@@ -1,6 +1,5 @@
 package swati4star.createpdf.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -64,6 +63,8 @@ import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
@@ -543,18 +544,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.checkRuntimePermissions(this,
-                PERMISSION_REQUEST_CODE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA);
+        PermissionsUtils.requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_CODE);
     }
 
     private boolean isStoragePermissionGranted() {
-        return PermissionsUtils.checkRuntimePermissions(this,
-                PERMISSION_REQUEST_CODE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
+        return PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
     }
 
     /**

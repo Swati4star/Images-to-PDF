@@ -1,6 +1,5 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -52,6 +51,7 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
+import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.textExtension;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -103,6 +103,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         View rootview = inflater.inflate(R.layout.fragment_extract_text, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -199,7 +200,12 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      */
     @OnClick(R.id.extract_text)
     public void openExtractText() {
-        getRuntimePermissions();
+        if (!mPermissionGranted) {
+            PermissionsUtils.requestRuntimePermissions(this,
+                    READ_WRITE_PERMISSIONS,
+                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+            return;
+        }
 
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_txt)
@@ -225,6 +231,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     /**
      * This function is used to extract the text from a PDF and store
      * it in a new text file.
+     *
      * @param inputName
      */
     private void extractTextfromPdf(String inputName) {
@@ -258,15 +265,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             mRealPath = null;
             mExcelFileUri = null;
         }
-    }
-
-    private void getRuntimePermissions() {
-        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permission)
-            mPermissionGranted = true;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -46,6 +45,7 @@ import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.DialogUtils.showFilesInfoDialog;
@@ -299,11 +299,11 @@ public class ViewFilesFragment extends Fragment
 
     @OnClick(R.id.provide_permissions)
     public void providePermissions() {
-        PermissionsUtils.checkRuntimePermissions(mActivity,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA);
+        PermissionsUtils.requestRuntimePermissions(
+                this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT
+        );
     }
 
     /**

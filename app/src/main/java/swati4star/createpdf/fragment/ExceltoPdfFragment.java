@@ -1,6 +1,5 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
-import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -47,6 +45,7 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
@@ -92,6 +91,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         View rootview = inflater.inflate(R.layout.fragment_excelto_pdf, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
         showEnhancementOptions();
@@ -139,10 +139,9 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
      */
     @OnClick(R.id.create_excel_to_pdf)
     public void openExcelToPdf() {
-        if (!mPermissionGranted) {
+        if (!mPermissionGranted)
             getRuntimePermissions();
-            return;
-        }
+
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -229,12 +228,9 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
     }
 
     private void getRuntimePermissions() {
-        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permission)
-            mPermissionGranted = true;
+        PermissionsUtils.requestRuntimePermissions(this,
+                READ_WRITE_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 
     @Override
@@ -258,6 +254,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
                 .show();
+        new DatabaseHelper(mActivity).insertRecord(mPath, mActivity.getString(R.string.created));
         mTextView.setVisibility(View.GONE);
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
         mCreateExcelPdf.setEnabled(false);

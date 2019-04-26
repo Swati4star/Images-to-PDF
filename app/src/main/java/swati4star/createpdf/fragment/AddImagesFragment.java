@@ -1,9 +1,9 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -48,6 +48,7 @@ import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
@@ -68,8 +69,9 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private String mOperation;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private static final int REQUEST_PERMISSIONS_CODE = 124;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
+    private boolean mPermissionGranted = false;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -98,6 +100,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_add_images, container, false);
         ButterKnife.bind(this, rootview);
+        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_CAMERA_PERMISSIONS);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
@@ -158,6 +161,23 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
             case INTENT_REQUEST_PICKFILE_CODE:
                 setTextAndActivateButtons(getFilePath(data.getData()));
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length < 1)
+            return;
+        switch (requestCode) {
+            case REQUEST_PERMISSIONS_CODE: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mPermissionGranted = true;
+                    selectImages();
+                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                } else
+                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+            }
         }
     }
 
@@ -224,17 +244,13 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (getRuntimePermissions())
+        if (mPermissionGranted)
             selectImages();
-    }
-
-    private boolean getRuntimePermissions() {
-        boolean permission = PermissionsUtils.checkRuntimePermissions(mActivity,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA);
-        return permission;
+        else {
+            PermissionsUtils.requestRuntimePermissions(this,
+                    READ_WRITE_CAMERA_PERMISSIONS,
+                    REQUEST_PERMISSIONS_CODE);
+        }
     }
 
     /**
