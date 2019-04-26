@@ -516,5 +516,6 @@
     <string name="favourites">Favourites</string>
     <string name="add_to_favourite">Add to Favourite</string>
     <string name="favourites_text">Select + icon to add your favourite features!</string>
+    <string name="no_excel_file">No excel file selected</string>
 
 </resources>
