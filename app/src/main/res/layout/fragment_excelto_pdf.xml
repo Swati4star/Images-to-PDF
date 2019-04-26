@@ -7,13 +7,13 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:id="@+id/buttonLayoutNew"
@@ -70,18 +70,19 @@
                     android:nestedScrollingEnabled="false"
                     android:isScrollContainer="false"
                     android:layout_margin="4dp" />
-            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_excel_file_name_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal"
-                android:padding="8dp"
-                android:text="@string/excel_tv_view_text"
-                android:visibility="gone"  />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tv_excel_file_name_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:padding="8dp"
+        android:text="@string/excel_tv_view_text"
+        android:visibility="gone"  />
 
 </RelativeLayout>

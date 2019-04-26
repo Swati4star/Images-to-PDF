@@ -458,4 +458,5 @@
     <string name="favourites">Favourites</string>
     <string name="favourites_text">Выберите значок +, чтобы добавить свои любимые функции!</string>
     <string name="split_one_page_pdf_alert">Выбранный PDF не может быть разделен, потому что он имеет только 1 страницу!</string>
+    <string name="no_excel_file">Файл Excel не выбран</string>
 </resources>

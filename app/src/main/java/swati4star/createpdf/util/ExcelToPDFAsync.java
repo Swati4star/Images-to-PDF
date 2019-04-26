@@ -9,7 +9,6 @@ import com.aspose.cells.PdfSecurityOptions;
 
 import com.aspose.cells.Workbook;
 
-
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 
 public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
@@ -45,8 +44,7 @@ public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            LoadOptions loadOptions = new LoadOptions(FileFormatType.XLSX);
-            final Workbook workbook = new Workbook(mPath, loadOptions);
+            final Workbook workbook = new Workbook(mPath);
             if (mIsPasswordProtected) {
                 PdfSaveOptions saveOption = new PdfSaveOptions();
                 saveOption.setSecurityOptions(new PdfSecurityOptions());
