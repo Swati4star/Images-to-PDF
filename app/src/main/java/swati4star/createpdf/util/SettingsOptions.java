@@ -59,6 +59,9 @@ public class SettingsOptions {
             options.add(new EnhancementOptionsEntity(context,
                     R.drawable.ic_lock_black_24dp, R.string.change_master_pwd));
 
+            options.add(new EnhancementOptionsEntity(context,
+                    R.drawable.ic_format_list_numbered_black_24dp, R.string.show_pg_num));
+
             return options;
         }
     }
