@@ -291,6 +291,7 @@ public class ViewFilesFragment extends Fragment
         Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        mActivity.setTitle(appName);
         //Set default item selected
         if (mActivity instanceof MainActivity) {
             ((MainActivity) mActivity).setNavigationViewSelection(R.id.nav_home);
