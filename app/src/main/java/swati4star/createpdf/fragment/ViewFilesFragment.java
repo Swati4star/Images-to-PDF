@@ -355,14 +355,14 @@ public class ViewFilesFragment extends Fragment
 
         if (toolbar != null) {
             if (countFiles == 0) {
-                mActivity.setTitle(appName);
+                toolbar.setTitle(appName);
                 if (mCheckBoxChanged) {
                     mCheckBoxChanged = false;
                     mIsChecked = false;
                     activity.invalidateOptionsMenu();
                 }
             } else {
-                mActivity.setTitle(String.valueOf(countFiles));
+                toolbar.setTitle(String.valueOf(countFiles));
                 if (!mCheckBoxChanged) {
                     mCheckBoxChanged = true;
                     mIsChecked = true;
