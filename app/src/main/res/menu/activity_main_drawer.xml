@@ -116,9 +116,8 @@
                         android:title="@string/extract_images" />
                     <item
                         android:id="@+id/nav_pdf_to_images"
-                        android:icon="@drawable/ic_image_black_24dp"
+                        android:icon="@drawable/ic_zip_to_pdf"
                         android:title="@string/pdf_to_images" />
-                    <!--TODO change icon-->
                     <item
                         android:id="@+id/nav_zip_to_pdf"
                         android:icon="@drawable/ic_image_black_24dp"
