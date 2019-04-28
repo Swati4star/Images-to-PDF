@@ -280,7 +280,6 @@
                 app:option_text="@string/pdf_to_images" />
         </LinearLayout>
 
-        <!--TODO change option icon-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -299,7 +298,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_broken_image_black_24dp"
+                app:option_icon="@drawable/ic_zip_to_pdf"
                 app:option_text="@string/zip_to_pdf" />
         </LinearLayout>
     </LinearLayout>

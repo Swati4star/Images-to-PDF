@@ -31,11 +31,12 @@ import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SPLIT_PDF_KEY;
 import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
+import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 
 public class FavouritesActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedpreferences;
-    private boolean[] mKeyState = new boolean[20];
+    private boolean[] mKeyState = new boolean[21];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class FavouritesActivity extends AppCompatActivity {
         mKeyState[17] = mSharedpreferences.getBoolean(EXTRACT_IMAGES_KEY, false);
         mKeyState[18] = mSharedpreferences.getBoolean(PDF_TO_IMAGES_KEY, false);
         mKeyState[19] = mSharedpreferences.getBoolean(EXCEL_TO_PDF_KEY, false);
+        mKeyState[20] = mSharedpreferences.getBoolean(ZIP_TO_PDF_KEY, false);
     }
     /**
      * Restore the intial state if user
@@ -130,5 +132,6 @@ public class FavouritesActivity extends AppCompatActivity {
         mSharedpreferences.edit().putBoolean(EXTRACT_IMAGES_KEY, mKeyState[17] ).apply();
         mSharedpreferences.edit().putBoolean(PDF_TO_IMAGES_KEY, mKeyState[18] ).apply();
         mSharedpreferences.edit().putBoolean(EXCEL_TO_PDF_KEY, mKeyState[19] ).apply();
+        mSharedpreferences.edit().putBoolean(ZIP_TO_PDF_KEY, mKeyState[20] ).apply();
     }
 }
