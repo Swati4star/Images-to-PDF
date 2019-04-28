@@ -200,10 +200,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * Sets the action bar title to app name when all files have been unchecked
      */
     private void updateActionBarTitle() {
-        ActionBar actionBar = ((AppCompatActivity) mActivity).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(R.string.app_name);
-        }
+        mActivity.setTitle(R.string.app_name);
     }
 
     /**
