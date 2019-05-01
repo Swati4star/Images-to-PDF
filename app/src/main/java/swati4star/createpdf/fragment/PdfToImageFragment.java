@@ -10,9 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +41,6 @@ import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
-import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PdfToImages;
 import swati4star.createpdf.util.RealPathUtil;
@@ -61,8 +57,7 @@ import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
-        ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener,
-        OnBackPressedInterface {
+        ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private Activity mActivity;
@@ -218,12 +213,15 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                         }
                     })
                     .show();
+        } else {
+            pdfToImage(mInputPassword);
         }
     }
 
     /**
      * Thia method handles the call to the Async process of conversion
      * from PDF to Image.
+     *
      * @param mInputPassword is the password if the file is encrypted.
      */
     private void pdfToImage(String[] mInputPassword) {
@@ -233,12 +231,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                         mPath, mUri, this)
                         .execute();
             } else {
-                new PdfToImages(mContext, mPath, mUri, PdfToImageFragment.this)
-                        .execute();
+                new PdfToImages(mContext, mPath, mUri, this).execute();
             }
         } else
-            new ExtractImages(mContext, mPath, PdfToImageFragment.this)
-                    .execute();
+            new ExtractImages(mContext, mPath, this).execute();
     }
 
     @Override
