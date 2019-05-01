@@ -194,12 +194,10 @@ public class PDFEncryptionUtility {
     /**
      * This function removes the password for encrypted files.
      * @param file - the path of the actual encrypted file.
-     * @param dataSetChanged - the DataSetChanged object.
      * @param inputPassword - the password of the encrypted file.
      * @return
      */
     public String removeDefPasswordForImages(final String file,
-                                             final DataSetChanged dataSetChanged,
                                              final String[] inputPassword) {
         String finalOutputFile;
         try {
@@ -215,8 +213,7 @@ public class PDFEncryptionUtility {
                 PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
                 stamper.close();
                 reader.close();
-                String filepath = finalOutputFile;
-                return filepath;
+                return finalOutputFile;
             }
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
