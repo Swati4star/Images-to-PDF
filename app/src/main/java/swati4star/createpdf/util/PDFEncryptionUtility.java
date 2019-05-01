@@ -24,7 +24,6 @@ import java.util.Objects;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
-import swati4star.createpdf.interfaces.OnPDFDecryptInterface;
 
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.appName;
