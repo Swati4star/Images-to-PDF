@@ -24,6 +24,7 @@ import java.util.Objects;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
+import swati4star.createpdf.interfaces.OnPDFDecryptInterface;
 
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.appName;
@@ -63,7 +64,8 @@ public class PDFEncryptionUtility {
         mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -189,6 +191,42 @@ public class PDFEncryptionUtility {
             }
             mDialog.dismiss();
         });
+    }
+
+    /**
+     * This function removes the password for encrypted files.
+     * @param file is the path of the actual encrypted file.
+     * @param dataSetChanged is the DataSetChanged object.
+     * @param inputPassword is the password of the encrypted file.
+     * @return
+     */
+    public String removeDefPasswordForImages(final String file,
+                                             final DataSetChanged dataSetChanged,
+                                             final String[] inputPassword) {
+        String finalOutputFile;
+        try {
+            String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
+            PdfReader reader = new PdfReader(file, masterpwd.getBytes());
+            byte[] password;
+            finalOutputFile = mFileUtils.getUniqueFileName
+                    (file.replace(mContext.getResources().getString(R.string.pdf_ext),
+                            mContext.getString(R.string.decrypted_file)));
+            password = reader.computeUserPassword();
+            byte[] input = inputPassword[0].getBytes();
+            if (Arrays.equals(input, password)) {
+                PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
+                stamper.close();
+                reader.close();
+                if (dataSetChanged != null)
+                    dataSetChanged.updateDataset();
+                new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
+                String filepath = finalOutputFile;
+                return filepath;
+            }
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private boolean removePasswordUsingDefMasterPAssword(final String file,
