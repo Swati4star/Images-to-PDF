@@ -193,7 +193,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             mInputPassword = new String[1];
             new MaterialDialog.Builder(mActivity)
                     .title(R.string.enter_password)
-                    .content(R.string.decrypt_message)
+                    .content(R.string.decrypt_protected_file)
                     .inputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
                     .input(null, null, (dialog, input) -> {
                         if (StringUtils.isEmpty(input)) {
@@ -223,7 +223,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             new PdfToImages(mContext, mInputPassword, mPath, mUri, this)
                     .execute();
         } else
-            new ExtractImages(mContext, mPath, this).execute();
+            new ExtractImages(mPath, this).execute();
     }
 
     @Override
