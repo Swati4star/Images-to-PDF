@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -193,6 +194,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             new MaterialDialog.Builder(mActivity)
                     .title(R.string.enter_password)
                     .content(R.string.decrypt_message)
+                    .inputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
                     .input(null, null, (dialog, input) -> {
                         if (StringUtils.isEmpty(input)) {
                             showSnackbar(mActivity, R.string.snackbar_name_not_blank);
@@ -201,14 +203,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                             if (inputName != null) {
                                 mInputPassword[0] = inputName;
                                 pdfToImage(mInputPassword);
-                            } else {
-                                MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
-                                builder.onPositive((dialog12, which) -> {
-                                    mInputPassword[0] = inputName;
-                                    pdfToImage(mInputPassword);
-                                })
-                                        .onNegative((dialog1, which) -> parse())
-                                        .show();
                             }
                         }
                     })
@@ -222,17 +216,12 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * Thia method handles the call to the Async process of conversion
      * from PDF to Image.
      *
-     * @param mInputPassword is the password if the file is encrypted.
+     * @param mInputPassword - the password if the file is encrypted.
      */
     private void pdfToImage(String[] mInputPassword) {
         if (mOperation.equals(PDF_TO_IMAGES)) {
-            if (mInputPassword != null) {
-                new PdfToImages(mContext, mInputPassword,
-                        mPath, mUri, this)
-                        .execute();
-            } else {
-                new PdfToImages(mContext, mPath, mUri, this).execute();
-            }
+            new PdfToImages(mContext, mInputPassword, mPath, mUri, this)
+                    .execute();
         } else
             new ExtractImages(mContext, mPath, this).execute();
     }

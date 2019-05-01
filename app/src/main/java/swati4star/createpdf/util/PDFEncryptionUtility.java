@@ -63,8 +63,7 @@ public class PDFEncryptionUtility {
         mPasswordInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -194,9 +193,9 @@ public class PDFEncryptionUtility {
 
     /**
      * This function removes the password for encrypted files.
-     * @param file is the path of the actual encrypted file.
-     * @param dataSetChanged is the DataSetChanged object.
-     * @param inputPassword is the password of the encrypted file.
+     * @param file - the path of the actual encrypted file.
+     * @param dataSetChanged - the DataSetChanged object.
+     * @param inputPassword - the password of the encrypted file.
      * @return
      */
     public String removeDefPasswordForImages(final String file,
@@ -216,9 +215,6 @@ public class PDFEncryptionUtility {
                 PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
                 stamper.close();
                 reader.close();
-                if (dataSetChanged != null)
-                    dataSetChanged.updateDataset();
-                new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
                 String filepath = finalOutputFile;
                 return filepath;
             }

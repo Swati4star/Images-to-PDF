@@ -33,15 +33,6 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     private Context mContext;
     private String mDecryptedPath;
 
-    public PdfToImages(Context context, String mPath, Uri mUri,
-                       ExtractImagesListener mExtractImagesListener) {
-        this.mPath = mPath;
-        this.mUri = mUri;
-        this.mExtractImagesListener = mExtractImagesListener;
-        mOutputFilePaths = new ArrayList<>();
-        this.mContext = context;
-    }
-
     public PdfToImages(Context context, String[] password, String mPath, Uri mUri,
                        ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
@@ -123,5 +114,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         mExtractImagesListener.updateView(mImagesCount, mOutputFilePaths);
+        if (mDecryptedPath != null)
+            new File(mDecryptedPath).delete();
     }
 }
