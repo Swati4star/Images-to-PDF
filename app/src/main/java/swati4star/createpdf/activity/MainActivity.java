@@ -27,6 +27,7 @@ import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
+import swati4star.createpdf.fragment.AddTextFragment;
 import swati4star.createpdf.fragment.ExceltoPdfFragment;
 import swati4star.createpdf.fragment.ExtractTextFragment;
 import swati4star.createpdf.fragment.FavouritesFragment;
@@ -385,6 +386,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentSelectedMap.append(R.id.nav_home, R.string.app_name);
         mFragmentSelectedMap.append(R.id.nav_camera, R.string.images_to_pdf);
         mFragmentSelectedMap.append(R.id.nav_qrcode, R.string.qr_barcode_pdf);
+        mFragmentSelectedMap.append(R.id.nav_add_text, R.string.add_text);
         mFragmentSelectedMap.append(R.id.nav_gallery, R.string.viewFiles);
         mFragmentSelectedMap.append(R.id.nav_merge, R.string.merge_pdf);
         mFragmentSelectedMap.append(R.id.nav_split, R.string.split_pdf);
@@ -442,6 +444,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_history:
                 fragment = new HistoryFragment();
+                break;
+            case R.id.nav_add_text:
+                fragment = new AddTextFragment();
                 break;
             case R.id.nav_add_password:
                 fragment = new RemovePagesFragment();
