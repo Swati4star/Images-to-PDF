@@ -401,7 +401,7 @@ public class FavouritesFragment extends Fragment
                 ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(v.getId()).getIconId());
                 fragmentManager.beginTransaction()
                         .replace(R.id.content, fragment)
-                        .addToBackStack(null)
+                        .addToBackStack(getString(R.string.favourites))
                         .commit();
             }
         } catch (Exception e) {

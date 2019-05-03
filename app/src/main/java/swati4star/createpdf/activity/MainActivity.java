@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -166,12 +167,30 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favourites_item) {
+            Fragment currFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+
             Fragment fragment = new FavouritesFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             setTitle(R.string.favourites);
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+            FragmentTransaction transaction = fragmentManager.beginTransaction()
+                    .replace(R.id.content, fragment);
+            if (!(currFragment instanceof HomeFragment)) {
+                transaction.addToBackStack(getFragmentName(currFragment));
+            }
+            transaction.commit();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String getFragmentName(Fragment fragment) {
+        String name = "set name";
+        if (fragment instanceof ViewFilesFragment) {
+            name = getString(R.string.viewFiles);
+        } else if (fragment instanceof HistoryFragment) {
+            name = getString(R.string.history);
+        }
+        // TODO : set name for other cases also
+        return name;
     }
 
     /**
@@ -310,9 +329,11 @@ public class MainActivity extends AppCompatActivity
             else {
                 // back stack count will be 1 when we open a item from favourite menu
                 // on clicking back, return back to fav menu and change title
-                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                int count = getSupportFragmentManager().getBackStackEntryCount();
+                if (count > 0) {
+                    String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
+                    setTitle(s);
                     getSupportFragmentManager().popBackStack();
-                    setTitle(R.string.favourites);
                 } else {
                     Fragment fragment = new HomeFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
