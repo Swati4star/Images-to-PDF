@@ -308,10 +308,17 @@ public class MainActivity extends AppCompatActivity
             } else if (checkFragmentBottomSheetBehavior())
                 closeFragmentBottomSheet();
             else {
-                Fragment fragment = new HomeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                setTitle(R.string.app_name);
-                setNavigationViewSelection(R.id.nav_home);
+                // back stack count will be 1 when we open a item from favourite menu
+                // on clicking back, return back to fav menu and change title
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                    setTitle(R.string.favourites);
+                } else {
+                    Fragment fragment = new HomeFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                    setTitle(R.string.app_name);
+                    setNavigationViewSelection(R.id.nav_home);
+                }
             }
         }
     }
