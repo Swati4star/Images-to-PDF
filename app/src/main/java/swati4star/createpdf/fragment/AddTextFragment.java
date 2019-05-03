@@ -180,6 +180,7 @@ public class AddTextFragment extends Fragment {
 
     public void resetView() {
         mPdfpath = mTextPath = null;
+        mPdfUri = mTextUri = null;
         mMorphButtonUtility.morphToGrey(mCreateTextPDF, mMorphButtonUtility.integer());
         mCreateTextPDF.setEnabled(false);
     }
@@ -239,10 +240,6 @@ public class AddTextFragment extends Fragment {
         } finally {
             mMorphButtonUtility.initializeButton(mSelectPDF, mCreateTextPDF);
             mMorphButtonUtility.initializeButton(mSelectText, mCreateTextPDF);
-            mTextPath = null;
-            mPdfpath = null;
-            mPdfUri = null;
-            mTextUri = null;
             resetView();
         }
     }
