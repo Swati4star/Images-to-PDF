@@ -9,11 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
@@ -22,21 +27,23 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
+import swati4star.createpdf.util.BottomSheetCallback;
+import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -44,6 +51,9 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
@@ -53,7 +63,8 @@ import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-public class AddTextFragment extends Fragment {
+public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
+        BottomSheetPopulate, OnBackPressedInterface {
     private Activity mActivity;
     private String mPdfpath;
     private String mTextPath;
@@ -61,6 +72,7 @@ public class AddTextFragment extends Fragment {
     private Uri mTextUri;
     private FileUtils mFileUtils;
     private MorphButtonUtility mMorphButtonUtility;
+    private BottomSheetUtils mBottomSheetUtils;
     private SharedPreferences mSharedPreferences;
     private boolean mPermissionGranted;
     private static final int INTENT_REQUEST_PICK_PDF_FILE_CODE = 10;
@@ -73,6 +85,19 @@ public class AddTextFragment extends Fragment {
     MorphingButton mSelectText;
     @BindView(R.id.create_pdf_added_text)
     MorphingButton mCreateTextPDF;
+    BottomSheetBehavior sheetBehavior;
+    @BindView(R.id.bottom_sheet)
+    LinearLayout layoutBottomSheet;
+    @BindView(R.id.recyclerViewFiles)
+    RecyclerView mRecyclerViewFiles;
+    @BindView(R.id.upArrow)
+    ImageView mUpArrow;
+    @BindView(R.id.downArrow)
+    ImageView mDownArrow;
+    @BindView(R.id.layout)
+    RelativeLayout mLayout;
+    @BindView(R.id.lottie_progress)
+    LottieAnimationView mLottieProgress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +106,10 @@ public class AddTextFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_add_text, container, false);
         ButterKnife.bind(this, rootView);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+        mLottieProgress.setVisibility(View.VISIBLE);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         resetView();
         return rootView;
     }
@@ -91,6 +120,7 @@ public class AddTextFragment extends Fragment {
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
+        mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
     @OnClick(R.id.select_pdf_file)
@@ -205,30 +235,21 @@ public class AddTextFragment extends Fragment {
             PdfReader pdfReader = new PdfReader(mPdfpath);
             PdfStamper pdfStamper = new PdfStamper(pdfReader, fos);
 
+            PdfContentByte pdfContentByte = pdfStamper.getOverContent(pdfReader.getNumberOfPages());
 
-            // loop on all the PDF pages
-            // i is the pdfPageNumber
-            for (int i = 1; i <= pdfReader.getNumberOfPages(); i++) {
-
-                //getOverContent() allows you to write content on TOP of existing pdf content.
-                //getUnderContent() allows you to write content on BELOW of existing pdf content.
-
-                PdfContentByte pdfContentByte = pdfStamper.getOverContent(i);
-
-                // Add text in existing PDF
-                pdfContentByte.beginText();
-                pdfContentByte.setFontAndSize(BaseFont.createFont
-                                (BaseFont.TIMES_BOLD, //Font name
-                                        BaseFont.CP1257, //Font encoding
-                                        BaseFont.EMBEDDED //Font embedded
-                                )
-                        , 12); // set font and size
-                pdfContentByte.setTextMatrix(35, 760); // set x and y co-ordinates
-                //0, 800 will write text on TOP LEFT of pdf page
-                //0, 0 will write text on BOTTOM LEFT of pdf page
-                pdfContentByte.showText(text.toString()); // add the text
-                pdfContentByte.endText();
-            }
+            // Add text in existing PDF
+            pdfContentByte.beginText();
+            pdfContentByte.setFontAndSize(BaseFont.createFont
+                            (BaseFont.TIMES_ROMAN, //Font name
+                                    BaseFont.CP1257, //Font encoding
+                                    BaseFont.EMBEDDED //Font embedded
+                            )
+                    , 12); // set font and size
+            pdfContentByte.setTextMatrix(10, 10); // set x and y co-ordinates
+            //0, 800 will write text on TOP LEFT of pdf page
+            //0, 0 will write text on BOTTOM LEFT of pdf page
+            pdfContentByte.showText(text.toString());
+            pdfContentByte.endText();
 
             pdfStamper.close(); //close pdfStamper
 
@@ -238,8 +259,7 @@ public class AddTextFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            mMorphButtonUtility.initializeButton(mSelectPDF, mCreateTextPDF);
-            mMorphButtonUtility.initializeButton(mSelectText, mCreateTextPDF);
+            mMorphButtonUtility.initializeButtonForAddText(mSelectPDF, mSelectText, mCreateTextPDF);
             resetView();
         }
     }
@@ -257,5 +277,27 @@ public class AddTextFragment extends Fragment {
                     showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
             }
         }
+    }
+
+    @Override
+    public void onItemClick(String path) {
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mPdfpath = path;
+        showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
+    }
+
+    @Override
+    public void onPopulate(ArrayList<String> paths) {
+        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+    }
+
+    @Override
+    public void closeBottomSheet() {
+        closeBottomSheetUtil(sheetBehavior);
+    }
+
+    @Override
+    public boolean checkSheetBehaviour() {
+        return checkSheetBehaviourUtil(sheetBehavior);
     }
 }

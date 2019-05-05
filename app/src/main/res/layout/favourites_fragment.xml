@@ -97,6 +97,15 @@
                     app:option_icon="@drawable/ic_lock_open_black_24dp"
                     app:option_text="@string/remove_password" />
 
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/add_text_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_text_format_black_24dp"
+                    app:option_text="@string/add_text" />
+
             </LinearLayout>
 
             <LinearLayout

@@ -42,6 +42,11 @@
         android:icon="@drawable/ic_lock_open_black_24dp"/>
 
     <CheckBoxPreference
+        android:title="@string/add_text"
+        android:key="@string/add_text"
+        android:icon="@drawable/ic_text_format_black_24dp"/>
+
+    <CheckBoxPreference
         android:title="@string/rotate_pages"
         android:key="@string/rotate_pages"
         android:icon="@drawable/baseline_crop_rotate_24"/>
