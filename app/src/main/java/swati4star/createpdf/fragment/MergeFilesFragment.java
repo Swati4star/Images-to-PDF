@@ -332,6 +332,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         setMorphingButtonState(false);
         mFilePaths.clear();
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
+        mPasswordProtected = false;
+        showEnhancementOptions();
     }
 
     @Override

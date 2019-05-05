@@ -5,30 +5,75 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ExceltoPdfFragment">
 
-    <LinearLayout
-        android:id="@+id/buttonLayoutNew"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <com.dd.morphingbutton.MorphingButton
-            android:id="@+id/select_excel_file"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MorphingButton"
-            android:padding="10dp"
-            android:text="@string/select_excel_file" />
-        <com.dd.morphingbutton.MorphingButton
-            android:id="@+id/create_excel_to_pdf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/MorphingButton"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:text="@string/excel_to_pdf" />
-    </LinearLayout>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/buttonLayoutNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+
+                <com.dd.morphingbutton.MorphingButton
+                    android:id="@+id/select_excel_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MorphingButton"
+                    android:padding="10dp"
+                    android:text="@string/select_excel_file" />
+                <com.dd.morphingbutton.MorphingButton
+                    android:id="@+id/create_excel_to_pdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MorphingButton"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:text="@string/excel_to_pdf" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="bottom|center"
+                android:orientation="vertical"
+                tools:targetApi="lollipop">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?attr/customDividerColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:text="@string/more_options_text"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/enhancement_options_recycle_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:isScrollContainer="false"
+                    android:layout_margin="4dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/tv_excel_file_name_bottom"

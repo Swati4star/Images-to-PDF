@@ -60,6 +60,7 @@ import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SPLIT_PDF_KEY;
 import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
+import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
@@ -119,6 +120,8 @@ public class FavouritesFragment extends Fragment
     LottieAnimationView favouritesAnimation;
     @BindView(R.id.favourites_text)
     TextView favouritesText;
+    @BindView(R.id.zip_to_pdf)
+    MyCardView pref_zip_to_pdf;
 
     @Nullable
     @Override
@@ -169,6 +172,7 @@ public class FavouritesFragment extends Fragment
         pref_rem_dup_pages.setOnClickListener(this);
         pref_invert_pdf.setOnClickListener(this);
         pref_excel_to_pdf.setOnClickListener(this);
+        pref_zip_to_pdf.setOnClickListener(this);
 
     }
 
@@ -215,6 +219,7 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_extract_img, EXTRACT_IMAGES_KEY);
         viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
         viewVisibility(pref_excel_to_pdf, EXCEL_TO_PDF_KEY);
+        viewVisibility(pref_zip_to_pdf, ZIP_TO_PDF_KEY);
 
         // if there are no favourites then show favourites animation and text
         if (!mDoesFavouritesExist) {
@@ -269,6 +274,8 @@ public class FavouritesFragment extends Fragment
                 new FavouriteItem(R.id.nav_invert_pdf, R.string.invert_pdf));
         mFragmentPositionMap.put(R.id.excel_to_pdf,
                 new FavouriteItem(R.id.nav_excel_to_pdf, R.string.excel_to_pdf));
+        mFragmentPositionMap.put(R.id.zip_to_pdf,
+                new FavouriteItem(R.id.nav_zip_to_pdf, R.string.zip_to_pdf));
     }
 
     @Override
@@ -394,6 +401,9 @@ public class FavouritesFragment extends Fragment
                 break;
             case R.id.excel_to_pdf:
                 fragment = new ExceltoPdfFragment();
+                break;
+            case R.id.zip_to_pdf:
+                fragment = new ZipToPdfFragment();
                 break;
         }
         try {

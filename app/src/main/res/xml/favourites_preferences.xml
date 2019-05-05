@@ -110,4 +110,9 @@
         android:title="@string/pdf_to_images"
         android:key="@string/pdf_to_images"
         android:icon="@drawable/ic_image_black_24dp"/>
+
+    <CheckBoxPreference
+        android:title="@string/zip_to_pdf"
+        android:key="@string/zip_to_pdf"
+        android:icon="@drawable/ic_zip_to_pdf"/>
 </PreferenceScreen>

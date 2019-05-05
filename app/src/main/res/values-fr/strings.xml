@@ -421,4 +421,5 @@
 
     <string name="favourites_text">Sélectionnez l\'icône + pour ajouter vos fonctionnalités préférées!</string>
     <string name="split_one_page_pdf_alert">Le PDF sélectionné ne peut pas être divisé car il ne contient qu\'une page!</string>
+    <string name="no_excel_file">Aucun fichier Excel sélectionné</string>
 </resources>

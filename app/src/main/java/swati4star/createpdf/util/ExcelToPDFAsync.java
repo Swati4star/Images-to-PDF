@@ -3,6 +3,10 @@ package swati4star.createpdf.util;
 import android.os.AsyncTask;
 
 import com.aspose.cells.FileFormatType;
+import com.aspose.cells.LoadOptions;
+import com.aspose.cells.PdfSaveOptions;
+import com.aspose.cells.PdfSecurityOptions;
+
 import com.aspose.cells.Workbook;
 
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -11,7 +15,8 @@ public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private boolean mSuccess;
     private String mPath;
-    private String mDestPath;
+    private boolean mIsPasswordProtected;
+    private String mDestPath, mPassword;
 
     /**
      * This public constructor is responsible for initializing the path of actual file,
@@ -21,10 +26,12 @@ public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
      * @param onPDFCreated is the onPDFCreatedInterface instance.
      */
     public ExcelToPDFAsync(String parentPath, String destPath,
-                           OnPDFCreatedInterface onPDFCreated) {
+                           OnPDFCreatedInterface onPDFCreated, boolean isPasswordProtected, String password) {
         mPath = parentPath;
         mDestPath = destPath;
         this.mOnPDFCreatedInterface = onPDFCreated;
+        mIsPasswordProtected = isPasswordProtected;
+        mPassword = password;
     }
 
     @Override
@@ -38,7 +45,17 @@ public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         try {
             final Workbook workbook = new Workbook(mPath);
-            workbook.save(mDestPath, FileFormatType.PDF);
+            if (mIsPasswordProtected) {
+                PdfSaveOptions saveOption = new PdfSaveOptions();
+                saveOption.setSecurityOptions(new PdfSecurityOptions());
+                saveOption.getSecurityOptions().setUserPassword(mPassword);
+                saveOption.getSecurityOptions().setOwnerPassword(mPassword);
+                saveOption.getSecurityOptions().setExtractContentPermission(false);
+                saveOption.getSecurityOptions().setPrintPermission(false);
+                workbook.save(mDestPath, saveOption);
+            } else {
+                workbook.save(mDestPath, FileFormatType.PDF);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             mSuccess = false;
