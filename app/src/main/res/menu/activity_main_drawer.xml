@@ -56,7 +56,7 @@
                         android:title="@string/remove_password" />
                     <item
                         android:id="@+id/nav_add_text"
-                        android:icon="@drawable/ic_extract_text"
+                        android:icon="@drawable/ic_text_format_black_24dp"
                         android:title="@string/add_text" />
                     <item
                         android:id="@+id/nav_add_images"
