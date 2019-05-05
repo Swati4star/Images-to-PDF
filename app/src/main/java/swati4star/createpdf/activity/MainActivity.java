@@ -57,6 +57,7 @@ import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
@@ -69,6 +70,7 @@ import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
@@ -184,12 +186,46 @@ public class MainActivity extends AppCompatActivity
 
     private String getFragmentName(Fragment fragment) {
         String name = "set name";
-        if (fragment instanceof ViewFilesFragment) {
-            name = getString(R.string.viewFiles);
+        if (fragment instanceof ImageToPdfFragment) {
+            name = getString(R.string.images_to_pdf);
+        } else if (fragment instanceof TextToPdfFragment) {
+            name = getString(R.string.text_to_pdf);
+        } else if (fragment instanceof QrBarcodeScanFragment) {
+            name = getString(R.string.qr_barcode_pdf);
+        } else if (fragment instanceof ExceltoPdfFragment) {
+            name = getString(R.string.excel_to_pdf);
+        } else if (fragment instanceof ViewFilesFragment) {
+            if (fragment.getArguments() != null) {
+                int code = fragment.getArguments().getInt(BUNDLE_DATA);
+                if (code == ROTATE_PAGES) {
+                    name = ROTATE_PAGES_KEY;
+                } else if (code == ADD_WATERMARK) {
+                    name = ADD_WATERMARK_KEY;
+                }
+            } else {
+                name = getString(R.string.viewFiles);
+            }
         } else if (fragment instanceof HistoryFragment) {
             name = getString(R.string.history);
+        } else if (fragment instanceof ExtractTextFragment) {
+            name = getString(R.string.extract_text);
+        } else if (fragment instanceof AddImagesFragment) {
+            name = getString(R.string.add_images);
+        } else if (fragment instanceof MergeFilesFragment) {
+            name = getString(R.string.merge_pdf);
+        } else if (fragment instanceof SplitFilesFragment) {
+            name = getString(R.string.split_pdf);
+        } else if (fragment instanceof InvertPdfFragment) {
+            name = getString(R.string.invert_pdf);
+        } else if (fragment instanceof RemoveDuplicatePagesFragment) {
+            name = getString(R.string.remove_duplicate);
+        } else if (fragment instanceof RemovePagesFragment) {
+            name = fragment.getArguments().getString(BUNDLE_DATA);
+        } else if (fragment instanceof PdfToImageFragment) {
+            name = getString(R.string.pdf_to_images);
+        } else if (fragment instanceof ZipToPdfFragment) {
+            name = getString(R.string.zip_to_pdf);
         }
-        // TODO : set name for other cases also
         return name;
     }
 
@@ -345,38 +381,38 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean checkFragmentBottomSheetBehavior() {
-        if (mCurrentFragment instanceof InvertPdfFragment )
+        if (mCurrentFragment instanceof InvertPdfFragment)
             return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof MergeFilesFragment )
+        if (mCurrentFragment instanceof MergeFilesFragment)
             return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment)
             return ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof RemovePagesFragment )
+        if (mCurrentFragment instanceof RemovePagesFragment)
             return ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof AddImagesFragment )
+        if (mCurrentFragment instanceof AddImagesFragment)
             return ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof PdfToImageFragment )
+        if (mCurrentFragment instanceof PdfToImageFragment)
             return ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
 
-        if (mCurrentFragment instanceof SplitFilesFragment )
+        if (mCurrentFragment instanceof SplitFilesFragment)
             return ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
 
         return false;
     }
 
     private void closeFragmentBottomSheet() {
-        if ( mCurrentFragment instanceof InvertPdfFragment)
+        if (mCurrentFragment instanceof InvertPdfFragment)
             ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof MergeFilesFragment)
             ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
 
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment)
             ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
 
         if (mCurrentFragment instanceof RemovePagesFragment)
@@ -406,8 +442,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     *  Hashmap for setting title
-     * */
+     * Hashmap for setting title
+     */
     private void titleMap() {
         mFragmentSelectedMap = new SparseIntArray();
         mFragmentSelectedMap.append(R.id.nav_home, R.string.app_name);
