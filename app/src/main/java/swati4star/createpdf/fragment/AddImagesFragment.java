@@ -287,6 +287,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, addImages);
+        mMorphButtonUtility.setTextAndActivateButtons(mPath,
+                selectFileButton, mCreatePdf);
     }
 
     @Override
