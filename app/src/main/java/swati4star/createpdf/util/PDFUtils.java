@@ -577,33 +577,36 @@ public class PDFUtils {
                  * from first letter to "-" and endpage will be from "-" till last letter.
                  *
                  */
-                if (!range.contains("-")) {
-                    startPage = Integer.parseInt(range);
-                    document = new Document();
-                    fileName = fileName.replace(pdfExtension,
-                            "_" + startPage + pdfExtension);
-                    copy = new PdfCopy(document, new FileOutputStream(fileName));
+                if (ranges.length > 1) {
+                    if (!range.contains("-")) {
+                        startPage = Integer.parseInt(range);
+                        document = new Document();
+                        fileName = fileName.replace(pdfExtension,
+                                "_" + startPage + pdfExtension);
+                        copy = new PdfCopy(document, new FileOutputStream(fileName));
 
-                    document.open();
-                    copy.addPage(copy.getImportedPage(reader, startPage));
-                    document.close();
+                        document.open();
+                        copy.addPage(copy.getImportedPage(reader, startPage));
+                        document.close();
 
-                } else {
-                    startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
-                    endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                    document = new Document();
-                    fileName = fileName.replace(pdfExtension,
-                            "_" + startPage + "-" + endPage + pdfExtension);
-                    copy = new PdfCopy(document, new FileOutputStream(fileName));
-                    document.open();
-                    for (int page = startPage; page <= endPage; page++) {
-                        copy.addPage(copy.getImportedPage(reader, page));
+                    } else {
+                        startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                        endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                        document = new Document();
+                        fileName = fileName.replace(pdfExtension,
+                                "_" + startPage + "-" + endPage + pdfExtension);
+                        copy = new PdfCopy(document, new FileOutputStream(fileName));
+                        document.open();
+                        for (int page = startPage; page <= endPage; page++) {
+                            copy.addPage(copy.getImportedPage(reader, page));
+                        }
+                        document.close();
                     }
-                    document.close();
+                    new DatabaseHelper(mContext).insertRecord(fileName,
+                            mContext.getString(R.string.created));
                 }
                 outputPaths.add(fileName);
-                new DatabaseHelper(mContext).insertRecord(fileName,
-                        mContext.getString(R.string.created));
+
             }
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
