@@ -53,7 +53,6 @@ import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
-import static swati4star.createpdf.util.ResultUtils.checkResultValidity;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -136,7 +135,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (!checkResultValidity(resultCode, data))
+        if (resultCode != Activity.RESULT_OK || data == null)
             return;
 
         switch (requestCode) {
@@ -287,6 +286,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, addImages);
+
     }
 
     @Override
