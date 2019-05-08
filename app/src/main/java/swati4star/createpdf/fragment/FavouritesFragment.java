@@ -399,7 +399,10 @@ public class FavouritesFragment extends Fragment
         try {
             if (fragment != null && fragmentManager != null) {
                 ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(v.getId()).getIconId());
-                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content, fragment)
+                        .addToBackStack(getString(R.string.favourites))
+                        .commit();
             }
         } catch (Exception e) {
             e.printStackTrace();

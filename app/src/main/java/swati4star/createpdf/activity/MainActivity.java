@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -56,6 +57,7 @@ import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
@@ -68,6 +70,7 @@ import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
@@ -166,12 +169,64 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favourites_item) {
+            Fragment currFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+
             Fragment fragment = new FavouritesFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             setTitle(R.string.favourites);
-            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+            FragmentTransaction transaction = fragmentManager.beginTransaction()
+                    .replace(R.id.content, fragment);
+            if (!(currFragment instanceof HomeFragment)) {
+                transaction.addToBackStack(getFragmentName(currFragment));
+            }
+            transaction.commit();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String getFragmentName(Fragment fragment) {
+        String name = "set name";
+        if (fragment instanceof ImageToPdfFragment) {
+            name = getString(R.string.images_to_pdf);
+        } else if (fragment instanceof TextToPdfFragment) {
+            name = getString(R.string.text_to_pdf);
+        } else if (fragment instanceof QrBarcodeScanFragment) {
+            name = getString(R.string.qr_barcode_pdf);
+        } else if (fragment instanceof ExceltoPdfFragment) {
+            name = getString(R.string.excel_to_pdf);
+        } else if (fragment instanceof ViewFilesFragment) {
+            if (fragment.getArguments() != null) {
+                int code = fragment.getArguments().getInt(BUNDLE_DATA);
+                if (code == ROTATE_PAGES) {
+                    name = ROTATE_PAGES_KEY;
+                } else if (code == ADD_WATERMARK) {
+                    name = ADD_WATERMARK_KEY;
+                }
+            } else {
+                name = getString(R.string.viewFiles);
+            }
+        } else if (fragment instanceof HistoryFragment) {
+            name = getString(R.string.history);
+        } else if (fragment instanceof ExtractTextFragment) {
+            name = getString(R.string.extract_text);
+        } else if (fragment instanceof AddImagesFragment) {
+            name = getString(R.string.add_images);
+        } else if (fragment instanceof MergeFilesFragment) {
+            name = getString(R.string.merge_pdf);
+        } else if (fragment instanceof SplitFilesFragment) {
+            name = getString(R.string.split_pdf);
+        } else if (fragment instanceof InvertPdfFragment) {
+            name = getString(R.string.invert_pdf);
+        } else if (fragment instanceof RemoveDuplicatePagesFragment) {
+            name = getString(R.string.remove_duplicate);
+        } else if (fragment instanceof RemovePagesFragment) {
+            name = fragment.getArguments().getString(BUNDLE_DATA);
+        } else if (fragment instanceof PdfToImageFragment) {
+            name = getString(R.string.pdf_to_images);
+        } else if (fragment instanceof ZipToPdfFragment) {
+            name = getString(R.string.zip_to_pdf);
+        }
+        return name;
     }
 
     /**
@@ -308,10 +363,19 @@ public class MainActivity extends AppCompatActivity
             } else if (checkFragmentBottomSheetBehavior())
                 closeFragmentBottomSheet();
             else {
-                Fragment fragment = new HomeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                setTitle(R.string.app_name);
-                setNavigationViewSelection(R.id.nav_home);
+                // back stack count will be 1 when we open a item from favourite menu
+                // on clicking back, return back to fav menu and change title
+                int count = getSupportFragmentManager().getBackStackEntryCount();
+                if (count > 0) {
+                    String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
+                    setTitle(s);
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    Fragment fragment = new HomeFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                    setTitle(R.string.app_name);
+                    setNavigationViewSelection(R.id.nav_home);
+                }
             }
         }
     }

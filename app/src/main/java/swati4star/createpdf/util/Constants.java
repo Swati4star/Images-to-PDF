@@ -65,11 +65,11 @@ public class Constants {
     public static final String ZIP_TO_PDF_KEY = "ZIP to PDF";
 
     public static final String BUNDLE_DATA = "bundle_data";
-    public static final String REORDER_PAGES = "reorder_pages";
-    public static final String REMOVE_PAGES = "remove_pages";
-    public static final String COMPRESS_PDF = "compress_pdf";
-    public static final String ADD_PWD = "add_pwd";
-    public static final String REMOVE_PWd = "remove_pwd";
+    public static final String REORDER_PAGES = "Reorder pages";
+    public static final String REMOVE_PAGES = "Remove pages";
+    public static final String COMPRESS_PDF = "Compress PDF";
+    public static final String ADD_PWD = "Add password";
+    public static final String REMOVE_PWd = "Remove password";
     public static final String ADD_IMAGES = "add_images";
     public static final String PDF_TO_IMAGES = "pdf_to_images";
     public static final String EXTRACT_IMAGES = "extract_images";
