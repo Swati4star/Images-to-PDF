@@ -46,6 +46,7 @@ public class Constants {
     public static final String QR_BARCODE_KEY = "QR & Barcodes";
     public static final String VIEW_FILES_KEY = "View Files";
     public static final String HISTORY_KEY = "History";
+    public static final String ADD_TEXT_KEY = "Add Text";
     public static final String ADD_PASSWORD_KEY = "Add password";
     public static final String REMOVE_PASSWORD_KEY = "Remove password";
     public static final String ROTATE_PAGES_KEY = "Rotate Pages";

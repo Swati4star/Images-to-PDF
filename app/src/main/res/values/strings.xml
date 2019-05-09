@@ -200,6 +200,8 @@
     <string name="set_as_default">Set as default</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Enter the password to continue</string>
+    <string name="add_text">Add Text</string>
+    <string name="snackbar_txtselected">Text File selected!</string>
     <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue...</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
     <string name="save_current">Save</string>

@@ -403,6 +403,8 @@
     <string name="pdf_selected">PDF file selected: </string>
     <string name="snackbar_txtExtracted">Text extracted!</string>
     <string name="snackbar_pdfselected">PDF file selected!</string>
+    <string name="add_text">Add Text</string>
+    <string name="snackbar_txtselected">Text File selected!</string>
     <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue...</string>
     <string name="creating_txt">Creating Text File</string>
 

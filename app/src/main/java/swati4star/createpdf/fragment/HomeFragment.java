@@ -79,6 +79,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView excelToPdf;
     @BindView(R.id.extract_text)
     MyCardView extractText;
+    @BindView(R.id.add_text)
+    MyCardView addText;
 
     private Map<Integer, HomePageItem> mFragmentPositionMap;
 
@@ -111,6 +113,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         zipToPdf.setOnClickListener(this);
         excelToPdf.setOnClickListener(this);
         extractText.setOnClickListener(this);
+        addText.setOnClickListener(this);
 
         return rootview;
     }
@@ -129,6 +132,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 new HomePageItem(R.id.nav_gallery, R.string.rotate_pages));
         mFragmentPositionMap.put(R.id.extract_text,
                 new HomePageItem(R.id.nav_text_extract, R.string.extract_text));
+        mFragmentPositionMap.put(R.id.add_text,
+                new HomePageItem(R.id.nav_add_text, R.string.add_text));
         mFragmentPositionMap.put(R.id.add_watermark,
                 new HomePageItem(R.id.nav_add_watermark, R.string.add_watermark));
         mFragmentPositionMap.put(R.id.merge_pdf,
@@ -264,6 +269,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.extract_text:
                 fragment = new ExtractTextFragment();
+                break;
+            case R.id.add_text:
+                fragment = new AddTextFragment();
+                break;
         }
 
         try {
