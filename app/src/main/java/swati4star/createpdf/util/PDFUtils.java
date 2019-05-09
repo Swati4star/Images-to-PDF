@@ -577,7 +577,7 @@ public class PDFUtils {
                  * from first letter to "-" and endpage will be from "-" till last letter.
                  *
                  */
-                if (ranges.length > 1) {
+                if (ranges.length > 1 || range.contains("-")) {
                     if (!range.contains("-")) {
                         startPage = Integer.parseInt(range);
                         document = new Document();
@@ -592,21 +592,29 @@ public class PDFUtils {
                     } else {
                         startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
                         endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                        document = new Document();
-                        fileName = fileName.replace(pdfExtension,
-                                "_" + startPage + "-" + endPage + pdfExtension);
-                        copy = new PdfCopy(document, new FileOutputStream(fileName));
-                        document.open();
-                        for (int page = startPage; page <= endPage; page++) {
-                            copy.addPage(copy.getImportedPage(reader, page));
-                        }
-                        document.close();
-                    }
-                    new DatabaseHelper(mContext).insertRecord(fileName,
-                            mContext.getString(R.string.created));
-                }
-                outputPaths.add(fileName);
+                        if (reader.getNumberOfPages() == endPage - startPage + 1) {
+                            showSnackbar(mContext, R.string.split_range_alert);
+                            return outputPaths;
+                        } else {
+                            document = new Document();
+                            fileName = fileName.replace(pdfExtension,
+                                    "_" + startPage + "-" + endPage + pdfExtension);
+                            copy = new PdfCopy(document, new FileOutputStream(fileName));
+                            document.open();
+                            for (int page = startPage; page <= endPage; page++) {
+                                copy.addPage(copy.getImportedPage(reader, page));
+                            }
+                            document.close();
 
+                            new DatabaseHelper(mContext).insertRecord(fileName,
+                                    mContext.getString(R.string.created));
+                            outputPaths.add(fileName);
+                        }
+                    }
+                } else {
+                    showSnackbar(mContext, R.string.split_one_page_pdf_alert);
+                    return outputPaths;
+                }
             }
         } catch (IOException | DocumentException e) {
             e.printStackTrace();

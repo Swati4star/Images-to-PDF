@@ -418,4 +418,5 @@
     <string name="favourites_text">Selecciona el ícono + para agregar tus funciones favoritas!</string>
     <string name="split_one_page_pdf_alert">¡El PDF seleccionado no se puede dividir porque solo tiene 1 página!</string>
     <string name="no_excel_file">Ningún archivo excel seleccionado</string>
+    <string name="split_range_alert">Please change your split range</string>
 </resources>
