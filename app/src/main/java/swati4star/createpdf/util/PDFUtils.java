@@ -577,7 +577,7 @@ public class PDFUtils {
                  * from first letter to "-" and endpage will be from "-" till last letter.
                  *
                  */
-                if (ranges.length > 1 || range.contains("-")) {
+                if (reader.getNumberOfPages() > 1) {
                     if (!range.contains("-")) {
                         startPage = Integer.parseInt(range);
                         document = new Document();
@@ -588,13 +588,13 @@ public class PDFUtils {
                         document.open();
                         copy.addPage(copy.getImportedPage(reader, startPage));
                         document.close();
-
+                        outputPaths.add(fileName);
                     } else {
+
                         startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
                         endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
                         if (reader.getNumberOfPages() == endPage - startPage + 1) {
                             showSnackbar(mContext, R.string.split_range_alert);
-                            return outputPaths;
                         } else {
                             document = new Document();
                             fileName = fileName.replace(pdfExtension,
@@ -613,7 +613,6 @@ public class PDFUtils {
                     }
                 } else {
                     showSnackbar(mContext, R.string.split_one_page_pdf_alert);
-                    return outputPaths;
                 }
             }
         } catch (IOException | DocumentException e) {
