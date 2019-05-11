@@ -130,24 +130,21 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,
                 mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();
-        if (numberOfPages == 1) {
-            showSnackbar(getActivity(), R.string.split_one_page_pdf_alert);
+        if (numberOfPages == 0) {
             return;
         }
-        if (numberOfPages > 0) {
-            String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
-            showSnackbar(mActivity, output);
-            splitFilesSuccessText.setVisibility(View.VISIBLE);
-            splitFilesSuccessText.setText(output);
+        String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
+        showSnackbar(mActivity, output);
+        splitFilesSuccessText.setVisibility(View.VISIBLE);
+        splitFilesSuccessText.setText(output);
 
-            FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mSplittedFiles.setVisibility(View.VISIBLE);
-            mSplittedFiles.setLayoutManager(mLayoutManager);
-            mSplittedFiles.setAdapter(splitFilesAdapter);
-            mSplittedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-            resetValues();
-        }
+        FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+        mSplittedFiles.setVisibility(View.VISIBLE);
+        mSplittedFiles.setLayoutManager(mLayoutManager);
+        mSplittedFiles.setAdapter(splitFilesAdapter);
+        mSplittedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        resetValues();
     }
 
     private void resetValues() {
