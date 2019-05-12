@@ -818,6 +818,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
         mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
+        mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
+                DEFAULT_PAGE_COLOR);
     }
 
     void addMargins() {

@@ -521,5 +521,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         mCreateTextPdf.setEnabled(false);
         mTextFileUri = null;
         mButtonClicked = 0;
+        mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
+                Constants.DEFAULT_FONT_COLOR);
+        mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
+                DEFAULT_PAGE_COLOR);
     }
 }
