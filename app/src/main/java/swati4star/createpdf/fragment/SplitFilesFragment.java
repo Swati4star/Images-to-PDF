@@ -11,6 +11,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,8 +115,9 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (data == null || resultCode != RESULT_OK || data.getData() == null)
-            return;
+        if (data == null || resultCode != RESULT_OK || data.getData() == null) {
+            resetValues();
+        }
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             //Getting Absolute Path
             String path = RealPathUtil.getRealPath(getContext(), data.getData());
@@ -172,13 +174,13 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSplittedFiles.setVisibility(View.GONE);
         splitFilesSuccessText.setVisibility(View.GONE);
         mPath = path;
-        mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, splitFilesButton);
-        mSplitConfitEditText.setVisibility(View.VISIBLE);
         String defaultSplitConfig = getDefaultSplitConfig(mPath);
-        if (defaultSplitConfig != null)
+        if (defaultSplitConfig != null) {
+            mMorphButtonUtility.setTextAndActivateButtons(path,
+                    selectFileButton, splitFilesButton);
+            mSplitConfitEditText.setVisibility(View.VISIBLE);
             mSplitConfitEditText.setText(defaultSplitConfig);
-        else
+        } else
             resetValues();
     }
 
