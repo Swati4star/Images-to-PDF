@@ -589,6 +589,8 @@ public class PDFUtils {
                         copy.addPage(copy.getImportedPage(reader, startPage));
                         document.close();
                         outputPaths.add(fileName);
+                        new DatabaseHelper(mContext).insertRecord(fileName,
+                                mContext.getString(R.string.created));
                     } else {
 
                         startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
