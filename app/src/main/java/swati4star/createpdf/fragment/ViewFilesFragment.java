@@ -175,13 +175,8 @@ public class ViewFilesFragment extends Fragment
                 break;
             case R.id.select_all:
                 if (mViewFilesAdapter.getItemCount() > 0) {
-                    if (mIsChecked) {
-                        mViewFilesAdapter.unCheckAll();
-                        mMenuItem.setIcon(R.drawable.ic_check_box_outline_blank_24dp);
-                    } else {
-                        mViewFilesAdapter.checkAll();
-                        mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
-                    }
+                    mViewFilesAdapter.checkAll();
+                    mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
                     mIsChecked = !mIsChecked;
                 } else {
                     showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
@@ -369,7 +364,7 @@ public class ViewFilesFragment extends Fragment
                     mIsChecked = true;
                     activity.invalidateOptionsMenu();
                 }
-                if (countFiles == 1 || countFiles == 2)
+                if (countFiles == 1 || countFiles > 1)
                     //When one or two files are selected refresh ActionBar: set Merge option invisible or visible
                     activity.invalidateOptionsMenu();
             }
