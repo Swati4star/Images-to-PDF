@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,7 @@ import swati4star.createpdf.util.PageSizeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
@@ -61,8 +61,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
 
     public SettingsFragment() {
     }
-
-    static final int MODIFY_STORAGE_LOCATION_CODE = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -91,17 +89,14 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case MODIFY_STORAGE_LOCATION_CODE:
-                if (data.getExtras() != null) {
-                    String folderLocation = data.getExtras().getString("data") + "/";
-                    Log.i("folderLocation", folderLocation);
-                    mSharedPreferences.edit().putString(STORAGE_LOCATION, folderLocation).apply();
-                    showSnackbar(mActivity, R.string.storage_location_modified);
-                    storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
-                            getDefaultStorageLocation()));
-                }
-                break;
+        if (requestCode == MODIFY_STORAGE_LOCATION_CODE) {
+            if (data.getExtras() != null) {
+                String folderLocation = data.getExtras().getString("data") + "/";
+                mSharedPreferences.edit().putString(STORAGE_LOCATION, folderLocation).apply();
+                showSnackbar(mActivity, R.string.storage_location_modified);
+                storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
+                        getDefaultStorageLocation()));
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -141,7 +136,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                 break;
             case 7:
                 setShowPageNumber();
-                break;
         }
     }
 
@@ -149,7 +143,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      * To modify master password of PDFs
      */
     private void changeMasterPassword() {
-
         MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
                 R.string.change_master_pwd);
         MaterialDialog materialDialog =
@@ -201,7 +194,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         dialog.show();
     }
 
-
     /**
      * To modify font size
      */
@@ -221,7 +213,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                             editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, check);
                             editor.apply();
                             showSettingsOptions();
-
                         }
                     } catch (NumberFormatException e) {
                         showSnackbar(mActivity, R.string.invalid_entry);
@@ -324,7 +315,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                 .negativeText(R.string.cancel)
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
-
                     int id = rg.getCheckedRadioButtonId();
                     String style = null;
                     if (id == rbOpt1.getId()) {

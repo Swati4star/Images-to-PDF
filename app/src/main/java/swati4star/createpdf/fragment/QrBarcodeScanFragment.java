@@ -36,10 +36,10 @@ import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FileUtils;
-import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
+import swati4star.createpdf.util.TextToPDFUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
@@ -185,9 +185,9 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 getDefaultStorageLocation());
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
-            PDFUtils fileUtil = new PDFUtils(mActivity);
+            TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
             int fontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
-            fileUtil.createPdf(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, false,
+            fileUtil.createPdfFromTextFile(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, false,
                     "", uri, fontSize, mFontFamily, mFontColor, DEFAULT_PAGE_COLOR),
                     Constants.textExtension);
             final String finalMPath = mPath;

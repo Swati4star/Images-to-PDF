@@ -1,11 +1,12 @@
 package swati4star.createpdf.util;
 
 import android.os.AsyncTask;
+
 import swati4star.createpdf.interfaces.OnTextToPdfInterface;
 import swati4star.createpdf.model.TextToPDFOptions;
 
 public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
-    private PDFUtils mFileUtil;
+    private TextToPDFUtils mTexttoPDFUtil;
     private TextToPDFOptions mTextToPdfOptions;
     private String mRealPath;
     private String mFileExtension;
@@ -22,9 +23,9 @@ public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
      * @param fileextension is the file extension name string.
      * @param onPDFCreatedInterface is the OnTextToPdfInterface instance.
      */
-    public TextToPdfAsync(String realpath, PDFUtils fileutil, TextToPDFOptions textToPDFOptions,
+    public TextToPdfAsync(String realpath, TextToPDFUtils fileutil, TextToPDFOptions textToPDFOptions,
                           String fileextension, OnTextToPdfInterface onPDFCreatedInterface) {
-        this.mFileUtil = fileutil;
+        this.mTexttoPDFUtil = fileutil;
         this.mRealPath = realpath;
         this.mTextToPdfOptions = textToPDFOptions;
         this.mFileExtension = fileextension;
@@ -41,7 +42,7 @@ public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
     @Override
     protected Object doInBackground(Object[] objects) {
         try {
-            mFileUtil.createPdf(mTextToPdfOptions, mFileExtension);
+            mTexttoPDFUtil.createPdfFromTextFile(mTextToPdfOptions, mFileExtension);
         } catch (Exception e) {
             mSuccess = false;
             e.printStackTrace();
@@ -54,4 +55,5 @@ public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
         super.onPostExecute(o);
         mOnPDFCreatedInterface.onPDFCreated(mSuccess);
     }
+
 }

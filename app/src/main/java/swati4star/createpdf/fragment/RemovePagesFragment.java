@@ -260,7 +260,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         int check;
         try {
             check = Integer.parseInt(String.valueOf(input));
-            if (check > 100 || check <= 0) {
+            if (check > 100 || check <= 0 || mPath == null) {
                 showSnackbar(mActivity, R.string.invalid_entry);
             } else {
                 String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),

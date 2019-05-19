@@ -45,10 +45,10 @@ import swati4star.createpdf.util.ColorUtils;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
-import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
+import swati4star.createpdf.util.TextToPDFUtils;
 import swati4star.createpdf.util.TextToPdfAsync;
 
 import static android.app.Activity.RESULT_OK;
@@ -389,8 +389,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                 mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
-        PDFUtils fileUtil = new PDFUtils(mActivity);
-
+        TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
         new TextToPdfAsync(mTextFileUri.toString(), fileUtil, options, mFileExtension,
                 TextToPdfFragment.this).execute();
     }

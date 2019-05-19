@@ -168,24 +168,21 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length < 1)
             return;
-        switch (requestCode) {
-            case REQUEST_PERMISSIONS_CODE: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPermissionGranted = true;
-                    selectImages();
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                selectImages();
+                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
     @OnClick(R.id.pdfCreate)
     public void parse() {
         hideKeyboard(mActivity);
-        if (mOperation.equals(ADD_IMAGES)) {
+        if (mOperation.equals(ADD_IMAGES))
             getFileName();
-        }
     }
 
     private void getFileName() {
