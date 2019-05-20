@@ -78,11 +78,11 @@ public class ViewFilesFragment extends Fragment
     private SearchView mSearchView;
     private int mCurrentSortingIndex;
     private SharedPreferences mSharedPreferences;
-    private boolean mIsChecked = false;
-    private boolean mCheckBoxChanged = false;
+    private boolean mIsAllFilesSelected = false;
+    private boolean mIsMergeRequired = false;
     private AlertDialog.Builder mAlertDialogBuilder;
 
-    private int mCountFiles;
+    private int mCountFiles = 0;
     private MergeHelper mMergeHelper;
 
     @Override
