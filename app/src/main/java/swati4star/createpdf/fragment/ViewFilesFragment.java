@@ -182,9 +182,11 @@ public class ViewFilesFragment extends Fragment
                 break;
             case R.id.select_all:
                 if (mViewFilesAdapter.getItemCount() > 0) {
-                    mViewFilesAdapter.checkAll();
-                    mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
-                    mIsChecked = !mIsChecked;
+                    if (mIsAllFilesSelected) {
+                        mViewFilesAdapter.unCheckAll();
+                    } else {
+                        mViewFilesAdapter.checkAll();
+                    }
                 } else {
                     showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 }
@@ -351,30 +353,23 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void isSelected(Boolean isSelected, int countFiles) {
+        mCountFiles = countFiles;
+        updateToolbar();
+    }
+
+    public void updateToolbar() {
         AppCompatActivity activity = ((AppCompatActivity)
                 Objects.requireNonNull(mActivity));
         ActionBar toolbar = activity.getSupportActionBar();
-        mCountFiles = countFiles;
-
         if (toolbar != null) {
-            if (countFiles == 0) {
-                mActivity.setTitle(appName);
-                if (mCheckBoxChanged) {
-                    mCheckBoxChanged = false;
-                    mIsChecked = false;
-                    activity.invalidateOptionsMenu();
-                }
-            } else {
-                mActivity.setTitle(String.valueOf(countFiles));
-                if (!mCheckBoxChanged) {
-                    mCheckBoxChanged = true;
-                    mIsChecked = true;
-                    activity.invalidateOptionsMenu();
-                }
-                if (countFiles == 1 || countFiles > 1)
-                    //When one or two files are selected refresh ActionBar: set Merge option invisible or visible
-                    activity.invalidateOptionsMenu();
-            }
+            mActivity.setTitle(mCountFiles == 0 ?
+                    mActivity.getResources().getString(R.string.viewFiles)
+                    : String.valueOf(mCountFiles));
+            //When one or more than one files are selected refresh
+            //ActionBar: set Merge option invisible or visible
+            mIsMergeRequired = mCountFiles > 1;
+            mIsAllFilesSelected = mCountFiles == mViewFilesAdapter.getItemCount();
+            activity.invalidateOptionsMenu();
         }
     }
 
