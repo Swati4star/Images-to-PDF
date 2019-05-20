@@ -118,7 +118,8 @@ public class ViewFilesFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (!mCheckBoxChanged) {
+        if (!mIsMergeRequired) {
+            // menu to inflate the view where search and selectall icon is there.
             inflater.inflate(R.menu.activity_view_files_actions, menu);
             MenuItem item = menu.findItem(R.id.action_search);
             mMenuItem = menu.findItem(R.id.select_all);
@@ -147,8 +148,14 @@ public class ViewFilesFragment extends Fragment
         } else {
             inflater.inflate(R.menu.activity_view_files_actions_if_selected, menu);
             MenuItem item = menu.findItem(R.id.item_merge);
-            item.setVisible(mCountFiles > 1); // Show Merge icon when two or more files was selected
+            item.setVisible(mCountFiles > 1); //Show Merge icon when two or more files was selected
+            mMenuItem = menu.findItem(R.id.select_all);
         }
+
+        if (mIsAllFilesSelected) {
+            mMenuItem.setIcon(R.drawable.ic_check_box_outline_blank_24dp);
+        }
+
     }
 
     private void setDataForQueryChange(String s) {
