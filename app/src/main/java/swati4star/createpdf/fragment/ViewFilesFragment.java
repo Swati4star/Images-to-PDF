@@ -236,8 +236,11 @@ public class ViewFilesFragment extends Fragment
                 count++;
                 break;
             }
-        if (count == 0)
+        if (count == 0) {
             setEmptyStateVisible();
+            mCountFiles = 0;
+            updateToolbar();
+        }
     }
 
     @Override
