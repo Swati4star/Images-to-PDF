@@ -21,7 +21,7 @@ import swati4star.createpdf.util.PDFUtils;
 
 public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.ViewMergeFilesHolder> {
 
-    private final ArrayList<String> mFilePaths;
+    private final ArrayList<String> mFilePaths, mSelectedPaths;
     private final Activity mContext;
     private final FileUtils mFileUtils;
     private final OnClickListener mOnClickListener;
@@ -29,13 +29,15 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     private final boolean mIsMergeFragment;
 
     public MergeFilesAdapter(Activity mContext, ArrayList<String> mFilePaths,
-                             boolean mIsMergeFragment, OnClickListener mOnClickListener) {
+                             boolean mIsMergeFragment, ArrayList<String> mSelectedPaths,
+                             OnClickListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         mFileUtils = new FileUtils(mContext);
         this.mOnClickListener = mOnClickListener;
         mPDFUtils = new PDFUtils(mContext);
         this.mIsMergeFragment = mIsMergeFragment;
+        this.mSelectedPaths = mSelectedPaths;
     }
 
     @NonNull
@@ -51,6 +53,13 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
         boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
         holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
         holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
+        if (mIsMergeFragment) {
+            if (mSelectedPaths.contains(mFilePaths.get(position))) {
+                holder.mCheckbox.setChecked(true);
+            } else {
+                holder.mCheckbox.setChecked(false);
+            }
+        }
 
     }
 

@@ -36,7 +36,7 @@ public class CommonCodeUtils {
             // Init recycler view
             recyclerView.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, false, onClickListener);
+                    paths, false, null, onClickListener);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setAdapter(mergeFilesAdapter);

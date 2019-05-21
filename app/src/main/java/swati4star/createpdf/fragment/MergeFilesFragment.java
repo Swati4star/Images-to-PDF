@@ -383,9 +383,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             mLayout.setVisibility(View.GONE);
         } else {
             // Init recycler view
+            mBottomSheetUtils.populateBottomSheetWithPDFs(this);
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
             MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, true, this);
+                    paths, true, mFilePaths, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);

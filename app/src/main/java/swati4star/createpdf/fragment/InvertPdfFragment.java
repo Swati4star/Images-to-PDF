@@ -145,7 +145,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         } else {
             // Init recycler view
             mRecyclerViewFiles.setVisibility(View.VISIBLE);
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, paths, false, this);
+            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, paths, false, null, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
             mRecyclerViewFiles.setLayoutManager(mLayoutManager);
             mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
