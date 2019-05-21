@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:picker="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -51,7 +52,8 @@
     <com.github.danielnilsson9.colorpickerview.view.ColorPickerView
         android:id="@+id/watermarkColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        picker:alphaChannelVisible="true"/>
 
     <TextView
         android:id="@+id/enter_watermark_font_size"
