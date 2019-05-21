@@ -18,7 +18,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/select_all"
-        android:icon="@drawable/ic_check_box_24dp"
+        android:icon="@drawable/ic_check_box_outline_blank_24dp"
         android:orderInCategory="1"
         android:title="@string/select_all"
         app:showAsAction="always" />

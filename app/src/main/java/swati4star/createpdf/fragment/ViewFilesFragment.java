@@ -153,7 +153,7 @@ public class ViewFilesFragment extends Fragment
         }
 
         if (mIsAllFilesSelected) {
-            mMenuItem.setIcon(R.drawable.ic_check_box_outline_blank_24dp);
+            mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
         }
 
     }
@@ -360,6 +360,10 @@ public class ViewFilesFragment extends Fragment
         updateToolbar();
     }
 
+    /**
+     * Updates the toolbar with respective the number of files selected.
+     *
+     * */
     public void updateToolbar() {
         AppCompatActivity activity = ((AppCompatActivity)
                 Objects.requireNonNull(mActivity));
