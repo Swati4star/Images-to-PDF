@@ -397,6 +397,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     }
 
+    @Override
+    public void filesPopulated() {
+
+    }
+
     public class ViewFilesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.fileRipple)

@@ -292,6 +292,16 @@ public class ViewFilesFragment extends Fragment
         noPermissionsLayout.setVisibility(View.GONE);
     }
 
+    @Override
+    public void filesPopulated() {
+        //refresh eveything and invalidate the menu.
+        if (mIsMergeRequired) {
+            mIsMergeRequired = false;
+            mIsAllFilesSelected = false;
+            mActivity.invalidateOptionsMenu();
+        }
+    }
+
     //When the "GET STARTED" button is clicked, the user is taken to home
     @OnClick(R.id.getStarted)
     public void loadHome() {
@@ -362,8 +372,7 @@ public class ViewFilesFragment extends Fragment
 
     /**
      * Updates the toolbar with respective the number of files selected.
-     *
-     * */
+     */
     public void updateToolbar() {
         AppCompatActivity activity = ((AppCompatActivity)
                 Objects.requireNonNull(mActivity));

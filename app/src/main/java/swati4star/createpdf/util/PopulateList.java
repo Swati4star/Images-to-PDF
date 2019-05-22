@@ -74,6 +74,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
             List<PDFFile> pdfFilesWithEncryptionStatus = getPdfFilesWithEncryptionStatus(pdfFiles);
             mHandler.post(mEmptyStateChangeListener::hideNoPermissionsView);
             mHandler.post(() -> mAdapter.setData(pdfFilesWithEncryptionStatus));
+            mHandler.post(mEmptyStateChangeListener::filesPopulated);
         }
     }
 
