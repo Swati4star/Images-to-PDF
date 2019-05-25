@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -27,8 +26,9 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
-import swati4star.createpdf.model.FavouriteItem;
+import swati4star.createpdf.model.HomePageItem;
 
+import static swati4star.createpdf.util.CommonCodeUtils.fillNavigationItemsMap;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
@@ -69,7 +69,7 @@ public class FavouritesFragment extends Fragment
     private SharedPreferences mSharedpreferences;
     private boolean mDoesFavouritesExist;
     private Activity mActivity;
-    private Map<Integer, FavouriteItem> mFragmentPositionMap;
+    private Map<Integer, HomePageItem> mFragmentPositionMap;
 
     @BindView(R.id.images_to_pdf_fav)
     MyCardView pref_img_to_pdf;
@@ -111,13 +111,13 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_pdf_to_img;
     @BindView(R.id.extract_text_fav)
     MyCardView pref_extract_txt;
-    @BindView(R.id.excel_to_pdf)
+    @BindView(R.id.excel_to_pdf_fav)
     MyCardView pref_excel_to_pdf;
     @BindView(R.id.favourites)
     LottieAnimationView favouritesAnimation;
     @BindView(R.id.favourites_text)
     TextView favouritesText;
-    @BindView(R.id.zip_to_pdf)
+    @BindView(R.id.zip_to_pdf_fav)
     MyCardView pref_zip_to_pdf;
 
     @Nullable
@@ -127,8 +127,11 @@ public class FavouritesFragment extends Fragment
         View rootview = inflater.inflate(R.layout.favourites_fragment, container, false);
         ButterKnife.bind(this, rootview);
 
-        initializeValues();
+        mSharedpreferences = PreferenceManager
+                .getDefaultSharedPreferences(mActivity);
+        mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
 
+        initializeValues();
 
         setHasOptionsMenu(true);
         return rootview;
@@ -139,13 +142,9 @@ public class FavouritesFragment extends Fragment
      */
     private void initializeValues() {
 
-        mSharedpreferences = PreferenceManager
-                .getDefaultSharedPreferences(mActivity);
-        mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
-
         mDoesFavouritesExist = false;
         checkFavs(mSharedpreferences);
-        fillMap();
+        mFragmentPositionMap = fillNavigationItemsMap(false);
 
         pref_img_to_pdf.setOnClickListener(this);
         pref_text_to_pdf.setOnClickListener(this);
@@ -221,54 +220,6 @@ public class FavouritesFragment extends Fragment
             favouritesAnimation.setVisibility(View.VISIBLE);
             favouritesText.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void fillMap() {
-        mFragmentPositionMap = new HashMap<>();
-        mFragmentPositionMap.put(R.id.images_to_pdf_fav,
-                new FavouriteItem(R.id.nav_camera, R.string.images_to_pdf));
-        mFragmentPositionMap.put(R.id.qr_barcode_to_pdf_fav,
-                new FavouriteItem(R.id.nav_qrcode, R.string.qr_barcode_pdf));
-        mFragmentPositionMap.put(R.id.view_files_fav,
-                new FavouriteItem(R.id.nav_gallery, R.string.viewFiles));
-        mFragmentPositionMap.put(R.id.rotate_pages_fav,
-                new FavouriteItem(R.id.nav_gallery, R.string.rotate_pages));
-        mFragmentPositionMap.put(R.id.add_watermark_fav,
-                new FavouriteItem(R.id.nav_add_watermark, R.string.add_watermark));
-        mFragmentPositionMap.put(R.id.merge_pdf_fav,
-                new FavouriteItem(R.id.nav_merge, R.string.merge_pdf));
-        mFragmentPositionMap.put(R.id.split_pdf_fav,
-                new FavouriteItem(R.id.nav_split, R.string.split_pdf));
-        mFragmentPositionMap.put(R.id.text_to_pdf_fav,
-                new FavouriteItem(R.id.nav_text_to_pdf, R.string.text_to_pdf));
-        mFragmentPositionMap.put(R.id.compress_pdf_fav,
-                new FavouriteItem(R.id.nav_compress_pdf, R.string.compress_pdf));
-        mFragmentPositionMap.put(R.id.remove_pages_fav,
-                new FavouriteItem(R.id.nav_remove_pages, R.string.remove_pages));
-        mFragmentPositionMap.put(R.id.extract_text_fav,
-                new FavouriteItem(R.id.nav_text_extract, R.string.extract_text));
-        mFragmentPositionMap.put(R.id.rearrange_pages_fav,
-                new FavouriteItem(R.id.nav_rearrange_pages, R.string.reorder_pages));
-        mFragmentPositionMap.put(R.id.extract_images_fav,
-                new FavouriteItem(R.id.nav_extract_images, R.string.extract_images));
-        mFragmentPositionMap.put(R.id.view_history_fav,
-                new FavouriteItem(R.id.nav_history, R.string.history));
-        mFragmentPositionMap.put(R.id.pdf_to_images_fav,
-                new FavouriteItem(R.id.nav_pdf_to_images, R.string.pdf_to_images));
-        mFragmentPositionMap.put(R.id.add_password_fav,
-                new FavouriteItem(R.id.nav_add_password, R.string.add_password));
-        mFragmentPositionMap.put(R.id.remove_password_fav,
-                new FavouriteItem(R.id.nav_remove_password, R.string.remove_password));
-        mFragmentPositionMap.put(R.id.add_images_fav,
-                new FavouriteItem(R.id.nav_add_images, R.string.add_images));
-        mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf_fav,
-                new FavouriteItem(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages));
-        mFragmentPositionMap.put(R.id.invert_pdf_fav,
-                new FavouriteItem(R.id.nav_invert_pdf, R.string.invert_pdf));
-        mFragmentPositionMap.put(R.id.excel_to_pdf,
-                new FavouriteItem(R.id.nav_excel_to_pdf, R.string.excel_to_pdf));
-        mFragmentPositionMap.put(R.id.zip_to_pdf,
-                new FavouriteItem(R.id.nav_zip_to_pdf, R.string.zip_to_pdf));
     }
 
     @Override
@@ -389,16 +340,17 @@ public class FavouritesFragment extends Fragment
             case R.id.extract_text_fav:
                 fragment = new ExtractTextFragment();
                 break;
-            case R.id.excel_to_pdf:
+            case R.id.excel_to_pdf_fav:
                 fragment = new ExceltoPdfFragment();
                 break;
-            case R.id.zip_to_pdf:
+            case R.id.zip_to_pdf_fav:
                 fragment = new ZipToPdfFragment();
                 break;
         }
         try {
             if (fragment != null && fragmentManager != null) {
-                ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(v.getId()).getIconId());
+                ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(
+                        v.getId()).getNavigationItemId());
                 fragmentManager.beginTransaction()
                         .replace(R.id.content, fragment)
                         .addToBackStack(getString(R.string.favourites))

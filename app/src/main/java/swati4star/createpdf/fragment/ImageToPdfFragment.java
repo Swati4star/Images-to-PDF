@@ -129,7 +129,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
-    private static ArrayList<String> tempImageUri = new ArrayList<>();
     public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private SharedPreferences mSharedPreferences;
@@ -467,7 +466,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
      * Saves Images with grayscale filter
      */
     private void saveImagesInGrayscale() {
-        tempImageUri = new ArrayList<>();
+        ArrayList<String> tempImageUri = new ArrayList<>();
         try {
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
