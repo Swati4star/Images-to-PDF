@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:stretchColumns="*"
+        android:layout_marginBottom="40dp"
         tools:context=".fragment.AddImagesFragment">
 
         <com.dd.morphingbutton.MorphingButton
