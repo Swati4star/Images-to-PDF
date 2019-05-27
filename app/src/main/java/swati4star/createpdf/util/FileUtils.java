@@ -180,7 +180,8 @@ public class FileUtils {
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("application/pdf");
-        mContext.startActivity(Intent.createChooser(intent, "Sharing"));
+        mContext.startActivity(Intent.createChooser(intent,
+                mContext.getResources().getString(R.string.share_chooser)));
     }
 
     /**
@@ -188,6 +189,10 @@ public class FileUtils {
      * @param path - path of the file to be opened
      */
     public void openFile(String path) {
+        if (path == null) {
+            showSnackbar(mContext, R.string.error_occurred);
+            return;
+        }
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

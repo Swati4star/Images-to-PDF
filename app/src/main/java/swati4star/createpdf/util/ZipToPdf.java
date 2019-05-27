@@ -8,7 +8,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +17,13 @@ import java.util.zip.ZipInputStream;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 
+import static swati4star.createpdf.util.Constants.pdfDirectory;
+import static swati4star.createpdf.util.Constants.tempDirectory;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ZipToPdf {
+
+    private static final int BUFFER_SIZE = 4096;
 
     /**
      * Converts zip file to PDF
@@ -29,17 +32,14 @@ public class ZipToPdf {
      */
     public static void convertZipToPDF(String path, Activity context) {
 
-        final int BUFFER_SIZE = 4096;
-
         BufferedOutputStream bufferedOutputStream;
-        FileInputStream fileInputStream;
         ArrayList<Uri> imageUris = new ArrayList<>();
         FileUtils.makeAndClearTemp();
         String dest = Environment.getExternalStorageDirectory().toString() +
-                Constants.pdfDirectory + Constants.tempDirectory;
+                pdfDirectory + tempDirectory;
 
         try {
-            fileInputStream = new FileInputStream(path);
+            FileInputStream fileInputStream = new FileInputStream(path);
             ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(fileInputStream));
             ZipEntry zipEntry;
             int folderPrefix = 0;
@@ -74,11 +74,11 @@ public class ZipToPdf {
                     while ((count = zipInputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
                         bufferedOutputStream.write(buffer, 0, count);
                     }
-
                     bufferedOutputStream.flush();
                     bufferedOutputStream.close();
                 }
             }
+
             zipInputStream.close();
 
             if (imageUris.size() == 0) {
@@ -89,13 +89,10 @@ public class ZipToPdf {
              * image uri's and to main activity which will then be used to
              * to start images to pdf fragment*/
             ((MainActivity) context).convertImagesToPdf(imageUris);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            showSnackbar(context, R.string.error_occurred);
         } catch (IOException e) {
             e.printStackTrace();
             showSnackbar(context, R.string.error_occurred);
         }
-
     }
+
 }

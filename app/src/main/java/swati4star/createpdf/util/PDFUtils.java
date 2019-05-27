@@ -2,34 +2,19 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.annotation.WorkerThread;
-import android.util.Log;
-import android.util.SparseIntArray;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PRStream;
 import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfCopy;
-import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfNumber;
@@ -39,33 +24,16 @@ import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.parser.PdfImageObject;
 
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
-import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
-import swati4star.createpdf.model.TextToPDFOptions;
 
-import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -73,23 +41,10 @@ public class PDFUtils {
 
     private final Activity mContext;
     private final FileUtils mFileUtils;
-    private SparseIntArray mAngleRadioButton;
-    private SharedPreferences mSharedPreferences;
-
-    private static final int NO_ERROR = 0;
-    private static final int ERROR_PAGE_NUMBER = 1;
-    private static final int ERROR_PAGE_RANGE = 2;
-    private static final int ERROR_INVALID_INPUT = 3;
 
     public PDFUtils(Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(mContext);
-        mAngleRadioButton = new SparseIntArray();
-        mAngleRadioButton.put(R.id.deg90, 90);
-        mAngleRadioButton.put(R.id.deg180, 180);
-        mAngleRadioButton.put(R.id.deg270, 270);
-        mSharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
     }
 
     /**
@@ -98,7 +53,6 @@ public class PDFUtils {
      * @param file - file name
      */
     public void showDetails(File file) {
-
         String name = file.getName();
         String path = file.getPath();
         String size = FileUtils.getFormattedSize(file);
@@ -123,165 +77,6 @@ public class PDFUtils {
         builder.show();
     }
 
-
-    /**
-     * Create a PDF from a Text File
-     *
-     * @param mTextToPDFOptions TextToPDFOptions Object
-     * @param fileExtension     file extension represented as string
-     */
-    public void createPdf(TextToPDFOptions mTextToPDFOptions, String fileExtension)
-            throws DocumentException, IOException {
-
-        String masterpwd = mSharedPreferences.getString(MASTER_PWD_STRING, appName);
-
-        Rectangle pageSize = new Rectangle(PageSize.getRectangle(mTextToPDFOptions.getPageSize()));
-        pageSize.setBackgroundColor(getBaseColor(mTextToPDFOptions.getPageColor()));
-        Document document = new Document(pageSize);
-
-        String finalOutput = mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation()) +
-                mTextToPDFOptions.getOutFileName() + ".pdf";
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(finalOutput));
-        writer.setPdfVersion(PdfWriter.VERSION_1_7);
-        if (mTextToPDFOptions.isPasswordProtected()) {
-            writer.setEncryption(mTextToPDFOptions.getPassword().getBytes(),
-                    masterpwd.getBytes(),
-                    PdfWriter.ALLOW_PRINTING | PdfWriter.ALLOW_COPY,
-                    PdfWriter.ENCRYPTION_AES_128);
-        }
-
-        document.open();
-
-        Font myfont = new Font(mTextToPDFOptions.getFontFamily());
-        myfont.setStyle(Font.NORMAL);
-        myfont.setSize(mTextToPDFOptions.getFontSize());
-        myfont.setColor(getBaseColor(mTextToPDFOptions.getmFontColor()));
-
-        document.add(new Paragraph("\n"));
-
-        if (fileExtension == null)
-            throw new DocumentException();
-
-        switch (fileExtension) {
-            case Constants.textExtension:
-                readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
-                break;
-            case Constants.docExtension:
-                readDocFile(mTextToPDFOptions.getInFileUri(), document, myfont);
-                break;
-            case Constants.docxExtension:
-                readDocxFile(mTextToPDFOptions.getInFileUri(), document, myfont);
-                break;
-            default:
-                readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
-                break;
-        }
-        document.close();
-
-        new DatabaseHelper(mContext).insertRecord(finalOutput, mContext.getString(R.string.created));
-    }
-
-    /**
-     * Read the BaseColor of passed color
-     *
-     * @param color value of color in int
-     */
-    private BaseColor getBaseColor(int color) {
-        return new BaseColor(
-                Color.red(color),
-                Color.green(color),
-                Color.blue(color)
-        );
-    }
-
-    /**
-     * Read the .docx file and put it in document
-     *
-     * @param uri      URL to create PDF
-     * @param document PDF Document
-     * @param myfont   Font style in PDF
-     */
-    private void readDocxFile(Uri uri, Document document, Font myfont) {
-        InputStream inputStream;
-
-        try {
-            inputStream = mContext.getContentResolver().openInputStream(uri);
-            if (inputStream == null)
-                return;
-
-            XWPFDocument doc = new XWPFDocument(inputStream);
-            XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
-            String fileData = extractor.getText();
-
-            Paragraph documentParagraph = new Paragraph(fileData + "\n", myfont);
-            documentParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
-            document.add(documentParagraph);
-            inputStream.close();
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Read the .doc file and put it in document
-     *
-     * @param uri      URL to create PDF
-     * @param document PDF Document
-     * @param myfont   Font style in PDF
-     */
-    private void readDocFile(Uri uri, Document document, Font myfont) {
-        InputStream inputStream;
-
-        try {
-            inputStream = mContext.getContentResolver().openInputStream(uri);
-            if (inputStream == null)
-                return;
-
-            HWPFDocument doc = new HWPFDocument(inputStream);
-            WordExtractor extractor = new WordExtractor(doc);
-            String fileData = extractor.getText();
-
-            Paragraph documentParagraph = new Paragraph(fileData + "\n", myfont);
-            documentParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
-            document.add(documentParagraph);
-            inputStream.close();
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * Read the Text File and put it in document
-     *
-     * @param uri      URL to create PDF
-     * @param document PDF Document
-     * @param myfont   Font style in PDF
-     */
-    private void readTextFile(Uri uri, Document document, Font myfont) {
-        InputStream inputStream;
-        try {
-            inputStream = mContext.getContentResolver().openInputStream(uri);
-            if (inputStream == null)
-                return;
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println("line = " + line);
-                Paragraph para = new Paragraph(line + "\n", myfont);
-                para.setAlignment(Element.ALIGN_JUSTIFIED);
-                document.add(para);
-            }
-            reader.close();
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Check if a PDF at given path is encrypted
      *
@@ -301,72 +96,6 @@ public class PDFUtils {
             if (pdfReader != null) pdfReader.close();
         }
         return isEncrypted;
-    }
-
-    /**
-     * Show the dialog for angle of rotation of pdf pages
-     *
-     * @param sourceFilePath - path of file to be rotated
-     */
-    public void rotatePages(String sourceFilePath, final DataSetChanged dataSetChanged) {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mContext,
-                R.string.rotate_pages);
-        builder.customView(R.layout.dialog_rotate_pdf, true)
-                .onPositive((dialog, which) -> {
-                    final RadioGroup angleInput = dialog.getCustomView().findViewById(R.id.rotation_angle);
-                    int angle = mAngleRadioButton.get(angleInput.getCheckedRadioButtonId());
-                    String destFilePath = FileUtils.getFileDirectoryPath(sourceFilePath);
-                    String fileName = FileUtils.getFileName(sourceFilePath);
-                    destFilePath += String.format(mContext.getString(R.string.rotated_file_name),
-                            fileName.substring(0, fileName.lastIndexOf('.')),
-                            Integer.toString(angle),
-                            mContext.getString(R.string.pdf_ext));
-                    boolean result = rotatePDFPages(angle, sourceFilePath,
-                            destFilePath, dataSetChanged);
-                    if (result) {
-                        new DatabaseHelper(mContext).insertRecord(destFilePath,
-                                mContext.getString(R.string.rotated));
-                    }
-                })
-                .show();
-    }
-
-
-    /**
-     * Rotates pages in pdf
-     *
-     * @param angle          rotation angle
-     * @param sourceFilePath source file path
-     * @param destFilePath   destination file path
-     * @return true if no error else false
-     */
-    private boolean rotatePDFPages(int angle, String sourceFilePath, String destFilePath,
-                                   final DataSetChanged dataSetChanged) {
-        try {
-            PdfReader reader = new PdfReader(sourceFilePath);
-            int n = reader.getNumberOfPages();
-            PdfDictionary page;
-            PdfNumber rotate;
-            for (int p = 1; p <= n; p++) {
-                page = reader.getPageN(p);
-                rotate = page.getAsNumber(PdfName.ROTATE);
-                if (rotate == null)
-                    page.put(PdfName.ROTATE, new PdfNumber(angle));
-                else
-                    page.put(PdfName.ROTATE, new PdfNumber((rotate.intValue() + angle) % 360));
-            }
-            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(destFilePath));
-            stamper.close();
-            reader.close();
-            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(destFilePath)).show();
-            dataSetChanged.updateDataset();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            showSnackbar(mContext, R.string.encrypted_pdf);
-        }
-        return false;
     }
 
     public void compressPDF(String inputPath, String outputPath, int quality,
@@ -538,194 +267,6 @@ public class PDFUtils {
             showSnackbar(mContext, R.string.remove_pages_error);
             return false;
         }
-    }
-
-    /**
-     * Breaks up the splitDetail String into ranges where a "," is found
-     *
-     *
-     * @param path        the input pdf path
-     * @param splitDetail string that contains split configuration
-     * @return
-     */
-    public ArrayList<String> splitPDFByConfig(String path, String splitDetail) {
-        String splitConfig = splitDetail.replaceAll("\\s+", "");
-        ArrayList<String> outputPaths = new ArrayList<>();
-        String delims = "[,]";
-        String[] ranges = splitConfig.split(delims);
-        Log.v("Ranges", Arrays.toString(ranges));
-
-        // if input is invalid then return empty arraylist
-        if (!isInputValid(path, ranges))
-            return outputPaths;
-
-        try {
-            String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
-                    getDefaultStorageLocation());
-            PdfReader reader = new PdfReader(path);
-            PdfCopy copy;
-            Document document;
-            for (String range : ranges) {
-                int startPage;
-                int endPage;
-
-                String fileName = folderPath + FileUtils.getFileName(path);
-
-                /*
-                 * If the pdf is single page only then convert whole range into int
-                 * else break the range on "-",where startpage will be substring
-                 * from first letter to "-" and endpage will be from "-" till last letter.
-                 *
-                 */
-                if (reader.getNumberOfPages() > 1) {
-                    if (!range.contains("-")) {
-                        startPage = Integer.parseInt(range);
-                        document = new Document();
-                        fileName = fileName.replace(pdfExtension,
-                                "_" + startPage + pdfExtension);
-                        copy = new PdfCopy(document, new FileOutputStream(fileName));
-
-                        document.open();
-                        copy.addPage(copy.getImportedPage(reader, startPage));
-                        document.close();
-                        outputPaths.add(fileName);
-                    } else {
-
-                        startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
-                        endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                        if (reader.getNumberOfPages() == endPage - startPage + 1) {
-                            showSnackbar(mContext, R.string.split_range_alert);
-                        } else {
-                            document = new Document();
-                            fileName = fileName.replace(pdfExtension,
-                                    "_" + startPage + "-" + endPage + pdfExtension);
-                            copy = new PdfCopy(document, new FileOutputStream(fileName));
-                            document.open();
-                            for (int page = startPage; page <= endPage; page++) {
-                                copy.addPage(copy.getImportedPage(reader, page));
-                            }
-                            document.close();
-
-                            new DatabaseHelper(mContext).insertRecord(fileName,
-                                    mContext.getString(R.string.created));
-                            outputPaths.add(fileName);
-                        }
-                    }
-                } else {
-                    showSnackbar(mContext, R.string.split_one_page_pdf_alert);
-                }
-            }
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-            showSnackbar(mContext, R.string.file_access_error);
-        }
-        return outputPaths;
-    }
-
-    /**
-     * checks if the user entered split ranges are valid or not
-     *
-     * @param path   the input pdf path
-     * @param ranges string array that contain page range, can be a single integer or range separated by dash like 2-5
-     * @return true if input is valid, otherwise false
-     */
-    private boolean isInputValid(String path, String[] ranges) {
-        try {
-            PdfReader reader = new PdfReader(path);
-            int numOfPages = reader.getNumberOfPages();
-            int result = checkRangeValidity(numOfPages, ranges);
-            switch (result) {
-                case ERROR_PAGE_NUMBER:
-                    showSnackbar(mContext, R.string.error_page_number);
-                    break;
-                case ERROR_PAGE_RANGE:
-                    showSnackbar(mContext, R.string.error_page_range);
-                    break;
-                case ERROR_INVALID_INPUT:
-                    showSnackbar(mContext, R.string.error_invalid_input);
-                    break;
-                default:
-                    return true;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * checks if the user entered split ranges are valid or not
-     * the returnValue is initialized with NO_ERROR
-     * if no range is given, ERROR_INVALID_INPUT is returned
-     * for all the given ranges, if single page (starting page) is only given then we fetch the starting page
-     * if starting page is not a number then exception is caught and ERROR_INVALID_INPUT is returned
-     * if the starting page is greater than number of pages or is 0 then ERROR_PAGE_NUMBER is returned
-     * for hyphenated ranges, e.g 4-8, the start and end page are read
-     * if the start or end page are not valid numbers then ERROR_INVALID_INPUT is returned
-     * if the start and end page are out of range then ERROR_PAGE_NUMBER is returned
-     * if the start page is greater than end page then the range is invalid so ERROR_PAGE_RANGE is returned
-     *
-     * @param numOfPages total number of pages of pdf
-     * @param ranges     string array that contain page range,
-     *                   can be a single integer or range separated by dash like 2-5
-     * @return 0 if all ranges are valid
-     * ERROR_PAGE_NUMBER    if range greater than max number of pages
-     * ERROR_PAGE_RANGE     if range is invalid like 9-4
-     * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
-     */
-    public static int checkRangeValidity(int numOfPages, String[] ranges) {
-        int startPage = 0;
-        int endPage = 0;
-        int returnValue = NO_ERROR;
-
-        if (ranges.length == 0)
-            returnValue = ERROR_INVALID_INPUT;
-        else {
-            for (String range : ranges) {
-                if (!range.contains("-")) {
-                    try {
-                        startPage = Integer.parseInt(range);
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                        returnValue = ERROR_INVALID_INPUT;
-                        break;
-                    }
-                    if (startPage > numOfPages || startPage == 0) {
-                        returnValue = ERROR_PAGE_NUMBER;
-                        break;
-                    }
-                } else {
-                    try {
-                        startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
-                        endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                    } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-                        e.printStackTrace();
-                        returnValue = ERROR_INVALID_INPUT;
-                        break;
-                    }
-                    if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
-                        returnValue = ERROR_PAGE_NUMBER;
-                        break;
-                    } else if (startPage >= endPage) {
-                        returnValue = ERROR_PAGE_RANGE;
-                        break;
-                    }
-                }
-            }
-        }
-        return returnValue;
-    }
-
-    /**
-     * Shows the dialog to allow users to add images
-     */
-    public void setImages() {
-        new MaterialDialog.Builder(mContext)
-                .title(R.string.add_images)
-                .customView(R.layout.fragment_add_images, true)
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
-                .build();
     }
 
 }

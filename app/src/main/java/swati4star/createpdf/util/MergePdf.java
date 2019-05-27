@@ -22,11 +22,19 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     private String mPassword, mMasterPwd;
     private final MergeFilesListener mMergeFilesListener;
 
-    public MergePdf(String fileName, String homePath, boolean isPasswordProtected,
+    /**
+     * Constructor of MergePDf background task
+     *
+     * @param fileName - output file name
+     * @param isPasswordProtected - true if pdf is password protected
+     * @param password - pasword entered by user
+     * @param mergeFilesListener - listener object
+     * @param masterpwd - current master password
+     */
+    public MergePdf(String fileName, boolean isPasswordProtected,
                     String password, MergeFilesListener mergeFilesListener, String masterpwd) {
         mFilename = fileName;
         mMergeFilesListener = mergeFilesListener;
-        mFinPath = homePath;
         mIsPasswordProtected = isPasswordProtected;
         mPassword = password;
         mMasterPwd = masterpwd;
@@ -63,10 +71,9 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
                 pdfreader = new PdfReader(pdfPath);
                 // Get the number of pages of the pdf file
                 numOfPages = pdfreader.getNumberOfPages();
-                for (int page = 1; page <= numOfPages; page++) {
+                for (int page = 1; page <= numOfPages; page++)
                     // Import all pages from the file to PdfCopy
                     copy.addPage(copy.getImportedPage(pdfreader, page));
-                }
             }
             mIsPDFMerged = true;
             document.close(); // close the document

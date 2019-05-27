@@ -5,4 +5,5 @@ public interface EmptyStateChangeListener {
     void setEmptyStateInvisible();
     void showNoPermissionsView();
     void hideNoPermissionsView();
+    void filesPopulated();
 }

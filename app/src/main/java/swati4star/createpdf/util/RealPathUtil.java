@@ -18,9 +18,7 @@ public class RealPathUtil {
      * @return - actual path
      */
     public static String getRealPath(Context context, Uri fileUri) {
-        String realPath;
-        realPath = RealPathUtil.getRealPathFromURI_API19(context, fileUri);
-        return realPath;
+        return getRealPathFromURI_API19(context, fileUri);
     }
 
     /**
@@ -32,6 +30,8 @@ public class RealPathUtil {
      * @param uri     The Uri to query.
      */
     private static String getRealPathFromURI_API19(final Context context, final Uri uri) {
+
+        String path = null;
         // DocumentProvider
         if (isDriveFile(uri)) {
             return null;
@@ -44,10 +44,10 @@ public class RealPathUtil {
                 final String type = split[0];
 
                 if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                    path =  Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
                 if ("home".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                    path =  Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
 
             } else if (isDownloadsDocument(uri)) {
@@ -56,25 +56,24 @@ public class RealPathUtil {
 
                 if (!TextUtils.isEmpty(id)) {
                     if (id.startsWith("raw:")) {
-                        return id.replaceFirst("raw:", "");
+                        path =  id.replaceFirst("raw:", "");
                     }
                     try {
                         final Uri contentUri = ContentUris.withAppendedId(
                                 Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
 
-                        return getDataColumn(context, contentUri, null, null);
+                        path = getDataColumn(context, contentUri, null, null);
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
-                        return null;
                     }
                 }
             }
         } else {
-            StringBuilder path = StringUtils.trimExternal(uri.getPath().substring(1));
-            path.insert(0, Environment.getExternalStorageDirectory() + "/");
-            return path.toString();
+            StringBuilder pathbuilder = StringUtils.trimExternal(uri.getPath().substring(1));
+            pathbuilder.insert(0, Environment.getExternalStorageDirectory() + "/");
+            path =  pathbuilder.toString();
         }
-        return null;
+        return path;
     }
 
     /**
@@ -94,16 +93,17 @@ public class RealPathUtil {
         final String[] projection = {
                 column
         };
+        String path = null;
         try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                 null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(index);
+                path =  cursor.getString(index);
             }
         } catch (Exception e) {
             Log.e("Error", " " + e.getMessage());
         }
-        return null;
+        return path;
     }
 
 
@@ -124,9 +124,7 @@ public class RealPathUtil {
     private static boolean isDriveFile(Uri uri) {
         if ("com.google.android.apps.docs.storage".equals(uri.getAuthority()))
             return true;
-        if ("com.google.android.apps.docs.storage.legacy".equals(uri.getAuthority()))
-            return true;
-        return false;
+        return "com.google.android.apps.docs.storage.legacy".equals(uri.getAuthority());
     }
 
     /**

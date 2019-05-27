@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,11 +38,11 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.RemoveDuplicates;
-import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -136,18 +135,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        if (paths == null || paths.size() == 0) {
-            mLayout.setVisibility(View.GONE);
-        } else {
-            // Init recycler view
-            mRecyclerViewFiles.setVisibility(View.VISIBLE);
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity, paths, false, null, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        }
-        mLottieProgress.setVisibility(View.GONE);
+        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override

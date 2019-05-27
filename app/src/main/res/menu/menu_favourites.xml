@@ -7,6 +7,6 @@
         android:icon="@drawable/ic_favorite_white_24dp"
         android:orderInCategory="1"
         android:title="Favourites"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>

@@ -54,7 +54,6 @@ import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,

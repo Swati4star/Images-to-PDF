@@ -118,4 +118,5 @@ public class Constants {
             Manifest.permission.CAMERA
     };
 
+    public static final int MODIFY_STORAGE_LOCATION_CODE = 1;
 }
