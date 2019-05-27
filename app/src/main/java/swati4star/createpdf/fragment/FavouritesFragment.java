@@ -227,54 +227,6 @@ public class FavouritesFragment extends Fragment
         }
     }
 
-    private void fillMap() {
-        mFragmentPositionMap = new HashMap<>();
-        mFragmentPositionMap.put(R.id.images_to_pdf_fav,
-                new FavouriteItem(R.id.nav_camera, R.string.images_to_pdf));
-        mFragmentPositionMap.put(R.id.qr_barcode_to_pdf_fav,
-                new FavouriteItem(R.id.nav_qrcode, R.string.qr_barcode_pdf));
-        mFragmentPositionMap.put(R.id.view_files_fav,
-                new FavouriteItem(R.id.nav_gallery, R.string.viewFiles));
-        mFragmentPositionMap.put(R.id.rotate_pages_fav,
-                new FavouriteItem(R.id.nav_gallery, R.string.rotate_pages));
-        mFragmentPositionMap.put(R.id.add_text_fav,
-                new FavouriteItem(R.id.nav_add_text, R.string.add_text));
-        mFragmentPositionMap.put(R.id.add_watermark_fav,
-                new FavouriteItem(R.id.nav_add_watermark, R.string.add_watermark));
-        mFragmentPositionMap.put(R.id.merge_pdf_fav,
-                new FavouriteItem(R.id.nav_merge, R.string.merge_pdf));
-        mFragmentPositionMap.put(R.id.split_pdf_fav,
-                new FavouriteItem(R.id.nav_split, R.string.split_pdf));
-        mFragmentPositionMap.put(R.id.text_to_pdf_fav,
-                new FavouriteItem(R.id.nav_text_to_pdf, R.string.text_to_pdf));
-        mFragmentPositionMap.put(R.id.compress_pdf_fav,
-                new FavouriteItem(R.id.nav_compress_pdf, R.string.compress_pdf));
-        mFragmentPositionMap.put(R.id.remove_pages_fav,
-                new FavouriteItem(R.id.nav_remove_pages, R.string.remove_pages));
-        mFragmentPositionMap.put(R.id.extract_text_fav,
-                new FavouriteItem(R.id.nav_text_extract, R.string.extract_text));
-        mFragmentPositionMap.put(R.id.rearrange_pages_fav,
-                new FavouriteItem(R.id.nav_rearrange_pages, R.string.reorder_pages));
-        mFragmentPositionMap.put(R.id.extract_images_fav,
-                new FavouriteItem(R.id.nav_extract_images, R.string.extract_images));
-        mFragmentPositionMap.put(R.id.view_history_fav,
-                new FavouriteItem(R.id.nav_history, R.string.history));
-        mFragmentPositionMap.put(R.id.pdf_to_images_fav,
-                new FavouriteItem(R.id.nav_pdf_to_images, R.string.pdf_to_images));
-        mFragmentPositionMap.put(R.id.add_password_fav,
-                new FavouriteItem(R.id.nav_add_password, R.string.add_password));
-        mFragmentPositionMap.put(R.id.remove_password_fav,
-                new FavouriteItem(R.id.nav_remove_password, R.string.remove_password));
-        mFragmentPositionMap.put(R.id.add_images_fav,
-                new FavouriteItem(R.id.nav_add_images, R.string.add_images));
-        mFragmentPositionMap.put(R.id.remove_duplicates_pages_pdf_fav,
-                new FavouriteItem(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages));
-        mFragmentPositionMap.put(R.id.invert_pdf_fav,
-                new FavouriteItem(R.id.nav_invert_pdf, R.string.invert_pdf));
-        mFragmentPositionMap.put(R.id.excel_to_pdf,
-                new FavouriteItem(R.id.nav_excel_to_pdf, R.string.excel_to_pdf));
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
