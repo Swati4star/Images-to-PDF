@@ -66,7 +66,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
     private String mRealPath;
-    private String mFileExtension;
     private BottomSheetUtils mBottomSheetUtils;
 
     @BindView(R.id.tv_extract_text_bottom)
@@ -87,13 +86,11 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
 
-
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private boolean mPermissionGranted = false;
     private boolean mButtonClicked = false;
-    private ArrayList<String> mFilePaths;
     private String mFileName;
     private final int mFileSelectCode = 0;
 
@@ -109,7 +106,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());
         extractText.setEnabled(false);
-        mFilePaths = new ArrayList<>();
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         mLottieProgress.setVisibility(View.VISIBLE);
         sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
@@ -150,29 +146,21 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mButtonClicked = false;
-        switch (requestCode) {
-            case mFileSelectCode:
-                if (resultCode == RESULT_OK) {
-                    mExcelFileUri = data.getData();
-                    mRealPath = RealPathUtil.getRealPath(getContext(), data.getData());
-                    showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
-                    mFileName = mFileUtils.getFileName(mExcelFileUri);
-                    if (mFileName != null) {
-                        if (mFileName.endsWith(Constants.pdfExtension))
-                            mFileExtension = Constants.pdfExtension;
-                        else {
-                            showSnackbar(mActivity, R.string.extension_not_supported);
-                            return;
-                        }
-                    }
-                    mFileName = getResources().getString(R.string.pdf_selected)
-                            + mFileName;
-                    mTextView.setText(mFileName);
-                    mTextView.setVisibility(View.VISIBLE);
-                    extractText.setEnabled(true);
-                    mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
-                }
-                break;
+        if (requestCode == mFileSelectCode && resultCode == RESULT_OK) {
+            mExcelFileUri = data.getData();
+            mRealPath = RealPathUtil.getRealPath(getContext(), data.getData());
+            showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
+            mFileName = mFileUtils.getFileName(mExcelFileUri);
+            if (mFileName != null && !mFileName.endsWith(Constants.pdfExtension)) {
+                showSnackbar(mActivity, R.string.extension_not_supported);
+                return;
+            }
+            mFileName = mActivity.getResources().getString(R.string.pdf_selected)
+                    + mFileName;
+            mTextView.setText(mFileName);
+            mTextView.setVisibility(View.VISIBLE);
+            extractText.setEnabled(true);
+            mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -182,15 +170,13 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length < 1)
             return;
-        switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPermissionGranted = true;
-                    openExtractText();
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                openExtractText();
+                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
@@ -232,7 +218,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      * This function is used to extract the text from a PDF and store
      * it in a new text file.
      *
-     * @param inputName
+     * @param inputName -  input pdf filename
      */
     private void extractTextfromPdf(String inputName) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
@@ -244,7 +230,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             int n = reader.getNumberOfPages();
             for (int i = 0; i < n; i++) {
                 parsedText.append(PdfTextExtractor.getTextFromPage(reader, i + 1)
-                        .trim() + "\n"); //Extracting the content from the different pages
+                        .trim()).append("\n"); //Extracting the content from the different pages
             }
             reader.close();
             File textFile = new File(mStorePath, inputName + textExtension);
@@ -276,9 +262,8 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     public void onItemClick(String path) {
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mRealPath = path;
-        mFileName = mFileUtils.getFileName(path);
-        mFileName = getResources().getString(R.string.pdf_selected)
-                + mFileName;
+        mFileName = FileUtils.getFileName(path);
+        mFileName = getResources().getString(R.string.pdf_selected) + mFileName;
         mTextView.setText(mFileName);
         mTextView.setVisibility(View.VISIBLE);
         extractText.setEnabled(true);

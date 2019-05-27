@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,35 +28,51 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     private ExtractImagesListener mExtractImagesListener;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
+    private String[] mPassword;
+    private PDFEncryptionUtility mPDFEncryptionUtility;
+    private Context mContext;
+    private String mDecryptedPath;
 
-    public PdfToImages(String mPath, Uri mUri, ExtractImagesListener mExtractImagesListener) {
+    public PdfToImages(Context context, String[] password, String mPath, Uri mUri,
+                       ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
         this.mUri = mUri;
         this.mExtractImagesListener = mExtractImagesListener;
         mOutputFilePaths = new ArrayList<>();
+        this.mPassword = password;
+        this.mContext = context;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        mPDFEncryptionUtility = new PDFEncryptionUtility((Activity) mContext);
         mExtractImagesListener.extractionStarted();
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
+        if (mPassword != null) {
+            mDecryptedPath = mPDFEncryptionUtility.removeDefPasswordForImages(mPath, mPassword);
+        }
         mOutputFilePaths = new ArrayList<>();
         mImagesCount = 0;
 
         // Render pdf pages as bitmap
         ParcelFileDescriptor fileDescriptor = null;
         try {
-            if (mUri != null)
-                // resolve pdf file path based on uri
-                fileDescriptor = ((PdfToImageFragment) mExtractImagesListener).getContext()
-                        .getContentResolver().openFileDescriptor(mUri, "r");
-            else if (mPath != null)
-                // resolve pdf file path based on relative path
-                fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+            if (mDecryptedPath != null)
+                fileDescriptor = ParcelFileDescriptor.open(new File(mDecryptedPath), MODE_READ_ONLY);
+            else {
+                if (mUri != null) {
+                    // resolve pdf file path based on uri
+                    fileDescriptor = ((PdfToImageFragment) mExtractImagesListener).getContext()
+                            .getContentResolver().openFileDescriptor(mUri, "r");
+                } else if (mPath != null) {
+                    // resolve pdf file path based on relative path
+                    fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+                }
+            }
             if (fileDescriptor != null) {
                 PdfRenderer renderer = new PdfRenderer(fileDescriptor);
                 final int pageCount = renderer.getPageCount();
@@ -88,8 +106,6 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
         } catch (IOException | SecurityException e) {
             e.printStackTrace();
         }
-
-
         return null;
     }
 
@@ -97,5 +113,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         mExtractImagesListener.updateView(mImagesCount, mOutputFilePaths);
+        if (mDecryptedPath != null)
+            new File(mDecryptedPath).delete();
     }
 }

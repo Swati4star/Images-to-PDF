@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +42,10 @@ import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PdfToImages;
 import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
@@ -67,6 +70,9 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     private ArrayList<String> mOutputFilePaths;
     private MaterialDialog mMaterialDialog;
     private String mOperation;
+    private Context mContext;
+    private PDFUtils mPDFUtils;
+    private String[] mInputPassword;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -177,13 +183,45 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     }
 
     /**
-     * invokes generation of images for pdf pages in the background
+     * invokes generation of images for pdf pages in the background by checking
+     * for encryption first.
      */
     @OnClick(R.id.createImages)
     public void parse() {
-        if (mOperation.equals(PDF_TO_IMAGES))
-            new PdfToImages(mPath, mUri, this).execute();
-        else
+        if (mPDFUtils.isPDFEncrypted(mPath)) {
+            mInputPassword = new String[1];
+            new MaterialDialog.Builder(mActivity)
+                    .title(R.string.enter_password)
+                    .content(R.string.decrypt_protected_file)
+                    .inputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                    .input(null, null, (dialog, input) -> {
+                        if (StringUtils.isEmpty(input)) {
+                            showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                        } else {
+                            final String inputName = input.toString();
+                            if (inputName != null) {
+                                mInputPassword[0] = inputName;
+                                pdfToImage(mInputPassword);
+                            }
+                        }
+                    })
+                    .show();
+        } else {
+            pdfToImage(mInputPassword);
+        }
+    }
+
+    /**
+     * Thia method handles the call to the Async process of conversion
+     * from PDF to Image.
+     *
+     * @param mInputPassword - the password if the file is encrypted.
+     */
+    private void pdfToImage(String[] mInputPassword) {
+        if (mOperation.equals(PDF_TO_IMAGES)) {
+            new PdfToImages(mContext, mInputPassword, mPath, mUri, this)
+                    .execute();
+        } else
             new ExtractImages(mPath, this).execute();
     }
 
@@ -194,6 +232,8 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mContext = context;
+        mPDFUtils = new PDFUtils(mActivity);
     }
 
     /**

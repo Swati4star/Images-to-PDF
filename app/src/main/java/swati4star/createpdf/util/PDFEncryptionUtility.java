@@ -191,6 +191,36 @@ public class PDFEncryptionUtility {
         });
     }
 
+    /**
+     * This function removes the password for encrypted files.
+     * @param file - the path of the actual encrypted file.
+     * @param inputPassword - the password of the encrypted file.
+     * @return
+     */
+    public String removeDefPasswordForImages(final String file,
+                                             final String[] inputPassword) {
+        String finalOutputFile;
+        try {
+            String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
+            PdfReader reader = new PdfReader(file, masterpwd.getBytes());
+            byte[] password;
+            finalOutputFile = mFileUtils.getUniqueFileName
+                    (file.replace(mContext.getResources().getString(R.string.pdf_ext),
+                            mContext.getString(R.string.decrypted_file)));
+            password = reader.computeUserPassword();
+            byte[] input = inputPassword[0].getBytes();
+            if (Arrays.equals(input, password)) {
+                PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(finalOutputFile));
+                stamper.close();
+                reader.close();
+                return finalOutputFile;
+            }
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private boolean removePasswordUsingDefMasterPAssword(final String file,
                                                          final DataSetChanged dataSetChanged,
                                                          final String[] inputPassword) {

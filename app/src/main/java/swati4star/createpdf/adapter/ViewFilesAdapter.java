@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +32,7 @@ import swati4star.createpdf.model.PDFFile;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
+import swati4star.createpdf.util.PDFRotationUtils;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.WatermarkUtils;
@@ -60,6 +59,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final ArrayList<Integer> mSelectedFiles;
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
+    private final PDFRotationUtils mPDFRotationUtils;
     private final WatermarkUtils mWatermakrUtils;
     private final PDFEncryptionUtility mPDFEncryptionUtils;
     private final DatabaseHelper mDatabaseHelper;
@@ -86,6 +86,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mSelectedFiles = new ArrayList<>();
         mFileUtils = new FileUtils(activity);
         mPDFUtils = new PDFUtils(activity);
+        mPDFRotationUtils = new PDFRotationUtils(activity);
         mPDFEncryptionUtils = new PDFEncryptionUtility(activity);
         mWatermakrUtils = new WatermarkUtils(activity);
         mDatabaseHelper = new DatabaseHelper(mActivity);
@@ -165,14 +166,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 8://Rotate Pages
-                mPDFUtils.rotatePages(file.getPath(), ViewFilesAdapter.this);
+                mPDFRotationUtils.rotatePages(file.getPath(), ViewFilesAdapter.this);
                 break;
 
             case 9: // Add Watermark
                 mWatermakrUtils.setWatermark(file.getPath(), ViewFilesAdapter.this);
-                break;
-            case 10: // Add Images
-                mPDFUtils.setImages();
                 break;
         }
     }
@@ -200,10 +198,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * Sets the action bar title to app name when all files have been unchecked
      */
     private void updateActionBarTitle() {
-        ActionBar actionBar = ((AppCompatActivity) mActivity).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(R.string.app_name);
-        }
+        mActivity.setTitle(R.string.app_name);
     }
 
     /**
@@ -399,6 +394,11 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void hideNoPermissionsView() {
+
+    }
+
+    @Override
+    public void filesPopulated() {
 
     }
 

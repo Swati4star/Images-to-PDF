@@ -22,7 +22,7 @@ import swati4star.createpdf.model.WhatsNew;
 public class WhatsNewUtils {
 
     /**
-     * Display news
+     * Display dialog with whats new
      *
      * @param context - current context
      */
@@ -34,26 +34,16 @@ public class WhatsNewUtils {
         Button continueButton = dialog.findViewById(R.id.continueButton);
         continueButton.setText(R.string.whatsnew_continue);
         title.setText(R.string.whatsnew_title);
-        ArrayList<WhatsNew> whatsNewList;
         try {
-            JSONObject obj = new JSONObject(loadJSONFromAsset(context));
-            JSONArray data = obj.getJSONArray("data");
-            whatsNewList = new ArrayList<>();
 
-            for (int i = 0; i < data.length(); i++) {
-                JSONObject jsonObject = data.getJSONObject(i);
-                String newTitle = jsonObject.getString("title");
-                String newContent = jsonObject.getString("content");
-                String iconLocation = jsonObject.getString("icon");
-                WhatsNew whatsNew = new WhatsNew(newTitle, newContent, iconLocation);
-                whatsNewList.add(whatsNew);
-            }
-            WhatsNewAdapter whatsNewAdapter = new WhatsNewAdapter(context, whatsNewList);
+            JSONObject obj = new JSONObject(loadJSONFromAsset(context));
+            WhatsNewAdapter whatsNewAdapter = new WhatsNewAdapter(context, extractItemsFromJSON(obj));
             LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             rv.setLayoutManager(layoutManager);
             rv.setAdapter(whatsNewAdapter);
             dialog.show();
             continueButton.setOnClickListener(view -> dialog.dismiss());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -79,5 +69,30 @@ public class WhatsNewUtils {
             return null;
         }
         return json;
+    }
+
+
+    /**
+     * Extract whatsnew items by parsing json
+     * @param object - json object to be parsed
+     * @return list of whatsnew items
+     * @throws JSONException
+     */
+    private static ArrayList<WhatsNew> extractItemsFromJSON(JSONObject object) throws JSONException {
+
+        ArrayList<WhatsNew> whatsNewList;
+        JSONArray data = object.getJSONArray("data");
+        whatsNewList = new ArrayList<>();
+
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject jsonObject = data.getJSONObject(i);
+            String newTitle = jsonObject.getString("title");
+            String newContent = jsonObject.getString("content");
+            String iconLocation = jsonObject.getString("icon");
+            WhatsNew whatsNew = new WhatsNew(newTitle, newContent, iconLocation);
+            whatsNewList.add(whatsNew);
+        }
+
+        return  whatsNewList;
     }
 }

@@ -38,8 +38,8 @@ import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
-import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.SplitPDFUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
@@ -57,7 +57,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
-    private PDFUtils mPDFUtils;
+    private SplitPDFUtils mSplitPDFUtils;
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
 
@@ -127,27 +127,24 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void parse() {
         hideKeyboard(mActivity);
 
-        ArrayList<String> outputFilePaths = mPDFUtils.splitPDFByConfig(mPath,
+        ArrayList<String> outputFilePaths = mSplitPDFUtils.splitPDFByConfig(mPath,
                 mSplitConfitEditText.getText().toString());
         int numberOfPages = outputFilePaths.size();
-        if (numberOfPages == 1) {
-            showSnackbar(getActivity(), R.string.split_one_page_pdf_alert);
+        if (numberOfPages == 0) {
             return;
         }
-        if (numberOfPages > 0) {
-            String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
-            showSnackbar(mActivity, output);
-            splitFilesSuccessText.setVisibility(View.VISIBLE);
-            splitFilesSuccessText.setText(output);
+        String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
+        showSnackbar(mActivity, output);
+        splitFilesSuccessText.setVisibility(View.VISIBLE);
+        splitFilesSuccessText.setText(output);
 
-            FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mSplittedFiles.setVisibility(View.VISIBLE);
-            mSplittedFiles.setLayoutManager(mLayoutManager);
-            mSplittedFiles.setAdapter(splitFilesAdapter);
-            mSplittedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-            resetValues();
-        }
+        FilesListAdapter splitFilesAdapter = new FilesListAdapter(mActivity, outputFilePaths, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+        mSplittedFiles.setVisibility(View.VISIBLE);
+        mSplittedFiles.setLayoutManager(mLayoutManager);
+        mSplittedFiles.setAdapter(splitFilesAdapter);
+        mSplittedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        resetValues();
     }
 
     private void resetValues() {
@@ -161,7 +158,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mPDFUtils = new PDFUtils(mActivity);
+        mSplitPDFUtils = new SplitPDFUtils(mActivity);
         mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
@@ -175,13 +172,13 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSplittedFiles.setVisibility(View.GONE);
         splitFilesSuccessText.setVisibility(View.GONE);
         mPath = path;
-        mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, splitFilesButton);
-        mSplitConfitEditText.setVisibility(View.VISIBLE);
         String defaultSplitConfig = getDefaultSplitConfig(mPath);
-        if (defaultSplitConfig != null)
+        if (defaultSplitConfig != null) {
+            mMorphButtonUtility.setTextAndActivateButtons(path,
+                    selectFileButton, splitFilesButton);
+            mSplitConfitEditText.setVisibility(View.VISIBLE);
             mSplitConfitEditText.setText(defaultSplitConfig);
-        else
+        } else
             resetValues();
     }
 

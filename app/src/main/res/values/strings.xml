@@ -519,8 +519,7 @@
     <string name="favourites">Favourites</string>
     <string name="add_to_favourite">Add to Favourite</string>
     <string name="favourites_text">Select + icon to add your favourite features!</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_excel_file">No excel file selected</string>
+    <string name="split_range_alert">Entered split range will create Selected PDF again!</string>
 
 </resources>

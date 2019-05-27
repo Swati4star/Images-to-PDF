@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -58,6 +57,7 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
+import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
@@ -192,14 +192,14 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                         } else {
                             mPassword = input.toString();
                             mPasswordProtected = true;
-                            onPasswordAdded();
+                            onPasswordStatusChanges(true);
                         }
                     }
                 });
         if (StringUtils.isNotEmpty(mPassword)) {
             neutralAction.setOnClickListener(v -> {
                 mPassword = null;
-                onPasswordRemoved();
+                onPasswordStatusChanges(false);
                 mPasswordProtected = false;
                 dialog.dismiss();
                 showSnackbar(mActivity, R.string.password_remove);
@@ -209,17 +209,11 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         positiveAction.setEnabled(false);
     }
 
-    private void onPasswordAdded() {
+    private void onPasswordStatusChanges(boolean passwordAdded) {
         mEnhancementOptionsEntityArrayList.get(0)
                 .setImage(mActivity.getResources()
-                        .getDrawable(R.drawable.baseline_done_24));
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
-    }
-
-    private void onPasswordRemoved() {
-        mEnhancementOptionsEntityArrayList.get(0)
-                .setImage(mActivity.getResources()
-                        .getDrawable(R.drawable.baseline_enhanced_encryption_24));
+                        .getDrawable(passwordAdded ?
+                                R.drawable.baseline_done_24 : R.drawable.baseline_enhanced_encryption_24));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
@@ -246,12 +240,12 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                         showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         if (!mFileUtils.isFileExist(input + getString(R.string.pdf_ext))) {
-                            new MergePdf(input.toString(), mHomePath, mPasswordProtected,
+                            new MergePdf(input.toString(), mPasswordProtected,
                                     mPassword, this, masterpwd).execute(pdfpaths);
                         } else {
                             MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
-                                    mHomePath, mPasswordProtected, mPassword,
+                                    mPasswordProtected, mPassword,
                                     this, masterpwd).execute(pdfpaths))
                                     .onNegative((dialog1, which) -> mergeFiles(view)).show();
                         }
@@ -332,6 +326,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         setMorphingButtonState(false);
         mFilePaths.clear();
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
+        mPasswordProtected = false;
+        showEnhancementOptions();
     }
 
     @Override
@@ -377,19 +373,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        if (paths == null || paths.size() == 0) {
-            mLayout.setVisibility(View.GONE);
-        } else {
-            // Init recycler view
-            mRecyclerViewFiles.setVisibility(View.VISIBLE);
-            MergeFilesAdapter mergeFilesAdapter = new MergeFilesAdapter(mActivity,
-                    paths, true, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
-            mRecyclerViewFiles.setLayoutManager(mLayoutManager);
-            mRecyclerViewFiles.setAdapter(mergeFilesAdapter);
-            mRecyclerViewFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
-        }
-        mLottieProgress.setVisibility(View.GONE);
+        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override

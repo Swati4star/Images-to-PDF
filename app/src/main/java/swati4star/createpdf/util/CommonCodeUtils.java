@@ -12,10 +12,13 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.model.HomePageItem;
 
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -85,5 +88,61 @@ public class CommonCodeUtils {
      */
     public static boolean checkSheetBehaviourUtil(BottomSheetBehavior sheetBehavior) {
         return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
+    }
+
+    public static Map<Integer, HomePageItem> fillNavigationItemsMap(boolean homepageitems) {
+
+        // if homepage items is false, it's favourite items
+        Map<Integer, HomePageItem> mFragmentPositionMap;
+
+        mFragmentPositionMap = new HashMap<>();
+        mFragmentPositionMap.put(homepageitems ? R.id.images_to_pdf : R.id.images_to_pdf_fav,
+                new HomePageItem(R.id.nav_camera, R.string.images_to_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.qr_barcode_to_pdf : R.id.qr_barcode_to_pdf_fav,
+                new HomePageItem(R.id.nav_qrcode, R.string.qr_barcode_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.excel_to_pdf : R.id.excel_to_pdf_fav,
+                new HomePageItem(R.id.nav_excel_to_pdf, R.string.excel_to_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.view_files : R.id.view_files_fav,
+                new HomePageItem(R.id.nav_gallery, R.string.viewFiles));
+        mFragmentPositionMap.put(homepageitems ? R.id.rotate_pages : R.id.rotate_pages_fav,
+                new HomePageItem(R.id.nav_gallery, R.string.rotate_pages));
+        mFragmentPositionMap.put(homepageitems ? R.id.extract_text : R.id.extract_text_fav,
+                new HomePageItem(R.id.nav_text_extract, R.string.extract_text));
+        mFragmentPositionMap.put(homepageitems ? R.id.add_watermark : R.id.add_watermark_fav,
+                new HomePageItem(R.id.nav_add_watermark, R.string.add_watermark));
+        mFragmentPositionMap.put(homepageitems ? R.id.merge_pdf : R.id.merge_pdf_fav,
+                new HomePageItem(R.id.nav_merge, R.string.merge_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.split_pdf : R.id.split_pdf_fav,
+                new HomePageItem(R.id.nav_split, R.string.split_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.text_to_pdf : R.id.text_to_pdf_fav,
+                new HomePageItem(R.id.nav_text_to_pdf, R.string.text_to_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.compress_pdf : R.id.compress_pdf_fav,
+                new HomePageItem(R.id.nav_compress_pdf, R.string.compress_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.remove_pages : R.id.remove_pages_fav,
+                new HomePageItem(R.id.nav_remove_pages, R.string.remove_pages));
+        mFragmentPositionMap.put(homepageitems ? R.id.rearrange_pages : R.id.rearrange_pages_fav,
+                new HomePageItem(R.id.nav_rearrange_pages, R.string.reorder_pages));
+        mFragmentPositionMap.put(homepageitems ? R.id.extract_images : R.id.extract_images_fav,
+                new HomePageItem(R.id.nav_extract_images, R.string.extract_images));
+        mFragmentPositionMap.put(homepageitems ? R.id.view_history : R.id.view_history_fav,
+                new HomePageItem(R.id.nav_history, R.string.history));
+        mFragmentPositionMap.put(homepageitems ? R.id.pdf_to_images : R.id.pdf_to_images_fav,
+                new HomePageItem(R.id.nav_pdf_to_images, R.string.pdf_to_images));
+        mFragmentPositionMap.put(homepageitems ? R.id.add_password : R.id.add_password_fav,
+                new HomePageItem(R.id.nav_add_password, R.string.add_password));
+        mFragmentPositionMap.put(homepageitems ? R.id.remove_password : R.id.remove_password_fav,
+                new HomePageItem(R.id.nav_remove_password, R.string.remove_password));
+        mFragmentPositionMap.put(homepageitems ? R.id.add_images : R.id.add_images_fav,
+                new HomePageItem(R.id.nav_add_images, R.string.add_images));
+        mFragmentPositionMap.put(homepageitems ?
+                        R.id.remove_duplicates_pages_pdf : R.id.remove_duplicates_pages_pdf_fav,
+                new HomePageItem(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages));
+        mFragmentPositionMap.put(homepageitems ? R.id.invert_pdf : R.id.invert_pdf_fav,
+                new HomePageItem(R.id.nav_invert_pdf, R.string.invert_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.zip_to_pdf : R.id.zip_to_pdf_fav,
+                new HomePageItem(R.id.nav_zip_to_pdf, R.string.zip_to_pdf));
+
+        return mFragmentPositionMap;
+
     }
 }

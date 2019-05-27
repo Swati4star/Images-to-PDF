@@ -259,13 +259,22 @@
                     app:option_text="@string/pdf_to_images" />
 
                 <swati4star.createpdf.customviews.MyCardView
-                    android:id="@+id/excel_to_pdf"
+                    android:id="@+id/excel_to_pdf_fav"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:visibility="gone"
                     app:option_icon="@drawable/ic_excel"
                     app:option_text="@string/excel_to_pdf" />
+
+                <swati4star.createpdf.customviews.MyCardView
+                    android:id="@+id/zip_to_pdf_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:visibility="gone"
+                    app:option_icon="@drawable/ic_zip_to_pdf"
+                    app:option_text="@string/zip_to_pdf" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

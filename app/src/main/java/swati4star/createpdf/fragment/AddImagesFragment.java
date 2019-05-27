@@ -53,7 +53,6 @@ import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
-import static swati4star.createpdf.util.ResultUtils.checkResultValidity;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -136,7 +135,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (!checkResultValidity(resultCode, data))
+        if (resultCode != Activity.RESULT_OK || data == null)
             return;
 
         switch (requestCode) {
@@ -169,24 +168,21 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length < 1)
             return;
-        switch (requestCode) {
-            case REQUEST_PERMISSIONS_CODE: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPermissionGranted = true;
-                    selectImages();
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                selectImages();
+                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
     @OnClick(R.id.pdfCreate)
     public void parse() {
         hideKeyboard(mActivity);
-        if (mOperation.equals(ADD_IMAGES)) {
+        if (mOperation.equals(ADD_IMAGES))
             getFileName();
-        }
     }
 
     private void getFileName() {
@@ -287,6 +283,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
                 selectFileButton, addImages);
+
     }
 
     @Override

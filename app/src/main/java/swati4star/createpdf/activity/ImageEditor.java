@@ -162,7 +162,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mClicked = true;
         if (mClickedFilter || mDoodleSelected) {
             saveCurrentImage();
-            hideBrushEffect();
+            showHideBrushEffect(false);
             mClickedFilter = false;
             mDoodleSelected = false;
         }
@@ -248,10 +248,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                     .setPinchTextScalable(true)
                     .build();
             if (doodleSeekBar.getVisibility() == View.GONE && brushColorsView.getVisibility() == View.GONE) {
-                showBrushEffect();
+                showHideBrushEffect(true);
             } else if (doodleSeekBar.getVisibility() == View.VISIBLE &&
                     brushColorsView.getVisibility() == View.VISIBLE) {
-                hideBrushEffect();
+                showHideBrushEffect(false);
             }
         } else {
             applyFilter(mFilterItems.get(position).getFilter());
@@ -261,20 +261,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     /**
      * Shows the brush effect
      */
-    private void showBrushEffect() {
-        mPhotoEditor.setBrushDrawingMode(true);
-        doodleSeekBar.setVisibility(View.VISIBLE);
-        brushColorsView.setVisibility(View.VISIBLE);
+    private void showHideBrushEffect(boolean show) {
+        mPhotoEditor.setBrushDrawingMode(show);
+        doodleSeekBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        brushColorsView.setVisibility(show ? View.VISIBLE : View.GONE);
         mDoodleSelected = true;
-    }
-
-    /**
-     * Hides brush effect
-     */
-    private void hideBrushEffect() {
-        mPhotoEditor.setBrushDrawingMode(false);
-        doodleSeekBar.setVisibility(View.GONE);
-        brushColorsView.setVisibility(View.GONE);
     }
 
     /**

@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -27,8 +26,9 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
-import swati4star.createpdf.model.FavouriteItem;
+import swati4star.createpdf.model.HomePageItem;
 
+import static swati4star.createpdf.util.CommonCodeUtils.fillNavigationItemsMap;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
@@ -60,6 +60,7 @@ import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SPLIT_PDF_KEY;
 import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
+import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
@@ -69,7 +70,7 @@ public class FavouritesFragment extends Fragment
     private SharedPreferences mSharedpreferences;
     private boolean mDoesFavouritesExist;
     private Activity mActivity;
-    private Map<Integer, FavouriteItem> mFragmentPositionMap;
+    private Map<Integer, HomePageItem> mFragmentPositionMap;
 
     @BindView(R.id.images_to_pdf_fav)
     MyCardView pref_img_to_pdf;
@@ -111,7 +112,7 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_pdf_to_img;
     @BindView(R.id.extract_text_fav)
     MyCardView pref_extract_txt;
-    @BindView(R.id.excel_to_pdf)
+    @BindView(R.id.excel_to_pdf_fav)
     MyCardView pref_excel_to_pdf;
     @BindView(R.id.add_text_fav)
     MyCardView pref_add_text;
@@ -119,6 +120,8 @@ public class FavouritesFragment extends Fragment
     LottieAnimationView favouritesAnimation;
     @BindView(R.id.favourites_text)
     TextView favouritesText;
+    @BindView(R.id.zip_to_pdf_fav)
+    MyCardView pref_zip_to_pdf;
 
     @Nullable
     @Override
@@ -127,8 +130,11 @@ public class FavouritesFragment extends Fragment
         View rootview = inflater.inflate(R.layout.favourites_fragment, container, false);
         ButterKnife.bind(this, rootview);
 
-        initializeValues();
+        mSharedpreferences = PreferenceManager
+                .getDefaultSharedPreferences(mActivity);
+        mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
 
+        initializeValues();
 
         setHasOptionsMenu(true);
         return rootview;
@@ -139,13 +145,9 @@ public class FavouritesFragment extends Fragment
      */
     private void initializeValues() {
 
-        mSharedpreferences = PreferenceManager
-                .getDefaultSharedPreferences(mActivity);
-        mSharedpreferences.registerOnSharedPreferenceChangeListener(this);
-
         mDoesFavouritesExist = false;
         checkFavs(mSharedpreferences);
-        fillMap();
+        mFragmentPositionMap = fillNavigationItemsMap(false);
 
         pref_img_to_pdf.setOnClickListener(this);
         pref_text_to_pdf.setOnClickListener(this);
@@ -169,6 +171,7 @@ public class FavouritesFragment extends Fragment
         pref_rem_dup_pages.setOnClickListener(this);
         pref_invert_pdf.setOnClickListener(this);
         pref_excel_to_pdf.setOnClickListener(this);
+        pref_zip_to_pdf.setOnClickListener(this);
 
     }
 
@@ -215,6 +218,7 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_extract_img, EXTRACT_IMAGES_KEY);
         viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
         viewVisibility(pref_excel_to_pdf, EXCEL_TO_PDF_KEY);
+        viewVisibility(pref_zip_to_pdf, ZIP_TO_PDF_KEY);
 
         // if there are no favourites then show favourites animation and text
         if (!mDoesFavouritesExist) {
@@ -392,14 +396,21 @@ public class FavouritesFragment extends Fragment
             case R.id.extract_text_fav:
                 fragment = new ExtractTextFragment();
                 break;
-            case R.id.excel_to_pdf:
+            case R.id.excel_to_pdf_fav:
                 fragment = new ExceltoPdfFragment();
+                break;
+            case R.id.zip_to_pdf_fav:
+                fragment = new ZipToPdfFragment();
                 break;
         }
         try {
             if (fragment != null && fragmentManager != null) {
-                ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(v.getId()).getIconId());
-                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+                ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(
+                        v.getId()).getNavigationItemId());
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content, fragment)
+                        .addToBackStack(getString(R.string.favourites))
+                        .commit();
             }
         } catch (Exception e) {
             e.printStackTrace();

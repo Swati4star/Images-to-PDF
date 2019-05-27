@@ -38,6 +38,7 @@ import swati4star.createpdf.database.History;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
+import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -135,6 +136,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        mActivity.setTitle(appName);
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).setNavigationViewSelection(R.id.nav_home);
         }

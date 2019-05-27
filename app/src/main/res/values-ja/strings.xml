@@ -418,4 +418,6 @@
     <string name="favourites">Favourites</string>
     <string name="favourites_text">あなたのお気に入りの機能を追加するために+アイコンを選択してください！</string>
     <string name="split_one_page_pdf_alert">選択したPDFは1ページしかないため分割できません。</string>
+    <string name="no_excel_file">Excelファイルが選択されていません</string>
+    <string name="split_range_alert">Entered split range will create Selected PDF again!</string>
 </resources>

@@ -11,20 +11,32 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
+import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.ExcelToPDFAsync;
 import swati4star.createpdf.util.FileUtils;
@@ -37,12 +49,14 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
+import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
+import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterface {
+public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterface, OnItemClickListner {
     private Activity mActivity;
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
@@ -54,6 +68,8 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
     TextView mTextView;
     @BindView(R.id.create_excel_to_pdf)
     MorphingButton mCreateExcelPdf;
+    @BindView(R.id.enhancement_options_recycle_view)
+    RecyclerView mEnhancementOptionsRecycleView;
 
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
@@ -62,6 +78,10 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
     private boolean mButtonClicked = false;
     private final int mFileSelectCode = 0;
     private MaterialDialog mMaterialDialog;
+    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList;
+    private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
+    private boolean mPasswordProtected = false;
+    private String mPassword;
 
     public ExceltoPdfFragment() {
     }
@@ -75,9 +95,18 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootview);
+        showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
         mCreateExcelPdf.setEnabled(false);
         return rootview;
+    }
+
+    private void showEnhancementOptions() {
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
+        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
+        mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
+        mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }
 
     @Override
@@ -190,12 +219,12 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
      *
      * @param mFilename
      */
+
     private void convertToPdf(String mFilename) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
-
-        new ExcelToPDFAsync(mRealPath, mPath, ExceltoPdfFragment.this).execute();
+        new ExcelToPDFAsync(mRealPath, mPath, ExceltoPdfFragment.this, mPasswordProtected, mPassword).execute();
 
     }
 
@@ -231,5 +260,82 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
         mCreateExcelPdf.setEnabled(false);
         mExcelFileUri = null;
+        mPasswordProtected = false;
+        showEnhancementOptions();
     }
+
+    @Override
+    public void onItemClick(int position) {
+        if (!mCreateExcelPdf.isEnabled()) {
+            showSnackbar(mActivity, R.string.no_excel_file);
+            return;
+        }
+        switch (position) {
+            case 0:
+                setPassword();
+                break;
+        }
+    }
+
+    private void setPassword() {
+        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+                R.string.set_password);
+        final MaterialDialog dialog = builder
+                .customView(R.layout.custom_dialog, true)
+                .neutralText(R.string.remove_dialog)
+                .build();
+
+        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        final View neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
+        final EditText passwordInput = Objects.requireNonNull(dialog.getCustomView()).findViewById(R.id.password);
+        passwordInput.setText(mPassword);
+        passwordInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        positiveAction.setEnabled(s.toString().trim().length() > 0);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable input) {
+                        if (StringUtils.isEmpty(input)) {
+                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+                        } else {
+                            mPassword = input.toString();
+                            mPasswordProtected = true;
+                            onPasswordAdded();
+                        }
+                    }
+                });
+        if (StringUtils.isNotEmpty(mPassword)) {
+            neutralAction.setOnClickListener(v -> {
+                mPassword = null;
+                onPasswordRemoved();
+                mPasswordProtected = false;
+                dialog.dismiss();
+                showSnackbar(mActivity, R.string.password_remove);
+            });
+        }
+        dialog.show();
+        positiveAction.setEnabled(false);
+    }
+
+    private void onPasswordAdded() {
+        mEnhancementOptionsEntityArrayList.get(0)
+                .setImage(mActivity.getResources()
+                        .getDrawable(R.drawable.baseline_done_24));
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
+    private void onPasswordRemoved() {
+        mEnhancementOptionsEntityArrayList.get(0)
+                .setImage(mActivity.getResources()
+                        .getDrawable(R.drawable.baseline_enhanced_encryption_24));
+        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
 }
