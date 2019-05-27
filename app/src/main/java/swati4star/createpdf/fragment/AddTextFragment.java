@@ -13,6 +13,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,17 @@ import android.widget.RelativeLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -48,6 +56,7 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.SettingsOptions;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
@@ -68,8 +77,6 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private Activity mActivity;
     private String mPdfpath;
     private String mTextPath;
-    private Uri mPdfUri;
-    private Uri mTextUri;
     private FileUtils mFileUtils;
     private MorphButtonUtility mMorphButtonUtility;
     private BottomSheetUtils mBottomSheetUtils;
@@ -183,13 +190,11 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICK_PDF_FILE_CODE) {
-            mPdfUri = data.getData();
             mPdfpath = RealPathUtil.getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
             return;
         }
         if (requestCode == INTENT_REQUEST_PICK_TEXT_FILE_CODE) {
-            mTextUri = data.getData();
             mTextPath = RealPathUtil.getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_txtselected));
         }
@@ -208,13 +213,23 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                 mSelectText, mCreateTextPDF);
     }
 
+    @OnClick(R.id.viewFiles)
+    void onViewFilesClick(View view) {
+        mBottomSheetUtils.showHideSheet(sheetBehavior);
+    }
+
     public void resetView() {
         mPdfpath = mTextPath = null;
-        mPdfUri = mTextUri = null;
         mMorphButtonUtility.morphToGrey(mCreateTextPDF, mMorphButtonUtility.integer());
         mCreateTextPDF.setEnabled(false);
     }
 
+    /**
+     * This method is used to add append the text to an existing PDF file and
+     * make a final new pdf with the appended text to the old pdf content.
+     *
+     * @param fileName - the name of the new pdf that is to be created.
+     */
     private void addText(String fileName) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
@@ -233,25 +248,21 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             OutputStream fos = new FileOutputStream(new File(mPath));
 
             PdfReader pdfReader = new PdfReader(mPdfpath);
-            PdfStamper pdfStamper = new PdfStamper(pdfReader, fos);
 
-            PdfContentByte pdfContentByte = pdfStamper.getOverContent(pdfReader.getNumberOfPages());
+            Document document = new Document(pdfReader.getPageSize(1));
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, fos);
+            document.open();
+            PdfContentByte cb = pdfWriter.getDirectContent();
+            for (int i = 1; i <= pdfReader.getNumberOfPages(); i++) {
+                PdfImportedPage page = pdfWriter.getImportedPage(pdfReader, i);
 
-            // Add text in existing PDF
-            pdfContentByte.beginText();
-            pdfContentByte.setFontAndSize(BaseFont.createFont
-                            (BaseFont.TIMES_ROMAN, //Font name
-                                    BaseFont.CP1257, //Font encoding
-                                    BaseFont.EMBEDDED //Font embedded
-                            )
-                    , 12); // set font and size
-            pdfContentByte.setTextMatrix(10, 10); // set x and y co-ordinates
-            //0, 800 will write text on TOP LEFT of pdf page
-            //0, 0 will write text on BOTTOM LEFT of pdf page
-            pdfContentByte.showText(text.toString());
-            pdfContentByte.endText();
-
-            pdfStamper.close(); //close pdfStamper
+                document.newPage();
+                cb.addTemplate(page, 0, 0);
+            }
+            document.setPageSize(pdfReader.getPageSize(1));
+            document.newPage();
+            document.add(new Paragraph(text.toString()));
+            document.close();
 
             getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
