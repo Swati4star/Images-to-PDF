@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_extract_text"
+                app:option_icon="@drawable/ic_text_format_black_24dp"
                 app:option_text="@string/add_text" />
 
         </LinearLayout>
