@@ -105,4 +105,13 @@ public class MorphButtonUtility {
         morphToGrey(buttonToDisable, integer());
         buttonToDisable.setEnabled(false);
     }
+    public void initializeButtonForAddText(MorphingButton pdfButton, MorphingButton textButton,
+                                 MorphingButton buttonToDisable) {
+        pdfButton.setText(R.string.select_pdf_file);
+        pdfButton.setBackgroundColor(mActivity.getResources().getColor(R.color.mb_blue));
+        textButton.setText(R.string.select_text_file);
+        textButton.setBackgroundColor(mActivity.getResources().getColor(R.color.mb_blue));
+        morphToGrey(buttonToDisable, integer());
+        buttonToDisable.setEnabled(false);
+    }
 }

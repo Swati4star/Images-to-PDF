@@ -33,6 +33,7 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.ADD_TEXT_KEY;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
@@ -113,6 +114,8 @@ public class FavouritesFragment extends Fragment
     MyCardView pref_extract_txt;
     @BindView(R.id.excel_to_pdf_fav)
     MyCardView pref_excel_to_pdf;
+    @BindView(R.id.add_text_fav)
+    MyCardView pref_add_text;
     @BindView(R.id.favourites)
     LottieAnimationView favouritesAnimation;
     @BindView(R.id.favourites_text)
@@ -152,6 +155,7 @@ public class FavouritesFragment extends Fragment
         pref_view_files.setOnClickListener(this);
         pref_history.setOnClickListener(this);
         pref_extract_txt.setOnClickListener(this);
+        pref_add_text.setOnClickListener(this);
         pref_split_pdf.setOnClickListener(this);
         pref_merge_pdf.setOnClickListener(this);
         pref_compress.setOnClickListener(this);
@@ -197,6 +201,7 @@ public class FavouritesFragment extends Fragment
         viewVisibility(pref_qr_barcode, QR_BARCODE_KEY);
         viewVisibility(pref_view_files, VIEW_FILES_KEY);
         viewVisibility(pref_history, HISTORY_KEY);
+        viewVisibility(pref_add_text, ADD_TEXT_KEY);
         viewVisibility(pref_add_password, ADD_PASSWORD_KEY);
         viewVisibility(pref_rem_pass, REMOVE_PASSWORD_KEY);
         viewVisibility(pref_rot_pages, ROTATE_PAGES_KEY);
@@ -274,6 +279,9 @@ public class FavouritesFragment extends Fragment
                 break;
             case R.id.view_history_fav:
                 fragment = new HistoryFragment();
+                break;
+            case R.id.add_text_fav:
+                fragment = new AddTextFragment();
                 break;
             case R.id.merge_pdf_fav:
                 fragment = new MergeFilesFragment();
