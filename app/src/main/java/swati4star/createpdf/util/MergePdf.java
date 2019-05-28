@@ -31,9 +31,10 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
      * @param mergeFilesListener - listener object
      * @param masterpwd - current master password
      */
-    public MergePdf(String fileName, boolean isPasswordProtected,
+    public MergePdf(String fileName, String homePath, boolean isPasswordProtected,
                     String password, MergeFilesListener mergeFilesListener, String masterpwd) {
         mFilename = fileName;
+        mFinPath = homePath;
         mMergeFilesListener = mergeFilesListener;
         mIsPasswordProtected = isPasswordProtected;
         mPassword = password;
