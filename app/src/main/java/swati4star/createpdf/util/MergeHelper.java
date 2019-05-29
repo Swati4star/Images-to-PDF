@@ -54,12 +54,12 @@ public class MergeHelper implements MergeFilesListener {
                         showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         if (!mFileUtils.isFileExist(input + mContext.getResources().getString(R.string.pdf_ext))) {
-                            new MergePdf(input.toString(), mPasswordProtected,
+                            new MergePdf(input.toString(), mHomePath, mPasswordProtected,
                                     mPassword, this, masterpwd).execute(pdfpaths);
                         } else {
                             MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
-                                    mPasswordProtected, mPassword,
+                                    mHomePath, mPasswordProtected, mPassword,
                                     this, masterpwd).execute(pdfpaths))
                                     .onNegative((dialog1, which) -> mergeFiles()).show();
                         }
