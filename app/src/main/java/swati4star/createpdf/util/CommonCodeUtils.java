@@ -141,6 +141,8 @@ public class CommonCodeUtils {
                 new HomePageItem(R.id.nav_invert_pdf, R.string.invert_pdf));
         mFragmentPositionMap.put(homepageitems ? R.id.zip_to_pdf : R.id.zip_to_pdf_fav,
                 new HomePageItem(R.id.nav_zip_to_pdf, R.string.zip_to_pdf));
+        mFragmentPositionMap.put(homepageitems ? R.id.add_text : R.id.add_text_fav,
+                new HomePageItem(R.id.nav_add_text, R.string.add_text));
 
         return mFragmentPositionMap;
 
