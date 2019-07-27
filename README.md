@@ -114,3 +114,5 @@ This project is founded and actively maintained by [Swati Garg](https://github.c
 <a href="https://www.buymeacoff.ee/WmJepqz6H" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Swati4star)
 <a href="https://www.buymeacoffee.com/qITGMWB" target="_blank">
+
+Trial
