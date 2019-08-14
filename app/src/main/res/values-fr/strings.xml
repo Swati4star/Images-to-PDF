@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PDF Converter</string>
     <string name="title">Actions PDF</string>
     <string name="file_name_text">Nom du fichier</string>
@@ -8,7 +8,9 @@
     <string name="edit_images_text">Modifier des images</string>
     <string name="open_pdf_text">Ouvrir un PDF</string>
     <string name="create_pdf_text">Créer PDF</string>
-    <string name="details"><b>Détails</b></string>
+    <string name="details">
+        <b>Détails</b>
+    </string>
     <string name="search_hint">Nom de fichier</string>
     <string name="search">recherche</string>
     <array name="items">
@@ -50,7 +52,7 @@
     <string name="scan_qrcode">Scannez le code QR</string>
     <string name="scan_barcode">Scannez le code à barres</string>
     <string name="qrbarcodes_to_pdf">Créer un fichier PDF à partir de QR &amp; code à barres</string>
-    <string name="scan_cancelled">Cancelled Scan by user</string>
+    <string name="scan_cancelled">Analyse annulée par l’utilisateur</string>
     <string name="set_password">Définir un mot de passe</string>
     <string name="enter_password">Entrer le mot de passe</string>
     <string name="snackbar_password_cannot_be_blank">Le mot de passe ne peut pas être vide</string>
@@ -96,7 +98,7 @@
     <string name="set_page_size_text">Définir la taille de page</string>
     <string name="b0_to_b10">B0 à B10</string>
     <string name="a0_to_a10">A0 à A10</string>
-    <string name="tabloid">TABLOID</string>
+    <string name="tabloid">TABLOÏD</string>
     <string name="executive">EXECUTIVE</string>
     <string name="ledger">LEDGER</string>
     <string name="letter">LETTRE</string>
@@ -149,7 +151,7 @@
     <string name="filter_grain">Grain</string>
     <string name="save">Sauvegarder</string>
     <string name="choose_color_text">Choisir une couleur :</string>
-    <string name="view_in_gallery">View Images in Gallery</string>
+    <string name="view_in_gallery">Afficher les images dans la galerie</string>
     <string name="filter_lomish">Lomish</string>
     <string name="filter_negative">Négatif</string>
     <string name="filter_saturate">Saturer</string>
@@ -165,7 +167,14 @@
     <string name="deleted">Supprimé</string>
     <string name="no_history_message">Aucun historique à afficher</string>
     <string name="delete_history_message">Êtes-vous sûr de vouloir supprimer l\'historique \?</string>
-    <string name="file_info">"  File Name : %1$s    Path : %2$s    Size : %3$s    Date Modified %4$s"</string>
+    <string name="file_info">"
+\n Nom du fichier : %1$s 
+\n
+\n Chemin : %2$s 
+\n
+\n Taille : %3$s 
+\n
+\n Date de modification %4$s"</string>
     <string name="default_font_family_text">Famille de police de caractères (par défaut : %s)</string>
     <string name="font_family_text">"Famille de la police : "</string>
     <string name="courier">COURRIER</string>
@@ -181,7 +190,7 @@
     <string name="rearrange_text">Réorganiser</string>
     <string name="snackbar_undoAction">Annuler</string>
     <string name="pdf_does_not_exist_message">Le PDF n\'existe pas.</string>
-    <string name="image_rearranging_options">Image Rearranging Options</string>
+    <string name="image_rearranging_options">Option de réarrangement des images</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Réinitialiser</string>
     <string name="confirm_exit_message">Appuyez à nouveau pour quitter</string>
@@ -197,7 +206,7 @@
     <string name="rate_negative">Non, merci</string>
     <string name="rate_us_never">Jamais</string>
     <string name="remove_pages">Supprimer des pages</string>
-    <string name="remove_pages_error">The input value is not valid</string>
+    <string name="remove_pages_error">La valeur d’entrée n’est pas valide</string>
     <string name="encrypted_pdf">Le PDF est protégé par mot de passe</string>
     <string name="encrypted">Chiffré</string>
     <string name="reorder_pages">Réorganiser les pages</string>
@@ -232,7 +241,7 @@
     <string name="welcome_text_to_pdf">Texte vers PDF</string>
     <string name="welcome_qrcode_to_pdf">QR Code vers format PDF</string>
     <string name="welcome_remove_pages">Supprimer les pages</string>
-    <string name="welcome_remove_pages_message">Remove the unwanted pages you do not need anymore</string>
+    <string name="welcome_remove_pages_message">Supprimez les pages indésirables et dont vous n’avez pas plus besoin</string>
     <string name="welcome_reorder_pages">Réorganiser les pages</string>
     <string name="welcome_extract_images">Extraire des images d\'un PDF</string>
     <string name="welcome_extract_images_message">Extraire toutes les images possibles de vos PDF d\'une seule traite</string>
@@ -241,7 +250,7 @@
     <string name="welcome_merge_message">Fusionner divers fichiers PDF existants dans votre téléphone en un seul fichier</string>
     <string name="skip_text">Passer</string>
     <string name="help">Aide</string>
-    <string name="image_scale_type">Set Image Scale Type</string>
+    <string name="image_scale_type">Spécifier le type d’échelle de l’image</string>
     <string name="stretch_image">Étirer l\'image pour l\'ajuster à la page</string>
     <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
     <string name="create_images">Créer des Images</string>
@@ -250,7 +259,7 @@
     <string name="select_pdf_file">Sélectionner un fichier PDF</string>
     <string name="pdf_to_images">PDF en Images</string>
     <string name="done">Fait</string>
-    <string name="image_successfully_cropped">Image successfully cropped</string>
+    <string name="image_successfully_cropped">Image recadrée avec succès</string>
     <string name="page_x_of_n">Page X de N</string>
     <string name="page_x">X de N</string>
     <string name="x">X</string>
@@ -273,7 +282,7 @@
     <string name="no_images_selected">Aucune image n\'est sélectionnée</string>
     <!-- Remove Duplicate Pages -->
     <string name="remove_duplicate_pages">Supprimer les doublons de pages</string>
-    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
+    <string name="remove_duplicate_info">Les pages en double dans le fichier PDF seront supprimées.</string>
     <string name="remove_duplicate">Supprimer les doublons de pages.</string>
     <string name="snackbar_invert_unsuccessful">Le PDF n\'a pas pu être inversé</string>
     <string name="snackbar_invert_successfull">Inversé</string>
@@ -300,4 +309,93 @@
     <string name="favourites_text">Sélectionnez l\'icône + pour ajouter vos fonctionnalités préférées !</string>
     <string name="split_one_page_pdf_alert">Le PDF sélectionné ne peut pas être divisé car il ne contient qu\'une seule page !</string>
     <string name="no_excel_file">Aucun fichier Excel sélectionné</string>
+    <string name="bundleKey">ImageUri</string>
+    <string name="no_permissions">Veuillez fournir une permission pour afficher vos fichiers.</string>
+    <string name="prompt_give_permission">Fournir des autorisations</string>
+    <string name="snackbar_folder_not_created">Erreur lors de la création du dossier de l’application.</string>
+    <string name="snackbar_imagecropped">Images recadrées</string>
+    <string name="snackbar_txtExtracted">Le texte a été extrait !</string>
+    <string name="more_options_text">Plus d\'options d’amélioration</string>
+    <string name="snackbar_no_share_app">Aucune application de partage.</string>
+    <string name="snackbar_no_email_clients">Aucun client de messagerie n’est installé.</string>
+    <string name="empty_image_description">NoPdfs</string>
+    <string name="enter_password_custom">Entrez le mot de passe</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">Chemin d’accès au second fichier PDF</string>
+    <string name="i_have_attached_pdfs_to_this_message">J’ai attaché des fichiers à ce message</string>
+    <string name="btn_sav_text">savText</string>
+    <string name="decrypt_protected_file">Le PDF est protégé par mot de passe. Entrez le mot de passe pour continuer …</string>
+    <string name="save_first">Sauvegarder la présente image d’abord</string>
+    <string name="moving_files">Déplacement de vos fichiers</string>
+    <string name="move_files_delete_dir">Déplacement des fichiers et suppression du dossier</string>
+    <string name="text_type">text/plain</string>
+    <string name="font_size_changed">La taille de la police a été modifiée</string>
+    <string name="swipe_to_view_next">Glissez à gauche pour voir l’image suivante</string>
+    <string name="filter_autofix">Correction automatique</string>
+    <string name="filter_filllight">Lumière de remplissage</string>
+    <string name="filter_rotate">Tourner</string>
+    <string name="rotated">Tournée</string>
+    <string name="decrypted">Déchiffré</string>
+    <string name="arrow_up">Flèche vers le haut</string>
+    <string name="arrow_down">Flèche vers le bas</string>
+    <string name="images_rearranged">Images réarrangées</string>
+    <string name="rotate">Tourner</string>
+    <string name="border_width_prompt">Entrez les unités de la largeur de la bordure</string>
+    <string name="filter_not_saved">L’image n’a pas pu être enregistrée</string>
+    <string name="encrypted_file_text">fichier chiffré</string>
+    <string name="split_success">Le fichier PDF sélectionné a été divisé avec succès. Il a été divisé en %1$d PDF(s)</string>
+    <string name="split_info">Le PDF sera divisé en plusieurs fichiers PDFs. Exemple de format: de 1 à 5,6-7,8,9</string>
+    <string name="error_page_range">Entrée de plage invalide</string>
+    <string name="error_invalid_input">Entrée non valide</string>
+    <string name="file_access_error">Impossible d’accéder au PDF. Les fichiers sont soit chiffrés ou situés dans le stockage externe.</string>
+    <string name="compress_info">Félicitations! Votre PDF est compressé : 
+\nTaille originale du PDF : %s 
+\nTaille du PDF compressé : %s</string>
+    <string name="invert_pdf">Inverser le PDF</string>
+    <string name="invert_pdf_info">Toutes les couleurs dans le fichier PDF seront inversées</string>
+    <string name="invert_pdf_title">Inverser un PDF</string>
+    <string name="rate_positive">Évaluer maintenant</string>
+    <string name="rate_title">Évaluez-nous !</string>
+    <string name="rate_dialog_text">Si vous aimez cette application, veuillez prendre un moment pour évaluer cette app. Cela ne prendra pas plus d’une minute. Merci pour votre soutien ! :)</string>
+    <string name="error_occurred">Une erreur s’est produite</string>
+    <string name="rotate_pages">Tourner les pages</string>
+    <string name="enter_rotation_angle">Entrez l’angle de rotation</string>
+    <string name="rotated_file_name">%s_rotated_%s%s</string>
+    <string name="compression_image_edit">Modifier la valeur de compression des images</string>
+    <string name="font_family_edit">Changer la famille de la police par défaut</string>
+    <string name="font_size_edit">Changer la taille de la police par défaut</string>
+    <string name="image_compression_value_default">"Valeur par défaut de la compression des images :  %d %%"</string>
+    <string name="theme_value_def">Valeur du thème par défaut : %s</string>
+    <string name="page_size_value_def">Valeur par défaut de la taille de page : %s</string>
+    <string name="font_size_value_def">Valeur par défaut de la taille de la police : %d</string>
+    <string name="font_family_value_def">Valeur par défaut de la famille de la police : %s</string>
+    <string name="storage_location_modified">Emplacement de stockage modifié</string>
+    <string name="storage_location_info">Modifier l’emplacement du stockage</string>
+    <string name="view_pdfs">Afficher les PDFs</string>
+    <string name="enhance_created_pdfs">Optimiser les PDF créés</string>
+    <string name="viewfiles_rotatepages">1. Sélectionnez le fichier PDF que vous souhaitez faire pivoter. 
+\n2. Sélectionnez « Pivoter les pages ». 
+\n3. Sélectionnez l’angle de rotation. Appuyez sur OK. 
+\n4. Un nouveau PDF pivoté sera créé.</string>
+    <string name="viewfiles_removepassword">1. Sélectionnez le fichier PDF dont vous souhaitez supprimer le mot de passe. 
+\n2. Sélectionnez « Supprimer le mot de passe ». 
+\n3. Saisissez le mot de passe du PDF. Appuyez sur OK. 
+\n4. Un nouveau PDF sans mot de passe sera créé.</string>
+    <string name="grayscale_images">Créer un PDF en nuances de gris</string>
+    <string name="choose_page_number_style">Choisissez le style des numéros de pages</string>
+    <string name="top">En haut</string>
+    <string name="welcome_text_to_pdf_message">Convertissez à l’aise vos fichiers textes en PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">Convertissez les codes QR et les codes-barres au format PDF de façon simple</string>
+    <string name="welcome_reorder_pages_message">Réorganisez et de arrangez les pages à votre façon</string>
+    <string name="welcome_viewfiles_title">Visualisation des fichiers PDF</string>
+    <string name="welcome_viewfiles_message">Affichez, supprimez, renommez, partagez et ajoutez un mot de passe de vos fichiers PDF</string>
+    <string name="get_started_title">Commencez !</string>
+    <string name="watermark_added">Filigrane ajoutée</string>
+    <string name="watermarked">Watermarked</string>
+    <string name="watermark_remove">Filigrane supprimée</string>
+    <string name="cannot_add_watermark">Le filigrane n’a pas pu être ajoutée au PDF. Veuillez vérifier le fichier PDF à nouveau.</string>
+    <string name="add_watermark">Ajouter une filigrane</string>
+    <string name="enter_watermark_angle">Entrez l’angle</string>
+    <string name="choose_watermark_font_family">Choisissez une famille de police</string>
+    <string name="selected_images_text">Les images que vous avez sélectionnées seront ajoutées à la fin du PDF séléctionné.</string>
+    <string name="title_filter_history_dialog">Filtrer par type d’opération</string>
 </resources>
