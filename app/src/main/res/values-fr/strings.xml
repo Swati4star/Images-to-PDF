@@ -396,4 +396,29 @@
     <string name="selected_images_text">Les images que vous avez sélectionnées seront ajoutées à la fin du PDF séléctionné.</string>
     <string name="title_filter_history_dialog">Filtrer par type d’opération</string>
     <string name="split_range_alert">La plage de division saisie va récréer une nouvelle fois le PDF sélectionné !</string>
+    <string name="whatsappToast">Désolé! Les images n’ont pas pu être ajoutées. Veuillez sélectionner les images à partir de notre option **Sélectionnez des images**.</string>
+    <string name="snackbar_viewAction">View</string>
+    <string name="rate_us_text">Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details\?id=swati4star.createpdf . It converts images to PDF so smoothly. :)</string>
+    <string name="feedback_subject">Suggestions pour le convertisseur Images en PDF</string>
+    <string name="feedback_text">Veuillez écrire vos précieux commentaires ou dîtes-nous bonjour ! :)</string>
+    <string name="Filter_image_preview">Filter Image Preview</string>
+    <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
+    <string name="directory">Directory</string>
+    <string name="showing_image">Showing %1$d of %2$d image(s)</string>
+    <string name="filter_cross">Cross Process</string>
+    <string name="filter_documentary">Documentary</string>
+    <string name="filter_duetone">Due Tone</string>
+    <string name="filter_poster">Posterize</string>
+    <string name="view_history_here_message">View all your converted files history here!</string>
+    <string name="extract_images_success">We found %1$d image(s) in the selected PDF. They have been saved in the PDF Files folder in root directory.</string>
+    <string name="current_master_pwd">The current master password is \"%1$s\" for every encrypted PDF. You can change it here:</string>
+    <string name="viewfiles_addpassword">1. Select the PDF you wish to add password to. 
+\n2. Select Add Password. 
+\n3. Type new password. Select OK. 
+\n4. New PDF with password be created.</string>
+    <string name="welcome_create_pdf_info">View the PDF files previously created or create a new one!</string>
+    <string name="viewfiles_addwatermark">1. Select the PDF you wish to add watermark to. 
+\n2. Select Add Watermark. 
+\n3. Fill the required information. Select OK. 
+\n4. New PDF with watermark will be created.</string>
 </resources>
