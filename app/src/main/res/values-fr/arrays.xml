@@ -8,20 +8,20 @@
     </string-array>
 
     <string-array name="sort_options_images">
-        <item>Name ▲</item>
-        <item>Name ▼</item>
+        <item>Nom ▲</item>
+        <item>Nom ▼</item>
         <item>Date ▲</item>
         <item>Date ▼</item>
     </string-array>
 
     <string-array name="filter_options_history">
-        <item>Created</item>
-        <item>Deleted</item>
-        <item>Renamed</item>
-        <item>Rotated</item>
-        <item>Printed</item>
-        <item>Decrypted</item>
-        <item>Encrypted</item>
-        <item>Inverted</item>
+        <item>Créé</item>
+        <item>Supprimé</item>
+        <item>Renommé</item>
+        <item>Tourné</item>
+        <item>Imprimé</item>
+        <item>Déchiffré</item>
+        <item>Chiffré</item>
+        <item>Inversé</item>
     </string-array>
 </resources>
