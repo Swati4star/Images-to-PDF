@@ -42,7 +42,7 @@ public class TextToPDFUtils {
     private SharedPreferences mSharedPreferences;
 
     public TextToPDFUtils(Activity context) {
-        context = mContext;
+        mContext = context;
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
     }
