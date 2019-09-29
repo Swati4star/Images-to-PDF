@@ -103,6 +103,9 @@ public class CropImageActivity extends AppCompatActivity {
 
     @OnClick(R.id.nextimageButton)
     public void nextImageClicked() {
+        if ( mImages.size() == 0)
+            return;
+
         if (!mCurrentImageEdited) {
             mCurrentImageIndex = (mCurrentImageIndex + 1) % mImages.size();
             setImage(mCurrentImageIndex);
@@ -113,6 +116,9 @@ public class CropImageActivity extends AppCompatActivity {
 
     @OnClick(R.id.previousImageButton)
     public void prevImgBtnClicked() {
+        if ( mImages.size() == 0)
+            return;
+
         if (!mCurrentImageEdited) {
             if (mCurrentImageIndex == 0) {
                 mCurrentImageIndex = mImages.size();

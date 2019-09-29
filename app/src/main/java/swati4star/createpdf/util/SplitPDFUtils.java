@@ -55,7 +55,7 @@ public class SplitPDFUtils {
         Log.v("Ranges", Arrays.toString(ranges));
 
         // if input is invalid then return empty arraylist
-        if (!isInputValid(path, ranges))
+        if (path == null || !isInputValid(path, ranges))
             return outputPaths;
 
         try {

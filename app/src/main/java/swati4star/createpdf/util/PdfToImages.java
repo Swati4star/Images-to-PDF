@@ -64,10 +64,9 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
             if (mDecryptedPath != null)
                 fileDescriptor = ParcelFileDescriptor.open(new File(mDecryptedPath), MODE_READ_ONLY);
             else {
-                if (mUri != null) {
+                if (mUri != null && mContext != null) {
                     // resolve pdf file path based on uri
-                    fileDescriptor = ((PdfToImageFragment) mExtractImagesListener).getContext()
-                            .getContentResolver().openFileDescriptor(mUri, "r");
+                    fileDescriptor =  mContext.getContentResolver().openFileDescriptor(mUri, "r");
                 } else if (mPath != null) {
                     // resolve pdf file path based on relative path
                     fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);

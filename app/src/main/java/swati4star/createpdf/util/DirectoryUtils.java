@@ -91,6 +91,8 @@ public class DirectoryUtils {
 
     private ArrayList<File> searchPdfsFromPdfFolder(File[] files) {
         ArrayList<File> pdfFiles = getPdfsFromPdfFolder(files);
+        if (files == null)
+            return pdfFiles;
         for (File file : files) {
             if (file.isDirectory()) {
                 for (File dirFiles : file.listFiles()) {
