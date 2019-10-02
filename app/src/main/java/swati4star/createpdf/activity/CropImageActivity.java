@@ -37,10 +37,10 @@ public class CropImageActivity extends AppCompatActivity {
     private ArrayList<String> mImages;
     private HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
     private boolean mCurrentImageEdited = false;
-    private boolean mFinishedclicked = false;
+    private boolean mFinishedClicked = false;
 
     @BindView(R.id.imagecount)
-    TextView mImagecount;
+    TextView mImageCount;
 
     @BindView(R.id.cropImageView)
     CropImageView mCropImageView;
@@ -62,7 +62,7 @@ public class CropImageActivity extends AppCompatActivity {
         setUpCropImageView();
 
         mImages = ImageToPdfFragment.mImagesUri;
-        mFinishedclicked = false;
+        mFinishedClicked = false;
 
         for (int i = 0; i < mImages.size(); i++)
             mCroppedImageUris.put(i, Uri.fromFile(new File(mImages.get(i))));
@@ -147,7 +147,7 @@ public class CropImageActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_done:
-                mFinishedclicked = true;
+                mFinishedClicked = true;
                 cropButtonClicked();
                 return true;
             case R.id.action_skip:
@@ -166,7 +166,7 @@ public class CropImageActivity extends AppCompatActivity {
             mCroppedImageUris.put(mCurrentImageIndex, result.getUri());
             mCropImageView.setImageUriAsync(mCroppedImageUris.get(mCurrentImageIndex));
 
-            if (mFinishedclicked) {
+            if (mFinishedClicked) {
                 Intent intent = new Intent();
                 intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, mCroppedImageUris);
                 setResult(Activity.RESULT_OK, intent);
@@ -185,7 +185,7 @@ public class CropImageActivity extends AppCompatActivity {
         if (index < 0 || index >= mImages.size())
             return;
 
-        mImagecount.setText(getString(R.string.cropImage_activityTitle) + " " + (index + 1) + " of " + mImages.size());
+        mImageCount.setText(getString(R.string.cropImage_activityTitle) + " " + (index + 1) + " of " + mImages.size());
         mCropImageView.setImageUriAsync(mCroppedImageUris.get(index));
     }
 }
