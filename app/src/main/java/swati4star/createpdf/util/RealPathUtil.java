@@ -72,6 +72,9 @@ public class RealPathUtil {
             StringBuilder pathbuilder = StringUtils.trimExternal(uri.getPath().substring(1));
             pathbuilder.insert(0, Environment.getExternalStorageDirectory() + "/");
             path =  pathbuilder.toString();
+
+            // check if path contains :
+            path = path.replaceAll("[:]", "/");
         }
         return path;
     }
