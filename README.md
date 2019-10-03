@@ -9,7 +9,7 @@
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
-Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
+Have JPG when you need a PDF? Converting JPG to PDF was never so easy! :smiley:  
 Here is an easy to use Android app to convert images to PDF file!
 
 <img src="./screenshots/image_to_pdf.gif"  width="300px">
@@ -104,6 +104,7 @@ If you are a developer and you wish to contribute to the app please fork the pro
 and submit a pull request.
 Follow [Github Flow](https://help.github.com/articles/github-flow/) for collaboration!
 If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you want.
+You may also mail another [contributor](mailto:halcyongarima@gmail.com) for useful discussions and contributions.
 [Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 
 ### Project Maintainers
