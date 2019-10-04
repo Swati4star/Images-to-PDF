@@ -350,6 +350,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     mNoOfImages.setVisibility(View.VISIBLE);
                     showSnackbar(mActivity, R.string.snackbar_images_added);
                     mCreatePdf.setEnabled(true);
+                    mCreatePdf.unblockTouch();
                 }
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 mOpenPdf.setVisibility(View.GONE);
@@ -767,6 +768,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
         mOpenPdf.setVisibility(View.VISIBLE);
         mMorphButtonUtility.morphToSuccess(mCreatePdf);
+        mCreatePdf.blockTouch();
         mPath = path;
         resetValues();
     }
