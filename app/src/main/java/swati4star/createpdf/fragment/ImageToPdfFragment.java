@@ -195,8 +195,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     @OnClick(R.id.tvNoOfImages)
-    public void onClick() {
-    }
+    public void onClick() { }
 
     /**
      * Adds images (if any) received in the bundle
@@ -264,8 +263,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mPdfOptions.setMasterPwd(mSharedPreferences.getString(MASTER_PWD_STRING, appName));
         mPdfOptions.setPageColor(mPageColor);
 
-        String preFillName = getLastFileName(mImagesUri);
-
+        String preFillName = mFileUtils.getLastFileName(mImagesUri);
 
         MaterialDialog.Builder builder = createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
@@ -508,32 +506,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Returns the last file name obtained from filepath
-     */
-    private String getLastFileName(ArrayList<String> filesPath) {
-
-        if (filesPath.size() == 0)
-            return "";
-        String lastSelectedFilePath = filesPath.get(filesPath.size() - 1);
-        String nameWithoutExt = stripExtension(getFileNameWithoutExtension(lastSelectedFilePath));
-        return nameWithoutExt + getString(swati4star.createpdf.R.string.pdf_suffix);
-    }
-
-    private String stripExtension(String str) {
-        // Handle null case specially.
-        if (str == null) return null;
-
-        // Get position of last '.'.
-        int pos = str.lastIndexOf(".");
-
-        // If there wasn't any '.' just return the string as is.
-        if (pos == -1) return str;
-
-        // Otherwise return the string, up to the dot.
-        return str.substring(0, pos);
     }
 
     private void addBorder() {
@@ -847,7 +819,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
-        mPageNumStyle = mSharedPreferences.getString(Constants.PREF_PAGE_STYLE, null);
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
                 DEFAULT_PAGE_COLOR);
     }
@@ -889,22 +861,22 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private void addPageNumbers() {
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        mPageNumStyle = mSharedPreferences.getString(Constants.PREF_PAGE_STYLE, null);
-        mChoseId = mSharedPreferences.getInt(Constants.PREF_PAGE_STYLE_ID, -1);
+        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
+        mChoseId = mSharedPreferences.getInt (Constants.PREF_PAGE_STYLE_ID, -1);
 
-        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater()
-                .inflate(R.layout.add_pgnum_dialog, null);
+        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
+                .inflate (R.layout.add_pgnum_dialog, null);
 
         RadioButton rbOpt1 = dialogLayout.findViewById(R.id.page_num_opt1);
         RadioButton rbOpt2 = dialogLayout.findViewById(R.id.page_num_opt2);
         RadioButton rbOpt3 = dialogLayout.findViewById(R.id.page_num_opt3);
         RadioGroup rg = dialogLayout.findViewById(R.id.radioGroup);
-        CheckBox cbDefault = dialogLayout.findViewById(R.id.set_as_default);
+        CheckBox cbDefault = dialogLayout.findViewById (R.id.set_as_default);
 
         if (mChoseId > 0) {
-            cbDefault.setChecked(true);
-            rg.clearCheck();
-            rg.check(mChoseId);
+            cbDefault.setChecked (true);
+            rg.clearCheck ();
+            rg.check (mChoseId);
         }
 
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
@@ -915,25 +887,25 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
 
-                    int checkedRadioButtonId = rg.getCheckedRadioButtonId();
+                    int checkedRadioButtonId = rg.getCheckedRadioButtonId ();
                     mChoseId = checkedRadioButtonId;
-                    if (checkedRadioButtonId == rbOpt1.getId()) {
+                    if (checkedRadioButtonId == rbOpt1.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_PAGE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt2.getId()) {
+                    } else if (checkedRadioButtonId == rbOpt2.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt3.getId()) {
+                    } else if (checkedRadioButtonId == rbOpt3.getId ()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
                     }
-                    if (cbDefault.isChecked()) {
+                    if (cbDefault.isChecked ()) {
 
-                        editor.putString(Constants.PREF_PAGE_STYLE, mPageNumStyle);
-                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, mChoseId);
-                        editor.commit();
+                        editor.putString (Constants.PREF_PAGE_STYLE, mPageNumStyle);
+                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, mChoseId);
+                        editor.commit ();
                     } else {
 
-                        editor.putString(Constants.PREF_PAGE_STYLE, null);
-                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, -1);
-                        editor.commit();
+                        editor.putString (Constants.PREF_PAGE_STYLE, null);
+                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, -1);
+                        editor.commit ();
                     }
                 }))
                 .onNeutral((((dialog, which) -> mPageNumStyle = null)))
