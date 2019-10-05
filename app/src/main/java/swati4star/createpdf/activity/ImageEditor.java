@@ -54,7 +54,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private int mDisplaySize;
     private int mCurrentImage; // 0 by default
     private String mFilterName;
-
     @BindView(R.id.nextimageButton)
     ImageView mNextButton;
     @BindView(R.id.imagecount)

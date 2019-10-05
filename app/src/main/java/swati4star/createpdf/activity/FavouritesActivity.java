@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Objects;
+
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
@@ -35,14 +37,14 @@ import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 
 public class FavouritesActivity extends AppCompatActivity {
 
-    private SharedPreferences mSharedpreferences;
+    private SharedPreferences mSharedPreferences;
     private boolean[] mKeyState = new boolean[21];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.add_to_favourite);
-        mSharedpreferences = PreferenceManager
+        mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         setContentView(R.layout.fav_pref_screen);
 
@@ -50,8 +52,11 @@ public class FavouritesActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     }
 
     @Override
@@ -85,53 +90,54 @@ public class FavouritesActivity extends AppCompatActivity {
      * the user make new changes
      */
     private void storeInitialState() {
-        mKeyState[0] = mSharedpreferences.getBoolean(IMAGE_TO_PDF_KEY, false);
-        mKeyState[1] = mSharedpreferences.getBoolean(TEXT_TO_PDF_KEY, false);
-        mKeyState[2] = mSharedpreferences.getBoolean(QR_BARCODE_KEY, false);
-        mKeyState[3] = mSharedpreferences.getBoolean(VIEW_FILES_KEY, false);
-        mKeyState[4] = mSharedpreferences.getBoolean(HISTORY_KEY, false);
-        mKeyState[5] = mSharedpreferences.getBoolean(ADD_PASSWORD_KEY, false);
-        mKeyState[6] = mSharedpreferences.getBoolean(REMOVE_PASSWORD_KEY, false);
-        mKeyState[7] = mSharedpreferences.getBoolean(ROTATE_PAGES_KEY, false);
-        mKeyState[8] = mSharedpreferences.getBoolean(ADD_WATERMARK_KEY, false);
-        mKeyState[9] = mSharedpreferences.getBoolean(ADD_IMAGES_KEY, false);
-        mKeyState[10] = mSharedpreferences.getBoolean(MERGE_PDF_KEY, false);
-        mKeyState[11] = mSharedpreferences.getBoolean(SPLIT_PDF_KEY, false);
-        mKeyState[12] = mSharedpreferences.getBoolean(INVERT_PDF_KEY, false);
-        mKeyState[13] = mSharedpreferences.getBoolean(COMPRESS_PDF_KEY, false);
-        mKeyState[14] = mSharedpreferences.getBoolean(REMOVE_DUPLICATE_PAGES_KEY, false);
-        mKeyState[15] = mSharedpreferences.getBoolean(REMOVE_PAGES_KEY, false);
-        mKeyState[16] = mSharedpreferences.getBoolean(REORDER_PAGES_KEY, false);
-        mKeyState[17] = mSharedpreferences.getBoolean(EXTRACT_IMAGES_KEY, false);
-        mKeyState[18] = mSharedpreferences.getBoolean(PDF_TO_IMAGES_KEY, false);
-        mKeyState[19] = mSharedpreferences.getBoolean(EXCEL_TO_PDF_KEY, false);
-        mKeyState[20] = mSharedpreferences.getBoolean(ZIP_TO_PDF_KEY, false);
+        mKeyState[0] = mSharedPreferences.getBoolean(IMAGE_TO_PDF_KEY, false);
+        mKeyState[1] = mSharedPreferences.getBoolean(TEXT_TO_PDF_KEY, false);
+        mKeyState[2] = mSharedPreferences.getBoolean(QR_BARCODE_KEY, false);
+        mKeyState[3] = mSharedPreferences.getBoolean(VIEW_FILES_KEY, false);
+        mKeyState[4] = mSharedPreferences.getBoolean(HISTORY_KEY, false);
+        mKeyState[5] = mSharedPreferences.getBoolean(ADD_PASSWORD_KEY, false);
+        mKeyState[6] = mSharedPreferences.getBoolean(REMOVE_PASSWORD_KEY, false);
+        mKeyState[7] = mSharedPreferences.getBoolean(ROTATE_PAGES_KEY, false);
+        mKeyState[8] = mSharedPreferences.getBoolean(ADD_WATERMARK_KEY, false);
+        mKeyState[9] = mSharedPreferences.getBoolean(ADD_IMAGES_KEY, false);
+        mKeyState[10] = mSharedPreferences.getBoolean(MERGE_PDF_KEY, false);
+        mKeyState[11] = mSharedPreferences.getBoolean(SPLIT_PDF_KEY, false);
+        mKeyState[12] = mSharedPreferences.getBoolean(INVERT_PDF_KEY, false);
+        mKeyState[13] = mSharedPreferences.getBoolean(COMPRESS_PDF_KEY, false);
+        mKeyState[14] = mSharedPreferences.getBoolean(REMOVE_DUPLICATE_PAGES_KEY, false);
+        mKeyState[15] = mSharedPreferences.getBoolean(REMOVE_PAGES_KEY, false);
+        mKeyState[16] = mSharedPreferences.getBoolean(REORDER_PAGES_KEY, false);
+        mKeyState[17] = mSharedPreferences.getBoolean(EXTRACT_IMAGES_KEY, false);
+        mKeyState[18] = mSharedPreferences.getBoolean(PDF_TO_IMAGES_KEY, false);
+        mKeyState[19] = mSharedPreferences.getBoolean(EXCEL_TO_PDF_KEY, false);
+        mKeyState[20] = mSharedPreferences.getBoolean(ZIP_TO_PDF_KEY, false);
     }
+
     /**
      * Restore the intial state if user
      * press the back button
      */
     private void onBackPressedState() {
-        mSharedpreferences.edit().putBoolean(IMAGE_TO_PDF_KEY, mKeyState[0] ).apply();
-        mSharedpreferences.edit().putBoolean(TEXT_TO_PDF_KEY, mKeyState[1] ).apply();
-        mSharedpreferences.edit().putBoolean(QR_BARCODE_KEY, mKeyState[2] ).apply();
-        mSharedpreferences.edit().putBoolean(VIEW_FILES_KEY, mKeyState[3] ).apply();
-        mSharedpreferences.edit().putBoolean(HISTORY_KEY, mKeyState[4] ).apply();
-        mSharedpreferences.edit().putBoolean(ADD_PASSWORD_KEY, mKeyState[5] ).apply();
-        mSharedpreferences.edit().putBoolean(REMOVE_PASSWORD_KEY, mKeyState[6] ).apply();
-        mSharedpreferences.edit().putBoolean(ROTATE_PAGES_KEY, mKeyState[7] ).apply();
-        mSharedpreferences.edit().putBoolean(ADD_WATERMARK_KEY, mKeyState[8] ).apply();
-        mSharedpreferences.edit().putBoolean(ADD_IMAGES_KEY, mKeyState[9] ).apply();
-        mSharedpreferences.edit().putBoolean(MERGE_PDF_KEY, mKeyState[10] ).apply();
-        mSharedpreferences.edit().putBoolean(SPLIT_PDF_KEY, mKeyState[11] ).apply();
-        mSharedpreferences.edit().putBoolean(INVERT_PDF_KEY, mKeyState[12] ).apply();
-        mSharedpreferences.edit().putBoolean(COMPRESS_PDF_KEY, mKeyState[13] ).apply();
-        mSharedpreferences.edit().putBoolean(REMOVE_DUPLICATE_PAGES_KEY, mKeyState[14] ).apply();
-        mSharedpreferences.edit().putBoolean(REMOVE_PAGES_KEY, mKeyState[15] ).apply();
-        mSharedpreferences.edit().putBoolean(REORDER_PAGES_KEY, mKeyState[16] ).apply();
-        mSharedpreferences.edit().putBoolean(EXTRACT_IMAGES_KEY, mKeyState[17] ).apply();
-        mSharedpreferences.edit().putBoolean(PDF_TO_IMAGES_KEY, mKeyState[18] ).apply();
-        mSharedpreferences.edit().putBoolean(EXCEL_TO_PDF_KEY, mKeyState[19] ).apply();
-        mSharedpreferences.edit().putBoolean(ZIP_TO_PDF_KEY, mKeyState[20] ).apply();
+        mSharedPreferences.edit().putBoolean(IMAGE_TO_PDF_KEY, mKeyState[0]).apply();
+        mSharedPreferences.edit().putBoolean(TEXT_TO_PDF_KEY, mKeyState[1]).apply();
+        mSharedPreferences.edit().putBoolean(QR_BARCODE_KEY, mKeyState[2]).apply();
+        mSharedPreferences.edit().putBoolean(VIEW_FILES_KEY, mKeyState[3]).apply();
+        mSharedPreferences.edit().putBoolean(HISTORY_KEY, mKeyState[4]).apply();
+        mSharedPreferences.edit().putBoolean(ADD_PASSWORD_KEY, mKeyState[5]).apply();
+        mSharedPreferences.edit().putBoolean(REMOVE_PASSWORD_KEY, mKeyState[6]).apply();
+        mSharedPreferences.edit().putBoolean(ROTATE_PAGES_KEY, mKeyState[7]).apply();
+        mSharedPreferences.edit().putBoolean(ADD_WATERMARK_KEY, mKeyState[8]).apply();
+        mSharedPreferences.edit().putBoolean(ADD_IMAGES_KEY, mKeyState[9]).apply();
+        mSharedPreferences.edit().putBoolean(MERGE_PDF_KEY, mKeyState[10]).apply();
+        mSharedPreferences.edit().putBoolean(SPLIT_PDF_KEY, mKeyState[11]).apply();
+        mSharedPreferences.edit().putBoolean(INVERT_PDF_KEY, mKeyState[12]).apply();
+        mSharedPreferences.edit().putBoolean(COMPRESS_PDF_KEY, mKeyState[13]).apply();
+        mSharedPreferences.edit().putBoolean(REMOVE_DUPLICATE_PAGES_KEY, mKeyState[14]).apply();
+        mSharedPreferences.edit().putBoolean(REMOVE_PAGES_KEY, mKeyState[15]).apply();
+        mSharedPreferences.edit().putBoolean(REORDER_PAGES_KEY, mKeyState[16]).apply();
+        mSharedPreferences.edit().putBoolean(EXTRACT_IMAGES_KEY, mKeyState[17]).apply();
+        mSharedPreferences.edit().putBoolean(PDF_TO_IMAGES_KEY, mKeyState[18]).apply();
+        mSharedPreferences.edit().putBoolean(EXCEL_TO_PDF_KEY, mKeyState[19]).apply();
+        mSharedPreferences.edit().putBoolean(ZIP_TO_PDF_KEY, mKeyState[20]).apply();
     }
 }
