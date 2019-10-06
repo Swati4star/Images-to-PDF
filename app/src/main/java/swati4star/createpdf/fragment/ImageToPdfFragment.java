@@ -96,6 +96,7 @@ import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
+import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
 import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.ImageUtils.mImageScaleType;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
@@ -262,9 +263,11 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mPdfOptions.setMasterPwd(mSharedPreferences.getString(MASTER_PWD_STRING, appName));
         mPdfOptions.setPageColor(mPageColor);
 
+        String preFillName = mFileUtils.getLastFileName(mImagesUri);
+
         MaterialDialog.Builder builder = createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
-        builder.input(getString(R.string.example), null, (dialog, input) -> {
+        builder.input(getString(R.string.example), preFillName, (dialog, input) -> {
             if (StringUtils.isEmpty(input)) {
                 showSnackbar(mActivity, R.string.snackbar_name_not_blank);
             } else {

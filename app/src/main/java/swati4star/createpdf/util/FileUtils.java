@@ -343,6 +343,39 @@ public class FileUtils {
     }
 
     /**
+     * Returns name of the last file with "_pdf" suffix.
+     * @param filesPath - ArrayList of image paths
+     * @return fileName with _pdf suffix
+     */
+    public String getLastFileName(ArrayList<String> filesPath) {
+
+        if (filesPath.size() == 0)
+            return "";
+        String lastSelectedFilePath = filesPath.get(filesPath.size() - 1);
+        String nameWithoutExt = stripExtension(getFileNameWithoutExtension(lastSelectedFilePath));
+        return nameWithoutExt + mContext.getString(swati4star.createpdf.R.string.pdf_suffix);
+    }
+
+    /**
+     * Returns the filename without its extension
+     * @param fileNameWithExt fileName with extension. Ex: androidDev.jpg
+     * @return fileName without extension. Ex: androidDev
+     */
+    private String stripExtension(String fileNameWithExt) {
+        // Handle null case specially.
+        if (fileNameWithExt == null) return null;
+
+        // Get position of last '.'.
+        int pos = fileNameWithExt.lastIndexOf(".");
+
+        // If there wasn't any '.' just return the string as is.
+        if (pos == -1) return fileNameWithExt;
+
+        // Otherwise return the string, up to the dot.
+        return fileNameWithExt.substring(0, pos);
+    }
+
+    /**
      * Saves bitmap to external storage
      * @param filename - name of the file
      * @param finalBitmap - bitmap to save
