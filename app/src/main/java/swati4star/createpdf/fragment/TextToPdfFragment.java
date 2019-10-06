@@ -43,7 +43,6 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.ColorUtils;
 import swati4star.createpdf.util.Constants;
-import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
@@ -69,7 +68,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
 
     private Activity mActivity;
     private FileUtils mFileUtils;
-    private DirectoryUtils mDirectoryUtils;
 
     private final int mFileSelectCode = 0;
     private Uri mTextFileUri = null;
@@ -77,6 +75,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     private int mFontColor;
     private int mPageColor;
     private String mFileExtension;
+    private String mHomePath;
     private int mFontSize = 0;
     private int mButtonClicked = 0;
     private boolean mPasswordProtected = false;
@@ -121,6 +120,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+
+        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation());
 
         return rootview;
     }
@@ -386,12 +388,13 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
      * @param mFilename name of file to be created.
      */
     private void createPdf(String mFilename) {
-        mPath = mDirectoryUtils.getOrCreatePdfDirectory().getPath();
+        mPath = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation());
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                 mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
         TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
-        new TextToPdfAsync(mTextFileUri.toString(), fileUtil, options, mFileExtension,
+        new TextToPdfAsync(mTextFileUri.toString(), mHomePath, fileUtil, options, mFileExtension,
                 TextToPdfFragment.this).execute();
     }
 
@@ -457,7 +460,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
-        mDirectoryUtils = new DirectoryUtils(mActivity);
     }
 
     @Override
