@@ -75,6 +75,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     private int mFontColor;
     private int mPageColor;
     private String mFileExtension;
+    private String mHomePath;
     private int mFontSize = 0;
     private int mButtonClicked = 0;
     private boolean mPasswordProtected = false;
@@ -85,8 +86,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
 
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
-    @BindView(R.id.tv_file_name)
-    TextView mTextView;
+    @BindView(R.id.selectFile)
+    MorphingButton mSelectFile;
     @BindView(R.id.createtextpdf)
     MorphingButton mCreateTextPdf;
 
@@ -119,6 +120,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         PageSizeUtils.mPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
                 Constants.DEFAULT_PAGE_SIZE);
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+
+        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
+                getDefaultStorageLocation());
 
         return rootview;
     }
@@ -390,7 +394,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                 mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
         TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
-        new TextToPdfAsync(mTextFileUri.toString(), fileUtil, options, mFileExtension,
+        new TextToPdfAsync(mTextFileUri.toString(), mHomePath, fileUtil, options, mFileExtension,
                 TextToPdfFragment.this).execute();
     }
 
@@ -441,8 +445,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                         }
                     }
                     fileName = getString(R.string.text_file_name) + fileName;
-                    mTextView.setText(fileName);
-                    mTextView.setVisibility(View.VISIBLE);
+                    mSelectFile.setText(fileName);
+
                     mCreateTextPdf.setEnabled(true);
                     mMorphButtonUtility.morphToSquare(mCreateTextPdf, mMorphButtonUtility.integer());
                 }
@@ -515,7 +519,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         }
         getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
-        mTextView.setVisibility(View.GONE);
+        mSelectFile.setText(R.string.select_text_file);
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);
         mTextFileUri = null;
