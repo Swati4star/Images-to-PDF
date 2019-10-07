@@ -454,7 +454,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (Activity) context;
+        if (context instanceof Activity) {
+            mActivity = (Activity) context;
+        } else {
+            mActivity = getActivity();
+        }
+
         mFileUtils = new FileUtils(mActivity);
         mDirectoryUtils = new DirectoryUtils(mActivity);
     }
