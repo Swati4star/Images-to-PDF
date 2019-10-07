@@ -43,6 +43,7 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.ColorUtils;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
@@ -68,6 +69,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
 
     private Activity mActivity;
     private FileUtils mFileUtils;
+    private DirectoryUtils mDirectoryUtils;
 
     private final int mFileSelectCode = 0;
     private Uri mTextFileUri = null;
@@ -85,8 +87,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
 
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
-    @BindView(R.id.tv_file_name)
-    TextView mTextView;
+    @BindView(R.id.selectFile)
+    MorphingButton mSelectFile;
     @BindView(R.id.createtextpdf)
     MorphingButton mCreateTextPdf;
 
@@ -384,9 +386,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
      * @param mFilename name of file to be created.
      */
     private void createPdf(String mFilename) {
-        mPath = mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation());
-        mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
+        mPath = mDirectoryUtils.getOrCreatePdfDirectory().getPath();
+        mPath = mPath + "/" + mFilename + mActivity.getString(R.string.pdf_ext);
         TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                 mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
         TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
@@ -441,8 +442,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                         }
                     }
                     fileName = getString(R.string.text_file_name) + fileName;
-                    mTextView.setText(fileName);
-                    mTextView.setVisibility(View.VISIBLE);
+                    mSelectFile.setText(fileName);
                     mCreateTextPdf.setEnabled(true);
                     mMorphButtonUtility.morphToSquare(mCreateTextPdf, mMorphButtonUtility.integer());
                 }
@@ -456,6 +456,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
+        mDirectoryUtils = new DirectoryUtils(mActivity);
     }
 
     @Override
@@ -515,7 +516,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         }
         getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
-        mTextView.setVisibility(View.GONE);
+        mSelectFile.setText(R.string.select_text_file);
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);
         mTextFileUri = null;
