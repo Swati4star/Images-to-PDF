@@ -12,7 +12,6 @@ check.dependsOn 'checkstyle'
 task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code style checks') {
     configFile file("$qualityConfigDir/checkstyle_config.xml")
     source 'src'
-    exclude '**/swati4star/createpdf/pickit/**'
     include '**/*.java'
 
     reports {

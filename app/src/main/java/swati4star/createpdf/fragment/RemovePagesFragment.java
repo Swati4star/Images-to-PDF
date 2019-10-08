@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
@@ -41,14 +40,13 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
-import swati4star.createpdf.pickit.PickiT;
-import swati4star.createpdf.pickit.PickiTCallbacks;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
@@ -69,7 +67,7 @@ import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface, PickiTCallbacks {
+        OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -108,7 +106,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @BindView(R.id.view_pdf)
     Button mViewPdf;
     private Uri mUri;
-    private PickiT mPickit;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -122,8 +119,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
         resetValues();
-
-        mPickit = new PickiT(this.getContext(), this);
         return rootview;
     }
 
@@ -147,7 +142,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             mUri = data.getData();
             //Getting Absolute Path
-            mPickit.getPath(data.getData(), Build.VERSION.SDK_INT);
+            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            setTextAndActivateButtons(path);
         } else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
             String pages = data.getStringExtra(RESULT);
             boolean sameFile = data.getBooleanExtra("SameFile", false);
@@ -368,20 +364,5 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public boolean checkSheetBehaviour() {
         return checkSheetBehaviourUtil(sheetBehavior);
-    }
-
-    @Override
-    public void PickiTonStartListener() {
-    }
-
-    @Override
-    public void PickiTonProgressUpdate(int progress) {
-    }
-
-    @Override
-    public void PickiTonCompleteListener(String path, boolean wasDriveFile,
-                                         boolean wasUnknownProvider, boolean wasSuccessful,
-                                         String reason) {
-        setTextAndActivateButtons(path);
     }
 }

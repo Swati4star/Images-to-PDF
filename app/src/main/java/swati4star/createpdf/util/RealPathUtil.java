@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -13,6 +14,7 @@ public class RealPathUtil {
 
     /**
      * Returns actual path from uri
+     *
      * @param context - current context
      * @param fileUri - uri of file
      * @return - actual path
@@ -30,53 +32,122 @@ public class RealPathUtil {
      * @param uri     The Uri to query.
      */
     private static String getRealPathFromURI_API19(final Context context, final Uri uri) {
-
         String path = null;
         // DocumentProvider
         if (isDriveFile(uri)) {
             return null;
         }
         if (DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
 
                 if ("primary".equalsIgnoreCase(type)) {
-                    path =  Environment.getExternalStorageDirectory() + "/" + split[1];
-                }
-                if ("home".equalsIgnoreCase(type)) {
-                    path =  Environment.getExternalStorageDirectory() + "/" + split[1];
+                    if (split.length > 1) {
+                        path = Environment.getExternalStorageDirectory() + "/" + split[1];
+                    } else {
+                        path = Environment.getExternalStorageDirectory() + "/";
+                    }
+                } else {
+                    path = "storage" + "/" + docId.replace(":", "/");
                 }
 
+            } else if (isRawDownloadsDocument(uri)) {
+                path = getDownloadsDocumentPath(context, uri, true);
             } else if (isDownloadsDocument(uri)) {
-
-                final String id = DocumentsContract.getDocumentId(uri);
-
-                if (!TextUtils.isEmpty(id)) {
-                    if (id.startsWith("raw:")) {
-                        path =  id.replaceFirst("raw:", "");
-                    }
-                    try {
-                        final Uri contentUri = ContentUris.withAppendedId(
-                                Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                        path = getDataColumn(context, contentUri, null, null);
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
-                }
+                path = getDownloadsDocumentPath(context, uri, false);
             }
-        } else {
-            StringBuilder pathbuilder = StringUtils.trimExternal(uri.getPath().substring(1));
-            pathbuilder.insert(0, Environment.getExternalStorageDirectory() + "/");
-            path =  pathbuilder.toString();
-
-            // check if path contains :
-            path = path.replaceAll("[:]", "/");
         }
         return path;
+    }
+
+    /**
+     * Get a file path from an Uri that points to the Downloads folder.
+     *
+     * @param context       The context
+     * @param uri           The uri to query
+     * @param hasSubFolders The flag that indicates if the file is in the root or in a subfolder
+     * @return The absolute file path
+     */
+    private static String getDownloadsDocumentPath(Context context, Uri uri, boolean hasSubFolders) {
+        String fileName = getFilePath(context, uri);
+        String subFolderName = hasSubFolders ? getSubFolders(uri) : "";
+
+        if (fileName != null) {
+            return Environment.getExternalStorageDirectory().toString() +
+                    "/Download/" + subFolderName + fileName;
+        }
+        final String id = DocumentsContract.getDocumentId(uri);
+
+        String path = null;
+        if (!TextUtils.isEmpty(id)) {
+            if (id.startsWith("raw:")) {
+                path = id.replaceFirst("raw:", "");
+            }
+            try {
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                path = getDataColumn(context, contentUri, null, null);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        return path;
+
+    }
+
+    /**
+     * Get all the subfolders from an Uri.
+     *
+     * @param uri The uri
+     * @return A string containing all the subfolders that point to the final file path
+     */
+    private static String getSubFolders(Uri uri) {
+        String replaceChars = String.valueOf(uri).replace("%2F", "/")
+                .replace("%20", " ").replace("%3A", ":");
+        String[] bits = replaceChars.split("/");
+        String sub5 = bits[bits.length - 2];
+        String sub4 = bits[bits.length - 3];
+        String sub3 = bits[bits.length - 4];
+        String sub2 = bits[bits.length - 5];
+        String sub1 = bits[bits.length - 6];
+        if (sub1.equals("Download")) {
+            return sub2 + "/" + sub3 + "/" + sub4 + "/" + sub5 + "/";
+        } else if (sub2.equals("Download")) {
+            return sub3 + "/" + sub4 + "/" + sub5 + "/";
+        } else if (sub3.equals("Download")) {
+            return sub4 + "/" + sub5 + "/";
+        } else if (sub4.equals("Download")) {
+            return sub5 + "/";
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Get the file path (without subfolders if any)
+     *
+     * @param context The context
+     * @param uri     The uri to query
+     * @return The file path
+     */
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
+    private static String getFilePath(Context context, Uri uri) {
+        Cursor cursor = null;
+        final String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
+        try {
+            cursor = context.getContentResolver().query(uri, projection, null, null,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
     }
 
     /**
@@ -101,7 +172,7 @@ public class RealPathUtil {
                 null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(column);
-                path =  cursor.getString(index);
+                path = cursor.getString(index);
             }
         } catch (Exception e) {
             Log.e("Error", " " + e.getMessage());
@@ -136,5 +207,14 @@ public class RealPathUtil {
      */
     private static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check
+     * @return True if is a raw downloads document, otherwise false
+     */
+    private static boolean isRawDownloadsDocument(Uri uri) {
+        String uriToString = String.valueOf(uri);
+        return uriToString.contains("com.android.providers.downloads.documents/document/raw");
     }
 }
