@@ -113,6 +113,9 @@ dependencies {
     // color picker
     implementation 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
 
+    // aspoes-cells
+    implementation 'com.aspose:aspose-cells:18.4'
+
     testImplementation 'org.mockito:mockito-core:2.23.0'
 }
 

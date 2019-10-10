@@ -11,3 +11,9 @@
 /captures
 app/release/
 java_pid*.hprof
+
+
+# Apple
+*.DS_Store
+.AppleDouble
+.LSOverride
