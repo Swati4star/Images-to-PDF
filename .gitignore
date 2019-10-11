@@ -6,8 +6,13 @@
 *.iml
 /local.properties
 
-.DS_Store
 /build
 /captures
 app/release/
 java_pid*.hprof
+
+
+# specific for Apple
+.DS_Store
+.AppleDouble
+.LSOverride
