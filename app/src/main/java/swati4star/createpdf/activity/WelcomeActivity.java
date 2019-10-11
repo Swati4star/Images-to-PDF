@@ -39,8 +39,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
 
-        // layouts of all welcome sliders
-        // add few more layouts if you want
+        /** layouts of all welcome sliders
+        * add few more layouts if you want
+        */
         mLayouts = new int[]{
                 R.layout.fragment_step_create_pdf,
                 R.layout.fragment_step_view_file,
