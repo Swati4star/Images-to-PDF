@@ -91,57 +91,33 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
         titleMap();
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
-
-        // Set navigation drawer
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.app_name, R.string.app_name);
-
-        //Replaced setDrawerListener with addDrawerListener because it was deprecated.
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.app_name, R.string.app_name);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        // initialize values
-        initializeValues();
-
-        // suitable xml parsers for reading .docx files
-        System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory",
-                "com.fasterxml.aalto.stax.InputFactoryImpl");
-        System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory",
-                "com.fasterxml.aalto.stax.OutputFactoryImpl");
-        System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory",
-                "com.fasterxml.aalto.stax.EventFactoryImpl");
-
-        // Check for app shortcuts & select default fragment
+        initializeValues();// initialize values
+        System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory","com.fasterxml.aalto.stax.InputFactoryImpl");
+        System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory","com.fasterxml.aalto.stax.OutputFactoryImpl");
+        System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory","com.fasterxml.aalto.stax.EventFactoryImpl");
         Fragment fragment = checkForAppShortcutClicked();
-
-        // Check if  images are received
         handleReceivedImagesIntent(fragment);
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
-        if (count > 0 && count % 15 == 0) {
+        if (count > 0 && count % 15 == 0) 
             mFeedbackUtils.rateUs();
-        }
-        if (count != -1) {
+        if (count != -1) 
             mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
-        }
-
         String versionName = mSharedPreferences.getString(VERSION_NAME, "");
         if (versionName != null && !versionName.equals(BuildConfig.VERSION_NAME)) {
             WhatsNewUtils.displayDialog(this);
             mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }
         getRuntimePermissions();
-
-        //check for welcome activity
         openWelcomeActivity();
     }
 
@@ -625,7 +601,6 @@ public class MainActivity extends AppCompatActivity
     /**
      * puts image uri's in a bundle and start ImageToPdf fragment with this bundle
      * as argument
-     *
      * @param imageUris - ArrayList of image uri's in temp directory
      */
     public void convertImagesToPdf(ArrayList<Uri> imageUris) {
