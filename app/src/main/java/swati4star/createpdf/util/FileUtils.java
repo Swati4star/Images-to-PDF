@@ -353,7 +353,7 @@ public class FileUtils {
             return "";
         String lastSelectedFilePath = filesPath.get(filesPath.size() - 1);
         String nameWithoutExt = stripExtension(getFileNameWithoutExtension(lastSelectedFilePath));
-        return nameWithoutExt + mContext.getString(swati4star.createpdf.R.string.pdf_suffix);
+        return nameWithoutExt + mContext.getString(R.string.pdf_suffix);
     }
 
     /**

@@ -13,13 +13,11 @@
            app:titleTextColor="?attr/titleToolbarTextColor"
            android:layout_width="match_parent"
            android:layout_height="?android:attr/actionBarSize"
-           xmlns:android="http://schemas.android.com/apk/res/android"
            xmlns:app="http://schemas.android.com/apk/res-auto" />
     </android.support.design.widget.AppBarLayout>
     <fragment android:id="@+id/activity_settings"
     android:name="swati4star.createpdf.util.FavouritesPreferences"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:layout_marginTop="20dp" />
 </LinearLayout>

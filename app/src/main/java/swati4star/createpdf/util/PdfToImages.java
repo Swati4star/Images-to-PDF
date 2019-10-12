@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import swati4star.createpdf.fragment.PdfToImageFragment;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;

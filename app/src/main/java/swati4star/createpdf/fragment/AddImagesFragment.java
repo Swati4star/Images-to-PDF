@@ -111,7 +111,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     @OnClick(R.id.viewFiles)
-    void onViewFilesClick(View view) {
+    void onViewFilesClick() {
         mBottomSheetUtils.showHideSheet(sheetBehavior);
     }
 

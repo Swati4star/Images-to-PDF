@@ -178,8 +178,8 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
             mViewPdf.setVisibility(View.GONE);
             return;
         }
-        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_no_duplicate_pdf));
-        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+        new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
+        getSnackbarwithAction(mActivity, R.string.snackbar_duplicate_removed)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
         viewPdfButton(path);
         resetValues();
