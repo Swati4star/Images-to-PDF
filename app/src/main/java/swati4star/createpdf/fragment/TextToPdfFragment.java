@@ -81,7 +81,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private boolean mPermissionGranted = false;
     private MaterialDialog mMaterialDialog;
-    private String mSelectedFileName = null;
+    private String mFileNameWithType = null;
 
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
@@ -360,7 +360,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(getString(R.string.example), mSelectedFileName == null ? "" : mSelectedFileName,
+                .input(getString(R.string.example), mFileNameWithType,
                         (dialog, input) -> {
                             if (StringUtils.isEmpty(input)) {
                                 showSnackbar(mActivity, R.string.snackbar_name_not_blank);
@@ -443,10 +443,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                             return;
                         }
                     }
-                    String nameWithoutExtension = mFileUtils.stripExtension(fileName);
-                    mSelectedFileName = nameWithoutExtension + getString(swati4star.createpdf.R.string.pdf_suffix);
-                    fileName = getString(R.string.text_file_name) + fileName;
-                    mSelectFile.setText(fileName);
+                    mFileNameWithType = mFileUtils.stripExtension(fileName) + getString(R.string.pdf_suffix);
+                    mSelectFile.setText(getString(R.string.text_file_name) + fileName);
                     mCreateTextPdf.setEnabled(true);
                     mMorphButtonUtility.morphToSquare(mCreateTextPdf, mMorphButtonUtility.integer());
                 }
