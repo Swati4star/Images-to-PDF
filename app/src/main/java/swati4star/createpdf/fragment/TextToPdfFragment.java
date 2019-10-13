@@ -81,6 +81,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private boolean mPermissionGranted = false;
     private MaterialDialog mMaterialDialog;
+    private String mSelectedFileName = null;
 
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
@@ -359,21 +360,22 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
-                .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.isEmpty(input)) {
-                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
-                    } else {
-                        final String inputName = input.toString();
-                        if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
-                            createPdf(inputName);
-                        } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
-                            builder.onPositive((dialog12, which) -> createPdf(inputName))
-                                    .onNegative((dialog1, which) -> openCreateTextPdf())
-                                    .show();
-                        }
-                    }
-                })
+                .input(getString(R.string.example), mSelectedFileName == null ? "" : mSelectedFileName,
+                        (dialog, input) -> {
+                            if (StringUtils.isEmpty(input)) {
+                                showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                            } else {
+                                final String inputName = input.toString();
+                                if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
+                                    createPdf(inputName);
+                                } else {
+                                    MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                                    builder.onPositive((dialog12, which) -> createPdf(inputName))
+                                            .onNegative((dialog1, which) -> openCreateTextPdf())
+                                            .show();
+                                }
+                            }
+                        })
                 .show();
     }
 
@@ -430,14 +432,19 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     showSnackbar(mActivity, R.string.text_file_selected);
                     String fileName = mFileUtils.getFileName(mTextFileUri);
                     if (fileName != null) {
-                        if (fileName.endsWith(Constants.textExtension)) mFileExtension = Constants.textExtension;
-                        else if (fileName.endsWith(Constants.docxExtension)) mFileExtension = Constants.docxExtension;
-                        else if (fileName.endsWith(Constants.docExtension)) mFileExtension = Constants.docExtension;
+                        if (fileName.endsWith(Constants.textExtension))
+                            mFileExtension = Constants.textExtension;
+                        else if (fileName.endsWith(Constants.docxExtension))
+                            mFileExtension = Constants.docxExtension;
+                        else if (fileName.endsWith(Constants.docExtension))
+                            mFileExtension = Constants.docExtension;
                         else {
                             showSnackbar(mActivity, R.string.extension_not_supported);
                             return;
                         }
                     }
+                    String nameWithoutExtension = mFileUtils.stripExtension(fileName);
+                    mSelectedFileName = nameWithoutExtension + getString(swati4star.createpdf.R.string.pdf_suffix);
                     fileName = getString(R.string.text_file_name) + fileName;
                     mSelectFile.setText(fileName);
                     mCreateTextPdf.setEnabled(true);

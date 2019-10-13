@@ -361,7 +361,7 @@ public class FileUtils {
      * @param fileNameWithExt fileName with extension. Ex: androidDev.jpg
      * @return fileName without extension. Ex: androidDev
      */
-    private String stripExtension(String fileNameWithExt) {
+    public String stripExtension(String fileNameWithExt) {
         // Handle null case specially.
         if (fileNameWithExt == null) return null;
 
