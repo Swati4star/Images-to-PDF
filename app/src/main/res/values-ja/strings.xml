@@ -71,6 +71,7 @@
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snack_bar_empty_txt_in_pdf">選択したPDFには抽出するテキストがありません!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>
     <string name="delete">Delete</string>

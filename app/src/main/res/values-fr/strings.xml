@@ -56,6 +56,7 @@
     <string name="cannot_add_password">Le mot de passe n\'a pas pu être appliqué au fichier PDF. Veuillez vérifier le PDF à nouveau.</string>
     <string name="cropImage_activityTitle">Rogner l\'image</string>
     <string name="snackbar_pdfCreated">PDF créé !</string>
+    <string name="snack_bar_empty_txt_in_pdf">Le PDF choisi n\'a pas de texte à extraire!</string>
     <string name="delete">Supprimer</string>
     <string name="share">Partager</string>
     <string name="extras">Extras</string>
