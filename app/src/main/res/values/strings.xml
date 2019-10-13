@@ -145,6 +145,7 @@
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="snack_bar_empty_txt_in_pdf">The chosen PDF has no text to extract!</string>
     <string name="snackbar_txtExtracted">Text extracted!</string>
     <string name="snackbar_pdfselected">PDF file selected!</string>
     <string name="snackbar_viewAction">View</string>

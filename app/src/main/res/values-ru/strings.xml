@@ -88,6 +88,7 @@
     <string name="snackbar_imagecropped">Изображения кадрированы</string>
     <string name="cropImage_activityTitle">Кадрирование изображения</string>
     <string name="snackbar_pdfCreated">PDF файл создан!</string>
+    <string name="snack_bar_empty_txt_in_pdf">Выбранный PDF не имеет текста для извлечения!</string>
     <string name="snackbar_viewAction">Просмотр</string>
     <string name="more_options_text">Параметры</string>
     <string name="delete">Удалить</string>

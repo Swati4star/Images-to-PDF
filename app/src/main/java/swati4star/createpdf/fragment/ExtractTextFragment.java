@@ -13,6 +13,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -202,10 +203,10 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + textExtension)) {
-                            extractTextfromPdf(inputName);
+                            extractTextFromPdf(inputName);
                         } else {
                             MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
-                            builder.onPositive((dialog12, which) -> extractTextfromPdf(inputName))
+                            builder.onPositive((dialog12, which) -> extractTextFromPdf(inputName))
                                     .onNegative((dialog1, which) -> openExtractText())
                                     .show();
                         }
@@ -220,7 +221,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      *
      * @param inputName -  input pdf filename
      */
-    private void extractTextfromPdf(String inputName) {
+    private void extractTextFromPdf(String inputName) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 getDefaultStorageLocation());
         String mPath = mStorePath + inputName + textExtension;
@@ -233,6 +234,11 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                         .trim()).append("\n"); //Extracting the content from the different pages
             }
             reader.close();
+            // Check whether there is no text found from the PDF Doc
+            if (TextUtils.isEmpty(parsedText.toString().trim())) {
+                showSnackbar(mActivity, R.string.snack_bar_empty_txt_in_pdf);
+                return;
+            }
             File textFile = new File(mStorePath, inputName + textExtension);
             FileWriter writer = new FileWriter(textFile);
             writer.append(parsedText.toString());
