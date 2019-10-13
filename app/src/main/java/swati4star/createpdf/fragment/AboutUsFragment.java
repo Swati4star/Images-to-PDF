@@ -27,18 +27,18 @@ public class AboutUsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_about_us, container, false);
-        ButterKnife.bind(this, rootview);
+        View rootView = inflater.inflate(R.layout.fragment_about_us, container, false);
+        ButterKnife.bind(this, rootView);
         try {
             PackageInfo packageInfo = mActivity.getPackageManager().getPackageInfo(mActivity.getPackageName(), 0);
-            TextView versionText = rootview.findViewById(R.id.version_value);
+            TextView versionText = rootView.findViewById(R.id.version_value);
             String version = versionText.getText().toString() + " " + packageInfo.versionName;
             versionText.setText(version);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         mFeedbackUtils = new FeedbackUtils(mActivity);
-        return rootview;
+        return rootView;
     }
 
     @OnClick(R.id.layout_email)

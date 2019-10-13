@@ -61,7 +61,6 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
     private String mRealPath;
-    private String mFileExtension;
     private String mPath;
 
     @BindView(R.id.tv_excel_file_name_bottom)
@@ -167,31 +166,25 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mButtonClicked = false;
-        switch (requestCode) {
-            case mFileSelectCode:
-                if (resultCode == RESULT_OK) {
-                    mExcelFileUri = data.getData();
-                    mRealPath = RealPathUtil.getRealPath(getContext(), mExcelFileUri);
-                    showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
-                    String fileName = mFileUtils.getFileName(mExcelFileUri);
-                    if (fileName != null) {
-                        if (fileName.endsWith(Constants.excelExtension))
-                            mFileExtension = Constants.excelExtension;
-                        else if (fileName.endsWith(Constants.excelWorkbookExtension))
-                            mFileExtension = Constants.excelWorkbookExtension;
-                        else {
-                            showSnackbar(mActivity, R.string.extension_not_supported);
-                            return;
-                        }
-                    }
-                    fileName = getResources().getString(R.string.excel_selected)
-                            + fileName;
-                    mTextView.setText(fileName);
-                    mTextView.setVisibility(View.VISIBLE);
-                    mCreateExcelPdf.setEnabled(true);
-                    mMorphButtonUtility.morphToSquare(mCreateExcelPdf, mMorphButtonUtility.integer());
+        if (requestCode == mFileSelectCode) {
+            if (resultCode == RESULT_OK) {
+                mExcelFileUri = data.getData();
+                mRealPath = RealPathUtil.getRealPath(getContext(), mExcelFileUri);
+                showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
+                String fileName = mFileUtils.getFileName(mExcelFileUri);
+                if (fileName != null && !fileName.endsWith(Constants.excelExtension) &&
+                        !fileName.endsWith(Constants.excelWorkbookExtension)) {
+                    showSnackbar(mActivity, R.string.extension_not_supported);
+                    return;
                 }
-                break;
+
+                fileName = getResources().getString(R.string.excel_selected)
+                        + fileName;
+                mTextView.setText(fileName);
+                mTextView.setVisibility(View.VISIBLE);
+                mCreateExcelPdf.setEnabled(true);
+                mMorphButtonUtility.morphToSquare(mCreateExcelPdf, mMorphButtonUtility.integer());
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -201,15 +194,13 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length < 1)
             return;
-        switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPermissionGranted = true;
-                    openExcelToPdf();
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                openExcelToPdf();
+                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
@@ -217,7 +208,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
      * This function is required to convert the chosen excel file
      * to PDF.
      *
-     * @param mFilename
+     * @param mFilename - output PDF name
      */
 
     private void convertToPdf(String mFilename) {

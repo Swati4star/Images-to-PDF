@@ -64,6 +64,7 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.AddTextEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
@@ -74,7 +75,6 @@ import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
-import static swati4star.createpdf.util.AddTextEnhancementOptionsUtils.getEnhancementOptions;
 
 public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         BottomSheetPopulate, OnBackPressedInterface, OnItemClickListner {

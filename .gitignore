@@ -9,6 +9,7 @@
 /build
 /captures
 app/release/
+app/build/
 java_pid*.hprof
 
 

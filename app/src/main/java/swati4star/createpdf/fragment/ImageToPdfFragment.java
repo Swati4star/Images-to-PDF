@@ -96,7 +96,6 @@ import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
 import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
-import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
 import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.ImageUtils.mImageScaleType;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
@@ -193,9 +192,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         return root;
     }
-
-    @OnClick(R.id.tvNoOfImages)
-    public void onClick() { }
 
     /**
      * Adds images (if any) received in the bundle
@@ -900,14 +896,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     }
                     if (cbDefault.isChecked ()) {
 
-                        editor.putString (Constants.PREF_PAGE_STYLE, mPageNumStyle);
-                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, mChoseId);
-                        editor.commit ();
+                        editor.putString(Constants.PREF_PAGE_STYLE, mPageNumStyle);
+                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, mChoseId);
+                        editor.apply();
                     } else {
 
-                        editor.putString (Constants.PREF_PAGE_STYLE, null);
-                        editor.putInt (Constants.PREF_PAGE_STYLE_ID, -1);
-                        editor.commit ();
+                        editor.putString(Constants.PREF_PAGE_STYLE, null);
+                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, -1);
+                        editor.apply();
                     }
                 }))
                 .onNeutral((((dialog, which) -> mPageNumStyle = null)))
