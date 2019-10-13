@@ -106,12 +106,15 @@ public class RealPathUtil {
     private static String getSubFolders(Uri uri) {
         String replaceChars = String.valueOf(uri).replace("%2F", "/")
                 .replace("%20", " ").replace("%3A", ":");
-        String[] bits = replaceChars.split("/");
-        String sub5 = bits[bits.length - 2];
-        String sub4 = bits[bits.length - 3];
-        String sub3 = bits[bits.length - 4];
-        String sub2 = bits[bits.length - 5];
-        String sub1 = bits[bits.length - 6];
+        // searches for "Download" to get the directory path
+        // for example, if the file is inside a folder "test" in the Download folder, this method
+        // returns "test/"
+        String[] components = replaceChars.split("/");
+        String sub5 = components[components.length - 2];
+        String sub4 = components[components.length - 3];
+        String sub3 = components[components.length - 4];
+        String sub2 = components[components.length - 5];
+        String sub1 = components[components.length - 6];
         if (sub1.equals("Download")) {
             return sub2 + "/" + sub3 + "/" + sub4 + "/" + sub5 + "/";
         } else if (sub2.equals("Download")) {
@@ -121,7 +124,7 @@ public class RealPathUtil {
         } else if (sub4.equals("Download")) {
             return sub5 + "/";
         } else {
-            return "";
+            return null;
         }
     }
 
@@ -132,20 +135,14 @@ public class RealPathUtil {
      * @param uri     The uri to query
      * @return The file path
      */
-    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private static String getFilePath(Context context, Uri uri) {
-        Cursor cursor = null;
         final String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
-        try {
-            cursor = context.getContentResolver().query(uri, projection, null, null,
-                    null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, null, null,
+                null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
                 return cursor.getString(index);
             }
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
         return null;
     }
