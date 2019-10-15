@@ -25,26 +25,12 @@ import java.util.Objects;
 
 import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
-import swati4star.createpdf.fragment.AboutUsFragment;
-import swati4star.createpdf.fragment.AddImagesFragment;
-import swati4star.createpdf.fragment.AddTextFragment;
-import swati4star.createpdf.fragment.ExceltoPdfFragment;
-import swati4star.createpdf.fragment.ExtractTextFragment;
 import swati4star.createpdf.fragment.FavouritesFragment;
-import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
-import swati4star.createpdf.fragment.InvertPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
-import swati4star.createpdf.fragment.PdfToImageFragment;
-import swati4star.createpdf.fragment.QrBarcodeScanFragment;
-import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
-import swati4star.createpdf.fragment.RemovePagesFragment;
-import swati4star.createpdf.fragment.SettingsFragment;
-import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
-import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.FragmentHandler;
@@ -57,30 +43,19 @@ import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
-import static swati4star.createpdf.util.Constants.ADD_IMAGES;
-import static swati4star.createpdf.util.Constants.ADD_PWD;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
-import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
-import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PWd;
-import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
-import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
-import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final ImageHandler imageHandler = new ImageHandler();
     private final FragmentHandler fragmentHandler = new FragmentHandler(this);
+    private final FragmentBuilder fragmentBuilder = new FragmentBuilder(this);
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
@@ -313,117 +288,7 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         fragmentHandler.setTitleFragment(mFragmentSelectedMap.get(item.getItemId()));
 
-        switch (item.getItemId()) {
-            case R.id.nav_home:
-                fragment = new HomeFragment();
-                break;
-            case R.id.nav_camera:
-                fragment = new ImageToPdfFragment();
-                break;
-            case R.id.nav_qrcode:
-                fragment = new QrBarcodeScanFragment();
-                break;
-            case R.id.nav_gallery:
-                fragment = new ViewFilesFragment();
-                break;
-            case R.id.nav_merge:
-                fragment = new MergeFilesFragment();
-                break;
-            case R.id.nav_split:
-                fragment = new SplitFilesFragment();
-                break;
-            case R.id.nav_text_to_pdf:
-                fragment = new TextToPdfFragment();
-                break;
-            case R.id.nav_history:
-                fragment = new HistoryFragment();
-                break;
-            case R.id.nav_add_text:
-                fragment = new AddTextFragment();
-                break;
-            case R.id.nav_add_password:
-                fragment = new RemovePagesFragment();
-                bundle.putString(BUNDLE_DATA, ADD_PWD);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_remove_password:
-                fragment = new RemovePagesFragment();
-                bundle.putString(BUNDLE_DATA, REMOVE_PWd);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_share:
-                mFeedbackUtils.shareApplication();
-                break;
-            case R.id.nav_about:
-                fragment = new AboutUsFragment();
-                break;
-            case R.id.nav_settings:
-                fragment = new SettingsFragment();
-                break;
-            case R.id.nav_extract_images:
-                fragment = new PdfToImageFragment();
-                bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_pdf_to_images:
-                fragment = new PdfToImageFragment();
-                bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_excel_to_pdf:
-                fragment = new ExceltoPdfFragment();
-                break;
-            case R.id.nav_remove_pages:
-                fragment = new RemovePagesFragment();
-                bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_rearrange_pages:
-                fragment = new RemovePagesFragment();
-                bundle.putString(BUNDLE_DATA, REORDER_PAGES);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_compress_pdf:
-                fragment = new RemovePagesFragment();
-                bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_add_images:
-                fragment = new AddImagesFragment();
-                bundle.putString(BUNDLE_DATA, ADD_IMAGES);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_help:
-                Intent intent = new Intent(this, WelcomeActivity.class);
-                intent.putExtra(SHOW_WELCOME_ACT, true);
-                startActivity(intent);
-                break;
-            case R.id.nav_remove_duplicate_pages:
-                fragment = new RemoveDuplicatePagesFragment();
-                break;
-            case R.id.nav_invert_pdf:
-                fragment = new InvertPdfFragment();
-                break;
-            case R.id.nav_add_watermark:
-                fragment = new ViewFilesFragment();
-                bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_zip_to_pdf:
-                fragment = new ZipToPdfFragment();
-                break;
-            case R.id.nav_whatsNew:
-                WhatsNewUtils.displayDialog(this);
-                break;
-            case R.id.nav_rotate_pages:
-                fragment = new ViewFilesFragment();
-                bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
-                fragment.setArguments(bundle);
-                break;
-            case R.id.nav_text_extract:
-                fragment = new ExtractTextFragment();
-                break;
-        }
+        fragment = fragmentBuilder.getFragment(item, bundle, mFeedbackUtils);
 
         try {
             if (fragment != null)
@@ -435,6 +300,10 @@ public class MainActivity extends AppCompatActivity
         // them to be selected
         return item.getItemId() != R.id.nav_share && item.getItemId() != R.id.nav_help
                 && item.getItemId() != R.id.nav_whatsNew;
+    }
+
+    private Fragment getFragment(@NonNull MenuItem item, Bundle bundle) {
+        return fragmentBuilder.getFragment(item, bundle, mFeedbackUtils);
     }
 
     public void setNavigationViewSelection(int id) {
