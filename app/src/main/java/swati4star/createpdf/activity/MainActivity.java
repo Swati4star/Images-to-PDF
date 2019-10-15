@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         // Check if  images are received
         handleReceivedImagesIntent(fragment);
 
+        //TODO: New method
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0) {
@@ -167,6 +168,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //TODO: Fragment Manager
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favourites_item) {
@@ -185,6 +187,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO: FragmentManager
     private String getFragmentName(Fragment fragment) {
         String name = "set name";
         if (fragment instanceof ImageToPdfFragment) {
@@ -241,6 +244,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //TODO: FragmentManager
     /**
      * Sets a fragment based on app shortcut selected, otherwise default
      *
@@ -351,6 +355,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //TODO: Fragment Manager
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -381,6 +386,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //TODO: Fragment Manager + Switch
     public boolean checkFragmentBottomSheetBehavior() {
         if (mCurrentFragment instanceof InvertPdfFragment )
             return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
@@ -406,6 +412,7 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    //TODO: Fragment Manager + Switch
     private void closeFragmentBottomSheet() {
         if ( mCurrentFragment instanceof InvertPdfFragment)
             ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
@@ -442,6 +449,7 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
     }
 
+    //TODO: Fragment Manager
     /**
      *  Hashmap for setting title
      * */
@@ -474,6 +482,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentSelectedMap.append(R.id.nav_excel_to_pdf, R.string.excel_to_pdf);
     }
 
+    //TODO: Fragment Manager
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
