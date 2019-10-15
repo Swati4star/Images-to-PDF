@@ -29,4 +29,12 @@ interface IFragmentManagement {
      * @return A map with all the titles.
      */
     SparseIntArray setTitleMap();
+
+    /**
+     * Handles the fragment transaction for the selected
+     * navigation item.
+     * @param itemId The selected item id.
+     * @return
+     */
+    boolean handleNavigationItemSelected(int itemId);
 }

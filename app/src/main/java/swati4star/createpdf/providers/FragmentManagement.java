@@ -13,7 +13,10 @@ import android.widget.Toast;
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.WelcomeActivity;
+import swati4star.createpdf.fragment.AboutUsFragment;
 import swati4star.createpdf.fragment.AddImagesFragment;
+import swati4star.createpdf.fragment.AddTextFragment;
 import swati4star.createpdf.fragment.ExceltoPdfFragment;
 import swati4star.createpdf.fragment.ExtractTextFragment;
 import swati4star.createpdf.fragment.FavouritesFragment;
@@ -26,19 +29,31 @@ import swati4star.createpdf.fragment.PdfToImageFragment;
 import swati4star.createpdf.fragment.QrBarcodeScanFragment;
 import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
 import swati4star.createpdf.fragment.RemovePagesFragment;
+import swati4star.createpdf.fragment.SettingsFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
+import swati4star.createpdf.util.FeedbackUtils;
+import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
+import static swati4star.createpdf.util.Constants.ADD_IMAGES;
+import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
+import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
@@ -51,10 +66,13 @@ public class FragmentManagement implements IFragmentManagement {
     private NavigationView mNavigationView;
     private Fragment mCurrentFragment;
     private boolean mDoubleBackToExitPressedOnce = false;
+    private FeedbackUtils mFeedbackUtils;
 
     public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
         mContext = context;
         mNavigationView = navigationView;
+
+        mFeedbackUtils = new FeedbackUtils(mContext);
     }
 
     public void favouritesFragmentOption() {
@@ -151,6 +169,135 @@ public class FragmentManagement implements IFragmentManagement {
         return titles;
     }
 
+    public boolean handleNavigationItemSelected(int itemId) {
+        Fragment fragment = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Bundle bundle = new Bundle();
+
+        switch (itemId) {
+            case R.id.nav_home:
+                fragment = new HomeFragment();
+                break;
+            case R.id.nav_camera:
+                fragment = new ImageToPdfFragment();
+                break;
+            case R.id.nav_qrcode:
+                fragment = new QrBarcodeScanFragment();
+                break;
+            case R.id.nav_gallery:
+                fragment = new ViewFilesFragment();
+                break;
+            case R.id.nav_merge:
+                fragment = new MergeFilesFragment();
+                break;
+            case R.id.nav_split:
+                fragment = new SplitFilesFragment();
+                break;
+            case R.id.nav_text_to_pdf:
+                fragment = new TextToPdfFragment();
+                break;
+            case R.id.nav_history:
+                fragment = new HistoryFragment();
+                break;
+            case R.id.nav_add_text:
+                fragment = new AddTextFragment();
+                break;
+            case R.id.nav_add_password:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_PWD);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_remove_password:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PWd);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_share:
+                mFeedbackUtils.shareApplication();
+                break;
+            case R.id.nav_about:
+                fragment = new AboutUsFragment();
+                break;
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
+                break;
+            case R.id.nav_extract_images:
+                fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_pdf_to_images:
+                fragment = new PdfToImageFragment();
+                bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_excel_to_pdf:
+                fragment = new ExceltoPdfFragment();
+                break;
+            case R.id.nav_remove_pages:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_rearrange_pages:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, REORDER_PAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_compress_pdf:
+                fragment = new RemovePagesFragment();
+                bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_add_images:
+                fragment = new AddImagesFragment();
+                bundle.putString(BUNDLE_DATA, ADD_IMAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_help:
+                Intent intent = new Intent(mContext, WelcomeActivity.class);
+                intent.putExtra(SHOW_WELCOME_ACT, true);
+                mContext.startActivity(intent);
+                break;
+            case R.id.nav_remove_duplicate_pages:
+                fragment = new RemoveDuplicatePagesFragment();
+                break;
+            case R.id.nav_invert_pdf:
+                fragment = new InvertPdfFragment();
+                break;
+            case R.id.nav_add_watermark:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_zip_to_pdf:
+                fragment = new ZipToPdfFragment();
+                break;
+            case R.id.nav_whatsNew:
+                WhatsNewUtils.displayDialog(mContext);
+                break;
+            case R.id.nav_rotate_pages:
+                fragment = new ViewFilesFragment();
+                bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_text_extract:
+                fragment = new ExtractTextFragment();
+                break;
+        }
+
+        try {
+            if (fragment != null)
+                fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // if help or share or what's new is clicked then return false, as we don't want
+        // them to be selected
+        return itemId != R.id.nav_share && itemId != R.id.nav_help
+                && itemId != R.id.nav_whatsNew;
+    }
+
     /**
      * Closes the app only when double clicked
      */
@@ -163,6 +310,7 @@ public class FragmentManagement implements IFragmentManagement {
         return false;
     }
 
+    //TODO: Return 1 value
     private boolean checkFragmentBottomSheetBehavior() {
         if (mCurrentFragment instanceof InvertPdfFragment )
             return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
@@ -187,7 +335,6 @@ public class FragmentManagement implements IFragmentManagement {
 
         return false;
     }
-
 
     private void closeFragmentBottomSheet() {
         if ( mCurrentFragment instanceof InvertPdfFragment)
