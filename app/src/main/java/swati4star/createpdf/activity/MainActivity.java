@@ -49,6 +49,7 @@ import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.ImageHandler;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
@@ -81,6 +82,7 @@ import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private final ImageHandler imageHandler = new ImageHandler();
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = checkForAppShortcutClicked();
 
         // Check if  images are received
-        handleReceivedImagesIntent(fragment);
+        imageHandler.handleReceivedImagesIntent(fragment, this, getApplicationContext());
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
@@ -285,7 +287,7 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
-        if (areImagesRecevied())
+        if (imageHandler.areImagesRecevied(this))
             fragment = new ImageToPdfFragment();
 
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
@@ -303,62 +305,6 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setCheckedItem(R.id.nav_home);
     }
 
-    /**
-     * Checks if images are received in the intent
-     *
-     * @param fragment - instance of current fragment
-     */
-    private void handleReceivedImagesIntent(Fragment fragment) {
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-
-        if (type == null || !type.startsWith("image/"))
-            return;
-
-        if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
-            handleSendMultipleImages(intent, fragment); // Handle multiple images
-        } else if (Intent.ACTION_SEND.equals(action)) {
-            handleSendImage(intent, fragment); // Handle single image
-        }
-    }
-
-
-    private boolean areImagesRecevied() {
-        Intent intent = getIntent();
-        String type = intent.getType();
-        return type != null && type.startsWith("image/");
-    }
-
-    /**
-     * Get image uri from intent and send the image to homeFragment
-     *
-     * @param intent   - intent containing image uris
-     * @param fragment - instance of homeFragment
-     */
-    private void handleSendImage(Intent intent, Fragment fragment) {
-        Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-        ArrayList<Uri> imageUris = new ArrayList<>();
-        imageUris.add(uri);
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
-        fragment.setArguments(bundle);
-    }
-
-    /**
-     * Get ArrayList of image uris from intent and send the image to homeFragment
-     *
-     * @param intent   - intent containing image uris
-     * @param fragment - instance of homeFragment
-     */
-    private void handleSendMultipleImages(Intent intent, Fragment fragment) {
-        ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-        if (imageUris != null) {
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);
-            fragment.setArguments(bundle);
-        }
-    }
 
     @Override
     public void onBackPressed() {
