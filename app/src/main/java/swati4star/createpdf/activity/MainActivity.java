@@ -19,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -46,9 +45,9 @@ import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
-import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.FragmentHandler;
 import swati4star.createpdf.util.ImageHandler;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
@@ -60,7 +59,6 @@ import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
-import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
@@ -73,7 +71,6 @@ import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
@@ -83,6 +80,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final ImageHandler imageHandler = new ImageHandler();
+    private final FragmentHandler fragmentHandler = new FragmentHandler(this);
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
@@ -189,56 +187,11 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction transaction = fragmentManager.beginTransaction()
                     .replace(R.id.content, fragment);
             if (!(currFragment instanceof HomeFragment)) {
-                transaction.addToBackStack(getFragmentName(currFragment));
+                transaction.addToBackStack(fragmentHandler.getFragmentName(currFragment));
             }
             transaction.commit();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private String getFragmentName(Fragment fragment) {
-        String name = "set name";
-        if (fragment instanceof ImageToPdfFragment) {
-            name = getString(R.string.images_to_pdf);
-        } else if (fragment instanceof TextToPdfFragment) {
-            name = getString(R.string.text_to_pdf);
-        } else if (fragment instanceof QrBarcodeScanFragment) {
-            name = getString(R.string.qr_barcode_pdf);
-        } else if (fragment instanceof ExceltoPdfFragment) {
-            name = getString(R.string.excel_to_pdf);
-        } else if (fragment instanceof ViewFilesFragment) {
-            if (fragment.getArguments() != null) {
-                int code = fragment.getArguments().getInt(BUNDLE_DATA);
-                if (code == ROTATE_PAGES) {
-                    name = ROTATE_PAGES_KEY;
-                } else if (code == ADD_WATERMARK) {
-                    name = ADD_WATERMARK_KEY;
-                }
-            } else {
-                name = getString(R.string.viewFiles);
-            }
-        } else if (fragment instanceof HistoryFragment) {
-            name = getString(R.string.history);
-        } else if (fragment instanceof ExtractTextFragment) {
-            name = getString(R.string.extract_text);
-        } else if (fragment instanceof AddImagesFragment) {
-            name = getString(R.string.add_images);
-        } else if (fragment instanceof MergeFilesFragment) {
-            name = getString(R.string.merge_pdf);
-        } else if (fragment instanceof SplitFilesFragment) {
-            name = getString(R.string.split_pdf);
-        } else if (fragment instanceof InvertPdfFragment) {
-            name = getString(R.string.invert_pdf);
-        } else if (fragment instanceof RemoveDuplicatePagesFragment) {
-            name = getString(R.string.remove_duplicate);
-        } else if (fragment instanceof RemovePagesFragment) {
-            name = fragment.getArguments().getString(BUNDLE_DATA);
-        } else if (fragment instanceof PdfToImageFragment) {
-            name = getString(R.string.pdf_to_images);
-        } else if (fragment instanceof ZipToPdfFragment) {
-            name = getString(R.string.zip_to_pdf);
-        }
-        return name;
     }
 
     /**
@@ -314,54 +267,8 @@ public class MainActivity extends AppCompatActivity
         } else {
             mCurrentFragment = getSupportFragmentManager()
                     .findFragmentById(R.id.content);
-            handleBackPressForFragement();
+            fragmentHandler.handleBackPressForFragement(mCurrentFragment, mDoubleBackToExitPressedOnce);
         }
-    }
-
-    private void handleBackPressForFragement() {
-        if (mCurrentFragment instanceof HomeFragment) {
-            checkDoubleBackPress();
-        } else if (checkFragmentBottomSheetBehavior())
-            closeFragmentBottomSheet();
-        else {
-            // back stack count will be 1 when we open a item from favourite menu
-            // on clicking back, return back to fav menu and change title
-            int count = getSupportFragmentManager().getBackStackEntryCount();
-            setTitleOnBackPressed(count);
-        }
-    }
-
-    private void setTitleOnBackPressed(int count) {
-        if (count > 0) {
-            String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
-            setTitle(s);
-            getSupportFragmentManager().popBackStack();
-        } else {
-            Fragment fragment = new HomeFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-            setTitle(R.string.app_name);
-            setNavigationViewSelection(R.id.nav_home);
-        }
-    }
-
-    public boolean checkFragmentBottomSheetBehavior() {
-        return ((OnBackPressedInterface) mCurrentFragment).checkSheetBehaviour();
-    }
-
-    private void closeFragmentBottomSheet() {
-        ((OnBackPressedInterface)mCurrentFragment).closeBottomSheet();
-    }
-
-    /**
-     * Closes the app only when double clicked
-     */
-    private void checkDoubleBackPress() {
-        if (mDoubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-        this.mDoubleBackToExitPressedOnce = true;
-        Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -404,7 +311,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        setTitleFragment(mFragmentSelectedMap.get(item.getItemId()));
+        fragmentHandler.setTitleFragment(mFragmentSelectedMap.get(item.getItemId()));
 
         switch (item.getItemId()) {
             case R.id.nav_home:
@@ -558,12 +465,4 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 
-    /**
-     * Sets fragment title
-     * @param title - string resource id
-     */
-    private void setTitleFragment(int title) {
-        if (title != 0)
-            setTitle(title);
-    }
 }
