@@ -46,6 +46,7 @@ import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -417,27 +418,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void closeFragmentBottomSheet() {
-        if ( mCurrentFragment instanceof InvertPdfFragment)
-            ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof MergeFilesFragment)
-            ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
-            ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof RemovePagesFragment)
-            ((RemovePagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof AddImagesFragment)
-            ((AddImagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof PdfToImageFragment)
-            ((PdfToImageFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof SplitFilesFragment)
-            ((SplitFilesFragment) mCurrentFragment).closeBottomSheet();
-
+        ((OnBackPressedInterface)mCurrentFragment).closeBottomSheet();
     }
 
     /**
