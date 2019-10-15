@@ -391,30 +391,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean checkFragmentBottomSheetBehavior() {
-        boolean returnValue = false;
-
-        if (mCurrentFragment instanceof InvertPdfFragment )
-            returnValue = ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof MergeFilesFragment )
-            returnValue = ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
-            returnValue = ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof RemovePagesFragment )
-            returnValue = ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof AddImagesFragment )
-            returnValue = ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof PdfToImageFragment )
-            returnValue = ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof SplitFilesFragment )
-            returnValue = ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        return returnValue;
+        return ((OnBackPressedInterface) mCurrentFragment).checkSheetBehaviour();
     }
 
     private void closeFragmentBottomSheet() {
