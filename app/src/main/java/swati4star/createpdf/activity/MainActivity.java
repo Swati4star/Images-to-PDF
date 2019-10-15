@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
-        if (count > 0 && count % 15 == 0) {
+        if (checkForRatingRequest(count)) {
             mFeedbackUtils.rateUs();
         }
         if (count != -1) {
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         String versionName = mSharedPreferences.getString(VERSION_NAME, "");
-        if (versionName != null && !versionName.equals(BuildConfig.VERSION_NAME)) {
+        if (checkIfNewVersion(versionName)) {
             WhatsNewUtils.displayDialog(this);
             mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }
@@ -143,6 +143,14 @@ public class MainActivity extends AppCompatActivity
 
         //check for welcome activity
         openWelcomeActivity();
+    }
+
+    private boolean checkIfNewVersion(String versionName) {
+        return versionName != null && !versionName.equals(BuildConfig.VERSION_NAME);
+    }
+
+    private boolean checkForRatingRequest(int count) {
+        return count > 0 && count % 15 == 0;
     }
 
     @Override
