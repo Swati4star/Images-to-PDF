@@ -368,25 +368,33 @@ public class MainActivity extends AppCompatActivity
         } else {
             mCurrentFragment = getSupportFragmentManager()
                     .findFragmentById(R.id.content);
-            if (mCurrentFragment instanceof HomeFragment) {
-                checkDoubleBackPress();
-            } else if (checkFragmentBottomSheetBehavior())
-                closeFragmentBottomSheet();
-            else {
-                // back stack count will be 1 when we open a item from favourite menu
-                // on clicking back, return back to fav menu and change title
-                int count = getSupportFragmentManager().getBackStackEntryCount();
-                if (count > 0) {
-                    String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
-                    setTitle(s);
-                    getSupportFragmentManager().popBackStack();
-                } else {
-                    Fragment fragment = new HomeFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                    setTitle(R.string.app_name);
-                    setNavigationViewSelection(R.id.nav_home);
-                }
-            }
+            handleBackPressForFragement();
+        }
+    }
+
+    private void handleBackPressForFragement() {
+        if (mCurrentFragment instanceof HomeFragment) {
+            checkDoubleBackPress();
+        } else if (checkFragmentBottomSheetBehavior())
+            closeFragmentBottomSheet();
+        else {
+            // back stack count will be 1 when we open a item from favourite menu
+            // on clicking back, return back to fav menu and change title
+            int count = getSupportFragmentManager().getBackStackEntryCount();
+            setTitleOnBackPressed(count);
+        }
+    }
+
+    private void setTitleOnBackPressed(int count) {
+        if (count > 0) {
+            String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
+            setTitle(s);
+            getSupportFragmentManager().popBackStack();
+        } else {
+            Fragment fragment = new HomeFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            setTitle(R.string.app_name);
+            setNavigationViewSelection(R.id.nav_home);
         }
     }
 
