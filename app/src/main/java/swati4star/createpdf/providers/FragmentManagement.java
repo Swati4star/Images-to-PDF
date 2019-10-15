@@ -310,7 +310,6 @@ public class FragmentManagement implements IFragmentManagement {
         return false;
     }
 
-    //TODO: Return 1 value
     private boolean checkFragmentBottomSheetBehavior() {
         if (mCurrentFragment instanceof InvertPdfFragment )
             return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
