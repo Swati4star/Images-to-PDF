@@ -1,10 +1,15 @@
 package swati4star.createpdf.providers;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
+
+import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AddImagesFragment;
@@ -25,8 +30,13 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
 
+import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
+import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
+import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
 import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
@@ -37,9 +47,13 @@ import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
  */
 public class FragmentManagement implements IFragmentManagement {
     private FragmentActivity mContext;
+    private NavigationView mNavigationView;
+    private Fragment mCurrentFragment;
+    private boolean mDoubleBackToExitPressedOnce = false;
 
-    public FragmentManagement(FragmentActivity context) {
-        this.mContext = context;
+    public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
+        mContext = context;
+        mNavigationView = navigationView;
     }
 
     public void favouritesFragmentOption() {
@@ -53,6 +67,142 @@ public class FragmentManagement implements IFragmentManagement {
             transaction.addToBackStack(getFragmentName(currFragment));
         }
         transaction.commit();
+    }
+
+    public Fragment checkForAppShortcutClicked() {
+        Fragment fragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (getIntent().getAction() != null) {
+            switch (Objects.requireNonNull(getIntent().getAction())) {
+                case ACTION_SELECT_IMAGES:
+                    fragment = new ImageToPdfFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(OPEN_SELECT_IMAGES, true);
+                    fragment.setArguments(bundle);
+                    break;
+                case ACTION_VIEW_FILES:
+                    fragment = new ViewFilesFragment();
+                    setNavigationViewSelection(R.id.nav_gallery);
+                    break;
+                case ACTION_TEXT_TO_PDF:
+                    fragment = new TextToPdfFragment();
+                    setNavigationViewSelection(R.id.nav_text_to_pdf);
+                    break;
+                case ACTION_MERGE_PDF:
+                    fragment = new MergeFilesFragment();
+                    setNavigationViewSelection(R.id.nav_merge);
+                    break;
+                default:
+                    // Set default fragment
+                    fragment = new HomeFragment();
+                    break;
+            }
+        }
+        if (areImagesReceived())
+            fragment = new ImageToPdfFragment();
+
+        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
+        return fragment;
+    }
+
+    public boolean handleBackPressed() {
+        mCurrentFragment = getSupportFragmentManager()
+                .findFragmentById(R.id.content);
+        if (mCurrentFragment instanceof HomeFragment) {
+            return checkDoubleBackPress();
+        } else if (checkFragmentBottomSheetBehavior())
+            closeFragmentBottomSheet();
+        else {
+            handleBackStackEntry();
+        }
+        return false;
+    }
+
+    /**
+     * Closes the app only when double clicked
+     */
+    private boolean checkDoubleBackPress() {
+        if (mDoubleBackToExitPressedOnce) {
+            return true;
+        }
+        mDoubleBackToExitPressedOnce = true;
+        Toast.makeText(mContext, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    private boolean checkFragmentBottomSheetBehavior() {
+        if (mCurrentFragment instanceof InvertPdfFragment )
+            return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof MergeFilesFragment )
+            return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+            return ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof RemovePagesFragment )
+            return ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof AddImagesFragment )
+            return ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof PdfToImageFragment )
+            return ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
+
+        if (mCurrentFragment instanceof SplitFilesFragment )
+            return ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
+
+        return false;
+    }
+
+
+    private void closeFragmentBottomSheet() {
+        if ( mCurrentFragment instanceof InvertPdfFragment)
+            ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof MergeFilesFragment)
+            ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
+            ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof RemovePagesFragment)
+            ((RemovePagesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof AddImagesFragment)
+            ((AddImagesFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof PdfToImageFragment)
+            ((PdfToImageFragment) mCurrentFragment).closeBottomSheet();
+
+        if (mCurrentFragment instanceof SplitFilesFragment)
+            ((SplitFilesFragment) mCurrentFragment).closeBottomSheet();
+    }
+
+    /**
+     *  Back stack count will be 1 when we open a item from favourite menu
+     *  on clicking back, return back to fav menu and change title
+     */
+    private void handleBackStackEntry() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count > 0) {
+            String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
+            mContext.setTitle(s);
+            getSupportFragmentManager().popBackStack();
+        } else {
+            Fragment fragment = new HomeFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            mContext.setTitle(R.string.app_name);
+            setNavigationViewSelection(R.id.nav_home);
+        }
+    }
+
+    private boolean areImagesReceived() {
+        Intent intent = getIntent();
+        String type = intent.getType();
+        return type != null && type.startsWith("image/");
     }
 
     private String getFragmentName(Fragment fragment) {
@@ -110,6 +260,9 @@ public class FragmentManagement implements IFragmentManagement {
         return getString(R.string.viewFiles);
     }
 
+    private void setNavigationViewSelection(int id) {
+        mNavigationView.setCheckedItem(id);
+    }
 
     /**
      * Calls the getString method from the FragmentActivity.
@@ -126,5 +279,13 @@ public class FragmentManagement implements IFragmentManagement {
      */
     private FragmentManager getSupportFragmentManager() {
         return mContext.getSupportFragmentManager();
+    }
+
+    /**
+     * Calls the getIntent method from the FragmentActivity.
+     * @return the Intent.
+     */
+    private Intent getIntent() {
+        return mContext.getIntent();
     }
 }

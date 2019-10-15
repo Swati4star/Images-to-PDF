@@ -84,8 +84,6 @@ public class MainActivity extends AppCompatActivity
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
-    private boolean mDoubleBackToExitPressedOnce = false;
-    private Fragment mCurrentFragment;
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
 
@@ -113,21 +111,36 @@ public class MainActivity extends AppCompatActivity
         // initialize values
         initializeValues();
 
-        // suitable xml parsers for reading .docx files
+        setXMLParsers();
+        // Check for app shortcuts & select default fragment
+        Fragment fragment = mFragmentManagement.checkForAppShortcutClicked();
+
+        // Check if  images are received
+        handleReceivedImagesIntent(fragment);
+
+        displayFeedBackAndWhatsNew();
+        getRuntimePermissions();
+
+        //check for welcome activity
+        openWelcomeActivity();
+    }
+
+    /**
+     * Set suitable xml parsers for reading .docx files.
+     */
+    private  void setXMLParsers() {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory",
                 "com.fasterxml.aalto.stax.InputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory",
                 "com.fasterxml.aalto.stax.OutputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory",
                 "com.fasterxml.aalto.stax.EventFactoryImpl");
+    }
 
-        // Check for app shortcuts & select default fragment
-        Fragment fragment = checkForAppShortcutClicked();
-
-        // Check if  images are received
-        handleReceivedImagesIntent(fragment);
-
-        //TODO: New method
+    /**
+     * A method for the feedback and whats new dialogs.
+     */
+    private void displayFeedBackAndWhatsNew() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0) {
@@ -142,10 +155,6 @@ public class MainActivity extends AppCompatActivity
             WhatsNewUtils.displayDialog(this);
             mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }
-        getRuntimePermissions();
-
-        //check for welcome activity
-        openWelcomeActivity();
     }
 
     @Override
@@ -170,7 +179,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    //TODO: Fragment Manager
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favourites_item) {
@@ -191,50 +199,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //TODO: FragmentManagement
-    /**
-     * Sets a fragment based on app shortcut selected, otherwise default
-     *
-     * @return - instance of current fragment
-     */
-    private Fragment checkForAppShortcutClicked() {
-        Fragment fragment = new HomeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        if (getIntent().getAction() != null) {
-            switch (Objects.requireNonNull(getIntent().getAction())) {
-                case ACTION_SELECT_IMAGES:
-                    fragment = new ImageToPdfFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean(OPEN_SELECT_IMAGES, true);
-                    fragment.setArguments(bundle);
-                    break;
-                case ACTION_VIEW_FILES:
-                    fragment = new ViewFilesFragment();
-                    setNavigationViewSelection(R.id.nav_gallery);
-                    break;
-                case ACTION_TEXT_TO_PDF:
-                    fragment = new TextToPdfFragment();
-                    setNavigationViewSelection(R.id.nav_text_to_pdf);
-                    break;
-                case ACTION_MERGE_PDF:
-                    fragment = new MergeFilesFragment();
-                    setNavigationViewSelection(R.id.nav_merge);
-                    break;
-                default:
-                    // Set default fragment
-                    fragment = new HomeFragment();
-                    break;
-            }
-        }
-        if (areImagesRecevied())
-            fragment = new ImageToPdfFragment();
-
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-
-        return fragment;
-    }
-
     /**
      * Ininitializes default values
      */
@@ -244,7 +208,7 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_home);
 
-        mFragmentManagement = new FragmentManagement(this);
+        mFragmentManagement = new FragmentManagement(this, mNavigationView);
     }
 
     /**
@@ -265,13 +229,6 @@ public class MainActivity extends AppCompatActivity
         } else if (Intent.ACTION_SEND.equals(action)) {
             handleSendImage(intent, fragment); // Handle single image
         }
-    }
-
-
-    private boolean areImagesRecevied() {
-        Intent intent = getIntent();
-        String type = intent.getType();
-        return type != null && type.startsWith("image/");
     }
 
     /**
@@ -304,98 +261,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //TODO: Fragment Manager
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            mCurrentFragment = getSupportFragmentManager()
-                    .findFragmentById(R.id.content);
-            if (mCurrentFragment instanceof HomeFragment) {
-                checkDoubleBackPress();
-            } else if (checkFragmentBottomSheetBehavior())
-                closeFragmentBottomSheet();
-            else {
-                // back stack count will be 1 when we open a item from favourite menu
-                // on clicking back, return back to fav menu and change title
-                int count = getSupportFragmentManager().getBackStackEntryCount();
-                if (count > 0) {
-                    String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
-                    setTitle(s);
-                    getSupportFragmentManager().popBackStack();
-                } else {
-                    Fragment fragment = new HomeFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                    setTitle(R.string.app_name);
-                    setNavigationViewSelection(R.id.nav_home);
-                }
-            }
+            boolean shouldExit = mFragmentManagement.handleBackPressed();
+            if (shouldExit)
+                super.onBackPressed();
         }
-    }
-
-    //TODO: Fragment Manager + Switch
-    public boolean checkFragmentBottomSheetBehavior() {
-        if (mCurrentFragment instanceof InvertPdfFragment )
-            return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof MergeFilesFragment )
-            return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
-            return ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof RemovePagesFragment )
-            return ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof AddImagesFragment )
-            return ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof PdfToImageFragment )
-            return ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof SplitFilesFragment )
-            return ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        return false;
-    }
-
-    //TODO: Fragment Manager + Switch
-    private void closeFragmentBottomSheet() {
-        if ( mCurrentFragment instanceof InvertPdfFragment)
-            ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof MergeFilesFragment)
-            ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
-            ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof RemovePagesFragment)
-            ((RemovePagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof AddImagesFragment)
-            ((AddImagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof PdfToImageFragment)
-            ((PdfToImageFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof SplitFilesFragment)
-            ((SplitFilesFragment) mCurrentFragment).closeBottomSheet();
-
-    }
-
-    /**
-     * Closes the app only when double clicked
-     */
-    private void checkDoubleBackPress() {
-        if (mDoubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-        this.mDoubleBackToExitPressedOnce = true;
-        Toast.makeText(this, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
     }
 
     //TODO: Fragment Manager
