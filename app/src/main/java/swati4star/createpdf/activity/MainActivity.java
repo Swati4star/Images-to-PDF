@@ -46,6 +46,7 @@ import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
+import swati4star.createpdf.providers.FragmentManagement;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity
     private boolean mDoubleBackToExitPressedOnce = false;
     private Fragment mCurrentFragment;
     private SparseIntArray mFragmentSelectedMap;
+    private FragmentManagement mFragmentManagement;
 
     private static final int PERMISSION_REQUEST_CODE = 0;
 
@@ -172,65 +174,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_favourites_item) {
-            Fragment currFragment = getSupportFragmentManager().findFragmentById(R.id.content);
-
-            Fragment fragment = new FavouritesFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
             setTitle(R.string.favourites);
-            FragmentTransaction transaction = fragmentManager.beginTransaction()
-                    .replace(R.id.content, fragment);
-            if (!(currFragment instanceof HomeFragment)) {
-                transaction.addToBackStack(getFragmentName(currFragment));
-            }
-            transaction.commit();
+            mFragmentManagement.favouritesFragmentOption();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    //TODO: FragmentManager
-    private String getFragmentName(Fragment fragment) {
-        String name = "set name";
-        if (fragment instanceof ImageToPdfFragment) {
-            name = getString(R.string.images_to_pdf);
-        } else if (fragment instanceof TextToPdfFragment) {
-            name = getString(R.string.text_to_pdf);
-        } else if (fragment instanceof QrBarcodeScanFragment) {
-            name = getString(R.string.qr_barcode_pdf);
-        } else if (fragment instanceof ExceltoPdfFragment) {
-            name = getString(R.string.excel_to_pdf);
-        } else if (fragment instanceof ViewFilesFragment) {
-            if (fragment.getArguments() != null) {
-                int code = fragment.getArguments().getInt(BUNDLE_DATA);
-                if (code == ROTATE_PAGES) {
-                    name = ROTATE_PAGES_KEY;
-                } else if (code == ADD_WATERMARK) {
-                    name = ADD_WATERMARK_KEY;
-                }
-            } else {
-                name = getString(R.string.viewFiles);
-            }
-        } else if (fragment instanceof HistoryFragment) {
-            name = getString(R.string.history);
-        } else if (fragment instanceof ExtractTextFragment) {
-            name = getString(R.string.extract_text);
-        } else if (fragment instanceof AddImagesFragment) {
-            name = getString(R.string.add_images);
-        } else if (fragment instanceof MergeFilesFragment) {
-            name = getString(R.string.merge_pdf);
-        } else if (fragment instanceof SplitFilesFragment) {
-            name = getString(R.string.split_pdf);
-        } else if (fragment instanceof InvertPdfFragment) {
-            name = getString(R.string.invert_pdf);
-        } else if (fragment instanceof RemoveDuplicatePagesFragment) {
-            name = getString(R.string.remove_duplicate);
-        } else if (fragment instanceof RemovePagesFragment) {
-            name = fragment.getArguments().getString(BUNDLE_DATA);
-        } else if (fragment instanceof PdfToImageFragment) {
-            name = getString(R.string.pdf_to_images);
-        } else if (fragment instanceof ZipToPdfFragment) {
-            name = getString(R.string.zip_to_pdf);
-        }
-        return name;
     }
 
     /**
@@ -244,7 +191,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //TODO: FragmentManager
+    //TODO: FragmentManagement
     /**
      * Sets a fragment based on app shortcut selected, otherwise default
      *
@@ -296,6 +243,8 @@ public class MainActivity extends AppCompatActivity
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_home);
+
+        mFragmentManagement = new FragmentManagement(this);
     }
 
     /**
