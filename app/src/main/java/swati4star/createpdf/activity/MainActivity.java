@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.setThemeApp(this);
         super.onCreate(savedInstanceState);
-        titleMap();
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setCheckedItem(R.id.nav_home);
 
         mFragmentManagement = new FragmentManagement(this, mNavigationView);
+        mFragmentSelectedMap = mFragmentManagement.setTitleMap();
     }
 
     /**
@@ -271,39 +272,6 @@ public class MainActivity extends AppCompatActivity
             if (shouldExit)
                 super.onBackPressed();
         }
-    }
-
-    //TODO: Fragment Manager
-    /**
-     *  Hashmap for setting title
-     * */
-    private void titleMap() {
-        mFragmentSelectedMap = new SparseIntArray();
-        mFragmentSelectedMap.append(R.id.nav_home, R.string.app_name);
-        mFragmentSelectedMap.append(R.id.nav_camera, R.string.images_to_pdf);
-        mFragmentSelectedMap.append(R.id.nav_qrcode, R.string.qr_barcode_pdf);
-        mFragmentSelectedMap.append(R.id.nav_add_text, R.string.add_text);
-        mFragmentSelectedMap.append(R.id.nav_gallery, R.string.viewFiles);
-        mFragmentSelectedMap.append(R.id.nav_merge, R.string.merge_pdf);
-        mFragmentSelectedMap.append(R.id.nav_split, R.string.split_pdf);
-        mFragmentSelectedMap.append(R.id.nav_text_to_pdf, R.string.text_to_pdf);
-        mFragmentSelectedMap.append(R.id.nav_history, R.string.history);
-        mFragmentSelectedMap.append(R.id.nav_add_password, R.string.add_password);
-        mFragmentSelectedMap.append(R.id.nav_remove_password, R.string.remove_password);
-        mFragmentSelectedMap.append(R.id.nav_about, R.string.about_us);
-        mFragmentSelectedMap.append(R.id.nav_settings, R.string.settings);
-        mFragmentSelectedMap.append(R.id.nav_extract_images, R.string.extract_images);
-        mFragmentSelectedMap.append(R.id.nav_pdf_to_images, R.string.pdf_to_images);
-        mFragmentSelectedMap.append(R.id.nav_remove_pages, R.string.remove_pages);
-        mFragmentSelectedMap.append(R.id.nav_rearrange_pages, R.string.reorder_pages);
-        mFragmentSelectedMap.append(R.id.nav_compress_pdf, R.string.compress_pdf);
-        mFragmentSelectedMap.append(R.id.nav_add_images, R.string.add_images);
-        mFragmentSelectedMap.append(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages);
-        mFragmentSelectedMap.append(R.id.nav_invert_pdf, R.string.invert_pdf);
-        mFragmentSelectedMap.append(R.id.nav_add_watermark, R.string.add_watermark);
-        mFragmentSelectedMap.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
-        mFragmentSelectedMap.append(R.id.nav_rotate_pages, R.string.rotate_pages);
-        mFragmentSelectedMap.append(R.id.nav_excel_to_pdf, R.string.excel_to_pdf);
     }
 
     //TODO: Fragment Manager

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.SparseIntArray;
 import android.widget.Toast;
 
 import java.util.Objects;
@@ -118,6 +119,36 @@ public class FragmentManagement implements IFragmentManagement {
             handleBackStackEntry();
         }
         return false;
+    }
+
+    public SparseIntArray setTitleMap() {
+        SparseIntArray titles = new SparseIntArray();
+        titles.append(R.id.nav_home, R.string.app_name);
+        titles.append(R.id.nav_camera, R.string.images_to_pdf);
+        titles.append(R.id.nav_qrcode, R.string.qr_barcode_pdf);
+        titles.append(R.id.nav_add_text, R.string.add_text);
+        titles.append(R.id.nav_gallery, R.string.viewFiles);
+        titles.append(R.id.nav_merge, R.string.merge_pdf);
+        titles.append(R.id.nav_split, R.string.split_pdf);
+        titles.append(R.id.nav_text_to_pdf, R.string.text_to_pdf);
+        titles.append(R.id.nav_history, R.string.history);
+        titles.append(R.id.nav_add_password, R.string.add_password);
+        titles.append(R.id.nav_remove_password, R.string.remove_password);
+        titles.append(R.id.nav_about, R.string.about_us);
+        titles.append(R.id.nav_settings, R.string.settings);
+        titles.append(R.id.nav_extract_images, R.string.extract_images);
+        titles.append(R.id.nav_pdf_to_images, R.string.pdf_to_images);
+        titles.append(R.id.nav_remove_pages, R.string.remove_pages);
+        titles.append(R.id.nav_rearrange_pages, R.string.reorder_pages);
+        titles.append(R.id.nav_compress_pdf, R.string.compress_pdf);
+        titles.append(R.id.nav_add_images, R.string.add_images);
+        titles.append(R.id.nav_remove_duplicate_pages, R.string.remove_duplicate_pages);
+        titles.append(R.id.nav_invert_pdf, R.string.invert_pdf);
+        titles.append(R.id.nav_add_watermark, R.string.add_watermark);
+        titles.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
+        titles.append(R.id.nav_rotate_pages, R.string.rotate_pages);
+        titles.append(R.id.nav_excel_to_pdf, R.string.excel_to_pdf);
+        return titles;
     }
 
     /**

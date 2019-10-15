@@ -1,6 +1,7 @@
 package swati4star.createpdf.providers;
 
 import android.support.v4.app.Fragment;
+import android.util.SparseIntArray;
 
 interface IFragmentManagement {
     /**
@@ -22,4 +23,10 @@ interface IFragmentManagement {
      * @return A should exit flag.
      */
     boolean handleBackPressed();
+
+    /**
+     * Hashmap for setting the titles.
+     * @return A map with all the titles.
+     */
+    SparseIntArray setTitleMap();
 }
