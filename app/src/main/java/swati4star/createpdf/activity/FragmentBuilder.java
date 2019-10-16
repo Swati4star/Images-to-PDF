@@ -32,10 +32,10 @@ import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 public class FragmentBuilder {
-    private final MainActivity mainActivity;
+    private final MainActivity mMainActivity;
 
-    public FragmentBuilder(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public FragmentBuilder(MainActivity mMainActivity) {
+        this.mMainActivity = mMainActivity;
     }
 
     Fragment getFragment(@NonNull MenuItem item, Bundle bundle, FeedbackUtils feedbackUtils) {
@@ -121,9 +121,9 @@ public class FragmentBuilder {
                 fragment.setArguments(bundle);
                 break;
             case R.id.nav_help:
-                Intent intent = new Intent(mainActivity, WelcomeActivity.class);
+                Intent intent = new Intent(mMainActivity, WelcomeActivity.class);
                 intent.putExtra(Constants.SHOW_WELCOME_ACT, true);
-                mainActivity.startActivity(intent);
+                mMainActivity.startActivity(intent);
                 break;
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
@@ -140,7 +140,7 @@ public class FragmentBuilder {
                 fragment = new ZipToPdfFragment();
                 break;
             case R.id.nav_whatsNew:
-                WhatsNewUtils.displayDialog(mainActivity);
+                WhatsNewUtils.displayDialog(mMainActivity);
                 break;
             case R.id.nav_rotate_pages:
                 fragment = new ViewFilesFragment();

@@ -53,9 +53,9 @@ import static swati4star.createpdf.util.Constants.VERSION_NAME;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final ImageHandler imageHandler = new ImageHandler();
-    private final FragmentHandler fragmentHandler = new FragmentHandler(this);
-    private final FragmentBuilder fragmentBuilder = new FragmentBuilder(this);
+    private final ImageHandler mImageHandler = new ImageHandler();
+    private final FragmentHandler mFragmentHandler = new FragmentHandler(this);
+    private final FragmentBuilder mFragmentBuilder = new FragmentBuilder(this);
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = checkForAppShortcutClicked();
 
         // Check if  images are received
-        imageHandler.handleReceivedImagesIntent(fragment, this, getApplicationContext());
+        mImageHandler.handleReceivedImagesIntent(fragment, this, getApplicationContext());
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction transaction = fragmentManager.beginTransaction()
                     .replace(R.id.content, fragment);
             if (!(currFragment instanceof HomeFragment)) {
-                transaction.addToBackStack(fragmentHandler.getFragmentName(currFragment));
+                transaction.addToBackStack(mFragmentHandler.getFragmentName(currFragment));
             }
             transaction.commit();
         }
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
-        if (imageHandler.areImagesRecevied(this))
+        if (mImageHandler.areImagesRecevied(this))
             fragment = new ImageToPdfFragment();
 
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             mCurrentFragment = getSupportFragmentManager()
                     .findFragmentById(R.id.content);
-            fragmentHandler.handleBackPressForFragement(mCurrentFragment, mDoubleBackToExitPressedOnce);
+            mFragmentHandler.handleBackPressForFragement(mCurrentFragment, mDoubleBackToExitPressedOnce);
         }
     }
 
@@ -286,9 +286,9 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        fragmentHandler.setTitleFragment(mFragmentSelectedMap.get(item.getItemId()));
+        mFragmentHandler.setTitleFragment(mFragmentSelectedMap.get(item.getItemId()));
 
-        fragment = fragmentBuilder.getFragment(item, bundle, mFeedbackUtils);
+        fragment = mFragmentBuilder.getFragment(item, bundle, mFeedbackUtils);
 
         try {
             if (fragment != null)
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private Fragment getFragment(@NonNull MenuItem item, Bundle bundle) {
-        return fragmentBuilder.getFragment(item, bundle, mFeedbackUtils);
+        return mFragmentBuilder.getFragment(item, bundle, mFeedbackUtils);
     }
 
     public void setNavigationViewSelection(int id) {

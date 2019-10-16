@@ -24,23 +24,23 @@ import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 
 public class FragmentHandler {
-    private final MainActivity mainActivity;
+    private final MainActivity mMainActivity;
     private boolean mDoubleBackToExitPressedOnce;
 
-    public FragmentHandler(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public FragmentHandler(MainActivity mMainActivity) {
+        this.mMainActivity = mMainActivity;
     }
 
     public String getFragmentName(Fragment fragment) {
         String name = "set name";
         if (fragment instanceof ImageToPdfFragment) {
-            name = mainActivity.getString(R.string.images_to_pdf);
+            name = mMainActivity.getString(R.string.images_to_pdf);
         } else if (fragment instanceof TextToPdfFragment) {
-            name = mainActivity.getString(R.string.text_to_pdf);
+            name = mMainActivity.getString(R.string.text_to_pdf);
         } else if (fragment instanceof QrBarcodeScanFragment) {
-            name = mainActivity.getString(R.string.qr_barcode_pdf);
+            name = mMainActivity.getString(R.string.qr_barcode_pdf);
         } else if (fragment instanceof ExceltoPdfFragment) {
-            name = mainActivity.getString(R.string.excel_to_pdf);
+            name = mMainActivity.getString(R.string.excel_to_pdf);
         } else if (fragment instanceof ViewFilesFragment) {
             if (fragment.getArguments() != null) {
                 int code = fragment.getArguments().getInt(Constants.BUNDLE_DATA);
@@ -50,28 +50,28 @@ public class FragmentHandler {
                     name = Constants.ADD_WATERMARK_KEY;
                 }
             } else {
-                name = mainActivity.getString(R.string.viewFiles);
+                name = mMainActivity.getString(R.string.viewFiles);
             }
         } else if (fragment instanceof HistoryFragment) {
-            name = mainActivity.getString(R.string.history);
+            name = mMainActivity.getString(R.string.history);
         } else if (fragment instanceof ExtractTextFragment) {
-            name = mainActivity.getString(R.string.extract_text);
+            name = mMainActivity.getString(R.string.extract_text);
         } else if (fragment instanceof AddImagesFragment) {
-            name = mainActivity.getString(R.string.add_images);
+            name = mMainActivity.getString(R.string.add_images);
         } else if (fragment instanceof MergeFilesFragment) {
-            name = mainActivity.getString(R.string.merge_pdf);
+            name = mMainActivity.getString(R.string.merge_pdf);
         } else if (fragment instanceof SplitFilesFragment) {
-            name = mainActivity.getString(R.string.split_pdf);
+            name = mMainActivity.getString(R.string.split_pdf);
         } else if (fragment instanceof InvertPdfFragment) {
-            name = mainActivity.getString(R.string.invert_pdf);
+            name = mMainActivity.getString(R.string.invert_pdf);
         } else if (fragment instanceof RemoveDuplicatePagesFragment) {
-            name = mainActivity.getString(R.string.remove_duplicate);
+            name = mMainActivity.getString(R.string.remove_duplicate);
         } else if (fragment instanceof RemovePagesFragment) {
             name = fragment.getArguments().getString(Constants.BUNDLE_DATA);
         } else if (fragment instanceof PdfToImageFragment) {
-            name = mainActivity.getString(R.string.pdf_to_images);
+            name = mMainActivity.getString(R.string.pdf_to_images);
         } else if (fragment instanceof ZipToPdfFragment) {
-            name = mainActivity.getString(R.string.zip_to_pdf);
+            name = mMainActivity.getString(R.string.zip_to_pdf);
         }
         return name;
     }
@@ -85,21 +85,21 @@ public class FragmentHandler {
         else {
             // back stack count will be 1 when we open a item from favourite menu
             // on clicking back, return back to fav menu and change title
-            int count = mainActivity.getSupportFragmentManager().getBackStackEntryCount();
+            int count = mMainActivity.getSupportFragmentManager().getBackStackEntryCount();
             setTitleOnBackPressed(count);
         }
     }
 
     public void setTitleOnBackPressed(int count) {
         if (count > 0) {
-            String s = mainActivity.getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
-            mainActivity.setTitle(s);
-            mainActivity.getSupportFragmentManager().popBackStack();
+            String s = mMainActivity.getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
+            mMainActivity.setTitle(s);
+            mMainActivity.getSupportFragmentManager().popBackStack();
         } else {
             Fragment fragment = new HomeFragment();
-            mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-            mainActivity.setTitle(R.string.app_name);
-            mainActivity.setNavigationViewSelection(R.id.nav_home);
+            mMainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            mMainActivity.setTitle(R.string.app_name);
+            mMainActivity.setNavigationViewSelection(R.id.nav_home);
         }
     }
 
@@ -116,11 +116,11 @@ public class FragmentHandler {
      */
     public void checkDoubleBackPress() {
         if (this.mDoubleBackToExitPressedOnce) {
-            mainActivity.onBackPressed();
+            mMainActivity.onBackPressed();
             return;
         }
         setmDoubleBackToExitPressedOnce(true);
-        Toast.makeText(mainActivity, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mMainActivity, R.string.confirm_exit_message, Toast.LENGTH_SHORT).show();
     }
 
     private void setmDoubleBackToExitPressedOnce(boolean b) {
@@ -134,6 +134,6 @@ public class FragmentHandler {
      */
     public void setTitleFragment(int title) {
         if (title != 0)
-            mainActivity.setTitle(title);
+            mMainActivity.setTitle(title);
     }
 }
