@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -23,49 +22,19 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
-import swati4star.createpdf.fragment.AboutUsFragment;
-import swati4star.createpdf.fragment.AddImagesFragment;
-import swati4star.createpdf.fragment.AddTextFragment;
-import swati4star.createpdf.fragment.ExceltoPdfFragment;
-import swati4star.createpdf.fragment.ExtractTextFragment;
-import swati4star.createpdf.fragment.HistoryFragment;
-import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
-import swati4star.createpdf.fragment.InvertPdfFragment;
-import swati4star.createpdf.fragment.MergeFilesFragment;
-import swati4star.createpdf.fragment.PdfToImageFragment;
-import swati4star.createpdf.fragment.QrBarcodeScanFragment;
-import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
-import swati4star.createpdf.fragment.RemovePagesFragment;
-import swati4star.createpdf.fragment.SettingsFragment;
-import swati4star.createpdf.fragment.SplitFilesFragment;
-import swati4star.createpdf.fragment.TextToPdfFragment;
-import swati4star.createpdf.fragment.ViewFilesFragment;
-import swati4star.createpdf.fragment.ZipToPdfFragment;
-import swati4star.createpdf.providers.FragmentManagement;
+import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
-import static swati4star.createpdf.util.Constants.ADD_IMAGES;
-import static swati4star.createpdf.util.Constants.ADD_PWD;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
-import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
-import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PWd;
-import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
-import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
-import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

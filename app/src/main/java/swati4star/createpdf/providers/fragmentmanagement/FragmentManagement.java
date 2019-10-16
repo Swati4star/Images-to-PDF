@@ -1,4 +1,4 @@
-package swati4star.createpdf.providers;
+package swati4star.createpdf.providers.fragmentmanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.SparseIntArray;
 import android.widget.Toast;
+
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Objects;
 
@@ -34,6 +36,7 @@ import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
+import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
@@ -71,15 +74,14 @@ public class FragmentManagement implements IFragmentManagement {
     public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
         mContext = context;
         mNavigationView = navigationView;
-
         mFeedbackUtils = new FeedbackUtils(mContext);
     }
 
     public void favouritesFragmentOption() {
-        Fragment currFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+        Fragment currFragment = mContext.getSupportFragmentManager().findFragmentById(R.id.content);
 
         Fragment fragment = new FavouritesFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = mContext.getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction()
                 .replace(R.id.content, fragment);
         if (!(currFragment instanceof HomeFragment)) {
@@ -90,10 +92,8 @@ public class FragmentManagement implements IFragmentManagement {
 
     public Fragment checkForAppShortcutClicked() {
         Fragment fragment = new HomeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        if (getIntent().getAction() != null) {
-            switch (Objects.requireNonNull(getIntent().getAction())) {
+        if (mContext.getIntent().getAction() != null) {
+            switch (Objects.requireNonNull(mContext.getIntent().getAction())) {
                 case ACTION_SELECT_IMAGES:
                     fragment = new ImageToPdfFragment();
                     Bundle bundle = new Bundle();
@@ -113,21 +113,20 @@ public class FragmentManagement implements IFragmentManagement {
                     setNavigationViewSelection(R.id.nav_merge);
                     break;
                 default:
-                    // Set default fragment
-                    fragment = new HomeFragment();
+                    fragment = new HomeFragment(); // Set default fragment
                     break;
             }
         }
         if (areImagesReceived())
             fragment = new ImageToPdfFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        mContext.getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
 
         return fragment;
     }
 
     public boolean handleBackPressed() {
-        mCurrentFragment = getSupportFragmentManager()
+        mCurrentFragment = mContext.getSupportFragmentManager()
                 .findFragmentById(R.id.content);
         if (mCurrentFragment instanceof HomeFragment) {
             return checkDoubleBackPress();
@@ -171,7 +170,7 @@ public class FragmentManagement implements IFragmentManagement {
 
     public boolean handleNavigationItemSelected(int itemId) {
         Fragment fragment = null;
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = mContext.getSupportFragmentManager();
         Bundle bundle = new Bundle();
 
         switch (itemId) {
@@ -311,8 +310,9 @@ public class FragmentManagement implements IFragmentManagement {
     }
 
     private boolean checkFragmentBottomSheetBehavior() {
+
         if (mCurrentFragment instanceof InvertPdfFragment )
-            return ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
+            return false;
 
         if (mCurrentFragment instanceof MergeFilesFragment )
             return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
@@ -363,21 +363,21 @@ public class FragmentManagement implements IFragmentManagement {
      *  on clicking back, return back to fav menu and change title
      */
     private void handleBackStackEntry() {
-        int count = getSupportFragmentManager().getBackStackEntryCount();
+        int count = mContext.getSupportFragmentManager().getBackStackEntryCount();
         if (count > 0) {
-            String s = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
+            String s = mContext.getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
             mContext.setTitle(s);
-            getSupportFragmentManager().popBackStack();
+            mContext.getSupportFragmentManager().popBackStack();
         } else {
             Fragment fragment = new HomeFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            mContext.getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             mContext.setTitle(R.string.app_name);
             setNavigationViewSelection(R.id.nav_home);
         }
     }
 
     private boolean areImagesReceived() {
-        Intent intent = getIntent();
+        Intent intent = mContext.getIntent();
         String type = intent.getType();
         return type != null && type.startsWith("image/");
     }
@@ -385,36 +385,36 @@ public class FragmentManagement implements IFragmentManagement {
     private String getFragmentName(Fragment fragment) {
         String name = "set name";
         if (fragment instanceof ImageToPdfFragment) {
-            name = getString(R.string.images_to_pdf);
+            name = mContext.getString(R.string.images_to_pdf);
         } else if (fragment instanceof TextToPdfFragment) {
-            name = getString(R.string.text_to_pdf);
+            name = mContext.getString(R.string.text_to_pdf);
         } else if (fragment instanceof QrBarcodeScanFragment) {
-            name = getString(R.string.qr_barcode_pdf);
+            name = mContext.getString(R.string.qr_barcode_pdf);
         } else if (fragment instanceof ExceltoPdfFragment) {
-            name = getString(R.string.excel_to_pdf);
+            name = mContext.getString(R.string.excel_to_pdf);
         } else if (fragment instanceof ViewFilesFragment) {
             name = checkViewFilesFragmentCode(fragment.getArguments());
         } else if (fragment instanceof HistoryFragment) {
-            name = getString(R.string.history);
+            name = mContext.getString(R.string.history);
         } else if (fragment instanceof ExtractTextFragment) {
-            name = getString(R.string.extract_text);
+            name = mContext.getString(R.string.extract_text);
         } else if (fragment instanceof AddImagesFragment) {
-            name = getString(R.string.add_images);
+            name = mContext.getString(R.string.add_images);
         } else if (fragment instanceof MergeFilesFragment) {
-            name = getString(R.string.merge_pdf);
+            name = mContext.getString(R.string.merge_pdf);
         } else if (fragment instanceof SplitFilesFragment) {
-            name = getString(R.string.split_pdf);
+            name = mContext.getString(R.string.split_pdf);
         } else if (fragment instanceof InvertPdfFragment) {
-            name = getString(R.string.invert_pdf);
+            name = mContext.getString(R.string.invert_pdf);
         } else if (fragment instanceof RemoveDuplicatePagesFragment) {
-            name = getString(R.string.remove_duplicate);
+            name = mContext.getString(R.string.remove_duplicate);
         } else if (fragment instanceof RemovePagesFragment) {
             name = fragment.getArguments() != null ?
                     fragment.getArguments().getString(BUNDLE_DATA) : null;
         } else if (fragment instanceof PdfToImageFragment) {
-            name = getString(R.string.pdf_to_images);
+            name = mContext.getString(R.string.pdf_to_images);
         } else if (fragment instanceof ZipToPdfFragment) {
-            name = getString(R.string.zip_to_pdf);
+            name = mContext.getString(R.string.zip_to_pdf);
         }
         return name;
     }
@@ -434,35 +434,10 @@ public class FragmentManagement implements IFragmentManagement {
                 return ADD_WATERMARK_KEY;
             }
         }
-        return getString(R.string.viewFiles);
+        return mContext.getString(R.string.viewFiles);
     }
 
     private void setNavigationViewSelection(int id) {
         mNavigationView.setCheckedItem(id);
-    }
-
-    /**
-     * Calls the getString method from the FragmentActivity.
-     * @param resId The resource id.
-     * @return the string for the given resource id.
-     */
-    private String getString(int resId) {
-        return mContext.getString(resId);
-    }
-
-    /**
-     * Calls the getSupportFragmentManager method from the FragmentActivity.
-     * @return the FragmentManager.
-     */
-    private FragmentManager getSupportFragmentManager() {
-        return mContext.getSupportFragmentManager();
-    }
-
-    /**
-     * Calls the getIntent method from the FragmentActivity.
-     * @return the Intent.
-     */
-    private Intent getIntent() {
-        return mContext.getIntent();
     }
 }

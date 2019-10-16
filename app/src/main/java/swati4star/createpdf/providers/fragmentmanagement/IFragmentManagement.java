@@ -1,4 +1,4 @@
-package swati4star.createpdf.providers;
+package swati4star.createpdf.providers.fragmentmanagement;
 
 import android.support.v4.app.Fragment;
 import android.util.SparseIntArray;
