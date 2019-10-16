@@ -75,8 +75,12 @@ public class RealPathUtil {
         String subFolderName = hasSubFolders ? getSubFolders(uri) : "";
 
         if (fileName != null) {
-            return Environment.getExternalStorageDirectory().toString() +
-                    "/Download/" + subFolderName + fileName;
+            if (subFolderName != null)
+                return Environment.getExternalStorageDirectory().toString() +
+                        "/Download/" + subFolderName + fileName;
+            else
+                return Environment.getExternalStorageDirectory().toString() +
+                        "/Download/" + fileName;
         }
         final String id = DocumentsContract.getDocumentId(uri);
 
