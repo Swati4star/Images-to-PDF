@@ -71,6 +71,32 @@ public class FragmentUtils {
         return name;
     }
 
+    public boolean handleFragmentBottomSheetBehavior(Fragment fragment) {
+        boolean bottomSheetBehaviour = false;
+        if (fragment instanceof InvertPdfFragment) {
+            bottomSheetBehaviour = ((InvertPdfFragment) fragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((InvertPdfFragment) fragment).closeBottomSheet();
+        } else if (fragment instanceof MergeFilesFragment) {
+            bottomSheetBehaviour = ((MergeFilesFragment) fragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((MergeFilesFragment) fragment).closeBottomSheet();
+        } else if (fragment instanceof RemoveDuplicatePagesFragment) {
+            bottomSheetBehaviour = ((RemoveDuplicatePagesFragment) fragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((RemoveDuplicatePagesFragment) fragment).closeBottomSheet();
+        } else if (fragment instanceof RemovePagesFragment) {
+            bottomSheetBehaviour = ((RemovePagesFragment) fragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((RemovePagesFragment) fragment).closeBottomSheet();
+        } else if (fragment instanceof AddImagesFragment) {
+            bottomSheetBehaviour = ((AddImagesFragment) fragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((AddImagesFragment) fragment).closeBottomSheet();
+        } else if (fragment instanceof PdfToImageFragment) {
+            bottomSheetBehaviour = ((PdfToImageFragment) fragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((PdfToImageFragment) fragment).closeBottomSheet();
+        } else if (fragment instanceof SplitFilesFragment) {
+            bottomSheetBehaviour = ((SplitFilesFragment) fragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((SplitFilesFragment) fragment).closeBottomSheet();
+        }
+        return bottomSheetBehaviour;
+    }
 
     /**
      * Checks the arguments of the ViewFilesFragment
