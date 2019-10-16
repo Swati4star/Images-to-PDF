@@ -130,11 +130,11 @@ public class FragmentManagement implements IFragmentManagement {
                 .findFragmentById(R.id.content);
         if (mCurrentFragment instanceof HomeFragment) {
             return checkDoubleBackPress();
-        } else if (checkFragmentBottomSheetBehavior())
-            closeFragmentBottomSheet();
-        else {
-            handleBackStackEntry();
+        } else {
+            if (handleFragmentBottomSheetBehavior())
+                return false;
         }
+        handleBackStackEntry();
         return false;
     }
 
@@ -309,53 +309,31 @@ public class FragmentManagement implements IFragmentManagement {
         return false;
     }
 
-    private boolean checkFragmentBottomSheetBehavior() {
-
-        if (mCurrentFragment instanceof InvertPdfFragment )
-            return false;
-
-        if (mCurrentFragment instanceof MergeFilesFragment )
-            return ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
-            return ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof RemovePagesFragment )
-            return ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof AddImagesFragment )
-            return ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof PdfToImageFragment )
-            return ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
-
-        if (mCurrentFragment instanceof SplitFilesFragment )
-            return ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
-
-        return false;
-    }
-
-    private void closeFragmentBottomSheet() {
-        if ( mCurrentFragment instanceof InvertPdfFragment)
-            ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof MergeFilesFragment)
-            ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof RemoveDuplicatePagesFragment )
-            ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof RemovePagesFragment)
-            ((RemovePagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof AddImagesFragment)
-            ((AddImagesFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof PdfToImageFragment)
-            ((PdfToImageFragment) mCurrentFragment).closeBottomSheet();
-
-        if (mCurrentFragment instanceof SplitFilesFragment)
-            ((SplitFilesFragment) mCurrentFragment).closeBottomSheet();
+    private boolean handleFragmentBottomSheetBehavior() {
+        boolean bottomSheetBehaviour = false;
+        if (mCurrentFragment instanceof InvertPdfFragment) {
+            bottomSheetBehaviour = ((InvertPdfFragment) mCurrentFragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((InvertPdfFragment) mCurrentFragment).closeBottomSheet();
+        } else if (mCurrentFragment instanceof MergeFilesFragment) {
+            bottomSheetBehaviour = ((MergeFilesFragment) mCurrentFragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((MergeFilesFragment) mCurrentFragment).closeBottomSheet();
+        } else if (mCurrentFragment instanceof RemoveDuplicatePagesFragment) {
+            bottomSheetBehaviour = ((RemoveDuplicatePagesFragment) mCurrentFragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((RemoveDuplicatePagesFragment) mCurrentFragment).closeBottomSheet();
+        } else if (mCurrentFragment instanceof RemovePagesFragment) {
+            bottomSheetBehaviour = ((RemovePagesFragment) mCurrentFragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((RemovePagesFragment) mCurrentFragment).closeBottomSheet();
+        } else if (mCurrentFragment instanceof AddImagesFragment) {
+            bottomSheetBehaviour = ((AddImagesFragment) mCurrentFragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((AddImagesFragment) mCurrentFragment).closeBottomSheet();
+        } else if (mCurrentFragment instanceof PdfToImageFragment) {
+            bottomSheetBehaviour = ((PdfToImageFragment) mCurrentFragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((PdfToImageFragment) mCurrentFragment).closeBottomSheet();
+        } else if (mCurrentFragment instanceof SplitFilesFragment) {
+            bottomSheetBehaviour = ((SplitFilesFragment) mCurrentFragment).checkSheetBehaviour();
+            if (bottomSheetBehaviour) ((SplitFilesFragment) mCurrentFragment).closeBottomSheet();
+        }
+        return bottomSheetBehaviour;
     }
 
     /**
