@@ -38,6 +38,7 @@ import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.FeedbackUtils;
+import swati4star.createpdf.util.FragmentUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
@@ -70,11 +71,13 @@ public class FragmentManagement implements IFragmentManagement {
     private Fragment mCurrentFragment;
     private boolean mDoubleBackToExitPressedOnce = false;
     private FeedbackUtils mFeedbackUtils;
+    private FragmentUtils mFragmentUtils;
 
     public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
         mContext = context;
         mNavigationView = navigationView;
         mFeedbackUtils = new FeedbackUtils(mContext);
+        mFragmentUtils = new FragmentUtils(mContext);
     }
 
     public void favouritesFragmentOption() {
@@ -85,7 +88,7 @@ public class FragmentManagement implements IFragmentManagement {
         FragmentTransaction transaction = fragmentManager.beginTransaction()
                 .replace(R.id.content, fragment);
         if (!(currFragment instanceof HomeFragment)) {
-            transaction.addToBackStack(getFragmentName(currFragment));
+            transaction.addToBackStack(mFragmentUtils.getFragmentName(currFragment));
         }
         transaction.commit();
     }
@@ -358,61 +361,6 @@ public class FragmentManagement implements IFragmentManagement {
         Intent intent = mContext.getIntent();
         String type = intent.getType();
         return type != null && type.startsWith("image/");
-    }
-
-    private String getFragmentName(Fragment fragment) {
-        String name = "set name";
-        if (fragment instanceof ImageToPdfFragment) {
-            name = mContext.getString(R.string.images_to_pdf);
-        } else if (fragment instanceof TextToPdfFragment) {
-            name = mContext.getString(R.string.text_to_pdf);
-        } else if (fragment instanceof QrBarcodeScanFragment) {
-            name = mContext.getString(R.string.qr_barcode_pdf);
-        } else if (fragment instanceof ExceltoPdfFragment) {
-            name = mContext.getString(R.string.excel_to_pdf);
-        } else if (fragment instanceof ViewFilesFragment) {
-            name = checkViewFilesFragmentCode(fragment.getArguments());
-        } else if (fragment instanceof HistoryFragment) {
-            name = mContext.getString(R.string.history);
-        } else if (fragment instanceof ExtractTextFragment) {
-            name = mContext.getString(R.string.extract_text);
-        } else if (fragment instanceof AddImagesFragment) {
-            name = mContext.getString(R.string.add_images);
-        } else if (fragment instanceof MergeFilesFragment) {
-            name = mContext.getString(R.string.merge_pdf);
-        } else if (fragment instanceof SplitFilesFragment) {
-            name = mContext.getString(R.string.split_pdf);
-        } else if (fragment instanceof InvertPdfFragment) {
-            name = mContext.getString(R.string.invert_pdf);
-        } else if (fragment instanceof RemoveDuplicatePagesFragment) {
-            name = mContext.getString(R.string.remove_duplicate);
-        } else if (fragment instanceof RemovePagesFragment) {
-            name = fragment.getArguments() != null ?
-                    fragment.getArguments().getString(BUNDLE_DATA) : null;
-        } else if (fragment instanceof PdfToImageFragment) {
-            name = mContext.getString(R.string.pdf_to_images);
-        } else if (fragment instanceof ZipToPdfFragment) {
-            name = mContext.getString(R.string.zip_to_pdf);
-        }
-        return name;
-    }
-
-    /**
-     * Checks the arguments of the ViewFilesFragment
-     * to determine the name of the fragment.
-     * @param arguments A Bundle containing the args of the fragment.
-     * @return The name of the fragment.
-     */
-    private String checkViewFilesFragmentCode(Bundle arguments) {
-        if (arguments != null) {
-            int code = arguments.getInt(BUNDLE_DATA);
-            if (code == ROTATE_PAGES) {
-                return ROTATE_PAGES_KEY;
-            } else if (code == ADD_WATERMARK) {
-                return ADD_WATERMARK_KEY;
-            }
-        }
-        return mContext.getString(R.string.viewFiles);
     }
 
     private void setNavigationViewSelection(int id) {
