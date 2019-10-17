@@ -35,7 +35,7 @@ public class FragmentUtils {
     }
 
     public String getFragmentName(Fragment fragment) {
-        String name = "set name";
+        String name = mContext.getString(R.string.app_name);
         if (fragment instanceof ImageToPdfFragment) {
             name = mContext.getString(R.string.images_to_pdf);
         } else if (fragment instanceof TextToPdfFragment) {
