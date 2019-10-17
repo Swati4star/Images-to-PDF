@@ -29,6 +29,19 @@
                     style="@style/MorphingButton"
                     android:padding="10dp"
                     android:text="@string/select_excel_file" />
+
+                <com.dd.morphingbutton.MorphingButton
+                    android:id="@+id/pdfOpen"
+                    style="@style/MorphingButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/open_pdf_text"
+                    android:visibility="gone"/>
+
                 <com.dd.morphingbutton.MorphingButton
                     android:id="@+id/create_excel_to_pdf"
                     android:layout_width="match_parent"
