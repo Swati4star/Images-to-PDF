@@ -261,7 +261,6 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         mMorphButtonUtility.morphToSuccess(mCreateExcelPdf);
         mCreateExcelPdf.blockTouch();
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
-        //mCreateExcelPdf.setEnabled(false);
         mExcelFileUri = null;
         mPasswordProtected = false;
         showEnhancementOptions();
