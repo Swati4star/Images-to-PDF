@@ -65,7 +65,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
 
     @BindView(R.id.tv_excel_file_name_bottom)
     TextView mTextView;
-    @BindView(R.id.pdfOpen)
+    @BindView(R.id.open_pdf)
     MorphingButton mOpenPdf;
     @BindView(R.id.create_excel_to_pdf)
     MorphingButton mCreateExcelPdf;
@@ -165,7 +165,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
                 .show();
     }
 
-    @OnClick(R.id.pdfOpen)
+    @OnClick(R.id.open_pdf)
     void openPdf() {
         mFileUtils.openFile(mPath);
     }
