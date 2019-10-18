@@ -65,6 +65,8 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
 
     @BindView(R.id.tv_excel_file_name_bottom)
     TextView mTextView;
+    @BindView(R.id.open_pdf)
+    MorphingButton mOpenPdf;
     @BindView(R.id.create_excel_to_pdf)
     MorphingButton mCreateExcelPdf;
     @BindView(R.id.enhancement_options_recycle_view)
@@ -163,6 +165,11 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
                 .show();
     }
 
+    @OnClick(R.id.open_pdf)
+    void openPdf() {
+        mFileUtils.openFile(mPath);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mButtonClicked = false;
@@ -183,7 +190,9 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
                 mTextView.setText(fileName);
                 mTextView.setVisibility(View.VISIBLE);
                 mCreateExcelPdf.setEnabled(true);
+                mCreateExcelPdf.unblockTouch();
                 mMorphButtonUtility.morphToSquare(mCreateExcelPdf, mMorphButtonUtility.integer());
+                mOpenPdf.setVisibility(View.GONE);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -248,8 +257,10 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
                 .show();
         new DatabaseHelper(mActivity).insertRecord(mPath, mActivity.getString(R.string.created));
         mTextView.setVisibility(View.GONE);
+        mOpenPdf.setVisibility(View.VISIBLE);
+        mMorphButtonUtility.morphToSuccess(mCreateExcelPdf);
+        mCreateExcelPdf.blockTouch();
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
-        mCreateExcelPdf.setEnabled(false);
         mExcelFileUri = null;
         mPasswordProtected = false;
         showEnhancementOptions();
