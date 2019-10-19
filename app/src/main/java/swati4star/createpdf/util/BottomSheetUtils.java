@@ -1,7 +1,7 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
-import android.support.design.widget.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 

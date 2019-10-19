@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.AsyncTask;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.WorkerThread;
 import android.widget.TextView;
 
 import com.itextpdf.text.Document;

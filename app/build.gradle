@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply from: '../config/checkstyle.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "swati4star.createpdf"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 21
         multiDexEnabled true
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 102
         versionName "8.7.5"
     }
@@ -54,32 +54,35 @@ repositories {
     maven { url "https://repository.aspose.com/repo/" }
 }
 dependencies {
-    def room_version = "1.1.1"
+    //def room_version = "1.1.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.android.support:support-v13:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:preference-v7:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.1.0'
 
     // butterknife
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    /*implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'*/
+
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
     // persistence room library - for db operations
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    implementation 'androidx.room:room-runtime:2.2.0'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0'
 
     // material ripple, morphing button, material dialog, animations
     implementation 'com.balysv:material-ripple:1.0.2'
     implementation 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.airbnb.android:lottie:2.5.5'
+    implementation 'com.airbnb.android:lottie:3.0.6'
 
     // libraries for reading from doc and docx files
     implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '2.4.0'
@@ -112,7 +115,7 @@ dependencies {
     // color picker
     implementation 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
 
-    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'org.mockito:mockito-core:2.23.4'
 }
 
 preBuild.dependsOn('checkstyle')

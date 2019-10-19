@@ -2,7 +2,7 @@ package swati4star.createpdf.util;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.AddImagesFragment;
