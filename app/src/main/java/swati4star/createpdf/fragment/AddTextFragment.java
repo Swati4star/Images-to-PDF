@@ -64,7 +64,7 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.AddTextEnhancementOptionsUtils.getEnhancementOptions;
+import static swati4star.createpdf.util.AddTextEnhancementOptionsUtils.getInstance;
 import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
 import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
@@ -145,7 +145,8 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mTextEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
+        mTextEnhancementOptionsEntityArrayList = getInstance()
+                .getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);
         mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
     }
@@ -448,7 +449,6 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                 .setName(getString(R.string.font_family_text) + mFontFamily.name());
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
-
 
 
 }
