@@ -52,7 +52,6 @@ import swati4star.createpdf.util.TextToPDFUtils;
 import swati4star.createpdf.util.TextToPdfAsync;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.ColorUtils.getInstance;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
@@ -261,7 +260,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mFontColor = colorPickerView.getColor();
-                    if (getInstance().colorSimilarCheck(mFontColor, mPageColor)) {
+                    if (ColorUtils.getInstance().colorSimilarCheck(mFontColor, mPageColor)) {
                         showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
@@ -287,7 +286,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mPageColor = colorPickerView.getColor();
-                    if (getInstance().colorSimilarCheck(mFontColor, mPageColor)) {
+                    if (ColorUtils.getInstance().colorSimilarCheck(mFontColor, mPageColor)) {
                         showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {

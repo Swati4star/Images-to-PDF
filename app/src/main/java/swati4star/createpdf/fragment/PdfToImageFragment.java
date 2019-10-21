@@ -52,7 +52,6 @@ import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
-import static swati4star.createpdf.util.CommonCodeUtils.getInstance;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
@@ -306,7 +305,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         resetView();
         mOutputFilePaths = outputFilePaths;
 
-        getInstance().updateView(mActivity, imageCount, outputFilePaths,
+        CommonCodeUtils.getInstance().updateView(mActivity, imageCount, outputFilePaths,
                 mCreateImagesSuccessText, options, mCreatedImages, this);
     }
 
@@ -317,16 +316,17 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        getInstance().populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
     public void closeBottomSheet() {
-        getInstance().closeBottomSheetUtil(mSheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return getInstance().checkSheetBehaviourUtil(mSheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }
