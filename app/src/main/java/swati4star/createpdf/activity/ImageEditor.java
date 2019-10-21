@@ -38,7 +38,7 @@ import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
 import swati4star.createpdf.util.ThemeUtils;
 
-import static swati4star.createpdf.util.BrushUtils.getBrushItems;
+import static swati4star.createpdf.util.BrushUtils.getInstance;
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
@@ -95,7 +95,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mFilterUris = getIntent().getStringArrayListExtra(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
         mFilterItems = getFiltersList(this);
-        mBrushItems = getBrushItems();
+        mBrushItems = getInstance().getBrushItems();
         mImagepaths.addAll(mFilterUris);
 
         mPhotoEditorView.getSource()
