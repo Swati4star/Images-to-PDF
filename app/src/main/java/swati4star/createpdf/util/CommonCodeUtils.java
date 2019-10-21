@@ -28,7 +28,7 @@ public class CommonCodeUtils {
      * updates the output recycler view if paths.size > 0
      * else gides the main view
      */
-    public static void populateUtil(Activity mActivity, ArrayList<String> paths,
+    public void populateUtil(Activity mActivity, ArrayList<String> paths,
                                     MergeFilesAdapter.OnClickListener onClickListener,
                                     RelativeLayout layout, LottieAnimationView animationView,
                                     RecyclerView recyclerView) {
@@ -52,7 +52,7 @@ public class CommonCodeUtils {
     /**
      * sets the appropriate text to successtextview & display images in adapter
      */
-    public static void updateView(Activity mActivity, int imageCount, ArrayList<String> outputFilePaths,
+    public void updateView(Activity mActivity, int imageCount, ArrayList<String> outputFilePaths,
                                   TextView successTextView, LinearLayout options, RecyclerView mCreatedImages,
                                   ExtractImagesAdapter.OnFileItemClickedListener listener) {
 
@@ -79,18 +79,18 @@ public class CommonCodeUtils {
      * Closes the bottom sheet if it is expanded
      */
 
-    public static void closeBottomSheetUtil(BottomSheetBehavior sheetBehavior) {
+    public void closeBottomSheetUtil(BottomSheetBehavior sheetBehavior) {
         if (checkSheetBehaviourUtil(sheetBehavior))
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
     /**
      * Checks whether the bottom sheet is expanded or collapsed
      */
-    public static boolean checkSheetBehaviourUtil(BottomSheetBehavior sheetBehavior) {
+    public boolean checkSheetBehaviourUtil(BottomSheetBehavior sheetBehavior) {
         return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 
-    public static Map<Integer, HomePageItem> fillNavigationItemsMap(boolean homepageitems) {
+    public Map<Integer, HomePageItem> fillNavigationItemsMap(boolean homepageitems) {
 
         // if homepage items is false, it's favourite items
         Map<Integer, HomePageItem> mFragmentPositionMap;
@@ -146,5 +146,13 @@ public class CommonCodeUtils {
 
         return mFragmentPositionMap;
 
+    }
+
+    private static class SingletonHolder {
+        static final CommonCodeUtils INSTANCE = new CommonCodeUtils();
+    }
+
+    public static CommonCodeUtils getInstance() {
+        return CommonCodeUtils.SingletonHolder.INSTANCE;
     }
 }

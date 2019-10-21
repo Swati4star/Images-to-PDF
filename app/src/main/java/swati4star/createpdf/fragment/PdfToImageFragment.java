@@ -48,13 +48,11 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
+import static swati4star.createpdf.util.CommonCodeUtils.getInstance;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
@@ -308,7 +306,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         resetView();
         mOutputFilePaths = outputFilePaths;
 
-        CommonCodeUtils.updateView(mActivity, imageCount, outputFilePaths,
+        getInstance().updateView(mActivity, imageCount, outputFilePaths,
                 mCreateImagesSuccessText, options, mCreatedImages, this);
     }
 
@@ -319,16 +317,16 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        getInstance().populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
     public void closeBottomSheet() {
-        closeBottomSheetUtil(mSheetBehavior);
+        getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return checkSheetBehaviourUtil(mSheetBehavior);
+        return getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

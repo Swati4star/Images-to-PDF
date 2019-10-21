@@ -18,8 +18,9 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 import swati4star.createpdf.model.HomePageItem;
+import swati4star.createpdf.util.CommonCodeUtils;
 
-import static swati4star.createpdf.util.CommonCodeUtils.fillNavigationItemsMap;
+import static swati4star.createpdf.util.CommonCodeUtils.getInstance;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
@@ -89,7 +90,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootview);
-        mFragmentPositionMap = fillNavigationItemsMap(true);
+        mFragmentPositionMap = getInstance().fillNavigationItemsMap(true);
 
         imagesToPdf.setOnClickListener(this);
         qrbarcodeToPdf.setOnClickListener(this);

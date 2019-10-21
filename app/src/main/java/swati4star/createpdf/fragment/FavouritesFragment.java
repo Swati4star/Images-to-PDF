@@ -28,7 +28,7 @@ import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.customviews.MyCardView;
 import swati4star.createpdf.model.HomePageItem;
 
-import static swati4star.createpdf.util.CommonCodeUtils.fillNavigationItemsMap;
+import static swati4star.createpdf.util.CommonCodeUtils.getInstance;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
@@ -147,7 +147,7 @@ public class FavouritesFragment extends Fragment
 
         mDoesFavouritesExist = false;
         checkFavs(mSharedpreferences);
-        mFragmentPositionMap = fillNavigationItemsMap(false);
+        mFragmentPositionMap = getInstance().fillNavigationItemsMap(false);
 
         pref_img_to_pdf.setOnClickListener(this);
         pref_text_to_pdf.setOnClickListener(this);
