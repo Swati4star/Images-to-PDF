@@ -7,7 +7,7 @@ import swati4star.createpdf.model.BrushItem;
 
 public class BrushUtils {
 
-    public static ArrayList<BrushItem> getBrushItems() {
+    public ArrayList<BrushItem> getBrushItems() {
         ArrayList<BrushItem> brushItems = new ArrayList<>();
         brushItems.add(new BrushItem(R.color.mb_white));
         brushItems.add(new BrushItem(R.color.red));
@@ -19,5 +19,13 @@ public class BrushUtils {
         brushItems.add(new BrushItem(R.color.black));
         brushItems.add(new BrushItem(R.drawable.color_palette));
         return brushItems;
+    }
+
+    private static class SingletonHolder {
+        static final BrushUtils INSTANCE = new BrushUtils();
+    }
+
+    public static BrushUtils getInstance() {
+        return BrushUtils.SingletonHolder.INSTANCE;
     }
 }

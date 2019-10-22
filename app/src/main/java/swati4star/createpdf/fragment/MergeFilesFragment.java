@@ -47,6 +47,7 @@ import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -55,9 +56,6 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
@@ -373,16 +371,17 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
     public void closeBottomSheet() {
-        closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
     }
 }
