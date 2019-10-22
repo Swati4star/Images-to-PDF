@@ -35,11 +35,11 @@ import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.HistoryAdapter;
 import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickListener {
@@ -125,7 +125,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     }
 
     private void deleteHistory() {
-        MaterialDialog.Builder builder = createWarningDialog(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createWarningDialog(mActivity,
                 R.string.delete_history_message);
         builder.onPositive((dialog2, which) -> new DeleteHistory().execute())
                 .show();

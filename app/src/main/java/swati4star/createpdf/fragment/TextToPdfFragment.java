@@ -42,6 +42,7 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.ColorUtils;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -54,9 +55,6 @@ import swati4star.createpdf.util.TextToPdfAsync;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
@@ -159,7 +157,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void setPassword() {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.set_password);
         final MaterialDialog dialog = builder
                 .customView(R.layout.custom_dialog, true)
@@ -369,7 +367,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                                 if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
                                     createPdf(inputName);
                                 } else {
-                                    MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                                    MaterialDialog.Builder builder = DialogUtils.getInstance()
+                                            .createOverwriteDialog(mActivity);
                                     builder.onPositive((dialog12, which) -> createPdf(inputName))
                                             .onNegative((dialog1, which) -> openCreateTextPdf())
                                             .show();
@@ -505,7 +504,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 

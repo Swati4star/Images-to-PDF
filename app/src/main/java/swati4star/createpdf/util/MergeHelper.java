@@ -15,8 +15,6 @@ import swati4star.createpdf.interfaces.MergeFilesListener;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -57,7 +55,7 @@ public class MergeHelper implements MergeFilesListener {
                             new MergePdf(input.toString(), mHomePath, mPasswordProtected,
                                     mPassword, this, masterpwd).execute(pdfpaths);
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
                                     mHomePath, mPasswordProtected, mPassword,
                                     this, masterpwd).execute(pdfpaths))
@@ -82,7 +80,7 @@ public class MergeHelper implements MergeFilesListener {
 
     @Override
     public void mergeStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 }

@@ -35,6 +35,7 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -50,8 +51,6 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -164,7 +163,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
                             createPdf(inputName, uri);
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> createPdf(inputName, uri))
                                     .onNegative((dialog1, which) -> resultToTextPdf(uri))
                                     .show();
@@ -223,7 +222,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 

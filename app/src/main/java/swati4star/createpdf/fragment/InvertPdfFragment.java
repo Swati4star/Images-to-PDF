@@ -35,13 +35,13 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.InvertPdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -168,7 +168,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 

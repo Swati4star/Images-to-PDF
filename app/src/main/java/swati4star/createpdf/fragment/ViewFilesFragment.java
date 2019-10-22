@@ -38,6 +38,7 @@ import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.MergeHelper;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -48,7 +49,6 @@ import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.DialogUtils.showFilesInfoDialog;
 import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -107,7 +107,7 @@ public class ViewFilesFragment extends Fragment
         int dialogId;
         if (getArguments() != null) {
             dialogId = getArguments().getInt(BUNDLE_DATA);
-            showFilesInfoDialog(mActivity, dialogId);
+            DialogUtils.getInstance().showFilesInfoDialog(mActivity, dialogId);
         }
 
         checkIfListEmpty();
