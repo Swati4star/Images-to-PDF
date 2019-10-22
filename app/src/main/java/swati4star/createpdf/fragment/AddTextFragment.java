@@ -218,12 +218,12 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICK_PDF_FILE_CODE) {
-            mPdfpath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mPdfpath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
             return;
         }
         if (requestCode == INTENT_REQUEST_PICK_TEXT_FILE_CODE) {
-            mTextPath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mTextPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_txtselected));
         }
         setTextAndActivateButtons(mPdfpath, mTextPath);

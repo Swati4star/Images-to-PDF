@@ -174,7 +174,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         if (requestCode == mFileSelectCode) {
             if (resultCode == RESULT_OK) {
                 mExcelFileUri = data.getData();
-                mRealPath = RealPathUtil.getRealPath(getContext(), mExcelFileUri);
+                mRealPath = RealPathUtil.getInstance().getRealPath(getContext(), mExcelFileUri);
                 showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
                 String fileName = mFileUtils.getFileName(mExcelFileUri);
                 if (fileName != null && !fileName.endsWith(Constants.excelExtension) &&

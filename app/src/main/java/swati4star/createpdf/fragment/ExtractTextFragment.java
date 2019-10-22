@@ -147,7 +147,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         mButtonClicked = false;
         if (requestCode == mFileSelectCode && resultCode == RESULT_OK) {
             mExcelFileUri = data.getData();
-            mRealPath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mRealPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
             mFileName = mFileUtils.getFileName(mExcelFileUri);
             if (mFileName != null && !mFileName.endsWith(Constants.pdfExtension)) {

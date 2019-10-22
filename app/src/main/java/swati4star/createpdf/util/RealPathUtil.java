@@ -12,6 +12,14 @@ import android.util.Log;
 
 public class RealPathUtil {
 
+    private static class SingletonHolder {
+        static final RealPathUtil INSTANCE = new RealPathUtil();
+    }
+
+    public static RealPathUtil getInstance() {
+        return RealPathUtil.SingletonHolder.INSTANCE;
+    }
+
     /**
      * Returns actual path from uri
      *
@@ -19,7 +27,7 @@ public class RealPathUtil {
      * @param fileUri - uri of file
      * @return - actual path
      */
-    public static String getRealPath(Context context, Uri fileUri) {
+    public String getRealPath(Context context, Uri fileUri) {
         return getRealPathFromURI_API19(context, fileUri);
     }
 
@@ -31,7 +39,7 @@ public class RealPathUtil {
      * @param context The context.
      * @param uri     The Uri to query.
      */
-    private static String getRealPathFromURI_API19(final Context context, final Uri uri) {
+    private String getRealPathFromURI_API19(final Context context, final Uri uri) {
         String path = null;
         // DocumentProvider
         if (isDriveFile(uri)) {
@@ -70,7 +78,7 @@ public class RealPathUtil {
      * @param hasSubFolders The flag that indicates if the file is in the root or in a subfolder
      * @return The absolute file path
      */
-    private static String getDownloadsDocumentPath(Context context, Uri uri, boolean hasSubFolders) {
+    private String getDownloadsDocumentPath(Context context, Uri uri, boolean hasSubFolders) {
         String fileName = getFilePath(context, uri);
         String subFolderName = hasSubFolders ? getSubFolders(uri) : "";
 
@@ -107,7 +115,7 @@ public class RealPathUtil {
      * @param uri The uri
      * @return A string containing all the subfolders that point to the final file path
      */
-    private static String getSubFolders(Uri uri) {
+    private String getSubFolders(Uri uri) {
         String replaceChars = String.valueOf(uri).replace("%2F", "/")
                 .replace("%20", " ").replace("%3A", ":");
         // searches for "Download" to get the directory path
@@ -139,7 +147,7 @@ public class RealPathUtil {
      * @param uri     The uri to query
      * @return The file path
      */
-    private static String getFilePath(Context context, Uri uri) {
+    private String getFilePath(Context context, Uri uri) {
         final String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
         try (Cursor cursor = context.getContentResolver().query(uri, projection, null, null,
                 null)) {
@@ -161,7 +169,7 @@ public class RealPathUtil {
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
-    private static String getDataColumn(Context context, Uri uri, String selection,
+    private String getDataColumn(Context context, Uri uri, String selection,
                                         String[] selectionArgs) {
 
         final String column = "_data";
@@ -186,7 +194,7 @@ public class RealPathUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    private static boolean isExternalStorageDocument(Uri uri) {
+    private boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
@@ -196,7 +204,7 @@ public class RealPathUtil {
      * @param uri - input uri
      * @return true, if is google drive uri, otherwise false
      */
-    private static boolean isDriveFile(Uri uri) {
+    private boolean isDriveFile(Uri uri) {
         if ("com.google.android.apps.docs.storage".equals(uri.getAuthority()))
             return true;
         return "com.google.android.apps.docs.storage.legacy".equals(uri.getAuthority());
@@ -206,7 +214,7 @@ public class RealPathUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
-    private static boolean isDownloadsDocument(Uri uri) {
+    private boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
@@ -214,7 +222,7 @@ public class RealPathUtil {
      * @param uri The Uri to check
      * @return True if is a raw downloads document, otherwise false
      */
-    private static boolean isRawDownloadsDocument(Uri uri) {
+    private boolean isRawDownloadsDocument(Uri uri) {
         String uriToString = String.valueOf(uri);
         return uriToString.contains("com.android.providers.downloads.documents/document/raw");
     }

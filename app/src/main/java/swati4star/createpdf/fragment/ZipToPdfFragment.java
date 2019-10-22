@@ -77,7 +77,7 @@ public class ZipToPdfFragment extends Fragment {
             return;
 
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-            mPath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             if (mPath != null) {
                 convertButton.setVisibility(View.VISIBLE);
             }
