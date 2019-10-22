@@ -297,6 +297,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentSelectedMap.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
         mFragmentSelectedMap.append(R.id.nav_rotate_pages, R.string.rotate_pages);
         mFragmentSelectedMap.append(R.id.nav_excel_to_pdf, R.string.excel_to_pdf);
+        mFragmentSelectedMap.append(R.id.nav_faq, R.string.faqs);
     }
 
     /**
