@@ -69,6 +69,7 @@ import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.model.Watermark;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -92,10 +93,6 @@ import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.ImageUtils.mImageScaleType;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
@@ -261,7 +258,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
         String preFillName = mFileUtils.getLastFileName(mImagesUri);
 
-        MaterialDialog.Builder builder = createCustomDialog(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
         builder.input(getString(R.string.example), preFillName, (dialog, input) -> {
             if (StringUtils.isEmpty(input)) {
@@ -278,7 +275,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     new CreatePdf(mPdfOptions, mHomePath,
                             ImageToPdfFragment.this).execute();
                 } else {
-                    MaterialDialog.Builder builder2 = createOverwriteDialog(mActivity);
+                    MaterialDialog.Builder builder2 = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                     builder2.onPositive((dialog2, which) -> {
                         mPdfOptions.setOutFileName(filename);
                         if (isgrayScale)
@@ -506,7 +503,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void addBorder() {
-        createCustomDialogWithoutContent(mActivity, R.string.border)
+        DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity, R.string.border)
                 .customView(R.layout.dialog_border_image, true)
                 .onPositive((dialog1, which) -> {
                     View view = dialog1.getCustomView();
@@ -533,7 +530,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
     private void compressImage() {
-        createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
+        DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
                 .customView(R.layout.compress_image_dialog, true)
                 .onPositive((dialog1, which) -> {
                     final EditText qualityInput = dialog1.getCustomView().findViewById(R.id.quality);
@@ -749,7 +746,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 

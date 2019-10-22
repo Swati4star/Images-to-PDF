@@ -48,6 +48,7 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -59,9 +60,6 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
@@ -161,7 +159,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     private void setPassword() {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.set_password);
         final MaterialDialog dialog = builder
                 .customView(R.layout.custom_dialog, true)
@@ -241,7 +239,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                             new MergePdf(input.toString(), mHomePath, mPasswordProtected,
                                     mPassword, this, masterpwd).execute(pdfpaths);
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
                                     mHomePath, mPasswordProtected, mPassword,
                                     this, masterpwd).execute(pdfpaths))
@@ -257,7 +255,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             //Getting Absolute Path
-            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             mFilePaths.add(path);
             mMergeSelectedFilesAdapter.notifyDataSetChanged();
             showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
@@ -330,7 +328,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void mergeStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 

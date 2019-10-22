@@ -59,6 +59,7 @@ import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -69,7 +70,6 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -204,7 +204,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
                             addText(inputName, mFontSize, mFontFamily);
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> addText(inputName, mFontSize, mFontFamily))
                                     .onNegative((dialog1, which) -> openPdfNameDialog())
                                     .show();
@@ -218,12 +218,12 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICK_PDF_FILE_CODE) {
-            mPdfpath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mPdfpath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
             return;
         }
         if (requestCode == INTENT_REQUEST_PICK_TEXT_FILE_CODE) {
-            mTextPath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mTextPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_txtselected));
         }
         setTextAndActivateButtons(mPdfpath, mTextPath);

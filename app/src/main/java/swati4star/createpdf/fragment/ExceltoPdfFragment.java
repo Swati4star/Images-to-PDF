@@ -38,6 +38,7 @@ import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ExcelToPDFAsync;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -48,9 +49,6 @@ import swati4star.createpdf.util.StringUtils;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
@@ -155,7 +153,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
                             convertToPdf(inputName);
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> convertToPdf(inputName))
                                     .onNegative((dialog1, which) -> openExcelToPdf())
                                     .show();
@@ -176,7 +174,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         if (requestCode == mFileSelectCode) {
             if (resultCode == RESULT_OK) {
                 mExcelFileUri = data.getData();
-                mRealPath = RealPathUtil.getRealPath(getContext(), mExcelFileUri);
+                mRealPath = RealPathUtil.getInstance().getRealPath(getContext(), mExcelFileUri);
                 showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
                 String fileName = mFileUtils.getFileName(mExcelFileUri);
                 if (fileName != null && !fileName.endsWith(Constants.excelExtension) &&
@@ -236,7 +234,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 
@@ -280,7 +278,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
     }
 
     private void setPassword() {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.set_password);
         final MaterialDialog dialog = builder
                 .customView(R.layout.custom_dialog, true)

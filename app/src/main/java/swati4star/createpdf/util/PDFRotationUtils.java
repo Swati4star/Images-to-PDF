@@ -17,7 +17,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -42,7 +41,7 @@ public class PDFRotationUtils {
      * @param sourceFilePath - path of file to be rotated
      */
     public void rotatePages(String sourceFilePath, final DataSetChanged dataSetChanged) {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mContext,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mContext,
                 R.string.rotate_pages);
         builder.customView(R.layout.dialog_rotate_pdf, true)
                 .onPositive((dialog, which) -> {
