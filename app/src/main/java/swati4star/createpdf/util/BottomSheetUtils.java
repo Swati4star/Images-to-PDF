@@ -25,4 +25,8 @@ public class BottomSheetUtils  {
         new PopulateBottomSheetList(listener, new DirectoryUtils(mContext)).execute();
     }
 
+    public void populateBottomSheetWithExcelFiles(BottomSheetPopulate listener) {
+        new PopulateBottomSheetListWithExcelFiles(listener, new DirectoryUtils(mContext)).execute();
+    }
+
 }

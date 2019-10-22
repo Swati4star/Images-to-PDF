@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,10 +20,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.util.ArrayList;
@@ -33,10 +38,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.util.BottomSheetCallback;
+import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.ExcelToPDFAsync;
 import swati4star.createpdf.util.FileUtils;
@@ -56,13 +66,16 @@ import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
-public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterface, OnItemClickListner {
+public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
+        OnPDFCreatedInterface, OnItemClickListner, BottomSheetPopulate {
     private Activity mActivity;
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
     private String mRealPath;
     private String mPath;
 
+    @BindView(R.id.lottie_progress)
+    LottieAnimationView mLottieProgress;
     @BindView(R.id.tv_excel_file_name_bottom)
     TextView mTextView;
     @BindView(R.id.open_pdf)
@@ -71,9 +84,19 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
     MorphingButton mCreateExcelPdf;
     @BindView(R.id.enhancement_options_recycle_view)
     RecyclerView mEnhancementOptionsRecycleView;
+    BottomSheetBehavior sheetBehavior;
+    @BindView(R.id.bottom_sheet)
+    LinearLayout layoutBottomSheet;
+    @BindView(R.id.upArrow)
+    ImageView mUpArrow;
+    @BindView(R.id.layout)
+    RelativeLayout mLayout;
+    @BindView(R.id.recyclerViewFiles)
+    RecyclerView mRecyclerViewFiles;
 
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
+    private BottomSheetUtils mBottomSheetUtils;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private boolean mPermissionGranted = false;
     private boolean mButtonClicked = false;
@@ -99,6 +122,12 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
         mCreateExcelPdf.setEnabled(false);
+
+        ButterKnife.bind(this, rootview);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mLottieProgress.setVisibility(View.VISIBLE);
+        mBottomSheetUtils.populateBottomSheetWithExcelFiles(this);
         return rootview;
     }
 
@@ -115,6 +144,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
+        mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
     @OnClick(R.id.select_excel_file)
@@ -177,22 +207,7 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
             if (resultCode == RESULT_OK) {
                 mExcelFileUri = data.getData();
                 mRealPath = RealPathUtil.getRealPath(getContext(), mExcelFileUri);
-                showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
-                String fileName = mFileUtils.getFileName(mExcelFileUri);
-                if (fileName != null && !fileName.endsWith(Constants.excelExtension) &&
-                        !fileName.endsWith(Constants.excelWorkbookExtension)) {
-                    showSnackbar(mActivity, R.string.extension_not_supported);
-                    return;
-                }
-
-                fileName = getResources().getString(R.string.excel_selected)
-                        + fileName;
-                mTextView.setText(fileName);
-                mTextView.setVisibility(View.VISIBLE);
-                mCreateExcelPdf.setEnabled(true);
-                mCreateExcelPdf.unblockTouch();
-                mMorphButtonUtility.morphToSquare(mCreateExcelPdf, mMorphButtonUtility.integer());
-                mOpenPdf.setVisibility(View.GONE);
+                processUri();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -211,6 +226,25 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
             } else
                 showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
+    }
+
+    private void processUri() {
+        showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
+        String fileName = mFileUtils.getFileName(mExcelFileUri);
+        if (fileName != null && !fileName.endsWith(Constants.excelExtension) &&
+                !fileName.endsWith(Constants.excelWorkbookExtension)) {
+            showSnackbar(mActivity, R.string.extension_not_supported);
+            return;
+        }
+
+        fileName = getResources().getString(R.string.excel_selected)
+                + fileName;
+        mTextView.setText(fileName);
+        mTextView.setVisibility(View.VISIBLE);
+        mCreateExcelPdf.setEnabled(true);
+        mCreateExcelPdf.unblockTouch();
+        mMorphButtonUtility.morphToSquare(mCreateExcelPdf, mMorphButtonUtility.integer());
+        mOpenPdf.setVisibility(View.GONE);
     }
 
     /**
@@ -338,6 +372,20 @@ public class ExceltoPdfFragment extends Fragment implements OnPDFCreatedInterfac
                 .setImage(mActivity.getResources()
                         .getDrawable(R.drawable.baseline_enhanced_encryption_24));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(String path) {
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mExcelFileUri = Uri.parse("file://" + path);
+        mRealPath = path;
+        processUri();
+    }
+
+    @Override
+    public void onPopulate(ArrayList<String> paths) {
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
 }
