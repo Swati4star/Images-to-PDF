@@ -51,6 +51,10 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
         return view;
     }
 
+    /**
+     * Initializes the FAQs questions and answers by populating data from the
+     * strings.xml file and adding it to the custom FAQItem Model.
+     */
     private void initFAQs() {
         mFaqs = new ArrayList<>();
         String[] questions = mContext.getResources().getStringArray(R.array.faq_questions);
@@ -62,11 +66,21 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
         }
     }
 
+
+    /**
+     * Initializes the RecyclerView using the FAQAdapter to populate the views
+     * for FAQs
+     */
     private void initFAQRecyclerView() {
         faqAdapter = new FAQAdapter(mFaqs, this);
         mFAQRecyclerView.setAdapter(faqAdapter);
     }
 
+    /**
+     * This method defines the behavior of the FAQItem when clicked.
+     * It makes the FAQItem view expanded or contracted.
+     * @param position
+     */
     @Override
     public void onItemClick(int position) {
         FAQItem faqItem = mFaqs.get(position);

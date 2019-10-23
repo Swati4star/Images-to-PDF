@@ -550,7 +550,7 @@
     </string-array>
 
     <string-array name="faq_answers">
-        <item>The software supports jpeg, png etc.</item>
+        <item>The software supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>No new text files can\'t be created. You can only convert already made text files to pdf.</item>
         <item>There is no restriction to the number of images you desire to convert to pdf. You can include as many images as you desire.</item>
         <item>There\'s no limit to the sizes of images you wish to convert to pdf. But for efficient and smooth operations restricting image size to less than 10mb is adviced. The conversion of multiple huge image files takes a longer time(10secs upward) than images with less file sizes.</item>
@@ -559,7 +559,7 @@
         <item>The pdf files created with the software are automatically saved to a location on your device storage name "PDFfiles"</item>
         <item>Yes, you can customize/change the location where created pdf files are saved to your preferred location. To make this change, \nAccess the options menu either by swiping from left to right or by clicking the 3 horizontal lines at the top left of the app. \nScroll down and click on settings \nOn the settings page, click the text just beneath change location storage. \nAn inbuilt file manager will pop up, select your preferred save location and click the select option at the top.</item>
         <item>You can share pdf files directly from within the app and also externally. To share pdf files from the app, \nClick on view files on the home page which will show you all the pdf files you have created with the software. \nClick on the box beside the file you wish to share and you will see the share file option at the top right of the app. \nClick the option and select your desired share location. You can also mark multiple files to share at once.</item>
-        <item>The minimum password length to encrypt a pdf file is one character, however, it\'s not advisable to use a password with just a single numeric or alphabetic character. The software allows numeric and alphabetic password entry. For more security, create a password mixed with alphabets and numbers up to 8 characters.</item>
+        <item>The minimum password length to password protect a pdf file is one character, however, it\'s not advisable to use a password with just a single numeric or alphabetic character. The software allows numeric and alphabetic password entry. For more security, create a password mixed with alphabets and numbers up to 8 characters.</item>
         <item>No, a lost password cannot be recovered. While you are advised to protect your files with strong passwords which sometimes amounts to complex passwords, it is also vital it is something you can remember.</item>
         <item>This cannot be directly done but can be manipulated. To change the password, you will first have to remove the existing password from the file and create a new password again.</item>
         <item>No, you can only set a password for one file at a time.</item>
@@ -568,7 +568,7 @@
         <item>There is no intention to migrate this software to another operating system.</item>
         <item>The software can be downloaded from Google PlayStore and also on F-droid</item>
         <item>Yes, please! \nFeel free to share your ideas(feature requests), submit a bug or pull request for anything you feel should be added. \nThis project currently has multiple contributors that add as little as a single line change. This project is opened to contributions of any kind. You can also fork the project and further develop it on your own so long as you work within the confines of the license. Pull requests of your contributions will be merged if they fulfill some certain requirements. Read the project\'s Contributor\'s guide to get started on how to contribute.</item>
-        <item>For further inquiries, you can contact the developer via email. Send an email to swati4star@gmail.com. The developer can also be contacted by opening an issue on the repository.</item>
+        <item>For further inquiries, you can contact the developer via email. Send an email to swati4star@gmail.com.</item>
     </string-array>
 
 </resources>

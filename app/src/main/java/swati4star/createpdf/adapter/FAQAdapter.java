@@ -26,6 +26,14 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
+    /**
+     * Inflates the layout view and returns it
+     *
+     * @param viewGroup
+     * @param i
+     * @return FAQViewHolder View
+     */
+
     @NonNull
     @Override
     public FAQViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -34,7 +42,11 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
         return new FAQAdapter.FAQViewHolder(view);
     }
 
-
+    /**
+     * Binds the FAQItem with the proper data that it fetches from List
+     * @param viewHolder
+     * @param i
+     */
     @Override
     public void onBindViewHolder(@NonNull FAQViewHolder viewHolder, int i) {
         FAQItem faqItem = faqs.get(i);
@@ -58,6 +70,10 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
         @BindView(R.id.expandable_view)
         ConstraintLayout expandableView;
 
+        /**
+         * Initializes and binds the view and sets the onClickListener
+         * @param itemView
+         */
         FAQViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -65,6 +81,10 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
             question.setOnClickListener(this);
         }
 
+        /**
+         * Defines the onItemClickListener handler
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             mOnItemClickListener.onItemClick(getAdapterPosition());
