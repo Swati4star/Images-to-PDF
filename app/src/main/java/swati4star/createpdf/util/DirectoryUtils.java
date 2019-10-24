@@ -7,13 +7,17 @@ import android.preference.PreferenceManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
+import static swati4star.createpdf.util.Constants.excelExtension;
+import static swati4star.createpdf.util.Constants.excelWorkbookExtension;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 
 public class DirectoryUtils {
@@ -167,19 +171,40 @@ public class DirectoryUtils {
      * @param dir - root directory
      */
     private void walkdir(File dir) {
+        walkdir(dir, Arrays.asList(pdfExtension));
+    }
+
+    /**
+     * Walks through given dir & sub direc, and append file path to mFilePaths
+     * @param dir - root directory
+     * @param extensions - a list of file extensions to search for
+     */
+    private void walkdir(File dir, List<String> extensions) {
         File[] listFile = dir.listFiles();
         if (listFile != null) {
             for (File aListFile : listFile) {
 
                 if (aListFile.isDirectory()) {
-                    walkdir(aListFile);
+                    walkdir(aListFile, extensions);
                 } else {
-                    if (aListFile.getName().endsWith(pdfExtension)) {
-                        //Do what ever u want
-                        mFilePaths.add(aListFile.getAbsolutePath());
+                    for (String extension: extensions) {
+                        if (aListFile.getName().endsWith(extension)) {
+                            //Do what ever u want
+                            mFilePaths.add(aListFile.getAbsolutePath());
+                        }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * gets a list of all the excel files on the user device
+     * @return - list of file absolute paths
+     */
+    ArrayList<String> getAllExcelDocumentsOnDevice() {
+        mFilePaths = new ArrayList<>();
+        walkdir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
+        return mFilePaths;
     }
 }
