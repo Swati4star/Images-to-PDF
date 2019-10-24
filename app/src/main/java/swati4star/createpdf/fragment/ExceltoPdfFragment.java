@@ -204,7 +204,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         if (requestCode == mFileSelectCode) {
             if (resultCode == RESULT_OK) {
                 mExcelFileUri = data.getData();
-                mRealPath = RealPathUtil.getRealPath(getContext(), mExcelFileUri);
+                mRealPath = RealPathUtil.getInstance().getRealPath(getContext(), mExcelFileUri);
                 processUri();
             }
         }
