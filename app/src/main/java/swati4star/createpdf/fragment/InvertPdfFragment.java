@@ -34,16 +34,14 @@ import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.InvertPdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -111,7 +109,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             //Getting Absolute Path
-            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             setTextAndActivateButtons(path);
         }
     }
@@ -139,7 +137,8 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
@@ -169,7 +168,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
 
     @Override
     public void onPDFCreationStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 
@@ -188,11 +187,11 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     }
 
     public void closeBottomSheet() {
-        closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
     }
 
     public boolean checkSheetBehaviour() {
-        return checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
     }
 }
 

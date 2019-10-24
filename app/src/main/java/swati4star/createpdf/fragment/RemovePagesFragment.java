@@ -42,6 +42,8 @@ import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFEncryptionUtility;
@@ -50,9 +52,6 @@ import swati4star.createpdf.util.RealPathUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
@@ -60,7 +59,6 @@ import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.FileUtils.getFormattedSize;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
@@ -142,7 +140,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             mUri = data.getData();
             //Getting Absolute Path
-            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             setTextAndActivateButtons(path);
         } else if (requestCode == INTENT_REQUEST_REARRANGE_PDF) {
             String pages = data.getStringExtra(RESULT);
@@ -321,7 +319,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @Override
     public void pdfCompressionStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 
@@ -353,16 +351,17 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
     public void closeBottomSheet() {
-        closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
     }
 }

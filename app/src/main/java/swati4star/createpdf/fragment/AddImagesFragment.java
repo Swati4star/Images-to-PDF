@@ -36,22 +36,18 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
-import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialog;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -186,7 +182,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     private void getFileName() {
-        MaterialDialog.Builder builder = createCustomDialog(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
         builder.input(getString(R.string.example), null, (dialog, input) -> {
             if (StringUtils.isEmpty(input)) {
@@ -197,7 +193,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                     this.addImagesToPdf(filename);
                 } else {
-                    MaterialDialog.Builder builder2 = createOverwriteDialog(mActivity);
+                    MaterialDialog.Builder builder2 = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                     builder2.onPositive((dialog2, which) ->
                             this.addImagesToPdf(filename)).onNegative((dialog1, which) -> getFileName()).show();
                 }
@@ -216,7 +212,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                 output + mActivity.getString(R.string.pdf_ext));
 
         if (mImagesUri.size() > 0) {
-            MaterialDialog progressDialog = createAnimationDialog(mActivity);
+            MaterialDialog progressDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
             progressDialog.show();
             mPDFUtils.addImagesToPdf(mPath, outputPath, mImagesUri);
             mMorphButtonUtility.morphToSuccess(mCreatePdf);
@@ -288,16 +284,17 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
     public void closeBottomSheet() {
-        closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
     }
 }

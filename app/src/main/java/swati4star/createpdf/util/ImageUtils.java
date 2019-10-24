@@ -27,7 +27,6 @@ import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 
 public class ImageUtils {
 
@@ -158,7 +157,7 @@ public class ImageUtils {
     public static void showImageScaleTypeDialog(Context context, Boolean saveValue) {
 
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent((Activity) context,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent((Activity) context,
                 R.string.image_scale_type);
         MaterialDialog materialDialog =
                 builder.customView(R.layout.image_scale_type_dialog, true)

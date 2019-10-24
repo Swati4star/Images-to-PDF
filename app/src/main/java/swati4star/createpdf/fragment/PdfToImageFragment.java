@@ -39,6 +39,7 @@ import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
@@ -48,12 +49,8 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
-import static swati4star.createpdf.util.DialogUtils.createAnimationDialog;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
@@ -176,7 +173,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             mUri = data.getData();
             //Getting Absolute Path
-            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             setTextAndActivateButtons(path);
 
         }
@@ -291,7 +288,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     @Override
     public void extractionStarted() {
-        mMaterialDialog = createAnimationDialog(mActivity);
+        mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
         mMaterialDialog.show();
     }
 
@@ -308,7 +305,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         resetView();
         mOutputFilePaths = outputFilePaths;
 
-        CommonCodeUtils.updateView(mActivity, imageCount, outputFilePaths,
+        CommonCodeUtils.getInstance().updateView(mActivity, imageCount, outputFilePaths,
                 mCreateImagesSuccessText, options, mCreatedImages, this);
     }
 
@@ -319,16 +316,17 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
     public void closeBottomSheet() {
-        closeBottomSheetUtil(mSheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return checkSheetBehaviourUtil(mSheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

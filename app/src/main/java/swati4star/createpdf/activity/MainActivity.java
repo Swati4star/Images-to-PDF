@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity
 
     // Hashmap for setting the mFragmentSelectedMap.
     public void setTitleMap() {
+        mFragmentSelectedMap = new SparseIntArray();
         mFragmentSelectedMap.append(R.id.nav_home, R.string.app_name);
         mFragmentSelectedMap.append(R.id.nav_camera, R.string.images_to_pdf);
         mFragmentSelectedMap.append(R.id.nav_qrcode, R.string.qr_barcode_pdf);
@@ -296,6 +297,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentSelectedMap.append(R.id.nav_zip_to_pdf, R.string.zip_to_pdf);
         mFragmentSelectedMap.append(R.id.nav_rotate_pages, R.string.rotate_pages);
         mFragmentSelectedMap.append(R.id.nav_excel_to_pdf, R.string.excel_to_pdf);
+        mFragmentSelectedMap.append(R.id.nav_faq, R.string.faqs);
     }
 
     /**

@@ -54,9 +54,12 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.util.AddTextEnhancementOptionsUtils;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
+import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -64,14 +67,9 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.AddTextEnhancementOptionsUtils.getEnhancementOptions;
-import static swati4star.createpdf.util.CommonCodeUtils.checkSheetBehaviourUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.closeBottomSheetUtil;
-import static swati4star.createpdf.util.CommonCodeUtils.populateUtil;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -145,7 +143,8 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mTextEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
+        mTextEnhancementOptionsEntityArrayList = AddTextEnhancementOptionsUtils.getInstance()
+                .getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);
         mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
     }
@@ -205,7 +204,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
                             addText(inputName, mFontSize, mFontFamily);
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> addText(inputName, mFontSize, mFontFamily))
                                     .onNegative((dialog1, which) -> openPdfNameDialog())
                                     .show();
@@ -219,12 +218,12 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICK_PDF_FILE_CODE) {
-            mPdfpath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mPdfpath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
             return;
         }
         if (requestCode == INTENT_REQUEST_PICK_TEXT_FILE_CODE) {
-            mTextPath = RealPathUtil.getRealPath(getContext(), data.getData());
+            mTextPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             showSnackbar(mActivity, getResources().getString(R.string.snackbar_txtselected));
         }
         setTextAndActivateButtons(mPdfpath, mTextPath);
@@ -334,17 +333,18 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
+                this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
     public void closeBottomSheet() {
-        closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
     }
 
     @Override
@@ -448,7 +448,6 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                 .setName(getString(R.string.font_family_text) + mFontFamily.name());
         mTextEnhancementOptionsAdapter.notifyDataSetChanged();
     }
-
 
 
 }

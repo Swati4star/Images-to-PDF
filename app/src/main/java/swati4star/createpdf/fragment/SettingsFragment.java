@@ -34,6 +34,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
@@ -41,7 +42,6 @@ import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
@@ -143,7 +143,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      * To modify master password of PDFs
      */
     private void changeMasterPassword() {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.change_master_pwd);
         MaterialDialog materialDialog =
                 builder.customView(R.layout.dialog_change_master_pwd, true)
@@ -170,7 +170,8 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      */
     private void changeCompressImage() {
 
-        MaterialDialog dialog = createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
+        MaterialDialog dialog = DialogUtils.getInstance()
+                .createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
                 .customView(R.layout.compress_image_dialog, true)
                 .onPositive((dialog1, which) -> {
                     final EditText qualityInput = dialog1.getCustomView().findViewById(R.id.quality);
@@ -198,8 +199,8 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      * To modify font size
      */
     private void editFontSize() {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
-                R.string.font_size_edit);
+        MaterialDialog.Builder builder = DialogUtils.getInstance()
+                .createCustomDialogWithoutContent(mActivity, R.string.font_size_edit);
         MaterialDialog dialog = builder.customView(R.layout.dialog_font_size, true)
                 .onPositive((dialog1, which) -> {
                     final EditText fontInput = dialog1.getCustomView().findViewById(R.id.fontInput);
@@ -231,7 +232,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         String fontFamily = mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY);
         int ordinal = Font.FontFamily.valueOf(fontFamily).ordinal();
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.font_family_edit);
         MaterialDialog materialDialog = builder.customView(R.layout.dialog_font_family, true)
                 .onPositive((dialog, which) -> {
@@ -267,7 +268,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
      * To modify theme
      */
     public void setTheme() {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent(mActivity,
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.theme_edit);
         MaterialDialog materialDialog = builder.customView(R.layout.dialog_theme_default, true)
                 .onPositive(((dialog, which) -> {

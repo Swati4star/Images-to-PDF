@@ -11,9 +11,13 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 public class AddTextEnhancementOptionsUtils {
 
-    public static ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
-                                                                            String fontTitle,
-                                                                            Font.FontFamily fontFamily) {
+    private AddTextEnhancementOptionsUtils() {
+
+    }
+
+    public ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
+                                                                     String fontTitle,
+                                                                     Font.FontFamily fontFamily) {
         ArrayList<EnhancementOptionsEntity> options = new ArrayList<>();
 
         options.add(new EnhancementOptionsEntity(
@@ -24,4 +28,13 @@ public class AddTextEnhancementOptionsUtils {
                 String.format(context.getString(R.string.default_font_family_text), fontFamily.name())));
         return options;
     }
+
+    private static class SingletonHolder {
+        static final AddTextEnhancementOptionsUtils INSTANCE = new AddTextEnhancementOptionsUtils();
+    }
+
+    public static AddTextEnhancementOptionsUtils getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
 }
