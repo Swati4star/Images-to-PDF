@@ -1,9 +1,8 @@
 package swati4star.createpdf.util;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.List;
 
 public class ImageSortUtils {
     private static final int NAME_ASC = 0;
@@ -18,7 +17,9 @@ public class ImageSortUtils {
      * @param option sorting operation
      * @param images list of image paths
      */
-    public static void performSortOperation(int option, ArrayList<String> images) {
+    public static void performSortOperation(int option, List<String> images) {
+        if (option < 0 || option > 3) throw new IllegalArgumentException("Invalid sort option. "
+                + "Sort option must be in <0; 3> range!");
         switch (option) {
             case NAME_ASC:
                 sortByNameAsc(images);
@@ -40,7 +41,7 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByNameAsc(ArrayList<String> imagePaths) {
+    private static void sortByNameAsc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> path1.substring(path1.lastIndexOf('/'))
                 .compareTo(path2.substring(path2.lastIndexOf('/'))));
     }
@@ -50,7 +51,7 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByNameDesc(ArrayList<String> imagePaths) {
+    private static void sortByNameDesc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> path2.substring(path2.lastIndexOf('/'))
                 .compareTo(path1.substring(path1.lastIndexOf('/'))));
 
@@ -62,7 +63,7 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByDateAsc(ArrayList<String> imagePaths) {
+    private static void sortByDateAsc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> Long.compare(new File(path2).lastModified(),
                 new File(path1).lastModified()));
     }
@@ -72,7 +73,10 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByDateDesc(ArrayList<String> imagePaths) {
+    private static void sortByDateDesc(List<String> imagePaths) {
+        for (String imagePath : imagePaths) {
+            System.out.println(new File(imagePath).lastModified());
+        }
         Collections.sort(imagePaths, (path1, path2) -> Long.compare(new File(path1).lastModified(),
                 new File(path2).lastModified()));
     }
