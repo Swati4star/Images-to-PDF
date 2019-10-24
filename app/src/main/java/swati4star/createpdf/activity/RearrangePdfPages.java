@@ -26,12 +26,12 @@ import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.RearrangePdfAdapter;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.SAMEFILE;
-import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
 
@@ -111,7 +111,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
             mRearrangeImagesAdapter.positionChanged(mImages);
             mSequence.remove(position);
         } else {
-            MaterialDialog.Builder builder = createWarningDialog(this,
+            MaterialDialog.Builder builder = DialogUtils.getInstance().createWarningDialog(this,
                     R.string.remove_page_message);
             builder.checkBoxPrompt(getString(R.string.dont_show_again), false, null)
                     .onPositive((dialog, which) -> {

@@ -24,12 +24,12 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.RearrangeImagesAdapter;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ImageSortUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
-import static swati4star.createpdf.util.DialogUtils.createWarningDialog;
 
 public class RearrangeImages extends AppCompatActivity implements RearrangeImagesAdapter.OnClickListener {
 
@@ -84,7 +84,7 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
             mImages.remove(position);
             mRearrangeImagesAdapter.positionChanged(mImages);
         } else {
-            MaterialDialog.Builder builder = createWarningDialog(this,
+            MaterialDialog.Builder builder = DialogUtils.getInstance().createWarningDialog(this,
                     R.string.remove_image_message);
             builder.checkBoxPrompt(getString(R.string.dont_show_again), false, null)
                     .onPositive((dialog, which) -> {

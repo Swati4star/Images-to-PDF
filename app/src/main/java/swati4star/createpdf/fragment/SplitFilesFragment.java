@@ -116,7 +116,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             //Getting Absolute Path
-            String path = RealPathUtil.getRealPath(getContext(), data.getData());
+            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             setTextAndActivateButtons(path);
         }
     }

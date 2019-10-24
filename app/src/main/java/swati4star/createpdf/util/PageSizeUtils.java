@@ -18,7 +18,6 @@ import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
-import static swati4star.createpdf.util.DialogUtils.createCustomDialogWithoutContent;
 
 public class PageSizeUtils {
 
@@ -112,8 +111,8 @@ public class PageSizeUtils {
      * @return - dialog object
      */
     private MaterialDialog getPageSizeDialog(boolean saveValue) {
-        MaterialDialog.Builder builder = createCustomDialogWithoutContent((Activity) mActivity,
-                R.string.set_page_size_text);
+        MaterialDialog.Builder builder = DialogUtils.getInstance()
+                .createCustomDialogWithoutContent((Activity) mActivity, R.string.set_page_size_text);
         return builder.customView(R.layout.set_page_size_dialog, true)
                 .onPositive((dialog1, which) -> {
                     View view = dialog1.getCustomView();

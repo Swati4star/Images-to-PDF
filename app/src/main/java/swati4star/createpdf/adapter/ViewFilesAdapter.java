@@ -29,6 +29,7 @@ import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.model.PDFFile;
+import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
@@ -38,7 +39,6 @@ import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.WatermarkUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
-import static swati4star.createpdf.util.DialogUtils.createOverwriteDialog;
 import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
@@ -345,7 +345,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                         if (!mFileUtils.isFileExist(input + mActivity.getString(R.string.pdf_ext))) {
                             renameFile(position, input.toString());
                         } else {
-                            MaterialDialog.Builder builder = createOverwriteDialog(mActivity);
+                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog2, which) -> renameFile(position, input.toString()))
                                     .onNegative((dialog1, which) -> onRenameFileClick(position))
                                     .show();
