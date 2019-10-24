@@ -21,6 +21,7 @@ import swati4star.createpdf.fragment.AddImagesFragment;
 import swati4star.createpdf.fragment.AddTextFragment;
 import swati4star.createpdf.fragment.ExceltoPdfFragment;
 import swati4star.createpdf.fragment.ExtractTextFragment;
+import swati4star.createpdf.fragment.FAQFragment;
 import swati4star.createpdf.fragment.FavouritesFragment;
 import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.HomeFragment;
@@ -254,6 +255,9 @@ public class FragmentManagement implements IFragmentManagement {
                 break;
             case R.id.nav_text_extract:
                 fragment = new ExtractTextFragment();
+                break;
+            case R.id.nav_faq:
+                fragment = new FAQFragment();
                 break;
         }
 
