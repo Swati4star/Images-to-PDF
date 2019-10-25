@@ -29,14 +29,27 @@ public class SplitPDFUtils {
     private static final int ERROR_PAGE_NUMBER = 1;
     private static final int ERROR_PAGE_RANGE = 2;
     private static final int ERROR_INVALID_INPUT = 3;
+    private static SplitPDFUtils INSTANCE;
 
     private final Activity mContext;
     private SharedPreferences mSharedPreferences;
 
-    public SplitPDFUtils(Activity context) {
+    private SplitPDFUtils(Activity context) {
         this.mContext = context;
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
+    }
+
+
+    public static SplitPDFUtils getInstance(Activity context) {
+        if (INSTANCE == null) {
+            synchronized (SplitPDFUtils.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new SplitPDFUtils(context);
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     /**
