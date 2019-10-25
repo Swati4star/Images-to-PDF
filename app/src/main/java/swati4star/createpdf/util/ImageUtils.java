@@ -30,6 +30,18 @@ import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
 
 public class ImageUtils {
 
+    private ImageUtils() {
+
+    }
+
+    private static class SingletonHolder {
+        static final ImageUtils INSTANCE = new ImageUtils();
+    }
+
+    public static ImageUtils getInstance(){
+        return ImageUtils.SingletonHolder.INSTANCE;
+    }
+
     public static String mImageScaleType;
 
     /**
@@ -124,8 +136,9 @@ public class ImageUtils {
 
     /**
      * Calculate the inSampleSize value for given bitmap options & image dimensions
-     * @param options - bitmap options
-     * @param reqWidth - width
+     *
+     * @param options   - bitmap options
+     * @param reqWidth  - width
      * @param reqHeight - height
      * @return inSampleSize value
      * https://developer.android.com/topic/performance/graphics/load-bitmap.html#java
@@ -153,7 +166,6 @@ public class ImageUtils {
     }
 
 
-
     public static void showImageScaleTypeDialog(Context context, Boolean saveValue) {
 
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -161,22 +173,22 @@ public class ImageUtils {
                 R.string.image_scale_type);
         MaterialDialog materialDialog =
                 builder.customView(R.layout.image_scale_type_dialog, true)
-                .onPositive((dialog1, which) -> {
-                    View view = dialog1.getCustomView();
-                    RadioGroup radioGroup = view.findViewById(R.id.scale_type);
-                    int selectedId = radioGroup.getCheckedRadioButtonId();
-                    if (selectedId == R.id.aspect_ratio)
-                        mImageScaleType = IMAGE_SCALE_TYPE_ASPECT_RATIO;
-                    else
-                        mImageScaleType = IMAGE_SCALE_TYPE_STRETCH;
+                        .onPositive((dialog1, which) -> {
+                            View view = dialog1.getCustomView();
+                            RadioGroup radioGroup = view.findViewById(R.id.scale_type);
+                            int selectedId = radioGroup.getCheckedRadioButtonId();
+                            if (selectedId == R.id.aspect_ratio)
+                                mImageScaleType = IMAGE_SCALE_TYPE_ASPECT_RATIO;
+                            else
+                                mImageScaleType = IMAGE_SCALE_TYPE_STRETCH;
 
-                    CheckBox mSetAsDefault = view.findViewById(R.id.cbSetDefault);
-                    if (saveValue || mSetAsDefault.isChecked()) {
-                        SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putString(Constants.DEFAULT_IMAGE_SCALETYPE_TEXT, mImageScaleType);
-                        editor.apply();
-                    }
-                }).build();
+                            CheckBox mSetAsDefault = view.findViewById(R.id.cbSetDefault);
+                            if (saveValue || mSetAsDefault.isChecked()) {
+                                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                editor.putString(Constants.DEFAULT_IMAGE_SCALETYPE_TEXT, mImageScaleType);
+                                editor.apply();
+                            }
+                        }).build();
         if (saveValue) {
             View customView = materialDialog.getCustomView();
             customView.findViewById(R.id.cbSetDefault).setVisibility(View.GONE);
@@ -186,6 +198,7 @@ public class ImageUtils {
 
     /**
      * convert a bitmap to grayscale and return it
+     *
      * @param bmpOriginal original bitmap which is converted to a new
      *                    grayscale bitmap
      */
