@@ -543,6 +543,17 @@
         <item>Can I set a password for multiple files at the same time?</item>
         <item>I\'m not fluent in the English language, are there other translations of the software?</item>
         <item>Does the developer have access to and collects any personal information when I use the software?</item>
+        <item>Can I compress the images before creating a PDF?</item>
+        <item>What is the format of the images extracted from  a PDF?</item>
+        <item>Can I select files from cloud storage?</item>
+        <item>Can I check history of files created/modified?</item>
+        <item>Can I join two PDF files together?</item>
+        <item>Can I edit the images in the software while creating a PDF?</item>
+        <item>Can I add watermark to the PDF?</item>
+        <item>Can I alter the sequence of pages in a PDF?</item>
+        <item>Can I extract images or text from a PDF?</item>
+        <item>Before converting a text file into a PDF, can I specify enhancement options?</item>
+        <item>Can I convert a PDF into different file formats such as PPT, PPTX, ODT, DOC, DOCX?</item>
         <item>Is Images-to-pdf software available to any other operating system?</item>
         <item>Where can I download Images-to-pdf software?</item>
         <item>Can I contribute to Images-to-pdf project?</item>
@@ -565,6 +576,17 @@
         <item>No, you can only set a password for one file at a time.</item>
         <item>The software is only available in English language for now. Translations to other languages would be available soon. If you feel you can contribute to this software in terms of translation feel free to send a pull request.</item>
         <item>No, the developer does not collect any information when the software is utilized because the developer does not have access to any such information.</item>
+        <item>Yes, you can compress the images before using them to create a PDF by clicking on Image compression when using the Images to PDF feature.</item>
+        <item>The images extracted from a PDF are in png format.</item>
+        <item>No, files from cloud storage cannot be selected.</item>
+        <item>Yes, you can see all the files you have created/modified in the software. \nTo do this, click on History on the home page.</item>
+        <item>Yes, you can merge multiple PDF files together. Click on Merge PDFs available in the Modify existing PDFs on the home page.</item>
+        <item>Yes, you can edit and apply filters to the images before creating a PDF. /nTo do this use Edit Images and Filter Images options available while converting Images to PDF.</item>
+        <item>Yes, to add a watermark scroll down to Enhance Created PDFs on the home page and click on Add Watermark.</item>
+        <item>Yes, to change the sequence of pages in the PDF, select Reorder Pages from the home page.\nYou can use the arrow keys to order the pages or even delete one or more pages.</item>
+        <item>Yes, to extract images or text from a PDF, use Extract Images and Extract Text available on the home page.</item>
+        <item>Yes, you can use the enhancement options available in the Text to PDF option.</item>
+        <item>No, the PDF can be only be converted to text format.</item>
         <item>There is no intention to migrate this software to another operating system.</item>
         <item>The software can be downloaded from Google PlayStore and also on F-droid</item>
         <item>Yes, please! \nFeel free to share your ideas(feature requests), submit a bug or pull request for anything you feel should be added. \nThis project currently has multiple contributors that add as little as a single line change. This project is opened to contributions of any kind. You can also fork the project and further develop it on your own so long as you work within the confines of the license. Pull requests of your contributions will be merged if they fulfill some certain requirements. Read the project\'s Contributor\'s guide to get started on how to contribute.</item>
