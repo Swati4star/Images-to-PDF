@@ -8,9 +8,20 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 public class BottomSheetUtils  {
 
     private Activity mContext;
+    private static BottomSheetUtils instance = null;
 
-    public BottomSheetUtils(Activity context) {
+    private BottomSheetUtils(Activity context) {
         this.mContext = context;
+    }
+
+    public static BottomSheetUtils getInstance(Activity context) {
+        if(instance == null) {
+            synchronized(BottomSheetUtils.class) {
+                if(instance == null)
+                    instance = new BottomSheetUtils(context);
+            }
+        }
+        return instance;
     }
 
     public void showHideSheet(BottomSheetBehavior sheetBehavior) {
