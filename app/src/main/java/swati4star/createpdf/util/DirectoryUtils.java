@@ -33,11 +33,11 @@ public class DirectoryUtils {
     }
 
     public static DirectoryUtils getInstance(Context context) {
-        if(instance == null) {
+        if (instance == null) {
             //added synchronized block to control simultaneous access
-            synchronized(DirectoryUtils.class) {
+            synchronized (DirectoryUtils.class) {
                 // double check locking
-                if(instance == null)
+                if (instance == null)
                     instance = new DirectoryUtils(context);
             }
         }
