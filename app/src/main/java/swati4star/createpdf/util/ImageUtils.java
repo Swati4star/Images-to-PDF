@@ -34,14 +34,6 @@ public class ImageUtils {
 
     }
 
-    private static class SingletonHolder {
-        static final ImageUtils INSTANCE = new ImageUtils();
-    }
-
-    public static ImageUtils getInstance(){
-        return ImageUtils.SingletonHolder.INSTANCE;
-    }
-
     public static String mImageScaleType;
 
     /**
@@ -216,5 +208,13 @@ public class ImageUtils {
         paint.setColorFilter(f);
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
+    }
+
+    private static class SingletonHolder {
+        static final ImageUtils INSTANCE = new ImageUtils();
+    }
+
+    public static ImageUtils getInstance(){
+        return SingletonHolder.INSTANCE;
     }
 }

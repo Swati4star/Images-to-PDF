@@ -25,14 +25,6 @@ public class WhatsNewUtils {
 
     }
 
-    private static final class SingletonHolder{
-        static final WhatsNewUtils INSTANCE = new WhatsNewUtils();
-    }
-
-    public WhatsNewUtils getInstance(){
-        return WhatsNewUtils.SingletonHolder.INSTANCE;
-    }
-
     /**
      * Display dialog with whats new
      *
@@ -106,5 +98,13 @@ public class WhatsNewUtils {
         }
 
         return  whatsNewList;
+    }
+
+    private static final class SingletonHolder{
+        static final WhatsNewUtils INSTANCE = new WhatsNewUtils();
+    }
+
+    public WhatsNewUtils getInstance(){
+        return WhatsNewUtils.SingletonHolder.INSTANCE;
     }
 }

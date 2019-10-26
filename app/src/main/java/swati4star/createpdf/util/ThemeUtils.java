@@ -16,14 +16,6 @@ public class ThemeUtils {
 
     }
 
-    private static class SingletonHolder {
-        static final ThemeUtils INSTANCE = new ThemeUtils();
-    }
-
-    static ThemeUtils getInstance() {
-        return ThemeUtils.SingletonHolder.INSTANCE;
-    }
-
     /**
      * Set selected theme to current context
      *
@@ -78,5 +70,13 @@ public class ThemeUtils {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.DEFAULT_THEME_TEXT, themeName);
         editor.apply();
+    }
+
+    private static class SingletonHolder {
+        static final ThemeUtils INSTANCE = new ThemeUtils();
+    }
+
+    public static ThemeUtils getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 }
