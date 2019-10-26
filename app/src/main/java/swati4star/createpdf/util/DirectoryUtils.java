@@ -25,10 +25,23 @@ public class DirectoryUtils {
     private final Context mContext;
     private final SharedPreferences mSharedPreferences;
     private ArrayList<String> mFilePaths;
+    public static DirectoryUtils instance = null;
 
-    public DirectoryUtils(Context context) {
+    private DirectoryUtils(Context context) {
         mContext = context;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public static DirectoryUtils getInstance(Context context) {
+        if(instance == null) {
+            //added synchronized block to control simultaneous access
+            synchronized(DirectoryUtils.class) {
+                // double check locking
+                if(instance == null)
+                    instance = new DirectoryUtils(context);
+            }
+        }
+        return instance;
     }
 
     /**
