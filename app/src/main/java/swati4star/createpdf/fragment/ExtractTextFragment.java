@@ -116,7 +116,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @OnClick(R.id.viewFiles)

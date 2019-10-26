@@ -228,7 +228,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
         mContext = context;
         mPDFUtils = new PDFUtils(mActivity);
     }

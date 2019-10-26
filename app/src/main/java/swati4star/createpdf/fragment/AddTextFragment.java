@@ -155,7 +155,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @OnClick(R.id.select_pdf_file)

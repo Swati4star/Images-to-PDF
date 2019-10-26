@@ -20,7 +20,7 @@ public class BottomSheetUtils  {
             synchronized (BottomSheetUtils.class) {
                 // double check locking
                 if (instance == null)
-                    instance = new BottomSheetUtils(context);
+                    instance = BottomSheetUtils.getInstance(context);
             }
         }
         return instance;

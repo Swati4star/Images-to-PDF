@@ -283,7 +283,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @Override

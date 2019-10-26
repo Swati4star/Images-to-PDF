@@ -142,7 +142,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @OnClick(R.id.select_excel_file)

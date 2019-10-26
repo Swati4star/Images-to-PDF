@@ -266,7 +266,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mPDFUtils = new PDFUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @Override

@@ -143,7 +143,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @Override

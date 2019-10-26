@@ -147,7 +147,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @Override

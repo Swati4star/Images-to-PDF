@@ -157,7 +157,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
         mSplitPDFUtils = new SplitPDFUtils(mActivity);
-        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mBottomSheetUtils = BottomSheetUtils.getInstance(mActivity);
     }
 
     @Override
