@@ -110,3 +110,5 @@ For further inquiries, you can contact the developer via email. Send an email to
 
 You can also check out the developer's profile [here](https://swati4star.github.io/).
 
+**Is the software supported in mobile phones?**
+
