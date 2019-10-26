@@ -38,7 +38,7 @@ public class DirectoryUtils {
             synchronized (DirectoryUtils.class) {
                 // double check locking
                 if (instance == null)
-                    instance = new DirectoryUtils(context);
+                    instance = DirectoryUtils.getInstance(context);
             }
         }
         return instance;

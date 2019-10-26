@@ -462,7 +462,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         }
 
         mFileUtils = new FileUtils(mActivity);
-        mDirectoryUtils = new DirectoryUtils(mActivity);
+        mDirectoryUtils = DirectoryUtils.getInstance(mActivity);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class BottomSheetUtils  {
     }
 
     public void populateBottomSheetWithPDFs(BottomSheetPopulate listener) {
-        new PopulateBottomSheetList(listener, new DirectoryUtils(mContext)).execute();
+        new PopulateBottomSheetList(listener, DirectoryUtils.getInstance(mContext)).execute();
     }
 
     /**
@@ -31,7 +31,7 @@ public class BottomSheetUtils  {
      * is available
      */
     public void populateBottomSheetWithExcelFiles(BottomSheetPopulate listener) {
-        new PopulateBottomSheetListWithExcelFiles(listener, new DirectoryUtils(mContext)).execute();
+        new PopulateBottomSheetListWithExcelFiles(listener, DirectoryUtils.getInstance(mContext)).execute();
     }
 
 }

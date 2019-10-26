@@ -256,7 +256,7 @@ public class ViewFilesFragment extends Fragment
      */
     private void populatePdfList(@Nullable String query) {
         new PopulateList(mViewFilesAdapter, this,
-                new DirectoryUtils(mActivity), mCurrentSortingIndex, query).execute();
+                DirectoryUtils.getInstance(mActivity), mCurrentSortingIndex, query).execute();
     }
 
     private void displaySortDialog() {
@@ -355,7 +355,7 @@ public class ViewFilesFragment extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
-        mDirectoryUtils = new DirectoryUtils(mActivity);
+        mDirectoryUtils = DirectoryUtils.getInstance(mActivity);
     }
 
     @Override

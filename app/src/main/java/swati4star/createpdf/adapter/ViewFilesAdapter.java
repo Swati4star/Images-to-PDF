@@ -374,7 +374,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     public void updateDataset() {
         int index = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
         new PopulateList(this, this,
-                new DirectoryUtils(mActivity), index, null).execute();
+                DirectoryUtils.getInstance(mActivity), index, null).execute();
     }
 
     @Override
