@@ -15,11 +15,11 @@ public class BottomSheetUtils  {
     }
 
     public static BottomSheetUtils getInstance(Activity context) {
-        if(instance == null) {
+        if (instance == null) {
             //added synchronized block to control simultaneous access
-            synchronized(BottomSheetUtils.class) {
+            synchronized (BottomSheetUtils.class) {
                 // double check locking
-                if(instance == null)
+                if (instance == null)
                     instance = new BottomSheetUtils(context);
             }
         }
