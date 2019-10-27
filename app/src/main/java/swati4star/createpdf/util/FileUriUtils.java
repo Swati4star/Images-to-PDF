@@ -11,25 +11,25 @@ import android.provider.MediaStore;
 
 public class FileUriUtils {
 
-    private static final String EXTERNALSTORAGEDOC = "com.android.externalstorage.documents";
-    private static final String ISDOWNLOADDOC = "com.android.providers.downloads.documents";
-    private static final String ISMEDIADOC = "com.android.providers.media.documents";
-    private static final String ISGOOGLEPHOTODOC = "com.google.android.apps.photos.content";
+    private final String mEXTERNALSTORAGEDOC = "com.android.externalstorage.documents";
+    private final String mISDOWNLOADDOC = "com.android.providers.downloads.documents";
+    private final String mISMEDIADOC = "com.android.providers.media.documents";
+    private final String mISGOOGLEPHOTODOC = "com.google.android.apps.photos.content";
 
     /**
      * Check whether the image is whatsapp image
      *
      * @return true if whatsapp image, else false
      */
-    static boolean isWhatsappImage(String uriAuthority) {
+    public boolean isWhatsappImage(String uriAuthority) {
         return "com.whatsapp.provider.media".equals(uriAuthority);
     }
 
-    private static boolean checkURIAuthority(Uri uri, String toCheckWith) {
+    private boolean checkURIAuthority(Uri uri, String toCheckWith) {
         return toCheckWith.equals(uri.getAuthority());
     }
 
-    private static boolean checkURI(Uri uri, String toCheckWith) {
+    private boolean checkURI(Uri uri, String toCheckWith) {
         return uri != null && uri.getScheme().equalsIgnoreCase(toCheckWith);
     }
 
@@ -38,7 +38,7 @@ public class FileUriUtils {
      *
      * @return - true if document , else false
      */
-    private static boolean isDocumentUri(Context mContext, Uri uri) {
+    private boolean isDocumentUri(Context mContext, Uri uri) {
         boolean ret = false;
         if (mContext != null && uri != null) {
             ret = DocumentsContract.isDocumentUri(mContext, uri);
@@ -47,7 +47,7 @@ public class FileUriUtils {
     }
 
 
-    private static String getURIForMediaDoc(ContentResolver mContentResolver, Uri uri) {
+    private String getURIForMediaDoc(ContentResolver mContentResolver, Uri uri) {
         String documentId = DocumentsContract.getDocumentId(uri);
         String[] idArr = documentId.split(":");
         if (idArr.length == 2) {
@@ -78,7 +78,7 @@ public class FileUriUtils {
         return null;
     }
 
-    private static String getURIForDownloadDoc(ContentResolver mContentResolver, Uri uri) {
+    private String getURIForDownloadDoc(ContentResolver mContentResolver, Uri uri) {
         String documentId = DocumentsContract.getDocumentId(uri);
         // Build download uri.
         Uri downloadUri = Uri.parse("content://downloads/public_downloads");
@@ -87,7 +87,7 @@ public class FileUriUtils {
         return getImageRealPath(mContentResolver, downloadUriAppendId, null);
     }
 
-    private static String getURIForExternalstorageDoc(Uri uri) {
+    private String getURIForExternalstorageDoc(Uri uri) {
         String documentId = DocumentsContract.getDocumentId(uri);
         String[] idArr = documentId.split(":");
         if (idArr.length == 2) {
@@ -100,12 +100,12 @@ public class FileUriUtils {
         return null;
     }
 
-    private static String getUriForDocumentUri(ContentResolver mContentResolver, Uri uri) {
-        if (checkURIAuthority(uri, ISMEDIADOC)) {
+    private String getUriForDocumentUri(ContentResolver mContentResolver, Uri uri) {
+        if (checkURIAuthority(uri, mISMEDIADOC)) {
             return getURIForMediaDoc(mContentResolver, uri);
-        } else if (checkURIAuthority(uri, ISDOWNLOADDOC)) {
+        } else if (checkURIAuthority(uri, mISDOWNLOADDOC)) {
             return getURIForDownloadDoc(mContentResolver, uri);
-        } else if (checkURIAuthority(uri, EXTERNALSTORAGEDOC)) {
+        } else if (checkURIAuthority(uri, mEXTERNALSTORAGEDOC)) {
             return getURIForExternalstorageDoc(uri);
         }
         return null;
@@ -118,7 +118,7 @@ public class FileUriUtils {
      * @param uri      - uri of the image
      * @return - real path of the image file on device
      */
-    static String getUriRealPathAboveKitkat(Context mContext, Uri uri) {
+    public String getUriRealPathAboveKitkat(Context mContext, Uri uri) {
 
         if (uri == null)
             return null;
@@ -126,7 +126,7 @@ public class FileUriUtils {
         ContentResolver mContentResolver = mContext.getContentResolver();
 
         if (checkURI(uri, "content"))
-            if (checkURIAuthority(uri, ISGOOGLEPHOTODOC))
+            if (checkURIAuthority(uri, mISGOOGLEPHOTODOC))
                 return uri.getLastPathSegment();
             else
                 return getImageRealPath(mContentResolver, uri, null);
@@ -148,7 +148,7 @@ public class FileUriUtils {
      * @param whereClause     - add constraint on content resolver
      * @return true if google photo, else false
      */
-    static String getImageRealPath(ContentResolver contentResolver, Uri uri, String whereClause) {
+    private String getImageRealPath(ContentResolver contentResolver, Uri uri, String whereClause) {
         String ret = "";
         // Query the uri with condition.
         Cursor cursor = contentResolver.query(uri, null, whereClause, null, null);
@@ -177,11 +177,19 @@ public class FileUriUtils {
      * @param uri - input uri
      * @return - path
      */
-    public static String getFilePath(Uri uri) {
+    public String getFilePath(Uri uri) {
         String path = uri.getPath();
         if (path == null)
             return null;
         path =  path.replace("/document/raw:", "");
         return path;
+    }
+
+    private static class SingletonHolder {
+        static final FileUriUtils INSTANCE = new FileUriUtils();
+    }
+
+    public static FileUriUtils getInstance() {
+        return FileUriUtils.SingletonHolder.INSTANCE;
     }
 }
