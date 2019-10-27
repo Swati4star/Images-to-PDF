@@ -31,6 +31,7 @@ import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.model.PDFFile;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FileSortUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFRotationUtils;
@@ -39,7 +40,6 @@ import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.WatermarkUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
-import static swati4star.createpdf.util.FileSortUtils.NAME_INDEX;
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
@@ -372,7 +372,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public void updateDataset() {
-        int index = mSharedPreferences.getInt(SORTING_INDEX, NAME_INDEX);
+        int index = mSharedPreferences.getInt(SORTING_INDEX, FileSortUtils.getInstance().NAME_INDEX);
         new PopulateList(this, this,
                 new DirectoryUtils(mActivity), index, null).execute();
     }

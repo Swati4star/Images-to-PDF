@@ -7,12 +7,12 @@ import java.util.Collections;
 public class FileSortUtils {
 
     // Sorting order constants
-    public static final int NAME_INDEX = 0;
-    public static final int DATE_INDEX = 1;
-    public static final int SIZE_INCREASING_ORDER_INDEX = 2;
-    public static final int SIZE_DECREASING_ORDER_INDEX = 3;
+    public final int NAME_INDEX = 0;
+    public final int DATE_INDEX = 1;
+    public final int SIZE_INCREASING_ORDER_INDEX = 2;
+    public final int SIZE_DECREASING_ORDER_INDEX = 3;
 
-    public static void performSortOperation(int option, ArrayList<File> pdf) {
+    public void performSortOperation(int option, ArrayList<File> pdf) {
         switch (option) {
             case DATE_INDEX:
                 sortFilesByDateNewestToOldest(pdf);
@@ -36,7 +36,7 @@ public class FileSortUtils {
      *
      * @param filesList list of files to be sorted
      */
-    private static void sortByNameAlphabetical(ArrayList<File> filesList) {
+    private void sortByNameAlphabetical(ArrayList<File> filesList) {
         Collections.sort(filesList);
     }
 
@@ -45,7 +45,7 @@ public class FileSortUtils {
      *
      * @param filesList list of files to be sorted
      */
-    private static void sortFilesByDateNewestToOldest(ArrayList<File> filesList) {
+    private void sortFilesByDateNewestToOldest(ArrayList<File> filesList) {
         Collections.sort(filesList, (file, file2) -> Long.compare(file2.lastModified(), file.lastModified()));
     }
 
@@ -54,7 +54,7 @@ public class FileSortUtils {
      *
      * @param filesList list of files to be sorted
      */
-    private static void sortFilesBySizeIncreasingOrder(ArrayList<File> filesList) {
+    private void sortFilesBySizeIncreasingOrder(ArrayList<File> filesList) {
         Collections.sort(filesList, (file1, file2) -> Long.compare(file1.length(), file2.length()));
     }
 
@@ -63,9 +63,15 @@ public class FileSortUtils {
      *
      * @param filesList list of files to be sorted
      */
-    private static void sortFilesBySizeDecreasingOrder(ArrayList<File> filesList) {
+    private void sortFilesBySizeDecreasingOrder(ArrayList<File> filesList) {
         Collections.sort(filesList, (file1, file2) -> Long.compare(file2.length(), file1.length()));
     }
 
+    private static class SingletonHolder {
+        static final FileSortUtils INSTANCE = new FileSortUtils();
+    }
 
+    public static FileSortUtils getInstance() {
+        return FileSortUtils.SingletonHolder.INSTANCE;
+    }
 }
