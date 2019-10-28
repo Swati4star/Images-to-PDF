@@ -90,7 +90,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
 
                     // generate numbered image file names
                     String filename = getFileNameWithoutExtension(mPath) +
-                            "_" + Integer.toString(i + 1);
+                            "_" + (i + 1);
                     String path = saveImage(filename, bitmap);
                     if (path != null) {
                         mOutputFilePaths.add(path);

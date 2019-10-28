@@ -210,8 +210,8 @@
     <string name="deleted">Deleted</string>
     <string name="no_history_message">No history to show</string>
     <string name="view_history_here_message">View all your converted files history here!</string>
-    <string name="delete_history_message">Are you sure you want to delete history ?</string>
-    <string name="file_info">"  File Name : %1$s    Path : %2$s    Size : %3$s    Date Modified %4$s"</string>
+    <string name="delete_history_message">Are you sure you want to delete history?</string>
+    <string name="file_info">\n File Name : %1$s\n\n Path : %2$s\n\n Size : %3$s\n\n Date Modified %4$s</string>
     <string name="default_font_family_text">Font Family (Default : %s)</string>
     <string name="font_family_text">"Font Family : "</string>
     <string name="courier">COURIER</string>
@@ -290,6 +290,7 @@
     <string name="prompt_give_permission">Provide permissions</string>
     <string name="create_new_pdfs">Create new PDF</string>
     <string name="view_pdfs">View PDFs</string>
+    <string name="view_pdf">View PDF</string>
     <string name="modify_existing_pdfs">Modify existing PDFs</string>
     <string name="more_options">More Options</string>
     <string name="add_password">Add password</string>
@@ -406,7 +407,7 @@
     <string name="snackbar_pdfselected">PDF file selected!</string>
     <string name="add_text">Add Text</string>
     <string name="snackbar_txtselected">Text File selected!</string>
-    <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue...</string>
+    <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue…</string>
     <string name="creating_txt">Creating Text File</string>
 
     <string name="font_color">Font Color</string>

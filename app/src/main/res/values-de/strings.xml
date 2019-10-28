@@ -79,9 +79,6 @@
         <item>FETT KURSIV</item>
     </string-array>
 
-    <string name="pdf_ext" translatable="false">.pdf</string>
-    <string name="pdf_type" translatable="false">application/pdf</string>
-    <string name="txt_type" translatable="false">text/*</string>
 
     <string name="please_wait">Warten Sie mal</string>
 
@@ -166,12 +163,13 @@
     <string name="snackbar_no_share_app">Keine Anwendung zum Teilen.</string>
 
     
-    <string name="images_selected"> % 1 $ d Bilder ausgewählt.</string>
+    <string name="images_selected"> %1$d Bilder ausgewählt.</string>
 
     
     <string name="feedback_subject">Vorschläge für Bilder in PDF Converter</string>
     <string name="feedback_text">Schreiben Sie bitte Ihr kostbares Rückgespräch, oder lassen Sie einfach ein Hallo fallen! :)</string>
     <string name="snackbar_no_email_clients">Es sind keine E-Mail-Clients installiert.</string>
+    <string name="snack_bar_empty_txt_in_pdf">The chosen PDF has no text to extract!</string>
     <string name="feedback_chooser">"Mail senden …"</string>
     <string name="no_pdf">Keine PDFs zum Anzeigen</string>
     <string name="get_started">Jetzt loslegen</string>
@@ -194,7 +192,7 @@
     <string name="btn_sav_text">savText</string>
     <string name="filter_images_Text">Filter Images \n</string>
     <string name="nextimage_contentdesc">Nächstes Bild</string>
-    <string name="compress_image">Bildkomprimierung:% s %%</string>
+    <string name="compress_image">Bildkomprimierung: %s %%</string>
     <string name="quality_image">Geben Sie die prozentuale Komprimierung des Bildes ein:</string>
     <string name="invalid_entry">Ungültiger Eintrag</string>
     <string name="compress_dialog_enter_prompt">Hier eintreten</string>
@@ -204,7 +202,7 @@
     <string name="decrypt_message">Geben Sie das Passwort ein, um fortzufahren</string>
     <string name="add_text">Text hinzufügen</string>
     <string name="snackbar_txtselected">Textdatei ausgewählt!</string>
-    <string name="decrypt_protected_file">Das ausgewählte PDF ist passwortgeschützt. Geben Sie das Passwort ein, um fortzufahren ...</string>
+    <string name="decrypt_protected_file">Das ausgewählte PDF ist passwortgeschützt. Geben Sie das Passwort ein, um fortzufahren …</string>
     <string name="not_encrypted">PDF ist nicht verschlüsselt</string>
     <string name="save_current">sparen</string>
     <string name="save">sparen</string>
@@ -222,7 +220,7 @@
     <string name="letter">BRIEF</string>
     <string name="legal">RECHTLICH</string>
     <string name="a4">A4</string>
-    <string name="default_page_size">STANDARD (% s)</string>
+    <string name="default_page_size">STANDARD (%s)</string>
     <string name="master_password_changed">Das Passwort scheint falsch zu sein. Möglicherweise haben Sie das Master-Passwort geändert.</string>
 
 
@@ -256,11 +254,11 @@
     <string name="previous_image_content_desc">Vorheriges Bild</string>
     <string name="text_file_name">"Text File : "</string>
     <string name="extension_not_supported">Es tut uns leid! Dieser Dateityp wird derzeit nicht unterstützt.</string>
-    <string name="edit_font_size">Schriftgröße (Standard:% d)</string>
+    <string name="edit_font_size">Schriftgröße (Standard:%d)</string>
     <string name="enter_font_size">Schriftgröße eingeben</string>
     <string name="example_font">Beispiel: 10</string>
     <string name="font_size_changed">Schriftgröße geändert</string>
-    <string name="font_size">Schriftgröße:% 1 $ s</string>
+    <string name="font_size">Schriftgröße: %1$s</string>
     <string name="about_us">Über uns</string>
     <string name="app_description">Eine benutzerfreundliche Android-Anwendung zum Konvertieren Ihrer Dateien in PDF.</string>
     <string name="version">Version : </string>
@@ -276,7 +274,7 @@
 
     
     <string name="swipe_to_view_next">Streichen Sie nach links, um das nächste Bild anzuzeigen</string>
-    <string name="showing_image">Zeige% 1 $ d von% 2 $ d Bildern</string>
+    <string name="showing_image">Zeige %1$d von %2$d Bildern</string>
 
     
     <string name="filter_brush">Bürste</string>
@@ -319,10 +317,10 @@
     <string name="extract_images">Bilder extrahieren</string>
     <string name="extract_text">Text extrahieren</string>
     <string name="extract_images_failed">Im ausgewählten PDF konnten keine Bilder gefunden werden.</string>
-    <string name="extract_images_success">Wir haben% 1 $ d Bilder im ausgewählten PDF gefunden. Sie wurden im Ordner PDF-Dateien im Stammverzeichnis gespeichert.</string>
+    <string name="extract_images_success">Wir haben %1$d Bilder im ausgewählten PDF gefunden. Sie wurden im Ordner PDF-Dateien im Stammverzeichnis gespeichert.</string>
 
-    <string name="file_info">\ n Dateiname:% 1 $ s \ n \ n Pfad:% 2 $ s \ n \ n Größe:% 3 $ s \ n \ n Änderungsdatum% 4 $ s</string>
-    <string name="default_font_family_text">Schriftfamilie (Standard:% s)</string>
+    <string name="file_info">\n Dateiname: %1$s \n\n Pfad: %2$s \n\n Größe: %3$s \n\n Änderungsdatum: %4$s</string>
+    <string name="default_font_family_text">Schriftfamilie (Standard:%s)</string>
     <string name="font_family_text">"Schriftfamilie : "</string>
     <string name="courier">KURIER</string>
     <string name="helvetica">HELVETICA</string>
@@ -339,7 +337,7 @@
     <string name="snackbar_undoAction">Rückgängig machen</string>
     <string name="pdf_does_not_exist_message">Das PDF existiert nicht.</string>
     <string name="image_rearranging_options">Optionen für die Neuanordnung von Bildern</string>
-    <string name="filter_file_name">% s_% s.jpg</string>
+    <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Zurücksetzen</string>
     <string name="rotate">Drehen</string>
     <string name="done">Getan</string>
@@ -348,7 +346,7 @@
     <string name="confirm_exit_message">Drücken Sie erneut zurück, um den Vorgang zu beenden</string>
 
     <string name="border">Bildrahmen hinzufügen</string>
-    <string name="border_dialog_title">Rahmenbreite:% d</string>
+    <string name="border_dialog_title">Rahmenbreite:%d</string>
     <string name="border_width_prompt">Geben Sie die Rahmenbreiten ein</string>
     <string name="filter_not_saved">Bild konnte nicht gespeichert werden</string>
     <string name="remove_image_message">Möchten Sie dieses Bild wirklich entfernen?</string>
@@ -360,7 +358,7 @@
 
     
     <string name="split_pdf">Split PDF</string>
-    <string name="split_success">Das ausgewählte PDF wurde erfolgreich geteilt. Es wurde in% 1 $ d PDF (s) aufgeteilt</string>
+    <string name="split_success">Das ausgewählte PDF wurde erfolgreich geteilt. Es wurde in %1$d PDF (s) aufgeteilt</string>
     <string name="split_info">Die PDF-Datei wird in mehrere PDF-Dateien aufgeteilt. Formatbeispiel: 1–5,6–7,8,9</string>
     <string name="error_page_number">Ungültige Seitenzahl</string>
     <string name="error_page_range">Ungültige Bereichseingabe</string>
@@ -379,8 +377,8 @@
 
     
     <string name="compress_pdf">Compress PDF</string>
-    <string name="compress_pdf_prompt">Geben Sie% Komprimierung von PDF ein:</string>
-    <string name="compress_info">Herzliche Glückwünsche! Ihre PDF-Datei ist komprimiert: \ n Original-PDF-Größe:% s \ n Komprimierte PDF-Größe:% s</string>
+    <string name="compress_pdf_prompt">Geben Sie%Komprimierung von PDF ein:</string>
+    <string name="compress_info">Herzliche Glückwünsche! Ihre PDF-Datei ist komprimiert: \ n Original-PDF-Größe:%s \ n Komprimierte PDF-Größe:%s</string>
 
     
     <string name="pdf_to_images">PDF zu Bildern</string>
@@ -410,10 +408,7 @@
 
     <string name="rotate_pages">Seiten drehen</string>
     <string name="enter_rotation_angle">Drehwinkel eingeben</string>
-    <string name="rotated_file_name">% s_rotated_% s% s</string>
-    <string name="degree_90" translatable="false">90 °</string>
-    <string name="degree_180" translatable="false">180 °</string>
-    <string name="degree_270" translatable="false">270 °</string>
+    <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="share_files">Dateien freigeben</string>
     <string name="pdf_removed_from_list">PDF wurde aus der Liste entfernt.</string>
     <string name="pdf_added_to_list">PDF wurde der Liste hinzugefügt.</string>
@@ -425,11 +420,11 @@
     <string name="font_family_edit">Ändern Sie die Standardschriftfamilie</string>
     <string name="font_size_edit">Ändern Sie die Standardschriftgröße</string>
     <string name="theme_edit">Ändern Sie das Standarddesign</string>
-    <string name="image_compression_value_default">Standardwert für die Bildkomprimierung:% d %%</string>
-    <string name="theme_value_def">Standardwert für das Design:% s</string>
-    <string name="page_size_value_def">Standardwert für die Seitengröße:% s</string>
-    <string name="font_size_value_def">Standardwert für die Schriftgröße:% d</string>
-    <string name="font_family_value_def">Standardwert für die Schriftfamilie:% s</string>
+    <string name="image_compression_value_default">Standardwert für die Bildkomprimierung:%d %%</string>
+    <string name="theme_value_def">Standardwert für das Design: %s</string>
+    <string name="page_size_value_def">Standardwert für die Seitengröße: %s</string>
+    <string name="font_size_value_def">Standardwert für die Schriftgröße: %d</string>
+    <string name="font_family_value_def">Standardwert für die Schriftfamilie: %s</string>
     <string name="settings_info">Hier können Sie den Standardwert für verschiedene Einstellungen ändern.</string>
     <string name="storage_location_modified">Speicherort geändert</string>
     <string name="storage_location_info">Speicherort ändern</string>
@@ -437,12 +432,13 @@
     <string name="theme_dark">Dunkel</string>
     <string name="theme_black">Schwarz</string>
     <string name="change_master_pwd">Ändern Sie das Master-Passwort</string>
-    <string name="current_master_pwd">Das aktuelle Hauptkennwort ist "% 1 $ s" für jede verschlüsselte PDF-Datei. Sie können es hier ändern:</string>
+    <string name="current_master_pwd">Das aktuelle Hauptkennwort ist "%1$s" für jede verschlüsselte PDF-Datei. Sie können es hier ändern:</string>
 
     
     <string name="home_page">Zuhause</string>
     <string name="create_new_pdfs">Neues PDF erstellen</string>
     <string name="view_pdfs">View PDFs</string>
+    <string name="view_pdf">View PDF</string>
     <string name="modify_existing_pdfs">Ändern Sie vorhandene PDFs</string>
     <string name="more_options">Mehr Optionen</string>
     <string name="add_password">Passwort hinzufügen</string>
@@ -525,6 +521,5 @@
     <string name="split_range_alert">Der eingegebene geteilte Bereich erstellt das ausgewählte PDF erneut!</string>
 
     
-    <string name="pdf_suffix" translatable="false">_pdf</string>
 
 </resources>

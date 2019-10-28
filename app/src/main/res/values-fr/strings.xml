@@ -165,14 +165,7 @@
     <string name="deleted">Supprimé</string>
     <string name="no_history_message">Aucun historique à afficher</string>
     <string name="delete_history_message">Êtes-vous sûr de vouloir supprimer l\'historique \?</string>
-    <string name="file_info">"
-\n Nom du fichier : %1$s 
-\n
-\n Chemin : %2$s 
-\n
-\n Taille : %3$s 
-\n
-\n Date de modification %4$s"</string>
+    <string name="file_info">\n Nom du fichier : %1$s\n\n Chemin : %2$s\n\n Taille : %3$s\n\n Date de modification %4$s</string>
     <string name="default_font_family_text">Famille de police de caractères (par défaut : %s)</string>
     <string name="font_family_text">"Famille de la police : "</string>
     <string name="courier">COURRIER</string>
@@ -341,7 +334,7 @@
     <string name="filter_not_saved">L’image n’a pas pu être enregistrée</string>
     <string name="encrypted_file_text">fichier chiffré</string>
     <string name="split_success">Le fichier PDF sélectionné a été divisé avec succès. Il a été divisé en %1$d PDF(s)</string>
-    <string name="split_info">Le PDF sera divisé en plusieurs fichiers PDFs. Exemple de format: de 1 à 5,6-7,8,9</string>
+    <string name="split_info">Le PDF sera divisé en plusieurs fichiers PDFs. Exemple de format: de 1 à 5,6–7,8,9</string>
     <string name="error_page_range">Entrée de plage invalide</string>
     <string name="error_invalid_input">Entrée non valide</string>
     <string name="file_access_error">Impossible d’accéder au PDF. Les fichiers sont soit chiffrés ou situés dans le stockage externe.</string>
@@ -369,15 +362,10 @@
     <string name="storage_location_modified">Emplacement de stockage modifié</string>
     <string name="storage_location_info">Modifier l’emplacement du stockage</string>
     <string name="view_pdfs">Afficher les PDFs</string>
+    <string name="view_pdf">View PDF</string>
     <string name="enhance_created_pdfs">Optimiser les PDF créés</string>
-    <string name="viewfiles_rotatepages">1. Sélectionnez le fichier PDF que vous souhaitez faire pivoter. 
-\n2. Sélectionnez « Pivoter les pages ». 
-\n3. Sélectionnez l’angle de rotation. Appuyez sur OK. 
-\n4. Un nouveau PDF pivoté sera créé.</string>
-    <string name="viewfiles_removepassword">1. Sélectionnez le fichier PDF dont vous souhaitez supprimer le mot de passe. 
-\n2. Sélectionnez « Supprimer le mot de passe ». 
-\n3. Saisissez le mot de passe du PDF. Appuyez sur OK. 
-\n4. Un nouveau PDF sans mot de passe sera créé.</string>
+    <string name="viewfiles_rotatepages">1. Sélectionnez le fichier PDF que vous souhaitez faire pivoter. \n2. Sélectionnez « Pivoter les pages ».\n3. Sélectionnez l’angle de rotation. Appuyez sur OK. \n4. Un nouveau PDF pivoté sera créé.</string>
+    <string name="viewfiles_removepassword">1. Sélectionnez le fichier PDF dont vous souhaitez supprimer le mot de passe. \n2. Sélectionnez « Supprimer le mot de passe ».\n3. Saisissez le mot de passe du PDF. Appuyez sur OK. \n4. Un nouveau PDF sans mot de passe sera créé.</string>
     <string name="grayscale_images">Créer un PDF en nuances de gris</string>
     <string name="choose_page_number_style">Choisissez le style des numéros de pages</string>
     <string name="top">En haut</string>

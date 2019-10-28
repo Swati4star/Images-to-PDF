@@ -106,14 +106,12 @@ public class ZipToPdfFragment extends Fragment {
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length < 1)
             return;
-        switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPermissionGranted = true;
-                    showFileChooser();
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                showFileChooser();
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 }

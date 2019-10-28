@@ -308,10 +308,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:src="@drawable/ic_add_black_24dp"
         android:tint="@android:color/white"
-        android:translationZ="12dp" />
+        android:translationZ="12dp"
+        android:focusable="true" />
 </android.support.design.widget.CoordinatorLayout>

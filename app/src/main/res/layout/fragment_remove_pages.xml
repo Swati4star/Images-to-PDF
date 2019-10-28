@@ -68,7 +68,7 @@
             android:id="@+id/view_pdf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View PDF"
+            android:text="@string/view_pdf"
             android:layout_margin="16dp"
             android:visibility="gone"
             android:background="@color/mb_green"/>

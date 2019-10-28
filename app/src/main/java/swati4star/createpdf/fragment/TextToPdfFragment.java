@@ -424,30 +424,28 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mButtonClicked = 0;
-        switch (requestCode) {
-            case mFileSelectCode:
-                if (resultCode == RESULT_OK) {
-                    mTextFileUri = data.getData();
-                    showSnackbar(mActivity, R.string.text_file_selected);
-                    String fileName = mFileUtils.getFileName(mTextFileUri);
-                    if (fileName != null) {
-                        if (fileName.endsWith(Constants.textExtension))
-                            mFileExtension = Constants.textExtension;
-                        else if (fileName.endsWith(Constants.docxExtension))
-                            mFileExtension = Constants.docxExtension;
-                        else if (fileName.endsWith(Constants.docExtension))
-                            mFileExtension = Constants.docExtension;
-                        else {
-                            showSnackbar(mActivity, R.string.extension_not_supported);
-                            return;
-                        }
+        if (requestCode == mFileSelectCode) {
+            if (resultCode == RESULT_OK) {
+                mTextFileUri = data.getData();
+                showSnackbar(mActivity, R.string.text_file_selected);
+                String fileName = mFileUtils.getFileName(mTextFileUri);
+                if (fileName != null) {
+                    if (fileName.endsWith(Constants.textExtension))
+                        mFileExtension = Constants.textExtension;
+                    else if (fileName.endsWith(Constants.docxExtension))
+                        mFileExtension = Constants.docxExtension;
+                    else if (fileName.endsWith(Constants.docExtension))
+                        mFileExtension = Constants.docExtension;
+                    else {
+                        showSnackbar(mActivity, R.string.extension_not_supported);
+                        return;
                     }
-                    mFileNameWithType = mFileUtils.stripExtension(fileName) + getString(R.string.pdf_suffix);
-                    mSelectFile.setText(getString(R.string.text_file_name) + fileName);
-                    mCreateTextPdf.setEnabled(true);
-                    mMorphButtonUtility.morphToSquare(mCreateTextPdf, mMorphButtonUtility.integer());
                 }
-                break;
+                mFileNameWithType = mFileUtils.stripExtension(fileName) + getString(R.string.pdf_suffix);
+                mSelectFile.setText(getString(R.string.text_file_name) + fileName);
+                mCreateTextPdf.setEnabled(true);
+                mMorphButtonUtility.morphToSquare(mCreateTextPdf, mMorphButtonUtility.integer());
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -470,15 +468,13 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length < 1)
             return;
-        switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPermissionGranted = true;
-                    selectTextFile();
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                selectTextFile();
+                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 

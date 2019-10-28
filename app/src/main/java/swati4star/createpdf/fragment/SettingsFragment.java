@@ -328,7 +328,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     if (cbDefault.isChecked()) {
                         editor.putString(Constants.PREF_PAGE_STYLE, style);
                         editor.putInt(Constants.PREF_PAGE_STYLE_ID, id);
-                        editor.commit();
+                        editor.apply();
                     } else {
                         editor.putString(Constants.PREF_PAGE_STYLE, null);
                         editor.putInt(Constants.PREF_PAGE_STYLE_ID, -1);

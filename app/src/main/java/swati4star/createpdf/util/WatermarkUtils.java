@@ -119,9 +119,8 @@ public class WatermarkUtils {
                 )));
                 String filePath = createWatermark(path);
                 dataSetChanged.updateDataset();
-                getSnackbarwithAction(mContext, R.string.watermark_added).setAction("View", v1 -> {
-                    mFileUtils.openFile(filePath);
-                }).show();
+                getSnackbarwithAction(mContext, R.string.watermark_added).setAction(
+                        "View", v1 -> mFileUtils.openFile(filePath)).show();
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
                 showSnackbar(mContext, R.string.cannot_add_watermark);
@@ -164,8 +163,6 @@ public class WatermarkUtils {
 
     public static int getStyleValueFromName(String name) {
         switch (name) {
-            case "NORMAL":
-                return Font.NORMAL;
             case "BOLD":
                 return Font.BOLD;
             case "ITALIC":
@@ -183,8 +180,6 @@ public class WatermarkUtils {
 
     public static String getStyleNameFromFont(int font) {
         switch (font) {
-            case Font.NORMAL:
-                return "NORMAL";
             case Font.BOLD:
                 return "BOLD";
             case Font.ITALIC:

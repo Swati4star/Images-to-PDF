@@ -38,6 +38,7 @@ import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.DialogUtils;
+import swati4star.createpdf.util.FileUriUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
@@ -48,7 +49,6 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
-import static swati4star.createpdf.util.FileUriUtils.getFilePath;
 import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -154,7 +154,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                 break;
 
             case INTENT_REQUEST_PICKFILE_CODE:
-                setTextAndActivateButtons(getFilePath(data.getData()));
+                setTextAndActivateButtons(FileUriUtils.getInstance().getFilePath(data.getData()));
                 break;
         }
     }
