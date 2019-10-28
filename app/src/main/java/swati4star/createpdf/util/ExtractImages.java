@@ -54,7 +54,7 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                         Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,
                                 image.length);
                         String filename = getFileNameWithoutExtension(mPath) +
-                                "_" + Integer.toString(mImagesCount + 1);
+                                "_" + (mImagesCount + 1);
                         String path = saveImage(filename, bmp);
                         if (path != null) {
                             mOutputFilePaths.add(path);

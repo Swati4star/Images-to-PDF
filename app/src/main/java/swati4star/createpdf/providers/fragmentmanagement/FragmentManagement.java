@@ -7,10 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.SparseIntArray;
 import android.widget.Toast;
-
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Objects;
 
@@ -37,7 +34,6 @@ import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
-import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FragmentUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
@@ -48,7 +44,6 @@ import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
-import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
@@ -57,7 +52,6 @@ import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
 import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;

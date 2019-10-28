@@ -195,7 +195,7 @@ public class PDFEncryptionUtility {
      * This function removes the password for encrypted files.
      * @param file - the path of the actual encrypted file.
      * @param inputPassword - the password of the encrypted file.
-     * @return
+     * @return - output file path
      */
     public String removeDefPasswordForImages(final String file,
                                              final String[] inputPassword) {

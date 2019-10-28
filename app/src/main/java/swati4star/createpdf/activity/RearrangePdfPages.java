@@ -148,13 +148,11 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                passUris();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            passUris();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public static Intent getStartIntent(Context context) {

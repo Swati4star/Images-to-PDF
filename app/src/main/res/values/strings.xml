@@ -194,7 +194,7 @@
     <string name="btn_sav_text">savText</string>
     <string name="filter_images_Text">Filter Images \n</string>
     <string name="nextimage_contentdesc">Next Image</string>
-    <string name="compress_image">Image compression : %s%%</string>
+    <string name="compress_image">Image compression : %s %%</string>
     <string name="quality_image">Enter % compression of image :</string>
     <string name="invalid_entry">Invalid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
@@ -443,6 +443,7 @@
     <string name="home_page">Home</string>
     <string name="create_new_pdfs">Create new PDF</string>
     <string name="view_pdfs">View PDFs</string>
+    <string name="view_pdf">View PDF</string>
     <string name="modify_existing_pdfs">Modify existing PDFs</string>
     <string name="more_options">More Options</string>
     <string name="add_password">Add password</string>
@@ -531,7 +532,7 @@
         <item>What image file formats are supported?#####The software supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file with the software?#####No new text files can\'t be created. You can only convert already made text files to pdf.</item>
         <item>What is the maximum limit of images I can add to create a pdf file?#####There is no restriction to the number of images you desire to convert to pdf. You can include as many images as you desire.</item>
-        <item>Is there a limit to the size of image file I can add?#####There\'s no limit to the sizes of images you wish to convert to pdf. But for efficient and smooth operations restricting image size to less than 10mb is adviced. The conversion of multiple huge image files takes a longer time(10secs upward) than images with less file sizes.</item>
+        <item>Is there a limit to the size of image file I can add?#####There\'s no limit to the sizes of images you wish to convert to pdf. But for efficient and smooth operations restricting image size to less than 10mb is advised. The conversion of multiple huge image files takes a longer time(10secs upward) than images with less file sizes.</item>
         <item>Can I insert captions in the image after upload?#####No, captions cannot be inserted on images except otherwise edited on the image itself.</item>
         <item>Can I open and view pdf files with the software?#####Yes, you can open pdf files with the software but you need an external pdf reader to be able to view its content.</item>
         <item>I want to access the pdf files I created externally outside the software, where are the pdf files saved?#####The pdf files created with the software are automatically saved to a location on your device storage name "PDFfiles"</item>

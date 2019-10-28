@@ -128,16 +128,14 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         if (resultCode != RESULT_OK)
             return;
 
-        switch (requestCode) {
-            case INTENT_REQUEST_REARRANGE_IMAGE:
-                try {
-                    mImagesArrayList = data.getStringArrayListExtra(Constants.RESULT);
-                    mPreviewAdapter.setData(mImagesArrayList);
-                    mViewPager.setAdapter(mPreviewAdapter);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
+        if (requestCode == INTENT_REQUEST_REARRANGE_IMAGE) {
+            try {
+                mImagesArrayList = data.getStringArrayListExtra(Constants.RESULT);
+                mPreviewAdapter.setData(mImagesArrayList);
+                mViewPager.setAdapter(mPreviewAdapter);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

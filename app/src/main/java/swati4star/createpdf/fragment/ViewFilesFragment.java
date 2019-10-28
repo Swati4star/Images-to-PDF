@@ -340,14 +340,12 @@ public class ViewFilesFragment extends Fragment
             showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
             return;
         }
-        switch (requestCode) {
-            case PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                    onRefresh();
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                onRefresh();
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 

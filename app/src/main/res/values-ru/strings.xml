@@ -343,6 +343,7 @@
     <string name="home_page">На главную</string>
     <string name="create_new_pdfs">Создание PDF</string>
     <string name="view_pdfs">Просмотр PDF</string>
+    <string name="view_pdf">View PDF</string>
     <string name="modify_existing_pdfs">Изменение PDF</string>
     <string name="more_options">Дополнительно</string>
     <string name="add_password">Добавить пароль</string>
@@ -449,7 +450,7 @@
     <string name="snackbar_pdfselected">PDF file selected!</string>
     <string name="add_text">Add Text</string>
     <string name="snackbar_txtselected">Text File selected!</string>
-    <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue...</string>
+    <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue…</string>
     <string name="creating_txt">Creating Text File</string>
 
     <string name="font_color">Font Color</string>

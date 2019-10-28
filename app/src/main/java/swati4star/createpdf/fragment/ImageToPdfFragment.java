@@ -308,15 +308,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         if (grantResults.length < 1)
             return;
 
-        switch (requestCode) {
-            case REQUEST_PERMISSIONS_CODE: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPermissionGranted = true;
-                    selectImages();
-                    showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                } else
-                    showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            }
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                selectImages();
+                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+            } else
+                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
@@ -493,11 +491,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             }
             mImagesUri.clear();
             mImagesUri.addAll(tempImageUri);
-        } catch (SecurityException e) {
-            e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SecurityException | IOException e) {
             e.printStackTrace();
         }
     }

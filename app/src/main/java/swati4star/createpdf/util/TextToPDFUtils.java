@@ -86,9 +86,6 @@ public class TextToPDFUtils {
             throw new DocumentException();
 
         switch (fileExtension) {
-            case Constants.textExtension:
-                readTextFile(mTextToPDFOptions.getInFileUri(), document, myfont);
-                break;
             case Constants.docExtension:
                 readDocFile(mTextToPDFOptions.getInFileUri(), document, myfont);
                 break;

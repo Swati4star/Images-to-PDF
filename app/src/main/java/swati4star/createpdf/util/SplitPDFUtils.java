@@ -42,10 +42,9 @@ public class SplitPDFUtils {
     /**
      * Breaks up the splitDetail String into ranges where a "," is found
      *
-     *
      * @param path        the input pdf path
      * @param splitDetail string that contains split configuration
-     * @return
+     * @return output splitted string array
      */
     public ArrayList<String> splitPDFByConfig(String path, String splitDetail) {
         String splitConfig = splitDetail.replaceAll("\\s+", "");
@@ -116,7 +115,7 @@ public class SplitPDFUtils {
                     showSnackbar(mContext, R.string.split_one_page_pdf_alert);
                 }
             }
-        } catch (IOException | DocumentException e) {
+        } catch (IOException | DocumentException | IllegalArgumentException e) {
             e.printStackTrace();
             showSnackbar(mContext, R.string.file_access_error);
         }
@@ -175,8 +174,7 @@ public class SplitPDFUtils {
      * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
      */
     public static int checkRangeValidity(int numOfPages, String[] ranges) {
-        int startPage = 0;
-        int endPage = 0;
+        int startPage, endPage;
         int returnValue = NO_ERROR;
 
         if (ranges.length == 0)

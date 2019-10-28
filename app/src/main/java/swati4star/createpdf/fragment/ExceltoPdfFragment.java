@@ -304,10 +304,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
             showSnackbar(mActivity, R.string.no_excel_file);
             return;
         }
-        switch (position) {
-            case 0:
-                setPassword();
-                break;
+        if (position == 0) {
+            setPassword();
         }
     }
 
