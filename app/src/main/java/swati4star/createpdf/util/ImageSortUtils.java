@@ -19,7 +19,7 @@ public class ImageSortUtils {
      */
     public static void performSortOperation(int option, List<String> images) {
         if (option < 0 || option > 3) throw new IllegalArgumentException("Invalid sort option. "
-                + "Sort option must be in <0; 3> range!");
+                + "Sort option must be in [0; 3] range!");
         switch (option) {
             case NAME_ASC:
                 sortByNameAsc(images);
