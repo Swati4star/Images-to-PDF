@@ -16,6 +16,8 @@ public class FileUriUtils {
     private final String mISMEDIADOC = "com.android.providers.media.documents";
     private final String mISGOOGLEPHOTODOC = "com.google.android.apps.photos.content";
 
+    private FileUriUtils(){}
+
     /**
      * Check whether the image is whatsapp image
      *

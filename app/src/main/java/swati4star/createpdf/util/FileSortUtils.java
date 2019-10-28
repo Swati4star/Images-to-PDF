@@ -12,6 +12,8 @@ public class FileSortUtils {
     public final int SIZE_INCREASING_ORDER_INDEX = 2;
     public final int SIZE_DECREASING_ORDER_INDEX = 3;
 
+    private FileSortUtils(){}
+
     public void performSortOperation(int option, ArrayList<File> pdf) {
         switch (option) {
             case DATE_INDEX:
