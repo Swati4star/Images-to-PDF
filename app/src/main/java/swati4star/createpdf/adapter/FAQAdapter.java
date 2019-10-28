@@ -29,14 +29,14 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
     /**
      * Inflates the layout view and returns it
      *
-     * @param viewGroup
-     * @param i
+     * @param viewGroup - holds view
+     * @param position - view position
      * @return FAQViewHolder View
      */
 
     @NonNull
     @Override
-    public FAQViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public FAQViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_faq, viewGroup, false);
         return new FAQAdapter.FAQViewHolder(view);
@@ -44,12 +44,12 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
     /**
      * Binds the FAQItem with the proper data that it fetches from List
-     * @param viewHolder
-     * @param i
+     * @param viewHolder - holds view
+     * @param position - view position
      */
     @Override
-    public void onBindViewHolder(@NonNull FAQViewHolder viewHolder, int i) {
-        FAQItem faqItem = faqs.get(i);
+    public void onBindViewHolder(@NonNull FAQViewHolder viewHolder, int position) {
+        FAQItem faqItem = faqs.get(position);
         viewHolder.question.setText(faqItem.getQuestion());
         viewHolder.answer.setText(faqItem.getAnswer());
         boolean isExpanded = faqItem.isExpanded();
@@ -72,7 +72,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
         /**
          * Initializes and binds the view and sets the onClickListener
-         * @param itemView
+         * @param itemView - holds view
          */
         FAQViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,10 +83,10 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
         /**
          * Defines the onItemClickListener handler
-         * @param v
+         * @param view - view
          */
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             mOnItemClickListener.onItemClick(getAdapterPosition());
         }
     }

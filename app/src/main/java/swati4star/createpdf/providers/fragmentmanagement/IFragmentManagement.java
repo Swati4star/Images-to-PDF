@@ -1,7 +1,6 @@
 package swati4star.createpdf.providers.fragmentmanagement;
 
 import android.support.v4.app.Fragment;
-import android.util.SparseIntArray;
 
 interface IFragmentManagement {
     /**
@@ -28,7 +27,7 @@ interface IFragmentManagement {
      * Handles the fragment transaction for the selected
      * navigation item.
      * @param itemId The selected item id.
-     * @return
+     * @return true when handled
      */
     boolean handleNavigationItemSelected(int itemId);
 }

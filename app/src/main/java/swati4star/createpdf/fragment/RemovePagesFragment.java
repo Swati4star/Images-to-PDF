@@ -257,7 +257,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         String input = pagesInput.getText().toString();
         int check;
         try {
-            check = Integer.parseInt(String.valueOf(input));
+            check = Integer.parseInt(input);
             if (check > 100 || check <= 0 || mPath == null) {
                 showSnackbar(mActivity, R.string.invalid_entry);
             } else {

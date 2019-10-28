@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
@@ -63,7 +64,7 @@ public class WhatsNewUtils {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
@@ -76,7 +77,7 @@ public class WhatsNewUtils {
      * Extract whatsnew items by parsing json
      * @param object - json object to be parsed
      * @return list of whatsnew items
-     * @throws JSONException
+     * @throws JSONException - invalid JSON
      */
     private static ArrayList<WhatsNew> extractItemsFromJSON(JSONObject object) throws JSONException {
 
