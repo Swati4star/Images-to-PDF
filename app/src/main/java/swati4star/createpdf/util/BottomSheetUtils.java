@@ -28,7 +28,7 @@ public class BottomSheetUtils  {
     /**
      * Retrieves a list of available excel files on the device
      * @param listener a bottom sheet listener used to inform the caller when the list of files
-     * is available
+     * are available
      */
     public void populateBottomSheetWithExcelFiles(BottomSheetPopulate listener) {
         new PopulateBottomSheetListWithExcelFiles(listener, new DirectoryUtils(mContext)).execute();

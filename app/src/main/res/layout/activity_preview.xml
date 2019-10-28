@@ -24,7 +24,7 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_above="@id/textView"
         android:background="?attr/customDividerColor" />
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/recyclerView"
         android:gravity="center"
-        android:paddingTop="3dp"
+        android:paddingTop="4dp"
         android:text="@string/image_rearranging_options"
         android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_above="@id/info"
         android:background="?attr/customDividerColor" />
 
