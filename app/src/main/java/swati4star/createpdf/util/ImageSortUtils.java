@@ -74,9 +74,6 @@ public class ImageSortUtils {
      * @param imagePaths list of image paths to be sorted
      */
     private static void sortByDateDesc(List<String> imagePaths) {
-        for (String imagePath : imagePaths) {
-            System.out.println(new File(imagePath).lastModified());
-        }
         Collections.sort(imagePaths, (path1, path2) -> Long.compare(new File(path1).lastModified(),
                 new File(path2).lastModified()));
     }

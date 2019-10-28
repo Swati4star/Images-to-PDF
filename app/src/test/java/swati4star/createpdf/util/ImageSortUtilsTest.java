@@ -3,11 +3,14 @@ package swati4star.createpdf.util;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +20,11 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 @SuppressWarnings("unchecked")
 public class ImageSortUtilsTest {
 
+    @Before
+    @After
+    public void cleanup() {
+        deleteAllFiles();
+    }
 
     @Test
     public void shouldSortPathsByFileNamesAscending() {
@@ -59,10 +67,11 @@ public class ImageSortUtilsTest {
     }
 
     @Test
-    public void shouldSortPathsByLastModifiedAsc() {
+    public void shouldSortPathsByLastModifiedAsc() throws Exception {
         // given
         int dateAscendingOption = 2;
         List<String> paths = getFilePaths();
+        createNewFiles();
 
         // when
         ImageSortUtils.performSortOperation(dateAscendingOption, paths);
@@ -79,10 +88,11 @@ public class ImageSortUtilsTest {
     }
 
     @Test
-    public void shouldSortPathsByLastModifiedDescending() {
+    public void shouldSortPathsByLastModifiedDescending() throws Exception {
         // given
         int dateDescendingOption = 3;
         List<String> paths = getFilePaths();
+        createNewFiles();
 
         // when
         ImageSortUtils.performSortOperation(dateDescendingOption, paths);
@@ -117,9 +127,26 @@ public class ImageSortUtilsTest {
 
     private List<String> getFilePaths() {
         return asList(
+                "src/test/resources/sort-test/A-oldest",
                 "src/test/resources/sort-test/B-middle",
-                "src/test/resources/sort-test/C-latest",
-                "src/test/resources/sort-test/A-oldest"
+                "src/test/resources/sort-test/C-latest"
         );
     }
+
+    private void createNewFiles() throws Exception {
+        List<String> filePaths = getFilePaths();
+        for (String filePath : filePaths) {
+            new File(filePath).createNewFile();
+            Thread.sleep(1000);
+        }
+    }
+
+    private void deleteAllFiles() {
+        List<String> filePaths = getFilePaths();
+        for (String filePath : filePaths) {
+            new File(filePath).delete();
+        }
+    }
+
+
 }
