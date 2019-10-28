@@ -38,9 +38,9 @@ public class ImageSortUtilsTest {
         // then
         Assert.assertEquals(
                 asList(
-                        "src/test/resources/sort-test/A-oldest",
-                        "src/test/resources/sort-test/B-middle",
-                        "src/test/resources/sort-test/C-latest"
+                        "src/A-oldest",
+                        "src/B-middle",
+                        "src/C-latest"
                 ),
                 paths
         );
@@ -58,9 +58,9 @@ public class ImageSortUtilsTest {
         // then
         Assert.assertEquals(
                 asList(
-                        "src/test/resources/sort-test/C-latest",
-                        "src/test/resources/sort-test/B-middle",
-                        "src/test/resources/sort-test/A-oldest"
+                        "src/C-latest",
+                        "src/B-middle",
+                        "src/A-oldest"
                 ),
                 paths
         );
@@ -79,9 +79,9 @@ public class ImageSortUtilsTest {
         // then
         Assert.assertEquals(
                 asList(
-                        "src/test/resources/sort-test/C-latest",
-                        "src/test/resources/sort-test/B-middle",
-                        "src/test/resources/sort-test/A-oldest"
+                        "src/C-latest",
+                        "src/B-middle",
+                        "src/A-oldest"
                 ),
                 paths
         );
@@ -100,9 +100,9 @@ public class ImageSortUtilsTest {
         // then
         Assert.assertEquals(
                 asList(
-                        "src/test/resources/sort-test/A-oldest",
-                        "src/test/resources/sort-test/B-middle",
-                        "src/test/resources/sort-test/C-latest"
+                        "src/A-oldest",
+                        "src/B-middle",
+                        "src/C-latest"
                 ),
                 paths
         );
@@ -127,9 +127,9 @@ public class ImageSortUtilsTest {
 
     private List<String> getFilePaths() {
         return asList(
-                "src/test/resources/sort-test/A-oldest",
-                "src/test/resources/sort-test/B-middle",
-                "src/test/resources/sort-test/C-latest"
+                "src/A-oldest",
+                "src/B-middle",
+                "src/C-latest"
         );
     }
 
@@ -144,7 +144,8 @@ public class ImageSortUtilsTest {
     private void deleteAllFiles() {
         List<String> filePaths = getFilePaths();
         for (String filePath : filePaths) {
-            new File(filePath).delete();
+            File file = new File(filePath);
+            file.delete();
         }
     }
 
