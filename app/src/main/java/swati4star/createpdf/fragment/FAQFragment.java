@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +56,11 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
      */
     private void initFAQs() {
         mFaqs = new ArrayList<>();
-        String[] questions = mContext.getResources().getStringArray(R.array.faq_questions);
-        String[] answers = mContext.getResources().getStringArray(R.array.faq_answers);
+        String[] questionAnswers = mContext.getResources().getStringArray(R.array.faq_question_answers);
         FAQItem faqItem;
-        for (int i = 0; i < questions.length; ++i) {
-            faqItem = new FAQItem(questions[i], answers[i]);
+        for (String questionAnswer : questionAnswers) {
+            String[] questionAnswerSplit = questionAnswer.split("#####");
+            faqItem = new FAQItem(questionAnswerSplit[0], questionAnswerSplit[1]);
             mFaqs.add(faqItem);
         }
     }
@@ -79,7 +78,7 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
     /**
      * This method defines the behavior of the FAQItem when clicked.
      * It makes the FAQItem view expanded or contracted.
-     * @param position
+     * @param position - view position
      */
     @Override
     public void onItemClick(int position) {

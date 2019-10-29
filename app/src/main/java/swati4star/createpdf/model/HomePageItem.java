@@ -3,16 +3,16 @@ package swati4star.createpdf.model;
 public class HomePageItem {
 
     private int mIconId;
-    int mtitleString;
+    private int mTitleString;
 
     /**
-     * Constructor
-     * @param iconId
-     * @param titleString
+     * Constructor for home page item
+     * @param iconId - icon drawable id
+     * @param titleString - title string resource id of home page item
      */
     public HomePageItem(int iconId, int titleString) {
         mIconId = iconId;
-        mtitleString = titleString;
+        mTitleString = titleString;
     }
 
     public int getNavigationItemId() {
@@ -20,6 +20,6 @@ public class HomePageItem {
     }
 
     public int getTitleString() {
-        return mtitleString;
+        return mTitleString;
     }
 }

@@ -41,8 +41,6 @@ import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.FileUriUtils.getUriRealPathAboveKitkat;
-import static swati4star.createpdf.util.FileUriUtils.isWhatsappImage;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -209,7 +207,7 @@ public class FileUtils {
     /**
      * This function is used to open the created text file with Text editing/viewing
      * applications on the device.
-     * @param path
+     * @param path - file path
      */
     public void openTextFile(String path) {
         File file = new File(path);
@@ -255,10 +253,10 @@ public class FileUtils {
         if (uri == null)
             return null;
 
-        if (isWhatsappImage(uri.getAuthority())) {
+        if (FileUriUtils.getInstance().isWhatsappImage(uri.getAuthority())) {
             ret = null;
         } else {
-            ret = getUriRealPathAboveKitkat(mContext, uri);
+            ret = FileUriUtils.getInstance().getUriRealPathAboveKitkat(mContext, uri);
         }
         return ret;
     }
@@ -492,12 +490,12 @@ public class FileUtils {
         String dest = Environment.getExternalStorageDirectory().toString() +
                 Constants.pdfDirectory + Constants.tempDirectory;
         File folder = new File(dest);
-        Boolean result = folder.mkdir();
+        boolean result = folder.mkdir();
         // clear all the files in it, if any
         if (result && folder.isDirectory()) {
             String[] children = folder.list();
-            for (int i = 0; i < children.length; i++) {
-                new File(folder, children[i]).delete();
+            for (String child : children) {
+                new File(folder, child).delete();
             }
         }
     }

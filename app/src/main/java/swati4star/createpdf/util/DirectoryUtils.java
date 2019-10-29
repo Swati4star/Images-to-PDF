@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,9 +16,9 @@ import java.util.Set;
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.pdfExtension;
 import static swati4star.createpdf.util.Constants.excelExtension;
 import static swati4star.createpdf.util.Constants.excelWorkbookExtension;
+import static swati4star.createpdf.util.Constants.pdfExtension;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 
 public class DirectoryUtils {
@@ -171,7 +172,7 @@ public class DirectoryUtils {
      * @param dir - root directory
      */
     private void walkdir(File dir) {
-        walkdir(dir, Arrays.asList(pdfExtension));
+        walkdir(dir, Collections.singletonList(pdfExtension));
     }
 
     /**

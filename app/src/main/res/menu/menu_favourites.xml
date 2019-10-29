@@ -6,7 +6,7 @@
         android:id="@+id/menu_favourites_item"
         android:icon="@drawable/ic_favorite_white_24dp"
         android:orderInCategory="1"
-        android:title="Favourites"
+        android:title="@string/favourites"
         app:showAsAction="always" />
 
 </menu>

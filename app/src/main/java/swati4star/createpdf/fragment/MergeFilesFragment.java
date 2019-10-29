@@ -151,10 +151,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
             return;
         }
-        switch (position) {
-            case 0:
-                setPassword();
-                break;
+        if (position == 0) {
+            setPassword();
         }
     }
 

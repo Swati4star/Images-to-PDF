@@ -60,18 +60,4 @@ public class StringUtils {
         return Environment.getExternalStorageDirectory().getAbsolutePath() +
                 pdfDirectory;
     }
-
-    /**
-     * This function is used to trim the root path name from
-     * the getPath() method so that it can be replaced by
-     * the External Storage Directory.
-     * @param path
-     * @return
-     */
-    public static StringBuilder trimExternal(String path) {
-        StringBuilder trimmedPath = new StringBuilder();
-        int tempPath = path.indexOf('/');
-        trimmedPath.append(path.substring(tempPath + 1));
-        return trimmedPath;
-    }
 }

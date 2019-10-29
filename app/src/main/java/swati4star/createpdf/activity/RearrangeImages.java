@@ -116,13 +116,11 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                passUris();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            passUris();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
