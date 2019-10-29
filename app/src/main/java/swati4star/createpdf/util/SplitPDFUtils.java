@@ -28,15 +28,15 @@ public class SplitPDFUtils {
     private static final int ERROR_PAGE_RANGE = 2;
     private static final int ERROR_INVALID_INPUT = 3;
 
-    private final Activity mContext;
-    private SharedPreferences mSharedPreferences;
+    private static Activity mContext;
+    private static SharedPreferences mSharedPreferences;
 
     private static class SplitPDFUtilsHolder {
         static final SplitPDFUtils INSTANCE = new SplitPDFUtils();
     }
 
     public static SplitPDFUtils getInstance(Activity context) {
-        this.mContext = context;
+        mContext = context;
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
         return SplitPDFUtilsHolder.INSTANCE;
