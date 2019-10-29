@@ -4,24 +4,21 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
+import swati4star.createpdf.R;
+import swati4star.createpdf.database.DatabaseHelper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import swati4star.createpdf.R;
-import swati4star.createpdf.database.DatabaseHelper;
-
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class SplitPDFUtils {
 
@@ -29,27 +26,19 @@ public class SplitPDFUtils {
     private static final int ERROR_PAGE_NUMBER = 1;
     private static final int ERROR_PAGE_RANGE = 2;
     private static final int ERROR_INVALID_INPUT = 3;
-    private static SplitPDFUtils INSTANCE;
 
     private final Activity mContext;
     private SharedPreferences mSharedPreferences;
 
-    private SplitPDFUtils(Activity context) {
+    private static class SplitPDFUtilsHolder {
+        static final SplitPDFUtils INSTANCE = new SplitPDFUtils();
+    }
+
+    public static SplitPDFUtils getInstance(Activity context) {
         this.mContext = context;
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
-    }
-
-
-    public static SplitPDFUtils getInstance(Activity context) {
-        if (INSTANCE == null) {
-            synchronized (SplitPDFUtils.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new SplitPDFUtils(context);
-                }
-            }
-        }
-        return INSTANCE;
+        return SplitPDFUtilsHolder.INSTANCE;
     }
 
     /**
@@ -187,7 +176,7 @@ public class SplitPDFUtils {
      * ERROR_PAGE_RANGE     if range is invalid like 9-4
      * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
      */
-    public static int checkRangeValidity(int numOfPages, String[] ranges) {
+    public int checkRangeValidity(int numOfPages, String[] ranges) {
         int startPage = 0;
         int endPage = 0;
         int returnValue = NO_ERROR;
