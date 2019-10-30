@@ -527,6 +527,7 @@
 
     <!--file name suffix-->
     <string name="pdf_suffix" translatable="false">_pdf</string>
+    <string name="reordering_pages_dialog">Reordering your pages</string>
 
     <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The software supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>

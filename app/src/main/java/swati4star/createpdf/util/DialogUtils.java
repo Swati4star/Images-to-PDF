@@ -1,6 +1,9 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -88,6 +91,24 @@ public class DialogUtils {
         return new MaterialDialog.Builder(activity)
                 .customView(R.layout.lottie_anim_dialog, false)
                 .build();
+    }
+
+    /**
+     * Creates dialog with animation
+     * @param activity - activity instance
+     * @param title - dialog message
+     * @return - material dialog
+     */
+
+    public MaterialDialog createCustomAnimationDialog(Activity activity, String title) {
+        View v = LayoutInflater.from(activity).inflate(R.layout.lottie_anim_dialog, null);
+        TextView titleText = v.findViewById(R.id.textView);
+        titleText.setText(title);
+
+        return new MaterialDialog.Builder(activity)
+                .customView(v, false)
+                .build();
+
     }
 
     public void showFilesInfoDialog(Activity activity, int dialogId) {
