@@ -7,6 +7,11 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.w3c.dom.Text;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import swati4star.createpdf.R;
 
 public class DialogUtils {
@@ -15,6 +20,9 @@ public class DialogUtils {
     public static final int ADD_PASSWORD = 21;
     public static final int REMOVE_PASSWORD = 22;
     public static final int ADD_WATERMARK = 23;
+
+    @BindView(R.id.textView)
+    public TextView mDialogTitle;
 
     private static class SingletonHolder {
         static final DialogUtils INSTANCE = new DialogUtils();
@@ -99,14 +107,15 @@ public class DialogUtils {
      * @param title - dialog message
      * @return - material dialog
      */
-
     public MaterialDialog createCustomAnimationDialog(Activity activity, String title) {
-        View v = LayoutInflater.from(activity).inflate(R.layout.lottie_anim_dialog, null);
-        TextView titleText = v.findViewById(R.id.textView);
-        titleText.setText(title);
+        View view = LayoutInflater.from(activity).inflate(R.layout.lottie_anim_dialog, null);
+
+        Unbinder unbinder = ButterKnife.bind(this, view);
+        mDialogTitle.setText(title);
+        unbinder.unbind();
 
         return new MaterialDialog.Builder(activity)
-                .customView(v, false)
+                .customView(view, false)
                 .build();
 
     }
@@ -134,4 +143,5 @@ public class DialogUtils {
                 .build()
                 .show();
     }
+
 }

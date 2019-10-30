@@ -519,7 +519,7 @@
     <string name="favourites_text">Wählen Sie das Symbol, um Ihre Lieblingsfunktionen hinzuzufügen!</string>
     <string name="no_excel_file">Keine Excel-Datei ausgewählt</string>
     <string name="split_range_alert">Der eingegebene geteilte Bereich erstellt das ausgewählte PDF erneut!</string>
+    <string name="reordering_pages_dialog">Ordnen Sie Ihre Seiten neu...</string>
 
-    
 
 </resources>

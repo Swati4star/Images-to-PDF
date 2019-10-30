@@ -1,5 +1,6 @@
 package swati4star.createpdf.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
@@ -275,10 +276,16 @@ public class PDFUtils {
         }
     }
 
-    public void reorderPdfPages(Uri mUri, String mPath, @NonNull OnPdfReorderedInterface onPdfReorderedInterface) {
-        new ReorderPdfPagesAsync(mUri, mPath, mContext, onPdfReorderedInterface).execute();
+    /**
+     * @param uri Uri of the pdf
+     * @param path Absolute path of the pdf
+     * @param onPdfReorderedInterface interface to update  pdf reorder progress
+     * */
+    public void reorderPdfPages(Uri uri, String path, @NonNull OnPdfReorderedInterface onPdfReorderedInterface) {
+        new ReorderPdfPagesAsync(uri, path, mContext, onPdfReorderedInterface).execute();
     }
 
+    @SuppressLint("StaticFieldLeak")
     private static class ReorderPdfPagesAsync extends AsyncTask<String, String, ArrayList<Bitmap>> {
 
         private Uri mUri;
@@ -286,14 +293,21 @@ public class PDFUtils {
         private OnPdfReorderedInterface mOnPdfReorderedInterface;
         private Activity mActivity;
 
-        public ReorderPdfPagesAsync(Uri mUri,
-                                    String mPath,
-                                    Activity mActivity,
-                                    OnPdfReorderedInterface mOnPdfReorderedInterface) {
-            this.mUri = mUri;
-            this.mPath = mPath;
-            this.mOnPdfReorderedInterface = mOnPdfReorderedInterface;
-            this.mActivity = mActivity;
+        /**
+         * @param uri Uri of the pdf
+         * @param path Absolute path of the pdf
+         * @param onPdfReorderedInterface interface to update  pdf reorder progress
+         * @param activity Its needed to get the current context
+         * */
+
+        ReorderPdfPagesAsync(Uri uri,
+                             String path,
+                             Activity activity,
+                             OnPdfReorderedInterface onPdfReorderedInterface) {
+            this.mUri = uri;
+            this.mPath = path;
+            this.mOnPdfReorderedInterface = onPdfReorderedInterface;
+            this.mActivity = activity;
         }
 
         @Override
