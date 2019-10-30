@@ -41,6 +41,12 @@ android {
     lintOptions {
         checkReleaseBuilds false
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
 }
 configurations {
     all {
@@ -111,7 +117,9 @@ dependencies {
     // color picker
     implementation 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
 
-    testImplementation 'org.mockito:mockito-core:2.23.0'
+
+    testImplementation 'org.mockito:mockito-core:2.23.4'
+    testImplementation 'org.robolectric:robolectric:4.3.1'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
