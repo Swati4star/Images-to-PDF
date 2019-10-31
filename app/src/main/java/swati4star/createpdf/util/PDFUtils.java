@@ -1,6 +1,5 @@
 package swati4star.createpdf.util;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
@@ -285,8 +284,7 @@ public class PDFUtils {
         new ReorderPdfPagesAsync(uri, path, mContext, onPdfReorderedInterface).execute();
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private static class ReorderPdfPagesAsync extends AsyncTask<String, String, ArrayList<Bitmap>> {
+    private class ReorderPdfPagesAsync extends AsyncTask<String, String, ArrayList<Bitmap>> {
 
         private Uri mUri;
         private String mPath;

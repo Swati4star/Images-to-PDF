@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import org.w3c.dom.Text;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,7 +20,7 @@ public class DialogUtils {
     public static final int ADD_WATERMARK = 23;
 
     @BindView(R.id.textView)
-    public TextView mDialogTitle;
+    public TextView dialogTitle;
 
     private static class SingletonHolder {
         static final DialogUtils INSTANCE = new DialogUtils();
@@ -111,7 +109,7 @@ public class DialogUtils {
         View view = LayoutInflater.from(activity).inflate(R.layout.lottie_anim_dialog, null);
 
         Unbinder unbinder = ButterKnife.bind(this, view);
-        mDialogTitle.setText(title);
+        dialogTitle.setText(title);
         unbinder.unbind();
 
         return new MaterialDialog.Builder(activity)
