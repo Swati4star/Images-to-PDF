@@ -5,7 +5,11 @@ import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.pdf.PdfRenderer;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.ParcelFileDescriptor;
+import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.widget.TextView;
 
@@ -33,7 +37,9 @@ import java.util.ArrayList;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
+import swati4star.createpdf.interfaces.OnPdfReorderedInterface;
 
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
@@ -266,6 +272,90 @@ public class PDFUtils {
             e.printStackTrace();
             showSnackbar(mContext, R.string.remove_pages_error);
             return false;
+        }
+    }
+
+    /**
+     * @param uri Uri of the pdf
+     * @param path Absolute path of the pdf
+     * @param onPdfReorderedInterface interface to update  pdf reorder progress
+     * */
+    public void reorderPdfPages(Uri uri, String path, @NonNull OnPdfReorderedInterface onPdfReorderedInterface) {
+        new ReorderPdfPagesAsync(uri, path, mContext, onPdfReorderedInterface).execute();
+    }
+
+    private class ReorderPdfPagesAsync extends AsyncTask<String, String, ArrayList<Bitmap>> {
+
+        private Uri mUri;
+        private String mPath;
+        private OnPdfReorderedInterface mOnPdfReorderedInterface;
+        private Activity mActivity;
+
+        /**
+         * @param uri Uri of the pdf
+         * @param path Absolute path of the pdf
+         * @param onPdfReorderedInterface interface to update  pdf reorder progress
+         * @param activity Its needed to get the current context
+         * */
+
+        ReorderPdfPagesAsync(Uri uri,
+                             String path,
+                             Activity activity,
+                             OnPdfReorderedInterface onPdfReorderedInterface) {
+            this.mUri = uri;
+            this.mPath = path;
+            this.mOnPdfReorderedInterface = onPdfReorderedInterface;
+            this.mActivity = activity;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mOnPdfReorderedInterface.onPdfReorderStarted();
+        }
+
+        @Override
+        protected ArrayList<Bitmap> doInBackground(String... strings) {
+            ArrayList<Bitmap> bitmaps = new ArrayList<>();
+            ParcelFileDescriptor fileDescriptor = null;
+            try {
+                if (mUri != null)
+                    fileDescriptor = mActivity.getContentResolver().openFileDescriptor(mUri, "r");
+                else if (mPath != null)
+                    fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
+                if (fileDescriptor != null) {
+                    PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+                    final int pageCount = renderer.getPageCount();
+                    for (int i = 0; i < pageCount; i++) {
+                        PdfRenderer.Page page = renderer.openPage(i);
+                        Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
+                                Bitmap.Config.ARGB_8888);
+                        // say we render for showing on the screen
+                        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+                        // do stuff with the bitmap
+                        bitmaps.add(bitmap);
+                        // close the page
+                        page.close();
+                    }
+
+                    // close the renderer
+                    renderer.close();
+                }
+            } catch (IOException | SecurityException | IllegalArgumentException | OutOfMemoryError e) {
+                e.printStackTrace();
+            }
+            return bitmaps;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
+            super.onPostExecute(bitmaps);
+            if (bitmaps != null && !bitmaps.isEmpty()) {
+                mOnPdfReorderedInterface.onPdfReorderCompleted(bitmaps);
+            } else {
+                mOnPdfReorderedInterface.onPdfReorderFailed();
+            }
         }
     }
 

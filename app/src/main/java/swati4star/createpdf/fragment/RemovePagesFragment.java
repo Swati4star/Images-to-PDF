@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
@@ -27,9 +25,8 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,6 +37,7 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
+import swati4star.createpdf.interfaces.OnPdfReorderedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
@@ -65,7 +63,7 @@ import static swati4star.createpdf.util.StringUtils.hideKeyboard;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface {
+        OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface, OnPdfReorderedInterface {
 
     private Activity mActivity;
     private String mPath;
@@ -185,6 +183,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         return outputPath;
     }
 
+
     @OnClick(R.id.pdfCreate)
     public void parse() {
         hideKeyboard(mActivity);
@@ -212,45 +211,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             return;
         }
 
-        // Render pdf pages as bitmap
-        ArrayList<Bitmap> bitmaps = new ArrayList<>();
-        ParcelFileDescriptor fileDescriptor = null;
-        try {
-            if (mUri != null)
-                fileDescriptor = mActivity.getContentResolver().openFileDescriptor(mUri, "r");
-            else if (mPath != null)
-                fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
-            if (fileDescriptor != null) {
-                PdfRenderer renderer = new PdfRenderer(fileDescriptor);
-                final int pageCount = renderer.getPageCount();
-                for (int i = 0; i < pageCount; i++) {
-                    PdfRenderer.Page page = renderer.openPage(i);
-                    Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
-                            Bitmap.Config.ARGB_8888);
-                    // say we render for showing on the screen
-                    page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-
-                    // do stuff with the bitmap
-                    bitmaps.add(bitmap);
-                    // close the page
-                    page.close();
-                }
-
-                // close the renderer
-                renderer.close();
-            }
-        } catch (IOException | SecurityException | IllegalArgumentException | OutOfMemoryError e) {
-            e.printStackTrace();
-        }
-
-        if (bitmaps.size() < 1) {
-            showSnackbar(mActivity, R.string.file_access_error);
-        } else {
-            RearrangePdfPages.mImages = bitmaps;
-            startActivityForResult(RearrangePdfPages.getStartIntent(mActivity),
-                    INTENT_REQUEST_REARRANGE_PDF);
-        }
-
+        mPDFUtils.reorderPdfPages(mUri, mPath, this);
     }
 
     private void compressPDF() {
@@ -363,5 +324,28 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public boolean checkSheetBehaviour() {
         return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+    }
+
+    @Override
+    public void onPdfReorderStarted() {
+        mMaterialDialog = DialogUtils
+                .getInstance()
+                .createCustomAnimationDialog(mActivity, mActivity.getString(R.string.reordering_pages_dialog));
+        mMaterialDialog.show();
+    }
+
+    @Override
+    public void onPdfReorderCompleted(List<Bitmap> bitmaps) {
+        mMaterialDialog.dismiss();
+        RearrangePdfPages.mImages = new ArrayList<>(bitmaps);
+        bitmaps.clear(); //releasing memory
+        startActivityForResult(RearrangePdfPages.getStartIntent(mActivity),
+                INTENT_REQUEST_REARRANGE_PDF);
+    }
+
+    @Override
+    public void onPdfReorderFailed() {
+        mMaterialDialog.dismiss();
+        showSnackbar(mActivity, R.string.file_access_error);
     }
 }

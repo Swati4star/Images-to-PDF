@@ -1,9 +1,15 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import swati4star.createpdf.R;
 
 public class DialogUtils {
@@ -12,6 +18,9 @@ public class DialogUtils {
     public static final int ADD_PASSWORD = 21;
     public static final int REMOVE_PASSWORD = 22;
     public static final int ADD_WATERMARK = 23;
+
+    @BindView(R.id.textView)
+    public TextView dialogTitle;
 
     private static class SingletonHolder {
         static final DialogUtils INSTANCE = new DialogUtils();
@@ -90,6 +99,25 @@ public class DialogUtils {
                 .build();
     }
 
+    /**
+     * Creates dialog with animation
+     * @param activity - activity instance
+     * @param title - dialog message
+     * @return - material dialog
+     */
+    public MaterialDialog createCustomAnimationDialog(Activity activity, String title) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.lottie_anim_dialog, null);
+
+        Unbinder unbinder = ButterKnife.bind(this, view);
+        dialogTitle.setText(title);
+        unbinder.unbind();
+
+        return new MaterialDialog.Builder(activity)
+                .customView(view, false)
+                .build();
+
+    }
+
     public void showFilesInfoDialog(Activity activity, int dialogId) {
         int stringId = R.string.viewfiles_rotatepages;
         switch (dialogId) {
@@ -113,4 +141,5 @@ public class DialogUtils {
                 .build()
                 .show();
     }
+
 }

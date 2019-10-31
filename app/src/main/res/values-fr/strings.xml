@@ -410,4 +410,5 @@
 \n2. Select Add Watermark. 
 \n3. Fill the required information. Select OK. 
 \n4. New PDF with watermark will be created.</string>
+    <string name="reordering_pages_dialog">Réorganiser vos pages...</string>
 </resources>
