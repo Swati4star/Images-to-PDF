@@ -209,12 +209,4 @@ public class ImageUtils {
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
     }
-
-    private static class SingletonHolder {
-        static final ImageUtils INSTANCE = new ImageUtils();
-    }
-
-    public static ImageUtils getInstance(){
-        return SingletonHolder.INSTANCE;
-    }
 }

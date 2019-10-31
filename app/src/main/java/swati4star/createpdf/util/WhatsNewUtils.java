@@ -99,12 +99,4 @@ public class WhatsNewUtils {
 
         return  whatsNewList;
     }
-
-    private static final class SingletonHolder{
-        static final WhatsNewUtils INSTANCE = new WhatsNewUtils();
-    }
-
-    public WhatsNewUtils getInstance(){
-        return WhatsNewUtils.SingletonHolder.INSTANCE;
-    }
 }

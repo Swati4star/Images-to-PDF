@@ -71,12 +71,4 @@ public class ThemeUtils {
         editor.putString(Constants.DEFAULT_THEME_TEXT, themeName);
         editor.apply();
     }
-
-    private static class SingletonHolder {
-        static final ThemeUtils INSTANCE = new ThemeUtils();
-    }
-
-    public static ThemeUtils getInstance() {
-        return SingletonHolder.INSTANCE;
-    }
 }
