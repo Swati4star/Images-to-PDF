@@ -54,9 +54,6 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.textExtension;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         BottomSheetPopulate, OnBackPressedInterface {
@@ -137,7 +134,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                         mFileSelectCode);
                 mButtonClicked = true;
             } catch (android.content.ActivityNotFoundException ex) {
-                showSnackbar(mActivity, R.string.install_file_manager);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
             }
         }
     }
@@ -148,10 +145,10 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         if (requestCode == mFileSelectCode && resultCode == RESULT_OK) {
             mExcelFileUri = data.getData();
             mRealPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
-            showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
+            StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
             mFileName = mFileUtils.getFileName(mExcelFileUri);
             if (mFileName != null && !mFileName.endsWith(Constants.pdfExtension)) {
-                showSnackbar(mActivity, R.string.extension_not_supported);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.extension_not_supported);
                 return;
             }
             mFileName = mActivity.getResources().getString(R.string.pdf_selected)
@@ -173,9 +170,9 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
                 openExtractText();
-                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
             } else
-                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
@@ -196,8 +193,8 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                 .title(R.string.creating_txt)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.isEmpty(input)) {
-                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    if (StringUtils.getInstance().isEmpty(input)) {
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + textExtension)) {
@@ -221,7 +218,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      */
     private void extractTextFromPdf(String inputName) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation());
+                StringUtils.getInstance().getDefaultStorageLocation());
         String mPath = mStorePath + inputName + textExtension;
         try {
             StringBuilder parsedText = new StringBuilder();
@@ -234,7 +231,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             reader.close();
             // Check whether there is no text found from the PDF Doc
             if (TextUtils.isEmpty(parsedText.toString().trim())) {
-                showSnackbar(mActivity, R.string.snack_bar_empty_txt_in_pdf);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snack_bar_empty_txt_in_pdf);
                 return;
             }
             File textFile = new File(mStorePath, inputName + textExtension);
@@ -242,7 +239,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             writer.append(parsedText.toString());
             writer.flush();
             writer.close();
-            getSnackbarwithAction(mActivity, R.string.snackbar_txtExtracted)
+            StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_txtExtracted)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openTextFile(mPath))
                     .show();
             mTextView.setVisibility(View.GONE);

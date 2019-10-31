@@ -15,9 +15,6 @@ import swati4star.createpdf.interfaces.MergeFilesListener;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeHelper implements MergeFilesListener {
     private MaterialDialog mMaterialDialog;
@@ -35,7 +32,7 @@ public class MergeHelper implements MergeFilesListener {
         mFileUtils = new FileUtils(mActivity);
         mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
                 .getString(STORAGE_LOCATION,
-                        getDefaultStorageLocation());
+                        StringUtils.getInstance().getDefaultStorageLocation());
         mContext = mActivity;
         mViewFilesAdapter = viewFilesAdapter;
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -48,8 +45,8 @@ public class MergeHelper implements MergeFilesListener {
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(mContext.getResources().getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.isEmpty(input)) {
-                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    if (StringUtils.getInstance().isEmpty(input)) {
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         if (!mFileUtils.isFileExist(input + mContext.getResources().getString(R.string.pdf_ext))) {
                             new MergePdf(input.toString(), mHomePath, mPasswordProtected,
@@ -69,12 +66,12 @@ public class MergeHelper implements MergeFilesListener {
     public void resetValues(boolean isPDFMerged, String path) {
         mMaterialDialog.dismiss();
         if (isPDFMerged) {
-            getSnackbarwithAction(mActivity, R.string.pdf_merged)
+            StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.pdf_merged)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
             new DatabaseHelper(mActivity).insertRecord(path,
                     mActivity.getString(R.string.created));
         } else
-            showSnackbar(mActivity, R.string.file_access_error);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.file_access_error);
         mViewFilesAdapter.updateDataset();
     }
 

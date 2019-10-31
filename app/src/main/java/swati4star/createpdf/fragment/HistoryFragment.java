@@ -37,10 +37,10 @@ import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickListener {
 
@@ -149,7 +149,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         if (file.exists()) {
             fileUtils.openFile(path);
         } else {
-            showSnackbar(mActivity, R.string.pdf_does_not_exist_message);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.pdf_does_not_exist_message);
         }
     }
 

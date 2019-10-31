@@ -44,13 +44,13 @@ import swati4star.createpdf.util.FileSortUtils;
 import swati4star.createpdf.util.MergeHelper;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.PopulateList;
+import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ViewFilesFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
@@ -172,13 +172,13 @@ public class ViewFilesFragment extends Fragment
                 if (mViewFilesAdapter.areItemsSelected())
                     deleteFiles();
                 else
-                    showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 break;
             case R.id.item_share:
                 if (mViewFilesAdapter.areItemsSelected())
                     mViewFilesAdapter.shareFiles();
                 else
-                    showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 break;
             case R.id.select_all:
                 if (mViewFilesAdapter.getItemCount() > 0) {
@@ -188,7 +188,7 @@ public class ViewFilesFragment extends Fragment
                         mViewFilesAdapter.checkAll();
                     }
                 } else {
-                    showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
                 }
                 break;
             case R.id.item_merge:
@@ -337,15 +337,15 @@ public class ViewFilesFragment extends Fragment
                                            @NonNull int[] grantResults) {
 
         if (grantResults.length < 1) {
-            showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
             return;
         }
         if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
                 onRefresh();
             } else
-                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 

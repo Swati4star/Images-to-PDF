@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.R;
 
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-
 public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
 
     private MaterialDialog mDialog;
@@ -67,7 +65,7 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
                 String destination;
                 for (String path : mFilePath) {
                     String[] fileName = path.split("/");
-                    destination = getDefaultStorageLocation()
+                    destination = StringUtils.getInstance().getDefaultStorageLocation()
                             + mDirectoryName + "/" + fileName[fileName.length - 1];
                     if (!path.equalsIgnoreCase(destination))
                         moveFile(mDirectoryName + "/", path, destination);
@@ -78,13 +76,13 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
                 for (String path : mFilePath)
                     new File(path).delete();
 
-                new File(getDefaultStorageLocation() + mDirectoryName).delete();
+                new File(StringUtils.getInstance().getDefaultStorageLocation() + mDirectoryName).delete();
                 break;
 
             case HOME_DIRECTORY:
                 for (String path : mFilePath) {
                     String[] fileName = path.split("/");
-                    destination = getDefaultStorageLocation()
+                    destination = StringUtils.getInstance().getDefaultStorageLocation()
                             + fileName[fileName.length - 1];
                     moveFile(null, path, destination);
                 }
@@ -105,7 +103,7 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
         int read;
         try {
             if (directoryName != null) {
-                File folder = new File(getDefaultStorageLocation() + directoryName);
+                File folder = new File(StringUtils.getInstance().getDefaultStorageLocation() + directoryName);
                 if (!folder.exists())
                     folder.mkdir();
             }

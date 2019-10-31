@@ -51,9 +51,6 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
@@ -99,7 +96,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result == null || result.getContents() == null)
-            showSnackbar(mActivity, R.string.scan_cancelled);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
         else {
             Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
 
@@ -156,8 +153,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.isEmpty(input)) {
-                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    if (StringUtils.getInstance().isEmpty(input)) {
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
@@ -181,7 +178,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      */
     private void createPdf(String mFilename, Uri uri) {
         mPath = mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation());
+                StringUtils.getInstance().getDefaultStorageLocation());
         mPath = mPath + mFilename + mActivity.getString(R.string.pdf_ext);
         try {
             TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
@@ -190,7 +187,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                     "", uri, fontSize, mFontFamily, mFontColor, DEFAULT_PAGE_COLOR),
                     Constants.textExtension);
             final String finalMPath = mPath;
-            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+            StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
@@ -230,11 +227,11 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     public void onPDFCreated(boolean success, String path) {
         mMaterialDialog.dismiss();
         if (!success) {
-            showSnackbar(mActivity, R.string.snackbar_folder_not_created);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_folder_not_created);
             return;
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
-        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
         mPath = path;
         resetValues();

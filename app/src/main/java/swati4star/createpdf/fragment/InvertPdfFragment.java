@@ -40,10 +40,9 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.InvertPdf;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
@@ -176,11 +175,11 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     public void onPDFCreated(boolean isNewPdfCreated, String path) {
         mMaterialDialog.dismiss();
         if (!isNewPdfCreated) {
-            showSnackbar(mActivity, R.string.snackbar_invert_unsuccessful);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_invert_unsuccessful);
             return;
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_invert_successfull));
-        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
         viewPdfButton(path);
         resetValues();

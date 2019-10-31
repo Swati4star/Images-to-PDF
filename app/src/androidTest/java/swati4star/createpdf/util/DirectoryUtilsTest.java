@@ -77,7 +77,7 @@ public class DirectoryUtilsTest {
     public void shouldCreatePdfDirectory() {
         // given
         cleanup();
-        File dir = new File(StringUtils.getDefaultStorageLocation());
+        File dir = new File(StringUtils.getInstance().getDefaultStorageLocation());
         dir.delete();
 
         Assert.assertFalse(dir.exists());

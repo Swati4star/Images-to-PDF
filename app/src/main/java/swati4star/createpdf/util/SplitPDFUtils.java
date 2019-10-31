@@ -20,8 +20,6 @@ import swati4star.createpdf.database.DatabaseHelper;
 
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class SplitPDFUtils {
 
@@ -59,7 +57,7 @@ public class SplitPDFUtils {
 
         try {
             String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
-                    getDefaultStorageLocation());
+                    StringUtils.getInstance().getDefaultStorageLocation());
             PdfReader reader = new PdfReader(path);
             PdfCopy copy;
             Document document;
@@ -94,7 +92,7 @@ public class SplitPDFUtils {
                         startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
                         endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
                         if (reader.getNumberOfPages() == endPage - startPage + 1) {
-                            showSnackbar(mContext, R.string.split_range_alert);
+                            StringUtils.getInstance().showSnackbar(mContext, R.string.split_range_alert);
                         } else {
                             document = new Document();
                             fileName = fileName.replace(pdfExtension,
@@ -112,12 +110,12 @@ public class SplitPDFUtils {
                         }
                     }
                 } else {
-                    showSnackbar(mContext, R.string.split_one_page_pdf_alert);
+                    StringUtils.getInstance().showSnackbar(mContext, R.string.split_one_page_pdf_alert);
                 }
             }
         } catch (IOException | DocumentException | IllegalArgumentException e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.file_access_error);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.file_access_error);
         }
         return outputPaths;
     }
@@ -136,13 +134,13 @@ public class SplitPDFUtils {
             int result = checkRangeValidity(numOfPages, ranges);
             switch (result) {
                 case ERROR_PAGE_NUMBER:
-                    showSnackbar(mContext, R.string.error_page_number);
+                    StringUtils.getInstance().showSnackbar(mContext, R.string.error_page_number);
                     break;
                 case ERROR_PAGE_RANGE:
-                    showSnackbar(mContext, R.string.error_page_range);
+                    StringUtils.getInstance().showSnackbar(mContext, R.string.error_page_range);
                     break;
                 case ERROR_INVALID_INPUT:
-                    showSnackbar(mContext, R.string.error_invalid_input);
+                    StringUtils.getInstance().showSnackbar(mContext, R.string.error_invalid_input);
                     break;
                 default:
                     return true;

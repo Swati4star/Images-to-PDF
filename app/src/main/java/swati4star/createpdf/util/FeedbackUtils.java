@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class FeedbackUtils {
 
@@ -36,7 +35,7 @@ public class FeedbackUtils {
         try {
             mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
-            showSnackbar(mContext, R.string.snackbar_no_share_app);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.snackbar_no_share_app);
         }
     }
 

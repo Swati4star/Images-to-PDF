@@ -37,12 +37,12 @@ import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFRotationUtils;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PopulateList;
+import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.WatermarkUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
 import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 /**
  * Created by swati on 9/10/15.
@@ -302,7 +302,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             File fdelete = new File(fileName);
             mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
             if (fdelete.exists() && !fdelete.delete())
-                showSnackbar(mActivity, R.string.snackbar_file_not_deleted);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_file_not_deleted);
         }
 
         ArrayList<PDFFile> newList = new ArrayList<>();
@@ -340,7 +340,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .content(R.string.enter_file_name)
                 .input(mActivity.getString(R.string.example), null, (dialog, input) -> {
                     if (input == null || input.toString().trim().isEmpty())
-                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     else {
                         if (!mFileUtils.isFileExist(input + mActivity.getString(R.string.pdf_ext))) {
                             renameFile(position, input.toString());
@@ -362,12 +362,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 + "/" + newName + mActivity.getString(R.string.pdf_ext);
         File newfile = new File(newfilename);
         if (oldfile.renameTo(newfile)) {
-            showSnackbar(mActivity, R.string.snackbar_file_renamed);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_file_renamed);
             pdfFile.setPdfFile(newfile);
             notifyDataSetChanged();
             mDatabaseHelper.insertRecord(newfilename, mActivity.getString(R.string.renamed));
         } else
-            showSnackbar(mActivity, R.string.snackbar_file_not_renamed);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_file_not_renamed);
     }
 
     @Override

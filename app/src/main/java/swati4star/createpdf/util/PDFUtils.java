@@ -40,8 +40,6 @@ import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.interfaces.OnPdfReorderedInterface;
 
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFUtils {
 
@@ -238,14 +236,14 @@ public class PDFUtils {
 
             document.close();
 
-            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+            StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
             new DatabaseHelper(mContext).insertRecord(output, mContext.getString(R.string.created));
 
             return true;
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.remove_pages_error);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.remove_pages_error);
             return false;
         }
     }
@@ -255,14 +253,14 @@ public class PDFUtils {
             PdfReader reader = new PdfReader(inputPath);
             reader.selectPages(pages);
             if (reader.getNumberOfPages() == 0) {
-                showSnackbar(mContext, R.string.remove_pages_error);
+                StringUtils.getInstance().showSnackbar(mContext, R.string.remove_pages_error);
                 return false;
             }
             //if (reader.getNumberOfPages() )
             PdfStamper pdfStamper = new PdfStamper(reader,
                     new FileOutputStream(output));
             pdfStamper.close();
-            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+            StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
             new DatabaseHelper(mContext).insertRecord(output,
                     mContext.getString(R.string.created));
@@ -270,7 +268,7 @@ public class PDFUtils {
 
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.remove_pages_error);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.remove_pages_error);
             return false;
         }
     }

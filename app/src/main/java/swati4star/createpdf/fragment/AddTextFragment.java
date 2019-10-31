@@ -70,9 +70,6 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         BottomSheetPopulate, OnBackPressedInterface, OnItemClickListner {
@@ -164,7 +161,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             startActivityForResult(mFileUtils.getFileChooser(),
                     INTENT_REQUEST_PICK_PDF_FILE_CODE);
         } catch (android.content.ActivityNotFoundException ex) {
-            showSnackbar(mActivity, R.string.install_file_manager);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
         }
     }
 
@@ -182,7 +179,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                     Intent.createChooser(intent, String.valueOf(R.string.select_file)),
                     INTENT_REQUEST_PICK_TEXT_FILE_CODE);
         } catch (android.content.ActivityNotFoundException ex) {
-            showSnackbar(mActivity, R.string.install_file_manager);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
         }
     }
 
@@ -197,8 +194,8 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.isEmpty(input)) {
-                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    if (StringUtils.getInstance().isEmpty(input)) {
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
@@ -219,19 +216,19 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             return;
         if (requestCode == INTENT_REQUEST_PICK_PDF_FILE_CODE) {
             mPdfpath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
-            showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
+            StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
             return;
         }
         if (requestCode == INTENT_REQUEST_PICK_TEXT_FILE_CODE) {
             mTextPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
-            showSnackbar(mActivity, getResources().getString(R.string.snackbar_txtselected));
+            StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_txtselected));
         }
         setTextAndActivateButtons(mPdfpath, mTextPath);
     }
 
     private void setTextAndActivateButtons(String pdfPath, String textPath) {
         if (pdfPath == null || textPath == null) {
-            showSnackbar(mActivity, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_occurred);
             resetView();
             return;
         }
@@ -265,7 +262,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
      */
     private void addText(String fileName, int fontsize, Font.FontFamily fontFamily) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation());
+                StringUtils.getInstance().getDefaultStorageLocation());
         String mPath = mStorePath + fileName + pdfExtension;
         try {
             StringBuilder text = new StringBuilder();
@@ -298,7 +295,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                     FontFactory.getFont(fontFamily.name(), fontsize))));
             document.close();
 
-            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+            StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
                     .show();
         } catch (Exception e) {
@@ -318,7 +315,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
             } else
-                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
@@ -326,7 +323,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     public void onItemClick(String path) {
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mPdfpath = path;
-        showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
+        StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
     }
 
     @Override
@@ -373,11 +370,11 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                     try {
                         int check = Integer.parseInt(String.valueOf(fontInput.getText()));
                         if (check > 1000 || check < 0) {
-                            showSnackbar(mActivity, R.string.invalid_entry);
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mFontSize = check;
                             showFontSize();
-                            showSnackbar(mActivity, R.string.font_size_changed);
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.font_size_changed);
                             if (cbSetDefault.isChecked()) {
                                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                                 editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
@@ -388,7 +385,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                             }
                         }
                     } catch (NumberFormatException e) {
-                        showSnackbar(mActivity, R.string.invalid_entry);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 })
                 .show();

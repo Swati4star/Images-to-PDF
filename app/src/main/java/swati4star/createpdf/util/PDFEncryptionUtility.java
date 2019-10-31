@@ -27,8 +27,6 @@ import swati4star.createpdf.interfaces.DataSetChanged;
 
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PDFEncryptionUtility {
 
@@ -72,8 +70,9 @@ public class PDFEncryptionUtility {
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        if (StringUtils.isEmpty(input))
-                            showSnackbar(mContext, R.string.snackbar_password_cannot_be_blank);
+                        if (StringUtils.getInstance().isEmpty(input))
+                            StringUtils.getInstance().
+                                    showSnackbar(mContext, R.string.snackbar_password_cannot_be_blank);
                         else
                             mPassword = input.toString();
                     }
@@ -83,13 +82,13 @@ public class PDFEncryptionUtility {
         mPositiveAction.setOnClickListener(v -> {
             try {
                 String path = doEncryption(filePath, mPassword);
-                getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                         .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(path)).show();
                 if (dataSetChanged != null)
                     dataSetChanged.updateDataset();
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
-                showSnackbar(mContext, R.string.cannot_add_password);
+                StringUtils.getInstance().showSnackbar(mContext, R.string.cannot_add_password);
             }
             mDialog.dismiss();
         });
@@ -135,7 +134,7 @@ public class PDFEncryptionUtility {
         }
         //Check if PDF is encrypted or not.
         if (!reader.isEncrypted()) {
-            showSnackbar(mContext, R.string.not_encrypted);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.not_encrypted);
             return false;
         }
         return true;
@@ -184,7 +183,7 @@ public class PDFEncryptionUtility {
 
             if (!removePasswordUsingDefMasterPAssword(file, dataSetChanged, input_password)) {
                 if (!removePasswordUsingInputMasterPAssword(file, dataSetChanged, input_password)) {
-                    showSnackbar(mContext, R.string.master_password_changed);
+                    StringUtils.getInstance().showSnackbar(mContext, R.string.master_password_changed);
                 }
             }
             mDialog.dismiss();
@@ -242,7 +241,7 @@ public class PDFEncryptionUtility {
                     dataSetChanged.updateDataset();
                 new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
                 final String filepath = finalOutputFile;
-                getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+                StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                         .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(filepath)).show();
                 return true;
             }
@@ -270,7 +269,7 @@ public class PDFEncryptionUtility {
                 dataSetChanged.updateDataset();
             new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
             final String filepath = finalOutputFile;
-            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+            StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(filepath)).show();
             return true;
 

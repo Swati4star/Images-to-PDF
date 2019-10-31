@@ -132,7 +132,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             for (int i = 0; i < mImagesUri.size(); i++) {
                 int quality;
                 quality = 30;
-                if (StringUtils.isNotEmpty(mQualityString)) {
+                if (StringUtils.getInstance().isNotEmpty(mQualityString)) {
                     quality = Integer.parseInt(mQualityString);
                 }
                 Image image = Image.getInstance(mImagesUri.get(i));

@@ -20,7 +20,6 @@ import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.model.HomePageItem;
 
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class CommonCodeUtils {
 
@@ -57,12 +56,12 @@ public class CommonCodeUtils {
                                   ExtractImagesAdapter.OnFileItemClickedListener listener) {
 
         if (imageCount == 0) {
-            showSnackbar(mActivity, R.string.extract_images_failed);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.extract_images_failed);
             return;
         }
 
         String text = String.format(mActivity.getString(R.string.extract_images_success), imageCount);
-        showSnackbar(mActivity, text);
+        StringUtils.getInstance().showSnackbar(mActivity, text);
         successTextView.setVisibility(View.VISIBLE);
         options.setVisibility(View.VISIBLE);
         ExtractImagesAdapter extractImagesAdapter = new ExtractImagesAdapter(mActivity, outputFilePaths, listener);

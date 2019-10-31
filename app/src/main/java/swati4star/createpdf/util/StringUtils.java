@@ -16,25 +16,29 @@ import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 public class StringUtils {
 
-    public static boolean isEmpty(CharSequence s) {
+    private StringUtils() {
+
+    }
+
+    public boolean isEmpty(CharSequence s) {
         return s == null || s.toString().trim().equals("");
     }
 
-    public static boolean isNotEmpty(CharSequence s) {
+    public boolean isNotEmpty(CharSequence s) {
         return s != null && !s.toString().trim().equals("");
     }
 
-    public static void showSnackbar(Activity context, int resID) {
+    public void showSnackbar(Activity context, int resID) {
         Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG).show();
     }
 
-    public static void showSnackbar(Activity context, String resID) {
+    public void showSnackbar(Activity context, String resID) {
         Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG).show();
     }
 
-    public static Snackbar showIndefiniteSnackbar(Activity context, String resID) {
+    public Snackbar showIndefiniteSnackbar(Activity context, String resID) {
         return Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_INDEFINITE);
     }
@@ -44,7 +48,7 @@ public class StringUtils {
                 resID, Snackbar.LENGTH_LONG);
     }
 
-    public static void hideKeyboard(Activity activity) {
+    public void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
@@ -56,8 +60,16 @@ public class StringUtils {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static String getDefaultStorageLocation() {
+    public String getDefaultStorageLocation() {
         return Environment.getExternalStorageDirectory().getAbsolutePath() +
                 pdfDirectory;
+    }
+
+    private static class SingletonHolder {
+        static final StringUtils INSTANCE = new StringUtils();
+    }
+
+    public static StringUtils getInstance() {
+        return StringUtils.SingletonHolder.INSTANCE;
     }
 }

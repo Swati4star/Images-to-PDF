@@ -55,8 +55,6 @@ import swati4star.createpdf.util.TextToPdfAsync;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
 public class TextToPdfFragment extends Fragment implements OnItemClickListner,
@@ -185,8 +183,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                 });
 
         positiveAction.setOnClickListener(v -> {
-            if (StringUtils.isEmpty(passwordInput.getText())) {
-                showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+            if (StringUtils.getInstance().isEmpty(passwordInput.getText())) {
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
             } else {
                 mPassword = passwordInput.getText().toString();
                 mPasswordProtected = true;
@@ -195,13 +193,13 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
             }
         });
 
-        if (StringUtils.isNotEmpty(mPassword)) {
+        if (StringUtils.getInstance().isNotEmpty(mPassword)) {
             neutralAction.setOnClickListener(v -> {
                 mPassword = null;
                 onPasswordRemoved();
                 mPasswordProtected = false;
                 dialog.dismiss();
-                showSnackbar(mActivity, R.string.password_remove);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.password_remove);
             });
         }
         dialog.show();
@@ -259,7 +257,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mFontColor = colorPickerView.getColor();
                     if (ColorUtils.getInstance().colorSimilarCheck(mFontColor, mPageColor)) {
-                        showSnackbar(mActivity, R.string.snackbar_color_too_close);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -285,7 +283,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mPageColor = colorPickerView.getColor();
                     if (ColorUtils.getInstance().colorSimilarCheck(mFontColor, mPageColor)) {
-                        showSnackbar(mActivity, R.string.snackbar_color_too_close);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -314,11 +312,11 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     try {
                         int check = Integer.parseInt(String.valueOf(fontInput.getText()));
                         if (check > 1000 || check < 0) {
-                            showSnackbar(mActivity, R.string.invalid_entry);
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mFontSize = check;
                             showFontSize();
-                            showSnackbar(mActivity, R.string.font_size_changed);
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.font_size_changed);
                             if (cbSetDefault.isChecked()) {
                                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                                 editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
@@ -329,7 +327,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                             }
                         }
                     } catch (NumberFormatException e) {
-                        showSnackbar(mActivity, R.string.invalid_entry);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 })
                 .show();
@@ -360,8 +358,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), mFileNameWithType,
                         (dialog, input) -> {
-                            if (StringUtils.isEmpty(input)) {
-                                showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                            if (StringUtils.getInstance().isEmpty(input)) {
+                                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                             } else {
                                 final String inputName = input.toString();
                                 if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
@@ -415,7 +413,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                         Intent.createChooser(intent, String.valueOf(R.string.select_file)),
                         mFileSelectCode);
             } catch (android.content.ActivityNotFoundException ex) {
-                showSnackbar(mActivity, R.string.install_file_manager);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
             }
             mButtonClicked = 1;
         }
@@ -427,7 +425,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         if (requestCode == mFileSelectCode) {
             if (resultCode == RESULT_OK) {
                 mTextFileUri = data.getData();
-                showSnackbar(mActivity, R.string.text_file_selected);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.text_file_selected);
                 String fileName = mFileUtils.getFileName(mTextFileUri);
                 if (fileName != null) {
                     if (fileName.endsWith(Constants.textExtension))
@@ -437,7 +435,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                     else if (fileName.endsWith(Constants.docExtension))
                         mFileExtension = Constants.docExtension;
                     else {
-                        showSnackbar(mActivity, R.string.extension_not_supported);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.extension_not_supported);
                         return;
                     }
                 }
@@ -472,9 +470,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
                 selectTextFile();
-                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
             } else
-                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
@@ -509,14 +507,14 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
-            showSnackbar(mActivity, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_occurred);
             mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
             mCreateTextPdf.setEnabled(false);
             mTextFileUri = null;
             mButtonClicked = 0;
             return;
         }
-        getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
         mSelectFile.setText(R.string.select_text_file);
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());

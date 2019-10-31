@@ -19,7 +19,6 @@ import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.excelExtension;
 import static swati4star.createpdf.util.Constants.excelWorkbookExtension;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
 
 public class DirectoryUtils {
 
@@ -124,7 +123,7 @@ public class DirectoryUtils {
      */
     public File getOrCreatePdfDirectory() {
         File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation()));
+                StringUtils.getInstance().getDefaultStorageLocation()));
         if (!folder.exists())
             folder.mkdir();
         return folder;
@@ -150,7 +149,7 @@ public class DirectoryUtils {
      */
     public File getDirectory(String dirName) {
         File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation()) + dirName);
+                StringUtils.getInstance().getDefaultStorageLocation()) + dirName);
         if (!folder.exists()) {
             return null;
         }
