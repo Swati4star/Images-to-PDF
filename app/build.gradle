@@ -12,6 +12,7 @@ android {
         targetSdkVersion 28
         versionCode 102
         versionName "8.7.5"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
