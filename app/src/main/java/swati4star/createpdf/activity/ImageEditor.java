@@ -37,12 +37,12 @@ import swati4star.createpdf.interfaces.OnItemClickListner;
 import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
 import swati4star.createpdf.util.BrushUtils;
+import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListner {
 
@@ -132,7 +132,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         if (mClicked) {
             changeAndShowImageCount((mCurrentImage + 1) % mDisplaySize);
         } else
-            showSnackbar(this, R.string.save_first);
+            StringUtils.getInstance().showSnackbar(this, R.string.save_first);
     }
 
     @OnClick(R.id.previousImageButton)
@@ -141,7 +141,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         if (mClicked) {
             changeAndShowImageCount((mCurrentImage - 1 % mDisplaySize));
         } else
-            showSnackbar(this, R.string.save_first);
+            StringUtils.getInstance().showSnackbar(this, R.string.save_first);
     }
 
     // modify current image num & display in textview

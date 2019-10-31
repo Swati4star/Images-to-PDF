@@ -27,9 +27,9 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.pdfDirectory;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class CropImageActivity extends AppCompatActivity {
 
@@ -81,7 +81,7 @@ public class CropImageActivity extends AppCompatActivity {
         Uri uri = mCropImageView.getImageUri();
 
         if (uri == null) {
-            showSnackbar(this, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(this, R.string.error_occurred);
             return;
         }
 
@@ -110,7 +110,7 @@ public class CropImageActivity extends AppCompatActivity {
             mCurrentImageIndex = (mCurrentImageIndex + 1) % mImages.size();
             setImage(mCurrentImageIndex);
         } else {
-            showSnackbar(this, R.string.save_first);
+            StringUtils.getInstance().showSnackbar(this, R.string.save_first);
         }
     }
 
@@ -126,7 +126,7 @@ public class CropImageActivity extends AppCompatActivity {
             mCurrentImageIndex = (mCurrentImageIndex - 1) % mImages.size();
             setImage(mCurrentImageIndex);
         } else {
-            showSnackbar(this, R.string.save_first);
+            StringUtils.getInstance().showSnackbar(this, R.string.save_first);
         }
     }
 

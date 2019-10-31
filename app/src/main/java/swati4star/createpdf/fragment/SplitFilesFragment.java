@@ -41,12 +41,11 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.SplitPDFUtils;
+import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.StringUtils.hideKeyboard;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnBackPressedInterface {
@@ -123,7 +122,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.splitFiles)
     public void parse() {
-        hideKeyboard(mActivity);
+        StringUtils.getInstance().hideKeyboard(mActivity);
 
         ArrayList<String> outputFilePaths = mSplitPDFUtils.splitPDFByConfig(mPath,
                 mSplitConfitEditText.getText().toString());
@@ -132,7 +131,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
             return;
         }
         String output = String.format(mActivity.getString(R.string.split_success), numberOfPages);
-        showSnackbar(mActivity, output);
+        StringUtils.getInstance().showSnackbar(mActivity, output);
         splitFilesSuccessText.setVisibility(View.VISIBLE);
         splitFilesSuccessText.setText(output);
 
@@ -201,7 +200,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
             }
         } catch (Exception er) {
             er.printStackTrace();
-            showSnackbar(mActivity, R.string.encrypted_pdf);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.encrypted_pdf);
             return null;
         }
         return splitConfig.toString();

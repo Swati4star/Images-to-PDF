@@ -36,6 +36,7 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.PageSizeUtils;
+import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
@@ -44,8 +45,6 @@ import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 import static swati4star.createpdf.util.ThemeUtils.getSelectedThemePosition;
 import static swati4star.createpdf.util.ThemeUtils.saveTheme;
 
@@ -76,7 +75,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
         ButterKnife.bind(this, root);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation()));
+                StringUtils.getInstance().getDefaultStorageLocation()));
         showSettingsOptions();
         return root;
     }
@@ -93,9 +92,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
             if (data.getExtras() != null) {
                 String folderLocation = data.getExtras().getString("data") + "/";
                 mSharedPreferences.edit().putString(STORAGE_LOCATION, folderLocation).apply();
-                showSnackbar(mActivity, R.string.storage_location_modified);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.storage_location_modified);
                 storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
-                        getDefaultStorageLocation()));
+                        StringUtils.getInstance().getDefaultStorageLocation()));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -154,7 +153,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                             if (!value.isEmpty())
                                 mSharedPreferences.edit().putString(MASTER_PWD_STRING, value).apply();
                             else
-                                showSnackbar(mActivity, R.string.invalid_entry);
+                                StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
 
 
                         }).build();
@@ -179,7 +178,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     try {
                         check = Integer.parseInt(String.valueOf(qualityInput.getText()));
                         if (check > 100 || check < 0) {
-                            showSnackbar(mActivity, R.string.invalid_entry);
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             SharedPreferences.Editor editor = mSharedPreferences.edit();
                             editor.putInt(DEFAULT_COMPRESSION, check);
@@ -187,7 +186,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                             showSettingsOptions();
                         }
                     } catch (NumberFormatException e) {
-                        showSnackbar(mActivity, R.string.invalid_entry);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 }).build();
         View customView = dialog.getCustomView();
@@ -207,16 +206,16 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
                     try {
                         int check = Integer.parseInt(String.valueOf(fontInput.getText()));
                         if (check > 1000 || check < 0) {
-                            showSnackbar(mActivity, R.string.invalid_entry);
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
-                            showSnackbar(mActivity, R.string.font_size_changed);
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.font_size_changed);
                             SharedPreferences.Editor editor = mSharedPreferences.edit();
                             editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, check);
                             editor.apply();
                             showSettingsOptions();
                         }
                     } catch (NumberFormatException e) {
-                        showSnackbar(mActivity, R.string.invalid_entry);
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                     }
                 })
                 .build();

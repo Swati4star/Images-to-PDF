@@ -51,7 +51,6 @@ import swati4star.createpdf.util.StringUtils;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
@@ -192,8 +191,8 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                     .content(R.string.decrypt_protected_file)
                     .inputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
                     .input(null, null, (dialog, input) -> {
-                        if (StringUtils.isEmpty(input)) {
-                            showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                        if (StringUtils.getInstance().isEmpty(input)) {
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                         } else {
                             final String inputName = input.toString();
                             if (inputName != null) {
@@ -252,7 +251,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     private void setTextAndActivateButtons(String path) {
         if (path == null) {
-            showSnackbar(mActivity, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_occurred);
             resetView();
             return;
         }

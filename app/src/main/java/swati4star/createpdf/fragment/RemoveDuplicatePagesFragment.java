@@ -40,10 +40,9 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.RemoveDuplicates;
+import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
@@ -172,13 +171,13 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     public void onPDFCreated(boolean isNewPdfCreated, String path) {
         mMaterialDialog.dismiss();
         if (!isNewPdfCreated) {
-            showSnackbar(mActivity, R.string.snackbar_no_duplicate_pdf);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_duplicate_pdf);
             //Hiding View PDF button
             mViewPdf.setVisibility(View.GONE);
             return;
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
-        getSnackbarwithAction(mActivity, R.string.snackbar_duplicate_removed)
+        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_duplicate_removed)
                 .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
         viewPdfButton(path);
         resetValues();

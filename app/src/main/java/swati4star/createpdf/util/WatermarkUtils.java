@@ -31,9 +31,6 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.model.Watermark;
 
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
-
 public class WatermarkUtils {
 
     private final Activity mContext;
@@ -86,8 +83,9 @@ public class WatermarkUtils {
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        if (StringUtils.isEmpty(input))
-                            showSnackbar(mContext, R.string.snackbar_watermark_cannot_be_blank);
+                        if (StringUtils.getInstance().isEmpty(input))
+                            StringUtils.getInstance().
+                                    showSnackbar(mContext, R.string.snackbar_watermark_cannot_be_blank);
                         else {
                             mWatermark.setWatermarkText(input.toString());
                         }
@@ -100,13 +98,13 @@ public class WatermarkUtils {
                 mWatermark.setWatermarkText(watermarkTextInput.getText().toString());
                 mWatermark.setFontFamily(((Font.FontFamily) fontFamilyInput.getSelectedItem()));
                 mWatermark.setFontStyle(getStyleValueFromName(((String) styleInput.getSelectedItem())));
-                if (StringUtils.isEmpty(angleInput.getText())) {
+                if (StringUtils.getInstance().isEmpty(angleInput.getText())) {
                     mWatermark.setRotationAngle(0);
                 } else {
                     mWatermark.setRotationAngle(Integer.valueOf(angleInput.getText().toString()));
                 }
 
-                if (StringUtils.isEmpty(fontSizeInput.getText())) {
+                if (StringUtils.getInstance().isEmpty(fontSizeInput.getText())) {
                     mWatermark.setTextSize(50);
                 } else {
                     mWatermark.setTextSize(Integer.valueOf(fontSizeInput.getText().toString()));
@@ -119,11 +117,11 @@ public class WatermarkUtils {
                 )));
                 String filePath = createWatermark(path);
                 dataSetChanged.updateDataset();
-                getSnackbarwithAction(mContext, R.string.watermark_added).setAction(
+                StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.watermark_added).setAction(
                         "View", v1 -> mFileUtils.openFile(filePath)).show();
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
-                showSnackbar(mContext, R.string.cannot_add_watermark);
+                StringUtils.getInstance().showSnackbar(mContext, R.string.cannot_add_watermark);
             }
             mDialog.dismiss();
         });

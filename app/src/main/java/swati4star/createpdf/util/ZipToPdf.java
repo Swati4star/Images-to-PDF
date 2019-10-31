@@ -19,7 +19,6 @@ import swati4star.createpdf.activity.MainActivity;
 
 import static swati4star.createpdf.util.Constants.pdfDirectory;
 import static swati4star.createpdf.util.Constants.tempDirectory;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ZipToPdf {
 
@@ -82,7 +81,7 @@ public class ZipToPdf {
             zipInputStream.close();
 
             if (imageUris.size() == 0) {
-                showSnackbar(context, R.string.error_no_image_in_zip);
+                StringUtils.getInstance().showSnackbar(context, R.string.error_no_image_in_zip);
                 return;
             }
             /*once we have extracted images out of zip, now we will pass
@@ -91,7 +90,7 @@ public class ZipToPdf {
             ((MainActivity) context).convertImagesToPdf(imageUris);
         } catch (IOException e) {
             e.printStackTrace();
-            showSnackbar(context, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(context, R.string.error_occurred);
         }
     }
 

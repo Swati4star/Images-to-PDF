@@ -49,8 +49,6 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
-import static swati4star.createpdf.util.StringUtils.hideKeyboard;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         MergeFilesAdapter.OnClickListener, OnBackPressedInterface {
@@ -144,7 +142,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
                     mNoOfImages.setVisibility(View.VISIBLE);
-                    showSnackbar(mActivity, R.string.snackbar_images_added);
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
                     mCreatePdf.setEnabled(true);
                 } else {
                     mNoOfImages.setVisibility(View.GONE);
@@ -168,15 +166,15 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
                 selectImages();
-                showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
             } else
-                showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
     @OnClick(R.id.pdfCreate)
     public void parse() {
-        hideKeyboard(mActivity);
+        StringUtils.getInstance().hideKeyboard(mActivity);
         if (mOperation.equals(ADD_IMAGES))
             getFileName();
     }
@@ -185,8 +183,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialog(mActivity,
                 R.string.creating_pdf, R.string.enter_file_name);
         builder.input(getString(R.string.example), null, (dialog, input) -> {
-            if (StringUtils.isEmpty(input)) {
-                showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+            if (StringUtils.getInstance().isEmpty(input)) {
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
             } else {
                 final String filename = input.toString();
                 FileUtils utils = new FileUtils(mActivity);
@@ -219,7 +217,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
             resetValues();
             progressDialog.dismiss();
         } else {
-            showSnackbar(mActivity, R.string.no_images_selected);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.no_images_selected);
         }
     }
 

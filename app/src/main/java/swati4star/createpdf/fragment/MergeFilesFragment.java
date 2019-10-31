@@ -61,9 +61,6 @@ import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
         MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner,
@@ -121,7 +118,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mHomePath = mSharedPrefs.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation());
+                StringUtils.getInstance().getDefaultStorageLocation());
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
@@ -148,7 +145,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public void onItemClick(int position) {
         if (mFilePaths.size() == 0) {
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
             return;
         }
         if (position == 0) {
@@ -181,8 +178,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
                     @Override
                     public void afterTextChanged(Editable input) {
-                        if (StringUtils.isEmpty(input)) {
-                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+                        if (StringUtils.getInstance().isEmpty(input)) {
+                            StringUtils.getInstance().
+                                    showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
                         } else {
                             mPassword = input.toString();
                             mPasswordProtected = true;
@@ -190,13 +188,13 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                         }
                     }
                 });
-        if (StringUtils.isNotEmpty(mPassword)) {
+        if (StringUtils.getInstance().isNotEmpty(mPassword)) {
             neutralAction.setOnClickListener(v -> {
                 mPassword = null;
                 onPasswordStatusChanges(false);
                 mPasswordProtected = false;
                 dialog.dismiss();
-                showSnackbar(mActivity, R.string.password_remove);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.password_remove);
             });
         }
         dialog.show();
@@ -230,8 +228,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.isEmpty(input)) {
-                        showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    if (StringUtils.getInstance().isEmpty(input)) {
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         if (!mFileUtils.isFileExist(input + getString(R.string.pdf_ext))) {
                             new MergePdf(input.toString(), mHomePath, mPasswordProtected,
@@ -256,7 +254,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             mFilePaths.add(path);
             mMergeSelectedFilesAdapter.notifyDataSetChanged();
-            showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
+            StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
             if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
                 setMorphingButtonState(true);
         }
@@ -288,10 +286,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onItemClick(String path) {
         if (mFilePaths.contains(path)) {
             mFilePaths.remove(path);
-            showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
+            StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
         } else {
             mFilePaths.add(path);
-            showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
+            StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
         }
 
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
@@ -310,12 +308,12 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMaterialDialog.dismiss();
 
         if (isPDFMerged) {
-            getSnackbarwithAction(mActivity, R.string.pdf_merged)
+            StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.pdf_merged)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
             new DatabaseHelper(mActivity).insertRecord(path,
                     mActivity.getString(R.string.created));
         } else
-            showSnackbar(mActivity, R.string.file_access_error);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.file_access_error);
 
         setMorphingButtonState(false);
         mFilePaths.clear();
@@ -339,7 +337,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void removeFile(String path) {
         mFilePaths.remove(path);
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
-        showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
+        StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
         if (mFilePaths.size() < 2 && mergeBtn.isEnabled())
             setMorphingButtonState(false);
     }

@@ -41,8 +41,6 @@ import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
 import static swati4star.createpdf.util.Constants.pdfExtension;
-import static swati4star.createpdf.util.StringUtils.getDefaultStorageLocation;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class FileUtils {
 
@@ -188,7 +186,7 @@ public class FileUtils {
      */
     public void openFile(String path) {
         if (path == null) {
-            showSnackbar(mContext, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
             return;
         }
         File file = new File(path);
@@ -200,7 +198,7 @@ public class FileUtils {
             target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
         } catch (Exception e) {
-            showSnackbar(mContext, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
         }
     }
 
@@ -219,7 +217,7 @@ public class FileUtils {
             target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
         } catch (Exception e) {
-            showSnackbar(mContext, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
         }
     }
 
@@ -269,7 +267,7 @@ public class FileUtils {
 
     public boolean isFileExist(String mFileName) {
         String path = mSharedPreferences.getString(STORAGE_LOCATION,
-                getDefaultStorageLocation()) + mFileName;
+                StringUtils.getInstance().getDefaultStorageLocation()) + mFileName;
         File file = new File(path);
         return file.exists();
     }
@@ -449,7 +447,7 @@ public class FileUtils {
         try {
             mContext.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            showSnackbar(mContext, R.string.snackbar_no_pdf_app);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.snackbar_no_pdf_app);
         }
     }
 

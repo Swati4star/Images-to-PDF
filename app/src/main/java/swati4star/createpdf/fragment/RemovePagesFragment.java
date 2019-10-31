@@ -27,6 +27,7 @@ import com.dd.morphingbutton.MorphingButton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,9 +48,9 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
@@ -58,9 +59,6 @@ import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.FileUtils.getFormattedSize;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.hideKeyboard;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface, OnPdfReorderedInterface {
@@ -150,7 +148,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
             outputPath = setPath(pages);
             if (mPDFUtils.isPDFEncrypted(mPath)) {
-                showSnackbar(mActivity, R.string.encrypted_pdf);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.encrypted_pdf);
                 return;
             }
 
@@ -159,7 +157,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                     viewPdfButton(outputPath);
                 }
             } else {
-                showSnackbar(mActivity, R.string.file_order);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.file_order);
             }
             resetValues();
         }
@@ -186,7 +184,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @OnClick(R.id.pdfCreate)
     public void parse() {
-        hideKeyboard(mActivity);
+        StringUtils.getInstance().hideKeyboard(mActivity);
         if (mOperation.equals(COMPRESS_PDF)) {
             compressPDF();
             return;
@@ -197,7 +195,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             if (!mPDFUtils.isPDFEncrypted(mPath)) {
                 pdfEncryptionUtility.setPassword(mPath, null);
             } else {
-                showSnackbar(mActivity, R.string.encrypted_pdf);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.encrypted_pdf);
             }
             return;
         }
@@ -206,7 +204,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             if (mPDFUtils.isPDFEncrypted(mPath)) {
                 pdfEncryptionUtility.removePassword(mPath, null);
             } else {
-                showSnackbar(mActivity, R.string.not_encrypted);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.not_encrypted);
             }
             return;
         }
@@ -220,14 +218,14 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         try {
             check = Integer.parseInt(input);
             if (check > 100 || check <= 0 || mPath == null) {
-                showSnackbar(mActivity, R.string.invalid_entry);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
             } else {
                 String outputPath = mPath.replace(mActivity.getString(R.string.pdf_ext),
                         "_edited" + check + mActivity.getString(R.string.pdf_ext));
                 mPDFUtils.compressPDF(mPath, outputPath, 100 - check, this);
             }
         } catch (NumberFormatException e) {
-            showSnackbar(mActivity, R.string.invalid_entry);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
         }
     }
 
@@ -267,7 +265,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     private void setTextAndActivateButtons(String path) {
         if (path == null) {
-            showSnackbar(mActivity, R.string.file_access_error);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.file_access_error);
             resetValues();
             return;
         }
@@ -288,7 +286,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     public void pdfCompressionEnded(String path, Boolean success) {
         mMaterialDialog.dismiss();
         if (success && path != null && mPath != null) {
-            getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+            StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
             new DatabaseHelper(mActivity).insertRecord(path,
                     mActivity.getString(R.string.created));
@@ -300,7 +298,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                     getFormattedSize(input),
                     getFormattedSize(output)));
         } else {
-            showSnackbar(mActivity, R.string.encrypted_pdf);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.encrypted_pdf);
         }
         resetValues();
     }
@@ -346,6 +344,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public void onPdfReorderFailed() {
         mMaterialDialog.dismiss();
-        showSnackbar(mActivity, R.string.file_access_error);
+        StringUtils.getInstance().showSnackbar(mActivity, R.string.file_access_error);
     }
 }

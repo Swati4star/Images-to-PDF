@@ -17,9 +17,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
-import static swati4star.createpdf.util.StringUtils.showSnackbar;
-
 public class PDFRotationUtils {
 
     private final Activity mContext;
@@ -89,13 +86,13 @@ public class PDFRotationUtils {
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(destFilePath));
             stamper.close();
             reader.close();
-            getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
+            StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
                     .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(destFilePath)).show();
             dataSetChanged.updateDataset();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            showSnackbar(mContext, R.string.encrypted_pdf);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.encrypted_pdf);
         }
         return false;
     }
