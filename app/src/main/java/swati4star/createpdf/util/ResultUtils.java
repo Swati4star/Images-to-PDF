@@ -5,7 +5,7 @@ import android.content.Intent;
 
 public class ResultUtils {
 
-    private ResultUtils(){
+    private ResultUtils() {
 
     }
 

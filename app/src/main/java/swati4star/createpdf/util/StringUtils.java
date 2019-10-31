@@ -16,7 +16,7 @@ import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 public class StringUtils {
 
-    private StringUtils(){
+    private StringUtils() {
 
     }
 
@@ -36,6 +36,11 @@ public class StringUtils {
     public void showSnackbar(Activity context, String resID) {
         Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG).show();
+    }
+
+    public Snackbar showIndefiniteSnackbar(Activity context, String resID) {
+        return Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
+                resID, Snackbar.LENGTH_INDEFINITE);
     }
 
     public static Snackbar getSnackbarwithAction(Activity context, int resID) {
