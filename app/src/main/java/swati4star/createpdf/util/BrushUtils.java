@@ -7,6 +7,10 @@ import swati4star.createpdf.model.BrushItem;
 
 public class BrushUtils {
 
+    private BrushUtils() {
+
+    }
+
     public ArrayList<BrushItem> getBrushItems() {
         ArrayList<BrushItem> brushItems = new ArrayList<>();
         brushItems.add(new BrushItem(R.color.mb_white));
