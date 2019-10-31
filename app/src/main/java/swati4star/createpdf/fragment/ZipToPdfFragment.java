@@ -23,10 +23,10 @@ import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.ResultUtils;
 import swati4star.createpdf.util.ZipToPdf;
 
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.ResultUtils.checkResultValidity;
 import static swati4star.createpdf.util.StringUtils.showSnackbar;
 
 public class ZipToPdfFragment extends Fragment {
@@ -73,7 +73,7 @@ public class ZipToPdfFragment extends Fragment {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (!checkResultValidity(resultCode, data))
+        if (!ResultUtils.getInstance().checkResultValidity(resultCode, data))
             return;
 
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
