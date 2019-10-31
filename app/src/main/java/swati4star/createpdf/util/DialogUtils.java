@@ -22,6 +22,10 @@ public class DialogUtils {
     @BindView(R.id.textView)
     public TextView dialogTitle;
 
+    private DialogUtils() {
+
+    }
+
     private static class SingletonHolder {
         static final DialogUtils INSTANCE = new DialogUtils();
     }
