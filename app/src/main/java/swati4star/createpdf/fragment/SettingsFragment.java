@@ -44,7 +44,7 @@ import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
-import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
+import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
 import static swati4star.createpdf.util.ThemeUtils.getSelectedThemePosition;
 import static swati4star.createpdf.util.ThemeUtils.saveTheme;
 
