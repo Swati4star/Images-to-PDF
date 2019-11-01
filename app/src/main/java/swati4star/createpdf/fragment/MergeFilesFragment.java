@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -52,7 +53,6 @@ import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MorphButtonUtility;
-import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -251,7 +251,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
             //Getting Absolute Path
-            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
+            Uri uri = data.getData();
+            String path = uri.getPath();
             mFilePaths.add(path);
             mMergeSelectedFilesAdapter.notifyDataSetChanged();
             StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
