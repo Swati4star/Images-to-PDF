@@ -195,10 +195,8 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                         } else {
                             final String inputName = input.toString();
-                            if (inputName != null) {
-                                mInputPassword[0] = inputName;
-                                pdfToImage(mInputPassword);
-                            }
+                            mInputPassword[0] = inputName;
+                            pdfToImage(mInputPassword);
                         }
                     })
                     .show();

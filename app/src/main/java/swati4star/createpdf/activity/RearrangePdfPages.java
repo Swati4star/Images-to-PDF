@@ -80,11 +80,14 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         mInitialSequence.addAll(mSequence);
     }
 
-    void swap (int pos1, int pos2) {
-
+    /**
+     * Swaps values at given positions
+     * @param pos1 - first value
+     * @param pos2 - second value
+     */
+    private void swap(int pos1, int pos2) {
         if (pos1 >= mSequence.size())
             return;
-
         int val = mSequence.get(pos1);
         mSequence.set(pos1, mSequence.get(pos2));
         mSequence.set(pos2, val);

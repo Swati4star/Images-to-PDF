@@ -20,6 +20,8 @@ public class ThemeUtils {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
+        if (themeName == null)
+            return;
         switch (themeName) {
             case THEME_WHITE:
                 context.setTheme(R.style.AppThemeWhite);

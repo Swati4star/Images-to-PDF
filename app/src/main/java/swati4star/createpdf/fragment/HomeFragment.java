@@ -22,6 +22,7 @@ import swati4star.createpdf.util.CommonCodeUtils;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
@@ -29,8 +30,7 @@ import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
-import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 

@@ -21,14 +21,15 @@ import swati4star.createpdf.fragment.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
 
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
 import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
-import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
-import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class FragmentUtils {
-    Context mContext;
+
+    private Context mContext;
 
     public FragmentUtils(Context mContext) {
         this.mContext = mContext;

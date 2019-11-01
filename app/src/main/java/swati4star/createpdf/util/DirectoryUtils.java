@@ -142,25 +142,12 @@ public class DirectoryUtils {
         return files;
     }
 
-    /**
-     * get the PDF Directory from directory name
-     * @param dirName - name of the directory to be searched for
-     * @return pdf directory if it exists , else null
-     */
-    public File getDirectory(String dirName) {
-        File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation()) + dirName);
-        if (!folder.exists()) {
-            return null;
-        }
-        return folder;
-    }
 
     /**
      * gets a list of all the pdf files on the user device
      * @return - list of file absolute paths
      */
-    public ArrayList<String> getAllPDFsOnDevice() {
+    ArrayList<String> getAllPDFsOnDevice() {
         mFilePaths = new ArrayList<>();
         walkdir(Environment.getExternalStorageDirectory());
         return mFilePaths;

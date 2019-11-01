@@ -86,6 +86,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private static final int INTENT_REQUEST_PICK_PDF_FILE_CODE = 10;
     private static final int INTENT_REQUEST_PICK_TEXT_FILE_CODE = 0;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.select_pdf_file)
     MorphingButton mSelectPDF;
@@ -93,7 +94,6 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     MorphingButton mSelectText;
     @BindView(R.id.create_pdf_added_text)
     MorphingButton mCreateTextPDF;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.recyclerViewFiles)
@@ -125,11 +125,11 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         showEnhancementOptions();
         mLottieProgress.setVisibility(View.VISIBLE);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         resetView();
         return rootView;
     }
@@ -240,10 +240,13 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
-    public void resetView() {
+    /**
+     * Resets view after successful conversion
+     */
+    private void resetView() {
         mPdfpath = mTextPath = null;
         mMorphButtonUtility.morphToGrey(mCreateTextPDF, mMorphButtonUtility.integer());
         mCreateTextPDF.setEnabled(false);
@@ -321,7 +324,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mPdfpath = path;
         StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
     }
@@ -334,12 +337,12 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 
     @Override

@@ -11,7 +11,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import swati4star.createpdf.model.Watermark;
 
-public class WatermarkPageEvent extends PdfPageEventHelper {
+class WatermarkPageEvent extends PdfPageEventHelper {
     private Watermark mWatermark;
     private Phrase mPhrase;
 

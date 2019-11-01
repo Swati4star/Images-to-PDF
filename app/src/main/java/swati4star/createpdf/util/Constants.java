@@ -120,4 +120,10 @@ public class Constants {
     };
 
     public static final int MODIFY_STORAGE_LOCATION_CODE = 1;
+
+
+    public static final int ROTATE_PAGES = 20;
+    public static final int ADD_PASSWORD = 21;
+    public static final int REMOVE_PASSWORD = 22;
+    public static final int ADD_WATERMARK = 23;
 }

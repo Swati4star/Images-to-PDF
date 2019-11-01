@@ -70,7 +70,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         holder.mFilename.setText(fileName);
         holder.mOperationDate.setText(date);
         holder.mOperationType.setText(operationType);
-        if (mIconsOperationList.containsKey(operationType))
+        if (mIconsOperationList != null && mIconsOperationList.containsKey(operationType))
             holder.mOperationImage.setImageResource(mIconsOperationList.get(operationType));
         else
             holder.mOperationImage.setImageResource(R.drawable.ic_create_black_24dp);

@@ -95,7 +95,7 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
 
     private void checkAndAddIfBitmapExists(Bitmap bitmap, int position) {
 
-        Boolean add = true;
+        boolean add = true;
         for (Bitmap b : mBitmaps) {
             if (b.sameAs(bitmap))
                 add = false;

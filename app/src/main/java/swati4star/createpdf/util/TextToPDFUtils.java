@@ -37,7 +37,7 @@ import static swati4star.createpdf.util.Constants.appName;
 
 public class TextToPDFUtils {
 
-    Activity mContext;
+    private Activity mContext;
     private SharedPreferences mSharedPreferences;
 
     public TextToPDFUtils(Activity context) {

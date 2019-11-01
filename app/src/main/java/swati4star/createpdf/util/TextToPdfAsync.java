@@ -8,7 +8,6 @@ import swati4star.createpdf.model.TextToPDFOptions;
 public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
     private TextToPDFUtils mTexttoPDFUtil;
     private TextToPDFOptions mTextToPdfOptions;
-    private String mRealPath;
     private String mFileExtension;
     private final OnTextToPdfInterface mOnPDFCreatedInterface;
     private boolean mSuccess;
@@ -17,16 +16,14 @@ public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
      * This is a public constructor responsible for initializing the path of the actual
      * file, the PDFUtils instance for the file, the options for text to Pdf, the file
      * extension, and the OnTextToPdfInterface instance.
-     * @param realpath is the path of the actual text file.
-     * @param fileutil is the PDFUtils instance for the file.
+     * @param textToPDFutil is the PDFUtils instance for the file.
      * @param textToPDFOptions is the options for text to Pdf.
      * @param fileextension is the file extension name string.
      * @param onPDFCreatedInterface is the OnTextToPdfInterface instance.
      */
-    public TextToPdfAsync(String realpath, TextToPDFUtils fileutil, TextToPDFOptions textToPDFOptions,
+    public TextToPdfAsync(TextToPDFUtils textToPDFutil, TextToPDFOptions textToPDFOptions,
                           String fileextension, OnTextToPdfInterface onPDFCreatedInterface) {
-        this.mTexttoPDFUtil = fileutil;
-        this.mRealPath = realpath;
+        this.mTexttoPDFUtil = textToPDFutil;
         this.mTextToPdfOptions = textToPDFOptions;
         this.mFileExtension = fileextension;
         this.mOnPDFCreatedInterface = onPDFCreatedInterface;

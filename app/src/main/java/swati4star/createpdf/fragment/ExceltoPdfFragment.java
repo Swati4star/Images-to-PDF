@@ -68,6 +68,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private Uri mExcelFileUri;
     private String mRealPath;
     private String mPath;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -79,7 +80,6 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     MorphingButton mCreateExcelPdf;
     @BindView(R.id.enhancement_options_recycle_view)
     RecyclerView mEnhancementOptionsRecycleView;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.upArrow)
@@ -119,8 +119,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         mCreateExcelPdf.setEnabled(false);
 
         ButterKnife.bind(this, rootview);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithExcelFiles(this);
         return rootview;
@@ -370,7 +370,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mExcelFileUri = Uri.parse("file://" + path);
         mRealPath = path;
         processUri();

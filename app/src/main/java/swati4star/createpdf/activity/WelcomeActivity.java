@@ -112,7 +112,6 @@ public class WelcomeActivity extends AppCompatActivity {
      * View pager adapter
      */
     public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater mLayoutInflater;
 
         MyViewPagerAdapter() {
         }
@@ -120,8 +119,8 @@ public class WelcomeActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = mLayoutInflater.inflate(mLayouts[position], container, false);
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = layoutInflater.inflate(mLayouts[position], container, false);
             if (position == 9) {
                 Button btnGetStarted = view.findViewById(R.id.getStarted);
                 btnGetStarted.setOnClickListener(v -> openMainActivity());

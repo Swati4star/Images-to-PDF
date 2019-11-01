@@ -63,12 +63,12 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private Uri mExcelFileUri;
     private String mRealPath;
     private BottomSheetUtils mBottomSheetUtils;
+    BottomSheetBehavior sheetBehavior;
 
     @BindView(R.id.tv_extract_text_bottom)
     TextView mTextView;
     @BindView(R.id.extract_text)
     MorphingButton extractText;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.recyclerViewFiles)

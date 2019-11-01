@@ -111,7 +111,7 @@ public class ImageUtils {
         BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
 
         // Calculate inSampleSize
-        bmOptions.inSampleSize = calculateInSampleSize(bmOptions, 500, 500);
+        bmOptions.inSampleSize = calculateInSampleSize(bmOptions);
 
         // Decode bitmap with actual size
         bmOptions.inJustDecodeBounds = false;
@@ -125,26 +125,24 @@ public class ImageUtils {
     /**
      * Calculate the inSampleSize value for given bitmap options & image dimensions
      * @param options - bitmap options
-     * @param reqWidth - width
-     * @param reqHeight - height
      * @return inSampleSize value
      * https://developer.android.com/topic/performance/graphics/load-bitmap.html#java
      */
-    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private static int calculateInSampleSize(BitmapFactory.Options options) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
-        if (height > reqHeight || width > reqWidth) {
+        if (height > 500 || width > 500) {
 
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
             // Calculate the largest inSampleSize value that is a power of 2 and keeps both
             // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
+            while ((halfHeight / inSampleSize) >= 500
+                    && (halfWidth / inSampleSize) >= 500) {
                 inSampleSize *= 2;
             }
         }

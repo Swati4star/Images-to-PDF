@@ -21,14 +21,12 @@ public class MergeSelectedFilesAdapter extends
 
     private final ArrayList<String> mFilePaths;
     private final Activity mContext;
-    private final FileUtils mFileUtils;
     private final OnFileItemClickListener mOnClickListener;
 
     public MergeSelectedFilesAdapter(Activity mContext, ArrayList<String> mFilePaths,
                                      OnFileItemClickListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
-        mFileUtils = new FileUtils(mContext);
         this.mOnClickListener = mOnClickListener;
     }
 

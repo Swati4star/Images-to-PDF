@@ -63,8 +63,9 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private String mOperation;
     private static final int REQUEST_PERMISSIONS_CODE = 124;
-    public static ArrayList<String> mImagesUri = new ArrayList<>();
+    private static ArrayList<String> mImagesUri = new ArrayList<>();
     private boolean mPermissionGranted = false;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -74,7 +75,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     MorphingButton mCreatePdf;
     @BindView(R.id.addImages)
     MorphingButton addImages;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.upArrow)
@@ -94,8 +94,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         View rootview = inflater.inflate(R.layout.fragment_add_images, container, false);
         ButterKnife.bind(this, rootview);
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_CAMERA_PERMISSIONS);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
@@ -106,7 +106,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick() {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
     /**
@@ -246,7 +246,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     /**
      * Opens Matisse activity to select Images
      */
-    public void selectImages() {
+    private void selectImages() {
         Matisse.from(this)
                 .choose(MimeType.ofImage(), false)
                 .countable(true)
@@ -269,7 +269,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
 
@@ -288,11 +288,11 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

@@ -42,7 +42,6 @@ import swati4star.createpdf.util.WatermarkUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 
 /**
  * Created by swati on 9/10/15.
@@ -268,22 +267,23 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         final File fdelete = new File(name);
         mFileList.remove(position);
         notifyDataSetChanged();
-        getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted).setAction(R.string.snackbar_undoAction, v -> {
-            if (mFileList.size() == 0) {
-                mEmptyStateChangeListener.setEmptyStateInvisible();
-            }
-            updateDataset();
-            undoClicked.set(1);
-        }).addCallback(new Snackbar.Callback() {
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                if (undoClicked.get() == 0) {
-                    fdelete.delete();
-                    mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
-                            mActivity.getString(R.string.deleted));
-                }
-            }
-        }).show();
+        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
+                .setAction(R.string.snackbar_undoAction, v -> {
+                    if (mFileList.size() == 0) {
+                        mEmptyStateChangeListener.setEmptyStateInvisible();
+                    }
+                    updateDataset();
+                    undoClicked.set(1);
+                }).addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        if (undoClicked.get() == 0) {
+                            fdelete.delete();
+                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                    mActivity.getString(R.string.deleted));
+                        }
+                    }
+                }).show();
         if (mFileList.size() == 0)
             mEmptyStateChangeListener.setEmptyStateVisible();
     }

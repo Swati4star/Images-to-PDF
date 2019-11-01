@@ -257,7 +257,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     /**
      * To modify page size
      */
-    public void setPageSize() {
+    private void setPageSize() {
         PageSizeUtils utils = new PageSizeUtils(mActivity);
         MaterialDialog materialDialog = utils.showPageSizeDialog(true);
         materialDialog.setOnDismissListener(dialog -> showSettingsOptions());
@@ -266,7 +266,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     /**
      * To modify theme
      */
-    public void setTheme() {
+    private void setTheme() {
         MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.theme_edit);
         MaterialDialog materialDialog = builder.customView(R.layout.dialog_theme_default, true)

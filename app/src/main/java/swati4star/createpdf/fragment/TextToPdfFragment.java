@@ -387,7 +387,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                 mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
         TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
-        new TextToPdfAsync(mTextFileUri.toString(), fileUtil, options, mFileExtension,
+        new TextToPdfAsync(fileUtil, options, mFileExtension,
                 TextToPdfFragment.this).execute();
     }
 

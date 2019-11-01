@@ -7,23 +7,16 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import swati4star.createpdf.R;
+
+import static swati4star.createpdf.util.Constants.ADD_PASSWORD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
+import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
 
 public class DialogUtils {
 
-    public static final int ROTATE_PAGES = 20;
-    public static final int ADD_PASSWORD = 21;
-    public static final int REMOVE_PASSWORD = 22;
-    public static final int ADD_WATERMARK = 23;
-
-    @BindView(R.id.textView)
-    public TextView dialogTitle;
-
     private DialogUtils() {
-
     }
 
     private static class SingletonHolder {
@@ -31,7 +24,7 @@ public class DialogUtils {
     }
 
     public static DialogUtils getInstance() {
-        return SingletonHolder.INSTANCE;
+        return DialogUtils.SingletonHolder.INSTANCE;
     }
 
     /**
@@ -112,9 +105,8 @@ public class DialogUtils {
     public MaterialDialog createCustomAnimationDialog(Activity activity, String title) {
         View view = LayoutInflater.from(activity).inflate(R.layout.lottie_anim_dialog, null);
 
-        Unbinder unbinder = ButterKnife.bind(this, view);
+        TextView dialogTitle = view.findViewById(R.id.textView);
         dialogTitle.setText(title);
-        unbinder.unbind();
 
         return new MaterialDialog.Builder(activity)
                 .customView(view, false)
