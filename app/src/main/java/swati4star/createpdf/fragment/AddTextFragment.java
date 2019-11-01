@@ -52,7 +52,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.AddTextEnhancementOptionsUtils;
 import swati4star.createpdf.util.BottomSheetCallback;
@@ -72,7 +72,7 @@ import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        BottomSheetPopulate, OnBackPressedInterface, OnItemClickListner {
+        BottomSheetPopulate, OnBackPressedInterface, OnItemClickListener {
     private Activity mActivity;
     private String mPdfpath;
     private String mFontTitle;

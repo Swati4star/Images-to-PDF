@@ -119,7 +119,7 @@ public class ViewFilesFragment extends Fragment
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem menuItem;
         if (!mIsMergeRequired) {
-            // menu to inflate the view where search and selectall icon is there.
+            // menu to inflate the view where search and select all icon is there.
             inflater.inflate(R.menu.activity_view_files_actions, menu);
             MenuItem item = menu.findItem(R.id.action_search);
             menuItem = menu.findItem(R.id.select_all);
@@ -294,7 +294,7 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void filesPopulated() {
-        //refresh eveything and invalidate the menu.
+        //refresh everything and invalidate the menu.
         if (mIsMergeRequired) {
             mIsMergeRequired = false;
             mIsAllFilesSelected = false;

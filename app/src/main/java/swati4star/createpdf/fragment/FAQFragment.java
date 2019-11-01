@@ -16,11 +16,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FAQAdapter;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.FAQItem;
 
 
-public class FAQFragment extends Fragment implements OnItemClickListner {
+public class FAQFragment extends Fragment implements OnItemClickListener {
 
     private FAQAdapter mFaqAdapter;
     private List<FAQItem> mFaqs;

@@ -93,19 +93,19 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_extract_text, container,
+        View rootView = inflater.inflate(R.layout.fragment_extract_text, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootview);
+        ButterKnife.bind(this, rootView);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());
         extractText.setEnabled(false);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         mLottieProgress.setVisibility(View.VISIBLE);
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        return rootview;
+        return rootView;
     }
 
     @Override

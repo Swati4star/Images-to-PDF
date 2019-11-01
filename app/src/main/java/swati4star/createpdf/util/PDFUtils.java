@@ -145,9 +145,9 @@ public class PDFUtils {
                     if (object == null || !object.isStream())
                         continue;
                     stream = (PRStream) object;
-                    PdfObject pdfsubtype = stream.get(PdfName.SUBTYPE);
+                    PdfObject pdfSubType = stream.get(PdfName.SUBTYPE);
                     System.out.println(stream.type());
-                    if (pdfsubtype != null && pdfsubtype.toString().equals(PdfName.IMAGE.toString())) {
+                    if (pdfSubType != null && pdfSubType.toString().equals(PdfName.IMAGE.toString())) {
                         PdfImageObject image = new PdfImageObject(stream);
                         byte[] imageBytes = image.getImageAsBytes();
                         Bitmap bmp;

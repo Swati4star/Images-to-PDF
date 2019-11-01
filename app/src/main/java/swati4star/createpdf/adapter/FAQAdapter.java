@@ -13,15 +13,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.FAQItem;
 
 public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
     private final List<FAQItem> mFaqs;
-    private final OnItemClickListner mOnItemClickListener;
+    private final OnItemClickListener mOnItemClickListener;
 
-    public FAQAdapter(List<FAQItem> faqs, OnItemClickListner mOnItemClickListener) {
+    public FAQAdapter(List<FAQItem> faqs, OnItemClickListener mOnItemClickListener) {
         this.mFaqs = faqs;
         this.mOnItemClickListener = mOnItemClickListener;
     }

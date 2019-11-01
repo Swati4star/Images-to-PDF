@@ -13,17 +13,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.BrushItem;
 
 public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.BrushItemViewHolder> {
 
     private final Context mContext;
-    private final OnItemClickListner mOnItemClickListener;
+    private final OnItemClickListener mOnItemClickListener;
     private final List<BrushItem> mBrushItems;
 
     public BrushItemAdapter(Context context,
-                            OnItemClickListner onItemClickListner,
+                            OnItemClickListener onItemClickListner,
                             List<BrushItem> brushItems) {
         mBrushItems = brushItems;
         mOnItemClickListener = onItemClickListner;

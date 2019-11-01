@@ -106,7 +106,7 @@ public class PageSizeUtils {
     }
 
     /**
-     * Private showpagesizeutils dialog
+     * Private show page size utils dialog
      * @param saveValue - save the value in shared prefs
      * @return - dialog object
      */
@@ -133,7 +133,7 @@ public class PageSizeUtils {
 
     /**
      * Get key from the value
-     * @param map - hashmap
+     * @param map - hash map
      * @param value - the value for which we want the key
      * @return - key value
      */

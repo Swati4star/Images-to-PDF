@@ -77,7 +77,7 @@ public class TextToPDFUtils {
         Font myfont = new Font(mTextToPDFOptions.getFontFamily());
         myfont.setStyle(Font.NORMAL);
         myfont.setSize(mTextToPDFOptions.getFontSize());
-        myfont.setColor(getBaseColor(mTextToPDFOptions.getmFontColor()));
+        myfont.setColor(getBaseColor(mTextToPDFOptions.getFontColor()));
 
         document.add(new Paragraph("\n"));
 

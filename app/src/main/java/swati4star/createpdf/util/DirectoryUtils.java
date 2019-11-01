@@ -36,7 +36,7 @@ public class DirectoryUtils {
      * @param query - Query from search bar
      * @return ArrayList containing all the pdf files matching the search query
      */
-    public ArrayList<File> searchPDF(String query) {
+    ArrayList<File> searchPDF(String query) {
         ArrayList<File> searchResult = new ArrayList<>();
         final File[] files = getOrCreatePdfDirectory().listFiles();
         ArrayList<File> pdfs = searchPdfsFromPdfFolder(files);
@@ -111,7 +111,7 @@ public class DirectoryUtils {
     /**
      * Checks if a given file is PDF
      * @param file - input file
-     * @return tru - if condition satistfies, else false
+     * @return tru - if condition satisfies, else false
      */
     private boolean isPDFAndNotDirectory(File file) {
         return !file.isDirectory() &&
@@ -154,7 +154,7 @@ public class DirectoryUtils {
     }
 
     /**
-     * Walks through given dir & sub direc, and append file path to mFilePaths
+     * Walks through given dir & sub directory, and append file path to mFilePaths
      * @param dir - root directory
      */
     private void walkdir(File dir) {

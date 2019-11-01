@@ -40,7 +40,7 @@ public class MyCardView extends LinearLayout {
      * Initiates custom card view with attributes set
      * @param context - context
      * @param attrs - attributes set
-     * @param defStyleAttr - attrbute style
+     * @param defStyleAttr - attribute style
      */
     public MyCardView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -48,7 +48,7 @@ public class MyCardView extends LinearLayout {
     }
 
     /**
-     * Initialize cardview with no attribute sets
+     * Initialize card view with no attribute sets
      */
     private void init() {
         inflate(getContext(), R.layout.item_view_enhancement_option, this);
@@ -57,7 +57,7 @@ public class MyCardView extends LinearLayout {
     }
 
     /**
-     * Initialize cardview with attributes recevied
+     * Initialize card view with attributes received
      * @param attrs - attribute set
      */
     private void init(AttributeSet attrs) {

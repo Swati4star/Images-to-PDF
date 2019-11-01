@@ -41,7 +41,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
@@ -62,7 +62,7 @@ import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 
 public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        OnPDFCreatedInterface, OnItemClickListner, BottomSheetPopulate {
+        OnPDFCreatedInterface, OnItemClickListener, BottomSheetPopulate {
     private Activity mActivity;
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;

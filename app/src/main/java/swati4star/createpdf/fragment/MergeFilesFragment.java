@@ -43,7 +43,7 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
@@ -63,7 +63,7 @@ import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
-        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner,
+        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListener,
         BottomSheetPopulate, OnBackPressedInterface {
     private Activity mActivity;
     private String mCheckbtClickTag = "";

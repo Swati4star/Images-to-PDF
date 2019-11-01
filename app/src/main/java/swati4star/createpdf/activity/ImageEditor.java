@@ -33,7 +33,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.BrushItemAdapter;
 import swati4star.createpdf.adapter.ImageFiltersAdapter;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
 import swati4star.createpdf.util.BrushUtils;
@@ -44,7 +44,7 @@ import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
-public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListner {
+public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListener {
 
     private ArrayList<String> mFilterUris = new ArrayList<>();
     private final ArrayList<String> mImagepaths = new ArrayList<>();

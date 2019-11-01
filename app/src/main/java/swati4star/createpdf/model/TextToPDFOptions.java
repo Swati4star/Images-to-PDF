@@ -32,7 +32,7 @@ public class TextToPDFOptions extends PDFOptions {
         return mFontFamily;
     }
 
-    public int getmFontColor() {
+    public int getFontColor() {
         return mFontColor;
     }
 }

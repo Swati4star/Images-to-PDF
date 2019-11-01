@@ -31,7 +31,7 @@ import butterknife.OnClick;
 import lib.folderpicker.FolderPicker;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
@@ -48,7 +48,7 @@ import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
 import static swati4star.createpdf.util.ThemeUtils.getSelectedThemePosition;
 import static swati4star.createpdf.util.ThemeUtils.saveTheme;
 
-public class SettingsFragment extends Fragment implements OnItemClickListner {
+public class SettingsFragment extends Fragment implements OnItemClickListener {
 
     @BindView(R.id.settings_list)
     RecyclerView mEnhancementOptionsRecycleView;

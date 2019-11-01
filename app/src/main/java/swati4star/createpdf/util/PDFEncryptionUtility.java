@@ -118,7 +118,7 @@ public class PDFEncryptionUtility {
     }
 
     /**
-     * Checks if PDf is encrpyted
+     * Checks if PDf is encrypted
      *
      * @param file - path of PDF file
      * @return true, if PDF is encrypted, otherwise false
@@ -181,8 +181,8 @@ public class PDFEncryptionUtility {
             // our master password & their user password
             // their master password
 
-            if (!removePasswordUsingDefMasterPAssword(file, dataSetChanged, input_password)) {
-                if (!removePasswordUsingInputMasterPAssword(file, dataSetChanged, input_password)) {
+            if (!removePasswordUsingDefMasterPassword(file, dataSetChanged, input_password)) {
+                if (!removePasswordUsingInputMasterPassword(file, dataSetChanged, input_password)) {
                     StringUtils.getInstance().showSnackbar(mContext, R.string.master_password_changed);
                 }
             }
@@ -200,8 +200,8 @@ public class PDFEncryptionUtility {
                                              final String[] inputPassword) {
         String finalOutputFile;
         try {
-            String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
-            PdfReader reader = new PdfReader(file, masterpwd.getBytes());
+            String masterPwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
+            PdfReader reader = new PdfReader(file, masterPwd.getBytes());
             byte[] password;
             finalOutputFile = mFileUtils.getUniqueFileName
                     (file.replace(mContext.getResources().getString(R.string.pdf_ext),
@@ -220,13 +220,13 @@ public class PDFEncryptionUtility {
         return null;
     }
 
-    private boolean removePasswordUsingDefMasterPAssword(final String file,
+    private boolean removePasswordUsingDefMasterPassword(final String file,
                                                          final DataSetChanged dataSetChanged,
                                                          final String[] inputPassword) {
         String finalOutputFile;
         try {
-            String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
-            PdfReader reader = new PdfReader(file, masterpwd.getBytes());
+            String masterPwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
+            PdfReader reader = new PdfReader(file, masterPwd.getBytes());
             byte[] password;
             finalOutputFile = mFileUtils.getUniqueFileName
                     (file.replace(mContext.getResources().getString(R.string.pdf_ext),
@@ -253,7 +253,7 @@ public class PDFEncryptionUtility {
     }
 
 
-    private boolean removePasswordUsingInputMasterPAssword(final String file,
+    private boolean removePasswordUsingInputMasterPassword(final String file,
                                                            final DataSetChanged dataSetChanged,
                                                            final String[] inputPassword) {
         String finalOutputFile;

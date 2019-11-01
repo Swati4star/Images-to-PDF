@@ -3,10 +3,6 @@ package swati4star.createpdf.model;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by anandparmar on 08/06/18.
- */
-
 public class EnhancementOptionsEntity {
     private Drawable mImage;
     private String mName;
