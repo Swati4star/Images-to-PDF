@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Hashmap for setting the mFragmentSelectedMap.
-    public void setTitleMap() {
+    private void setTitleMap() {
         mFragmentSelectedMap = new SparseIntArray();
         mFragmentSelectedMap.append(R.id.nav_home, R.string.app_name);
         mFragmentSelectedMap.append(R.id.nav_camera, R.string.images_to_pdf);

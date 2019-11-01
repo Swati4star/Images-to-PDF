@@ -30,7 +30,7 @@ import swati4star.createpdf.util.ZipToPdf;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 
 public class ZipToPdfFragment extends Fragment {
-    private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 145;
     private String mPath;
     private Activity mActivity;
@@ -47,11 +47,11 @@ public class ZipToPdfFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_zip_to_pdf, container, false);
-        ButterKnife.bind(this, rootview);
+        View rootView = inflater.inflate(R.layout.fragment_zip_to_pdf, container, false);
+        ButterKnife.bind(this, rootView);
         mActivity = getActivity();
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
-        return rootview;
+        return rootView;
     }
 
     @OnClick(R.id.selectFile)
@@ -69,14 +69,14 @@ public class ZipToPdfFragment extends Fragment {
         intent.setDataAndType(myUri, "application/zip");
 
         startActivityForResult(Intent.createChooser(intent, getString(R.string.merge_file_select)),
-                INTENT_REQUEST_PICKFILE_CODE);
+                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (!ResultUtils.getInstance().checkResultValidity(resultCode, data))
             return;
 
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+        if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
             mPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             if (mPath != null) {
                 convertButton.setVisibility(View.VISIBLE);

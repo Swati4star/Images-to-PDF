@@ -58,7 +58,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         MyViewPagerAdapter adapter = new MyViewPagerAdapter();
         mViewPager.setAdapter(adapter);
-        mViewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        mViewPager.addOnPageChangeListener(mViewPagerPageChangeListener);
         mViewPager.setOffscreenPageLimit(3);
     }
 
@@ -68,7 +68,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Add bottom dots & highligt the given one
+     * Add bottom dots & highlight the given one
      * @param currentPage - current page to highlight
      */
     private void addBottomDots(int currentPage) {
@@ -91,7 +91,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     //  viewpager change listener
-    final ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+    private final ViewPager.OnPageChangeListener mViewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {
@@ -111,7 +111,7 @@ public class WelcomeActivity extends AppCompatActivity {
     /**
      * View pager adapter
      */
-    public class MyViewPagerAdapter extends PagerAdapter {
+    class MyViewPagerAdapter extends PagerAdapter {
 
         MyViewPagerAdapter() {
         }

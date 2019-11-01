@@ -110,10 +110,11 @@ public class PDFUtils {
 
     private static class CompressPdfAsync extends AsyncTask<String, String, String> {
 
-        int quality;
-        String inputPath, outputPath;
+        final int quality;
+        final String inputPath;
+        final String outputPath;
         boolean success;
-        OnPDFCompressedInterface mPDFCompressedInterface;
+        final OnPDFCompressedInterface mPDFCompressedInterface;
 
         CompressPdfAsync(String inputPath, String outputPath, int quality,
                          OnPDFCompressedInterface onPDFCompressedInterface) {
@@ -284,10 +285,10 @@ public class PDFUtils {
 
     private class ReorderPdfPagesAsync extends AsyncTask<String, String, ArrayList<Bitmap>> {
 
-        private Uri mUri;
-        private String mPath;
-        private OnPdfReorderedInterface mOnPdfReorderedInterface;
-        private Activity mActivity;
+        private final Uri mUri;
+        private final String mPath;
+        private final OnPdfReorderedInterface mOnPdfReorderedInterface;
+        private final Activity mActivity;
 
         /**
          * @param uri Uri of the pdf

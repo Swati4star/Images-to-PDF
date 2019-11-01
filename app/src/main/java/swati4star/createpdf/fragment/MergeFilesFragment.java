@@ -80,6 +80,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private boolean mPasswordProtected = false;
     private String mPassword;
     private SharedPreferences mSharedPrefs;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -93,7 +94,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     ImageView mDownArrow;
     @BindView(R.id.layout)
     RelativeLayout mLayout;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.selectFiles)
@@ -112,7 +112,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
         showEnhancementOptions();
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mFilePaths = new ArrayList<>();
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -125,7 +125,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSelectedFiles.setAdapter(mMergeSelectedFilesAdapter);
         mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
 
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         setMorphingButtonState(false);
 
         return root;
@@ -211,7 +211,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
     @OnClick(R.id.selectFiles)
@@ -354,7 +354,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
     }
 
-    void setMorphingButtonState(Boolean enabled) {
+    private void setMorphingButtonState(Boolean enabled) {
         if (enabled)
             mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
         else
@@ -371,11 +371,11 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

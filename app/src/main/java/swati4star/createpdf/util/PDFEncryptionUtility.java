@@ -34,7 +34,7 @@ public class PDFEncryptionUtility {
     private final FileUtils mFileUtils;
     private final MaterialDialog mDialog;
     private String mPassword;
-    private SharedPreferences mSharedPrefs;
+    private final SharedPreferences mSharedPrefs;
 
     public PDFEncryptionUtility(Activity context) {
         this.mContext = context;

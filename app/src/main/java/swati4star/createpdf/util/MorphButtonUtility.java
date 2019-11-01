@@ -24,7 +24,7 @@ public class MorphButtonUtility {
         return (int) mActivity.getResources().getDimension(resId);
     }
 
-    public int color(@ColorRes int resId) {
+    private int color(@ColorRes int resId) {
         return mActivity.getResources().getColor(resId);
     }
 

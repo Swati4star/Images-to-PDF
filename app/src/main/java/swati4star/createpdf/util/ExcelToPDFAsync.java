@@ -12,9 +12,10 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private boolean mSuccess;
-    private String mPath;
-    private boolean mIsPasswordProtected;
-    private String mDestPath, mPassword;
+    private final String mPath;
+    private final boolean mIsPasswordProtected;
+    private final String mDestPath;
+    private final String mPassword;
 
     /**
      * This public constructor is responsible for initializing the path of actual file,

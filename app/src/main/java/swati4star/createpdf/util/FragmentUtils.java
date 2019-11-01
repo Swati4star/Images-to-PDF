@@ -29,7 +29,7 @@ import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 
 public class FragmentUtils {
 
-    private Context mContext;
+    private final Context mContext;
 
     public FragmentUtils(Context mContext) {
         this.mContext = mContext;

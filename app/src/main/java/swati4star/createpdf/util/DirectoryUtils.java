@@ -34,7 +34,7 @@ public class DirectoryUtils {
     /**
      * Used to search for PDF matching the search query
      * @param query - Query from search bar
-     * @return ArrayList containg all the pdf files matching the search query
+     * @return ArrayList containing all the pdf files matching the search query
      */
     public ArrayList<File> searchPDF(String query) {
         ArrayList<File> searchResult = new ArrayList<>();
@@ -75,7 +75,7 @@ public class DirectoryUtils {
         return 0;
     }
 
-    // RETURING LIST OF FILES OR DIRECTORIES
+    // RETURNING LIST OF FILES OR DIRECTORIES
 
     /**
      * Returns pdf files from folder

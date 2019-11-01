@@ -59,11 +59,11 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private FileUtils mFileUtils;
     private BottomSheetUtils mBottomSheetUtils;
     private PDFUtils mPDFUtils;
-    private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private String mOperation;
     private static final int REQUEST_PERMISSIONS_CODE = 124;
-    private static ArrayList<String> mImagesUri = new ArrayList<>();
+    private static final ArrayList<String> mImagesUri = new ArrayList<>();
     private boolean mPermissionGranted = false;
     private BottomSheetBehavior mSheetBehavior;
 
@@ -91,8 +91,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_add_images, container, false);
-        ButterKnife.bind(this, rootview);
+        View rootView = inflater.inflate(R.layout.fragment_add_images, container, false);
+        ButterKnife.bind(this, rootView);
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_CAMERA_PERMISSIONS);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
@@ -101,7 +101,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
         resetValues();
-        return rootview;
+        return rootView;
     }
 
     @OnClick(R.id.viewFiles)
@@ -115,7 +115,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
         startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
+                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     /**
@@ -151,7 +151,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 break;
 
-            case INTENT_REQUEST_PICKFILE_CODE:
+            case INTENT_REQUEST_PICK_FILE_CODE:
                 setTextAndActivateButtons(FileUriUtils.getInstance().getFilePath(data.getData()));
                 break;
         }

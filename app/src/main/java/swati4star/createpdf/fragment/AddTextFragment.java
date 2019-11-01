@@ -263,7 +263,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
      *
      * @param fileName - the name of the new pdf that is to be created.
      */
-    private void addText(String fileName, int fontsize, Font.FontFamily fontFamily) {
+    private void addText(String fileName, int fontSize, Font.FontFamily fontFamily) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 StringUtils.getInstance().getDefaultStorageLocation());
         String mPath = mStorePath + fileName + pdfExtension;
@@ -295,7 +295,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             document.setPageSize(pdfReader.getPageSize(1));
             document.newPage();
             document.add(new Paragraph(new Paragraph(text.toString(),
-                    FontFactory.getFont(fontFamily.name(), fontsize))));
+                    FontFactory.getFont(fontFamily.name(), fontSize))));
             document.close();
 
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)

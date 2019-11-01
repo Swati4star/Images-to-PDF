@@ -80,7 +80,7 @@ import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
-import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALETYPE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
@@ -122,7 +122,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
-    public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
+    private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private SharedPreferences mSharedPreferences;
     private FileUtils mFileUtils;
@@ -244,7 +244,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
 
-    void createPdf(boolean isgrayScale) {
+    private void createPdf(boolean isgrayScale) {
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
         mPdfOptions.setImageScaleType(mImageScaleType);
@@ -802,7 +802,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImagesUri.clear();
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
-        mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
+        mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALE_TYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
         mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
@@ -810,7 +810,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 DEFAULT_PAGE_COLOR);
     }
 
-    void addMargins() {
+    private void addMargins() {
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.add_margins)
                 .customView(R.layout.add_margins_dialog, false)

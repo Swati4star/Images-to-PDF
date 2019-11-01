@@ -35,7 +35,7 @@ public class WatermarkUtils {
 
     private final Activity mContext;
     private Watermark mWatermark;
-    private FileUtils mFileUtils;
+    private final FileUtils mFileUtils;
 
     public WatermarkUtils(Activity context) {
         mContext = context;

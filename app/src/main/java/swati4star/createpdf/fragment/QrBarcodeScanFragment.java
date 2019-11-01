@@ -133,7 +133,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * @param scannerType - type (qr code/bar code)
      * @param promptId    - string resource id for prompt
      */
-    public void openScanner(Collection<String> scannerType, int promptId) {
+    private void openScanner(Collection<String> scannerType, int promptId) {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         // use forSupportFragment or forFragment method to use fragments instead of activity
         integrator.setDesiredBarcodeFormats(scannerType);

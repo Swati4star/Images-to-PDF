@@ -18,14 +18,14 @@ import static swati4star.createpdf.util.Constants.appName;
 
 public class MergeHelper implements MergeFilesListener {
     private MaterialDialog mMaterialDialog;
-    private Activity mActivity;
-    private FileUtils mFileUtils;
-    private boolean mPasswordProtected = false;
+    private final Activity mActivity;
+    private final FileUtils mFileUtils;
+    private final boolean mPasswordProtected = false;
     private String mPassword;
-    private String mHomePath;
-    private Context mContext;
-    private ViewFilesAdapter mViewFilesAdapter;
-    private SharedPreferences mSharedPrefs;
+    private final String mHomePath;
+    private final Context mContext;
+    private final ViewFilesAdapter mViewFilesAdapter;
+    private final SharedPreferences mSharedPrefs;
 
     public MergeHelper(Activity activity, ViewFilesAdapter viewFilesAdapter) {
         mActivity = activity;

@@ -18,8 +18,9 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     private String mFinPath;
     private Boolean mIsPDFMerged;
     private String mFilename;
-    private boolean mIsPasswordProtected;
-    private String mPassword, mMasterPwd;
+    private final boolean mIsPasswordProtected;
+    private final String mPassword;
+    private final String mMasterPwd;
     private final MergeFilesListener mMergeFilesListener;
 
     /**

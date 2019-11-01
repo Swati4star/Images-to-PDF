@@ -18,7 +18,7 @@ import swati4star.createpdf.model.FAQItem;
 
 public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
-    private List<FAQItem> mFaqs;
+    private final List<FAQItem> mFaqs;
     private final OnItemClickListner mOnItemClickListener;
 
     public FAQAdapter(List<FAQItem> faqs, OnItemClickListner mOnItemClickListener) {

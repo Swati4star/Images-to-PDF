@@ -35,7 +35,7 @@ public class CropImageActivity extends AppCompatActivity {
 
     private int mCurrentImageIndex = 0;
     private ArrayList<String> mImages;
-    private HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
+    private final HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
     private boolean mCurrentImageEdited = false;
     private boolean mFinishedClicked = false;
 
@@ -176,7 +176,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     /**
-     * Set image in cropimage view & increment counters
+     * Set image in crop image view & increment counters
      * @param index - image index
      */
     private void setImage(int index) {

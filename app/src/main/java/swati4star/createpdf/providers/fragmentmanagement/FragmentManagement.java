@@ -61,11 +61,11 @@ import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
  * mainly for the MainActivity.
  */
 public class FragmentManagement implements IFragmentManagement {
-    private FragmentActivity mContext;
-    private NavigationView mNavigationView;
+    private final FragmentActivity mContext;
+    private final NavigationView mNavigationView;
     private boolean mDoubleBackToExitPressedOnce = false;
-    private FeedbackUtils mFeedbackUtils;
-    private FragmentUtils mFragmentUtils;
+    private final FeedbackUtils mFeedbackUtils;
+    private final FragmentUtils mFragmentUtils;
 
     public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
         mContext = context;

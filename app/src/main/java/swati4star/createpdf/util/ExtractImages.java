@@ -19,8 +19,8 @@ import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
 import static swati4star.createpdf.util.FileUtils.saveImage;
 
 public class ExtractImages extends AsyncTask<Void, Void, Void> {
-    private String mPath;
-    private ExtractImagesListener mExtractImagesListener;
+    private final String mPath;
+    private final ExtractImagesListener mExtractImagesListener;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
 

@@ -171,7 +171,7 @@ public class ImageUtils {
                     CheckBox mSetAsDefault = view.findViewById(R.id.cbSetDefault);
                     if (saveValue || mSetAsDefault.isChecked()) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putString(Constants.DEFAULT_IMAGE_SCALETYPE_TEXT, mImageScaleType);
+                        editor.putString(Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT, mImageScaleType);
                         editor.apply();
                     }
                 }).build();

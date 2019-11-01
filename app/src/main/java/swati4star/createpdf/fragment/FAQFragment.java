@@ -22,9 +22,9 @@ import swati4star.createpdf.model.FAQItem;
 
 public class FAQFragment extends Fragment implements OnItemClickListner {
 
-    FAQAdapter faqAdapter;
-    List<FAQItem> mFaqs;
-    Context mContext;
+    private FAQAdapter mFaqAdapter;
+    private List<FAQItem> mFaqs;
+    private Context mContext;
 
     @BindView(R.id.recycler_view_faq)
     RecyclerView mFAQRecyclerView;
@@ -71,8 +71,8 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
      * for FAQs
      */
     private void initFAQRecyclerView() {
-        faqAdapter = new FAQAdapter(mFaqs, this);
-        mFAQRecyclerView.setAdapter(faqAdapter);
+        mFaqAdapter = new FAQAdapter(mFaqs, this);
+        mFAQRecyclerView.setAdapter(mFaqAdapter);
     }
 
     /**
@@ -84,6 +84,6 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
     public void onItemClick(int position) {
         FAQItem faqItem = mFaqs.get(position);
         faqItem.setExpanded(!faqItem.isExpanded());
-        faqAdapter.notifyItemChanged(position);
+        mFaqAdapter.notifyItemChanged(position);
     }
 }

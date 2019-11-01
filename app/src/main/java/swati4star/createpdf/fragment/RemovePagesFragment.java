@@ -73,6 +73,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private static final int INTENT_REQUEST_REARRANGE_PDF = 11;
     private String mOperation;
     private MaterialDialog mMaterialDialog;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -80,7 +81,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     MorphingButton selectFileButton;
     @BindView(R.id.pdfCreate)
     MorphingButton createPdf;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.upArrow)
@@ -106,8 +106,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_remove_pages, container, false);
         ButterKnife.bind(this, rootview);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
@@ -118,7 +118,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
     /**
@@ -259,7 +259,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
 
@@ -316,12 +316,12 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 
     @Override

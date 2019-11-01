@@ -43,16 +43,16 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private String mPath;
     private final String mPageSize;
     private final boolean mPasswordProtected;
-    private Boolean mWatermarkAdded;
-    private Watermark mWatermark;
-    private int mMarginTop;
-    private int mMarginBottom;
-    private int mMarginRight;
-    private int mMarginLeft;
-    private String mImagescaleType;
-    private String mPageNumStyle;
-    private String mMasterPwd;
-    private int mPageColor;
+    private final Boolean mWatermarkAdded;
+    private final Watermark mWatermark;
+    private final int mMarginTop;
+    private final int mMarginBottom;
+    private final int mMarginRight;
+    private final int mMarginLeft;
+    private final String mImagescaleType;
+    private final String mPageNumStyle;
+    private final String mMasterPwd;
+    private final int mPageColor;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {

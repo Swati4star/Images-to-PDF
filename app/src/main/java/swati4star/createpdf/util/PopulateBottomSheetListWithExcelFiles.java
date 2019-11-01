@@ -9,7 +9,7 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 /**
  * AsyncTask used to populate the list of elements in the background
  */
-public class PopulateBottomSheetListWithExcelFiles extends AsyncTask<Void, Void, ArrayList<String>> {
+class PopulateBottomSheetListWithExcelFiles extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private final BottomSheetPopulate mOnLoadListener;
     private final DirectoryUtils mDirectoryUtils;

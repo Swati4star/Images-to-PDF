@@ -6,9 +6,9 @@ import swati4star.createpdf.interfaces.OnTextToPdfInterface;
 import swati4star.createpdf.model.TextToPDFOptions;
 
 public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
-    private TextToPDFUtils mTexttoPDFUtil;
-    private TextToPDFOptions mTextToPdfOptions;
-    private String mFileExtension;
+    private final TextToPDFUtils mTexttoPDFUtil;
+    private final TextToPDFOptions mTextToPdfOptions;
+    private final String mFileExtension;
     private final OnTextToPdfInterface mOnPDFCreatedInterface;
     private boolean mSuccess;
 

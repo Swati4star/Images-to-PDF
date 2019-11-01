@@ -8,8 +8,8 @@ import android.widget.ImageView;
 
 public class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
 
-    private ImageView mUpArrow;
-    private boolean mIsAdded;
+    private final ImageView mUpArrow;
+    private final boolean mIsAdded;
 
     public BottomSheetCallback(ImageView mUpArrow, boolean mIsFragmentAdded) {
         this.mUpArrow = mUpArrow;

@@ -22,7 +22,7 @@ import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class InvertPdf extends AsyncTask<Void, Void, Void> {
     private String mPath;
-    private OnPDFCreatedInterface mOnPDFCreatedInterface;
+    private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private Boolean mIsNewPDFCreated;
 
     /**

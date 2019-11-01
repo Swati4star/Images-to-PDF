@@ -38,7 +38,7 @@ import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 public class FavouritesActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
-    private boolean[] mKeyState = new boolean[21];
+    private final boolean[] mKeyState = new boolean[21];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

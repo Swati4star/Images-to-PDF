@@ -31,7 +31,7 @@ import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.Constants.SAMEFILE;
+import static swati4star.createpdf.util.Constants.SAME_FILE;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
 
@@ -138,7 +138,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
             result.append(x).append(",");
         returnIntent.putExtra(RESULT, result.toString());
         boolean sameFile = mInitialSequence.equals(mSequence);
-        returnIntent.putExtra(SAMEFILE, sameFile);
+        returnIntent.putExtra(SAME_FILE, sameFile);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
