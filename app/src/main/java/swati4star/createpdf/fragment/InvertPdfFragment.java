@@ -52,7 +52,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
     private BottomSheetUtils mBottomSheetUtils;
-    private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
     private MaterialDialog mMaterialDialog;
     private BottomSheetBehavior mSheetBehavior;
 
@@ -78,15 +78,15 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_invert_pdf, container, false);
-        ButterKnife.bind(this, rootview);
+        View rootView = inflater.inflate(R.layout.fragment_invert_pdf, container, false);
+        ButterKnife.bind(this, rootView);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
         resetValues();
-        return rootview;
+        return rootView;
     }
 
     @OnClick(R.id.viewFiles)
@@ -100,13 +100,13 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
         startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
+                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+        if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
             //Getting Absolute Path
             String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             setTextAndActivateButtons(path);

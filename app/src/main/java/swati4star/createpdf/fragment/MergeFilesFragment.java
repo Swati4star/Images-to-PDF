@@ -67,7 +67,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         BottomSheetPopulate, OnBackPressedInterface {
     private Activity mActivity;
     private String mCheckbtClickTag = "";
-    private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
     private MorphButtonUtility mMorphButtonUtility;
     private ArrayList<String> mFilePaths;
     private FileUtils mFileUtils;
@@ -217,7 +217,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     @OnClick(R.id.selectFiles)
     void startAddingPDF(View v) {
         startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
+                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     @OnClick(R.id.mergebtn)
@@ -249,7 +249,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+        if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
             //Getting Absolute Path
             String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             mFilePaths.add(path);

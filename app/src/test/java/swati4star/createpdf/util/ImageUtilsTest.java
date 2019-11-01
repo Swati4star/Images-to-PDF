@@ -17,7 +17,7 @@ public class ImageUtilsTest {
             new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
 
     @Test
-    public void testcalculateFitSize() {
+    public void testCalculateFitSize() {
         float testWidth = 8.0f;
         float testHeight = 12.0f;
         Rectangle testDocumentSize = new Rectangle(5.0f, 5.0f, 5.0f, 5.0f);

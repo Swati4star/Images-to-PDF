@@ -79,7 +79,7 @@ public class MorphButtonUtility {
     /**
      * Return morphing button params with default values
      * @param duration - duration of transition
-     * @return - params objefct
+     * @return - params object
      */
     private MorphingButton.Params defaultButton(int duration) {
         return MorphingButton.Params.create()

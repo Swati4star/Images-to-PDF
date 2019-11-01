@@ -244,7 +244,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
 
-    private void createPdf(boolean isgrayScale) {
+    private void createPdf(boolean isGrayScale) {
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
         mPdfOptions.setImageScaleType(mImageScaleType);
@@ -265,8 +265,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
 
                     mPdfOptions.setOutFileName(filename);
-                    if (isgrayScale)
-                        saveImagesInGrayscale();
+                    if (isGrayScale)
+                        saveImagesInGrayScale();
 
                     new CreatePdf(mPdfOptions, mHomePath,
                             ImageToPdfFragment.this).execute();
@@ -274,10 +274,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                     MaterialDialog.Builder builder2 = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                     builder2.onPositive((dialog2, which) -> {
                         mPdfOptions.setOutFileName(filename);
-                        if (isgrayScale)
-                            saveImagesInGrayscale();
+                        if (isGrayScale)
+                            saveImagesInGrayScale();
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
-                    }).onNegative((dialog1, which) -> createPdf(isgrayScale)).show();
+                    }).onNegative((dialog1, which) -> createPdf(isGrayScale)).show();
                 }
             }
         }).show();
@@ -454,9 +454,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
 
     /**
-     * Saves Images with grayscale filter
+     * Saves Images with gray scale filter
      */
-    private void saveImagesInGrayscale() {
+    private void saveImagesInGrayScale() {
         ArrayList<String> tempImageUri = new ArrayList<>();
         try {
             File sdCard = Environment.getExternalStorageDirectory();

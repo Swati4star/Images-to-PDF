@@ -47,7 +47,7 @@ import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListener {
 
     private ArrayList<String> mFilterUris = new ArrayList<>();
-    private final ArrayList<String> mImagepaths = new ArrayList<>();
+    private final ArrayList<String> mImagePaths = new ArrayList<>();
     private ArrayList<FilterItem> mFilterItems;
     private ArrayList<BrushItem> mBrushItems;
 
@@ -57,7 +57,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @BindView(R.id.nextimageButton)
     ImageView mNextButton;
     @BindView(R.id.imagecount)
-    TextView mImgcount;
+    TextView mImageCount;
     @BindView(R.id.previousImageButton)
     ImageView mPreviousButton;
     @BindView(R.id.doodleSeekBar)
@@ -96,7 +96,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mDisplaySize = mFilterUris.size();
         mFilterItems = getFiltersList(this);
         mBrushItems = BrushUtils.getInstance().getBrushItems();
-        mImagepaths.addAll(mFilterUris);
+        mImagePaths.addAll(mFilterUris);
 
         mPhotoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
@@ -144,7 +144,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             StringUtils.getInstance().showSnackbar(this, R.string.save_first);
     }
 
-    // modify current image num & display in textview
+    // modify current image num & display in text view
     private void changeAndShowImageCount(int count) {
 
         if (count < 0 || count >= mDisplaySize)
@@ -152,8 +152,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
         mCurrentImage = count % mDisplaySize;
         mPhotoEditorView.getSource()
-                .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage)));
-        mImgcount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
+                .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
+        mImageCount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
     }
 
     @OnClick(R.id.savecurrent)
@@ -171,7 +171,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     void resetCurrent() {
         mClicked = true;
         String originalPath = mFilterUris.get(mCurrentImage);
-        mImagepaths.set(mCurrentImage, originalPath);
+        mImagePaths.set(mCurrentImage, originalPath);
         mPhotoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(originalPath));
         mPhotoEditor.clearAllViews();
@@ -195,10 +195,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             mPhotoEditor.saveAsFile(imagePath, new PhotoEditor.OnSaveListener() {
                 @Override
                 public void onSuccess(@NonNull String imagePath) {
-                    mImagepaths.remove(mCurrentImage);
-                    mImagepaths.add(mCurrentImage, imagePath);
+                    mImagePaths.remove(mCurrentImage);
+                    mImagePaths.add(mCurrentImage, imagePath);
                     mPhotoEditorView.getSource()
-                            .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage)));
+                            .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
                     Toast.makeText(getApplicationContext(), R.string.filter_saved, Toast.LENGTH_SHORT).show();
                 }
 
@@ -286,7 +286,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @Override
     public void onBackPressed() {
         Intent returnIntent = new Intent();
-        returnIntent.putStringArrayListExtra(RESULT, mImagepaths);
+        returnIntent.putStringArrayListExtra(RESULT, mImagePaths);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -295,14 +295,14 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public void onItemClick(int position) {
         int color = mBrushItems.get(position).getColor();
         if (position == mBrushItems.size() - 1) {
-            final MaterialDialog colorpallete = new MaterialDialog.Builder(this)
+            final MaterialDialog colorPallete = new MaterialDialog.Builder(this)
                     .title(R.string.choose_color_text)
                     .customView(R.layout.color_pallete_layout, true)
                     .positiveText(R.string.ok)
                     .negativeText(R.string.cancel)
                     .build();
-            final View mPositiveAction = colorpallete.getActionButton(DialogAction.POSITIVE);
-            final ColorPickerView colorPickerInput = colorpallete.getCustomView().findViewById(R.id.color_pallete);
+            final View mPositiveAction = colorPallete.getActionButton(DialogAction.POSITIVE);
+            final ColorPickerView colorPickerInput = colorPallete.getCustomView().findViewById(R.id.color_pallete);
 
             mPositiveAction.setEnabled(true);
             mPositiveAction.setOnClickListener(v -> {
@@ -312,9 +312,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                colorpallete.dismiss();
+                colorPallete.dismiss();
             });
-            colorpallete.show();
+            colorPallete.show();
 
         } else {
             doodleSeekBar.setBackgroundColor(this.getResources().getColor(color));

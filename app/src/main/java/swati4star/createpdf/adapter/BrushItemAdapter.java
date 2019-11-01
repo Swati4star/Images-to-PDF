@@ -23,10 +23,10 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
     private final List<BrushItem> mBrushItems;
 
     public BrushItemAdapter(Context context,
-                            OnItemClickListener onItemClickListner,
+                            OnItemClickListener onItemClickListener,
                             List<BrushItem> brushItems) {
         mBrushItems = brushItems;
-        mOnItemClickListener = onItemClickListner;
+        mOnItemClickListener = onItemClickListener;
         mContext = context;
     }
 

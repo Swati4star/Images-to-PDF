@@ -108,22 +108,22 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_excelto_pdf, container,
+        View rootView = inflater.inflate(R.layout.fragment_excelto_pdf, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootview);
+        ButterKnife.bind(this, rootView);
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
         mCreateExcelPdf.setEnabled(false);
 
-        ButterKnife.bind(this, rootview);
+        ButterKnife.bind(this, rootView);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithExcelFiles(this);
-        return rootview;
+        return rootView;
     }
 
     private void showEnhancementOptions() {

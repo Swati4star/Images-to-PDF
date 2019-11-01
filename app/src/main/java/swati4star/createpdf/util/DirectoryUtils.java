@@ -82,7 +82,7 @@ public class DirectoryUtils {
      *
      * @param files list of files (folder)
      */
-    public ArrayList<File> getPdfsFromPdfFolder(File[] files) {
+    ArrayList<File> getPdfsFromPdfFolder(File[] files) {
         ArrayList<File> pdfFiles = new ArrayList<>();
         if (files == null)
             return pdfFiles;
@@ -135,7 +135,7 @@ public class DirectoryUtils {
      */
     public ArrayList<File> getPdfFromOtherDirectories() {
         mFilePaths = new ArrayList<>();
-        walkdir(getOrCreatePdfDirectory());
+        walkDir(getOrCreatePdfDirectory());
         ArrayList<File> files = new ArrayList<>();
         for (String path : mFilePaths)
             files.add(new File(path));
@@ -149,7 +149,7 @@ public class DirectoryUtils {
      */
     ArrayList<String> getAllPDFsOnDevice() {
         mFilePaths = new ArrayList<>();
-        walkdir(Environment.getExternalStorageDirectory());
+        walkDir(Environment.getExternalStorageDirectory());
         return mFilePaths;
     }
 
@@ -157,8 +157,8 @@ public class DirectoryUtils {
      * Walks through given dir & sub directory, and append file path to mFilePaths
      * @param dir - root directory
      */
-    private void walkdir(File dir) {
-        walkdir(dir, Collections.singletonList(pdfExtension));
+    private void walkDir(File dir) {
+        walkDir(dir, Collections.singletonList(pdfExtension));
     }
 
     /**
@@ -166,13 +166,13 @@ public class DirectoryUtils {
      * @param dir - root directory
      * @param extensions - a list of file extensions to search for
      */
-    private void walkdir(File dir, List<String> extensions) {
+    private void walkDir(File dir, List<String> extensions) {
         File[] listFile = dir.listFiles();
         if (listFile != null) {
             for (File aListFile : listFile) {
 
                 if (aListFile.isDirectory()) {
-                    walkdir(aListFile, extensions);
+                    walkDir(aListFile, extensions);
                 } else {
                     for (String extension: extensions) {
                         if (aListFile.getName().endsWith(extension)) {
@@ -191,7 +191,7 @@ public class DirectoryUtils {
      */
     ArrayList<String> getAllExcelDocumentsOnDevice() {
         mFilePaths = new ArrayList<>();
-        walkdir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
+        walkDir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
         return mFilePaths;
     }
 }

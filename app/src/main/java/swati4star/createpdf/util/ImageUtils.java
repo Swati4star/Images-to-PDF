@@ -65,16 +65,16 @@ public class ImageUtils {
     public static Bitmap getRoundBitmap(Bitmap bmp) {
         int width = bmp.getWidth(), height = bmp.getHeight();
         int radius = width > height ? height : width; // set the smallest edge as radius.
-        Bitmap sbmp;
+        Bitmap bitmap;
 
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
             float smallest = Math.min(bmp.getWidth(), bmp.getHeight());
             float factor = smallest / radius;
-            sbmp = Bitmap.createScaledBitmap(bmp,
+            bitmap = Bitmap.createScaledBitmap(bmp,
                     (int) (bmp.getWidth() / factor),
                     (int) (bmp.getHeight() / factor), false);
         } else {
-            sbmp = bmp;
+            bitmap = bmp;
         }
 
         Bitmap output = Bitmap.createBitmap(radius, radius, Bitmap.Config.ARGB_8888);
@@ -91,7 +91,7 @@ public class ImageUtils {
         canvas.drawCircle(radius / 2f + 0.7f, radius / 2f + 0.7f,
                 radius / 2f + 0.1f, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(sbmp, rect, rect, paint);
+        canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
     }
@@ -183,7 +183,7 @@ public class ImageUtils {
     }
 
     /**
-     * convert a bitmap to grayscale and return it
+     * convert a bitmap to gray scale and return it
      * @param bmpOriginal original bitmap which is converted to a new
      *                    grayscale bitmap
      */
