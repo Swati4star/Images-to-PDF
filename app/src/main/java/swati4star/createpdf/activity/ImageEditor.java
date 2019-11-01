@@ -54,16 +54,17 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private int mDisplaySize;
     private int mCurrentImage; // 0 by default
     private String mFilterName;
+
     @BindView(R.id.nextimageButton)
-    ImageView mNextButton;
+    ImageView nextButton;
     @BindView(R.id.imagecount)
-    TextView mImageCount;
+    TextView imageCount;
     @BindView(R.id.previousImageButton)
-    ImageView mPreviousButton;
+    ImageView previousButton;
     @BindView(R.id.doodleSeekBar)
     SeekBar doodleSeekBar;
     @BindView(R.id.photoEditorView)
-    PhotoEditorView mPhotoEditorView;
+    PhotoEditorView photoEditorView;
     @BindView(R.id.doodle_colors)
     RecyclerView brushColorsView;
 
@@ -98,13 +99,13 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mBrushItems = BrushUtils.getInstance().getBrushItems();
         mImagePaths.addAll(mFilterUris);
 
-        mPhotoEditorView.getSource()
+        photoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
         changeAndShowImageCount(0);
 
         initRecyclerView();
 
-        mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+        mPhotoEditor = new PhotoEditor.Builder(this, photoEditorView)
                 .setPinchTextScalable(true)
                 .build();
         doodleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -151,9 +152,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             return;
 
         mCurrentImage = count % mDisplaySize;
-        mPhotoEditorView.getSource()
+        photoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
-        mImageCount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
+        imageCount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
     }
 
     @OnClick(R.id.savecurrent)
@@ -172,7 +173,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mClicked = true;
         String originalPath = mFilterUris.get(mCurrentImage);
         mImagePaths.set(mCurrentImage, originalPath);
-        mPhotoEditorView.getSource()
+        photoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(originalPath));
         mPhotoEditor.clearAllViews();
         mPhotoEditor.undo();
@@ -197,7 +198,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 public void onSuccess(@NonNull String imagePath) {
                     mImagePaths.remove(mCurrentImage);
                     mImagePaths.add(mCurrentImage, imagePath);
-                    mPhotoEditorView.getSource()
+                    photoEditorView.getSource()
                             .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
                     Toast.makeText(getApplicationContext(), R.string.filter_saved, Toast.LENGTH_SHORT).show();
                 }
@@ -243,7 +244,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mClicked = position == 0;
         // Brush effect is in second position
         if (position == 1) {
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+            mPhotoEditor = new PhotoEditor.Builder(this, photoEditorView)
                     .setPinchTextScalable(true)
                     .build();
             if (doodleSeekBar.getVisibility() == View.GONE && brushColorsView.getVisibility() == View.GONE) {
@@ -272,7 +273,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void applyFilter(PhotoFilter filterType) {
         try {
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+            mPhotoEditor = new PhotoEditor.Builder(this, photoEditorView)
                     .setPinchTextScalable(true)
                     .build();
             mPhotoEditor.setFilterEffect(filterType);
