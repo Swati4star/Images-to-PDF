@@ -43,16 +43,16 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private String mPath;
     private final String mPageSize;
     private final boolean mPasswordProtected;
-    private Boolean mWatermarkAdded;
-    private Watermark mWatermark;
-    private int mMarginTop;
-    private int mMarginBottom;
-    private int mMarginRight;
-    private int mMarginLeft;
-    private String mImagescaleType;
-    private String mPageNumStyle;
-    private String mMasterPwd;
-    private int mPageColor;
+    private final Boolean mWatermarkAdded;
+    private final Watermark mWatermark;
+    private final int mMarginTop;
+    private final int mMarginBottom;
+    private final int mMarginRight;
+    private final int mMarginLeft;
+    private final String mImageScaleType;
+    private final String mPageNumStyle;
+    private final String mMasterPwd;
+    private final int mPageColor;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -70,7 +70,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mMarginBottom = mImageToPDFOptions.getMarginBottom();
         this.mMarginRight = mImageToPDFOptions.getMarginRight();
         this.mMarginLeft = mImageToPDFOptions.getMarginLeft();
-        this.mImagescaleType = mImageToPDFOptions.getImageScaleType();
+        this.mImageScaleType = mImageToPDFOptions.getImageScaleType();
         this.mPageNumStyle = mImageToPDFOptions.getPageNumStyle();
         this.mMasterPwd = mImageToPDFOptions.getMasterPwd();
         this.mPageColor = mImageToPDFOptions.getPageColor();
@@ -137,12 +137,12 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 }
                 Image image = Image.getInstance(mImagesUri.get(i));
                 // compressionLevel is a value between 0 (best speed) and 9 (best compression)
-                double qualtyMod = quality * 0.09;
-                image.setCompressionLevel((int) qualtyMod);
+                double qualityMod = quality * 0.09;
+                image.setCompressionLevel((int) qualityMod);
                 image.setBorder(Rectangle.BOX);
                 image.setBorderWidth(mBorderWidth);
 
-                Log.v("Stage 5", "Image compressed " + qualtyMod);
+                Log.v("Stage 5", "Image compressed " + qualityMod);
 
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);
@@ -151,7 +151,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
                 float pageWidth = document.getPageSize().getWidth() - (mMarginLeft + mMarginRight);
                 float pageHeight = document.getPageSize().getHeight() - (mMarginBottom + mMarginTop);
-                if (mImagescaleType.equals(IMAGE_SCALE_TYPE_ASPECT_RATIO))
+                if (mImageScaleType.equals(IMAGE_SCALE_TYPE_ASPECT_RATIO))
                     image.scaleToFit(pageWidth, pageHeight);
                 else
                     image.scaleAbsolute(pageWidth, pageHeight);

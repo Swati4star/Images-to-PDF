@@ -26,14 +26,14 @@ public class Constants {
     public static final String DEFAULT_THEME = "White";
     public static final String DEFAULT_IMAGE_BORDER_TEXT = "Image_border_text";
     public static final String RESULT = "result";
-    public static final String SAMEFILE = "SameFile";
+    public static final String SAME_FILE = "SameFile";
     public static final String DEFAULT_PAGE_SIZE_TEXT = "DefaultPageSize";
     public static final String DEFAULT_PAGE_SIZE = "A4";
     public static final String CHOICE_REMOVE_IMAGE = "CHOICE_REMOVE_IMAGE";
     public static final int DEFAULT_QUALITY_VALUE = 30;
     public static final int DEFAULT_BORDER_WIDTH = 0;
     public static final String STORAGE_LOCATION = "storage_location";
-    public static final String DEFAULT_IMAGE_SCALETYPE_TEXT = "image_scale_type";
+    public static final String DEFAULT_IMAGE_SCALE_TYPE_TEXT = "image_scale_type";
     public static final String IMAGE_SCALE_TYPE_STRETCH = "stretch_image";
     public static final String IMAGE_SCALE_TYPE_ASPECT_RATIO = "maintain_aspect_ratio";
     public static final String PG_NUM_STYLE_PAGE_X_OF_N = "pg_num_style_page_x_of_n";
@@ -120,4 +120,10 @@ public class Constants {
     };
 
     public static final int MODIFY_STORAGE_LOCATION_CODE = 1;
+
+
+    public static final int ROTATE_PAGES = 20;
+    public static final int ADD_PASSWORD = 21;
+    public static final int REMOVE_PASSWORD = 22;
+    public static final int ADD_WATERMARK = 23;
 }

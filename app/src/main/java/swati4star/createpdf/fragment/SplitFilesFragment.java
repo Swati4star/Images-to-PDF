@@ -57,6 +57,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private SplitPDFUtils mSplitPDFUtils;
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -64,7 +65,6 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     MorphingButton selectFileButton;
     @BindView(R.id.splitFiles)
     MorphingButton splitFilesButton;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.upArrow)
@@ -87,8 +87,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_split_files, container, false);
         ButterKnife.bind(this, rootview);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
@@ -98,7 +98,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
     /**
@@ -161,7 +161,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
 
@@ -219,11 +219,11 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

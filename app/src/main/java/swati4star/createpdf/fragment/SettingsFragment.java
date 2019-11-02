@@ -31,7 +31,7 @@ import butterknife.OnClick;
 import lib.folderpicker.FolderPicker;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
@@ -44,11 +44,11 @@ import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
-import static swati4star.createpdf.util.SettingsOptions.ImageEnhancementOptionsUtils.getEnhancementOptions;
+import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
 import static swati4star.createpdf.util.ThemeUtils.getSelectedThemePosition;
 import static swati4star.createpdf.util.ThemeUtils.saveTheme;
 
-public class SettingsFragment extends Fragment implements OnItemClickListner {
+public class SettingsFragment extends Fragment implements OnItemClickListener {
 
     @BindView(R.id.settings_list)
     RecyclerView mEnhancementOptionsRecycleView;
@@ -257,7 +257,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     /**
      * To modify page size
      */
-    public void setPageSize() {
+    private void setPageSize() {
         PageSizeUtils utils = new PageSizeUtils(mActivity);
         MaterialDialog materialDialog = utils.showPageSizeDialog(true);
         materialDialog.setOnDismissListener(dialog -> showSettingsOptions());
@@ -266,7 +266,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListner {
     /**
      * To modify theme
      */
-    public void setTheme() {
+    private void setTheme() {
         MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
                 R.string.theme_edit);
         MaterialDialog materialDialog = builder.customView(R.layout.dialog_theme_default, true)

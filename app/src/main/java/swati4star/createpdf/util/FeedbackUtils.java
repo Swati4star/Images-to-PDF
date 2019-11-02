@@ -73,8 +73,8 @@ public class FeedbackUtils {
 
 
     /**
-     * Opens given webpage in browser
-     * @param url - webpage to open up
+     * Opens given web page in browser
+     * @param url - web page to open up
      */
     public void openWebPage(String url) {
         Uri uri = Uri.parse(url);

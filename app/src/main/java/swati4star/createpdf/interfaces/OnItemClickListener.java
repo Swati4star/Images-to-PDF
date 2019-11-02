@@ -1,5 +1,6 @@
 package swati4star.createpdf.interfaces;
 
-public interface OnItemClickListner {
+public interface OnItemClickListener {
+
     void onItemClick(int position);
 }

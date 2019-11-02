@@ -34,9 +34,9 @@ public class DirectoryUtils {
     /**
      * Used to search for PDF matching the search query
      * @param query - Query from search bar
-     * @return ArrayList containg all the pdf files matching the search query
+     * @return ArrayList containing all the pdf files matching the search query
      */
-    public ArrayList<File> searchPDF(String query) {
+    ArrayList<File> searchPDF(String query) {
         ArrayList<File> searchResult = new ArrayList<>();
         final File[] files = getOrCreatePdfDirectory().listFiles();
         ArrayList<File> pdfs = searchPdfsFromPdfFolder(files);
@@ -75,14 +75,14 @@ public class DirectoryUtils {
         return 0;
     }
 
-    // RETURING LIST OF FILES OR DIRECTORIES
+    // RETURNING LIST OF FILES OR DIRECTORIES
 
     /**
      * Returns pdf files from folder
      *
      * @param files list of files (folder)
      */
-    public ArrayList<File> getPdfsFromPdfFolder(File[] files) {
+    ArrayList<File> getPdfsFromPdfFolder(File[] files) {
         ArrayList<File> pdfFiles = new ArrayList<>();
         if (files == null)
             return pdfFiles;
@@ -111,7 +111,7 @@ public class DirectoryUtils {
     /**
      * Checks if a given file is PDF
      * @param file - input file
-     * @return tru - if condition satistfies, else false
+     * @return tru - if condition satisfies, else false
      */
     private boolean isPDFAndNotDirectory(File file) {
         return !file.isDirectory() &&
@@ -135,43 +135,30 @@ public class DirectoryUtils {
      */
     public ArrayList<File> getPdfFromOtherDirectories() {
         mFilePaths = new ArrayList<>();
-        walkdir(getOrCreatePdfDirectory());
+        walkDir(getOrCreatePdfDirectory());
         ArrayList<File> files = new ArrayList<>();
         for (String path : mFilePaths)
             files.add(new File(path));
         return files;
     }
 
-    /**
-     * get the PDF Directory from directory name
-     * @param dirName - name of the directory to be searched for
-     * @return pdf directory if it exists , else null
-     */
-    public File getDirectory(String dirName) {
-        File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation()) + dirName);
-        if (!folder.exists()) {
-            return null;
-        }
-        return folder;
-    }
 
     /**
      * gets a list of all the pdf files on the user device
      * @return - list of file absolute paths
      */
-    public ArrayList<String> getAllPDFsOnDevice() {
+    ArrayList<String> getAllPDFsOnDevice() {
         mFilePaths = new ArrayList<>();
-        walkdir(Environment.getExternalStorageDirectory());
+        walkDir(Environment.getExternalStorageDirectory());
         return mFilePaths;
     }
 
     /**
-     * Walks through given dir & sub direc, and append file path to mFilePaths
+     * Walks through given dir & sub directory, and append file path to mFilePaths
      * @param dir - root directory
      */
-    private void walkdir(File dir) {
-        walkdir(dir, Collections.singletonList(pdfExtension));
+    private void walkDir(File dir) {
+        walkDir(dir, Collections.singletonList(pdfExtension));
     }
 
     /**
@@ -179,13 +166,13 @@ public class DirectoryUtils {
      * @param dir - root directory
      * @param extensions - a list of file extensions to search for
      */
-    private void walkdir(File dir, List<String> extensions) {
+    private void walkDir(File dir, List<String> extensions) {
         File[] listFile = dir.listFiles();
         if (listFile != null) {
             for (File aListFile : listFile) {
 
                 if (aListFile.isDirectory()) {
-                    walkdir(aListFile, extensions);
+                    walkDir(aListFile, extensions);
                 } else {
                     for (String extension: extensions) {
                         if (aListFile.getName().endsWith(extension)) {
@@ -204,7 +191,7 @@ public class DirectoryUtils {
      */
     ArrayList<String> getAllExcelDocumentsOnDevice() {
         mFilePaths = new ArrayList<>();
-        walkdir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
+        walkDir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
         return mFilePaths;
     }
 }

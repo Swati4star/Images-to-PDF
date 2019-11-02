@@ -32,9 +32,9 @@ public class ColorUtilsTest {
                 });
     }
 
-    private int mColor1;
-    private int mColor2;
-    private boolean mIsColorSimilar;
+    private final int mColor1;
+    private final int mColor2;
+    private final boolean mIsColorSimilar;
 
     public ColorUtilsTest(int mColor1, int mColor2, boolean mIsColorSimilar) {
         this.mColor1 = mColor1;

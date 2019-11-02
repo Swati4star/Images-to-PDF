@@ -63,12 +63,12 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private Uri mExcelFileUri;
     private String mRealPath;
     private BottomSheetUtils mBottomSheetUtils;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.tv_extract_text_bottom)
     TextView mTextView;
     @BindView(R.id.extract_text)
     MorphingButton extractText;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.recyclerViewFiles)
@@ -93,19 +93,19 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_extract_text, container,
+        View rootView = inflater.inflate(R.layout.fragment_extract_text, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootview);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        ButterKnife.bind(this, rootView);
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());
         extractText.setEnabled(false);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         mLottieProgress.setVisibility(View.VISIBLE);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        return rootview;
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        return rootView;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
     @OnClick(R.id.select_pdf_file)
@@ -262,7 +262,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mRealPath = path;
         mFileName = FileUtils.getFileName(path);
         mFileName = getResources().getString(R.string.pdf_selected) + mFileName;
@@ -274,11 +274,11 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

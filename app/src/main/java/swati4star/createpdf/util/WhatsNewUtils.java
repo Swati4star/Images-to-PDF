@@ -74,7 +74,7 @@ public class WhatsNewUtils {
 
 
     /**
-     * Extract whatsnew items by parsing json
+     * Extract what's new items by parsing json
      * @param object - json object to be parsed
      * @return list of whatsnew items
      * @throws JSONException - invalid JSON

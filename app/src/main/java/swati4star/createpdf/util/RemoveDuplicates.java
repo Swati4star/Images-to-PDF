@@ -20,9 +20,9 @@ import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 
 public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
     private String mPath;
-    private OnPDFCreatedInterface mOnPDFCreatedInterface;
-    private ArrayList<Bitmap> mBitmaps;
-    private StringBuilder mSequence;
+    private final OnPDFCreatedInterface mOnPDFCreatedInterface;
+    private final ArrayList<Bitmap> mBitmaps;
+    private final StringBuilder mSequence;
     private Boolean mIsNewPDFCreated;
 
     public RemoveDuplicates(String mPath, OnPDFCreatedInterface onPDFCreatedInterface) {
@@ -95,7 +95,7 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
 
     private void checkAndAddIfBitmapExists(Bitmap bitmap, int position) {
 
-        Boolean add = true;
+        boolean add = true;
         for (Bitmap b : mBitmaps) {
             if (b.sameAs(bitmap))
                 add = false;

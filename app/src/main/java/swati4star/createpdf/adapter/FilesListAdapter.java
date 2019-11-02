@@ -20,14 +20,12 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
 
     private final ArrayList<String> mFilePaths;
     private final Activity mContext;
-    private final FileUtils mFileUtils;
     private final OnFileItemClickedListener mOnClickListener;
 
     public FilesListAdapter(Activity mContext, ArrayList<String> mFilePaths,
                             OnFileItemClickedListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
-        mFileUtils = new FileUtils(mContext);
         this.mOnClickListener = mOnClickListener;
     }
 

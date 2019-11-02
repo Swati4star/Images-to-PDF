@@ -7,7 +7,7 @@ import swati4star.createpdf.interfaces.BottomSheetPopulate;
 
 public class BottomSheetUtils  {
 
-    private Activity mContext;
+    private final Activity mContext;
 
     public BottomSheetUtils(Activity context) {
         this.mContext = context;

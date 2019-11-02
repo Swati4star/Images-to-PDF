@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.interfaces.OnTextToPdfInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
@@ -57,7 +57,7 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
-public class TextToPdfFragment extends Fragment implements OnItemClickListner,
+public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         OnTextToPdfInterface {
 
     private Activity mActivity;
@@ -96,7 +96,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mFontTitle = String.format(getString(R.string.edit_font_size),
@@ -108,7 +108,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
                 DEFAULT_PAGE_COLOR);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootview);
+        ButterKnife.bind(this, rootView);
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);
@@ -116,7 +116,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
                 Constants.DEFAULT_PAGE_SIZE);
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
 
-        return rootview;
+        return rootView;
     }
 
     /**
@@ -387,7 +387,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
         TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, mPasswordProtected,
                 mPassword, mTextFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);
         TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
-        new TextToPdfAsync(mTextFileUri.toString(), fileUtil, options, mFileExtension,
+        new TextToPdfAsync(fileUtil, options, mFileExtension,
                 TextToPdfFragment.this).execute();
     }
 
@@ -404,9 +404,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListner,
             Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setDataAndType(uri, "*/*");
-            String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            String[] mimeTypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     "application/msword", getString(R.string.text_type)};
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             try {
                 startActivityForResult(

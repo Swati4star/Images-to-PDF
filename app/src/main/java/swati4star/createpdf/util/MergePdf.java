@@ -18,8 +18,9 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
     private String mFinPath;
     private Boolean mIsPDFMerged;
     private String mFilename;
-    private boolean mIsPasswordProtected;
-    private String mPassword, mMasterPwd;
+    private final boolean mIsPasswordProtected;
+    private final String mPassword;
+    private final String mMasterPwd;
     private final MergeFilesListener mMergeFilesListener;
 
     /**
@@ -27,7 +28,7 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
      *
      * @param fileName - output file name
      * @param isPasswordProtected - true if pdf is password protected
-     * @param password - pasword entered by user
+     * @param password - password entered by user
      * @param mergeFilesListener - listener object
      * @param masterpwd - current master password
      */
@@ -54,7 +55,7 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
             PdfReader pdfreader;
             // Create document object
             Document document = new Document();
-            // Create pdf copy object to copy current document to the output mergedresult file
+            // Create pdf copy object to copy current document to the output merged result file
             mFilename = mFilename + pdfExtension;
             mFinPath = mFinPath + mFilename;
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(mFinPath));

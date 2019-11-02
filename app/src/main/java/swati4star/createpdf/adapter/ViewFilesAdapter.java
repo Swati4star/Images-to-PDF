@@ -42,7 +42,6 @@ import swati4star.createpdf.util.WatermarkUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
 import static swati4star.createpdf.util.FileUtils.getFormattedDate;
-import static swati4star.createpdf.util.StringUtils.getSnackbarwithAction;
 
 /**
  * Created by swati on 9/10/15.
@@ -60,7 +59,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private final FileUtils mFileUtils;
     private final PDFUtils mPDFUtils;
     private final PDFRotationUtils mPDFRotationUtils;
-    private final WatermarkUtils mWatermakrUtils;
+    private final WatermarkUtils mWatermarkUtils;
     private final PDFEncryptionUtility mPDFEncryptionUtils;
     private final DatabaseHelper mDatabaseHelper;
     private final SharedPreferences mSharedPreferences;
@@ -88,7 +87,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         mPDFUtils = new PDFUtils(activity);
         mPDFRotationUtils = new PDFRotationUtils(activity);
         mPDFEncryptionUtils = new PDFEncryptionUtility(activity);
-        mWatermakrUtils = new WatermarkUtils(activity);
+        mWatermarkUtils = new WatermarkUtils(activity);
         mDatabaseHelper = new DatabaseHelper(mActivity);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
     }
@@ -106,12 +105,12 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         final int position = holder.getAdapterPosition();
         final PDFFile pdfFile = mFileList.get(position);
 
-        holder.mFilename.setText(pdfFile.getPdfFile().getName());
-        holder.mFilesize.setText(FileUtils.getFormattedSize(pdfFile.getPdfFile()));
-        holder.mFiledate.setText(getFormattedDate(pdfFile.getPdfFile()));
+        holder.fileName.setText(pdfFile.getPdfFile().getName());
+        holder.fileSize.setText(FileUtils.getFormattedSize(pdfFile.getPdfFile()));
+        holder.fileDate.setText(getFormattedDate(pdfFile.getPdfFile()));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
-        holder.mEncryptionImage.setVisibility(pdfFile.isEncrypted() ? View.VISIBLE : View.GONE);
-        holder.mRipple.setOnClickListener(view -> {
+        holder.encryptionImage.setVisibility(pdfFile.isEncrypted() ? View.VISIBLE : View.GONE);
+        holder.ripple.setOnClickListener(view -> {
             new MaterialDialog.Builder(mActivity)
                     .title(R.string.title)
                     .items(R.array.items)
@@ -125,7 +124,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     /**
      * Performs the required option on file
-     * as per user selction
+     * as per user selection
      *
      * @param index    - index of operation performed
      * @param position - position of item clicked
@@ -170,7 +169,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 9: // Add Watermark
-                mWatermakrUtils.setWatermark(file.getPath(), ViewFilesAdapter.this);
+                mWatermarkUtils.setWatermark(file.getPath(), ViewFilesAdapter.this);
                 break;
         }
     }
@@ -186,7 +185,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     /**
-     * Unchecks every item in the item
+     * unchecks every item in the item
      */
     public void unCheckAll() {
         mSelectedFiles.clear();
@@ -247,7 +246,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     /**
      * Checks if any item is selected
      *
-     * @return tru, if atleast one item is checked
+     * @return tru, if at least one item is checked
      */
     public boolean areItemsSelected() {
         return mSelectedFiles.size() > 0;
@@ -257,7 +256,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * Delete the file
      *
      * @param name     - name of the file
-     * @param position - position of file in arraylist
+     * @param position - position of file in array list
      */
     private void deleteFile(String name, int position) {
 
@@ -268,22 +267,23 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         final File fdelete = new File(name);
         mFileList.remove(position);
         notifyDataSetChanged();
-        getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted).setAction(R.string.snackbar_undoAction, v -> {
-            if (mFileList.size() == 0) {
-                mEmptyStateChangeListener.setEmptyStateInvisible();
-            }
-            updateDataset();
-            undoClicked.set(1);
-        }).addCallback(new Snackbar.Callback() {
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                if (undoClicked.get() == 0) {
-                    fdelete.delete();
-                    mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
-                            mActivity.getString(R.string.deleted));
-                }
-            }
-        }).show();
+        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
+                .setAction(R.string.snackbar_undoAction, v -> {
+                    if (mFileList.size() == 0) {
+                        mEmptyStateChangeListener.setEmptyStateInvisible();
+                    }
+                    updateDataset();
+                    undoClicked.set(1);
+                }).addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        if (undoClicked.get() == 0) {
+                            fdelete.delete();
+                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                    mActivity.getString(R.string.deleted));
+                        }
+                    }
+                }).show();
         if (mFileList.size() == 0)
             mEmptyStateChangeListener.setEmptyStateVisible();
     }
@@ -402,20 +402,20 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     }
 
-    public class ViewFilesHolder extends RecyclerView.ViewHolder {
+    class ViewFilesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.fileRipple)
-        MaterialRippleLayout mRipple;
+        MaterialRippleLayout ripple;
         @BindView(R.id.fileName)
-        TextView mFilename;
+        TextView fileName;
         @BindView(R.id.checkbox)
         CheckBox checkBox;
         @BindView(R.id.fileDate)
-        TextView mFiledate;
+        TextView fileDate;
         @BindView(R.id.fileSize)
-        TextView mFilesize;
+        TextView fileSize;
         @BindView(R.id.encryptionImage)
-        ImageView mEncryptionImage;
+        ImageView encryptionImage;
 
         ViewFilesHolder(View itemView, ItemSelectedListener itemSelectedListener) {
             super(itemView);

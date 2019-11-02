@@ -13,16 +13,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.FAQItem;
 
 public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
-    List<FAQItem> faqs;
-    private final OnItemClickListner mOnItemClickListener;
+    private final List<FAQItem> mFaqs;
+    private final OnItemClickListener mOnItemClickListener;
 
-    public FAQAdapter(List<FAQItem> faqs, OnItemClickListner mOnItemClickListener) {
-        this.faqs = faqs;
+    public FAQAdapter(List<FAQItem> faqs, OnItemClickListener mOnItemClickListener) {
+        this.mFaqs = faqs;
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
@@ -49,7 +49,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull FAQViewHolder viewHolder, int position) {
-        FAQItem faqItem = faqs.get(position);
+        FAQItem faqItem = mFaqs.get(position);
         viewHolder.question.setText(faqItem.getQuestion());
         viewHolder.answer.setText(faqItem.getAnswer());
         boolean isExpanded = faqItem.isExpanded();
@@ -58,7 +58,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
     @Override
     public int getItemCount() {
-        return faqs.size();
+        return mFaqs.size();
     }
 
     public class FAQViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

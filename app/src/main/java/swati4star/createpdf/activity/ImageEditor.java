@@ -33,7 +33,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.BrushItemAdapter;
 import swati4star.createpdf.adapter.ImageFiltersAdapter;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
 import swati4star.createpdf.util.BrushUtils;
@@ -44,26 +44,27 @@ import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
-public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListner {
+public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListener {
 
     private ArrayList<String> mFilterUris = new ArrayList<>();
-    private final ArrayList<String> mImagepaths = new ArrayList<>();
+    private final ArrayList<String> mImagePaths = new ArrayList<>();
     private ArrayList<FilterItem> mFilterItems;
     private ArrayList<BrushItem> mBrushItems;
 
     private int mDisplaySize;
     private int mCurrentImage; // 0 by default
     private String mFilterName;
+
     @BindView(R.id.nextimageButton)
-    ImageView mNextButton;
+    ImageView nextButton;
     @BindView(R.id.imagecount)
-    TextView mImgcount;
+    TextView imageCount;
     @BindView(R.id.previousImageButton)
-    ImageView mPreviousButton;
+    ImageView previousButton;
     @BindView(R.id.doodleSeekBar)
     SeekBar doodleSeekBar;
     @BindView(R.id.photoEditorView)
-    PhotoEditorView mPhotoEditorView;
+    PhotoEditorView photoEditorView;
     @BindView(R.id.doodle_colors)
     RecyclerView brushColorsView;
 
@@ -89,22 +90,22 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         }
     }
 
-    void initValues() {
+    private void initValues() {
 
         // Extract images
         mFilterUris = getIntent().getStringArrayListExtra(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
         mFilterItems = getFiltersList(this);
         mBrushItems = BrushUtils.getInstance().getBrushItems();
-        mImagepaths.addAll(mFilterUris);
+        mImagePaths.addAll(mFilterUris);
 
-        mPhotoEditorView.getSource()
+        photoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
         changeAndShowImageCount(0);
 
         initRecyclerView();
 
-        mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+        mPhotoEditor = new PhotoEditor.Builder(this, photoEditorView)
                 .setPinchTextScalable(true)
                 .build();
         doodleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -144,16 +145,16 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             StringUtils.getInstance().showSnackbar(this, R.string.save_first);
     }
 
-    // modify current image num & display in textview
+    // modify current image num & display in text view
     private void changeAndShowImageCount(int count) {
 
         if (count < 0 || count >= mDisplaySize)
             return;
 
         mCurrentImage = count % mDisplaySize;
-        mPhotoEditorView.getSource()
-                .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage)));
-        mImgcount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
+        photoEditorView.getSource()
+                .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
+        imageCount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
     }
 
     @OnClick(R.id.savecurrent)
@@ -171,8 +172,8 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     void resetCurrent() {
         mClicked = true;
         String originalPath = mFilterUris.get(mCurrentImage);
-        mImagepaths.set(mCurrentImage, originalPath);
-        mPhotoEditorView.getSource()
+        mImagePaths.set(mCurrentImage, originalPath);
+        photoEditorView.getSource()
                 .setImageBitmap(BitmapFactory.decodeFile(originalPath));
         mPhotoEditor.clearAllViews();
         mPhotoEditor.undo();
@@ -195,10 +196,10 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             mPhotoEditor.saveAsFile(imagePath, new PhotoEditor.OnSaveListener() {
                 @Override
                 public void onSuccess(@NonNull String imagePath) {
-                    mImagepaths.remove(mCurrentImage);
-                    mImagepaths.add(mCurrentImage, imagePath);
-                    mPhotoEditorView.getSource()
-                            .setImageBitmap(BitmapFactory.decodeFile(mImagepaths.get(mCurrentImage)));
+                    mImagePaths.remove(mCurrentImage);
+                    mImagePaths.add(mCurrentImage, imagePath);
+                    photoEditorView.getSource()
+                            .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
                     Toast.makeText(getApplicationContext(), R.string.filter_saved, Toast.LENGTH_SHORT).show();
                 }
 
@@ -243,7 +244,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mClicked = position == 0;
         // Brush effect is in second position
         if (position == 1) {
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+            mPhotoEditor = new PhotoEditor.Builder(this, photoEditorView)
                     .setPinchTextScalable(true)
                     .build();
             if (doodleSeekBar.getVisibility() == View.GONE && brushColorsView.getVisibility() == View.GONE) {
@@ -272,7 +273,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void applyFilter(PhotoFilter filterType) {
         try {
-            mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
+            mPhotoEditor = new PhotoEditor.Builder(this, photoEditorView)
                     .setPinchTextScalable(true)
                     .build();
             mPhotoEditor.setFilterEffect(filterType);
@@ -286,7 +287,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @Override
     public void onBackPressed() {
         Intent returnIntent = new Intent();
-        returnIntent.putStringArrayListExtra(RESULT, mImagepaths);
+        returnIntent.putStringArrayListExtra(RESULT, mImagePaths);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -295,14 +296,14 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     public void onItemClick(int position) {
         int color = mBrushItems.get(position).getColor();
         if (position == mBrushItems.size() - 1) {
-            final MaterialDialog colorpallete = new MaterialDialog.Builder(this)
+            final MaterialDialog colorPallete = new MaterialDialog.Builder(this)
                     .title(R.string.choose_color_text)
                     .customView(R.layout.color_pallete_layout, true)
                     .positiveText(R.string.ok)
                     .negativeText(R.string.cancel)
                     .build();
-            final View mPositiveAction = colorpallete.getActionButton(DialogAction.POSITIVE);
-            final ColorPickerView colorPickerInput = colorpallete.getCustomView().findViewById(R.id.color_pallete);
+            final View mPositiveAction = colorPallete.getActionButton(DialogAction.POSITIVE);
+            final ColorPickerView colorPickerInput = colorPallete.getCustomView().findViewById(R.id.color_pallete);
 
             mPositiveAction.setEnabled(true);
             mPositiveAction.setOnClickListener(v -> {
@@ -312,9 +313,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                colorpallete.dismiss();
+                colorPallete.dismiss();
             });
-            colorpallete.show();
+            colorPallete.show();
 
         } else {
             doodleSeekBar.setBackgroundColor(this.getResources().getColor(color));

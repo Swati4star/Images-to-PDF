@@ -70,7 +70,6 @@ public class ViewFilesFragment extends Fragment
     @BindView(R.id.no_permissions_view)
     RelativeLayout noPermissionsLayout;
 
-    private MenuItem mMenuItem;
     private Activity mActivity;
     private ViewFilesAdapter mViewFilesAdapter;
 
@@ -118,11 +117,12 @@ public class ViewFilesFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem;
         if (!mIsMergeRequired) {
-            // menu to inflate the view where search and selectall icon is there.
+            // menu to inflate the view where search and select all icon is there.
             inflater.inflate(R.menu.activity_view_files_actions, menu);
             MenuItem item = menu.findItem(R.id.action_search);
-            mMenuItem = menu.findItem(R.id.select_all);
+            menuItem = menu.findItem(R.id.select_all);
             mSearchView = (SearchView) item.getActionView();
             mSearchView.setQueryHint(getString(R.string.search_hint));
             mSearchView.setSubmitButtonEnabled(true);
@@ -149,11 +149,11 @@ public class ViewFilesFragment extends Fragment
             inflater.inflate(R.menu.activity_view_files_actions_if_selected, menu);
             MenuItem item = menu.findItem(R.id.item_merge);
             item.setVisible(mCountFiles > 1); //Show Merge icon when two or more files was selected
-            mMenuItem = menu.findItem(R.id.select_all);
+            menuItem = menu.findItem(R.id.select_all);
         }
 
         if (mIsAllFilesSelected) {
-            mMenuItem.setIcon(R.drawable.ic_check_box_24dp);
+            menuItem.setIcon(R.drawable.ic_check_box_24dp);
         }
 
     }
@@ -294,7 +294,7 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void filesPopulated() {
-        //refresh eveything and invalidate the menu.
+        //refresh everything and invalidate the menu.
         if (mIsMergeRequired) {
             mIsMergeRequired = false;
             mIsAllFilesSelected = false;
@@ -371,7 +371,7 @@ public class ViewFilesFragment extends Fragment
     /**
      * Updates the toolbar with respective the number of files selected.
      */
-    public void updateToolbar() {
+    private void updateToolbar() {
         AppCompatActivity activity = ((AppCompatActivity)
                 Objects.requireNonNull(mActivity));
         ActionBar toolbar = activity.getSupportActionBar();

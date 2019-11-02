@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class FileSortUtilsTest {
     private ArrayList<File> mFiles;
-    private FileSortUtils mInstance = FileSortUtils.getInstance();
+    private final FileSortUtils mInstance = FileSortUtils.getInstance();
 
     @Before
     public void setup() throws IOException {

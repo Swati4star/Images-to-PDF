@@ -61,11 +61,11 @@ public class FileUtils {
      **/
     public static String getFormattedDate(File file) {
         Date lastModDate = new Date(file.lastModified());
-        String[] formatdate = lastModDate.toString().split(" ");
-        String time = formatdate[3];
-        String[] formattime =  time.split(":");
-        String date = formattime[0] + ":" + formattime[1];
-        return formatdate[0] + ", " + formatdate[1] + " " + formatdate[2] + " at " + date;
+        String[] formatDate = lastModDate.toString().split(" ");
+        String time = formatDate[3];
+        String[] formatTime =  time.split(":");
+        String date = formatTime[0] + ":" + formatTime[1];
+        return formatDate[0] + ", " + formatDate[1] + " " + formatDate[2] + " at " + date;
     }
 
     /**
@@ -386,20 +386,20 @@ public class FileUtils {
 
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
-        String fname = filename + ".png";
+        String fileName = filename + ".png";
 
-        File file = new File(myDir, fname);
+        File file = new File(myDir, fileName);
         if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            Log.v("saving", fname);
+            Log.v("saving", fileName);
             out.flush();
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return myDir + "/" + fname;
+        return myDir + "/" + fileName;
     }
 
     /**

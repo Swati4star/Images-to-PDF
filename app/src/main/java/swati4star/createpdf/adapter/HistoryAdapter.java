@@ -53,13 +53,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         final String filePath = mHistoryList.get(position).getFilePath();
         File file = new File(filePath);
         final String operationDate = mHistoryList.get(position).getDate();
-        String[] formatdate = operationDate.split(" ");
+        String[] formatDate = operationDate.split(" ");
         String date;
-        if (formatdate.length >= 3) {
-            String time = formatdate[3];
-            String[] formattime =  time.split(":");
-            date = formattime[0] + ":" + formattime[1];
-            date = formatdate[0] + ", " + formatdate[1] + " " + formatdate[2] + " at " + date;
+        if (formatDate.length >= 3) {
+            String time = formatDate[3];
+            String[] formatTime =  time.split(":");
+            date = formatTime[0] + ":" + formatTime[1];
+            date = formatDate[0] + ", " + formatDate[1] + " " + formatDate[2] + " at " + date;
         } else {
             date = operationDate;
         }
@@ -70,7 +70,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         holder.mFilename.setText(fileName);
         holder.mOperationDate.setText(date);
         holder.mOperationType.setText(operationType);
-        if (mIconsOperationList.containsKey(operationType))
+        if (mIconsOperationList != null && mIconsOperationList.containsKey(operationType))
             holder.mOperationImage.setImageResource(mIconsOperationList.get(operationType));
         else
             holder.mOperationImage.setImageResource(R.drawable.ic_create_black_24dp);

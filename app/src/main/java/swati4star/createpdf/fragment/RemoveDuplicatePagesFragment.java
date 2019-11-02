@@ -54,6 +54,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private MaterialDialog mMaterialDialog;
+    BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -61,7 +62,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     MorphingButton selectFileButton;
     @BindView(R.id.remove)
     MorphingButton removeDuplicateButton;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.upArrow)
@@ -80,8 +80,8 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_remove_duplicate_pages, container, false);
         ButterKnife.bind(this, rootview);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
@@ -90,7 +90,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     }
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
     /**
@@ -147,7 +147,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
 
@@ -185,12 +185,12 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }
 

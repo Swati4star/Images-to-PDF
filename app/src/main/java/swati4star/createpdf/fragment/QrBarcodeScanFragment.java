@@ -56,7 +56,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private final String mTempFileName = "scan_result_temp.txt";
 
-    private ImageToPDFOptions mPdfOptions;
     private SharedPreferences mSharedPreferences;
     private Activity mActivity;
     private MaterialDialog mMaterialDialog;
@@ -134,7 +133,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * @param scannerType - type (qr code/bar code)
      * @param promptId    - string resource id for prompt
      */
-    public void openScanner(Collection<String> scannerType, int promptId) {
+    private void openScanner(Collection<String> scannerType, int promptId) {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         // use forSupportFragment or forFragment method to use fragments instead of activity
         integrator.setDesiredBarcodeFormats(scannerType);
@@ -205,15 +204,15 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * Resets pdf creation related values & show enhancement options
      */
     private void resetValues() {
-        mPdfOptions = new ImageToPDFOptions();
-        mPdfOptions.setBorderWidth(mSharedPreferences.getInt(DEFAULT_IMAGE_BORDER_TEXT,
+        ImageToPDFOptions imageToPDFOptions = new ImageToPDFOptions();
+        imageToPDFOptions.setBorderWidth(mSharedPreferences.getInt(DEFAULT_IMAGE_BORDER_TEXT,
                 DEFAULT_BORDER_WIDTH));
-        mPdfOptions.setQualityString(
+        imageToPDFOptions.setQualityString(
                 Integer.toString(mSharedPreferences.getInt(DEFAULT_COMPRESSION,
                         DEFAULT_QUALITY_VALUE)));
-        mPdfOptions.setPageSize(mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT,
+        imageToPDFOptions.setPageSize(mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT,
                 DEFAULT_PAGE_SIZE));
-        mPdfOptions.setPasswordProtected(false);
+        imageToPDFOptions.setPasswordProtected(false);
     }
 
 

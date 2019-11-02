@@ -41,7 +41,7 @@ import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
@@ -62,12 +62,13 @@ import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 
 public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        OnPDFCreatedInterface, OnItemClickListner, BottomSheetPopulate {
+        OnPDFCreatedInterface, OnItemClickListener, BottomSheetPopulate {
     private Activity mActivity;
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
     private String mRealPath;
     private String mPath;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -79,7 +80,6 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     MorphingButton mCreateExcelPdf;
     @BindView(R.id.enhancement_options_recycle_view)
     RecyclerView mEnhancementOptionsRecycleView;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.upArrow)
@@ -108,22 +108,22 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_excelto_pdf, container,
+        View rootView = inflater.inflate(R.layout.fragment_excelto_pdf, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootview);
+        ButterKnife.bind(this, rootView);
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
         mCreateExcelPdf.setEnabled(false);
 
-        ButterKnife.bind(this, rootview);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        ButterKnife.bind(this, rootView);
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithExcelFiles(this);
-        return rootview;
+        return rootView;
     }
 
     private void showEnhancementOptions() {
@@ -370,7 +370,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onItemClick(String path) {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mExcelFileUri = Uri.parse("file://" + path);
         mRealPath = path;
         processUri();

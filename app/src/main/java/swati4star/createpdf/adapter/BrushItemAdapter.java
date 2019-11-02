@@ -13,20 +13,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.BrushItem;
 
 public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.BrushItemViewHolder> {
 
     private final Context mContext;
-    private final OnItemClickListner mOnItemClickListner;
+    private final OnItemClickListener mOnItemClickListener;
     private final List<BrushItem> mBrushItems;
 
     public BrushItemAdapter(Context context,
-                            OnItemClickListner onItemClickListner,
+                            OnItemClickListener onItemClickListener,
                             List<BrushItem> brushItems) {
         mBrushItems = brushItems;
-        mOnItemClickListner = onItemClickListner;
+        mOnItemClickListener = onItemClickListener;
         mContext = context;
     }
 
@@ -42,9 +42,9 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
     public void onBindViewHolder(@NonNull BrushItemViewHolder holder, int position) {
         int color = mBrushItems.get(position).getColor();
         if (position == mBrushItems.size() - 1)
-            holder.Doodlebutton.setBackground(mContext.getResources().getDrawable(color));
+            holder.doodleButton.setBackground(mContext.getResources().getDrawable(color));
         else
-            holder.Doodlebutton.setBackgroundColor(mContext.getResources().getColor(color));
+            holder.doodleButton.setBackgroundColor(mContext.getResources().getColor(color));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
     public class BrushItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.doodle_color)
-        Button Doodlebutton;
+        Button doodleButton;
 
         BrushItemViewHolder(View itemView) {
             super(itemView);
@@ -65,7 +65,7 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
 
         @Override
         public void onClick(View view) {
-            mOnItemClickListner.onItemClick(getAdapterPosition());
+            mOnItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 }

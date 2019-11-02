@@ -23,7 +23,6 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
 
     private final ArrayList<String> mFilePaths;
     private final Activity mContext;
-    private final FileUtils mFileUtils;
     private final OnClickListener mOnClickListener;
     private final PDFUtils mPDFUtils;
     private final boolean mIsMergeFragment;
@@ -32,7 +31,6 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
                              boolean mIsMergeFragment, OnClickListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
-        mFileUtils = new FileUtils(mContext);
         this.mOnClickListener = mOnClickListener;
         mPDFUtils = new PDFUtils(mContext);
         this.mIsMergeFragment = mIsMergeFragment;

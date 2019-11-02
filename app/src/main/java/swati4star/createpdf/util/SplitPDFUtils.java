@@ -29,7 +29,7 @@ public class SplitPDFUtils {
     private static final int ERROR_INVALID_INPUT = 3;
 
     private final Activity mContext;
-    private SharedPreferences mSharedPreferences;
+    private final SharedPreferences mSharedPreferences;
 
     public SplitPDFUtils(Activity context) {
         this.mContext = context;

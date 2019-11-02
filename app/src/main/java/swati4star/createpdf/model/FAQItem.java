@@ -4,20 +4,25 @@ public class FAQItem {
 
     private String mQuestion;
     private String mAnswer;
-    boolean isExpanded;
+    private boolean mIsExpanded;
 
+    /**
+     * FAQ Item constructor
+     * @param question - question text
+     * @param answer - answer text
+     */
     public FAQItem(String question, String answer) {
         this.mQuestion = question;
         this.mAnswer = answer;
-        isExpanded = false;
+        mIsExpanded = false;
     }
 
     public boolean isExpanded() {
-        return isExpanded;
+        return mIsExpanded;
     }
 
     public void setExpanded(boolean expanded) {
-        isExpanded = expanded;
+        mIsExpanded = expanded;
     }
 
     public String getQuestion() {

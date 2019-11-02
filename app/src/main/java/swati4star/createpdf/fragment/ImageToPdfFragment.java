@@ -46,7 +46,6 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.activity.RearrangeImages;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.ImageToPDFOptions;
@@ -81,7 +80,7 @@ import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
-import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALETYPE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
@@ -102,7 +101,7 @@ import static swati4star.createpdf.util.WatermarkUtils.getStyleValueFromName;
 /**
  * ImageToPdfFragment fragment to start with creating PDF
  */
-public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
+public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         OnPDFCreatedInterface {
 
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
@@ -123,7 +122,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     public static ArrayList<String> mImagesUri = new ArrayList<>();
-    public static ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
+    private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private SharedPreferences mSharedPreferences;
     private FileUtils mFileUtils;
@@ -245,7 +244,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
     }
 
 
-    void createPdf(boolean isgrayScale) {
+    private void createPdf(boolean isGrayScale) {
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
         mPdfOptions.setImageScaleType(mImageScaleType);
@@ -266,8 +265,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
 
                     mPdfOptions.setOutFileName(filename);
-                    if (isgrayScale)
-                        saveImagesInGrayscale();
+                    if (isGrayScale)
+                        saveImagesInGrayScale();
 
                     new CreatePdf(mPdfOptions, mHomePath,
                             ImageToPdfFragment.this).execute();
@@ -275,10 +274,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                     MaterialDialog.Builder builder2 = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                     builder2.onPositive((dialog2, which) -> {
                         mPdfOptions.setOutFileName(filename);
-                        if (isgrayScale)
-                            saveImagesInGrayscale();
+                        if (isGrayScale)
+                            saveImagesInGrayScale();
                         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
-                    }).onNegative((dialog1, which) -> createPdf(isgrayScale)).show();
+                    }).onNegative((dialog1, which) -> createPdf(isGrayScale)).show();
                 }
             }
         }).show();
@@ -455,9 +454,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
 
 
     /**
-     * Saves Images with grayscale filter
+     * Saves Images with gray scale filter
      */
-    private void saveImagesInGrayscale() {
+    private void saveImagesInGrayScale() {
         ArrayList<String> tempImageUri = new ArrayList<>();
         try {
             File sdCard = Environment.getExternalStorageDirectory();
@@ -488,8 +487,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
             }
             mImagesUri.clear();
             mImagesUri.addAll(tempImageUri);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (SecurityException | IOException e) {
             e.printStackTrace();
         }
@@ -805,7 +802,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
         mImagesUri.clear();
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
-        mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALETYPE_TEXT,
+        mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALE_TYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
         mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
@@ -813,7 +810,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListner,
                 DEFAULT_PAGE_COLOR);
     }
 
-    void addMargins() {
+    private void addMargins() {
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                 .title(R.string.add_margins)
                 .customView(R.layout.add_margins_dialog, false)

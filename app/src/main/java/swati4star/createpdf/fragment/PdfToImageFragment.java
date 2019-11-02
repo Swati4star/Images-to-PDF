@@ -55,7 +55,7 @@ import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
 
-    private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
     private Activity mActivity;
     private String mPath;
     private Uri mUri;
@@ -160,7 +160,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
         startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
+                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     /**
@@ -169,7 +169,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+        if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
             mUri = data.getData();
             //Getting Absolute Path
             String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
@@ -195,10 +195,8 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                         } else {
                             final String inputName = input.toString();
-                            if (inputName != null) {
-                                mInputPassword[0] = inputName;
-                                pdfToImage(mInputPassword);
-                            }
+                            mInputPassword[0] = inputName;
+                            pdfToImage(mInputPassword);
                         }
                     })
                     .show();

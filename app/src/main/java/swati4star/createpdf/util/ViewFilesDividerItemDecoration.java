@@ -3,6 +3,7 @@ package swati4star.createpdf.util;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -22,7 +23,7 @@ public class ViewFilesDividerItemDecoration extends RecyclerView.ItemDecoration 
     }
 
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas canvas, RecyclerView parent, RecyclerView.State state) {
         int left = parent.getPaddingLeft();
         int right = parent.getWidth() - parent.getPaddingRight();
 
@@ -36,7 +37,7 @@ public class ViewFilesDividerItemDecoration extends RecyclerView.ItemDecoration 
             int bottom = top + mDivider.getIntrinsicHeight();
 
             mDivider.setBounds(left, top, right, bottom);
-            mDivider.draw(c);
+            mDivider.draw(canvas);
         }
     }
 }

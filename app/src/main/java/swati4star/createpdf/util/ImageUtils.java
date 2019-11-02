@@ -65,16 +65,16 @@ public class ImageUtils {
     public static Bitmap getRoundBitmap(Bitmap bmp) {
         int width = bmp.getWidth(), height = bmp.getHeight();
         int radius = width > height ? height : width; // set the smallest edge as radius.
-        Bitmap sbmp;
+        Bitmap bitmap;
 
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
             float smallest = Math.min(bmp.getWidth(), bmp.getHeight());
             float factor = smallest / radius;
-            sbmp = Bitmap.createScaledBitmap(bmp,
+            bitmap = Bitmap.createScaledBitmap(bmp,
                     (int) (bmp.getWidth() / factor),
                     (int) (bmp.getHeight() / factor), false);
         } else {
-            sbmp = bmp;
+            bitmap = bmp;
         }
 
         Bitmap output = Bitmap.createBitmap(radius, radius, Bitmap.Config.ARGB_8888);
@@ -91,7 +91,7 @@ public class ImageUtils {
         canvas.drawCircle(radius / 2f + 0.7f, radius / 2f + 0.7f,
                 radius / 2f + 0.1f, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(sbmp, rect, rect, paint);
+        canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
     }
@@ -111,7 +111,7 @@ public class ImageUtils {
         BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
 
         // Calculate inSampleSize
-        bmOptions.inSampleSize = calculateInSampleSize(bmOptions, 500, 500);
+        bmOptions.inSampleSize = calculateInSampleSize(bmOptions);
 
         // Decode bitmap with actual size
         bmOptions.inJustDecodeBounds = false;
@@ -125,26 +125,24 @@ public class ImageUtils {
     /**
      * Calculate the inSampleSize value for given bitmap options & image dimensions
      * @param options - bitmap options
-     * @param reqWidth - width
-     * @param reqHeight - height
      * @return inSampleSize value
      * https://developer.android.com/topic/performance/graphics/load-bitmap.html#java
      */
-    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private static int calculateInSampleSize(BitmapFactory.Options options) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
-        if (height > reqHeight || width > reqWidth) {
+        if (height > 500 || width > 500) {
 
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
             // Calculate the largest inSampleSize value that is a power of 2 and keeps both
             // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
+            while ((halfHeight / inSampleSize) >= 500
+                    && (halfWidth / inSampleSize) >= 500) {
                 inSampleSize *= 2;
             }
         }
@@ -173,7 +171,7 @@ public class ImageUtils {
                     CheckBox mSetAsDefault = view.findViewById(R.id.cbSetDefault);
                     if (saveValue || mSetAsDefault.isChecked()) {
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putString(Constants.DEFAULT_IMAGE_SCALETYPE_TEXT, mImageScaleType);
+                        editor.putString(Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT, mImageScaleType);
                         editor.apply();
                     }
                 }).build();
@@ -185,7 +183,7 @@ public class ImageUtils {
     }
 
     /**
-     * convert a bitmap to grayscale and return it
+     * convert a bitmap to gray scale and return it
      * @param bmpOriginal original bitmap which is converted to a new
      *                    grayscale bitmap
      */

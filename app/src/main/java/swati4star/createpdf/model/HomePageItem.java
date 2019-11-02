@@ -2,8 +2,8 @@ package swati4star.createpdf.model;
 
 public class HomePageItem {
 
-    private int mIconId;
-    private int mTitleString;
+    private final int mIconId;
+    private final int mTitleString;
 
     /**
      * Constructor for home page item

@@ -43,7 +43,7 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
@@ -63,11 +63,11 @@ import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
-        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListner,
+        MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListener,
         BottomSheetPopulate, OnBackPressedInterface {
     private Activity mActivity;
     private String mCheckbtClickTag = "";
-    private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
+    private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
     private MorphButtonUtility mMorphButtonUtility;
     private ArrayList<String> mFilePaths;
     private FileUtils mFileUtils;
@@ -80,6 +80,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private boolean mPasswordProtected = false;
     private String mPassword;
     private SharedPreferences mSharedPrefs;
+    private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -93,7 +94,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     ImageView mDownArrow;
     @BindView(R.id.layout)
     RelativeLayout mLayout;
-    BottomSheetBehavior sheetBehavior;
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
     @BindView(R.id.selectFiles)
@@ -112,7 +112,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
         showEnhancementOptions();
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mFilePaths = new ArrayList<>();
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -125,7 +125,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSelectedFiles.setAdapter(mMergeSelectedFilesAdapter);
         mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
 
-        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         setMorphingButtonState(false);
 
         return root;
@@ -211,13 +211,13 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(sheetBehavior);
+        mBottomSheetUtils.showHideSheet(mSheetBehavior);
     }
 
     @OnClick(R.id.selectFiles)
     void startAddingPDF(View v) {
         startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
+                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     @OnClick(R.id.mergebtn)
@@ -249,7 +249,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+        if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
             //Getting Absolute Path
             String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             mFilePaths.add(path);
@@ -354,7 +354,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
     }
 
-    void setMorphingButtonState(Boolean enabled) {
+    private void setMorphingButtonState(Boolean enabled) {
         if (enabled)
             mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
         else
@@ -371,11 +371,11 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void closeBottomSheet() {
-        CommonCodeUtils.getInstance().closeBottomSheetUtil(sheetBehavior);
+        CommonCodeUtils.getInstance().closeBottomSheetUtil(mSheetBehavior);
     }
 
     @Override
     public boolean checkSheetBehaviour() {
-        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(sheetBehavior);
+        return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 }

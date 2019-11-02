@@ -35,7 +35,7 @@ public class WatermarkUtils {
 
     private final Activity mContext;
     private Watermark mWatermark;
-    private FileUtils mFileUtils;
+    private final FileUtils mFileUtils;
 
     public WatermarkUtils(Activity context) {
         mContext = context;
@@ -139,15 +139,15 @@ public class WatermarkUtils {
         Phrase p = new Phrase(this.mWatermark.getWatermarkText(), font);
 
         PdfContentByte over;
-        Rectangle pagesize;
+        Rectangle pageSize;
         float x, y;
         int n = reader.getNumberOfPages();
         for (int i = 1; i <= n; i++) {
 
             // get page size and position
-            pagesize = reader.getPageSizeWithRotation(i);
-            x = (pagesize.getLeft() + pagesize.getRight()) / 2;
-            y = (pagesize.getTop() + pagesize.getBottom()) / 2;
+            pageSize = reader.getPageSizeWithRotation(i);
+            x = (pageSize.getLeft() + pageSize.getRight()) / 2;
+            y = (pageSize.getTop() + pageSize.getBottom()) / 2;
             over = stamper.getOverContent(i);
 
             ColumnText.showTextAligned(over, Element.ALIGN_CENTER, p, x, y, this.mWatermark.getRotationAngle());

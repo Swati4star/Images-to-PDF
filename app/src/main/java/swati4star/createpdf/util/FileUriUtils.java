@@ -23,7 +23,7 @@ public class FileUriUtils {
      *
      * @return true if whatsapp image, else false
      */
-    public boolean isWhatsappImage(String uriAuthority) {
+    boolean isWhatsappImage(String uriAuthority) {
         return "com.whatsapp.provider.media".equals(uriAuthority);
     }
 
@@ -32,7 +32,8 @@ public class FileUriUtils {
     }
 
     private boolean checkURI(Uri uri, String toCheckWith) {
-        return uri != null && uri.getScheme().equalsIgnoreCase(toCheckWith);
+        return uri != null && uri.getScheme() != null
+                && uri.getScheme().equalsIgnoreCase(toCheckWith);
     }
 
     /**

@@ -27,7 +27,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
     private final ViewFilesAdapter mAdapter;
     private final Handler mHandler;
     @Nullable
-    private String mQuery;
+    private final String mQuery;
 
     /**
      * Instantiates populate list object

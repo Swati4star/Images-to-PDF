@@ -29,7 +29,7 @@ public class MoveFilesToDirectory extends AsyncTask<String, String, String> {
     public static final int HOME_DIRECTORY = 3;
 
     /**
-     * Inititlize async task to perform directory related operation
+     * Initialize async task to perform directory related operation
      * @param context - context object
      * @param filePath - list of file paths to be moved
      * @param directoryName - directory name on which operation is to be performed

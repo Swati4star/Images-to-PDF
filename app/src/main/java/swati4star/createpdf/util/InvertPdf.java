@@ -1,6 +1,5 @@
 package swati4star.createpdf.util;
 
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 
@@ -15,7 +14,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 
@@ -24,15 +22,16 @@ import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class InvertPdf extends AsyncTask<Void, Void, Void> {
     private String mPath;
-    private OnPDFCreatedInterface mOnPDFCreatedInterface;
-    private ArrayList<Bitmap> mBitmaps;
-    private StringBuilder mSequence;
+    private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private Boolean mIsNewPDFCreated;
 
-    public InvertPdf(String mPath, OnPDFCreatedInterface onPDFCreatedInterface) {
-        this.mPath = mPath;
-        mSequence = new StringBuilder();
-        mBitmaps = new ArrayList<>();
+    /**
+     * Invert PDF constructor
+     * @param path - path of input file
+     * @param onPDFCreatedInterface - interface implementation to handle pre & post
+     */
+    public InvertPdf(String path, OnPDFCreatedInterface onPDFCreatedInterface) {
+        this.mPath = path;
         this.mOnPDFCreatedInterface = onPDFCreatedInterface;
     }
 
@@ -42,7 +41,6 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
         mOnPDFCreatedInterface.onPDFCreationStarted();
         mIsNewPDFCreated = false;
     }
-
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -62,9 +60,10 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
             mIsNewPDFCreated = false;
         }
-
         return null;
     }
+
+
     /**
      * invokes invert method passing stamper as parameter
      *
@@ -87,7 +86,12 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
         }
 
     }
-    void invert(PdfStamper stamper) {
+
+    /**
+     * Inverts PDF page by page
+     * @param stamper - PDF stamper
+     */
+    private void invert(PdfStamper stamper) {
         for (int i = stamper.getReader().getNumberOfPages(); i > 0; i--) {
             invertPage(stamper, i);
         }
@@ -97,8 +101,11 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
      * Draws a white rectangle in blend mode DIFFERENCE
      * over the page and then draws a white rectangle
      * under the page for compatibility for all acrobat versions.
+     *
+     * @param stamper - PDF stamper
+     * @param page - PDF page index
      */
-    void invertPage(PdfStamper stamper, int page) {
+    private void invertPage(PdfStamper stamper, int page) {
         Rectangle rect = stamper.getReader().getPageSize(page);
         PdfContentByte cb = stamper.getOverContent(page);
         PdfGState gs = new PdfGState();
@@ -113,12 +120,11 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
         cb.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight());
         cb.fill();
     }
+
     @Override
     protected void onPostExecute(Void avoid) {
         // Execution of result of Long time consuming operation
         super.onPostExecute(avoid);
         mOnPDFCreatedInterface.onPDFCreated(mIsNewPDFCreated, mPath);
     }
-
-
 }

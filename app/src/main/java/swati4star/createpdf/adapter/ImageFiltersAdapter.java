@@ -42,12 +42,12 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int imageid = mFilterItem.get(position).getImageId();
-        Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageid);
+        int imageId = mFilterItem.get(position).getImageId();
+        Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageId);
         if (roundBitmap != null) {
             holder.img.setImageBitmap(ImageUtils.getRoundBitmap(roundBitmap));
         } else
-            holder.img.setImageResource(imageid);
+            holder.img.setImageResource(imageId);
         holder.name.setText(mFilterItem.get(position).getName());
     }
 

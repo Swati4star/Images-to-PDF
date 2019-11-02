@@ -40,7 +40,7 @@ public class ImagesPreviewActivity extends AppCompatActivity {
     }
 
     /**
-     * get start intent for this axtivity
+     * get start intent for this activity
      * @param context - context to start activity from
      * @param uris - extra images uri
      * @return - start intent

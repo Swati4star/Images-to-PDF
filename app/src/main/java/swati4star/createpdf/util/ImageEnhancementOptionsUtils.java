@@ -15,12 +15,12 @@ public class ImageEnhancementOptionsUtils {
     public static ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
                                                                             ImageToPDFOptions pdfOptions) {
         ArrayList<EnhancementOptionsEntity> options = new ArrayList<>();
-        int passwordicon = R.drawable.baseline_enhanced_encryption_24;
+        int passwordIcon = R.drawable.baseline_enhanced_encryption_24;
         if (pdfOptions.isPasswordProtected())
-            passwordicon = R.drawable.baseline_done_24;
+            passwordIcon = R.drawable.baseline_done_24;
 
         options.add(new EnhancementOptionsEntity(
-                context, passwordicon, R.string.password_protect_pdf_text));
+                context, passwordIcon, R.string.password_protect_pdf_text));
 
         options.add(new EnhancementOptionsEntity(
                 context, R.drawable.baseline_crop_rotate_24, R.string.edit_images_text));
@@ -50,11 +50,11 @@ public class ImageEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context, R.drawable.ic_rearrange, R.string.rearrange_images));
 
-        Drawable iconGrayscale = context.getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp);
-        iconGrayscale.setColorFilter(Color.GRAY, android.graphics.PorterDuff.Mode.SRC_IN);
+        Drawable iconGrayScale = context.getResources().getDrawable(R.drawable.ic_photo_filter_black_24dp);
+        iconGrayScale.setColorFilter(Color.GRAY, android.graphics.PorterDuff.Mode.SRC_IN);
 
         options.add(new EnhancementOptionsEntity(
-                iconGrayscale,
+                iconGrayScale,
                 context.getResources().getString(R.string.grayscale_images)));
 
         options.add(new EnhancementOptionsEntity(

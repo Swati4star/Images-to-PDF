@@ -37,8 +37,8 @@ import static swati4star.createpdf.util.Constants.appName;
 
 public class TextToPDFUtils {
 
-    Activity mContext;
-    private SharedPreferences mSharedPreferences;
+    private final Activity mContext;
+    private final SharedPreferences mSharedPreferences;
 
     public TextToPDFUtils(Activity context) {
         mContext = context;
@@ -77,7 +77,7 @@ public class TextToPDFUtils {
         Font myfont = new Font(mTextToPDFOptions.getFontFamily());
         myfont.setStyle(Font.NORMAL);
         myfont.setSize(mTextToPDFOptions.getFontSize());
-        myfont.setColor(getBaseColor(mTextToPDFOptions.getmFontColor()));
+        myfont.setColor(getBaseColor(mTextToPDFOptions.getFontColor()));
 
         document.add(new Paragraph("\n"));
 

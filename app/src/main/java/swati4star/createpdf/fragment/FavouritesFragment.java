@@ -34,6 +34,7 @@ import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.ADD_TEXT_KEY;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
@@ -56,13 +57,12 @@ import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD_KEY;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES_KEY;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
 import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SPLIT_PDF_KEY;
 import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
 import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
-import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
-import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 public class FavouritesFragment extends Fragment
         implements SharedPreferences.OnSharedPreferenceChangeListener,
@@ -127,8 +127,8 @@ public class FavouritesFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.favourites_fragment, container, false);
-        ButterKnife.bind(this, rootview);
+        View rootView = inflater.inflate(R.layout.favourites_fragment, container, false);
+        ButterKnife.bind(this, rootView);
 
         mSharedpreferences = PreferenceManager
                 .getDefaultSharedPreferences(mActivity);
@@ -137,7 +137,7 @@ public class FavouritesFragment extends Fragment
         initializeValues();
 
         setHasOptionsMenu(true);
-        return rootview;
+        return rootView;
     }
 
     /**
@@ -146,7 +146,7 @@ public class FavouritesFragment extends Fragment
     private void initializeValues() {
 
         mDoesFavouritesExist = false;
-        checkFavs(mSharedpreferences);
+        checkFavourites(mSharedpreferences);
         mFragmentPositionMap = CommonCodeUtils.getInstance().fillNavigationItemsMap(false);
 
         pref_img_to_pdf.setOnClickListener(this);
@@ -190,9 +190,9 @@ public class FavouritesFragment extends Fragment
      * This method checks for the favourites from preferences list
      * and passes them to another method for dealing with the required view.
      *
-     * @param sharedPreferences - preferenves instance
+     * @param sharedPreferences - preferences instance
      */
-    private void checkFavs(SharedPreferences sharedPreferences) {
+    private void checkFavourites(SharedPreferences sharedPreferences) {
 
         // assigned due to onSharedPreferenceChanged
         mSharedpreferences = sharedPreferences;
@@ -254,7 +254,7 @@ public class FavouritesFragment extends Fragment
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        checkFavs(sharedPreferences);
+        checkFavourites(sharedPreferences);
     }
 
     @Override

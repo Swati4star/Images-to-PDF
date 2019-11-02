@@ -38,7 +38,7 @@ import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 public class FavouritesActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
-    private boolean[] mKeyState = new boolean[21];
+    private final boolean[] mKeyState = new boolean[21];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class FavouritesActivity extends AppCompatActivity {
     }
 
     /**
-     * store the intial state of checkbox before
+     * store the initial state of checkbox before
      * the user make new changes
      */
     private void storeInitialState() {
@@ -114,7 +114,7 @@ public class FavouritesActivity extends AppCompatActivity {
     }
 
     /**
-     * Restore the intial state if user
+     * Restore the initial state if user
      * press the back button
      */
     private void onBackPressedState() {

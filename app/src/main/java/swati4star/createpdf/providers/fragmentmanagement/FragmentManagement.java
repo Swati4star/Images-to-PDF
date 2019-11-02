@@ -44,6 +44,7 @@ import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
 import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
 import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
@@ -52,20 +53,19 @@ import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
 import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
-import static swati4star.createpdf.util.DialogUtils.ADD_WATERMARK;
-import static swati4star.createpdf.util.DialogUtils.ROTATE_PAGES;
 
 /**
  * This is a fragment service that manages the fragments
  * mainly for the MainActivity.
  */
 public class FragmentManagement implements IFragmentManagement {
-    private FragmentActivity mContext;
-    private NavigationView mNavigationView;
+    private final FragmentActivity mContext;
+    private final NavigationView mNavigationView;
     private boolean mDoubleBackToExitPressedOnce = false;
-    private FeedbackUtils mFeedbackUtils;
-    private FragmentUtils mFragmentUtils;
+    private final FeedbackUtils mFeedbackUtils;
+    private final FragmentUtils mFragmentUtils;
 
     public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
         mContext = context;

@@ -16,15 +16,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FAQAdapter;
-import swati4star.createpdf.interfaces.OnItemClickListner;
+import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.FAQItem;
 
 
-public class FAQFragment extends Fragment implements OnItemClickListner {
+public class FAQFragment extends Fragment implements OnItemClickListener {
 
-    FAQAdapter faqAdapter;
-    List<FAQItem> mFaqs;
-    Context mContext;
+    private FAQAdapter mFaqAdapter;
+    private List<FAQItem> mFaqs;
+    private Context mContext;
 
     @BindView(R.id.recycler_view_faq)
     RecyclerView mFAQRecyclerView;
@@ -71,8 +71,8 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
      * for FAQs
      */
     private void initFAQRecyclerView() {
-        faqAdapter = new FAQAdapter(mFaqs, this);
-        mFAQRecyclerView.setAdapter(faqAdapter);
+        mFaqAdapter = new FAQAdapter(mFaqs, this);
+        mFAQRecyclerView.setAdapter(mFaqAdapter);
     }
 
     /**
@@ -84,6 +84,6 @@ public class FAQFragment extends Fragment implements OnItemClickListner {
     public void onItemClick(int position) {
         FAQItem faqItem = mFaqs.get(position);
         faqItem.setExpanded(!faqItem.isExpanded());
-        faqAdapter.notifyItemChanged(position);
+        mFaqAdapter.notifyItemChanged(position);
     }
 }

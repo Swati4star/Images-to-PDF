@@ -31,7 +31,7 @@ import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.Constants.SAMEFILE;
+import static swati4star.createpdf.util.Constants.SAME_FILE;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
 
@@ -80,11 +80,14 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         mInitialSequence.addAll(mSequence);
     }
 
-    void swap (int pos1, int pos2) {
-
+    /**
+     * Swaps values at given positions
+     * @param pos1 - first value
+     * @param pos2 - second value
+     */
+    private void swap(int pos1, int pos2) {
         if (pos1 >= mSequence.size())
             return;
-
         int val = mSequence.get(pos1);
         mSequence.set(pos1, mSequence.get(pos2));
         mSequence.set(pos2, val);
@@ -135,7 +138,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
             result.append(x).append(",");
         returnIntent.putExtra(RESULT, result.toString());
         boolean sameFile = mInitialSequence.equals(mSequence);
-        returnIntent.putExtra(SAMEFILE, sameFile);
+        returnIntent.putExtra(SAME_FILE, sameFile);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }

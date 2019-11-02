@@ -22,14 +22,14 @@ import static swati4star.createpdf.util.FileUtils.saveImage;
 
 public class PdfToImages extends AsyncTask<Void, Void, Void> {
 
-    private String mPath;
-    private Uri mUri;
-    private ExtractImagesListener mExtractImagesListener;
+    private final String mPath;
+    private final Uri mUri;
+    private final ExtractImagesListener mExtractImagesListener;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
-    private String[] mPassword;
+    private final String[] mPassword;
     private PDFEncryptionUtility mPDFEncryptionUtility;
-    private Context mContext;
+    private final Context mContext;
     private String mDecryptedPath;
 
     public PdfToImages(Context context, String[] password, String mPath, Uri mUri,

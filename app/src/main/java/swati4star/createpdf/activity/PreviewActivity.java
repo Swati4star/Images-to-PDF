@@ -1,7 +1,5 @@
 package swati4star.createpdf.activity;
 
-import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +23,8 @@ import swati4star.createpdf.model.PreviewImageOptionItem;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.ImageSortUtils;
 import swati4star.createpdf.util.ThemeUtils;
+
+import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 
 public class PreviewActivity extends AppCompatActivity implements PreviewImageOptionsAdapter.OnItemClickListener {
 
