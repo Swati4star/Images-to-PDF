@@ -1,38 +1,57 @@
 package swati4star.createpdf.model;
 
-public class FAQItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class FAQItem implements Parcelable {
 
     private String mQuestion;
     private String mAnswer;
-    boolean isExpanded;
 
-    public FAQItem(String question, String answer) {
-        this.mQuestion = question;
-        this.mAnswer = answer;
-        isExpanded = false;
+    public FAQItem(Parcel in) {
+        mQuestion = in.readString();
     }
 
-    public boolean isExpanded() {
-        return isExpanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        isExpanded = expanded;
-    }
-
-    public String getQuestion() {
-        return mQuestion;
-    }
-
-    public void setQuestion(String question) {
-        this.mQuestion = question;
-    }
-
-    public String getAnswer() {
+    public String getmAnswer() {
         return mAnswer;
     }
 
-    public void setAnswer(String answer) {
-        this.mAnswer = answer;
+    public void setmAnswer(String mAnswer) {
+        this.mAnswer = mAnswer;
     }
+
+    public FAQItem(String mQuestion, String mAnswer) {
+        this.mQuestion = mQuestion;
+        this.mAnswer = mAnswer;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mQuestion);
+    }
+
+    public String getmQuestion() {
+        return mQuestion;
+    }
+
+    public void setmQuestion(String mQuestion) {
+        this.mQuestion = mQuestion;
+    }
+
+    public static final Creator<FAQItem> CREATOR = new Creator<FAQItem>() {
+        @Override
+        public FAQItem createFromParcel(Parcel source) {
+            return new FAQItem(source);
+        }
+
+        @Override
+        public FAQItem[] newArray(int size) {
+            return new FAQItem[size];
+        }
+    };
 }
