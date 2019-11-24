@@ -75,6 +75,10 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
 
         @Override
         public void onClick(View view) {
+
+            if (getAdapterPosition() >= mFilePaths.size())
+                return;
+
             if (mIsMergeFragment) mCheckbox.toggle();
             mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
         }

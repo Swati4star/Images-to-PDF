@@ -165,6 +165,9 @@
                 value="Method type name ''{0}'' must match pattern ''{1}''." />
         </module>
 
+        <module name="UnusedImports"/>
+        <module name="AvoidStarImport"/>
+
     </module>
 
 </module>
