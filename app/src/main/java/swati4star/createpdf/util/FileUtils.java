@@ -9,25 +9,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.CancellationSignal;
 import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
-import android.print.PageRange;
-import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
-import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -53,25 +44,27 @@ public class FileUtils {
     }
 
     // GET PDF DETAILS
+
     /**
      * Gives a formatted last modified date for pdf ListView
-     * @param file file object whose last modified date is to be returned
      *
+     * @param file file object whose last modified date is to be returned
      * @return String date modified in formatted form
      **/
     public static String getFormattedDate(File file) {
         Date lastModDate = new Date(file.lastModified());
         String[] formatDate = lastModDate.toString().split(" ");
         String time = formatDate[3];
-        String[] formatTime =  time.split(":");
+        String[] formatTime = time.split(":");
         String date = formatTime[0] + ":" + formatTime[1];
+
         return formatDate[0] + ", " + formatDate[1] + " " + formatDate[2] + " at " + date;
     }
 
     /**
      * Gives a formatted size in MB for every pdf in pdf ListView
-     * @param file file object whose size is to be returned
      *
+     * @param file file object whose size is to be returned
      * @return String Size of pdf in formatted form
      */
     public static String getFormattedSize(File file) {
@@ -80,55 +73,11 @@ public class FileUtils {
 
     /**
      * Prints a file
+     *
      * @param file the file to be printed
      */
     public void printFile(final File file) {
-
-        final PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapter() {
-
-            @Override
-            public void onWrite(PageRange[] pages,
-                                ParcelFileDescriptor destination,
-                                CancellationSignal cancellationSignal,
-                                WriteResultCallback callback) {
-                try {
-                    InputStream input = new FileInputStream(file.getName());
-                    OutputStream output = new FileOutputStream(destination.getFileDescriptor());
-
-                    byte[] buf = new byte[1024];
-                    int bytesRead;
-
-                    while ((bytesRead = input.read(buf)) > 0)
-                        output.write(buf, 0, bytesRead);
-
-                    callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
-
-                    input.close();
-                    output.close();
-
-                } catch (Exception e) {
-                    //Catch exception
-                }
-            }
-
-            @Override
-            public void onLayout(PrintAttributes oldAttributes,
-                                 PrintAttributes newAttributes,
-                                 CancellationSignal cancellationSignal,
-                                 LayoutResultCallback callback,
-                                 Bundle extras) {
-
-                if (cancellationSignal.isCanceled()) {
-                    callback.onLayoutCancelled();
-                    return;
-                }
-                PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("myFile")
-                        .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                        .build();
-
-                callback.onLayoutFinished(pdi, true);
-            }
-        };
+        final PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapterHelper(file);
 
         PrintManager printManager = (PrintManager) mContext
                 .getSystemService(Context.PRINT_SERVICE);
@@ -142,7 +91,7 @@ public class FileUtils {
     /**
      * Emails the desired PDF using application of choice by user
      *
-     * @param  file - the file to be shared
+     * @param file - the file to be shared
      */
     public void shareFile(File file) {
         Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
@@ -154,11 +103,11 @@ public class FileUtils {
     /**
      * Share the desired PDFs using application of choice by user
      *
-     * @param  files - the list of files to be shared
+     * @param files - the list of files to be shared
      */
     public void shareMultipleFiles(List<File> files) {
         ArrayList<Uri> uris = new ArrayList<>();
-        for (File file: files) {
+        for (File file : files) {
             Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
             uris.add(uri);
         }
@@ -167,6 +116,7 @@ public class FileUtils {
 
     /**
      * Emails the desired PDF using application of choice by user
+     *
      * @param uris - list of uris to be shared
      */
     private void shareFile(ArrayList<Uri> uris) {
@@ -182,6 +132,7 @@ public class FileUtils {
 
     /**
      * opens a file in appropriate application
+     *
      * @param path - path of the file to be opened
      */
     public void openFile(String path) {
@@ -189,22 +140,13 @@ public class FileUtils {
             StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
             return;
         }
-        File file = new File(path);
-        Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        try {
-            Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
-            target.setDataAndType(uri, mContext.getString(R.string.pdf_type));
-            target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
-        } catch (Exception e) {
-            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
-        }
+        openTextFile(path);
     }
 
     /**
      * This function is used to open the created text file with Text editing/viewing
      * applications on the device.
+     *
      * @param path - file path
      */
     public void openTextFile(String path) {
@@ -225,7 +167,7 @@ public class FileUtils {
      * Checks if the new file already exists.
      *
      * @param finalOutputFile Path of pdf file to check
-     * @param mFile File List of all PDFs
+     * @param mFile           File List of all PDFs
      * @return Number to be added finally in the name to avoid overwrite
      */
     private int checkRepeat(String finalOutputFile, final List<File> mFile) {
@@ -237,26 +179,21 @@ public class FileUtils {
                     append + mContext.getString(R.string.pdf_ext));
             flag = mFile.contains(new File(name));
         }
+
         return append;
     }
 
     /**
      * Get real image path from uri.
+     *
      * @param uri - uri of the image
-     * @return  - real path of the image file on device
+     * @return - real path of the image file on device
      */
     public String getUriRealPath(Uri uri) {
-        String ret;
-
-        if (uri == null)
+        if (uri == null || FileUriUtils.getInstance().isWhatsappImage(uri.getAuthority()))
             return null;
 
-        if (FileUriUtils.getInstance().isWhatsappImage(uri.getAuthority())) {
-            ret = null;
-        } else {
-            ret = FileUriUtils.getInstance().getUriRealPathAboveKitkat(mContext, uri);
-        }
-        return ret;
+        return FileUriUtils.getInstance().getUriRealPathAboveKitkat(mContext, uri);
     }
 
     /***
@@ -269,31 +206,38 @@ public class FileUtils {
         String path = mSharedPreferences.getString(STORAGE_LOCATION,
                 StringUtils.getInstance().getDefaultStorageLocation()) + mFileName;
         File file = new File(path);
+
         return file.exists();
     }
 
     /**
      * Extracts file name from the URI
+     *
      * @param uri - file uri
      * @return - extracted filename
      */
     public String getFileName(Uri uri) {
         String fileName = null;
         String scheme = uri.getScheme();
+
         if (scheme == null)
             return null;
-        if (scheme.equals("file"))
-            fileName = uri.getLastPathSegment();
-        else if (scheme.equals("content")) {
+
+        if (scheme.equals("file")) {
+            return uri.getLastPathSegment();
+        } else if (scheme.equals("content")) {
             Cursor cursor = mContext.getContentResolver().query(uri, null, null, null, null);
-            if (cursor != null && cursor.getCount() != 0) {
-                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
-                cursor.moveToFirst();
-                fileName = cursor.getString(columnIndex);
-            }
-            if (cursor != null)
+
+            if (cursor != null) {
+                if (cursor.getCount() != 0) {
+                    int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
+                    cursor.moveToFirst();
+                    fileName = cursor.getString(columnIndex);
+                }
                 cursor.close();
+            }
         }
+
         return fileName;
     }
 
@@ -306,10 +250,9 @@ public class FileUtils {
     public static String getFileName(String path) {
         if (path == null)
             return null;
+
         int index = path.lastIndexOf(PATH_SEPERATOR);
-        if (index < path.length())
-            return path.substring( index + 1);
-        return null;
+        return index < path.length() ? path.substring(index + 1) : null;
     }
 
 
@@ -325,6 +268,7 @@ public class FileUtils {
 
         String filename = path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
         filename = filename.replace(pdfExtension, "");
+
         return filename;
     }
 
@@ -340,20 +284,23 @@ public class FileUtils {
 
     /**
      * Returns name of the last file with "_pdf" suffix.
+     *
      * @param filesPath - ArrayList of image paths
      * @return fileName with _pdf suffix
      */
     public String getLastFileName(ArrayList<String> filesPath) {
-
         if (filesPath.size() == 0)
             return "";
+
         String lastSelectedFilePath = filesPath.get(filesPath.size() - 1);
         String nameWithoutExt = stripExtension(getFileNameWithoutExtension(lastSelectedFilePath));
+
         return nameWithoutExt + mContext.getString(R.string.pdf_suffix);
     }
 
     /**
      * Returns the filename without its extension
+     *
      * @param fileNameWithExt fileName with extension. Ex: androidDev.jpg
      * @return fileName without extension. Ex: androidDev
      */
@@ -373,15 +320,13 @@ public class FileUtils {
 
     /**
      * Saves bitmap to external storage
-     * @param filename - name of the file
+     *
+     * @param filename    - name of the file
      * @param finalBitmap - bitmap to save
      */
     public static String saveImage(String filename, Bitmap finalBitmap) {
 
-        if (finalBitmap == null)
-            return null;
-
-        if (checkIfBitmapIsWhite(finalBitmap))
+        if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
             return null;
 
         String root = Environment.getExternalStorageDirectory().toString();
@@ -389,7 +334,9 @@ public class FileUtils {
         String fileName = filename + ".png";
 
         File file = new File(myDir, fileName);
-        if (file.exists()) file.delete();
+        if (file.exists())
+            file.delete();
+
         try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
@@ -399,34 +346,38 @@ public class FileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return myDir + "/" + fileName;
     }
 
     /**
      * Checks of the bitmap is just all white pixels
+     *
      * @param bitmap - input bitmap
      * @return - true, if bitmap is all white
      */
     private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
-
         if (bitmap == null)
             return true;
 
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
-        for (int i =  0; i < w; i++) {
+
+        for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
-                int pixel =  bitmap.getPixel(i, j);
+                int pixel = bitmap.getPixel(i, j);
                 if (pixel != Color.WHITE) {
                     return false;
                 }
             }
         }
+
         return true;
     }
 
     /**
      * Opens image in a gallery application
+     *
      * @param path - image path
      */
     public void openImage(String path) {
@@ -434,13 +385,14 @@ public class FileUtils {
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
-        target.setDataAndType(uri,  "image/*");
+        target.setDataAndType(uri, "image/*");
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
     }
 
     /**
      * Opens the targeted intent (if possible), otherwise show a snackbar
+     *
      * @param intent - input intent
      */
     private void openIntent(Intent intent) {
@@ -453,6 +405,7 @@ public class FileUtils {
 
     /**
      * Returns file chooser intent
+     *
      * @return - intent
      */
     public Intent getFileChooser() {
@@ -461,23 +414,28 @@ public class FileUtils {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         Uri myUri = Uri.parse(folderPath);
         intent.setDataAndType(myUri, mContext.getString(R.string.pdf_type));
+
         return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
     }
 
     String getUniqueFileName(String fileName) {
         String outputFileName = fileName;
         File file = new File(outputFileName);
-        if (!isFileExist(file.getName())) return outputFileName;
+
+        if (!isFileExist(file.getName()))
+            return outputFileName;
 
         File parentFile = file.getParentFile();
         if (parentFile != null) {
             File[] listFiles = parentFile.listFiles();
+
             if (listFiles != null) {
                 int append = checkRepeat(outputFileName, Arrays.asList(listFiles));
                 outputFileName = outputFileName.replace(mContext.getString(R.string.pdf_ext),
                         append + mContext.getResources().getString(R.string.pdf_ext));
             }
         }
+
         return outputFileName;
     }
 
@@ -489,6 +447,7 @@ public class FileUtils {
                 Constants.pdfDirectory + Constants.tempDirectory;
         File folder = new File(dest);
         boolean result = folder.mkdir();
+
         // clear all the files in it, if any
         if (result && folder.isDirectory()) {
             String[] children = folder.list();
