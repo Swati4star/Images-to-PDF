@@ -190,6 +190,7 @@
     <string name="font_size_changed">Размер шрифта изменен</string>
     <string name="font_size">Размер шрифта : %1$s</string>
     <string name="about_us">О нас</string>
+    <string name="rate_us">оцените нас</string>
     <string name="app_description">Простое Android приложение для конвертации изображений в PDF.</string>
     <string name="version">Версия : </string>
     <string name="save">Save</string>

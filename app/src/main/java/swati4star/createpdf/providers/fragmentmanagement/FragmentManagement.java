@@ -242,6 +242,9 @@ public class FragmentManagement implements IFragmentManagement {
             case R.id.nav_whatsNew:
                 WhatsNewUtils.displayDialog(mContext);
                 break;
+            case R.id.nav_rateus:
+                mFeedbackUtils.openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
+                break;
             case R.id.nav_rotate_pages:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
