@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -254,8 +253,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     /**
-     * Shows an alert to delete file
-     * and deletes file on positive response
+     * Delete the file
      *
      * @param name     - name of the file
      * @param position - position of file in array list
@@ -264,92 +262,59 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
         if (position < 0 || position >= mFileList.size())
             return;
-        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(mActivity)
-                .setCancelable(true)
-                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
-                .setTitle(R.string.delete_alert)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    AtomicInteger undoClicked = new AtomicInteger();
-                    final File fdelete = new File(name);
-                    mFileList.remove(position);
-                    notifyDataSetChanged();
-                    StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
-                            .setAction(R.string.snackbar_undoAction, v -> {
-                                if (mFileList.size() == 0) {
-                                    mEmptyStateChangeListener.setEmptyStateInvisible();
-                                }
-                                updateDataset();
-                                undoClicked.set(1);
-                            }).addCallback(new Snackbar.Callback() {
-                                    @Override
-                                    public void onDismissed(Snackbar snackbar, int event) {
-                                        if (undoClicked.get() == 0) {
-                                            fdelete.delete();
-                                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
-                                                    mActivity.getString(R.string.deleted));
-                                        }
-                                    }
-                            }).show();
-                    if (mFileList.size() == 0)
-                        mEmptyStateChangeListener.setEmptyStateVisible();
-                });
-        dialogAlert.create().show();
+
+        AtomicInteger undoClicked = new AtomicInteger();
+        final File fdelete = new File(name);
+        mFileList.remove(position);
+        notifyDataSetChanged();
+        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
+                .setAction(R.string.snackbar_undoAction, v -> {
+                    if (mFileList.size() == 0) {
+                        mEmptyStateChangeListener.setEmptyStateInvisible();
+                    }
+                    updateDataset();
+                    undoClicked.set(1);
+                }).addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        if (undoClicked.get() == 0) {
+                            fdelete.delete();
+                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                    mActivity.getString(R.string.deleted));
+                        }
+                    }
+                }).show();
+        if (mFileList.size() == 0)
+            mEmptyStateChangeListener.setEmptyStateVisible();
     }
 
     /**
-     * Shows an alert to delete file
-     * and iterates through filelist and deletes all elements
+     * iterate through filelist and remove all elements
      */
     public void deleteFiles() {
 
-        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(mActivity)
-                .setCancelable(true)
-                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
-                .setTitle(R.string.delete_alert)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    AtomicInteger undoClicked = new AtomicInteger();
-                    ArrayList<PDFFile> newList = new ArrayList<>();
-                    for (int position = 0; position < mFileList.size(); position++)
-                        if (!mSelectedFiles.contains(position))
-                            newList.add(mFileList.get(position));
+        for (int position : mSelectedFiles) {
 
-                    mSelectedFiles.clear();
-                    if (newList.size() == 0)
-                        mEmptyStateChangeListener.setEmptyStateVisible();
+            if (position >= mFileList.size())
+                continue;
 
-                    setData(newList);
-                    StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
-                            .setAction(R.string.snackbar_undoAction, v -> {
-                                if (mFileList.size() == 0) {
-                                    mEmptyStateChangeListener.setEmptyStateInvisible();
-                                }
-                                updateDataset();
-                                undoClicked.set(1);
-                            }).addCallback(new Snackbar.Callback() {
-                                    @Override
-                                    public void onDismissed(Snackbar snackbar, int event) {
-                                        if (undoClicked.get() == 0) {
-                                            for (int position : mSelectedFiles) {
+            String fileName = mFileList.get(position).getPdfFile().getPath();
+            File fdelete = new File(fileName);
+            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
+            if (fdelete.exists() && !fdelete.delete())
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_file_not_deleted);
+        }
 
-                                                if (position >= mFileList.size())
-                                                    continue;
+        ArrayList<PDFFile> newList = new ArrayList<>();
+        for (int position = 0; position < mFileList.size(); position++)
+            if (!mSelectedFiles.contains(position))
+                newList.add(mFileList.get(position));
 
-                                            String fileName = mFileList.get(position).getPdfFile().getPath();
-                                            File fdelete = new File(fileName);
-                                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
-                                                    mActivity.getString(R.string.deleted));
-                                            if (fdelete.exists() && !fdelete.delete())
-                                                StringUtils.getInstance().showSnackbar(mActivity,
-                                                        R.string.snackbar_file_not_deleted);
-                                            }
-                                        }
-                                    }
-                            }).show();
-                    if (mFileList.size() == 0)
-                        mEmptyStateChangeListener.setEmptyStateVisible();
-                });
-        dialogAlert.create().show();
+        mSelectedFiles.clear();
+        if (newList.size() == 0)
+            mEmptyStateChangeListener.setEmptyStateVisible();
 
+        setData(newList);
     }
 
     /**
