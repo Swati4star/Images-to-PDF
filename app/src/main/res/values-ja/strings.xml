@@ -220,7 +220,7 @@
     <string name="symbol">SYMBOL</string>
     <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
-    <string name="delete_alert">Do you want to delete all selected files?</string>
+    <string name="delete_alert_selected">Do you want to delete all selected files?</string>
     <string name="sort_by_title">Sort by</string>
     <string name="selected_image">Selected Image</string>
     <string name="arrow_up">Arrow Up</string>
@@ -423,4 +423,6 @@
     <string name="no_excel_file">Excelファイルが選択されていません</string>
     <string name="split_range_alert">Entered split range will create Selected PDF again!</string>
     <string name="reordering_pages_dialog">ページの並べ替え...</string>
+    <string name="delete_alert_singular">選択したファイルを削除しますか？</string>
+    <string name="snackbar_files_deleted">削除されたファイル</string>
 </resources>

@@ -155,7 +155,7 @@
     <string name="default_page_size">По умолчанию ( %s )</string>
 
 
-    <string name="delete_alert">Удалить все выбранные файлы?</string>
+    <string name="delete_alert_selected">Удалить все выбранные файлы?</string>
     <string name="sort_by_title">Сортировка</string>
 
     <!-- Directory Strings -->
@@ -466,4 +466,6 @@
     <string name="no_excel_file">Файл Excel не выбран</string>
     <string name="split_range_alert">Entered split range will create Selected PDF again!</string>
     <string name="reordering_pages_dialog">Изменение порядка страниц...</string>
+    <string name="delete_alert_singular">Вы хотите удалить выбранный файл?</string>
+    <string name="snackbar_files_deleted">Файлы удалены</string>
 </resources>

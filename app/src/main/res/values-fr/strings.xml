@@ -174,7 +174,7 @@
     <string name="symbol">SYMBOL</string>
     <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">NON DÉFINIT</string>
-    <string name="delete_alert">Voulez-vous supprimer tous les fichiers sélectionnés \?</string>
+    <string name="delete_alert_selected">Voulez-vous supprimer tous les fichiers sélectionnés \?</string>
     <string name="sort_by_title">Trier par</string>
     <string name="selected_image">Image sélectionnée</string>
     <string name="rearrange_images">Réorganiser les images</string>
@@ -411,4 +411,6 @@
 \n3. Fill the required information. Select OK. 
 \n4. New PDF with watermark will be created.</string>
     <string name="reordering_pages_dialog">Réorganiser vos pages...</string>
+    <string name="delete_alert_singular">Voulez-vous supprimer le fichier sélectionné?</string>
+    <string name="snackbar_files_deleted">Fichiers supprimés</string>
 </resources>

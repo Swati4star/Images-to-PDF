@@ -201,20 +201,8 @@ public class ViewFilesFragment extends Fragment
     }
 
 
-    /**
-     * Shows an alert to delete files
-     * and delete files on positive response
-     */
     private void deleteFiles() {
-        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(mActivity)
-                .setCancelable(true)
-                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
-                .setTitle(R.string.delete_alert)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    mViewFilesAdapter.deleteFiles();
-                    checkIfListEmpty();
-                });
-        dialogAlert.create().show();
+        mViewFilesAdapter.deleteFile();
     }
 
     /**

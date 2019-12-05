@@ -226,7 +226,7 @@
     <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
 
 
-    <string name="delete_alert">Do you want to delete all selected files?</string>
+    <string name="delete_alert_selected">Do you want to delete all selected files?</string>
     <string name="sort_by_title">Sort by</string>
 
     <!-- Directory Strings -->
@@ -528,8 +528,10 @@
     <!--file name suffix-->
     <string name="pdf_suffix" translatable="false">_pdf</string>
     <string name="reordering_pages_dialog">Reordering your pages...</string>
+    <string name="delete_alert_singular">Do you want to delete selected file?</string>
+    <string name="snackbar_files_deleted">Files Deleted</string>
 
-    <string-array name="faq_question_answers">
+  <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The software supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file with the software?#####No new text files can\'t be created. You can only convert already made text files to pdf.</item>
         <item>What is the maximum limit of images I can add to create a pdf file?#####There is no restriction to the number of images you desire to convert to pdf. You can include as many images as you desire.</item>

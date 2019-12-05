@@ -224,7 +224,7 @@
     <string name="master_password_changed">Das Passwort scheint falsch zu sein. Möglicherweise haben Sie das Master-Passwort geändert.</string>
 
 
-    <string name="delete_alert">Möchten Sie alle ausgewählten Dateien löschen?</string>
+    <string name="delete_alert_selected">Möchten Sie alle ausgewählten Dateien löschen?</string>
     <string name="sort_by_title">Sortieren nach</string>
 
     
@@ -520,6 +520,8 @@
     <string name="no_excel_file">Keine Excel-Datei ausgewählt</string>
     <string name="split_range_alert">Der eingegebene geteilte Bereich erstellt das ausgewählte PDF erneut!</string>
     <string name="reordering_pages_dialog">Ordnen Sie Ihre Seiten neu...</string>
+    <string name="delete_alert_singular">Möchten Sie die ausgewählte Datei löschen?</string>
+    <string name="snackbar_files_deleted">Dateien gelöscht</string>
 
 
 </resources>
