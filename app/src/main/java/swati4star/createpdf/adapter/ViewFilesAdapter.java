@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -137,7 +138,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 break;
 
             case 1: //delete
-                deleteFile(file.getPath(), position);
+                deleteFile(position);
                 break;
 
             case 2: //rename
@@ -253,68 +254,87 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     /**
-     * Delete the file
-     *
-     * @param name     - name of the file
-     * @param position - position of file in array list
+     * Deletes all selected files
      */
-    private void deleteFile(String name, int position) {
-
-        if (position < 0 || position >= mFileList.size())
-            return;
-
-        AtomicInteger undoClicked = new AtomicInteger();
-        final File fdelete = new File(name);
-        mFileList.remove(position);
-        notifyDataSetChanged();
-        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_file_deleted)
-                .setAction(R.string.snackbar_undoAction, v -> {
-                    if (mFileList.size() == 0) {
-                        mEmptyStateChangeListener.setEmptyStateInvisible();
-                    }
-                    updateDataset();
-                    undoClicked.set(1);
-                }).addCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        if (undoClicked.get() == 0) {
-                            fdelete.delete();
-                            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
-                                    mActivity.getString(R.string.deleted));
-                        }
-                    }
-                }).show();
-        if (mFileList.size() == 0)
-            mEmptyStateChangeListener.setEmptyStateVisible();
+    public void deleteFile() {
+        deleteFiles(mSelectedFiles);
     }
 
     /**
-     * iterate through filelist and remove all elements
+     * Delete single file
      */
-    public void deleteFiles() {
+    private void deleteFile(int position) {
+        if (position < 0 || position >= mFileList.size())
+            return;
 
-        for (int position : mSelectedFiles) {
+        ArrayList<Integer> files = new ArrayList<>();
+        files.add(position);
+        deleteFiles(files);
+    }
 
-            if (position >= mFileList.size())
-                continue;
+    /**
+     * Shows an alert to delete files and
+     * iterate through filelist and deletes
+     * all files on positive response
+     */
+    private void deleteFiles(ArrayList<Integer> files ) {
 
-            String fileName = mFileList.get(position).getPdfFile().getPath();
-            File fdelete = new File(fileName);
-            mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(), mActivity.getString(R.string.deleted));
-            if (fdelete.exists() && !fdelete.delete())
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_file_not_deleted);
+        int messageAlert , messageSnackbar;
+        if (files.size() > 1) {
+            messageAlert = R.string.delete_alert_selected;
+            messageSnackbar = R.string.snackbar_files_deleted;
+        } else {
+            messageAlert = R.string.delete_alert_singular;
+            messageSnackbar = R.string.snackbar_file_deleted;
         }
 
-        ArrayList<PDFFile> newList = new ArrayList<>();
-        for (int position = 0; position < mFileList.size(); position++)
-            if (!mSelectedFiles.contains(position))
-                newList.add(mFileList.get(position));
+        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(mActivity)
+                .setCancelable(true)
+                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+                .setTitle(messageAlert)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    ArrayList<String> filePath = new ArrayList<>();
 
-        mSelectedFiles.clear();
-        if (newList.size() == 0)
-            mEmptyStateChangeListener.setEmptyStateVisible();
+                    for (int position : files) {
+                        if (position >= mFileList.size())
+                            continue;
+                        filePath.add(mFileList.get(position).getPdfFile().getPath());
+                        mFileList.remove(position);
+                    }
 
-        setData(newList);
+                    mSelectedFiles.clear();
+                    files.clear();
+                    updateActionBarTitle();
+                    notifyDataSetChanged();
+
+                    if (mFileList.size() == 0)
+                        mEmptyStateChangeListener.setEmptyStateVisible();
+
+                    AtomicInteger undoClicked = new AtomicInteger();
+                    StringUtils.getInstance().getSnackbarwithAction(mActivity, messageSnackbar)
+                            .setAction(R.string.snackbar_undoAction, v -> {
+                                if (mFileList.size() == 0) {
+                                    mEmptyStateChangeListener.setEmptyStateInvisible();
+                                }
+                                updateDataset();
+                                undoClicked.set(1);
+                            }).addCallback(new Snackbar.Callback() {
+                                    @Override
+                                    public void onDismissed(Snackbar snackbar, int event) {
+                                        if (undoClicked.get() == 0) {
+                                            for (String path : filePath) {
+                                                File fdelete = new File(path);
+                                                mDatabaseHelper.insertRecord(fdelete.getAbsolutePath(),
+                                                        mActivity.getString(R.string.deleted));
+                                                if (fdelete.exists() && !fdelete.delete())
+                                                    StringUtils.getInstance().showSnackbar(mActivity,
+                                                            R.string.snackbar_file_not_deleted);
+                                            }
+                                        }
+                                    }
+                            }).show();
+                });
+        dialogAlert.create().show();
     }
 
     /**

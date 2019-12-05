@@ -219,7 +219,7 @@
     <string name="symbol">SYMBOL</string>
     <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
-    <string name="delete_alert">¿Está seguro que quiere eliminar los archivos seleccionados?</string>
+    <string name="delete_alert_selected">¿Está seguro que quiere eliminar los archivos seleccionados?</string>
     <string name="sort_by_title">Ordenar por</string>
     <string name="selected_image">Imagen Seleccionada</string>
     <string name="arrow_up">Arrow Up</string>
@@ -424,4 +424,6 @@
     <string name="no_excel_file">Ningún archivo excel seleccionado</string>
     <string name="split_range_alert">Entered split range will create Selected PDF again!</string>
     <string name="reordering_pages_dialog">Reordenando tus páginas</string>
+    <string name="delete_alert_singular">¿Quieres eliminar el archivo seleccionado?</string>
+    <string name="snackbar_files_deleted">Archivos eliminados</string>
 </resources>
