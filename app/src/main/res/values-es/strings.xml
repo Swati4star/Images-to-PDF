@@ -163,6 +163,7 @@
     <string name="font_size_changed">Tamaño del Texto cambiado</string>
     <string name="font_size">Tamaño del Texto : %1$s</string>
     <string name="about_us">Acerca De</string>
+    <string name="rate_us">Nos califica</string>
     <string name="app_description">Una aplicación Android fácil de usar para convertir sus archivos a PDF.</string>
     <string name="version">Versión : </string>
     <string name="developer">Desarrollador : Swati Garg</string>

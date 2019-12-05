@@ -260,6 +260,7 @@
     <string name="font_size_changed">Schriftgröße geändert</string>
     <string name="font_size">Schriftgröße: %1$s</string>
     <string name="about_us">Über uns</string>
+    <string name="rate_us">bewerten Sie uns</string>
     <string name="app_description">Eine benutzerfreundliche Android-Anwendung zum Konvertieren Ihrer Dateien in PDF.</string>
     <string name="version">Version : </string>
     <string name="developer">Entwickler: Swati Garg</string>

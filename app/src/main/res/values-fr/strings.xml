@@ -128,6 +128,7 @@
     <string name="example_font">Exemple : 10</string>
     <string name="font_size">Taille de la police : %1$s</string>
     <string name="about_us">À propos</string>
+    <string name="rate_us">évaluez nous</string>
     <string name="app_description">Une application Android facile à utiliser pour convertir vos fichiers au format PDF.</string>
     <string name="version">Version : </string>
     <string name="developer">Développeur : Swati Garg</string>
