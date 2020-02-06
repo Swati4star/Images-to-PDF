@@ -3,22 +3,30 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import org.json.JSONException;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
+import swati4star.createpdf.adapter.RecentListAdapter;
 import swati4star.createpdf.customviews.MyCardView;
 import swati4star.createpdf.model.HomePageItem;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.RecentUtil;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
@@ -82,6 +90,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.add_text)
     MyCardView addText;
 
+    @BindView(R.id.recent_list)
+    RecyclerView recentList;
+
+    @BindView(R.id.recent_lbl)
+    View recentLabel;
+
+    @BindView(R.id.recent_list_lay)
+    ViewGroup recentLayout;
+
+
+
     private Map<Integer, HomePageItem> mFragmentPositionMap;
 
     @Override
@@ -118,6 +137,34 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return rootview;
     }
 
+    @Override public void onViewCreated(
+        @NonNull final View view, @Nullable final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        RecentListAdapter adapter = new RecentListAdapter(this);
+
+        try {
+            LinkedHashMap<String, Map<String, String>> test = RecentUtil
+                    .getList(PreferenceManager.getDefaultSharedPreferences(mActivity));
+            if (!test.isEmpty()) {
+                recentLabel.setVisibility(View.VISIBLE);
+                recentLayout.setVisibility(View.VISIBLE);
+                List<String> keys = new ArrayList<>(test.keySet());
+                List<Map<String, String>> testing = new ArrayList<>(test.values());
+                adapter.updateList(keys, testing);
+                recentList.setAdapter(adapter);
+            } else {
+                recentLabel.setVisibility(View.GONE);
+                recentLayout.setVisibility(View.GONE);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -130,8 +177,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
+
         highlightNavigationDrawerItem(mFragmentPositionMap.get(v.getId()).getNavigationItemId());
         setTitleFragment(mFragmentPositionMap.get(v.getId()).getTitleString());
+
+        Map<String, String> feature = new HashMap<>();
+        feature.put(
+                String.valueOf(mFragmentPositionMap.get(v.getId()).getTitleString()),
+                String.valueOf(mFragmentPositionMap.get(v.getId()).getmDrawableId()));
+
+        try {
+            RecentUtil.addFeatureInRecentList(PreferenceManager
+                    .getDefaultSharedPreferences(mActivity), v.getId(), feature);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         switch (v.getId()) {
             case R.id.images_to_pdf:
