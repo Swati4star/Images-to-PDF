@@ -10,8 +10,18 @@ import org.json.JSONObject;
 
 public class RecentUtil {
 
+    /**
+     * Preference key name.
+     * */
     private static final String RECENT_PREF = "Recent";
 
+
+    /**
+     * Returns the LinkedHashMap of Recently used feature from the shared preference.
+     * @param preferences - preferences object.
+     * @return LinkedHashMap consisting of string as a key holding the feature view Id when it was
+     * clicked and map of drawable Id and title string res Id.
+     * */
     public static LinkedHashMap<String, Map<String, String>> getList(SharedPreferences preferences)
         throws JSONException {
 
@@ -42,11 +52,17 @@ public class RecentUtil {
         return recentList;
     }
 
+
+    /**
+     * Adds the feature that was clicked to the recent bucket and updates the shared preference.
+     * @param preferences - shared preference object.
+     * @param resId - the view Id basically the feature that was clicked.
+     * @param itemClicked - Map of Drawable Id and title string resId received from HomePageItem.
+     * */
     public static void addFeatureInRecentList(SharedPreferences preferences,
             int resId, Map<String, String> itemClicked) throws JSONException {
 
         LinkedHashMap<String, Map<String, String>> recentList = getList(preferences);
-
 
         //remove the first item from the recent list.
         if (recentList.size() == 3) {
