@@ -414,4 +414,5 @@
     <string name="reordering_pages_dialog">Réorganiser vos pages...</string>
     <string name="delete_alert_singular">Voulez-vous supprimer le fichier sélectionné?</string>
     <string name="snackbar_files_deleted">Fichiers supprimés</string>
+  <string name="lbl_recently_used">Recently Used Features</string>
 </resources>

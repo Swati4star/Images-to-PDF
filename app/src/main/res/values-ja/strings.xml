@@ -426,4 +426,5 @@
     <string name="reordering_pages_dialog">ページの並べ替え...</string>
     <string name="delete_alert_singular">選択したファイルを削除しますか？</string>
     <string name="snackbar_files_deleted">削除されたファイル</string>
+  <string name="lbl_recently_used">Recently Used Features</string>
 </resources>
