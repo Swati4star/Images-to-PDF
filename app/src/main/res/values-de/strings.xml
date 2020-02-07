@@ -524,5 +524,7 @@
     <string name="delete_alert_singular">Möchten Sie die ausgewählte Datei löschen?</string>
     <string name="snackbar_files_deleted">Dateien gelöscht</string>
 
+    <string name="lbl_recently_used">Kürzlich verwendete Funktion</string>
+
 
 </resources>
