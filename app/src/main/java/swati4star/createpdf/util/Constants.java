@@ -126,4 +126,7 @@ public class Constants {
     public static final int ADD_PASSWORD = 21;
     public static final int REMOVE_PASSWORD = 22;
     public static final int ADD_WATERMARK = 23;
+
+    //Preference key name.
+    public static final String RECENT_PREF = "Recent";
 }

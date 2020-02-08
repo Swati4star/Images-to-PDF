@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.recent_list_lay)
     ViewGroup recentLayout;
-    
+
     private Map<Integer, HomePageItem> mFragmentPositionMap;
     private RecentListAdapter mAdapter;
 

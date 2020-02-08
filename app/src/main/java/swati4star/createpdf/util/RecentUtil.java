@@ -8,13 +8,9 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static swati4star.createpdf.util.Constants.RECENT_PREF;
+
 public class RecentUtil {
-
-    /**
-     * Preference key name.
-     * */
-    private static final String RECENT_PREF = "Recent";
-
 
     /**
      * Returns the LinkedHashMap of Recently used feature from the shared preference.
@@ -34,7 +30,6 @@ public class RecentUtil {
             JSONObject jsonObject = new JSONObject(preferences
                     .getString(RECENT_PREF, ""));
 
-
             Iterator<String> keys = jsonObject.keys();
 
             while (keys.hasNext()) {
@@ -51,7 +46,6 @@ public class RecentUtil {
         }
         return recentList;
     }
-
 
     /**
      * Adds the feature that was clicked to the recent bucket and updates the shared preference.
