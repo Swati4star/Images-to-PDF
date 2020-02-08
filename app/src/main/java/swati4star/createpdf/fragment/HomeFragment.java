@@ -102,6 +102,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private Map<Integer, HomePageItem> mFragmentPositionMap;
+    private RecentListAdapter mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -134,6 +135,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         extractText.setOnClickListener(this);
         addText.setOnClickListener(this);
 
+        mAdapter =  new RecentListAdapter(this);
+        recentList.setAdapter(mAdapter);
         return rootview;
     }
 
@@ -141,19 +144,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         @NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        RecentListAdapter adapter = new RecentListAdapter(this);
-
         try {
-            LinkedHashMap<String, Map<String, String>> test = RecentUtil
+            LinkedHashMap<String, Map<String, String>> mRecentList = RecentUtil
                     .getList(PreferenceManager.getDefaultSharedPreferences(mActivity));
-            if (!test.isEmpty()) {
+            if (!mRecentList.isEmpty()) {
                 recentLabel.setVisibility(View.VISIBLE);
                 recentLayout.setVisibility(View.VISIBLE);
-                List<String> keys = new ArrayList<>(test.keySet());
-                List<Map<String, String>> testing = new ArrayList<>(test.values());
-                adapter.updateList(keys, testing);
-                recentList.setAdapter(adapter);
+                List<String> featureItemIds = new ArrayList<>(mRecentList.keySet());
+                List<Map<String, String>> featureItemList = new ArrayList<>(mRecentList.values());
+                mAdapter.updateList(featureItemIds, featureItemList);
+                mAdapter.notifyDataSetChanged();
             } else {
                 recentLabel.setVisibility(View.GONE);
                 recentLayout.setVisibility(View.GONE);
