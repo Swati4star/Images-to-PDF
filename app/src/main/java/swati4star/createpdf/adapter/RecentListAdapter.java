@@ -23,6 +23,12 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
         this.mOnClickListener = listener;
     }
 
+
+    /**
+     * Updates the recent list
+     * @param keys - list of all the feature viewId
+     * @param recentList - list of the features
+     * */
     public void updateList(List<String> keys, List<Map<String, String>> recentList) {
         this.mKeys = keys;
         this.mValues = recentList;
