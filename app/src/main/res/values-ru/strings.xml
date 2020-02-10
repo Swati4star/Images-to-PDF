@@ -469,4 +469,5 @@
     <string name="reordering_pages_dialog">Изменение порядка страниц...</string>
     <string name="delete_alert_singular">Вы хотите удалить выбранный файл?</string>
     <string name="snackbar_files_deleted">Файлы удалены</string>
+  <string name="lbl_recently_used">Недавно использованная особенность</string>
 </resources>

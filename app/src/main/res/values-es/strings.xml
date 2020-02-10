@@ -427,4 +427,5 @@
     <string name="reordering_pages_dialog">Reordenando tus páginas</string>
     <string name="delete_alert_singular">¿Quieres eliminar el archivo seleccionado?</string>
     <string name="snackbar_files_deleted">Archivos eliminados</string>
+    <string name="lbl_recently_used">Característica recientemente utilizada</string>
 </resources>
