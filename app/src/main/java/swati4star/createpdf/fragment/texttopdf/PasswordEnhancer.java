@@ -16,6 +16,9 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.StringUtils;
 
+/**
+ * An {@link Enhancer} that lets you add and remove passwords
+ */
 public class PasswordEnhancer implements Enhancer {
 
     private final Activity mActivity;

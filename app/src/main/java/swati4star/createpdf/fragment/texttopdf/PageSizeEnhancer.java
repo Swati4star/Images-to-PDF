@@ -10,6 +10,9 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.PageSizeUtils;
 
+/**
+ * An {@link Enhancer} that lets you select page size.
+ */
 public class PageSizeEnhancer implements Enhancer {
 
     private final PageSizeUtils mPageSizeUtils;

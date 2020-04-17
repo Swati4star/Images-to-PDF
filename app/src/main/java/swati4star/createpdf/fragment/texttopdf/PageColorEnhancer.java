@@ -19,6 +19,9 @@ import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 
+/**
+ * An {@link Enhancer} that lets you select the page color.
+ */
 public class PageColorEnhancer implements Enhancer {
 
     private final Activity mActivity;

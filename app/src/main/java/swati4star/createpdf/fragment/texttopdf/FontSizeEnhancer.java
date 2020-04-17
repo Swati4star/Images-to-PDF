@@ -15,6 +15,9 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.StringUtils;
 
+/**
+ * An {@link Enhancer} that lets you select font size.
+ */
 public class FontSizeEnhancer implements Enhancer {
 
     private final Activity mActivity;

@@ -17,6 +17,9 @@ import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 
+/**
+ * An {@link Enhancer} that lets you select the font family.
+ */
 public class FontFamilyEnhancer implements Enhancer {
 
     private final SharedPreferences mSharedPreferences;

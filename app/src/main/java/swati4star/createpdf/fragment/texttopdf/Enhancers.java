@@ -4,6 +4,9 @@ import android.app.Activity;
 
 import swati4star.createpdf.interfaces.Enhancer;
 
+/**
+ * The {@link Enhancers} represent a list of enhancers for the Text-to-PDF feature.
+ */
 public enum Enhancers {
     FONT_COLOR {
         @Override
@@ -42,5 +45,10 @@ public enum Enhancers {
         }
     };
 
+    /**
+     * @param activity The {@link Activity} context.
+     * @param view The {@link TextToPdfContract.View} that needs the enhancement.
+     * @return An instance of the {@link Enhancer}.
+     */
     abstract Enhancer getEnhancer(Activity activity, TextToPdfContract.View view);
 }
