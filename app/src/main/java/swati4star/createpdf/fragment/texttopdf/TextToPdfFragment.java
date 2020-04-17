@@ -82,18 +82,16 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootView);
 
-        addEnhancements(Enhancers.FONT_SIZE, Enhancers.FONT_FAMILY, Enhancers.PAGE_SIZE,
-                Enhancers.PASSWORD, Enhancers.FONT_COLOR, Enhancers.PAGE_COLOR);
-
+        addEnhancements();
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);
         return rootView;
     }
 
-    private void addEnhancements(Enhancers... enhancers) {
+    private void addEnhancements() {
         mEnhancerList = new ArrayList<>();
-        for (final Enhancers enhancer: enhancers) {
+        for (final Enhancers enhancer: Enhancers.values()) {
             mEnhancerList.add(enhancer.getEnhancer(mActivity, this));
         }
     }
