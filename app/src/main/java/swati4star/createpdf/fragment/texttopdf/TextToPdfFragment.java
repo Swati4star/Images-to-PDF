@@ -1,4 +1,4 @@
-package swati4star.createpdf.fragment;
+package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
 import android.content.Context;

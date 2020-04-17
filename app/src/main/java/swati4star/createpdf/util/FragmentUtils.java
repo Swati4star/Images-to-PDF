@@ -17,7 +17,7 @@ import swati4star.createpdf.fragment.QrBarcodeScanFragment;
 import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
 import swati4star.createpdf.fragment.RemovePagesFragment;
 import swati4star.createpdf.fragment.SplitFilesFragment;
-import swati4star.createpdf.fragment.TextToPdfFragment;
+import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
 

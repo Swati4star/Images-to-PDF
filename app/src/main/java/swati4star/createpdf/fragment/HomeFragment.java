@@ -24,6 +24,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.RecentListAdapter;
 import swati4star.createpdf.customviews.MyCardView;
+import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
 import swati4star.createpdf.model.HomePageItem;
 import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.RecentUtil;
