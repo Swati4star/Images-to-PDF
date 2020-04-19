@@ -8,7 +8,15 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 public class MergePdfEnhancementOptionsUtils {
-    public static ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context) {
+    private static class SingletonHolder {
+        static final MergePdfEnhancementOptionsUtils INSTANCE = new MergePdfEnhancementOptionsUtils();
+    }
+
+    public static MergePdfEnhancementOptionsUtils getInstance() {
+        return MergePdfEnhancementOptionsUtils.SingletonHolder.INSTANCE;
+    }
+
+    public ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context) {
         ArrayList<EnhancementOptionsEntity> options = new ArrayList<>();
 
         options.add(new EnhancementOptionsEntity(

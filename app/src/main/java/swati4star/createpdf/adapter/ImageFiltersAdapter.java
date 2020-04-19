@@ -45,7 +45,7 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
         int imageId = mFilterItem.get(position).getImageId();
         Bitmap roundBitmap = BitmapFactory.decodeResource(mContext.getResources(), imageId);
         if (roundBitmap != null) {
-            holder.img.setImageBitmap(ImageUtils.getRoundBitmap(roundBitmap));
+            holder.img.setImageBitmap(ImageUtils.getInstance().getRoundBitmap(roundBitmap));
         } else
             holder.img.setImageResource(imageId);
         holder.name.setText(mFilterItem.get(position).getName());

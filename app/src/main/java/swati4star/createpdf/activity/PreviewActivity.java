@@ -103,7 +103,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
                 .title(R.string.sort_by_title)
                 .items(R.array.sort_options_images)
                 .itemsCallback((dialog, itemView, position, text) -> {
-                    ImageSortUtils.performSortOperation(position, mImagesArrayList);
+                    ImageSortUtils.getInstance().performSortOperation(position, mImagesArrayList);
                     mPreviewAdapter.setData(new ArrayList<>(mImagesArrayList));
                     mViewPager.setAdapter(mPreviewAdapter);
                 })
