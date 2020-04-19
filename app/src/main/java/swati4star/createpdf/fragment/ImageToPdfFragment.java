@@ -70,6 +70,7 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.ImageEnhancementOptionsUtils;
 import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
@@ -92,7 +93,6 @@ import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
 import static swati4star.createpdf.util.ImageUtils.mImageScaleType;
 import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.WatermarkUtils.getStyleNameFromFont;
@@ -214,7 +214,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        ArrayList<EnhancementOptionsEntity> list = getEnhancementOptions(mActivity, mPdfOptions);
+        ArrayList<EnhancementOptionsEntity> list = ImageEnhancementOptionsUtils.getInstance().getEnhancementOptions(mActivity, mPdfOptions);
         EnhancementOptionsAdapter adapter =
                 new EnhancementOptionsAdapter(this, list);
         mEnhancementOptionsRecycleView.setAdapter(adapter);
