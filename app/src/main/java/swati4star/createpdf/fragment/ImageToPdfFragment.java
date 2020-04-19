@@ -214,7 +214,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        ArrayList<EnhancementOptionsEntity> list = ImageEnhancementOptionsUtils.getInstance().getEnhancementOptions(mActivity, mPdfOptions);
+        ImageEnhancementOptionsUtils imageEnhancementOptionsUtilsInstance = ImageEnhancementOptionsUtils.getInstance();
+        ArrayList<EnhancementOptionsEntity> list = imageEnhancementOptionsUtilsInstance.getEnhancementOptions(mActivity,
+                mPdfOptions);
         EnhancementOptionsAdapter adapter =
                 new EnhancementOptionsAdapter(this, list);
         mEnhancementOptionsRecycleView.setAdapter(adapter);
