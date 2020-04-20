@@ -12,6 +12,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.preferences.TextToPdfPreferences;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.StringUtils;
 
@@ -21,20 +22,19 @@ import swati4star.createpdf.util.StringUtils;
 public class FontSizeEnhancer implements Enhancer {
 
     private final Activity mActivity;
-    private final SharedPreferences mSharedPreferences;
     private EnhancementOptionsEntity mEnhancementOptionsEntity;
     private String mFontTitle;
     private int mFontSize;
     private final TextToPdfContract.View mView;
+    private final TextToPdfPreferences mPreferences;
 
     FontSizeEnhancer(@NonNull final Activity activity,
                      @NonNull final TextToPdfContract.View view) {
         mActivity = activity;
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mPreferences = new TextToPdfPreferences(activity);
 
-        mFontTitle = String.format(mActivity.getString(R.string.edit_font_size),
-                mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
-        mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+        mFontTitle = String.format(mActivity.getString(R.string.edit_font_size), mPreferences.getFontSize());
+        mFontSize = mPreferences.getFontSize();
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity.getResources().getDrawable(R.drawable.ic_font_black_24dp),
                 mFontTitle);
@@ -63,12 +63,9 @@ public class FontSizeEnhancer implements Enhancer {
                             showFontSize();
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.font_size_changed);
                             if (cbSetDefault.isChecked()) {
-                                SharedPreferences.Editor editor = mSharedPreferences.edit();
-                                editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
-                                editor.apply();
+                                mPreferences.setFontSize(mFontSize);
                                 mFontTitle = String.format(mActivity.getString(R.string.edit_font_size),
-                                        mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT,
-                                                Constants.DEFAULT_FONT_SIZE));
+                                        mPreferences.getFontSize());
                             }
                         }
                     } catch (NumberFormatException e) {
