@@ -1,13 +1,12 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
-import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.preferences.TextToPdfDefaultManager;
 import swati4star.createpdf.util.PageSizeUtils;
 
 /**
@@ -22,8 +21,7 @@ public class PageSizeEnhancer implements Enhancer {
         mPageSizeUtils = new PageSizeUtils(context);
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 context, R.drawable.ic_page_size_24dp, R.string.set_page_size_text);
-        PageSizeUtils.mPageSize = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(Constants.DEFAULT_PAGE_SIZE_TEXT, Constants.DEFAULT_PAGE_SIZE);
+        PageSizeUtils.mPageSize = new TextToPdfDefaultManager(context).getPageSize();
     }
 
     @Override

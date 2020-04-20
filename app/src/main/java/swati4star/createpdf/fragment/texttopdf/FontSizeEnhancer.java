@@ -1,8 +1,6 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,7 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
-import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.preferences.TextToPdfDefaultManager;
 import swati4star.createpdf.util.StringUtils;
 
 /**
@@ -21,7 +19,7 @@ import swati4star.createpdf.util.StringUtils;
 public class FontSizeEnhancer implements Enhancer {
 
     private final Activity mActivity;
-    private final SharedPreferences mSharedPreferences;
+    private final TextToPdfDefaultManager mDefaultsManager;
     private EnhancementOptionsEntity mEnhancementOptionsEntity;
     private String mFontTitle;
     private int mFontSize;
@@ -30,11 +28,10 @@ public class FontSizeEnhancer implements Enhancer {
     FontSizeEnhancer(@NonNull final Activity activity,
                      @NonNull final TextToPdfContract.View view) {
         mActivity = activity;
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mDefaultsManager = new TextToPdfDefaultManager(activity);
 
-        mFontTitle = String.format(mActivity.getString(R.string.edit_font_size),
-                mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
-        mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+        mFontTitle = String.format(mActivity.getString(R.string.edit_font_size), mDefaultsManager.getFontSize());
+        mFontSize = mDefaultsManager.getFontSize();
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity.getResources().getDrawable(R.drawable.ic_font_black_24dp),
                 mFontTitle);
@@ -63,12 +60,10 @@ public class FontSizeEnhancer implements Enhancer {
                             showFontSize();
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.font_size_changed);
                             if (cbSetDefault.isChecked()) {
-                                SharedPreferences.Editor editor = mSharedPreferences.edit();
-                                editor.putInt(Constants.DEFAULT_FONT_SIZE_TEXT, mFontSize);
-                                editor.apply();
+                                mDefaultsManager.updateFontSize(mFontSize);
+
                                 mFontTitle = String.format(mActivity.getString(R.string.edit_font_size),
-                                        mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT,
-                                                Constants.DEFAULT_FONT_SIZE));
+                                        mDefaultsManager.getFontSize());
                             }
                         }
                     } catch (NumberFormatException e) {

@@ -1,8 +1,6 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,11 +11,9 @@ import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.preferences.TextToPdfDefaultManager;
 import swati4star.createpdf.util.ColorUtils;
-import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.StringUtils;
-
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 
 /**
  * An {@link Enhancer} that lets you select font colors.
@@ -25,15 +21,14 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 public class FontColorEnhancer implements Enhancer {
 
     private final Activity mActivity;
-    private final SharedPreferences mSharedPreferences;
     private final EnhancementOptionsEntity mEnhancementOptionsEntity;
+    private final TextToPdfDefaultManager mDefaultsManager;
     private int mFontColor;
 
     FontColorEnhancer(@NonNull final Activity activity) {
         mActivity = activity;
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
-                Constants.DEFAULT_FONT_COLOR);
+        mDefaultsManager = new TextToPdfDefaultManager(activity);
+        mFontColor = mDefaultsManager.getFontColor();
         mEnhancementOptionsEntity =  new EnhancementOptionsEntity(
                 mActivity, R.drawable.ic_color, R.string.font_color);
     }
@@ -50,15 +45,12 @@ public class FontColorEnhancer implements Enhancer {
                     ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mFontColor = colorPickerView.getColor();
-                    final int pageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
-                            DEFAULT_PAGE_COLOR);
+                    final int pageColor = mDefaultsManager.getPageColor();
                     if (ColorUtils.getInstance().colorSimilarCheck(mFontColor, pageColor)) {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
-                        SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putInt(Constants.DEFAULT_FONT_COLOR_TEXT, mFontColor);
-                        editor.apply();
+                        mDefaultsManager.updateFontColor(mFontColor);
                     }
                 })
                 .build();

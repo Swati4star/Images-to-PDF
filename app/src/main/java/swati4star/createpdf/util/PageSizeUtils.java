@@ -2,8 +2,6 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -15,14 +13,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.HashMap;
 
 import swati4star.createpdf.R;
-
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
+import swati4star.createpdf.preferences.TextToPdfDefaultManager;
 
 public class PageSizeUtils {
 
     private final Context mActivity;
-    private final SharedPreferences mSharedPreferences;
+    private final TextToPdfDefaultManager mDefaultsManager;
     public static String mPageSize;
     private final String mDefaultPageSize;
     private final HashMap<Integer, Integer> mPageSizeToString;
@@ -33,10 +29,9 @@ public class PageSizeUtils {
      */
     public PageSizeUtils(Context mActivity) {
         this.mActivity = mActivity;
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mDefaultPageSize = mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT,
-                DEFAULT_PAGE_SIZE);
-        mPageSize = mSharedPreferences.getString(DEFAULT_PAGE_SIZE_TEXT, DEFAULT_PAGE_SIZE);
+        mDefaultsManager = new TextToPdfDefaultManager(mActivity);
+        mDefaultPageSize = mDefaultsManager.getPageSize();
+        mPageSize = mDefaultsManager.getPageSize();
         mPageSizeToString = new HashMap<>();
         mPageSizeToString.put(R.id.page_size_default, R.string.a4);
         mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
@@ -124,9 +119,7 @@ public class PageSizeUtils {
                             spinnerB.getSelectedItem().toString());
                     CheckBox mSetAsDefault = view.findViewById(R.id.set_as_default);
                     if (saveValue || mSetAsDefault.isChecked() ) {
-                        SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putString(Constants.DEFAULT_PAGE_SIZE_TEXT, mPageSize);
-                        editor.apply();
+                        mDefaultsManager.updatePageSize(mPageSize);
                     }
                 }).build();
     }
