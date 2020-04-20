@@ -130,6 +130,8 @@
     <string name="excel_tv_view_text">Excel file selected: </string>
     <string name="select_excel_file">Select Excel file</string>
 
+    <string name="error_path_not_found">Sorry, we are unable to access the file at this location</string>
+
     <string name="creating_pdf">Creating PDF</string>
     <string name="creating_txt">Creating Text File</string>
     <string name="enter_file_name">Enter file name</string>
@@ -146,6 +148,7 @@
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="error_uri_not_found">Sorry, We are unable to access the cropped image. Please try again</string>
     <string name="snack_bar_empty_txt_in_pdf">The chosen PDF has no text to extract!</string>
     <string name="snackbar_txtExtracted">Text extracted!</string>
     <string name="snackbar_pdfselected">PDF file selected!</string>
@@ -518,6 +521,10 @@
     <string name="zip_to_pdf">ZIP to PDF</string>
     <string name="convert_to_pdf">convert to PDF</string>
     <string name="error_no_image_in_zip">ZIP file contains no image</string>
+    <string name="error_open_file">An error occurred while opening the file. Please try reopening</string>
+
+    <!--text to pdf-->
+    <string name="error_pdf_not_created">Sorry, PDF was not created. Please try again</string>
 
     <!--favourite fragment-->
     <string name="favourites">Favourites</string>

@@ -71,6 +71,7 @@
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
+    <string name="error_uri_not_found">トリミングされた画像にアクセスできません。もう一度お試しください</string>
     <string name="snack_bar_empty_txt_in_pdf">選択したPDFには抽出するテキストがありません!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>
@@ -92,6 +93,7 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
+    <string name="error_path_not_found">この場所のファイルにアクセスできません</string>
 
     <!-- Select Images string -->
     <string name="images_selected">%1$d image(s) selected.</string>
@@ -400,6 +402,7 @@
     <string name="zip_to_pdf">ZIP to PDF</string>
     <string name="convert_to_pdf">convert to PDF</string>
     <string name="error_no_image_in_zip">ZIP file contains no image</string>
+    <string name="error_open_file">ファイルを開くときにエラーが発生しました。もう一度開いてみてください</string>
 
     <string name="images_to_pdf">Images to PDF</string>
     <string name="extract_text">Extract Text</string>
@@ -410,6 +413,9 @@
     <string name="snackbar_txtselected">Text File selected!</string>
     <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue…</string>
     <string name="creating_txt">Creating Text File</string>
+
+    <!--text to pdf-->
+    <string name="error_pdf_not_created">PDFは作成されませんでした。もう一度やり直してください。</string>
 
     <string name="font_color">Font Color</string>
     <string name="page_color">Page Color</string>

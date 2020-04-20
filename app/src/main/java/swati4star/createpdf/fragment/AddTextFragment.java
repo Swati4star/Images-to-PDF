@@ -228,7 +228,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     private void setTextAndActivateButtons(String pdfPath, String textPath) {
         if (pdfPath == null || textPath == null) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_path_not_found);
             resetView();
             return;
         }

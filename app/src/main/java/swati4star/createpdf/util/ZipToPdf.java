@@ -90,7 +90,7 @@ public class ZipToPdf {
             ((MainActivity) context).convertImagesToPdf(imageUris);
         } catch (IOException e) {
             e.printStackTrace();
-            StringUtils.getInstance().showSnackbar(context, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(context, R.string.error_open_file);
         }
     }
 
