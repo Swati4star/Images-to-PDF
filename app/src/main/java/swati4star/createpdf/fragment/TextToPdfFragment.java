@@ -49,13 +49,13 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
+import swati4star.createpdf.util.TextEnhancementOptionsUtils;
 import swati4star.createpdf.util.TextToPDFUtils;
 import swati4star.createpdf.util.TextToPdfAsync;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.TextEnhancementOptionsUtils.getEnhancementOptions;
 
 public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         OnTextToPdfInterface {
@@ -97,7 +97,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
-        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
+        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mFontTitle = String.format(getString(R.string.edit_font_size),
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
@@ -125,7 +125,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mTextEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
+        mTextEnhancementOptionsEntityArrayList = TextEnhancementOptionsUtils.getInstance()
+                .getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);
         mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
     }
@@ -489,7 +490,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.requestRuntimePermissions(
+        PermissionsUtils.getInstance().requestRuntimePermissions(
                 mActivity,
                 READ_WRITE_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT

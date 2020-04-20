@@ -48,7 +48,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        ThemeUtils.setThemeApp(this);
+        ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rearrange_images);
 

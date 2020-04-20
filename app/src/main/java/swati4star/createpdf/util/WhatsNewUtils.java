@@ -22,12 +22,20 @@ import swati4star.createpdf.model.WhatsNew;
 
 public class WhatsNewUtils {
 
+    private static class SingletonHolder {
+        static final WhatsNewUtils INSTANCE = new WhatsNewUtils();
+    }
+
+    public static WhatsNewUtils getInstance() {
+        return WhatsNewUtils.SingletonHolder.INSTANCE;
+    }
+
     /**
      * Display dialog with whats new
      *
      * @param context - current context
      */
-    public static void displayDialog(Context context) {
+    public void displayDialog(Context context) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.fragment_whats_new);
         RecyclerView rv = dialog.findViewById(R.id.whatsNewListView);
@@ -37,7 +45,7 @@ public class WhatsNewUtils {
         title.setText(R.string.whatsnew_title);
         try {
 
-            JSONObject obj = new JSONObject(loadJSONFromAsset(context));
+            JSONObject obj = new JSONObject(WhatsNewUtils.getInstance().loadJSONFromAsset(context));
             WhatsNewAdapter whatsNewAdapter = new WhatsNewAdapter(context, extractItemsFromJSON(obj));
             LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             rv.setLayoutManager(layoutManager);
@@ -56,7 +64,7 @@ public class WhatsNewUtils {
      * @param context - current context
      * @return - json
      */
-    private static String loadJSONFromAsset(Context context) {
+    private String loadJSONFromAsset(Context context) {
         String json;
         try {
             InputStream is = context.getAssets().open("whatsnew.json");
@@ -79,7 +87,7 @@ public class WhatsNewUtils {
      * @return list of whatsnew items
      * @throws JSONException - invalid JSON
      */
-    private static ArrayList<WhatsNew> extractItemsFromJSON(JSONObject object) throws JSONException {
+    private ArrayList<WhatsNew> extractItemsFromJSON(JSONObject object) throws JSONException {
 
         ArrayList<WhatsNew> whatsNewList;
         JSONArray data = object.getJSONArray("data");

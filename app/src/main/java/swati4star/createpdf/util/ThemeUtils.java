@@ -12,11 +12,19 @@ import static swati4star.createpdf.util.Constants.THEME_WHITE;
 
 public class ThemeUtils {
 
+    private static class SingletonHolder {
+        static final ThemeUtils INSTANCE = new ThemeUtils();
+    }
+
+    public static ThemeUtils getInstance() {
+        return ThemeUtils.SingletonHolder.INSTANCE;
+    }
+
     /**
      * Set selected theme to current context
      * @param context - current context
      */
-    public static void setThemeApp(Context context) {
+    public void setThemeApp(Context context) {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
@@ -40,7 +48,7 @@ public class ThemeUtils {
      * @param context - current context
      * @return - position
      */
-    public static int getSelectedThemePosition(Context context) {
+    public int getSelectedThemePosition(Context context) {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
@@ -60,7 +68,7 @@ public class ThemeUtils {
      * @param context - current context
      * @param themeName - name of theme to save
      */
-    public static void saveTheme(Context context, String themeName) {
+    public void saveTheme(Context context, String themeName) {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.DEFAULT_THEME_TEXT, themeName);

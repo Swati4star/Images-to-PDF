@@ -78,7 +78,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     protected void onCreate(Bundle savedInstanceState) {
 
         // Set selected theme
-        ThemeUtils.setThemeApp(this);
+        ThemeUtils.getInstance().setThemeApp(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_editor);

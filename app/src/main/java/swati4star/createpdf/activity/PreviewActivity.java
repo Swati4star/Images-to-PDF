@@ -39,7 +39,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        ThemeUtils.setThemeApp(this);
+        ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
 

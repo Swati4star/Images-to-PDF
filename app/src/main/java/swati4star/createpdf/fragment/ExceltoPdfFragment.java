@@ -129,7 +129,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mEnhancementOptionsEntityArrayList = MergePdfEnhancementOptionsUtils.getInstance().getEnhancementOptions(mActivity);
+        mEnhancementOptionsEntityArrayList = MergePdfEnhancementOptionsUtils.getInstance()
+                .getEnhancementOptions(mActivity);
         mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
         mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }

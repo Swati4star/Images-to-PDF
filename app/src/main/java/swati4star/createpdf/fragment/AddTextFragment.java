@@ -186,7 +186,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     @OnClick(R.id.create_pdf_added_text)
     public void openPdfNameDialog() {
         if (!mPermissionGranted) {
-            PermissionsUtils.requestRuntimePermissions(this,
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     READ_WRITE_PERMISSIONS,
                     PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
         }

@@ -50,14 +50,14 @@ public class ZipToPdfFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_zip_to_pdf, container, false);
         ButterKnife.bind(this, rootView);
         mActivity = getActivity();
-        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
+        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         return rootView;
     }
 
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
         if (!mPermissionGranted) {
-            PermissionsUtils.requestRuntimePermissions(this,
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     READ_WRITE_PERMISSIONS,
                     PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             return;
@@ -93,7 +93,7 @@ public class ZipToPdfFragment extends Fragment {
         convertButton.blockTouch();
 
         // do the task!
-        ZipToPdf.convertZipToPDF(mPath, mActivity);
+        ZipToPdf.getInstance().convertZipToPDF(mPath, mActivity);
 
         //conversion done
         extractionProgress.setVisibility(View.GONE);
