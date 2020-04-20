@@ -81,7 +81,7 @@ public class CropImageActivity extends AppCompatActivity {
         Uri uri = mCropImageView.getImageUri();
 
         if (uri == null) {
-            StringUtils.getInstance().showSnackbar(this, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(this, R.string.error_uri_not_found);
             return;
         }
 

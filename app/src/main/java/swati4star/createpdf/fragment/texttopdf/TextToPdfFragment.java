@@ -273,7 +273,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_pdf_not_created);
             mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
             mCreateTextPdf.setEnabled(false);
             mTextFileUri = null;

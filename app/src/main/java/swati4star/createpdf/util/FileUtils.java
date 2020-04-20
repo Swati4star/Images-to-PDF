@@ -137,7 +137,7 @@ public class FileUtils {
      */
     public void openFile(String path) {
         if (path == null) {
-            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.error_path_not_found);
             return;
         }
         openTextFile(path);
@@ -159,7 +159,7 @@ public class FileUtils {
             target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
         } catch (Exception e) {
-            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.error_open_file);
         }
     }
 
