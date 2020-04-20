@@ -119,7 +119,7 @@ public class PageSizeUtils {
                             spinnerB.getSelectedItem().toString());
                     CheckBox mSetAsDefault = view.findViewById(R.id.set_as_default);
                     if (saveValue || mSetAsDefault.isChecked() ) {
-                        mDefaultsManager.updatePageSize(mPageSize);
+                        mDefaultsManager.setPageSize(mPageSize);
                     }
                 }).build();
     }

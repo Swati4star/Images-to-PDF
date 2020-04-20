@@ -50,7 +50,7 @@ public class PageColorEnhancer implements Enhancer {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
-                        mDefaultsManager.updatePageColor(mPageColor);
+                        mDefaultsManager.setPageColor(mPageColor);
                     }
                 })
                 .build();

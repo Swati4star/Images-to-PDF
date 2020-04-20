@@ -57,7 +57,7 @@ public class FontFamilyEnhancer implements Enhancer {
                     mFontFamily = Font.FontFamily.valueOf(fontFamily1);
                     final CheckBox cbSetDefault = view.findViewById(R.id.cbSetDefault);
                     if (cbSetDefault.isChecked()) {
-                        mDefaultsManager.updateFontFamily(fontFamily1);
+                        mDefaultsManager.setFontFamily(fontFamily1);
 
                     }
                     showFontFamily();

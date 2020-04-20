@@ -60,7 +60,7 @@ public class FontSizeEnhancer implements Enhancer {
                             showFontSize();
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.font_size_changed);
                             if (cbSetDefault.isChecked()) {
-                                mDefaultsManager.updateFontSize(mFontSize);
+                                mDefaultsManager.setFontSize(mFontSize);
 
                                 mFontTitle = String.format(mActivity.getString(R.string.edit_font_size),
                                         mDefaultsManager.getFontSize());

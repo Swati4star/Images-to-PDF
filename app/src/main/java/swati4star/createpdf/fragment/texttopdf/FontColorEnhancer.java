@@ -50,7 +50,7 @@ public class FontColorEnhancer implements Enhancer {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
-                        mDefaultsManager.updateFontColor(mFontColor);
+                        mDefaultsManager.setFontColor(mFontColor);
                     }
                 })
                 .build();
