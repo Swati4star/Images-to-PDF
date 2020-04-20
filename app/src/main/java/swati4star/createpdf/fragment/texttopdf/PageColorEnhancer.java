@@ -1,8 +1,6 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,11 +11,9 @@ import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.preferences.TextToPdfPreferences;
 import swati4star.createpdf.util.ColorUtils;
-import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.StringUtils;
-
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 
 /**
  * An {@link Enhancer} that lets you select the page color.
@@ -25,15 +21,14 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 public class PageColorEnhancer implements Enhancer {
 
     private final Activity mActivity;
-    private final SharedPreferences mSharedPreferences;
     private final EnhancementOptionsEntity mEnhancementOptionsEntity;
     private int mPageColor;
+    private final TextToPdfPreferences mPreferences;
 
     PageColorEnhancer(@NonNull final Activity activity) {
         mActivity = activity;
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_TTP,
-                DEFAULT_PAGE_COLOR);
+        mPreferences = new TextToPdfPreferences(activity);
+        mPageColor = mPreferences.getPageColor();
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity, R.drawable.ic_page_color, R.string.page_color);
     }
@@ -50,15 +45,12 @@ public class PageColorEnhancer implements Enhancer {
                     ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
                     mPageColor = colorPickerView.getColor();
-                    final int fontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
-                            Constants.DEFAULT_FONT_COLOR);
+                    final int fontColor = mPreferences.getFontColor();
                     if (ColorUtils.getInstance().colorSimilarCheck(fontColor, mPageColor)) {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
-                        SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putInt(Constants.DEFAULT_PAGE_COLOR_TTP, mPageColor);
-                        editor.apply();
+                        mPreferences.setPageColor(mPageColor);
                     }
                 })
                 .build();
