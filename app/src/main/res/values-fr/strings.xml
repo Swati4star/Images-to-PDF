@@ -56,7 +56,7 @@
     <string name="cannot_add_password">Le mot de passe n\'a pas pu être appliqué au fichier PDF. Veuillez vérifier le PDF à nouveau.</string>
     <string name="cropImage_activityTitle">Rogner l\'image</string>
     <string name="snackbar_pdfCreated">PDF créé !</string>
-    <string name="error_uri_not_found">Aucun fichier trouvé, veuillez sélectionner une image et réessayer</string>
+    <string name="error_uri_not_found">Désolé, nous ne pouvons pas accéder à l\'image recadrée. Veuillez réessayer</string>
     <string name="snack_bar_empty_txt_in_pdf">Le PDF choisi n\'a pas de texte à extraire!</string>
     <string name="delete">Supprimer</string>
     <string name="share">Partager</string>
@@ -81,7 +81,7 @@
     <string name="compress_image">Compression d\'Image : %s%%</string>
     <string name="quality_image">Entrez % de compression de l\'image :</string>
     <string name="invalid_entry">Entrée non valide</string>
-    <string name="error_path_not_found">Le chemin d\'erreur est vide. Veuillez sélectionner un fichier</string>
+    <string name="error_path_not_found">Désolé, nous ne pouvons pas accéder au fichier à cet endroit</string>
 
 
     <!-- Select Images string -->
@@ -287,7 +287,7 @@
     <string name="zip_to_pdf">ZIP au format PDF</string>
     <string name="convert_to_pdf">Convertir au format PDF</string>
     <string name="error_no_image_in_zip">Le fichier ZIP contient pas d\'image</string>
-    <string name="error_open_file">une erreur s\'est produite lors de l\'ouverture du fichier, veuillez réouvrir</string>
+    <string name="error_open_file">Une erreur s\'est produite lors de l\'ouverture du fichier. Veuillez réouvrir</string>
     <string name="images_to_pdf">Images vers PDF</string>
     <string name="extract_text">Extraire du texte</string>
     <string name="pdf_selected">Fichier PDF sélectionné :</string>
@@ -422,6 +422,6 @@
   <string name="lbl_recently_used">Fonction récemment utilisée</string>
 
     <!--text to pdf-->
-    <string name="error_pdf_not_created">Désolé, le pdf n\'a pas été créé</string>
+    <string name="error_pdf_not_created">Désolé, le pdf n\'a pas été créé. Veuillez réessayer.</string>
 
 </resources>

@@ -88,12 +88,12 @@
     <string name="snackbar_imagecropped">Изображения кадрированы</string>
     <string name="cropImage_activityTitle">Кадрирование изображения</string>
     <string name="snackbar_pdfCreated">PDF файл создан!</string>
-    <string name="error_uri_not_found">Файл не найден, пожалуйста, выберите изображение и попробуйте снова</string>
+    <string name="error_uri_not_found">К сожалению, мы не можем получить доступ к обрезанному изображению. Пожалуйста, попробуйте еще раз</string>
     <string name="snack_bar_empty_txt_in_pdf">Выбранный PDF не имеет текста для извлечения!</string>
     <string name="snackbar_viewAction">Просмотр</string>
     <string name="more_options_text">Параметры</string>
     <string name="delete">Удалить</string>
-    <string name="error_path_not_found">Путь ошибки пуст. Пожалуйста, выберите файл</string>
+    <string name="error_path_not_found">К сожалению, мы не можем получить доступ к файлу в этом месте</string>
 
     <!-- Share strings -->
     <string name="share_chooser">Выберите приложение для отправки сообщения…</string>
@@ -404,7 +404,7 @@
     <string name="whatsnew_title">What\'s New</string>
 
     <!--text to pdf-->
-    <string name="error_pdf_not_created">Извините, pdf не был создан</string>
+    <string name="error_pdf_not_created">Извините, pdf не был создан. Пожалуйста, попробуйте еще раз.</string>
 
     <!--watermark strings -->
     <string name="watermark_added">Watermark Added</string>
@@ -448,7 +448,7 @@
     <string name="zip_to_pdf">ZIP to PDF</string>
     <string name="convert_to_pdf">convert to PDF</string>
     <string name="error_no_image_in_zip">ZIP file contains no image</string>
-    <string name="error_open_file">произошла ошибка при открытии файла, попробуйте открыть снова</string>
+    <string name="error_open_file">Произошла ошибка при открытии файла. Пожалуйста, попробуйте снова открыть</string>
 
     <string name="images_to_pdf">Images to PDF</string>
     <string name="extract_text">Extract Text</string>

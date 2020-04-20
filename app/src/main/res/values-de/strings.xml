@@ -128,7 +128,7 @@
     <string name="excel_tv_view_text">Excel-Datei ausgewählt:</string>
     <string name="select_excel_file">Excel-Datei auswählen</string>
 
-    <string name="error_path_not_found">Fehlerpfad ist leer. Bitte wählen Sie eine Datei aus</string>
+    <string name="error_path_not_found">Leider können wir an dieser Stelle nicht auf die Datei zugreifen</string>
 
     <string name="creating_pdf">Creating PDF</string>
     <string name="creating_txt">Textdatei erstellen</string>
@@ -146,7 +146,7 @@
     <string name="snackbar_imagecropped">Bilder beschnitten</string>
     <string name="cropImage_activityTitle">Bild zuschneiden</string>
     <string name="snackbar_pdfCreated">PDF erstellt!</string>
-    <string name="error_uri_not_found">Keine Datei gefunden. Bitte wählen Sie ein Bild aus und versuchen Sie es erneut</string>
+    <string name="error_uri_not_found">Leider können wir nicht auf das zugeschnittene Bild zugreifen. Bitte versuche es erneut</string>
     <string name="snackbar_txtExtracted">Text extrahiert!</string>
     <string name="snackbar_pdfselected">PDF-Datei ausgewählt!</string>
     <string name="snackbar_viewAction">Aussicht</string>
@@ -519,7 +519,7 @@
     <string name="error_open_file">Beim Öffnen der Datei ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut</string>
 
     <!--text to pdf-->
-    <string name="error_pdf_not_created">Sorry, pdf wurde nicht erstellt</string>
+        <string name="error_pdf_not_created">Sorry, pdf wurde nicht erstellt. Bitte versuche es erneut.</string>
     
     <string name="favourites">Favoriten</string>
     <string name="add_to_favourite">Zu Favoriten hinzufügen</string>
