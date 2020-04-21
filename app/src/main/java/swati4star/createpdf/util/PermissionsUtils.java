@@ -18,6 +18,14 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class PermissionsUtils {
 
+    private static class SingletonHolder {
+        static final PermissionsUtils INSTANCE = new PermissionsUtils();
+    }
+
+    public static PermissionsUtils getInstance() {
+        return PermissionsUtils.SingletonHolder.INSTANCE;
+    }
+
     /**
      * checkRuntimePermissions takes in an Object instance(can be of type Activity or Fragment),
      * an array of permission and checks for if all the permissions are granted ot not
@@ -26,7 +34,7 @@ public class PermissionsUtils {
      * @param permissions string array of permissions
      * @return true if all permissions are granted, otherwise false
      */
-    public static boolean checkRuntimePermissions(Object context, String[] permissions) {
+    public boolean checkRuntimePermissions(Object context, String[] permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (String permission : permissions) {
                 if ((ContextCompat.checkSelfPermission(retrieveContext(context),
@@ -48,7 +56,7 @@ public class PermissionsUtils {
      * @param permissions string array of permissions
      * @param requestCode permission request code
      */
-    public static void requestRuntimePermissions(Object context, String[] permissions,
+    public void requestRuntimePermissions(Object context, String[] permissions,
                                                  int requestCode) {
         if (context instanceof Activity) {
             ActivityCompat.requestPermissions((AppCompatActivity) context,
@@ -64,7 +72,7 @@ public class PermissionsUtils {
      *
      * @param context     can be of type AppCompatActivity or Fragment
      */
-    private static Context retrieveContext(@NonNull Object context) {
+    private Context retrieveContext(@NonNull Object context) {
         if (context instanceof AppCompatActivity) {
             return ((AppCompatActivity) context).getApplicationContext();
         } else {

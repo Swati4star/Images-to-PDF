@@ -35,18 +35,17 @@ import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
+import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.StringUtils;
+import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
-import static swati4star.createpdf.util.ThemeUtils.getSelectedThemePosition;
-import static swati4star.createpdf.util.ThemeUtils.saveTheme;
 
 public class SettingsFragment extends Fragment implements OnItemClickListener {
 
@@ -128,7 +127,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
                 setTheme();
                 break;
             case 5:
-                showImageScaleTypeDialog(mActivity, true);
+                ImageUtils.getInstance().showImageScaleTypeDialog(mActivity, true);
                 break;
             case 6:
                 changeMasterPassword();
@@ -276,12 +275,13 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     RadioButton radioButton = view.findViewById(selectedId);
                     String themeName = radioButton.getText().toString();
-                    saveTheme(mActivity, themeName);
+                    ThemeUtils.getInstance().saveTheme(mActivity, themeName);
                     mActivity.recreate();
                 }))
                 .build();
         RadioGroup radioGroup = materialDialog.getCustomView().findViewById(R.id.radio_group_themes);
-        RadioButton rb = (RadioButton) radioGroup.getChildAt(getSelectedThemePosition(mActivity));
+        RadioButton rb = (RadioButton) radioGroup
+                .getChildAt(ThemeUtils.getInstance().getSelectedThemePosition(mActivity));
         rb.setChecked(true);
         materialDialog.show();
     }

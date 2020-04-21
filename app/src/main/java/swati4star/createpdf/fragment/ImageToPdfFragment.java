@@ -70,6 +70,7 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.CreatePdf;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.ImageEnhancementOptionsUtils;
 import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PageSizeUtils;
@@ -92,9 +93,6 @@ import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.ImageEnhancementOptionsUtils.getEnhancementOptions;
-import static swati4star.createpdf.util.ImageUtils.mImageScaleType;
-import static swati4star.createpdf.util.ImageUtils.showImageScaleTypeDialog;
 import static swati4star.createpdf.util.WatermarkUtils.getStyleNameFromFont;
 import static swati4star.createpdf.util.WatermarkUtils.getStyleValueFromName;
 
@@ -155,7 +153,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this,
+        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this,
                 READ_WRITE_CAMERA_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
@@ -214,7 +212,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        ArrayList<EnhancementOptionsEntity> list = getEnhancementOptions(mActivity, mPdfOptions);
+        ImageEnhancementOptionsUtils imageEnhancementOptionsUtilsInstance = ImageEnhancementOptionsUtils.getInstance();
+        ArrayList<EnhancementOptionsEntity> list = imageEnhancementOptionsUtilsInstance.getEnhancementOptions(mActivity,
+                mPdfOptions);
         EnhancementOptionsAdapter adapter =
                 new EnhancementOptionsAdapter(this, list);
         mEnhancementOptionsRecycleView.setAdapter(adapter);
@@ -247,7 +247,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private void createPdf(boolean isGrayScale) {
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
-        mPdfOptions.setImageScaleType(mImageScaleType);
+        mPdfOptions.setImageScaleType(ImageUtils.getInstance().mImageScaleType);
         mPdfOptions.setPageNumStyle(mPageNumStyle);
         mPdfOptions.setMasterPwd(mSharedPreferences.getString(MASTER_PWD_STRING, appName));
         mPdfOptions.setPageColor(mPageColor);
@@ -421,7 +421,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 mPageSizeUtils.showPageSizeDialog(false);
                 break;
             case 5:
-                showImageScaleTypeDialog(mActivity, false);
+                ImageUtils.getInstance().showImageScaleTypeDialog(mActivity, false);
                 break;
             case 6:
                 startActivityForResult(PreviewActivity.getStartIntent(mActivity, mImagesUri),
@@ -473,7 +473,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 File f = new File(mImagesUri.get(i));
                 FileInputStream fis = new FileInputStream(f);
                 Bitmap bitmap = BitmapFactory.decodeStream(fis);
-                Bitmap grayScaleBitmap = ImageUtils.toGrayscale(bitmap);
+                Bitmap grayScaleBitmap = ImageUtils.getInstance().toGrayscale(bitmap);
 
                 File file = new File(imagePath);
                 file.createNewFile();
@@ -766,7 +766,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_CAMERA_PERMISSIONS,
                 REQUEST_PERMISSIONS_CODE);
     }
@@ -802,7 +802,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         mImagesUri.clear();
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
-        mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALE_TYPE_TEXT,
+        ImageUtils.getInstance().mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALE_TYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
         mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);

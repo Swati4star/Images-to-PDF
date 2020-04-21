@@ -33,7 +33,7 @@ public class ImageSortUtilsTest {
         List<String> paths = getFilePaths();
 
         // when
-        ImageSortUtils.performSortOperation(ascendingSortOption, paths);
+        ImageSortUtils.getInstance().performSortOperation(ascendingSortOption, paths);
 
         // then
         Assert.assertEquals(
@@ -53,7 +53,7 @@ public class ImageSortUtilsTest {
         List<String> paths = getFilePaths();
 
         // when
-        ImageSortUtils.performSortOperation(descendingSortOption, paths);
+        ImageSortUtils.getInstance().performSortOperation(descendingSortOption, paths);
 
         // then
         Assert.assertEquals(
@@ -74,7 +74,7 @@ public class ImageSortUtilsTest {
         createNewFiles();
 
         // when
-        ImageSortUtils.performSortOperation(dateAscendingOption, paths);
+        ImageSortUtils.getInstance().performSortOperation(dateAscendingOption, paths);
 
         // then
         Assert.assertEquals(
@@ -95,7 +95,7 @@ public class ImageSortUtilsTest {
         createNewFiles();
 
         // when
-        ImageSortUtils.performSortOperation(dateDescendingOption, paths);
+        ImageSortUtils.getInstance().performSortOperation(dateDescendingOption, paths);
 
         // then
         Assert.assertEquals(
@@ -116,7 +116,7 @@ public class ImageSortUtilsTest {
         // when
         invalidSortOption.forEach(sortOption -> {
                     try {
-                        ImageSortUtils.performSortOperation(sortOption, Collections.emptyList());
+                        ImageSortUtils.getInstance().performSortOperation(sortOption, Collections.emptyList());
                     } catch (Exception ex) {
                         assertTrue(ex instanceof IllegalArgumentException);
                         assertTrue(ex.getMessage().startsWith("Invalid sort option"));

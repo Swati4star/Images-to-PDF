@@ -93,7 +93,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_images, container, false);
         ButterKnife.bind(this, rootView);
-        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_CAMERA_PERMISSIONS);
+        mPermissionGranted = PermissionsUtils.getInstance()
+                .checkRuntimePermissions(this, READ_WRITE_CAMERA_PERMISSIONS);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
@@ -237,7 +238,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         if (mPermissionGranted)
             selectImages();
         else {
-            PermissionsUtils.requestRuntimePermissions(this,
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     READ_WRITE_CAMERA_PERMISSIONS,
                     REQUEST_PERMISSIONS_CODE);
         }

@@ -6,12 +6,6 @@ import android.content.Intent;
 public class ResultUtils {
 
     private ResultUtils() {
-
-    }
-
-    public boolean checkResultValidity(int resultCode, Intent data) {
-
-        return resultCode == Activity.RESULT_OK && data != null && data.getData() != null;
     }
 
     private static class SingletonHolder {
@@ -20,5 +14,10 @@ public class ResultUtils {
 
     public static ResultUtils getInstance() {
         return ResultUtils.SingletonHolder.INSTANCE;
+    }
+
+    public boolean checkResultValidity(int resultCode, Intent data) {
+
+        return resultCode == Activity.RESULT_OK && data != null && data.getData() != null;
     }
 }

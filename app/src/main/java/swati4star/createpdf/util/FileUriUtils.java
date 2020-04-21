@@ -18,6 +18,14 @@ public class FileUriUtils {
 
     private FileUriUtils(){}
 
+    private static class SingletonHolder {
+        static final FileUriUtils INSTANCE = new FileUriUtils();
+    }
+
+    public static FileUriUtils getInstance() {
+        return FileUriUtils.SingletonHolder.INSTANCE;
+    }
+
     /**
      * Check whether the image is whatsapp image
      *
@@ -186,13 +194,5 @@ public class FileUriUtils {
             return null;
         path =  path.replace("/document/raw:", "");
         return path;
-    }
-
-    private static class SingletonHolder {
-        static final FileUriUtils INSTANCE = new FileUriUtils();
-    }
-
-    public static FileUriUtils getInstance() {
-        return FileUriUtils.SingletonHolder.INSTANCE;
     }
 }

@@ -12,8 +12,22 @@ import swati4star.createpdf.model.ImageToPDFOptions;
 
 public class ImageEnhancementOptionsUtils {
 
-    public static ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
-                                                                            ImageToPDFOptions pdfOptions) {
+    public ImageEnhancementOptionsUtils() {
+    }
+
+    /**
+     * Singleton Implementation
+     */
+    private static class SingletonHolder {
+        private static final ImageEnhancementOptionsUtils INSTANCE = new ImageEnhancementOptionsUtils();
+    }
+
+    public static ImageEnhancementOptionsUtils getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    public ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
+                                                                     ImageToPDFOptions pdfOptions) {
         ArrayList<EnhancementOptionsEntity> options = new ArrayList<>();
         int passwordIcon = R.drawable.baseline_enhanced_encryption_24;
         if (pdfOptions.isPasswordProtected())

@@ -12,13 +12,21 @@ import static swati4star.createpdf.util.Constants.RECENT_PREF;
 
 public class RecentUtil {
 
+    private static class SingletonHolder {
+        static final RecentUtil INSTANCE = new RecentUtil();
+    }
+
+    public static RecentUtil getInstance() {
+        return RecentUtil.SingletonHolder.INSTANCE;
+    }
+
     /**
      * Returns the LinkedHashMap of Recently used feature from the shared preference.
      * @param preferences - preferences object.
      * @return LinkedHashMap consisting of string as a key holding the feature view Id when it was
      * clicked and map of drawable Id and title string res Id.
      * */
-    public static LinkedHashMap<String, Map<String, String>> getList(SharedPreferences preferences)
+    public LinkedHashMap<String, Map<String, String>> getList(SharedPreferences preferences)
         throws JSONException {
 
         //creating the empty list.
@@ -53,7 +61,7 @@ public class RecentUtil {
      * @param resId - the view Id basically the feature that was clicked.
      * @param itemClicked - Map of Drawable Id and title string resId received from HomePageItem.
      * */
-    public static void addFeatureInRecentList(SharedPreferences preferences,
+    public void addFeatureInRecentList(SharedPreferences preferences,
             int resId, Map<String, String> itemClicked) throws JSONException {
 
         LinkedHashMap<String, Map<String, String>> recentList = getList(preferences);

@@ -51,6 +51,7 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ExcelToPDFAsync;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.MergePdfEnhancementOptionsUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
@@ -59,7 +60,6 @@ import swati4star.createpdf.util.StringUtils;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 
 public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         OnPDFCreatedInterface, OnItemClickListener, BottomSheetPopulate {
@@ -111,7 +111,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         View rootView = inflater.inflate(R.layout.fragment_excelto_pdf, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
+        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootView);
         showEnhancementOptions();
@@ -129,7 +129,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
+        mEnhancementOptionsEntityArrayList = MergePdfEnhancementOptionsUtils.getInstance()
+                .getEnhancementOptions(mActivity);
         mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
         mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }
@@ -258,7 +259,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }

@@ -10,7 +10,18 @@ import swati4star.createpdf.model.FilterItem;
 
 public class ImageFilterUtils {
 
-    public static ArrayList<FilterItem> getFiltersList(Context context) {
+    public ImageFilterUtils() {
+    }
+
+    private static class SingletonHolder {
+        static final ImageFilterUtils INSTANCE = new ImageFilterUtils();
+    }
+
+    public static ImageFilterUtils getInstance() {
+        return ImageFilterUtils.SingletonHolder.INSTANCE;
+    }
+
+    public ArrayList<FilterItem> getFiltersList(Context context) {
 
         ArrayList<FilterItem> items = new ArrayList<>();
 
