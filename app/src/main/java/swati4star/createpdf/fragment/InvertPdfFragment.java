@@ -157,12 +157,12 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
 
     @Override
     public void onFileItemClick(String path) {
-        mFileUtils.openFile(path);
+        mFileUtils.openFile(path, FileUtils.FileType.e_PDF);
     }
 
     private void viewPdfButton(String path) {
         mViewPdf.setVisibility(View.VISIBLE);
-        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path));
+        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
     }
 
     @Override
@@ -180,7 +180,8 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.snackbar_invert_successfull));
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
+                .setAction(R.string.snackbar_viewAction,
+                        v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
         viewPdfButton(path);
         resetValues();
     }

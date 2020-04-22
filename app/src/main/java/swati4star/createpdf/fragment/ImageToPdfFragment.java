@@ -285,7 +285,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
     @OnClick(R.id.pdfOpen)
     void openPdf() {
-        mFileUtils.openFile(mPath);
+        mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF);
     }
 
 
@@ -752,7 +752,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
+                .setAction(R.string.snackbar_viewAction,
+                        v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF)).show();
         mOpenPdf.setVisibility(View.VISIBLE);
         mMorphButtonUtility.morphToSuccess(mCreatePdf);
         mCreatePdf.blockTouch();

@@ -299,7 +299,8 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             document.close();
 
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
+                    .setAction(R.string.snackbar_viewAction,
+                            v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF))
                     .show();
         } catch (Exception e) {
             e.printStackTrace();

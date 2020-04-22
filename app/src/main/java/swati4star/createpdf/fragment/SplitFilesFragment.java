@@ -208,7 +208,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onFileItemClick(String path) {
-        mFileUtils.openFile(path);
+        mFileUtils.openFile(path, FileUtils.FileType.e_PDF);
     }
 
     @Override
