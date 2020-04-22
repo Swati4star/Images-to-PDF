@@ -153,12 +153,12 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
 
     @Override
     public void onFileItemClick(String path) {
-        mFileUtils.openFile(path);
+        mFileUtils.openFile(path, FileUtils.FileType.e_PDF);
     }
 
     private void viewPdfButton(String path) {
         mViewPdf.setVisibility(View.VISIBLE);
-        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path));
+        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
     }
 
     @Override
@@ -178,7 +178,8 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_duplicate_removed)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
+                .setAction(R.string.snackbar_viewAction,
+                        v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
         viewPdfButton(path);
         resetValues();
     }

@@ -1,12 +1,14 @@
 package swati4star.createpdf.util;
 
 import android.content.SharedPreferences;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import static swati4star.createpdf.util.Constants.RECENT_PREF;
 

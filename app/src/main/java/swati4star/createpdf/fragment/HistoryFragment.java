@@ -147,7 +147,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         FileUtils fileUtils = new FileUtils(mActivity);
         File file = new File(path);
         if (file.exists()) {
-            fileUtils.openFile(path);
+            fileUtils.openFile(path, FileUtils.FileType.e_PDF);
         } else {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.pdf_does_not_exist_message);
         }

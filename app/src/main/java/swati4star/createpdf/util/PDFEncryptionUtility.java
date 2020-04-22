@@ -83,7 +83,8 @@ public class PDFEncryptionUtility {
             try {
                 String path = doEncryption(filePath, mPassword);
                 StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
-                        .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(path)).show();
+                        .setAction(R.string.snackbar_viewAction, v2 ->
+                                mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
                 if (dataSetChanged != null)
                     dataSetChanged.updateDataset();
             } catch (IOException | DocumentException e) {
@@ -242,7 +243,8 @@ public class PDFEncryptionUtility {
                 new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
                 final String filepath = finalOutputFile;
                 StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
-                        .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(filepath)).show();
+                        .setAction(R.string.snackbar_viewAction,
+                                v2 -> mFileUtils.openFile(filepath, FileUtils.FileType.e_PDF)).show();
                 return true;
             }
         } catch (DocumentException | IOException e) {
@@ -270,7 +272,8 @@ public class PDFEncryptionUtility {
             new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.decrypted));
             final String filepath = finalOutputFile;
             StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v2 -> mFileUtils.openFile(filepath)).show();
+                    .setAction(R.string.snackbar_viewAction, v2 ->
+                            mFileUtils.openFile(filepath, FileUtils.FileType.e_PDF)).show();
             return true;
 
         } catch (DocumentException | IOException e) {

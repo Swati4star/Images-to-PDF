@@ -240,7 +240,8 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             writer.flush();
             writer.close();
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_txtExtracted)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openTextFile(mPath))
+                    .setAction(R.string.snackbar_viewAction,
+                            v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_TXT))
                     .show();
             mTextView.setVisibility(View.GONE);
             mButtonClicked = false;
