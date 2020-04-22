@@ -101,13 +101,13 @@ public class WatermarkUtils {
                 if (StringUtils.getInstance().isEmpty(angleInput.getText())) {
                     mWatermark.setRotationAngle(0);
                 } else {
-                    mWatermark.setRotationAngle(Integer.valueOf(angleInput.getText().toString()));
+                    mWatermark.setRotationAngle(Integer.parseInt(angleInput.getText().toString()));
                 }
 
                 if (StringUtils.getInstance().isEmpty(fontSizeInput.getText())) {
                     mWatermark.setTextSize(50);
                 } else {
-                    mWatermark.setTextSize(Integer.valueOf(fontSizeInput.getText().toString()));
+                    mWatermark.setTextSize(Integer.parseInt(fontSizeInput.getText().toString()));
                 }
                 mWatermark.setTextColor((new BaseColor(
                         Color.red(colorPickerInput.getColor()),

@@ -687,13 +687,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             if (StringUtils.getInstance().isEmpty(angleInput.getText())) {
                 watermark.setRotationAngle(0);
             } else {
-                watermark.setRotationAngle(Integer.valueOf(angleInput.getText().toString()));
+                watermark.setRotationAngle(Integer.parseInt(angleInput.getText().toString()));
             }
 
             if (StringUtils.getInstance().isEmpty(fontSizeInput.getText())) {
                 watermark.setTextSize(50);
             } else {
-                watermark.setTextSize(Integer.valueOf(fontSizeInput.getText().toString()));
+                watermark.setTextSize(Integer.parseInt(fontSizeInput.getText().toString()));
             }
 
             watermark.setTextColor((new BaseColor(
