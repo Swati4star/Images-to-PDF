@@ -94,7 +94,7 @@ public class FileUriUtils {
         // Build download uri.
         Uri downloadUri = Uri.parse("content://downloads/public_downloads");
         // Append download document id at uri end.
-        Uri downloadUriAppendId = ContentUris.withAppendedId(downloadUri, Long.valueOf(documentId));
+        Uri downloadUriAppendId = ContentUris.withAppendedId(downloadUri, Long.parseLong(documentId));
         return getImageRealPath(mContentResolver, downloadUriAppendId, null);
     }
 
@@ -129,7 +129,7 @@ public class FileUriUtils {
      * @param uri      - uri of the image
      * @return - real path of the image file on device
      */
-    public String getUriRealPathAboveKitkat(Context mContext, Uri uri) {
+    String getUriRealPathAboveKitkat(Context mContext, Uri uri) {
 
         if (uri == null)
             return null;

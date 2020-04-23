@@ -310,7 +310,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
         if (isPDFMerged) {
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.pdf_merged)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path)).show();
+                    .setAction(R.string.snackbar_viewAction,
+                            v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
             new DatabaseHelper(mActivity).insertRecord(path,
                     mActivity.getString(R.string.created));
         } else
@@ -331,7 +332,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void viewFile(String path) {
-        mFileUtils.openFile(path);
+        mFileUtils.openFile(path, FileUtils.FileType.e_PDF);
     }
 
     @Override

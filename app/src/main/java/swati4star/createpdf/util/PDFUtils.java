@@ -238,7 +238,8 @@ public class PDFUtils {
             document.close();
 
             StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
+                    .setAction(R.string.snackbar_viewAction, v ->
+                            mFileUtils.openFile(output, FileUtils.FileType.e_PDF)).show();
             new DatabaseHelper(mContext).insertRecord(output, mContext.getString(R.string.created));
 
             return true;
@@ -262,7 +263,8 @@ public class PDFUtils {
                     new FileOutputStream(output));
             pdfStamper.close();
             StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(output)).show();
+                    .setAction(R.string.snackbar_viewAction, v ->
+                            mFileUtils.openFile(output, FileUtils.FileType.e_PDF)).show();
             new DatabaseHelper(mContext).insertRecord(output,
                     mContext.getString(R.string.created));
             return true;

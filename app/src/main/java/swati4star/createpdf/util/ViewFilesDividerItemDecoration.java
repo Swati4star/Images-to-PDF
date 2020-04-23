@@ -23,7 +23,7 @@ public class ViewFilesDividerItemDecoration extends RecyclerView.ItemDecoration 
     }
 
     @Override
-    public void onDrawOver(@NonNull Canvas canvas, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas canvas, RecyclerView parent, @NonNull RecyclerView.State state) {
         int left = parent.getPaddingLeft();
         int right = parent.getWidth() - parent.getPaddingRight();
 

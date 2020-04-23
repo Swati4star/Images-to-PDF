@@ -48,16 +48,11 @@ public class ImageUtils {
      * @param documentSize   a rectangle specifying the width and height that the image must fit within
      * @return a rectangle that provides the scaled width and height of the image
      */
-    public Rectangle calculateFitSize(float originalWidth, float originalHeight, Rectangle documentSize) {
+    static Rectangle calculateFitSize(float originalWidth, float originalHeight, Rectangle documentSize) {
         float widthChange = (originalWidth - documentSize.getWidth()) / originalWidth;
         float heightChange = (originalHeight - documentSize.getHeight()) / originalHeight;
 
-        float changeFactor;
-        if (widthChange >= heightChange) {
-            changeFactor = widthChange;
-        } else {
-            changeFactor = heightChange;
-        }
+        float changeFactor = Math.max(widthChange, heightChange);
         float newWidth = originalWidth - (originalWidth * changeFactor);
         float newHeight = originalHeight - (originalHeight * changeFactor);
 
@@ -72,7 +67,7 @@ public class ImageUtils {
      */
     public Bitmap getRoundBitmap(Bitmap bmp) {
         int width = bmp.getWidth(), height = bmp.getHeight();
-        int radius = width > height ? height : width; // set the smallest edge as radius.
+        int radius = Math.min(width, height); // set the smallest edge as radius.
         Bitmap bitmap;
 
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {

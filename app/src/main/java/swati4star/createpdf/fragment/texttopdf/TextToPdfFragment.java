@@ -273,7 +273,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_pdf_not_created);
             mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
             mCreateTextPdf.setEnabled(false);
             mTextFileUri = null;
@@ -281,7 +281,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
             return;
         }
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
+                .setAction(R.string.snackbar_viewAction,
+                        v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF)).show();
         mSelectFile.setText(R.string.select_text_file);
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
         mCreateTextPdf.setEnabled(false);

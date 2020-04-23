@@ -43,6 +43,11 @@ public class FileUtils {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
+    public enum FileType {
+        e_PDF,
+        e_TXT
+    }
+
     // GET PDF DETAILS
 
     /**
@@ -125,7 +130,7 @@ public class FileUtils {
         intent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.i_have_attached_pdfs_to_this_message));
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("application/pdf");
+        intent.setType(mContext.getString(R.string.pdf_type));
         mContext.startActivity(Intent.createChooser(intent,
                 mContext.getResources().getString(R.string.share_chooser)));
     }
@@ -134,32 +139,35 @@ public class FileUtils {
      * opens a file in appropriate application
      *
      * @param path - path of the file to be opened
+     *
      */
-    public void openFile(String path) {
+    public void openFile(String path, FileType fileType) {
         if (path == null) {
-            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.error_path_not_found);
             return;
         }
-        openTextFile(path);
+        openFileInternal(path, fileType == FileType.e_PDF ?
+                mContext.getString(R.string.pdf_type) : mContext.getString(R.string.txt_type));
     }
 
     /**
-     * This function is used to open the created text file with Text editing/viewing
+     * This function is used to open the created file
      * applications on the device.
      *
      * @param path - file path
      */
-    public void openTextFile(String path) {
+    private void openFileInternal(String path, String dataType) {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         try {
             Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
-            target.setDataAndType(uri, mContext.getString(R.string.txt_type));
+
+            target.setDataAndType(uri, dataType);
             target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
         } catch (Exception e) {
-            StringUtils.getInstance().showSnackbar(mContext, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mContext, R.string.error_open_file);
         }
     }
 

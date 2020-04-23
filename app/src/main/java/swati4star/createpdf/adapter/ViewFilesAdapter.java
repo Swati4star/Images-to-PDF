@@ -134,7 +134,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     private void performOperation(int index, int position, File file) {
         switch (index) {
             case 0: //Open
-                mFileUtils.openFile(file.getPath());
+                mFileUtils.openFile(file.getPath(), FileUtils.FileType.e_PDF);
                 break;
 
             case 1: //delete

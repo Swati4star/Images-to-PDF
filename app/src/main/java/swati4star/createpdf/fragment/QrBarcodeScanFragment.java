@@ -187,7 +187,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                     Constants.textExtension);
             final String finalMPath = mPath;
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                    .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(finalMPath)).show();
+                    .setAction(R.string.snackbar_viewAction,
+                            v -> mFileUtils.openFile(finalMPath, FileUtils.FileType.e_PDF)).show();
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
@@ -231,7 +232,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath)).show();
+                .setAction(R.string.snackbar_viewAction,
+                        v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF)).show();
         mPath = path;
         resetValues();
     }

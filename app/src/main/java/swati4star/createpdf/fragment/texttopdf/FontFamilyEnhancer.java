@@ -1,8 +1,6 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
@@ -15,25 +13,24 @@ import com.itextpdf.text.Font;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
-import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.preferences.TextToPdfPreferences;
 
 /**
  * An {@link Enhancer} that lets you select the font family.
  */
 public class FontFamilyEnhancer implements Enhancer {
 
-    private final SharedPreferences mSharedPreferences;
     private final Activity mActivity;
     private Font.FontFamily mFontFamily;
     private EnhancementOptionsEntity mEnhancementOptionsEntity;
     private TextToPdfContract.View mView;
+    private final TextToPdfPreferences mPreferences;
 
     FontFamilyEnhancer(@NonNull final Activity activity,
                        @NonNull final TextToPdfContract.View view) {
         mActivity = activity;
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
-                Constants.DEFAULT_FONT_FAMILY));
+        mPreferences = new TextToPdfPreferences(activity);
+        mFontFamily = Font.FontFamily.valueOf(mPreferences.getFontFamily());
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity, R.drawable.ic_font_family_24dp,
                 String.format(mActivity.getString(R.string.default_font_family_text), mFontFamily.name()));
@@ -44,8 +41,7 @@ public class FontFamilyEnhancer implements Enhancer {
      */
     @Override
     public void enhance() {
-        String fontFamily = mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
-                Constants.DEFAULT_FONT_FAMILY);
+        String fontFamily = mPreferences.getFontFamily();
         int ordinal = Font.FontFamily.valueOf(fontFamily).ordinal();
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
                 .title(String.format(mActivity.getString(R.string.default_font_family_text), fontFamily))
@@ -61,9 +57,7 @@ public class FontFamilyEnhancer implements Enhancer {
                     mFontFamily = Font.FontFamily.valueOf(fontFamily1);
                     final CheckBox cbSetDefault = view.findViewById(R.id.cbSetDefault);
                     if (cbSetDefault.isChecked()) {
-                        SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putString(Constants.DEFAULT_FONT_FAMILY_TEXT, fontFamily1);
-                        editor.apply();
+                        mPreferences.setFontFamily(fontFamily1);
                     }
                     showFontFamily();
                 })

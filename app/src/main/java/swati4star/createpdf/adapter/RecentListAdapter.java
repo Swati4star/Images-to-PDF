@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import java.util.List;
 import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 
 public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.RecentItemViewHolder>  {
@@ -45,13 +47,13 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
             @NonNull final RecentItemViewHolder recentItemViewHolder, final int i) {
 
         recentItemViewHolder.name.setText(recentItemViewHolder.itemView.getContext().getString(
-                Integer.valueOf(mValues.get(i).keySet().iterator().next())
+                Integer.parseInt(mValues.get(i).keySet().iterator().next())
         ));
         recentItemViewHolder.icon.setImageDrawable(recentItemViewHolder.itemView.getContext()
-                .getDrawable(Integer.valueOf(mValues.get(i).values().iterator().next())
+                .getDrawable(Integer.parseInt(mValues.get(i).values().iterator().next())
         ));
 
-        recentItemViewHolder.itemView.setId(Integer.valueOf(mKeys.get(i)));
+        recentItemViewHolder.itemView.setId(Integer.parseInt(mKeys.get(i)));
         recentItemViewHolder.itemView.setOnClickListener(mOnClickListener);
     }
 

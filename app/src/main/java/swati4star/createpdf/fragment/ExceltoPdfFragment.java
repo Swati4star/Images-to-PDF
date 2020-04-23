@@ -193,7 +193,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.open_pdf)
     void openPdf() {
-        mFileUtils.openFile(mPath);
+        mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF);
     }
 
     @Override
@@ -275,7 +275,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_occurred);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_pdf_not_created);
             mTextView.setVisibility(View.GONE);
             mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
             mCreateExcelPdf.setEnabled(false);
@@ -283,7 +283,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
             return;
         }
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
-                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(mPath))
+                .setAction(R.string.snackbar_viewAction,
+                        v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF))
                 .show();
         new DatabaseHelper(mActivity).insertRecord(mPath, mActivity.getString(R.string.created));
         mTextView.setVisibility(View.GONE);
