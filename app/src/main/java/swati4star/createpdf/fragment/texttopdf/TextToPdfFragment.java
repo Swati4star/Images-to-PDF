@@ -77,7 +77,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
-        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
+        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
 
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootView);
@@ -255,7 +255,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.requestRuntimePermissions(
+        PermissionsUtils.getInstance().requestRuntimePermissions(
                 mActivity,
                 READ_WRITE_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT
