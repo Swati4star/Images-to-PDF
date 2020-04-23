@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         try {
-            LinkedHashMap<String, Map<String, String>> mRecentList = RecentUtil
+            LinkedHashMap<String, Map<String, String>> mRecentList = RecentUtil.getInstance()
                     .getList(PreferenceManager.getDefaultSharedPreferences(mActivity));
             if (!mRecentList.isEmpty()) {
                 recentLabel.setVisibility(View.VISIBLE);
@@ -188,7 +188,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 String.valueOf(mFragmentPositionMap.get(v.getId()).getmDrawableId()));
 
         try {
-            RecentUtil.addFeatureInRecentList(PreferenceManager
+            RecentUtil.getInstance().addFeatureInRecentList(PreferenceManager
                     .getDefaultSharedPreferences(mActivity), v.getId(), feature);
         } catch (JSONException e) {
             e.printStackTrace();

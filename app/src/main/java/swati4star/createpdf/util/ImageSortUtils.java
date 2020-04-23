@@ -10,6 +10,13 @@ public class ImageSortUtils {
     private static final int DATE_ASC = 2;
     private static final int DATE_DESC = 3;
 
+    private static class SingletonHolder {
+        static final ImageSortUtils INSTANCE = new ImageSortUtils();
+    }
+
+    public static ImageSortUtils getInstance() {
+        return ImageSortUtils.SingletonHolder.INSTANCE;
+    }
 
     /**
      * performs sorting operation.
@@ -17,7 +24,7 @@ public class ImageSortUtils {
      * @param option sorting operation
      * @param images list of image paths
      */
-    public static void performSortOperation(int option, List<String> images) {
+    public void performSortOperation(int option, List<String> images) {
         if (option < 0 || option > 3) throw new IllegalArgumentException("Invalid sort option. "
                 + "Sort option must be in [0; 3] range!");
         switch (option) {
@@ -41,7 +48,7 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByNameAsc(List<String> imagePaths) {
+    private void sortByNameAsc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> path1.substring(path1.lastIndexOf('/'))
                 .compareTo(path2.substring(path2.lastIndexOf('/'))));
     }
@@ -51,7 +58,7 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByNameDesc(List<String> imagePaths) {
+    private void sortByNameDesc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> path2.substring(path2.lastIndexOf('/'))
                 .compareTo(path1.substring(path1.lastIndexOf('/'))));
 
@@ -63,7 +70,7 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByDateAsc(List<String> imagePaths) {
+    private void sortByDateAsc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> Long.compare(new File(path2).lastModified(),
                 new File(path1).lastModified()));
     }
@@ -73,7 +80,7 @@ public class ImageSortUtils {
      *
      * @param imagePaths list of image paths to be sorted
      */
-    private static void sortByDateDesc(List<String> imagePaths) {
+    private void sortByDateDesc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> Long.compare(new File(path1).lastModified(),
                 new File(path2).lastModified()));
     }

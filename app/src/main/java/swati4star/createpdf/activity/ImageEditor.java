@@ -37,12 +37,12 @@ import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
 import swati4star.createpdf.util.BrushUtils;
+import swati4star.createpdf.util.ImageFilterUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
 import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.ImageFilterUtils.getFiltersList;
 
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListener {
 
@@ -78,7 +78,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     protected void onCreate(Bundle savedInstanceState) {
 
         // Set selected theme
-        ThemeUtils.setThemeApp(this);
+        ThemeUtils.getInstance().setThemeApp(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_editor);
@@ -95,7 +95,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         // Extract images
         mFilterUris = getIntent().getStringArrayListExtra(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
-        mFilterItems = getFiltersList(this);
+        mFilterItems = ImageFilterUtils.getInstance().getFiltersList(this);
         mBrushItems = BrushUtils.getInstance().getBrushItems();
         mImagePaths.addAll(mFilterUris);
 

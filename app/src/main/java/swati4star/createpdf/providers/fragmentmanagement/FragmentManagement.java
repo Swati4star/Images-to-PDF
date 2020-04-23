@@ -240,7 +240,7 @@ public class FragmentManagement implements IFragmentManagement {
                 fragment = new ZipToPdfFragment();
                 break;
             case R.id.nav_whatsNew:
-                WhatsNewUtils.displayDialog(mContext);
+                WhatsNewUtils.getInstance().displayDialog(mContext);
                 break;
             case R.id.nav_rateus:
                 mFeedbackUtils.openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");

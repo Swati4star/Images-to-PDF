@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.ImageUtils;
 
 import static swati4star.createpdf.util.FileUtils.getFileName;
-import static swati4star.createpdf.util.ImageUtils.getRoundBitmapFromPath;
 
 public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdapter.ViewMergeFilesHolder> {
 
@@ -43,7 +43,7 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
         holder.mFileName.setText(getFileName(mFilePaths.get(position)));
-        Bitmap bitmap = getRoundBitmapFromPath(mFilePaths.get(position));
+        Bitmap bitmap = ImageUtils.getInstance().getRoundBitmapFromPath(mFilePaths.get(position));
         if (bitmap != null)
             holder.mImagePreview.setImageBitmap(bitmap);
     }

@@ -9,6 +9,14 @@ public class ColorUtils {
     private ColorUtils() {
     }
 
+    private static class SingletonHolder {
+        static final ColorUtils INSTANCE = new ColorUtils();
+    }
+
+    public static ColorUtils getInstance() {
+        return ColorUtils.SingletonHolder.INSTANCE;
+    }
+
     /**
      * Every RGB color consists three components: red, green and blue. That's why can we put 2 colors in a 3D coordinate
      * system and calculate distance between them. When distance is lower than COLOR_DIFF_THRESHOLD it means that these
@@ -25,13 +33,5 @@ public class ColorUtils {
                 Math.pow(Color.blue(color1) - Color.blue(color2), 2)
         );
         return colorDiff < COLOR_DIFF_THRESHOLD;
-    }
-
-    private static class SingletonHolder {
-        static final ColorUtils INSTANCE = new ColorUtils();
-    }
-
-    public static ColorUtils getInstance() {
-        return ColorUtils.SingletonHolder.INSTANCE;
     }
 }

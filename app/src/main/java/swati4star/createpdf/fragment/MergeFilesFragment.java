@@ -51,6 +51,7 @@ import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
+import swati4star.createpdf.util.MergePdfEnhancementOptionsUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
@@ -60,7 +61,6 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.MergePdfEnhancementOptionsUtils.getEnhancementOptions;
 
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
         MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListener,
@@ -137,7 +137,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
-        mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
+        mEnhancementOptionsEntityArrayList = MergePdfEnhancementOptionsUtils.getInstance()
+                .getEnhancementOptions(mActivity);
         mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
         mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }

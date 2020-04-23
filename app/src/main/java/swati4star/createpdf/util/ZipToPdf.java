@@ -24,12 +24,20 @@ public class ZipToPdf {
 
     private static final int BUFFER_SIZE = 4096;
 
+    private static class SingletonHolder {
+        static final ZipToPdf INSTANCE = new ZipToPdf();
+    }
+
+    public static ZipToPdf getInstance() {
+        return ZipToPdf.SingletonHolder.INSTANCE;
+    }
+
     /**
      * Converts zip file to PDF
      * @param path - path of zip file
      * @param context - current context
      */
-    public static void convertZipToPDF(String path, Activity context) {
+    public void convertZipToPDF(String path, Activity context) {
 
         BufferedOutputStream bufferedOutputStream;
         ArrayList<Uri> imageUris = new ArrayList<>();

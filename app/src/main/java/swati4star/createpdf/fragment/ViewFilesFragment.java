@@ -305,7 +305,7 @@ public class ViewFilesFragment extends Fragment
 
     @OnClick(R.id.provide_permissions)
     public void providePermissions() {
-        PermissionsUtils.requestRuntimePermissions(
+        PermissionsUtils.getInstance().requestRuntimePermissions(
                 this,
                 READ_WRITE_CAMERA_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT

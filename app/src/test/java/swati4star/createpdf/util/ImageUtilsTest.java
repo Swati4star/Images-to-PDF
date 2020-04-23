@@ -18,42 +18,44 @@ public class ImageUtilsTest {
 
     @Test
     public void testCalculateFitSize() {
+        ImageUtils imageUtils = ImageUtils.getInstance();
+
         float testWidth = 8.0f;
         float testHeight = 12.0f;
         Rectangle testDocumentSize = new Rectangle(5.0f, 5.0f, 5.0f, 5.0f);
-        assertEquals(ImageUtils.calculateFitSize(testWidth, testHeight,
+        assertEquals(imageUtils.calculateFitSize(testWidth, testHeight,
                 testDocumentSize).getLeft(), NO_NORMAL_ERROR.getLeft());
-        assertEquals(ImageUtils.calculateFitSize(testWidth, testHeight,
+        assertEquals(imageUtils.calculateFitSize(testWidth, testHeight,
                 testDocumentSize).getRight(), NO_NORMAL_ERROR.getRight());
 
         float testWidthTwo = 8.0f;
         float testHeightTwo = 12.0f;
         Rectangle testDocumentSizeTwo = new Rectangle(-5.0f, 5.0f, -5.0f, 5.0f);
-        assertEquals(ImageUtils.calculateFitSize(testWidthTwo, testHeightTwo,
+        assertEquals(imageUtils.calculateFitSize(testWidthTwo, testHeightTwo,
                 testDocumentSizeTwo).getLeft(), NO_NORMAL_ERROR.getLeft());
-        assertEquals(ImageUtils.calculateFitSize(testWidthTwo, testHeightTwo,
+        assertEquals(imageUtils.calculateFitSize(testWidthTwo, testHeightTwo,
                 testDocumentSizeTwo).getRight(), NO_NORMAL_ERROR.getRight());
 
         float negWidth = -8.0f;
         float negHeight = -12.0f;
         Rectangle testDocumentSizeThree = new Rectangle(5.0f, 5.0f, 5.0f, 5.0f);
-        assertEquals(ImageUtils.calculateFitSize(negWidth, negHeight,
+        assertEquals(imageUtils.calculateFitSize(negWidth, negHeight,
                 testDocumentSizeThree).getLeft(), NO_NORMAL_ERROR.getLeft());
-        assertEquals(ImageUtils.calculateFitSize(negWidth, negHeight,
+        assertEquals(imageUtils.calculateFitSize(negWidth, negHeight,
                 testDocumentSizeThree).getRight(), NO_NORMAL_ERROR.getRight());
 
         float testWidthThree = 8.0f;
         float testHeightThree = 12.0f;
         Rectangle testDocumentSizePoint = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
-        assertThat(ImageUtils.calculateFitSize(testWidthThree, testHeightThree,
+        assertThat(imageUtils.calculateFitSize(testWidthThree, testHeightThree,
                 testDocumentSizePoint), is(NO_POINT_ERROR));
 
         float testWidthFour = 8.0f;
         float testHeightFour = 12.0f;
         Rectangle testDocumentSizeLine = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
-        assertEquals(ImageUtils.calculateFitSize(testWidthFour, testHeightFour,
+        assertEquals(imageUtils.calculateFitSize(testWidthFour, testHeightFour,
                 testDocumentSizeLine).getLeft(), NO_LINE_ERROR.getLeft());
-        assertEquals(ImageUtils.calculateFitSize(testWidthFour, testHeightFour,
+        assertEquals(imageUtils.calculateFitSize(testWidthFour, testHeightFour,
                 testDocumentSizeLine).getRight(), NO_LINE_ERROR.getRight());
 
     }

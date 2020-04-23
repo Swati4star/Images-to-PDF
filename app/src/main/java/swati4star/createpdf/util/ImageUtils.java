@@ -30,7 +30,15 @@ import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
 
 public class ImageUtils {
 
-    public static String mImageScaleType;
+    public String mImageScaleType;
+
+    private static class SingletonHolder {
+        static final ImageUtils INSTANCE = new ImageUtils();
+    }
+
+    public static ImageUtils getInstance() {
+        return ImageUtils.SingletonHolder.INSTANCE;
+    }
 
     /**
      * Calculates the optimum size for an image, such that it scales to fit whilst retaining its aspect ratio
@@ -57,7 +65,7 @@ public class ImageUtils {
      * @param bmp - input bitmap
      * @return - output bitmap
      */
-    public static Bitmap getRoundBitmap(Bitmap bmp) {
+    public Bitmap getRoundBitmap(Bitmap bmp) {
         int width = bmp.getWidth(), height = bmp.getHeight();
         int radius = Math.min(width, height); // set the smallest edge as radius.
         Bitmap bitmap;
@@ -97,7 +105,7 @@ public class ImageUtils {
      * @param path - file path
      * @return - output round bitmap
      */
-    public static Bitmap getRoundBitmapFromPath(String path) {
+    public Bitmap getRoundBitmapFromPath(String path) {
         File file = new File(path);
 
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -113,7 +121,7 @@ public class ImageUtils {
         Bitmap smallBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
         if (smallBitmap == null) return null;
 
-        return ImageUtils.getRoundBitmap(smallBitmap);
+        return ImageUtils.getInstance().getRoundBitmap(smallBitmap);
     }
 
 
@@ -123,7 +131,7 @@ public class ImageUtils {
      * @return inSampleSize value
      * https://developer.android.com/topic/performance/graphics/load-bitmap.html#java
      */
-    private static int calculateInSampleSize(BitmapFactory.Options options) {
+    private int calculateInSampleSize(BitmapFactory.Options options) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -147,7 +155,7 @@ public class ImageUtils {
 
 
 
-    public static void showImageScaleTypeDialog(Context context, Boolean saveValue) {
+    public void showImageScaleTypeDialog(Context context, Boolean saveValue) {
 
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent((Activity) context,
@@ -182,7 +190,7 @@ public class ImageUtils {
      * @param bmpOriginal original bitmap which is converted to a new
      *                    grayscale bitmap
      */
-    public static Bitmap toGrayscale(Bitmap bmpOriginal) {
+    public Bitmap toGrayscale(Bitmap bmpOriginal) {
         int width, height;
         height = bmpOriginal.getHeight();
         width = bmpOriginal.getWidth();

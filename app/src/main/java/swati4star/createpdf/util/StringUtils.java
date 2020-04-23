@@ -19,6 +19,14 @@ public class StringUtils {
     private StringUtils() {
     }
 
+    private static class SingletonHolder {
+        static final StringUtils INSTANCE = new StringUtils();
+    }
+
+    public static StringUtils getInstance() {
+        return StringUtils.SingletonHolder.INSTANCE;
+    }
+
     public boolean isEmpty(CharSequence s) {
         return s == null || s.toString().trim().equals("");
     }
@@ -62,13 +70,5 @@ public class StringUtils {
     public String getDefaultStorageLocation() {
         return Environment.getExternalStorageDirectory().getAbsolutePath() +
                 pdfDirectory;
-    }
-
-    private static class SingletonHolder {
-        static final StringUtils INSTANCE = new StringUtils();
-    }
-
-    public static StringUtils getInstance() {
-        return StringUtils.SingletonHolder.INSTANCE;
     }
 }

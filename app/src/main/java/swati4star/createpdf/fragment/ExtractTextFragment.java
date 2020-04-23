@@ -96,7 +96,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         View rootView = inflater.inflate(R.layout.fragment_extract_text, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mPermissionGranted = PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
+        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootView);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -183,7 +183,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     @OnClick(R.id.extract_text)
     public void openExtractText() {
         if (!mPermissionGranted) {
-            PermissionsUtils.requestRuntimePermissions(this,
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     READ_WRITE_PERMISSIONS,
                     PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
             return;

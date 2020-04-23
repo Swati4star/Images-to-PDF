@@ -11,7 +11,15 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 public class TextEnhancementOptionsUtils {
 
-    public static ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
+    private static class SingletonHolder {
+        static final TextEnhancementOptionsUtils INSTANCE = new TextEnhancementOptionsUtils();
+    }
+
+    public static TextEnhancementOptionsUtils getInstance() {
+        return TextEnhancementOptionsUtils.SingletonHolder.INSTANCE;
+    }
+
+    public ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
                                                                             String fontTitle,
                                                                             Font.FontFamily fontFamily) {
         ArrayList<EnhancementOptionsEntity> options = new ArrayList<>();

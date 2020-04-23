@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeUtils.setThemeApp(this);
+        ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
 
         String versionName = mSharedPreferences.getString(VERSION_NAME, "");
         if (versionName != null && !versionName.equals(BuildConfig.VERSION_NAME)) {
-            WhatsNewUtils.displayDialog(this);
+            WhatsNewUtils.getInstance().displayDialog(this);
             mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }
     }
@@ -246,13 +246,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_CAMERA_PERMISSIONS,
                 PERMISSION_REQUEST_CODE);
     }
 
     private boolean isStoragePermissionGranted() {
-        return PermissionsUtils.checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
+        return PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
     }
 
     /**
