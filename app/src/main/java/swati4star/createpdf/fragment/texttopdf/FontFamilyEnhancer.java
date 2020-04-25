@@ -13,6 +13,7 @@ import com.itextpdf.text.Font;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.preferences.TextToPdfPreferences;
 
 /**
@@ -21,19 +22,21 @@ import swati4star.createpdf.preferences.TextToPdfPreferences;
 public class FontFamilyEnhancer implements Enhancer {
 
     private final Activity mActivity;
-    private Font.FontFamily mFontFamily;
     private EnhancementOptionsEntity mEnhancementOptionsEntity;
     private TextToPdfContract.View mView;
     private final TextToPdfPreferences mPreferences;
+    private final TextToPDFOptions.Builder mBuilder;
 
     FontFamilyEnhancer(@NonNull final Activity activity,
-                       @NonNull final TextToPdfContract.View view) {
+                       @NonNull final TextToPdfContract.View view,
+                       @NonNull final TextToPDFOptions.Builder builder) {
         mActivity = activity;
         mPreferences = new TextToPdfPreferences(activity);
-        mFontFamily = Font.FontFamily.valueOf(mPreferences.getFontFamily());
+        mBuilder = builder;
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity, R.drawable.ic_font_family_24dp,
-                String.format(mActivity.getString(R.string.default_font_family_text), mFontFamily.name()));
+                String.format(mActivity.getString(R.string.default_font_family_text),
+                        mBuilder.getFontFamily().name()));
         mView = view;
     }
     /**
@@ -54,7 +57,7 @@ public class FontFamilyEnhancer implements Enhancer {
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     RadioButton radioButton = view.findViewById(selectedId);
                     String fontFamily1 = radioButton.getText().toString();
-                    mFontFamily = Font.FontFamily.valueOf(fontFamily1);
+                    mBuilder.setFontFamily(Font.FontFamily.valueOf(fontFamily1));
                     final CheckBox cbSetDefault = view.findViewById(R.id.cbSetDefault);
                     if (cbSetDefault.isChecked()) {
                         mPreferences.setFontFamily(fontFamily1);
@@ -77,12 +80,8 @@ public class FontFamilyEnhancer implements Enhancer {
      * Displays font family in UI
      */
     private void showFontFamily() {
-        mEnhancementOptionsEntity.setName(mActivity.getString(R.string.font_family_text) + mFontFamily.name());
+        mEnhancementOptionsEntity.setName(mActivity.getString(R.string.font_family_text)
+                + mBuilder.getFontFamily().name());
         mView.updateView();
-
-    }
-
-    Font.FontFamily getFontFamily() {
-        return mFontFamily;
     }
 }

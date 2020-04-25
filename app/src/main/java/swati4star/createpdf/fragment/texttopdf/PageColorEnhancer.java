@@ -11,6 +11,7 @@ import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.preferences.TextToPdfPreferences;
 import swati4star.createpdf.util.ColorUtils;
 import swati4star.createpdf.util.StringUtils;
@@ -22,13 +23,14 @@ public class PageColorEnhancer implements Enhancer {
 
     private final Activity mActivity;
     private final EnhancementOptionsEntity mEnhancementOptionsEntity;
-    private int mPageColor;
     private final TextToPdfPreferences mPreferences;
+    private final TextToPDFOptions.Builder mBuilder;
 
-    PageColorEnhancer(@NonNull final Activity activity) {
+    PageColorEnhancer(@NonNull final Activity activity,
+                      @NonNull final TextToPDFOptions.Builder builder) {
         mActivity = activity;
         mPreferences = new TextToPdfPreferences(activity);
-        mPageColor = mPreferences.getPageColor();
+        mBuilder = builder;
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity, R.drawable.ic_page_color, R.string.page_color);
     }
@@ -44,27 +46,24 @@ public class PageColorEnhancer implements Enhancer {
                     View view = dialog.getCustomView();
                     ColorPickerView colorPickerView = view.findViewById(R.id.color_picker);
                     CheckBox defaultCheckbox = view.findViewById(R.id.set_default);
-                    mPageColor = colorPickerView.getColor();
+                    final int pageColor = colorPickerView.getColor();
                     final int fontColor = mPreferences.getFontColor();
-                    if (ColorUtils.getInstance().colorSimilarCheck(fontColor, mPageColor)) {
+                    if (ColorUtils.getInstance().colorSimilarCheck(fontColor, pageColor)) {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_color_too_close);
                     }
                     if (defaultCheckbox.isChecked()) {
-                        mPreferences.setPageColor(mPageColor);
+                        mPreferences.setPageColor(pageColor);
                     }
+                    mBuilder.setPageColor(pageColor);
                 })
                 .build();
         ColorPickerView colorPickerView = materialDialog.getCustomView().findViewById(R.id.color_picker);
-        colorPickerView.setColor(mPageColor);
+        colorPickerView.setColor(mBuilder.getPageColor());
         materialDialog.show();
     }
 
     @Override
     public EnhancementOptionsEntity getEnhancementOptionsEntity() {
         return mEnhancementOptionsEntity;
-    }
-
-    int getPageColor() {
-        return mPageColor;
     }
 }
