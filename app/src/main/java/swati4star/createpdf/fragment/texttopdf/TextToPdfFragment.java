@@ -72,6 +72,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     private MorphButtonUtility mMorphButtonUtility;
     private String mPath;
     private List<Enhancer> mEnhancerList;
+    private TextToPDFOptions.Builder mBuilder;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -82,6 +83,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootView);
 
+        mBuilder = new TextToPDFOptions.Builder(getContext());
         addEnhancements();
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
@@ -92,7 +94,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     private void addEnhancements() {
         mEnhancerList = new ArrayList<>();
         for (final Enhancers enhancer: Enhancers.values()) {
-            mEnhancerList.add(enhancer.getEnhancer(mActivity, this));
+            mEnhancerList.add(enhancer.getEnhancer(mActivity, this, mBuilder));
         }
     }
 
@@ -147,23 +149,12 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
      * @param mFilename name of file to be created.
      */
     private void createPdf(String mFilename) {
-
-        final FontSizeEnhancer fontSizeEnhancer = (FontSizeEnhancer) mEnhancerList.get(0);
-        final FontFamilyEnhancer fontFamilyEnhancer = (FontFamilyEnhancer) mEnhancerList.get(1);
-        final PasswordEnhancer passwordEnhancer = (PasswordEnhancer) mEnhancerList.get(3);
-        final FontColorEnhancer fontColorEnhancer = (FontColorEnhancer) mEnhancerList.get(4);
-        final PageColorEnhancer pageColorEnhancer = (PageColorEnhancer) mEnhancerList.get(5);
-
         mPath = mDirectoryUtils.getOrCreatePdfDirectory().getPath();
         mPath = mPath + "/" + mFilename + mActivity.getString(R.string.pdf_ext);
-        TextToPDFOptions options = new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize,
-                passwordEnhancer.isPasswordProtected(),
-                passwordEnhancer.getPassword(),
-                mTextFileUri,
-                fontSizeEnhancer.getFontSize(),
-                fontFamilyEnhancer.getFontFamily(),
-                fontColorEnhancer.getFontColor(),
-                pageColorEnhancer.getPageColor());
+        TextToPDFOptions options = mBuilder.setFileName(mFilename)
+                .setPageSize(PageSizeUtils.mPageSize)
+                .setInFileUri(mTextFileUri)
+                .build();
         TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
         new TextToPdfAsync(fileUtil, options, mFileExtension,
                 TextToPdfFragment.this).execute();
@@ -288,6 +279,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         mCreateTextPdf.setEnabled(false);
         mTextFileUri = null;
         mButtonClicked = 0;
+        mBuilder = new TextToPDFOptions.Builder(getContext());
     }
 
     @Override

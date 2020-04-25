@@ -10,6 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
+import swati4star.createpdf.model.TextToPDFOptions;
 import swati4star.createpdf.preferences.TextToPdfPreferences;
 import swati4star.createpdf.util.StringUtils;
 
@@ -20,21 +21,22 @@ public class FontSizeEnhancer implements Enhancer {
 
     private final Activity mActivity;
     private EnhancementOptionsEntity mEnhancementOptionsEntity;
-    private String mFontTitle;
-    private int mFontSize;
     private final TextToPdfContract.View mView;
     private final TextToPdfPreferences mPreferences;
+    private final TextToPDFOptions.Builder mBuilder;
 
     FontSizeEnhancer(@NonNull final Activity activity,
-                     @NonNull final TextToPdfContract.View view) {
+                     @NonNull final TextToPdfContract.View view,
+                     @NonNull final TextToPDFOptions.Builder builder) {
         mActivity = activity;
         mPreferences = new TextToPdfPreferences(activity);
-
-        mFontTitle = String.format(mActivity.getString(R.string.edit_font_size), mPreferences.getFontSize());
-        mFontSize = mPreferences.getFontSize();
+        mBuilder = builder;
+        mBuilder.setFontSizeTitle(
+                String.format(mActivity.getString(R.string.edit_font_size),
+                        mPreferences.getFontSize()));
         mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity.getResources().getDrawable(R.drawable.ic_font_black_24dp),
-                mFontTitle);
+                mBuilder.getFontSizeTitle());
         mView = view;
     }
 
@@ -44,7 +46,7 @@ public class FontSizeEnhancer implements Enhancer {
     @Override
     public void enhance() {
         new MaterialDialog.Builder(mActivity)
-                .title(mFontTitle)
+                .title(mBuilder.getFontSizeTitle())
                 .customView(R.layout.dialog_font_size, true)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
@@ -56,13 +58,13 @@ public class FontSizeEnhancer implements Enhancer {
                         if (check > 1000 || check < 0) {
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
-                            mFontSize = check;
+                            mBuilder.setFontSize(check);
                             showFontSize();
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.font_size_changed);
                             if (cbSetDefault.isChecked()) {
-                                mPreferences.setFontSize(mFontSize);
-                                mFontTitle = String.format(mActivity.getString(R.string.edit_font_size),
-                                        mPreferences.getFontSize());
+                                mPreferences.setFontSize(mBuilder.getFontSize());
+                                mBuilder.setFontSizeTitle(String.format(mActivity.getString(R.string.edit_font_size),
+                                        mPreferences.getFontSize()));
                             }
                         }
                     } catch (NumberFormatException e) {
@@ -82,11 +84,8 @@ public class FontSizeEnhancer implements Enhancer {
      */
     private void showFontSize() {
         mEnhancementOptionsEntity
-                .setName(String.format(mActivity.getString(R.string.font_size), String.valueOf(mFontSize)));
+                .setName(String.format(mActivity.getString(R.string.font_size),
+                        String.valueOf(mBuilder.getFontSize())));
         mView.updateView();
-    }
-
-    int getFontSize() {
-        return mFontSize;
     }
 }
