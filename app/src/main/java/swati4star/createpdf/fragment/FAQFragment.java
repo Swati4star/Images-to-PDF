@@ -3,9 +3,14 @@ package swati4star.createpdf.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,6 +30,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
     private FAQAdapter mFaqAdapter;
     private List<FAQItem> mFaqs;
     private Context mContext;
+    private SearchView mSearchView;
 
     @BindView(R.id.recycler_view_faq)
     RecyclerView mFAQRecyclerView;
@@ -33,6 +39,11 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +59,66 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         initFAQRecyclerView();
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        // menu to inflate the view where search icon is there.
+        inflater.inflate(R.menu.activity_faq_actions, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) item.getActionView();
+        mSearchView.setQueryHint(getString(R.string.search));
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                setDataForQueryChange(s);
+                mSearchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                setDataForQueryChange(s);
+                return true;
+            }
+        });
+        mSearchView.setOnCloseListener(() -> {
+            populateFAQList(null);
+            return false;
+        });
+        mSearchView.setIconifiedByDefault(true);
+    }
+
+    private void setDataForQueryChange(String s) {
+        populateFAQList(s);
+    }
+
+    /**
+     * populate faq questions with search query
+     *
+     * @param query to filter faq questions, {@code null} to get all
+     */
+    private void populateFAQList(@Nullable String query) {
+        if ( query != null ) {
+            if ( !query.isEmpty() ) {
+                List<FAQItem> filteredMFaqs = new ArrayList<>();
+                for ( int i = 0; i < mFaqs.size(); i++ ) {
+                    if ( mFaqs.get(i).getQuestion().toLowerCase().contains( query.toLowerCase() ) ) {
+                        filteredMFaqs.add(mFaqs.get(i));
+                    }
+                }
+                mFaqAdapter = new FAQAdapter(filteredMFaqs, this);
+            } else {
+                mFaqAdapter = new FAQAdapter(mFaqs, this);
+            }
+        } else {
+            mFaqAdapter = new FAQAdapter(mFaqs, this);
+        }
+
+        mFAQRecyclerView.setAdapter(mFaqAdapter);
     }
 
     /**
@@ -82,7 +153,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
      */
     @Override
     public void onItemClick(int position) {
-        FAQItem faqItem = mFaqs.get(position);
+        FAQItem faqItem = mFaqAdapter.getmFaqs().get(position);
         faqItem.setExpanded(!faqItem.isExpanded());
         mFaqAdapter.notifyItemChanged(position);
     }
