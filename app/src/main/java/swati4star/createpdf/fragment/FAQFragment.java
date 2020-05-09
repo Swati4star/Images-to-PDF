@@ -74,14 +74,14 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                setDataForQueryChange(s);
+                setDataForQueryOnChange(s);
                 mSearchView.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                setDataForQueryChange(s);
+                setDataForQueryOnChange(s);
                 return true;
             }
         });
@@ -92,7 +92,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         mSearchView.setIconifiedByDefault(true);
     }
 
-    private void setDataForQueryChange(String s) {
+    private void setDataForQueryOnChange(String s) {
         populateFAQList(s);
     }
 
@@ -102,18 +102,14 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
      * @param query to filter faq questions, {@code null} to get all
      */
     private void populateFAQList(@Nullable String query) {
-        if ( query != null ) {
-            if ( !query.isEmpty() ) {
-                List<FAQItem> filteredMFaqs = new ArrayList<>();
-                for ( int i = 0; i < mFaqs.size(); i++ ) {
-                    if ( mFaqs.get(i).getQuestion().toLowerCase().contains( query.toLowerCase() ) ) {
-                        filteredMFaqs.add(mFaqs.get(i));
-                    }
+        if ( query != null && !query.isEmpty() ) {
+            List<FAQItem> filteredMFaqs = new ArrayList<>();
+            for ( int i = 0; i < mFaqs.size(); i++ ) {
+                if ( mFaqs.get(i).getQuestion().toLowerCase().contains( query.toLowerCase() ) ) {
+                    filteredMFaqs.add(mFaqs.get(i));
                 }
-                mFaqAdapter = new FAQAdapter(filteredMFaqs, this);
-            } else {
-                mFaqAdapter = new FAQAdapter(mFaqs, this);
             }
+            mFaqAdapter = new FAQAdapter(filteredMFaqs, this);
         } else {
             mFaqAdapter = new FAQAdapter(mFaqs, this);
         }
