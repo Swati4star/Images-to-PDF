@@ -74,14 +74,14 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                setDataForQueryOnChange(s);
+                setDataForQueryChange(s);
                 mSearchView.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                setDataForQueryOnChange(s);
+                setDataForQueryChange(s);
                 return true;
             }
         });
@@ -92,29 +92,43 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         mSearchView.setIconifiedByDefault(true);
     }
 
-    private void setDataForQueryOnChange(String s) {
+    private void setDataForQueryChange(String s) {
         populateFAQList(s);
     }
 
     /**
      * populate faq questions with search query
      *
-     * @param query to filter faq questions, {@code null} to get all
+     * @param query to filter faq, {@code null} to get all
      */
     private void populateFAQList(@Nullable String query) {
         if ( query != null && !query.isEmpty() ) {
-            List<FAQItem> filteredMFaqs = new ArrayList<>();
-            for ( int i = 0; i < mFaqs.size(); i++ ) {
-                if ( mFaqs.get(i).getQuestion().toLowerCase().contains( query.toLowerCase() ) ) {
-                    filteredMFaqs.add(mFaqs.get(i));
-                }
-            }
-            mFaqAdapter = new FAQAdapter(filteredMFaqs, this);
+            String queryToSearch = query.toLowerCase();
+            ArrayList<FAQItem> filteredMFaqs = analyzeSearchQuery( queryToSearch );
+            mFaqAdapter = new FAQAdapter( filteredMFaqs, this );
         } else {
-            mFaqAdapter = new FAQAdapter(mFaqs, this);
+            mFaqAdapter = new FAQAdapter( mFaqs, this );
         }
 
-        mFAQRecyclerView.setAdapter(mFaqAdapter);
+        mFAQRecyclerView.setAdapter( mFaqAdapter );
+    }
+
+    /**
+     * analyze a valid search query
+     *
+     * @param queryToSearch to filter the list of every faq
+     * @return
+     */
+    private ArrayList<FAQItem> analyzeSearchQuery( String queryToSearch) {
+        ArrayList<FAQItem> filteredMFaqs = new ArrayList<>();
+
+        for ( FAQItem faqItem : mFaqs ) {
+            if ( faqItem.getQuestion().toLowerCase().contains( queryToSearch ) ) {
+                filteredMFaqs.add( faqItem );
+            }
+        }
+
+        return filteredMFaqs;
     }
 
     /**
