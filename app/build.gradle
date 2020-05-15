@@ -57,7 +57,6 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
-    maven { url "https://repository.aspose.com/repo/" }
 }
 dependencies {
     def room_version = "1.1.1"
