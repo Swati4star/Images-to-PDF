@@ -28,6 +28,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
@@ -233,6 +234,11 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         if (!mFileUtils.isFileExist(input + getString(R.string.pdf_ext))) {
+                            File docsFolder = new File(mHomePath);
+                            if (!docsFolder.exists())
+                                docsFolder.mkdir();
+
+
                             new MergePdf(input.toString(), mHomePath, mPasswordProtected,
                                     mPassword, this, masterpwd).execute(pdfpaths);
                         } else {
