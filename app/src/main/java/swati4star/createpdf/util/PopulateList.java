@@ -69,7 +69,9 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
             mHandler.post(mEmptyStateChangeListener::showNoPermissionsView);
         else if (pdfFiles.size() == 0) {
             mHandler.post(mEmptyStateChangeListener::setEmptyStateVisible);
+            mHandler.post(() -> mAdapter.setData(null));
         } else {
+            mHandler.post(mEmptyStateChangeListener::setEmptyStateInvisible);
             FileSortUtils.getInstance().performSortOperation(mCurrentSortingIndex, pdfFiles);
             List<PDFFile> pdfFilesWithEncryptionStatus = getPdfFilesWithEncryptionStatus(pdfFiles);
             mHandler.post(mEmptyStateChangeListener::hideNoPermissionsView);
