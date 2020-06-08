@@ -11,13 +11,10 @@
     <string name="details"><b>Details</b></string>
     <string name="search_hint">Name of file</string>
     <string name="search">search</string>
-    <string name="set_page_size_text">Set Page Size</string>
-    <string name="preview_image_to_pdf">Preview PDF</string>
-
-    <string name="font_color">Font Color</string>
-
     <string name="default_content_description">no description</string>
     <string name="prompt_input">Enter here</string>
+
+    <!--   Items  -->
     <array name="items">
         <item>Open File</item>
         <item>Delete File</item>
@@ -80,9 +77,7 @@
     <string name="pdf_ext" translatable="false">.pdf</string>
     <string name="pdf_type" translatable="false">application/pdf</string>
     <string name="txt_type" translatable="false">text/*</string>
-
     <string name="please_wait">Please Wait</string>
-
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
     <string name="successToast">Images successfully added.</string>
@@ -98,10 +93,51 @@
 
     <!-- images to PDF -->
     <string name="images_to_pdf">Images to PDF</string>
+    <string name="page_color">Page Color</string>
+    <string name="filter_images_Text">Filter Images \n</string>
+    <!--    Image to PDF -Preview PDF-->
+    <string name="preview_image_to_pdf">Preview PDF</string>
+    <!--    Image to PDF-show page number-->
+    <string name="choose_page_number_style">Choose Page Number Style</string>
+    <string name="show_pg_num">Show page numbers</string>
+    <string name="page_x_of_n">Page X of N</string>
+    <string name="page_x">X of N</string>
+    <string name="x">X</string>
+    <!--    Image to PDF -Rearrange images-->
+    <string name="arrow_up">Arrow Up</string>
+    <string name="arrow_down">Arrow Down</string>
+    <string name="rearrange_images">Rearrange Images</string>
+    <string name="rearrange_text">Rearrange</string>
+    <string name="images_rearranged">Images rearranged</string>
+    <string name="snackbar_undoAction">Undo</string>
+    <string name="pdf_does_not_exist_message">The PDF doesn\'t exist.</string>
+    <string name="image_rearranging_options">Image Rearranging Options</string>
+    <string name="filter_file_name">%s_%s.jpg</string>
+
+    <!--    Image compression-->
+    <string name="compress_image">Image compression : %s %%</string>
+    <string name="quality_image">Enter % compression of image :</string>
+    <string name="invalid_entry">Invalid Entry</string>
+    <string name="compress_dialog_enter_prompt">Enter here</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">Set as default</string>
+    <!--    Image to PDf -Add margins-->
+    <string name="add_margins">Add Margins</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
+
+    <!--  Add Image Border  -->
+    <string name="border">Add Image Border</string>
+    <string name="border_dialog_title">Border width : %d</string>
+    <string name="border_width_prompt">Enter border width units</string>
+
+    <!--  set Image Scale type  -->
     <string name="image_scale_type">Set Image Scale Type</string>
     <string name="stretch_image">Stretch image to fit on page</string>
     <string name="maintain_aspect_ratio">Maintain aspect ratio of images</string>
-    <string name="page_color">Page Color</string>
+
 
     <!--QR & Barcode Scan-->
     <string name="scan_qrcode">Scan QR code</string>
@@ -124,27 +160,17 @@
     <string name="snackbar_file_not_deleted">File can\'t be deleted.</string>
     <string name="snackbar_folder_not_created">Error on creating application folder.</string>
     <string name="pdf_merged">PDFs Merged</string>
-    <string name="excel_selected">Excel file selected</string>
-    <string name="pdf_selected">PDF file selected: </string>
-    <string name="excel_to_pdf">Excel to PDF</string>
-    <string name="excel_tv_view_text">Excel file selected: </string>
-    <string name="select_excel_file">Select Excel file</string>
-
     <string name="error_path_not_found">Sorry, we are unable to access the file at this location</string>
-
     <string name="creating_pdf">Creating PDF</string>
     <string name="creating_txt">Creating Text File</string>
     <string name="enter_file_name">Enter file name</string>
     <string name="example">Example : abc</string>
     <string name="snackbar_no_pdf_app">No app to read PDF File</string>
     <string name="open_file">Open File</string>
-    <string name="sort">Sort</string>
-
     <string name="set_password">Set Password</string>
     <string name="enter_password">Enter Password</string>
     <string name="snackbar_password_cannot_be_blank">Password cannot be blank</string>
     <string name="cannot_add_password">Password could not be applied to the PDF. Please check the PDF again.</string>
-
     <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
@@ -154,12 +180,20 @@
     <string name="snackbar_pdfselected">PDF file selected!</string>
     <string name="snackbar_viewAction">View</string>
     <string name="more_options_text">More Enhancement Options</string>
-    <string name="delete">Delete</string>
     <string name="snackbar_no_duplicate_pdf">Duplicate pages not found.No new PDF created.</string>
     <string name="snackbar_duplicate_removed">A new PDF is created after removal of duplicate pages.</string>
     <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
     <string name="snackbar_invert_successfull">Inverted</string>
     <string name="snackbar_color_too_close">Your font color and background color are too similar</string>
+
+
+    <!-- Excel to PDF   -->
+    <string name="excel_selected">Excel file selected</string>
+    <string name="excel_to_pdf">Excel to PDF</string>
+    <string name="excel_tv_view_text">Excel file selected: </string>
+    <string name="select_excel_file">Select Excel file</string>
+
+
 
     <!-- Share strings -->
     <string name="share_chooser">Select app to send message…</string>
@@ -181,11 +215,13 @@
     <string name="view_files_text">View all your converted files here!</string>
     <string name="empty_image_description">NoPdfs</string>
 
+    <!--  Add Password -->
     <string name="enter_password_custom">Enter Password</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVE</string>
     <string name="password_remove">Password Removed</string>
 
+    <!-- Merge PDF  -->
     <string name="merge_pdf">Merge PDF</string>
     <string name="merge_file_select">Select a file</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">File Path for PDF two</string>
@@ -195,17 +231,11 @@
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached file(s) to this message</string>
     <string name="btn_sav_text">savText</string>
-    <string name="filter_images_Text">Filter Images \n</string>
+
     <string name="nextimage_contentdesc">Next Image</string>
-    <string name="compress_image">Image compression : %s %%</string>
-    <string name="quality_image">Enter % compression of image :</string>
-    <string name="invalid_entry">Invalid Entry</string>
-    <string name="compress_dialog_enter_prompt">Enter here</string>
-    <string name="compress_dialog_percentage">%</string>
-    <string name="set_as_default">Set as default</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Enter the password to continue</string>
-    <string name="add_text">Add Text</string>
+
     <string name="snackbar_txtselected">Text File selected!</string>
     <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue…</string>
     <string name="not_encrypted">PDF is not Encrypted</string>
@@ -217,6 +247,9 @@
     <string name="Filter_image_preview">Filter Image Preview</string>
     <string name="warning">Warning</string>
     <string name="overwrite_message">There already exists a file with the same name. Do you want to overwrite?</string>
+
+    <!--  Text To PDF -Set Page Size-->
+    <string name="set_page_size_text">Set Page Size</string>
     <string name="b0_to_b10">B0 to B10</string>
     <string name="a0_to_a10">A0 to A10</string>
     <string name="tabloid">TABLOID</string>
@@ -229,8 +262,11 @@
     <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
 
 
+    <!--View File options    -->
     <string name="delete_alert_selected">Do you want to delete all selected files?</string>
     <string name="sort_by_title">Sort by</string>
+    <string name="delete">Delete</string>
+    <string name="sort">Sort</string>
 
     <!-- Directory Strings -->
     <string name="directory">Directory</string>
@@ -248,9 +284,10 @@
     <string name="yes">Yes</string>
     <string name="select_all">Select All</string>
     <string name="converting_file_message">Converting your files to PDF.</string>
-
     <string name="select_text_file">Select Text File</string>
     <string name="install_file_manager">Please install a File Manager</string>
+
+    <!-- Text to PDF   -->
     <string name="text_to_pdf">Text To PDF</string>
     <string name="text_file_selected">Text File Selected</string>
     <string name="select_file">"Select a File to Upload"</string>
@@ -259,11 +296,14 @@
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
     <string name="extension_not_supported">Sorry! This file type is not supported currently.</string>
+    <string name="font_color">Font Color</string>
     <string name="edit_font_size">Font Size (Default : %d)</string>
     <string name="enter_font_size">Enter font size</string>
     <string name="example_font">Example : 10</string>
     <string name="font_size_changed">Font Size Changed</string>
     <string name="font_size">Font Size : %1$s</string>
+
+<!--  About US & App Description & Contact US  -->
     <string name="about_us">About Us</string>
     <string name="rate_us">Rate Us</string>
     <string name="app_description">An easy to use Android application to convert your files to PDF.</string>
@@ -307,7 +347,6 @@
     <string name="filter_tint">Tint</string>
     <string name="filter_vig">Vignette</string>
     <string name="filter_saved">Image saved</string>
-    <string name="history">History</string>
     <string name="created">Created</string>
     <string name="printed">Printed</string>
     <string name="renamed">Renamed</string>
@@ -315,17 +354,24 @@
     <string name="rotated">Rotated</string>
     <string name="encrypted">Encrypted</string>
     <string name="decrypted">Decrypted</string>
+    <string name="history">History</string>
     <string name="no_history_message">No history to show</string>
     <string name="view_history_here_message">View all your converted files history here!</string>
     <string name="delete_history_message">Are you sure you want to delete history?</string>
 
     <!-- Extract images -->
     <string name="extract_images">Extract Images</string>
-    <string name="extract_text">Extract Text</string>
     <string name="extract_images_failed">We couldn\'t find any images in the selected PDF.</string>
     <string name="extract_images_success">We found %1$d image(s) in the selected PDF. They have been saved in the PDF Files folder in root directory.</string>
 
+
+    <!--  Extract Text-->
+    <string name="extract_text">Extract Text</string>
+    <string name="pdf_selected">PDF file selected: </string>
     <string name="file_info">\n  File Name : %1$s \n\n  Path : %2$s \n\n  Size : %3$s \n\n  Date Modified %4$s</string>
+
+
+    <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">Font Family (Default : %s)</string>
     <string name="font_family_text">"Font Family : "</string>
     <string name="courier">COURIER</string>
@@ -335,25 +381,12 @@
     <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
     <string name="selected_image">Selected Image</string>
-    <string name="arrow_up">Arrow Up</string>
-    <string name="arrow_down">Arrow Down</string>
-    <string name="rearrange_images">Rearrange Images</string>
-    <string name="rearrange_text">Rearrange</string>
-    <string name="images_rearranged">Images rearranged</string>
-    <string name="snackbar_undoAction">Undo</string>
-    <string name="pdf_does_not_exist_message">The PDF doesn\'t exist.</string>
-    <string name="image_rearranging_options">Image Rearranging Options</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reset</string>
     <string name="rotate">Rotate</string>
     <string name="done">Done</string>
     <string name="image_successfully_cropped">Image successfully cropped</string>
-
     <string name="confirm_exit_message">Press back again to exit</string>
 
-    <string name="border">Add Image Border</string>
-    <string name="border_dialog_title">Border width : %d</string>
-    <string name="border_width_prompt">Enter border width units</string>
     <string name="filter_not_saved">Image could not be saved</string>
     <string name="remove_image_message">Are you sure you want to remove this image?</string>
     <string name="dont_show_again">Don\'t show again</string>
@@ -379,7 +412,7 @@
     <string name="file_order">No changes made in the file</string>
 
     <!-- Reorder Pages -->
-    <string name="reorder_pages">Reorder Pages</string>
+
 
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
@@ -399,7 +432,7 @@
     <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
     <string name="remove_duplicate">Remove Duplicate Pages.</string>
 
-    <!-- Remove Duplicate Pages -->
+    <!-- Invert Pdf -->
     <string name="invert_pdf">Invert Pdf</string>
     <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
     <string name="invert_pdf_title">Invert PDF</string>
@@ -412,6 +445,8 @@
     <string name="rate_us_never">Never</string>
     <string name="error_occurred">Error Occurred</string>
 
+
+    <!--Rotate Pages    -->
     <string name="rotate_pages">Rotate Pages</string>
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
     <string name="rotated_file_name">%s_rotated_%s%s</string>
@@ -451,22 +486,14 @@
     <string name="modify_existing_pdfs">Modify existing PDFs</string>
     <string name="more_options">More Options</string>
     <string name="add_password">Add password</string>
+    <string name="add_text">Add Text</string>
+    <string name="reorder_pages">Reorder Pages</string>
     <string name="remove_password">Remove password</string>
     <string name="enhance_created_pdfs">Enhance Created PDFs</string>
     <string name="viewfiles_rotatepages">1. Select the PDF you wish to rotate. \n2. Select Rotate Pages. \n3. Select angle of rotation. Select OK. \n4. New rotated PDF will be created.</string>
     <string name="viewfiles_addpassword">1. Select the PDF you wish to add password to. \n2. Select Add Password. \n3. Type new password. Select OK. \n4. New PDF with password be created.</string>
     <string name="viewfiles_removepassword">1. Select the PDF you wish to remove password from. \n2. Select Remove Password. \n3. Type PDF password. Select OK. \n4. New PDF without PDF will be created.</string>
     <string name="grayscale_images">Create grayscale PDF</string>
-    <string name="add_margins">Add Margins</string>
-    <string name="choose_page_number_style">Choose Page Number Style</string>
-    <string name="show_pg_num">Show page numbers</string>
-    <string name="top">Top</string>
-    <string name="bottom">Bottom</string>
-    <string name="right">Right</string>
-    <string name="left">Left</string>
-    <string name="page_x_of_n">Page X of N</string>
-    <string name="page_x">X of N</string>
-    <string name="x">X</string>
 
     <!-- Welcome screens-->
     <string name="welcome_create_pdf_message">Creating a PDF file</string>
@@ -480,7 +507,7 @@
     <string name="welcome_qrcode_to_pdf_message">Convert QR Codes and Barcodes to PDF in a simplistic manner</string>
     <string name="welcome_remove_pages">Remove Pages</string>
     <string name="welcome_remove_pages_message">Remove the unwanted pages you do not need anymore</string>
-    <string name="welcome_reorder_pages">Reorder Pages</string>
+    <string name="welcome_reorder_pages">e</string>
     <string name="welcome_reorder_pages_message">Reorder and rearrange the pages in a way you desire</string>
     <string name="welcome_extract_images">Extract Images from PDF</string>
     <string name="welcome_extract_images_message">Extract all possible images from your PDFs at a go</string>
@@ -517,6 +544,7 @@
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
+
     <!--zip to pdf-->
     <string name="zip_to_pdf">ZIP to PDF</string>
     <string name="convert_to_pdf">convert to PDF</string>
@@ -540,6 +568,7 @@
     <string name="snackbar_files_deleted">Files Deleted</string>
     <string name="lbl_recently_used">Recently Used Features</string>
 
+    <!--  FAQs  -->
   <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTARCT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
