@@ -43,7 +43,6 @@ public class WatermarkUtils {
     }
 
     public void setWatermark(String path, final DataSetChanged dataSetChanged) {
-
         final MaterialDialog mDialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.add_watermark)
                 .customView(R.layout.add_watermark_dialog, true)
@@ -52,7 +51,6 @@ public class WatermarkUtils {
                 .build();
 
         final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
-
         this.mWatermark = new Watermark();
 
         final EditText watermarkTextInput = mDialog.getCustomView().findViewById(R.id.watermarkText);
@@ -70,6 +68,14 @@ public class WatermarkUtils {
         angleInput.setText("0");
         fontSizeInput.setText("50");
 
+        addTextChangedListener(watermarkTextInput, mPositiveAction);
+        addPositiveActionClickListener(mPositiveAction, watermarkTextInput, angleInput, fontFamilyInput, dataSetChanged, mDialog);
+
+        mDialog.show();
+    }
+
+
+    private void addTextChangedListener(EditText watermarkTextInput, View mPositiveAction) {
         watermarkTextInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -91,7 +97,9 @@ public class WatermarkUtils {
                         }
                     }
                 });
+    }
 
+    private void addPositiveActionClickListener(View mPositiveAction, EditText watermarkTextInput, EditText angleInput, Spinner fontFamilyInput, DataSetChanged dataSetChanged,  MaterialDialog mDialog) {
         mPositiveAction.setEnabled(false);
         mPositiveAction.setOnClickListener(v -> {
             try {
@@ -126,7 +134,6 @@ public class WatermarkUtils {
             }
             mDialog.dismiss();
         });
-        mDialog.show();
     }
 
     private String createWatermark(String path) throws IOException, DocumentException {
