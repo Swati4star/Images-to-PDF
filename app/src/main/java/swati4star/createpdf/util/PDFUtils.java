@@ -134,53 +134,9 @@ public class PDFUtils {
         @Override
         protected String doInBackground(String... strings) {
             try {
-
                 PdfReader reader = new PdfReader(inputPath);
-                int n = reader.getXrefSize();
-                PdfObject object;
-                PRStream stream;
-
-                for (int i = 0; i < n; i++) {
-                    object = reader.getPdfObject(i);
-                    if (object == null || !object.isStream())
-                        continue;
-                    stream = (PRStream) object;
-                    PdfObject pdfSubType = stream.get(PdfName.SUBTYPE);
-                    System.out.println(stream.type());
-                    if (pdfSubType != null && pdfSubType.toString().equals(PdfName.IMAGE.toString())) {
-                        PdfImageObject image = new PdfImageObject(stream);
-                        byte[] imageBytes = image.getImageAsBytes();
-                        Bitmap bmp;
-                        bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                        if (bmp == null) continue;
-
-                        int width = bmp.getWidth();
-                        int height = bmp.getHeight();
-
-                        Bitmap outBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                        Canvas outCanvas = new Canvas(outBitmap);
-                        outCanvas.drawBitmap(bmp, 0f, 0f, null);
-
-                        ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
-
-                        outBitmap.compress(Bitmap.CompressFormat.JPEG, quality, imgBytes);
-                        stream.clear();
-                        stream.setData(imgBytes.toByteArray(), false, PRStream.BEST_COMPRESSION);
-                        stream.put(PdfName.TYPE, PdfName.XOBJECT);
-                        stream.put(PdfName.SUBTYPE, PdfName.IMAGE);
-                        stream.put(PdfName.FILTER, PdfName.DCTDECODE);
-                        stream.put(PdfName.WIDTH, new PdfNumber(width));
-                        stream.put(PdfName.HEIGHT, new PdfNumber(height));
-                        stream.put(PdfName.BITSPERCOMPONENT, new PdfNumber(8));
-                        stream.put(PdfName.COLORSPACE, PdfName.DEVICERGB);
-                    }
-                }
-
-                reader.removeUnusedObjects();
-                // Save altered PDF
-                PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputPath));
-                stamper.setFullCompression();
-                stamper.close();
+                compressReader(reader);
+                saveReader(reader);
                 reader.close();
                 success = true;
             } catch (IOException | DocumentException e) {
@@ -188,6 +144,75 @@ public class PDFUtils {
                 success = false;
             }
             return null;
+        }
+
+        /**
+         * Attempt to compress each object in a PdfReader
+         * @param reader - PdfReader to have objects compressed
+         * @throws IOException
+         */
+        private void compressReader(PdfReader reader) throws IOException {
+            int n = reader.getXrefSize();
+            PdfObject object;
+            PRStream stream;
+
+            for (int i = 0; i < n; i++) {
+                object = reader.getPdfObject(i);
+                if (object == null || !object.isStream())
+                    continue;
+                stream = (PRStream) object;
+                compressStream(stream);
+            }
+
+            reader.removeUnusedObjects();
+        }
+
+        /**
+         * If given stream is image compress it
+         * @param stream - Steam to be compressed
+         * @throws IOException
+         */
+        private void compressStream(PRStream stream) throws IOException {
+            PdfObject pdfSubType = stream.get(PdfName.SUBTYPE);
+            System.out.println(stream.type());
+            if (pdfSubType != null && pdfSubType.toString().equals(PdfName.IMAGE.toString())) {
+                PdfImageObject image = new PdfImageObject(stream);
+                byte[] imageBytes = image.getImageAsBytes();
+                Bitmap bmp;
+                bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                if (bmp == null) return;
+
+                int width = bmp.getWidth();
+                int height = bmp.getHeight();
+
+                Bitmap outBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas outCanvas = new Canvas(outBitmap);
+                outCanvas.drawBitmap(bmp, 0f, 0f, null);
+
+                ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
+                outBitmap.compress(Bitmap.CompressFormat.JPEG, quality, imgBytes);
+                stream.clear();
+                stream.setData(imgBytes.toByteArray(), false, PRStream.BEST_COMPRESSION);
+                stream.put(PdfName.TYPE, PdfName.XOBJECT);
+                stream.put(PdfName.SUBTYPE, PdfName.IMAGE);
+                stream.put(PdfName.FILTER, PdfName.DCTDECODE);
+                stream.put(PdfName.WIDTH, new PdfNumber(width));
+                stream.put(PdfName.HEIGHT, new PdfNumber(height));
+                stream.put(PdfName.BITSPERCOMPONENT, new PdfNumber(8));
+                stream.put(PdfName.COLORSPACE, PdfName.DEVICERGB);
+            }
+        }
+
+        /**
+         * Save changes to given reader's data to the output path
+         * @param reader - changed reader
+         * @throws DocumentException
+         * @throws IOException
+         */
+        private void saveReader(PdfReader reader) throws DocumentException, IOException {
+            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputPath));
+            stamper.setFullCompression();
+            stamper.close();
         }
 
         @Override
@@ -210,31 +235,9 @@ public class PDFUtils {
             PdfReader reader = new PdfReader(inputPath);
             Document document = new Document();
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(output));
-            Rectangle documentRect = document.getPageSize();
             document.open();
-
-            int numOfPages = reader.getNumberOfPages();
-            PdfContentByte cb = writer.getDirectContent();
-            PdfImportedPage importedPage;
-            for (int page = 1; page <= numOfPages; page++) {
-                importedPage = writer.getImportedPage(reader, page);
-                document.newPage();
-                cb.addTemplate(importedPage, 0, 0);
-            }
-
-            for (int i = 0; i < imagesUri.size(); i++) {
-                document.newPage();
-                Image image = Image.getInstance(imagesUri.get(i));
-                image.setBorder(0);
-                float pageWidth = document.getPageSize().getWidth(); // - (mMarginLeft + mMarginRight);
-                float pageHeight = document.getPageSize().getHeight(); // - (mMarginBottom + mMarginTop);
-                image.scaleToFit(pageWidth, pageHeight);
-                image.setAbsolutePosition(
-                        (documentRect.getWidth() - image.getScaledWidth()) / 2,
-                        (documentRect.getHeight() - image.getScaledHeight()) / 2);
-                document.add(image);
-            }
-
+            initDoc(reader, document, writer);
+            appendImages(document, imagesUri);
             document.close();
 
             StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
@@ -247,6 +250,46 @@ public class PDFUtils {
             e.printStackTrace();
             StringUtils.getInstance().showSnackbar(mContext, R.string.remove_pages_error);
             return false;
+        }
+    }
+
+    /**
+     * Initialise document with pages from reader to writer
+     * @param reader -
+     * @param document
+     * @param writer
+     */
+    private void initDoc(PdfReader reader, Document document, PdfWriter writer) {
+        int numOfPages = reader.getNumberOfPages();
+        PdfContentByte cb = writer.getDirectContent();
+        PdfImportedPage importedPage;
+        for (int page = 1; page <= numOfPages; page++) {
+            importedPage = writer.getImportedPage(reader, page);
+            document.newPage();
+            cb.addTemplate(importedPage, 0, 0);
+        }
+    }
+
+    /**
+     * Add images at given URIs to end of given document
+     * @param document
+     * @param imagesUri
+     * @throws DocumentException
+     * @throws IOException
+     */
+    private void appendImages(Document document, ArrayList<String> imagesUri) throws DocumentException, IOException {
+        Rectangle documentRect = document.getPageSize();
+        for (int i = 0; i < imagesUri.size(); i++) {
+            document.newPage();
+            Image image = Image.getInstance(imagesUri.get(i));
+            image.setBorder(0);
+            float pageWidth = document.getPageSize().getWidth(); // - (mMarginLeft + mMarginRight);
+            float pageHeight = document.getPageSize().getHeight(); // - (mMarginBottom + mMarginTop);
+            image.scaleToFit(pageWidth, pageHeight);
+            image.setAbsolutePosition(
+                    (documentRect.getWidth() - image.getScaledWidth()) / 2,
+                    (documentRect.getHeight() - image.getScaledHeight()) / 2);
+            document.add(image);
         }
     }
 
@@ -326,25 +369,35 @@ public class PDFUtils {
                     fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);
                 if (fileDescriptor != null) {
                     PdfRenderer renderer = new PdfRenderer(fileDescriptor);
-                    final int pageCount = renderer.getPageCount();
-                    for (int i = 0; i < pageCount; i++) {
-                        PdfRenderer.Page page = renderer.openPage(i);
-                        Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
-                                Bitmap.Config.ARGB_8888);
-                        // say we render for showing on the screen
-                        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-
-                        // do stuff with the bitmap
-                        bitmaps.add(bitmap);
-                        // close the page
-                        page.close();
-                    }
-
+                    bitmaps = getBitmaps(renderer);
                     // close the renderer
                     renderer.close();
                 }
             } catch (IOException | SecurityException | IllegalArgumentException | OutOfMemoryError e) {
                 e.printStackTrace();
+            }
+            return bitmaps;
+        }
+
+        /**
+         * Get list of Bitmaps from PdfRenderer
+         * @param renderer
+         * @return
+         */
+        private ArrayList<Bitmap> getBitmaps(PdfRenderer renderer) {
+            ArrayList<Bitmap> bitmaps = new ArrayList<>();
+            final int pageCount = renderer.getPageCount();
+            for (int i = 0; i < pageCount; i++) {
+                PdfRenderer.Page page = renderer.openPage(i);
+                Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(),
+                        Bitmap.Config.ARGB_8888);
+                // say we render for showing on the screen
+                page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+                // do stuff with the bitmap
+                bitmaps.add(bitmap);
+                // close the page
+                page.close();
             }
             return bitmaps;
         }
