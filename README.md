@@ -14,8 +14,13 @@ Here is an easy to use Android app to convert images to PDF file!
 
 <img src="./screenshots/image_to_pdf.gif"  width="300px">
 
-### Slack
-You can also join the Images To PDF Team on Slack [https://imagestopdf.slack.com/](https://imagestopdf.slack.com/) and chat with developers. Use [this link](https://join.slack.com/t/imagestopdf/shared_invite/zt-56xb0xf9-OaOUZ5lPyz2XkUKrJ1E57w) to join our slack team.
+
+### Support Us
+<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Swati4star)
+
+
 
 ### Features 
 - Create PDF from multiple images from camera or gallery
@@ -109,6 +114,3 @@ If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) ab
 ### Project Maintainers
 This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For any sort of queries feel free to mail at swati4star@gmail.com.
 
-<a href="https://www.buymeacoff.ee/WmJepqz6H" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Swati4star)
-<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank">
