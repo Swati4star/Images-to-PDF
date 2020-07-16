@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,7 +19,7 @@ import swati4star.createpdf.model.FAQItem;
 
 public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
-    private final List<FAQItem> mFaqs;
+    private List<FAQItem> mFaqs;
     private final OnItemClickListener mOnItemClickListener;
 
     public FAQAdapter(List<FAQItem> faqs, OnItemClickListener mOnItemClickListener) {
@@ -89,5 +90,10 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
         public void onClick(View view) {
             mOnItemClickListener.onItemClick(getAdapterPosition());
         }
+    }
+
+    public void filterList(ArrayList<FAQItem> filteredList) {
+        mFaqs = filteredList;
+        notifyDataSetChanged();
     }
 }

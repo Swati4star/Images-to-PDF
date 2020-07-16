@@ -5,9 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +29,13 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
     private List<FAQItem> mFaqs;
     private Context mContext;
 
+    @BindView(R.id.inputSearch)
+    EditText inputSearch;
+
     @BindView(R.id.recycler_view_faq)
     RecyclerView mFAQRecyclerView;
+
+
 
     public FAQFragment() {
         // Required empty public constructor
@@ -47,7 +55,35 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
 
         initFAQRecyclerView();
 
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+
+            }
+        });
+
         return view;
+    }
+
+    private void filter(String text) {
+        ArrayList<FAQItem> filteredList = new ArrayList<>();
+        for (FAQItem item : mFaqs) {
+            if (item.getQuestion().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        mFaqAdapter.filterList(filteredList);
     }
 
     /**
@@ -86,4 +122,5 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         faqItem.setExpanded(!faqItem.isExpanded());
         mFaqAdapter.notifyItemChanged(position);
     }
+
 }
