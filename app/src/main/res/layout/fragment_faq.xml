@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.FAQFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".fragment.FAQFragment">
 
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-     <EditText
-         android:id="@+id/inputSearch"
-         android:layout_margin="10dp"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:hint="search....."/>
-<!--    </FrameLayout>-->
+
+    <EditText
+        android:id="@+id/inputSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/search_in_FAQ" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_faq"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view_faq"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        />
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 </LinearLayout>

@@ -76,6 +76,10 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         return view;
     }
 
+    /**
+     *  The method is for filter the list of data as user input.
+     *  This method compare the user input with the question.
+     */
     private void filter(String text) {
         ArrayList<FAQItem> filteredList = new ArrayList<>();
         for (FAQItem item : mFaqs) {

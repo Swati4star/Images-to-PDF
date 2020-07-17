@@ -194,7 +194,6 @@
     <string name="select_excel_file">Select Excel file</string>
 
 
-
     <!-- Share strings -->
     <string name="share_chooser">Select app to send message…</string>
 
@@ -303,7 +302,7 @@
     <string name="font_size_changed">Font Size Changed</string>
     <string name="font_size">Font Size : %1$s</string>
 
-<!--  About US & App Description & Contact US  -->
+    <!--  About US & App Description & Contact US  -->
     <string name="about_us">About Us</string>
     <string name="rate_us">Rate Us</string>
     <string name="app_description">An easy to use Android application to convert your files to PDF.</string>
@@ -569,7 +568,8 @@
     <string name="lbl_recently_used">Recently Used Features</string>
 
     <!--  FAQs  -->
-  <string-array name="faq_question_answers">
+    <string name="search_in_FAQ" translatable="false">Search....</string>
+    <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTARCT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
         <item>Is there a limit on number of images I can add at once to create a PDF?#####No, there are no restrictions.</item>
