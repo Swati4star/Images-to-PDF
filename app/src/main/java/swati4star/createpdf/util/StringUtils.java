@@ -8,8 +8,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.Objects;
 
-import static swati4star.createpdf.util.Constants.pdfDirectory;
-
 /**
  * Created by anandparmar on 18/06/18.
  */
@@ -68,7 +66,6 @@ public class StringUtils {
     }
 
     public String getDefaultStorageLocation() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath() +
-                pdfDirectory;
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
     }
 }
