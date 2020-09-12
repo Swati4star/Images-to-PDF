@@ -18,9 +18,6 @@ Here is an easy to use Android app to convert images to PDF file!
 ### Support Us
 <a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
-[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Swati4star)
-
-
 
 ### Features 
 - Create PDF from multiple images from camera or gallery
