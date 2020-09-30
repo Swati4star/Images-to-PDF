@@ -1,4 +1,4 @@
-# Images To PDF
+# Images To PDF converter
 
 ### Badges
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF)
