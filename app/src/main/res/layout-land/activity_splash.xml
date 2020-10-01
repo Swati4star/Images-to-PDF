@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SplashActivity"
+    android:background="@color/colorPrimaryDark">
+
+    <ImageView
+        android:id="@+id/Splash_logo"
+        android:layout_width="349dp"
+        android:layout_height="172dp"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="433dp"
+        android:elevation="60dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.598"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.091" />
+
+    <TextView
+        android:id="@+id/Splash_text"
+        android:layout_width="408dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="156dp"
+        android:background="@color/mb_white"
+        android:elevation="20dp"
+        android:fontFamily="sans-serif-black"
+        android:padding="10dp"
+
+        android:paddingStart="15dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Splash_logo"
+        app:layout_constraintVertical_bias="0.042"
+        tools:ignore="RtlSymmetry" />
+
+
+</android.support.constraint.ConstraintLayout>
