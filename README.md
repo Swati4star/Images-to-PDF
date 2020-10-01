@@ -9,7 +9,7 @@
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
-Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
+Need a PDF when you have a JPG? Convert JPG to PDF in a few seconds! :smiley:  
 Here is an easy to use Android app to convert images to PDF file!
 
 <img src="./screenshots/image_to_pdf.gif"  width="300px">
@@ -22,8 +22,8 @@ Here is an easy to use Android app to convert images to PDF file!
 ### Features 
 - Create PDF from multiple images from camera or gallery
 - View your converted PDFs
-  - Open, Rename, Delete, print, share files
-  - Sort the files order based on a number of options
+  - Open, Rename, Delete, Print, Share Files
+  - Sort the order of files based on a number of options
   - View File details (Path, size, date created ...)
   - Encrypt PDF
   - Decrypt PDF
@@ -32,13 +32,13 @@ Here is an easy to use Android app to convert images to PDF file!
 - Merge existing PDFs
 - Split existing PDFs
 - Convert text file to PDFs
-- Compress existing PDF
+- Compress existing PDFs
 - Remove pages from a PDF
 - Rearrange pages of a PDF
-- Extract images from PDF
+- Extract images from PDFs
 - History : View all the PDF related conversions
 
-Here is a home page to get quick access to all the features "PDF Converter" provides:
+Here is a home page to get quick access to all the features that "PDF Converter" provides:
 
 <img src="./screenshots/0_1_home.png" width="190px"> <img src="./screenshots/0_2_home.png" width="190px">
 
