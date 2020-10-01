@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
@@ -367,20 +368,10 @@ public class FileUtils {
     private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
         if (bitmap == null)
             return true;
-
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
-
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                int pixel = bitmap.getPixel(i, j);
-                if (pixel != Color.WHITE) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        Bitmap whiteBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+        Canvas canvas = new Canvas(whiteBitmap);
+        canvas.drawColor(Color.WHITE);
+        return bitmap.sameAs(whiteBitmap);
     }
 
     /**
