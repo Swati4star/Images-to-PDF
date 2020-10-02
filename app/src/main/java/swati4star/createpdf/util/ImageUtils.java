@@ -71,11 +71,9 @@ public class ImageUtils {
         Bitmap bitmap;
 
         if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
-            float smallest = Math.min(bmp.getWidth(), bmp.getHeight());
-            float factor = smallest / radius;
             bitmap = Bitmap.createScaledBitmap(bmp,
-                    (int) (bmp.getWidth() / factor),
-                    (int) (bmp.getHeight() / factor), false);
+                    (int) (bmp.getWidth() / 1.0f),
+                    (int) (bmp.getHeight() / 1.0f), false);
         } else {
             bitmap = bmp;
         }
@@ -127,6 +125,7 @@ public class ImageUtils {
 
     /**
      * Calculate the inSampleSize value for given bitmap options & image dimensions
+     *
      * @param options - bitmap options
      * @return inSampleSize value
      * https://developer.android.com/topic/performance/graphics/load-bitmap.html#java
@@ -154,7 +153,6 @@ public class ImageUtils {
     }
 
 
-
     public void showImageScaleTypeDialog(Context context, Boolean saveValue) {
 
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -162,22 +160,22 @@ public class ImageUtils {
                 R.string.image_scale_type);
         MaterialDialog materialDialog =
                 builder.customView(R.layout.image_scale_type_dialog, true)
-                .onPositive((dialog1, which) -> {
-                    View view = dialog1.getCustomView();
-                    RadioGroup radioGroup = view.findViewById(R.id.scale_type);
-                    int selectedId = radioGroup.getCheckedRadioButtonId();
-                    if (selectedId == R.id.aspect_ratio)
-                        mImageScaleType = IMAGE_SCALE_TYPE_ASPECT_RATIO;
-                    else
-                        mImageScaleType = IMAGE_SCALE_TYPE_STRETCH;
+                        .onPositive((dialog1, which) -> {
+                            View view = dialog1.getCustomView();
+                            RadioGroup radioGroup = view.findViewById(R.id.scale_type);
+                            int selectedId = radioGroup.getCheckedRadioButtonId();
+                            if (selectedId == R.id.aspect_ratio)
+                                mImageScaleType = IMAGE_SCALE_TYPE_ASPECT_RATIO;
+                            else
+                                mImageScaleType = IMAGE_SCALE_TYPE_STRETCH;
 
-                    CheckBox mSetAsDefault = view.findViewById(R.id.cbSetDefault);
-                    if (saveValue || mSetAsDefault.isChecked()) {
-                        SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putString(Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT, mImageScaleType);
-                        editor.apply();
-                    }
-                }).build();
+                            CheckBox mSetAsDefault = view.findViewById(R.id.cbSetDefault);
+                            if (saveValue || mSetAsDefault.isChecked()) {
+                                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                editor.putString(Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT, mImageScaleType);
+                                editor.apply();
+                            }
+                        }).build();
         if (saveValue) {
             View customView = materialDialog.getCustomView();
             customView.findViewById(R.id.cbSetDefault).setVisibility(View.GONE);
@@ -187,6 +185,7 @@ public class ImageUtils {
 
     /**
      * convert a bitmap to gray scale and return it
+     *
      * @param bmpOriginal original bitmap which is converted to a new
      *                    grayscale bitmap
      */
