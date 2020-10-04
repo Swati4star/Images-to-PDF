@@ -20,6 +20,9 @@
 
     <string name="default_content_description">Keine Beschreibung</string>
     <string name="prompt_input">Hier eintreten</string>
+    <string name="faqSearch">FAQ suchen</string>
+
+
     <array name="items">
         <item>Open File</item>
         <item>Delete File</item>

@@ -13,7 +13,7 @@
     <string name="search">search</string>
     <string name="default_content_description">no description</string>
     <string name="prompt_input">Enter here</string>
-
+    <string name="faqSearch">Search FAQ</string>
     <!--   Items  -->
     <array name="items">
         <item>Open File</item>

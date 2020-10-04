@@ -16,6 +16,8 @@
 
     <string name="default_content_description">описание отсутствует</string>
     <string name="prompt_input">Введите</string>
+    <string name="faqSearch">Поиск в FAQ</string>
+
     <array name="items">
         <item>Открыть</item>
         <item>Удалить</item>

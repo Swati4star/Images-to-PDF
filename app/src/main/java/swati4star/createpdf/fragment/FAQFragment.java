@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +25,17 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
 
     private FAQAdapter mFaqAdapter;
     private List<FAQItem> mFaqs;
+    private List<FAQItem> mFaqsCopy;
     private Context mContext;
+    private SearchView mSearchView;
 
     @BindView(R.id.recycler_view_faq)
     RecyclerView mFAQRecyclerView;
 
+
     public FAQFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,14 +43,49 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
 
         View view = inflater.inflate(R.layout.fragment_faq, container, false);
 
+        mSearchView =  view.findViewById(R.id.searchView);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterFaq(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newQuery) {
+                filterFaq(newQuery);
+                return true;
+            }
+        });
+
         ButterKnife.bind(this, view);
         mContext = view.getContext();
 
         initFAQs();
-
         initFAQRecyclerView();
 
         return view;
+    }
+
+    /**
+     * @param text - This is the search tet entered in the search box.
+     * Simply filtering out the questions that contains the given search query.
+     */
+    public void filterFaq(String text) {
+        mFaqs.clear();
+        if (text.isEmpty())
+            mFaqs.addAll(mFaqsCopy);
+        else {
+            System.out.println(text);
+            text = text.toLowerCase();
+
+            for (FAQItem faq : mFaqsCopy) {
+                if (faq.getQuestion().toLowerCase().contains(text)) {
+                    mFaqs.add(faq);
+                }
+            }
+        }
+        mFaqAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -56,12 +94,14 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
      */
     private void initFAQs() {
         mFaqs = new ArrayList<>();
+        mFaqsCopy = new ArrayList<>();
         String[] questionAnswers = mContext.getResources().getStringArray(R.array.faq_question_answers);
         FAQItem faqItem;
         for (String questionAnswer : questionAnswers) {
             String[] questionAnswerSplit = questionAnswer.split("#####");
             faqItem = new FAQItem(questionAnswerSplit[0], questionAnswerSplit[1]);
             mFaqs.add(faqItem);
+            mFaqsCopy.add(faqItem);
         }
     }
 

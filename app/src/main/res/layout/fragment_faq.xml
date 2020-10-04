@@ -6,11 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.FAQFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view_faq"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        />
+        android:orientation="vertical">
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView"
+            android:background="@drawable/search_background"
+            android:layout_marginTop="10dp"
+            android:queryHint="@string/faqSearch"
+            android:layout_marginLeft="10dp"
+            android:iconifiedByDefault= "false"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+        </SearchView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_faq"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    </LinearLayout>
 
 </FrameLayout>
