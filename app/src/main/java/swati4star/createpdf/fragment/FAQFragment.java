@@ -32,7 +32,6 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
     @BindView(R.id.recycler_view_faq)
     RecyclerView mFAQRecyclerView;
 
-
     public FAQFragment() {
         // Required empty public constructor
     }
@@ -68,7 +67,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
     }
 
     /**
-     * @param text - This is the search tet entered in the search box.
+     * @param text - This is the search text entered in the search box.
      * Simply filtering out the questions that contains the given search query.
      */
     public void filterFaq(String text) {
@@ -76,7 +75,6 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         if (text.isEmpty())
             mFaqs.addAll(mFaqsCopy);
         else {
-            System.out.println(text);
             text = text.toLowerCase();
 
             for (FAQItem faq : mFaqsCopy) {
@@ -101,8 +99,8 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
             String[] questionAnswerSplit = questionAnswer.split("#####");
             faqItem = new FAQItem(questionAnswerSplit[0], questionAnswerSplit[1]);
             mFaqs.add(faqItem);
-            mFaqsCopy.add(faqItem);
         }
+        mFaqsCopy.addAll(mFaqs);
     }
 
 
