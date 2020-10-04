@@ -161,16 +161,19 @@ public class FileUtils {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        try {
-            Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
+        tryOpenFileInternal(dataType, file, target);
+    }
 
+	private void tryOpenFileInternal(String dataType, File file, Intent target) {
+		try {
+            Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
             target.setDataAndType(uri, dataType);
             target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
         } catch (Exception e) {
             StringUtils.getInstance().showSnackbar(mContext, R.string.error_open_file);
         }
-    }
+	}
 
     /**
      * Checks if the new file already exists.
@@ -226,7 +229,6 @@ public class FileUtils {
      * @return - extracted filename
      */
     public String getFileName(Uri uri) {
-        String fileName = null;
         String scheme = uri.getScheme();
 
         if (scheme == null)
@@ -234,7 +236,14 @@ public class FileUtils {
 
         if (scheme.equals("file")) {
             return uri.getLastPathSegment();
-        } else if (scheme.equals("content")) {
+        }
+        
+        return getFileNameInContent(uri);
+    }
+
+	private String getFileNameInContent(Uri uri) {
+		String fileName = null;
+		if (uri.getScheme() != null && uri.getScheme().equals("content")) {
             Cursor cursor = mContext.getContentResolver().query(uri, null, null, null, null);
 
             if (cursor != null) {
@@ -248,7 +257,7 @@ public class FileUtils {
         }
 
         return fileName;
-    }
+	}
 
     /**
      * Extracts file name from the path
@@ -346,7 +355,13 @@ public class FileUtils {
         if (file.exists())
             file.delete();
 
-        try {
+        trySaveImage(finalBitmap, fileName, file);
+
+        return myDir + "/" + fileName;
+    }
+
+	private static void trySaveImage(Bitmap finalBitmap, String fileName, File file) {
+		try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             Log.v("saving", fileName);
@@ -355,9 +370,7 @@ public class FileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return myDir + "/" + fileName;
-    }
+	}
 
     /**
      * Checks of the bitmap is just all white pixels
