@@ -15,13 +15,13 @@
     </string-array>
 
     <string-array name="filter_options_history">
-        <item>Created</item>
-        <item>Deleted</item>
-        <item>Renamed</item>
-        <item>Rotated</item>
-        <item>Printed</item>
-        <item>Decrypted</item>
-        <item>Encrypted</item>
-        <item>Inverted</item>
+        <item>Созданные</item>
+        <item>Удалённые</item>
+        <item>Переименованные</item>
+        <item>Повёрнутые</item>
+        <item>Напечатанные</item>
+        <item>Расшифрованные</item>
+        <item>Зашифрованные</item>
+        <item>Инвертированные</item>
     </string-array>
 </resources>
