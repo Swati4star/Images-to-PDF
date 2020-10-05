@@ -32,6 +32,7 @@ import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.model.PDFFile;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FileInfoUtils;
 import swati4star.createpdf.util.FileSortUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFEncryptionUtility;
@@ -42,7 +43,7 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.WatermarkUtils;
 
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
-import static swati4star.createpdf.util.FileUtils.getFormattedDate;
+import static swati4star.createpdf.util.FileInfoUtils.getFormattedDate;
 
 /**
  * Created by swati on 9/10/15.
@@ -107,7 +108,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
         final PDFFile pdfFile = mFileList.get(position);
 
         holder.fileName.setText(pdfFile.getPdfFile().getName());
-        holder.fileSize.setText(FileUtils.getFormattedSize(pdfFile.getPdfFile()));
+        holder.fileSize.setText(FileInfoUtils.getFormattedSize(pdfFile.getPdfFile()));
         holder.fileDate.setText(getFormattedDate(pdfFile.getPdfFile()));
         holder.checkBox.setChecked(mSelectedFiles.contains(position));
         holder.encryptionImage.setVisibility(pdfFile.isEncrypted() ? View.VISIBLE : View.GONE);

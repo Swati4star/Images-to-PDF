@@ -18,7 +18,7 @@ import swati4star.createpdf.interfaces.ExtractImagesListener;
 
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
-import static swati4star.createpdf.util.FileUtils.saveImage;
+import static swati4star.createpdf.util.ImageUtils.saveImage;
 
 public class PdfToImages extends AsyncTask<Void, Void, Void> {
 

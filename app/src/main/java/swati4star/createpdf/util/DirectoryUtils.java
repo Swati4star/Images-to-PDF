@@ -194,4 +194,22 @@ public class DirectoryUtils {
         walkDir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
         return mFilePaths;
     }
+
+    /**
+     * creates new folder for temp files
+     */
+    public static void makeAndClearTemp() {
+        String dest = Environment.getExternalStorageDirectory().toString() +
+                Constants.pdfDirectory + Constants.tempDirectory;
+        File folder = new File(dest);
+        boolean result = folder.mkdir();
+
+        // clear all the files in it, if any
+        if (result && folder.isDirectory()) {
+            String[] children = folder.list();
+            for (String child : children) {
+                new File(folder, child).delete();
+            }
+        }
+    }
 }

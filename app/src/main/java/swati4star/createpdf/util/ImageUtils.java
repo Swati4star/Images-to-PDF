@@ -13,7 +13,9 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
@@ -22,11 +24,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Rectangle;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
+import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 public class ImageUtils {
 
@@ -204,4 +208,53 @@ public class ImageUtils {
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
     }
+
+    /**
+     * Saves bitmap to external storage
+     *
+     * @param filename    - name of the file
+     * @param finalBitmap - bitmap to save
+     */
+    public static String saveImage(String filename, Bitmap finalBitmap) {
+
+        if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
+            return null;
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + pdfDirectory);
+        String fileName = filename + ".png";
+
+        File file = new File(myDir, fileName);
+        if (file.exists())
+            file.delete();
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            Log.v("saving", fileName);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return myDir + "/" + fileName;
+    }
+
+    /**
+     * Checks of the bitmap is just all white pixels
+     *
+     * @param bitmap - input bitmap
+     * @return - true, if bitmap is all white
+     */
+    private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
+        if (bitmap == null)
+            return true;
+        Bitmap whiteBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+        Canvas canvas = new Canvas(whiteBitmap);
+        canvas.drawColor(Color.WHITE);
+        return bitmap.sameAs(whiteBitmap);
+    }
+
+
 }

@@ -25,7 +25,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
 import swati4star.createpdf.util.FeedbackUtils;
-import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         if (isStoragePermissionGranted()) {
-            FileUtils.makeAndClearTemp();
+            DirectoryUtils.makeAndClearTemp();
         }
     }
 
