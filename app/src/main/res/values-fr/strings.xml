@@ -13,6 +13,8 @@
     </string>
     <string name="search_hint">Nom de fichier</string>
     <string name="search">recherche</string>
+    <string name="faqSearch">Rechercher dans la FAQ</string>
+
     <array name="items">
         <item>Ouvrir Fichier</item>
         <item>Supprimer Fichier</item>

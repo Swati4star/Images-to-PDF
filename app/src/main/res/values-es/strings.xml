@@ -12,6 +12,7 @@
     <string name="details"><b>Detalles</b></string>
     <string name="search_hint">Nombre del archivo</string>
     <string name="search">Búsqueda</string>
+    <string name="faqSearch">Buscar preguntas frecuentes</string>
 
     <array name="items">
         <item>Abrir archivo</item>

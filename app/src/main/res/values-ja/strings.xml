@@ -12,6 +12,7 @@
     <string name="search">search</string>
 
     <string name="details"><b>詳細</b></string>
+    <string name="faqSearch">FAQを検索</string>
 
     <array name="items">
         <item>ファイルを開く</item>
