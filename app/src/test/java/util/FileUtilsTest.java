@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.File;
 import java.util.TimeZone;
 
+import swati4star.createpdf.util.FileInfoUtils;
 import swati4star.createpdf.util.FileUtils;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -36,13 +37,13 @@ public class FileUtilsTest {
     @Test
     public void when_CallingGetFormattedDate_Expect_CorrectDateReturned() {
         when(file.lastModified()).thenReturn(0L);
-        assertThat(FileUtils.getFormattedDate(file), is("Thu, Jan 01 at 00:00"));
+        assertThat(FileInfoUtils.getFormattedDate(file), is("Thu, Jan 01 at 00:00"));
     }
 
     @Test
     public void when_CallingGetFormattedSize_Expect_CorrectDateReturned() {
         when(file.length()).thenReturn(5242880L);
-        assertThat(FileUtils.getFormattedSize(file), is("5.00 MB"));
+        assertThat(FileInfoUtils.getFormattedSize(file), is("5.00 MB"));
     }
 
     @Test

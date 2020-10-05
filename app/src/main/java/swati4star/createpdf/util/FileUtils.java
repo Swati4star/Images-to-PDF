@@ -49,34 +49,6 @@ public class FileUtils {
         e_TXT
     }
 
-    // GET PDF DETAILS
-
-    /**
-     * Gives a formatted last modified date for pdf ListView
-     *
-     * @param file file object whose last modified date is to be returned
-     * @return String date modified in formatted form
-     **/
-    public static String getFormattedDate(File file) {
-        Date lastModDate = new Date(file.lastModified());
-        String[] formatDate = lastModDate.toString().split(" ");
-        String time = formatDate[3];
-        String[] formatTime = time.split(":");
-        String date = formatTime[0] + ":" + formatTime[1];
-
-        return formatDate[0] + ", " + formatDate[1] + " " + formatDate[2] + " at " + date;
-    }
-
-    /**
-     * Gives a formatted size in MB for every pdf in pdf ListView
-     *
-     * @param file file object whose size is to be returned
-     * @return String Size of pdf in formatted form
-     */
-    public static String getFormattedSize(File file) {
-        return String.format("%.2f MB", (double) file.length() / (1024 * 1024));
-    }
-
     /**
      * Prints a file
      *
@@ -328,53 +300,6 @@ public class FileUtils {
     }
 
     /**
-     * Saves bitmap to external storage
-     *
-     * @param filename    - name of the file
-     * @param finalBitmap - bitmap to save
-     */
-    public static String saveImage(String filename, Bitmap finalBitmap) {
-
-        if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
-            return null;
-
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + pdfDirectory);
-        String fileName = filename + ".png";
-
-        File file = new File(myDir, fileName);
-        if (file.exists())
-            file.delete();
-
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            Log.v("saving", fileName);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return myDir + "/" + fileName;
-    }
-
-    /**
-     * Checks of the bitmap is just all white pixels
-     *
-     * @param bitmap - input bitmap
-     * @return - true, if bitmap is all white
-     */
-    private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
-        if (bitmap == null)
-            return true;
-        Bitmap whiteBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-        Canvas canvas = new Canvas(whiteBitmap);
-        canvas.drawColor(Color.WHITE);
-        return bitmap.sameAs(whiteBitmap);
-    }
-
-    /**
      * Opens image in a gallery application
      *
      * @param path - image path
@@ -436,23 +361,5 @@ public class FileUtils {
         }
 
         return outputFileName;
-    }
-
-    /**
-     * creates new folder for temp files
-     */
-    public static void makeAndClearTemp() {
-        String dest = Environment.getExternalStorageDirectory().toString() +
-                Constants.pdfDirectory + Constants.tempDirectory;
-        File folder = new File(dest);
-        boolean result = folder.mkdir();
-
-        // clear all the files in it, if any
-        if (result && folder.isDirectory()) {
-            String[] children = folder.list();
-            for (String child : children) {
-                new File(folder, child).delete();
-            }
-        }
     }
 }

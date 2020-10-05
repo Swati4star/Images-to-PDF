@@ -59,8 +59,8 @@ public class PDFUtils {
     public void showDetails(File file) {
         String name = file.getName();
         String path = file.getPath();
-        String size = FileUtils.getFormattedSize(file);
-        String lastModDate = FileUtils.getFormattedSize(file);
+        String size = FileInfoUtils.getFormattedSize(file);
+        String lastModDate = FileInfoUtils.getFormattedSize(file);
 
         TextView message = new TextView(mContext);
         TextView title = new TextView(mContext);

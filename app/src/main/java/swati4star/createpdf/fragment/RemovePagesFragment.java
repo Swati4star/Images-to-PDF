@@ -58,7 +58,7 @@ import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
 import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.FileUtils.getFormattedSize;
+import static swati4star.createpdf.util.FileInfoUtils.getFormattedSize;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface, OnPdfReorderedInterface {
