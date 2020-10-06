@@ -1,0 +1,599 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">PDF Konverter</string>
+    <string name="title">PDF Akcije</string>
+
+    <string name="file_name_text">Naziv Datoteke</string>
+    <string name="select_images_text">Odaberite fotografije</string>
+    <string name="password_protect_pdf_text">Zaštiti Lozinkom PDF</string>
+    <string name="edit_images_text">Izmijeni Fotografije</string>
+    <string name="open_pdf_text">Otvori PDF</string>
+    <string name="create_pdf_text">Izradi PDF</string>
+    <string name="details"><b>Detalji</b></string>
+    <string name="search_hint">Naziv datoteke</string>
+    <string name="search">traži</string>
+    <string name="default_content_description">bez opisa</string>
+    <string name="prompt_input">Unesite ovdje</string>
+
+    <!--   Items  -->
+    <array name="items">
+        <item>Otvori Datoteku</item>
+        <item>Izbriši Datoteku</item>
+        <item>Preimenuj Datoteku</item>
+        <item>Printaj Datoteku</item>
+        <item>Podijeli Datoteku</item>
+        <item>Prikaži Detalje</item>
+        <item>Dodaj Lozinku</item>
+        <item>Izbriši Lozinku</item>
+        <item>Zaokreni Stranice</item>
+        <item>Dodaj Vodeni Žig</item>
+    </array>
+
+    <array name="itemIds" translatable="false">
+        <item>open</item>
+        <item>delete</item>
+        <item>rename</item>
+        <item>print</item>
+        <item>e-mail</item>
+        <item>details</item>
+    </array>
+
+    <string-array name="array_page_sizes_b0_b10" translatable="false">
+        <item>B0 (1000 x 1414 mm)</item>
+        <item>B1 (707 x 1000 mm)</item>
+        <item>B2 (500 x 707 mm)</item>
+        <item>B3 (353 x 500 mm)</item>
+        <item>B4 (250 x 353 mm)</item>
+        <item>B5 (176 x 250 mm)</item>
+        <item>B6 (125 x 176 mm)</item>
+        <item>B7 (88 x 125 mm)</item>
+        <item>B8 (62 x 88 mm)</item>
+        <item>B9 (44 x 62 mm)</item>
+        <item>B10 (31 x 44 mm)</item>
+    </string-array>
+
+    <string-array name="array_page_sizes_a0_b10" translatable="false">
+        <item>A0 (841 x 1189 mm)</item>
+        <item>A1 (594 x 841 mm)</item>
+        <item>A2 (420 x 594 mm)</item>
+        <item>A3 (297 x 420 mm)</item>
+        <item>A4 (210 x 297 mm)</item>
+        <item>A5 (148 x 210 mm)</item>
+        <item>A6 (105 x 148 mm)</item>
+        <item>A7 (74 x 105 mm)</item>
+        <item>A8 (52 x 74 mm)</item>
+        <item>A9 (37 x 52 mm)</item>
+        <item>A10 (26 x 37 mm)</item>
+    </string-array>
+
+    <string-array name="fontStyles" translatable="false">
+        <item>NORMAL</item>
+        <item>BOLD</item>
+        <item>ITALIC</item>
+        <item>UNDERLINE</item>
+        <item>STRIKETHRU</item>
+        <item>BOLDITALIC</item>
+    </string-array>
+
+    <string name="pdf_ext" translatable="false">.pdf</string>
+    <string name="pdf_type" translatable="false">application/pdf</string>
+    <string name="txt_type" translatable="false">text/*</string>
+    <string name="please_wait">Molimo pričekajte</string>
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">Žao nam je! Fotografije nisu dodane. Molimo odaberite našu **Odaberi fotografije** opciju.</string>
+    <string name="successToast">Fotografije uspješno dodane.</string>
+
+    <!-- Navigation drawer strings -->
+    <string name="create_pdf">Izradi PDF</string>
+    <string name="qr_barcode_pdf">QR &amp; Barkodovi</string>
+    <string name="viewFiles">Pogledaj Datoteke</string>
+    <string name="extras">Dodaci</string>
+    <string name="share">Podijeli</string>
+    <string name="help">Pomoć</string>
+    <string name="faqs" translatable="false">FAQ</string>
+
+    <!-- images to PDF -->
+    <string name="images_to_pdf">Fotografije u PDF</string>
+    <string name="page_color">Boja Stranice</string>
+    <string name="filter_images_Text">Filtriraj Fotografije \n</string>
+    <!--    Image to PDF -Preview PDF-->
+    <string name="preview_image_to_pdf">Predpregled PDF-a</string>
+    <!--    Image to PDF-show page number-->
+    <string name="choose_page_number_style">Odaberite Izgled Broja Stranice</string>
+    <string name="show_pg_num">Prikaži brojeve stranica</string>
+    <string name="page_x_of_n">Stranica X od N</string>
+    <string name="page_x">X od N</string>
+    <string name="x">X</string>
+    <!--    Image to PDF -Rearrange images-->
+    <string name="arrow_up">Strelica Gore</string>
+    <string name="arrow_down">Strelica Dole</string>
+    <string name="rearrange_images">Rasporedi Fotografije</string>
+    <string name="rearrange_text">Rasporedi</string>
+    <string name="images_rearranged">Fotografije Raspoređene</string>
+    <string name="snackbar_undoAction">Poništi</string>
+    <string name="pdf_does_not_exist_message">PDF ne postoji.</string>
+    <string name="image_rearranging_options">Opcije Raspoređivanja Fotografija</string>
+    <string name="filter_file_name">%s_%s.jpg</string>
+
+    <!--    Image compression-->
+    <string name="compress_image">Kompresija fotografija : %s %%</string>
+    <string name="quality_image">Unesite % za kompresiju fotografije :</string>
+    <string name="invalid_entry">Pogrešan unos</string>
+    <string name="compress_dialog_enter_prompt">Unesite ovdje</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">Postavi kao zadano</string>
+    <!--    Image to PDf -Add margins-->
+    <string name="add_margins">Dodaj odstupanja</string>
+    <string name="top">Vrh</string>
+    <string name="bottom">Dno</string>
+    <string name="right">Desno</string>
+    <string name="left">Lijevo</string>
+
+    <!--  Add Image Border  -->
+    <string name="border">Okvir Za Fotografiju</string>
+    <string name="border_dialog_title">Širina okvira : %d</string>
+    <string name="border_width_prompt">Unesite jedinice širine okvira</string>
+
+    <!--  set Image Scale type  -->
+    <string name="image_scale_type">Odaberite način povećanja fotografije</string>
+    <string name="stretch_image">Razvuci fotografiju da popuni stranicu</string>
+    <string name="maintain_aspect_ratio">Zadrži omjer fotografije</string>
+
+
+    <!--QR & Barcode Scan-->
+    <string name="scan_qrcode">Skeniraj QR kod</string>
+    <string name="scan_barcode">Skeniraj Barkod</string>
+    <string name="qrbarcodes_to_pdf">Izradi PDF iz QR &amp; Barkoda</string>
+    <string name="scan_cancelled">Korisnik je prekinuo skeniranje</string>
+
+    <!--Snackbar strings -->
+    <string name="snackbar_no_images">Fotografije nisu odabrane</string>
+    <string name="snackbar_no_pdfs_selected">PDF-ovi nisu odabrani</string>
+    <string name="snackbar_name_not_blank">Naziv ne može biti prazan</string>
+    <string name="snackbar_permissions_given">Dozvole Postavljene!</string>
+    <string name="snackbar_insufficient_permissions">Nedovoljne dozvole!</string>
+    <string name="no_permissions">Odobrite dozvole za pohranu da pogledate datoteke.</string>
+    <string name="prompt_give_permission">Odobrite dozvole</string>
+    <string name="snackbar_images_added">Fotografije dodane</string>
+    <string name="snackbar_file_renamed">Datoteka preimenovana.</string>
+    <string name="snackbar_file_not_renamed">Datoteka ne može biti preimenovana.</string>
+    <string name="snackbar_file_deleted">Datoteka izbrisana.</string>
+    <string name="snackbar_file_not_deleted">Datoteka ne može biti izbrisana.</string>
+    <string name="snackbar_folder_not_created">Greška prilikom kreiranja foldera.</string>
+    <string name="pdf_merged">PDF-ovi Sastavljeni</string>
+    <string name="error_path_not_found">Nažalost, ne možemo pristupiti datoteci na datoj lokaciji</string>
+    <string name="creating_pdf">Izrađujem PDF</string>
+    <string name="creating_txt">Izrađujem Tekstnu Datoteku</string>
+    <string name="enter_file_name">Unesi naziv datoteke</string>
+    <string name="example">Primjer : abc</string>
+    <string name="snackbar_no_pdf_app">Nemate aplikaciju za pregled PDF Datoteke</string>
+    <string name="open_file">Otvori Datoteku</string>
+    <string name="set_password">Postavi Lozinku</string>
+    <string name="enter_password">Unesi Lozinku</string>
+    <string name="snackbar_password_cannot_be_blank">Lozinka ne može biti prazna</string>
+    <string name="cannot_add_password">Lozinka nije dodana na PDF. Molimo provjerite PDF ponovo.</string>
+    <string name="snackbar_imagecropped">Fotografije izrezane</string>
+    <string name="cropImage_activityTitle">Izreži Fotografiju</string>
+    <string name="snackbar_pdfCreated">PDF izrađen!</string>
+    <string name="error_uri_not_found">Nažalost, ne možemo pristupiti izrezanoj fotografiji. Pokušajte ponovo</string>
+    <string name="snack_bar_empty_txt_in_pdf">Odabrani PDF nema tekstualni sadržaj za izdvojiti!</string>
+    <string name="snackbar_txtExtracted">Tekst izdvojen!</string>
+    <string name="snackbar_pdfselected">PDF datoteka odabrana!</string>
+    <string name="snackbar_viewAction">Pogledaj</string>
+    <string name="more_options_text">Više Opcija za Poboljšanje</string>
+    <string name="snackbar_no_duplicate_pdf">Duple stranice nisu pronađene.Nije izrađen novi PDF.</string>
+    <string name="snackbar_duplicate_removed">Novi PDF je izrađen nakon brisanja duplih stranica.</string>
+    <string name="snackbar_invert_unsuccessful">PDF nije moguće obrnuti</string>
+    <string name="snackbar_invert_successfull">Obrnuto</string>
+    <string name="snackbar_color_too_close">Vaša boja fonta i boja pozadine su previše slične</string>
+
+
+    <!-- Excel to PDF   -->
+    <string name="excel_selected">Excel datoteka odabrana</string>
+    <string name="excel_to_pdf">Excel u PDF</string>
+    <string name="excel_tv_view_text">Excel datoteka odabrana: </string>
+    <string name="select_excel_file">Odaberite Excel datoteku</string>
+
+
+
+    <!-- Share strings -->
+    <string name="share_chooser">Odaberite aplikaciju za slanje poruke…</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_us_text">Zdravo! Pronašao/la sam ovu aplikaciju na Google trgovini. Isprobajte : https://play.google.com/store/apps/details?id=swati4star.createpdf . Ona brzo i jednostavno pretvara fotografije u PDF. :)</string>
+    <string name="snackbar_no_share_app">Nema aplikacije za dijeljenje.</string>
+
+    <!-- Select Images string -->
+    <string name="images_selected"> %1$d fotografija(e) odabrane.</string>
+
+    <!-- Feedback Strings -->
+    <string name="feedback_subject">Prijedlozi za Pretvarač Fotografija u PDF</string>
+    <string name="feedback_text">Napišite Vaše prijedloge, ili nas samo pozdravite! :)</string>
+    <string name="snackbar_no_email_clients">Nemate podešen email klijent.</string>
+    <string name="feedback_chooser">"Pošalji mail…"</string>
+    <string name="no_pdf">Nema PDF-ova za prikaz</string>
+    <string name="get_started">Započnite Odmah</string>
+    <string name="view_files_text">Pogledaj sve prebačene datoteke ovdje!</string>
+    <string name="empty_image_description">NemaPdf-a</string>
+
+    <!--  Add Password -->
+    <string name="enter_password_custom">Unesite Lozinku</string>
+    <string name="example_pass_123">lozinka@123</string>
+    <string name="remove_dialog">IZBRIŠI</string>
+    <string name="password_remove">Lozinka Izbrisana</string>
+
+    <!-- Merge PDF  -->
+    <string name="merge_pdf">Spoji PDF</string>
+    <string name="merge_file_select">Odaberite datoteku</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">Putanja datoteke za drugi PDF</string>
+    <string name="merge_files">SPOJO DATOTEKE</string>
+    <string name="file_date_text">Datum Datoteke</string>
+    <string name="file_size_text">Veličina Datoteke</string>
+    <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">Zakačio/la sam PDF datoteke u ovu poruku</string>
+    <string name="btn_sav_text">savText</string>
+
+    <string name="nextimage_contentdesc">Slijedeća Fotografija</string>
+    <string name="decrypted_file">_unencrypted.pdf</string>
+    <string name="decrypt_message">Unesite lozinku za nastavak</string>
+
+    <string name="snackbar_txtselected">Tekstualna datoteka odabrana!</string>
+    <string name="decrypt_protected_file">Odrabrani PDF je zaštićen lozinkom. Unesite lozinku za nastavak…</string>
+    <string name="not_encrypted">PDF nije šifriran</string>
+    <string name="save_current">Sačuvaj</string>
+    <string name="save">Sačuvaj</string>
+    <string name="choose_color_text">Odaberite boju :</string>
+    <string name="save_first">Prvo Sačuvaj Trenutnu Fotografiju</string>
+    <string name="Filter_name">Filtriranje</string>
+    <string name="Filter_image_preview">Filtriraj Predpregled Fotografije</string>
+    <string name="warning">Upozorenje</string>
+    <string name="overwrite_message">Već postoji datoteka sa istim nazivom. Želite li je zamijeniti novom?</string>
+
+    <!--  Text To PDF -Set Page Size-->
+    <string name="set_page_size_text">Odaberite Veličinu Stranice</string>
+    <string name="b0_to_b10">B0 do B10</string>
+    <string name="a0_to_a10">A0 do A10</string>
+    <string name="tabloid">TABLOID</string>
+    <string name="executive">EXECUTIVE</string>
+    <string name="ledger">LEDGER</string>
+    <string name="letter">LETTER</string>
+    <string name="legal">LEGAL</string>
+    <string name="a4">A4</string>
+    <string name="default_page_size">ZADANA ( %s )</string>
+    <string name="master_password_changed">Lozinka nije tačna. Može biti da ste zamijenili glavnu lozinku.</string>
+
+
+    <!--View File options    -->
+    <string name="delete_alert_selected">Želite li izbrisati sve odabrane datoteke?</string>
+    <string name="sort_by_title">Poredaj po</string>
+    <string name="delete">Izbriši</string>
+    <string name="sort">Poredaj</string>
+
+    <!-- Directory Strings -->
+    <string name="directory">Mapa</string>
+    <string name="moving_files">Prebacujem datoteke</string>
+    <string name="success_move">Datoteke uspješno prebačene</string>
+    <string name="dir_does_not_exists">Mapa ne postoji</string>
+    <string name="move_files_delete_dir">Prebacujem datoteke i brišem mapu</string>
+    <string name="directory_deleted">Mapa izbrisana</string>
+    <string name="success_delete_directory">Mapa uspješno izbrisana</string>
+    <string name="moved_files">Datoteke uspješno premještene</string>
+    <string name="dialog_new_dir">Unesite novi naziv mape</string>
+    <string name="dialog_dir">Unesite naziv mape</string>
+    <string name="cancel">Otkaži</string>
+    <string name="ok">OK</string>
+    <string name="yes">Da</string>
+    <string name="select_all">Odaberi Sve</string>
+    <string name="converting_file_message">Pretvaram Vaše datoteke u PDF.</string>
+    <string name="select_text_file">Odaberi Tekstualnu Datoteku</string>
+    <string name="install_file_manager">Molimo da instalirate Menadžer Datoteka</string>
+
+    <!-- Text to PDF   -->
+    <string name="text_to_pdf">Tekst u PDF</string>
+    <string name="text_file_selected">Tekstualna datoteka odabrana</string>
+    <string name="select_file">"Odaberite Datoteku za Slanje"</string>
+    <string name="text_type">text/plain</string>
+    <string name="new_directory">Nova Mapa</string>
+    <string name="previous_image_content_desc">Prethodna Fotografija</string>
+    <string name="text_file_name">"Tekstualna Datoteka : "</string>
+    <string name="extension_not_supported">Žao nam je! Ova vrsta datoteke trenutno nije podržana.</string>
+    <string name="font_color">Boja Slova</string>
+    <string name="edit_font_size">Veličina Slova (Zadano : %d)</string>
+    <string name="enter_font_size">Unesite veličinu slova</string>
+    <string name="example_font">Primjer : 10</string>
+    <string name="font_size_changed">Veličina Slova Promijenjena</string>
+    <string name="font_size">Veličina Slova : %1$s</string>
+
+<!--  About US & App Description & Contact US  -->
+    <string name="about_us">O nama</string>
+    <string name="rate_us">Ocijeni nas</string>
+    <string name="app_description">Android aplikacija uz pomoć koje lagano možete pretvoriti datoteke u PDF.</string>
+    <string name="version">Verzija : </string>
+    <string name="developer">Programer : Swati Garg</string>
+    <string name="github_repo">Github Repozitorij</string>
+    <string name="view_contributors">Pogledaj Saradnike</string>
+    <string name="privacy_policy">Politika Privatnosti</string>
+    <string name="mail">Pošalji Email</string>
+    <string name="join_slack">Pridruži nam se na Slack-u</string>
+    <string name="website">Posjeti naš Web sajt</string>
+    <string name="license">Licenca</string>
+    <string name="playstore">Ocijeni nas na Playstore-u</string>
+
+    <!-- Preview strings -->
+    <string name="swipe_to_view_next">Prevucite lijevo da pogledate slijedeću fotografiju</string>
+    <string name="showing_image">Prikazano %1$d od %2$d fotografije(a)</string>
+
+    <!-- Filter strings -->
+    <string name="filter_brush">Četka</string>
+    <string name="filter_none">Ništa</string>
+    <string name="filter_autofix">Automatska Popravka</string>
+    <string name="filter_grayscale">Sivo</string>
+    <string name="filter_brightness">Svjetlina</string>
+    <string name="filter_contrast">Kontrast</string>
+    <string name="filter_cross">Unakrsni Postupak</string>
+    <string name="filter_documentary">Dokumentarni</string>
+    <string name="filter_duetone">Dupli Ton</string>
+    <string name="filter_filllight">Popuni Svjetlost</string>
+    <string name="filter_filpver">Okreni Okomito</string>
+    <string name="filter_fliphor">Okreni Horizontalno</string>
+    <string name="filter_grain">Zrno</string>
+    <string name="filter_lomish">Lomish</string>
+    <string name="filter_negative">Negativ</string>
+    <string name="filter_poster">Poster</string>
+    <string name="filter_rotate">Zarotiraj</string>
+    <string name="filter_saturate">Zasićenost</string>
+    <string name="filter_sepia">Sepija</string>
+    <string name="filter_sharpen">Izoštreno</string>
+    <string name="filter_temp">Temperatura</string>
+    <string name="filter_tint">Nijansa</string>
+    <string name="filter_vig">Vinjeta</string>
+    <string name="filter_saved">Fotografija Sačuvana</string>
+    <string name="created">Izrađeno</string>
+    <string name="printed">Printano</string>
+    <string name="renamed">Preimenovano</string>
+    <string name="deleted">Izbrisano</string>
+    <string name="rotated">Zarotirano</string>
+    <string name="encrypted">Šifrirano</string>
+    <string name="decrypted">Dešifrirano</string>
+    <string name="history">Historija</string>
+    <string name="no_history_message">Nema izmjena za prikaz</string>
+    <string name="view_history_here_message">Ovdje pogledajte sve prethodno pretvorene datoteke!</string>
+    <string name="delete_history_message">Želite li očistiti historiju?</string>
+
+    <!-- Extract images -->
+    <string name="extract_images">Izdvoji Fotografije</string>
+    <string name="extract_images_failed">Nismo pronašli nijednu fotografiju u odabranom PDF.</string>
+    <string name="extract_images_success">Pronašli smo %1$d fotografiju(e) u odabranom PDF. Sačuvane su u PDF Datoteke mapu u glavnom (root) direktoriju.</string>
+
+
+    <!--  Extract Text-->
+    <string name="extract_text">Izdvoji Tekst</string>
+    <string name="pdf_selected">Odabrana PDF datoteka: </string>
+    <string name="file_info">\n  Naziv Datoteke : %1$s \n\n  Putanja : %2$s \n\n  Veličina : %3$s \n\n  Datum Izmjene %4$s</string>
+
+
+    <!-- Text To PDF   FontFamily-->
+    <string name="default_font_family_text">Vrsta Slova (Zadano : %s)</string>
+    <string name="font_family_text">"Vrsta Slova : "</string>
+    <string name="courier">COURIER</string>
+    <string name="helvetica">HELVETICA</string>
+    <string name="times_roman">TIMES_ROMAN</string>
+    <string name="symbol">SYMBOL</string>
+    <string name="zapfdingbats">ZAPFDINGBATS</string>
+    <string name="undefined">UNDEFINED</string>
+    <string name="selected_image">Odabrana Fotografija</string>
+    <string name="reset">Poništi</string>
+    <string name="rotate">Zarotiraj</string>
+    <string name="done">Gotovo</string>
+    <string name="image_successfully_cropped">Fotografija uspješno isječena</string>
+    <string name="confirm_exit_message">Pritisnite nazad ponovo za izlazak</string>
+
+    <string name="filter_not_saved">Fotografija nije sačuvana</string>
+    <string name="remove_image_message">Jeste li sigurni da želite izbrisati fotografiju?</string>
+    <string name="dont_show_again">Ne prikazuj ponovo</string>
+    <string name="remove_page_message">Jeste li sigurni da želite izbrisati stranicu?</string>
+
+    <!-- Watermark Strings -->
+    <string name="encrypted_file_text">šifrirana datoteka</string>
+
+    <!-- Split PDF -->
+    <string name="split_pdf">Podijeli PDF</string>
+    <string name="split_success">Odabrani PDF je uspješno podijeljen. Podijeljeno na ukupno %1$d PDF(ova)</string>
+    <string name="split_info">PDF će biti podijeljen na više PDF datoteka.Primjer formata: 1&#8211;5,6&#8211;7,8,9</string>
+    <string name="error_page_number">Nevažeći broj stranice</string>
+    <string name="error_page_range">Nevažeći iznos raspona</string>
+    <string name="error_invalid_input">Nevažeći unos</string>
+    <string name="split_one_page_pdf_alert">Odabrani PDF ne može biti podijeljen jer sadrži samo jednu PDF stranicu!</string>
+
+    <!-- Remove Pages -->
+    <string name="remove_pages">Izbriši Stranice</string>
+    <string name="remove_pages_error">Unesena vrijednost nije važeća</string>
+    <string name="encrypted_pdf">PDF je zaštićen lozinkom</string>
+    <string name="file_access_error">Ne možemo pristupiti PDF-u. Datoteke su možda šifrirane ili su na vanjskoj pohrani.</string>
+    <string name="file_order">Nema izmjena za ovu datoteku</string>
+
+    <!-- Reorder Pages -->
+
+
+    <!-- Compress PDF -->
+    <string name="compress_pdf">Kompresuj PDF</string>
+    <string name="compress_pdf_prompt">Unesite % kompresije za PDF : </string>
+    <string name="compress_info">Čestitamo! Vaš PDF je kompresovan: \n Originalna veličina PDF-a : %s \n Kompresovana veličina PDF-a: %s</string>
+
+    <!-- PDF to Images string resources-->
+    <string name="pdf_to_images">PDF u Fotografije</string>
+    <string name="create_images">Izradi Fotografije</string>
+    <string name="select_pdf_file">Odaberi PDF datoteku</string>
+    <string name="share_images">Podijeli Fotografije</string>
+    <string name="view_images">Pogledaj Fotografije</string>
+    <string name="view_in_gallery">Pogledaj Fotografije u Galeriji</string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">Izbriši Duple Stranice</string>
+    <string name="remove_duplicate_info">Duple stranice u PDF-u će biti izbrisane.</string>
+    <string name="remove_duplicate">Izbriši Duple Stranice.</string>
+
+    <!-- Invert Pdf -->
+    <string name="invert_pdf">Obrni PDF</string>
+    <string name="invert_pdf_info">Sve boje u PDF-u će biti obrnute</string>
+    <string name="invert_pdf_title">Obrni PDF</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_positive">Ocijeni sada</string>
+    <string name="rate_negative">Ne, hvala</string>
+    <string name="rate_title">Ocijeni nas!</string>
+    <string name="rate_dialog_text">Ako vam se sviđa ova aplikacija, molimo Vas da izdvojite trenutak i ocijenite ju. Neće trajati duže od minut. Hvala Vam za podršku! :)</string>
+    <string name="rate_us_never">Nikada</string>
+    <string name="error_occurred">Dogodila se Greška</string>
+
+
+    <!--Rotate Pages    -->
+    <string name="rotate_pages">Zakreni Stranice</string>
+    <string name="enter_rotation_angle">Unesite Ugao Zakretanja</string>
+    <string name="rotated_file_name">%s_rotated_%s%s</string>
+    <string name="degree_90" translatable="false">90 &#xb0;</string>
+    <string name="degree_180" translatable="false">180 &#xb0;</string>
+    <string name="degree_270" translatable="false">270 &#xb0;</string>
+    <string name="share_files">Podijeli Datoteke</string>
+    <string name="pdf_removed_from_list">PDF je izbrisan iz liste.</string>
+    <string name="pdf_added_to_list">PDF je dodan na listu.</string>
+    <string name="select_files">Odaberite Datoteke</string>
+
+    <!-- Settings page -->
+    <string name="settings">Postavke</string>
+    <string name="compression_image_edit">Promijeni vrijednost kompresije fotografija</string>
+    <string name="font_family_edit">Promijeni zadanu vrstu slova</string>
+    <string name="font_size_edit">Promijeni zadanu veličinu slova</string>
+    <string name="theme_edit">Promijeni zadani izgled</string>
+    <string name="image_compression_value_default">Zadana vrijednost za kompresiju fotografija : %d %%</string>
+    <string name="theme_value_def">Zadana tema : %s </string>
+    <string name="page_size_value_def">Zadana vrijednost veličine stranice : %s </string>
+    <string name="font_size_value_def">Zadana vrijednost veličine slova : %d </string>
+    <string name="font_family_value_def">Zadana vrijednost vrste slova : %s </string>
+    <string name="settings_info">Ovdje možete izmijeniti zadane vrijednosti za razne postavke.</string>
+    <string name="storage_location_modified">Lokacija za pohranu izmijenjena</string>
+    <string name="storage_location_info">Promijeni lokaciju pohrane</string>
+    <string name="theme_white">Bijela</string>
+    <string name="theme_dark">Tamna</string>
+    <string name="theme_black">Crna</string>
+    <string name="change_master_pwd">Promijeni glavnu lozinku</string>
+    <string name="current_master_pwd">Trenutna glavna lozinka je \"%1$s\" za svaki šifrirani PDF. Ovdje možete promijeniti:</string>
+
+    <!-- Home page -->
+    <string name="home_page">Početna</string>
+    <string name="create_new_pdfs">Izradi novi PDF</string>
+    <string name="view_pdfs">Pogledaj PDF-ove</string>
+    <string name="view_pdf">Pogledaj PDF</string>
+    <string name="modify_existing_pdfs">Izmijeni postojeće PDF-ove</string>
+    <string name="more_options">Više Opcija</string>
+    <string name="add_password">Dodaj lozinku</string>
+    <string name="add_text">Dodaj Tekst</string>
+    <string name="reorder_pages">Rasporedi Stranice</string>
+    <string name="remove_password">Izbriši lozinku</string>
+    <string name="enhance_created_pdfs">Poboljšaj izrađene PDF-ove</string>
+    <string name="viewfiles_rotatepages">1. Odaberite PDF koji želite zakrenuti. \n2. Odaberite Zakreni Stranicu. \n3. Odaberite ugao zakretanja. Stisnite OK. \n4. Novi zakrenuti PDF će biti izrađen.</string>
+    <string name="viewfiles_addpassword">1. Odaberite PDF koji želite zaštititi lozinkom. \n2. Odaberite Dodaj Lozinku. \n3. Unesite novu lozinku. Stisnite OK. \n4. Novi PDF zaštićen lozinkom će biti izrađen.</string>
+    <string name="viewfiles_removepassword">1. Odaberite PDF sa kojeg želite ukloniti lozinku. \n2. Odaberite Izbriši Lozinku. \n3. Unesite lozinku od PDF-a. Stisnite OK. \n4. Novi PDF bez lozinke će biti izrađen.</string>
+    <string name="grayscale_images">Izradi sivi PDF</string>
+
+    <!-- Welcome screens-->
+    <string name="welcome_create_pdf_message">Izrada PDF datoteke</string>
+    <string name="welcome_create_pdf_info">Izradi novi PDF ili pogledaj prethodno izrađene PDF-ove!</string>
+    <string name="welcome_themes_title">Različiti izgledi</string>
+    <string name="welcome_themes_message">Uđite na Postavke, zatim odaberite jedan od 3 izgleda : Crni, Tamni, Bijeli</string>
+    <string name="welcome_merge_title">Spoji PDF Datoteke</string>
+    <string name="welcome_text_to_pdf">Tekst u PDF</string>
+    <string name="welcome_text_to_pdf_message">Pretvorite Vaše tekstualne datoteke u PDF veoma lahko</string>
+    <string name="welcome_qrcode_to_pdf">QR Kod u PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">Pretvorite QR Kodove i Barkodove u PDF na jednostavan način</string>
+    <string name="welcome_remove_pages">Izbriši Stranice</string>
+    <string name="welcome_remove_pages_message">Izbrišite neželjene stranice koje Vam nisu potrebne</string>
+    <string name="welcome_reorder_pages">e</string>
+    <string name="welcome_reorder_pages_message">Preuredite raspored stranica po Vašoj želji</string>
+    <string name="welcome_extract_images">Izdvoji Fotografije iz PDF-a</string>
+    <string name="welcome_extract_images_message">Izdvojite sve moguće fotografije iz PDF-a u pokretu</string>
+    <string name="welcome_merge_message">Spojite više PDF datoteka u jedan PDF na Vašem telefonu</string>
+    <string name="welcome_viewfiles_title">Pregled PDF Datoteka</string>
+    <string name="welcome_viewfiles_message">Pogledaj, izbriši, preimenuj, podijeli i dodaj lozinku na Vaš PDF</string>
+    <string name="skip_text">Preskoči</string>
+    <string name="get_started_title">Počnite!</string>
+
+    <!-- Whats New Dialog -->
+    <string name="whatsnew_continue">Nastavi</string>
+    <string name="whatsnew_title">Šta je novo</string>
+
+    <!--watermark strings -->
+    <string name="watermark_added">Vodeni žig dodan</string>
+    <string name="watermarked">Vodeni žig označen</string>
+    <string name="watermarked_file">_watermarked.pdf</string>
+    <string name="watermark_remove">Vodeni žig izbrisan</string>
+    <string name="snackbar_watermark_cannot_be_blank">Tekst ne može biti prazan</string>
+    <string name="cannot_add_watermark">Vodeni žig nije dodan na PDF. Molimo provjerite PDF ponovo.</string>
+    <string name="add_watermark">Dodaj Vodeni žig</string>
+    <string name="enter_watermark_text">Unesi tekst</string>
+    <string name="enter_watermark_angle">Unesi ugao</string>
+    <string name="watermark_angle">Ugao</string>
+    <string name="choose_watermark_color">Odaberi boju</string>
+    <string name="enter_watermark_font_size">Odaberi veličinu slova</string>
+    <string name="choose_watermark_font_family">Odaberi vrstu slova</string>
+    <string name="watermark_font_size">Veličina slova</string>
+    <string name="choose_watermark_style">Odaberi izgled</string>
+    <string name="viewfiles_addwatermark">1. Odaberite datoteku na koju želite dodati vodeni žig. \n2. Odaberite Dodaj Vodeni žig. \n3. Unesite potrebne informacije. Stisnite OK. \n4. Novi PDF sa vodenim žigom će biti izrađen.</string>
+
+    <!--<nav add images>-->
+    <string name="add_images">Dodaj Fotografije</string>
+    <string name="selected_images_text">Fotografije koje odaberete će biti dodane na kraj PDF-a.</string>
+    <string name="no_images_selected">Nema odabranih fotografija</string>
+    <string name="title_filter_history_dialog">Filtriraj po vrsti operacije</string>
+
+    <!--zip to pdf-->
+    <string name="zip_to_pdf">ZIP u PDF</string>
+    <string name="convert_to_pdf">pretvori u PDF</string>
+    <string name="error_no_image_in_zip">ZIP datoteka ne sadrži fotografije</string>
+    <string name="error_open_file">Dogodila se greška prilikom otvaranja datoteke. Molimo pokušajte ponovo</string>
+
+    <!--text to pdf-->
+    <string name="error_pdf_not_created">Nažalost, PDF nije izrađen. Molimo pokušajte ponovo</string>
+
+    <!--favourite fragment-->
+    <string name="favourites">Omiljeni</string>
+    <string name="add_to_favourite">Dodaj u Omiljene</string>
+    <string name="favourites_text">Odaberite + ikonicu za dodavanje u Omiljene!</string>
+    <string name="no_excel_file">Excel datoteka nije odabrana</string>
+    <string name="split_range_alert">Unešeni raspon za dijeljenje će izraditi odabrani PDF ponovo!</string>
+
+    <!--file name suffix-->
+    <string name="pdf_suffix" translatable="false">_pdf</string>
+    <string name="reordering_pages_dialog">Preuređujem stranice...</string>
+    <string name="delete_alert_singular">Da li želite izbrisati odabrane datoteke?</string>
+    <string name="snackbar_files_deleted">Datoteke Izbrisane</string>
+    <string name="lbl_recently_used">Nedavno Korištene Funkcije</string>
+
+    <!--  FAQs  -->
+  <string-array name="faq_question_answers">
+        <item>Koji formati fotografija su podržani?#####Aplikacija podržava jpeg, jpg, tiff, gif, psd, bmp, eps, png, itd.</item>
+        <item>Mogu li izraditi novu tekstualnu datoteku u aplikaciji?#####Možete izraditi novu tekstualnu datoteku samo tako što ćete izdvojiti tekst iz postojećeg PDF-a. Da izradite tekstualnu datoteku, \n1) Stisnite na <strong>Izdvoji Tekst</strong> opciju na početnoj stranici. \n2) Odaberite PDF koristeći <strong>ODABERI PDF DATOTEKU</strong> tipku. \n3) Zatim, stisnite <strong>IZDVOJI TEKST</strong>. \n4) Kada završite, tekstualna datoteka sa tekstualnim sadržajem iz PDF-a će biti izrađena.</item>
+        <item>Postoji li ograničenje na broj fotografija koje mogu dodati odjednom za izradu PDF-a?#####Ne, nema ograničenja.</item>
+        <item>Postoji li ograničenje na veličinu fotografije?#####Ne, nema ograničenja. Ipak, preporučujemo da ograničite fotografije na <strong>manje od 10MB</strong>. Pretvaranje više većih fotografija može potrajati i više od 10 sekundi.</item>
+        <item>Mogu li dodati naslove za fotografije nakon dodavanja?#####Ne, naslovi ne mogu biti dodani na fotografije, osim da prethodno izmijenite samu fotografiju.</item>
+        <item>Mogu li iščitati PDF datoteke koristeći aplikaciju?#####Ne, trenutno nije moguće. Ova aplikacija nije predviđena za pregled PDF datoteka.</item>
+        <item>Gdje su smještene PDF datoteke koje izradim u ovoj aplikaciji?#####PDF datoteke izrađene ovom aplikacijom su automatski smještene u mapu pod nazivom PDFfiles na pohrani Vašeg telefona. \nMožete promijeniti zadanu putanju u <strong>Postavke</strong> sekciji.</item>
+        <item>Kako promijeniti zadanu lokaciju za pohranu?#####Da promijenite zadanu lokaciju pohrane, \n1) Stisnite na <strong>Hamburger ikonicu</strong> (tri horizontalne linije) u gornjem-lijevom uglu. \n2) Pomaknite prema dole i stisnite na <strong>Postavke</strong>. \n3) Na stranici postavke, stisnite na polje ispod teksta <strong>Promijeni lokaciju pohrane</strong>. \n4) Odaberite željenu lokaciju i stisnite <strong>Odaberi ikonu</strong> na vrhu. \nKada promijenite, datoteke izrađene u ovoj aplikaciji će biti premještene na novu lokaciju.</item>
+        <item>Kako mogu podijeliti PDF datoteke koje su izrađene/izmijenjene u ovoj aplikaciji?#####Možete pristupiti i podijeliti datotek izrađene/izmijenjene u ovoj aplikaciji direktno. Da podijelite PDF datoteke, \n1) Stisnite <strong>Pogledaj Datoteke</strong> opciju na početnoj stranici. \n2) Označite datoteku(e) koje želite podijeliti. \n3) Dalje, stisnite na <strong>Više opcija</strong> (tri vertikalne tačke) u gornjem-desnom uglu i stisnite <strong>Podijeli</strong>. \n4) Odaberite željenu metodu podjele datoteka.</item>
+        <item>Mogu li vratiti zaboravljenu lozinku PDF datoteke koristeći aplikaciju?#####Ne, izgubljena lozinka ne može biti vraćena.</item>
+        <item>Mogu li promijeniti lozinku za PDF datoteku?#####Da, ali samo ako izbrišete postojeću lozinku. Kada je lozinka izbrisana, iskoristite <strong>Izbriši Lozinku</strong> opciju na početnoj stranici.</item>
+        <item>Mogu li kompresovati fotografije prije izrade PDF-a?#####Da, možete. Da kompresujete fotografije, \n1) Stisnite na <strong>Fotografije u PDF</strong> opciju na početnoj stranici. \n2) Odaberite fotografije koristeći <strong>ODABERITE FOTOGRAFIJE</strong> tipku. \n3) Dalje, odaberite <strong>Kompresovanje fotografije</strong> opciju za kompresiju fotografije.</item>
+        <item>Koji je format fotografija koje su izdvojene iz PDF-a?#####Fotografije izdvojene iz PDF-a će biti u <strong>.png</strong> formatu.</item>
+        <item>Mogu li dodati datoteke direktno sa oblaka/online pohrane?#####Trenutno, ne. Ali radimo na tome i možete očekivati uskoro.</item>
+        <item>Kako pogledati listu izmjena/izrađenih datoteka?#####Da pogledate sve datoteke koje ste izmijenili/izradili u aplikaciji. \nStisnite na <strong>Historija</strong> opciju na početnoj stranici.</item>
+        <item>Kako da spojim više PDF datoteka u jednu?#####Da spojite više PDF datoteka, \n1) Stisnite na <strong>Spoji PDF</strong> opciju na početnoj stranici. \n2) Odaberite PDF datoteke koristeći <strong>ODABERI DATOTEKE</strong> tipku. \n3) Kada odaberete, stisnite na <strong>SPOJI DATOTEKE</strong> tipku.</item>
+        <item>Mogu li izmijeniti fotografije prilikom izrade PDF-a?#####Da, možete. Da to uradite, \n1) Stisnite na <strong>Fotografije u PDF</strong> opciju na početnoj stranici. \n2) Odaberi fotografije koristeći <strong>ODABERI FOTOGRAFIJE</strong> tipku. \n3) Kada odaberete, stisnite na <strong>Izmijeni Fotografije</strong> ili <strong>Filtriraj Fotografije</strong> opciju zavisno od Vaših potreba. \n4) Završite izmjene ili dodavanje filtera. \n5) Sada, odaberite izmijenjene fotografije koristeći <strong>ODABERI FOTOGRAFIJE</strong> tipku i stisnite na <strong>IZRADI PDF</strong> da izradite novi PDF.</item>
+        <item>Kako da dodam vodeni žig?#####Da dodate vodeni žig, pomaknite prema dole na <strong>Poboljšaj izrađeni PDF</strong> na početnoj stranici ili u opcijama u izborniku tako što ćete prevući sa lijeve na desnu stranu i stisnuti na <strong>Dodaj vodeni žig</strong>.</item>
+        <item>Mogu li preurediti stranice u PDF-u?#####Da, možete. Da preuredite stranice, \n1) Stisnite na <strong>Preuredi Stranice</strong> opciju na početnoj stranici. \n2) Odaberite PDF datoteku koristeći <strong>ODABERITE DATOTEKU</strong> tipku. \n3) Stisnite <strong>IZRADI PDF</strong>. \n4) Koristite strelice gore i dole za pomjeranje stranica. \n5) Kada preuredite, stisnite na <strong>NAZAD Strelica</strong> u gornjem-lijevom uglu da izradite novi izmijenjeni PDF.</item>
+        <item>Kako da izdvojim fotografije iz PDF-a?#####Da izdvojite fotografije, \n1) Stisnite na <strong>IZDVOJI FOTOGRAFIJE</strong> na početnoj stranici. \n2) Odaberite PDF datoteku koristeći <strong>ODABERITE DATOTEKU</strong> tipku. \n3) Kada odaberete, stisnite na <strong>IZRADI FOTOGRAFIJE</strong> tipku.</item>
+        <item>Mogu li pretvoriti PDF u PPT, PPTX, ODT, DOC, DOCX formate?#####Ne, PDF datoteke trenutno možete pretvoriti samo u tekstualne datoteke.</item>
+        <item>Gdje mogu pronaći PDF PRETVARAČ: Datoteke u PDF aplikaciju?#####Aplikacija je dostupna na Google PlayStore kao i na F-Droid</item>
+        <item>Mogu li doprinijeti razvoju ove aplikacije?#####Da, naravno. Pronađite nas na GitHub-u koristeći naziv projekta <strong>Swati4star/Images-to-PDF</strong>. \nSlobodno podijelite sa nama Vaše ideje(zahtjeve za nove opcije), prijavite grešku ili PR(pull request). \nMnogi su doprinijeli ovom projektu sa bar promjenom u jednoj liniji. Pročitajte stranicu <strong>Vodič za doprinos</strong> da započnete.</item>
+        <item>Imam neka pitanja koja se ne nalaze u FAQs dokumentu. Kako mogu kontaktirati programera?#####Za buduća pitanja, kontaktirajte programera na mail <strong>swati4star@gmail.com</strong></item>
+    </string-array>
+
+</resources>
