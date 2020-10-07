@@ -2,9 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:title="Images to PDF"
+        android:icon="@drawable/ic_menu_camera"
         android:key="@string/images_to_pdf"
-        android:icon="@drawable/ic_menu_camera"/>
+        android:title="@string/images_to_pdf" />
 
     <CheckBoxPreference
         android:title="@string/text_to_pdf"
