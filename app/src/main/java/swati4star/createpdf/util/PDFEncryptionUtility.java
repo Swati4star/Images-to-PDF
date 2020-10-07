@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,10 +58,7 @@ public class PDFEncryptionUtility {
         assert mDialog.getCustomView() != null;
         EditText mPasswordInput = mDialog.getCustomView().findViewById(R.id.password);
         mPasswordInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
+                new DefaultTextWatcher() {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         mPositiveAction.setEnabled(s.toString().trim().length() > 0);
@@ -159,11 +155,7 @@ public class PDFEncryptionUtility {
         TextView text = mDialog.getCustomView().findViewById(R.id.enter_password);
         text.setText(R.string.decrypt_message);
         mPasswordInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
+                new DefaultTextWatcher() {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         mPositiveAction.setEnabled(s.toString().trim().length() > 0);

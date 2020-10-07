@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import swati4star.createpdf.R;
+
 /**
  * !! IMPORTANT !!
  * permission arrays are defined in Constants.java file. we have two types of permissions:
@@ -78,5 +80,26 @@ public class PermissionsUtils {
         } else {
             return ((Fragment) context).requireActivity();
         }
+    }
+
+    /**
+     * Handle a RequestPermissionResult by checking if the first permission is granted
+     * and executing a Runnable when permission is granted
+     * @param grantResults the GrantResults Array
+     * @param requestCode
+     * @param expectedRequest
+     * @param whenSuccessful the Runnable to call when permission is granted
+     */
+    public void handleRequestPermissionsResult(Activity context, @NonNull int[] grantResults,
+                                               int requestCode, int expectedRequest, @NonNull Runnable whenSuccessful) {
+        if (requestCode != expectedRequest)
+            return;
+        if (grantResults.length < 1)
+            return;
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            whenSuccessful.run();
+            StringUtils.getInstance().showSnackbar(context, R.string.snackbar_permissions_given);
+        } else
+            StringUtils.getInstance().showSnackbar(context, R.string.snackbar_insufficient_permissions);
     }
 }

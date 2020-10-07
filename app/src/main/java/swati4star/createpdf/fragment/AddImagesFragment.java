@@ -3,7 +3,6 @@ package swati4star.createpdf.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -21,9 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.PicassoEngine;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.ArrayList;
 
@@ -40,13 +36,13 @@ import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUriUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
-import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 
@@ -161,16 +157,11 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length < 1)
-            return;
-        if (requestCode == REQUEST_PERMISSIONS_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mPermissionGranted = true;
-                selectImages();
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
-            } else
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-        }
+        PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
+                requestCode, REQUEST_PERMISSIONS_CODE, () -> {
+                    mPermissionGranted = true;
+                    selectImages();
+                });
     }
 
     @OnClick(R.id.pdfCreate)
@@ -248,14 +239,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      * Opens Matisse activity to select Images
      */
     private void selectImages() {
-        Matisse.from(this)
-                .choose(MimeType.ofImage(), false)
-                .countable(true)
-                .capture(true)
-                .captureStrategy(new CaptureStrategy(true, AUTHORITY_APP))
-                .maxSelectable(1000)
-                .imageEngine(new PicassoEngine())
-                .forResult(INTENT_REQUEST_GET_IMAGES);
+        ImageUtils.selectImages(this, INTENT_REQUEST_GET_IMAGES);
     }
 
     @Override
