@@ -27,7 +27,7 @@
                     android:layout_weight="1.0"
                     android:visibility="gone"
                     app:option_icon="@drawable/ic_menu_camera"
-                    app:option_text="Images to PDF" />
+                    app:option_text="@string/images_to_pdf" />
 
                 <swati4star.createpdf.customviews.MyCardView
                     android:id="@+id/text_to_pdf_fav"
