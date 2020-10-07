@@ -24,18 +24,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
-
-import java.util.ArrayList;
-import java.util.Objects;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
@@ -56,6 +51,9 @@ import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
@@ -102,12 +100,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private boolean mPasswordProtected = false;
     private String mPassword;
 
-    public ExceltoPdfFragment() {
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_excelto_pdf, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -309,8 +303,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     private void setPassword() {
-        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity,
-                R.string.set_password);
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity, R.string.set_password);
         final MaterialDialog dialog = builder
                 .customView(R.layout.custom_dialog, true)
                 .neutralText(R.string.remove_dialog)
@@ -320,33 +313,11 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         final View neutralAction = dialog.getActionButton(DialogAction.NEUTRAL);
         final EditText passwordInput = Objects.requireNonNull(dialog.getCustomView()).findViewById(R.id.password);
         passwordInput.setText(mPassword);
-        passwordInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        positiveAction.setEnabled(s.toString().trim().length() > 0);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable input) {
-                        if (StringUtils.getInstance().isEmpty(input)) {
-                            StringUtils.getInstance().
-                                    showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
-                        } else {
-                            mPassword = input.toString();
-                            mPasswordProtected = true;
-                            onPasswordAdded();
-                        }
-                    }
-                });
+        passwordInput.addTextChangedListener(watcherImpl(positiveAction));
         if (StringUtils.getInstance().isNotEmpty(mPassword)) {
             neutralAction.setOnClickListener(v -> {
                 mPassword = null;
-                onPasswordRemoved();
+                onPasswordAction(R.drawable.baseline_enhanced_encryption_24);
                 mPasswordProtected = false;
                 dialog.dismiss();
                 StringUtils.getInstance().showSnackbar(mActivity, R.string.password_remove);
@@ -356,17 +327,33 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         positiveAction.setEnabled(false);
     }
 
-    private void onPasswordAdded() {
-        mEnhancementOptionsEntityArrayList.get(0)
-                .setImage(mActivity.getResources()
-                        .getDrawable(R.drawable.baseline_done_24));
-        mEnhancementOptionsAdapter.notifyDataSetChanged();
+    private TextWatcher watcherImpl(View positiveAction) {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                positiveAction.setEnabled(s.toString().trim().length() > 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable input) {
+                if (StringUtils.getInstance().isEmpty(input)) {
+                    StringUtils.getInstance().
+                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+                } else {
+                    mPassword = input.toString();
+                    mPasswordProtected = true;
+                    onPasswordAction(R.drawable.baseline_done_24);
+                }
+            }
+        };
     }
 
-    private void onPasswordRemoved() {
-        mEnhancementOptionsEntityArrayList.get(0)
-                .setImage(mActivity.getResources()
-                        .getDrawable(R.drawable.baseline_enhanced_encryption_24));
+    private void onPasswordAction(int drawable) {
+        mEnhancementOptionsEntityArrayList.get(0).setImage(mActivity.getResources().getDrawable(drawable));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
