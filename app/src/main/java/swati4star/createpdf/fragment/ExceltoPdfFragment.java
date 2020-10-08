@@ -67,7 +67,6 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private String mRealPath;
     private String mPath;
     private BottomSheetBehavior mSheetBehavior;
-    private final StringUtils stringUtils = StringUtils.getInstance();
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -87,6 +86,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     RelativeLayout mLayout;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
+
+    StringUtils stringUtils = StringUtils.getInstance();
 
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
@@ -343,8 +344,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
             @Override
             public void afterTextChanged(Editable input) {
                 if (stringUtils.isEmpty(input)) {
-                    stringUtils.
-                            showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+                    stringUtils.showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
                 } else {
                     mPassword = input.toString();
                     mPasswordProtected = true;
