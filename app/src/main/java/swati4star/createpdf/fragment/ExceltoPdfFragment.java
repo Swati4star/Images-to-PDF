@@ -87,8 +87,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
 
-    StringUtils stringUtils = StringUtils.getInstance();
-
+    private StringUtils mStringUtils;
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
     private BottomSheetUtils mBottomSheetUtils;
@@ -134,9 +133,10 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (Activity) context;
-        this.mFileUtils = new FileUtils(this.mActivity);
-        this.mBottomSheetUtils = new BottomSheetUtils(this.mActivity);
+        mActivity = (Activity) context;
+        mFileUtils = new FileUtils(mActivity);
+        mBottomSheetUtils = new BottomSheetUtils(mActivity);
+        mStringUtils = StringUtils.getInstance();
     }
 
     @OnClick(R.id.select_excel_file)
@@ -151,7 +151,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
                         Intent.createChooser(intent, String.valueOf(R.string.select_file)),
                         mFileSelectCode);
             } catch (android.content.ActivityNotFoundException ex) {
-                stringUtils.showSnackbar(mActivity, R.string.install_file_manager);
+                mStringUtils.showSnackbar(mActivity, R.string.install_file_manager);
             }
             mButtonClicked = true;
         }
@@ -170,8 +170,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (stringUtils.isEmpty(input)) {
-                        stringUtils.showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    if (mStringUtils.isEmpty(input)) {
+                        mStringUtils.showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
@@ -214,18 +214,18 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
                 openExcelToPdf();
-                stringUtils.showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                mStringUtils.showSnackbar(mActivity, R.string.snackbar_permissions_given);
             } else
-                stringUtils.showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+                mStringUtils.showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
     private void processUri() {
-        stringUtils.showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
+        mStringUtils.showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
         String fileName = mFileUtils.getFileName(mExcelFileUri);
         if (fileName != null && !fileName.endsWith(Constants.excelExtension) &&
                 !fileName.endsWith(Constants.excelWorkbookExtension)) {
-            stringUtils.showSnackbar(mActivity, R.string.extension_not_supported);
+            mStringUtils.showSnackbar(mActivity, R.string.extension_not_supported);
             return;
         }
 
@@ -248,7 +248,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
     private void convertToPdf(String mFilename) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                stringUtils.getDefaultStorageLocation());
+                mStringUtils.getDefaultStorageLocation());
         mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
         new ExcelToPDFAsync(mRealPath, mPath, ExceltoPdfFragment.this, mPasswordProtected, mPassword).execute();
 
@@ -271,14 +271,14 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
-            stringUtils.showSnackbar(mActivity, R.string.error_pdf_not_created);
+            mStringUtils.showSnackbar(mActivity, R.string.error_pdf_not_created);
             mTextView.setVisibility(View.GONE);
             mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
             mCreateExcelPdf.setEnabled(false);
             mExcelFileUri = null;
             return;
         }
-        stringUtils.getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+        mStringUtils.getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction,
                         v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF))
                 .show();
@@ -296,7 +296,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public void onItemClick(int position) {
         if (!mCreateExcelPdf.isEnabled()) {
-            stringUtils.showSnackbar(mActivity, R.string.no_excel_file);
+            mStringUtils.showSnackbar(mActivity, R.string.no_excel_file);
             return;
         }
         if (position == 0) {
@@ -317,13 +317,13 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         final EditText passwordInput = Objects.requireNonNull(dialog.getCustomView()).findViewById(R.id.password);
         passwordInput.setText(mPassword);
         passwordInput.addTextChangedListener(watcherImpl(positiveAction));
-        if (stringUtils.isNotEmpty(mPassword)) {
+        if (mStringUtils.isNotEmpty(mPassword)) {
             neutralAction.setOnClickListener(v -> {
                 mPassword = null;
-                onPasswordAction(R.drawable.baseline_enhanced_encryption_24);
+                setPasswordIcon(R.drawable.baseline_enhanced_encryption_24);
                 mPasswordProtected = false;
                 dialog.dismiss();
-                stringUtils.showSnackbar(mActivity, R.string.password_remove);
+                mStringUtils.showSnackbar(mActivity, R.string.password_remove);
             });
         }
         dialog.show();
@@ -343,18 +343,18 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
             @Override
             public void afterTextChanged(Editable input) {
-                if (stringUtils.isEmpty(input)) {
-                    stringUtils.showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
+                if (mStringUtils.isEmpty(input)) {
+                    mStringUtils.showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
                 } else {
                     mPassword = input.toString();
                     mPasswordProtected = true;
-                    onPasswordAction(R.drawable.baseline_done_24);
+                    setPasswordIcon(R.drawable.baseline_done_24);
                 }
             }
         };
     }
 
-    private void onPasswordAction(int drawable) {
+    private void setPasswordIcon(int drawable) {
         mEnhancementOptionsEntityArrayList.get(0).setImage(mActivity.getResources().getDrawable(drawable));
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
