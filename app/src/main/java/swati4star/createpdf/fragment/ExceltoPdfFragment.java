@@ -67,6 +67,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private String mRealPath;
     private String mPath;
     private BottomSheetBehavior mSheetBehavior;
+    private final StringUtils stringUtils = StringUtils.getInstance();
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -149,7 +150,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
                         Intent.createChooser(intent, String.valueOf(R.string.select_file)),
                         mFileSelectCode);
             } catch (android.content.ActivityNotFoundException ex) {
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
+                stringUtils.showSnackbar(mActivity, R.string.install_file_manager);
             }
             mButtonClicked = true;
         }
@@ -168,8 +169,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
                 .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.getInstance().isEmpty(input)) {
-                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                    if (stringUtils.isEmpty(input)) {
+                        stringUtils.showSnackbar(mActivity, R.string.snackbar_name_not_blank);
                     } else {
                         final String inputName = input.toString();
                         if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
@@ -212,18 +213,18 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
                 openExcelToPdf();
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
+                stringUtils.showSnackbar(mActivity, R.string.snackbar_permissions_given);
             } else
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+                stringUtils.showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
         }
     }
 
     private void processUri() {
-        StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
+        stringUtils.showSnackbar(mActivity, getResources().getString(R.string.excel_selected));
         String fileName = mFileUtils.getFileName(mExcelFileUri);
         if (fileName != null && !fileName.endsWith(Constants.excelExtension) &&
                 !fileName.endsWith(Constants.excelWorkbookExtension)) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.extension_not_supported);
+            stringUtils.showSnackbar(mActivity, R.string.extension_not_supported);
             return;
         }
 
@@ -246,7 +247,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
     private void convertToPdf(String mFilename) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation());
+                stringUtils.getDefaultStorageLocation());
         mPath = mStorePath + mFilename + mActivity.getString(R.string.pdf_ext);
         new ExcelToPDFAsync(mRealPath, mPath, ExceltoPdfFragment.this, mPasswordProtected, mPassword).execute();
 
@@ -269,14 +270,14 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_pdf_not_created);
+            stringUtils.showSnackbar(mActivity, R.string.error_pdf_not_created);
             mTextView.setVisibility(View.GONE);
             mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
             mCreateExcelPdf.setEnabled(false);
             mExcelFileUri = null;
             return;
         }
-        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
+        stringUtils.getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction,
                         v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF))
                 .show();
@@ -294,7 +295,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public void onItemClick(int position) {
         if (!mCreateExcelPdf.isEnabled()) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.no_excel_file);
+            stringUtils.showSnackbar(mActivity, R.string.no_excel_file);
             return;
         }
         if (position == 0) {
@@ -315,13 +316,13 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         final EditText passwordInput = Objects.requireNonNull(dialog.getCustomView()).findViewById(R.id.password);
         passwordInput.setText(mPassword);
         passwordInput.addTextChangedListener(watcherImpl(positiveAction));
-        if (StringUtils.getInstance().isNotEmpty(mPassword)) {
+        if (stringUtils.isNotEmpty(mPassword)) {
             neutralAction.setOnClickListener(v -> {
                 mPassword = null;
                 onPasswordAction(R.drawable.baseline_enhanced_encryption_24);
                 mPasswordProtected = false;
                 dialog.dismiss();
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.password_remove);
+                stringUtils.showSnackbar(mActivity, R.string.password_remove);
             });
         }
         dialog.show();
@@ -341,8 +342,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
             @Override
             public void afterTextChanged(Editable input) {
-                if (StringUtils.getInstance().isEmpty(input)) {
-                    StringUtils.getInstance().
+                if (stringUtils.isEmpty(input)) {
+                    stringUtils.
                             showSnackbar(mActivity, R.string.snackbar_password_cannot_be_blank);
                 } else {
                     mPassword = input.toString();
