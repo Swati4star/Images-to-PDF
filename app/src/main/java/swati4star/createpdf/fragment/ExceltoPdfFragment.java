@@ -303,7 +303,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     private void setPassword() {
-        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mActivity, R.string.set_password);
+        MaterialDialog.Builder builder = DialogUtils.getInstance()
+                .createCustomDialogWithoutContent(mActivity, R.string.set_password);
         final MaterialDialog dialog = builder
                 .customView(R.layout.custom_dialog, true)
                 .neutralText(R.string.remove_dialog)
