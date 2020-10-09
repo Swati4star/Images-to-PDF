@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -276,13 +277,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode != REQUEST_PERMISSIONS_CODE)
+
+        if (grantResults.length < 1)
             return;
-        PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                requestCode, REQUEST_PERMISSIONS_CODE, () -> {
-                    mPermissionGranted = true;
-                    selectImages();
-                });
+
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPermissionGranted = true;
+                selectImages();
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
+            } else
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
+        }
     }
 
     /**
