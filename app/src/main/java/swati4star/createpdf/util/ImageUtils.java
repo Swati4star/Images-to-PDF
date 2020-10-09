@@ -247,6 +247,11 @@ public class ImageUtils {
         return myDir + "/" + fileName;
     }
 
+    /**
+     * Open a dialog to select some Images
+     * @param frag the fragment that should receive the Images
+     * @param requestCode the internal request code the fragment uses for image selection
+     */
     public static void selectImages(Fragment frag, int requestCode) {
         Matisse.from(frag)
                 .choose(MimeType.ofImage(), false)

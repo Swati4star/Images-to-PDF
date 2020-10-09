@@ -240,13 +240,20 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         createPdf(false);
     }
 
-
+    /**
+     * Opens the dialog to select a save name
+     */
     private void createPdf(boolean isGrayScale) {
         String preFillName = mFileUtils.getLastFileName(mImagesUri);
         String ext = getString(R.string.pdf_ext);
         mFileUtils.openSaveDialog(preFillName, ext, filename -> save(isGrayScale, filename));
     }
 
+    /**
+     * Saves the PDF
+     * @param isGrayScale if the images should be converted to grayscale before
+     * @param filename the filename to save to
+     */
     private void save(boolean isGrayScale, String filename) {
         mPdfOptions.setImagesUri(mImagesUri);
         mPdfOptions.setPageSize(PageSizeUtils.mPageSize);
@@ -816,9 +823,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
                     }
                     if (cbDefault.isChecked ()) {
-                        SharedPreferencesUtil.getInstance().setDefaultPageStyle(editor, mPageNumStyle, mChoseId);
+                        SharedPreferencesUtil.getInstance().setDefaultPageNumStyle(editor, mPageNumStyle, mChoseId);
                     } else {
-                        SharedPreferencesUtil.getInstance().clearDefaultPageStyle(editor);
+                        SharedPreferencesUtil.getInstance().clearDefaultPageNumStyle(editor);
                     }
                 }))
                 .onNeutral((((dialog, which) -> mPageNumStyle = null)))

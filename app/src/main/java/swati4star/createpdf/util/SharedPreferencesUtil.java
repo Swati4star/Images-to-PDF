@@ -14,14 +14,24 @@ public class SharedPreferencesUtil {
         return SharedPreferencesUtil.SingletonHolder.INSTANCE;
     }
 
-    public void setDefaultPageStyle(SharedPreferences.Editor editor, String pageNumStyle, int id) {
+    /**
+     * Set the default Page numbering style
+     * @param editor the {@link SharedPreferences.Editor} to use for editing
+     * @param pageNumStyle the page numbering style as defined in {@link Constants}
+     * @param id the id of the style
+     */
+    public void setDefaultPageNumStyle(SharedPreferences.Editor editor, String pageNumStyle, int id) {
         editor.putString(Constants.PREF_PAGE_STYLE, pageNumStyle);
         editor.putInt(Constants.PREF_PAGE_STYLE_ID, id);
         editor.apply();
     }
 
-    public void clearDefaultPageStyle(SharedPreferences.Editor editor) {
-        setDefaultPageStyle(editor, null, -1);
+    /**
+     * Clear the default Page numbering style
+     * @param editor the {@link SharedPreferences.Editor} to use for editing
+     */
+    public void clearDefaultPageNumStyle(SharedPreferences.Editor editor) {
+        setDefaultPageNumStyle(editor, null, -1);
     }
 
 }

@@ -326,9 +326,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
                         style = Constants.PG_NUM_STYLE_X;
                     }
                     if (cbDefault.isChecked()) {
-                        SharedPreferencesUtil.getInstance().setDefaultPageStyle(editor, style, id);
+                        SharedPreferencesUtil.getInstance().setDefaultPageNumStyle(editor, style, id);
                     } else {
-                        SharedPreferencesUtil.getInstance().clearDefaultPageStyle(editor);
+                        SharedPreferencesUtil.getInstance().clearDefaultPageNumStyle(editor);
                     }
                 }))
                 .build();
