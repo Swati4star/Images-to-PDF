@@ -144,11 +144,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
                 Log.v("Stage 5", "Image compressed " + qualityMod);
 
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);
-
-                Log.v("Stage 6", "Image path adding");
-
                 float pageWidth = document.getPageSize().getWidth() - (mMarginLeft + mMarginRight);
                 float pageHeight = document.getPageSize().getHeight() - (mMarginBottom + mMarginTop);
                 if (mImageScaleType.equals(IMAGE_SCALE_TYPE_ASPECT_RATIO))
@@ -160,20 +155,20 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,
                         (documentRect.getHeight() - image.getScaledHeight()) / 2);
 
-                Log.v("Stage 7", "Image Alignments");
+                Log.v("Stage 6", "Image Alignments");
                 addPageNumber(documentRect, writer);
                 document.add(image);
 
                 document.newPage();
             }
 
-            Log.v("Stage 8", "Image adding");
+            Log.v("Stage 7", "Image adding");
 
             document.close();
 
-            Log.v("Stage 7", "Document Closed" + mPath);
+            Log.v("Stage 8", "Document Closed" + mPath);
 
-            Log.v("Stage 8", "Record inserted in database");
+            Log.v("Stage 9", "Record inserted in database");
 
         } catch (Exception e) {
             e.printStackTrace();
