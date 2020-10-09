@@ -177,7 +177,8 @@ public class CommonCodeUtils {
         return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 
-    private void addFragmentPosition(boolean homePageItems, int iconA, int iconB, int iconId, int drawableId, int titleString) {
+    private void addFragmentPosition(boolean homePageItems, int iconA, int iconB,
+                                     int iconId, int drawableId, int titleString) {
         mFragmentPositionMap.put(homePageItems ? iconA : iconB, new HomePageItem(iconId, drawableId, titleString));
     }
 
@@ -222,7 +223,8 @@ public class CommonCodeUtils {
         addFragmentPosition(homePageItems, add_images, add_images_fav,
                 nav_add_images, ic_add_black_24dp, R.string.add_images);
         addFragmentPosition(homePageItems, remove_duplicates_pages_pdf,
-                remove_duplicates_pages_pdf_fav, nav_remove_duplicate_pages, R.drawable.ic_remove_duplicate_square_black, R.string.remove_duplicate_pages);
+                remove_duplicates_pages_pdf_fav, nav_remove_duplicate_pages,
+                R.drawable.ic_remove_duplicate_square_black, R.string.remove_duplicate_pages);
         addFragmentPosition(homePageItems, R.id.invert_pdf, invert_pdf_fav,
                 nav_invert_pdf, ic_invert_color_24dp, R.string.invert_pdf);
         addFragmentPosition(homePageItems, R.id.zip_to_pdf, zip_to_pdf_fav,
