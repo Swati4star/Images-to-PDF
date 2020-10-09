@@ -323,18 +323,8 @@ public class ViewFilesFragment extends Fragment
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-
-        if (grantResults.length < 1) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-            return;
-        }
-        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
-                onRefresh();
-            } else
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-        }
+        PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
+                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, this::onRefresh);
     }
 
     @Override

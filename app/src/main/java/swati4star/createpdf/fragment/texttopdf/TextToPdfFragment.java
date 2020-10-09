@@ -3,7 +3,6 @@ package swati4star.createpdf.fragment.texttopdf;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -233,16 +232,11 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length < 1)
-            return;
-        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mPermissionGranted = true;
-                selectTextFile();
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_permissions_given);
-            } else
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-        }
+        PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
+                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, () -> {
+                    mPermissionGranted = true;
+                    selectTextFile();
+                });
     }
 
     private void getRuntimePermissions() {
