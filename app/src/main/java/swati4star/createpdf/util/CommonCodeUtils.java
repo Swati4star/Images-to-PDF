@@ -183,29 +183,52 @@ public class CommonCodeUtils {
 
     public Map<Integer, HomePageItem> fillNavigationItemsMap(boolean homePageItems) {
         mFragmentPositionMap = new HashMap<>();
-        addFragmentPosition(homePageItems, R.id.images_to_pdf, images_to_pdf_fav, nav_camera, ic_menu_camera, R.string.images_to_pdf);
-        addFragmentPosition(homePageItems, qr_barcode_to_pdf, qr_barcode_to_pdf_fav, nav_qrcode, ic_qrcode_24dp, qr_barcode_pdf);
-        addFragmentPosition(homePageItems, R.id.excel_to_pdf, excel_to_pdf_fav, nav_excel_to_pdf, ic_excel, excel_to_pdf);
-        addFragmentPosition(homePageItems, view_files, view_files_fav, nav_gallery, ic_menu_gallery, R.string.viewFiles);
-        addFragmentPosition(homePageItems, rotate_pages, rotate_pages_fav, nav_gallery, baseline_crop_rotate_24, R.string.rotate_pages);
-        addFragmentPosition(homePageItems, extract_text, extract_text_fav, nav_text_extract, ic_broken_image_black_24dp, R.string.extract_text);
-        addFragmentPosition(homePageItems, add_watermark, add_watermark_fav, nav_add_watermark, ic_branding_watermark_black_24dp, R.string.add_watermark);
-        addFragmentPosition(homePageItems, merge_pdf, merge_pdf_fav, nav_merge, ic_merge_type_black_24dp, R.string.merge_pdf);
-        addFragmentPosition(homePageItems, split_pdf, split_pdf_fav, nav_split, ic_call_split_black_24dp, R.string.split_pdf);
-        addFragmentPosition(homePageItems, text_to_pdf, text_to_pdf_fav, nav_text_to_pdf, ic_text_format_black_24dp, R.string.text_to_pdf);
-        addFragmentPosition(homePageItems, compress_pdf, compress_pdf_fav, nav_compress_pdf, ic_compress_image, R.string.compress_pdf);
-        addFragmentPosition(homePageItems, remove_pages, remove_pages_fav, nav_remove_pages, ic_remove_circle_black_24dp, R.string.remove_pages);
-        addFragmentPosition(homePageItems, rearrange_pages, rearrange_pages_fav, nav_rearrange_pages, ic_rearrange, R.string.reorder_pages);
-        addFragmentPosition(homePageItems, extract_images, extract_images_fav, nav_extract_images, ic_broken_image_black_24dp, R.string.extract_images);
-        addFragmentPosition(homePageItems, view_history, view_history_fav, nav_history, ic_history_black_24dp, R.string.history);
-        addFragmentPosition(homePageItems, pdf_to_images, pdf_to_images_fav, nav_pdf_to_images, ic_image_black_24dp, R.string.pdf_to_images);
-        addFragmentPosition(homePageItems, add_password, add_password_fav, nav_add_password, ic_lock_black_24dp, R.string.add_password);
-        addFragmentPosition(homePageItems, remove_password, remove_password_fav, nav_remove_password, ic_lock_open_black_24dp, R.string.remove_password);
-        addFragmentPosition(homePageItems, add_images, add_images_fav, nav_add_images, ic_add_black_24dp, R.string.add_images);
-        addFragmentPosition(homePageItems, remove_duplicates_pages_pdf, remove_duplicates_pages_pdf_fav, nav_remove_duplicate_pages, R.drawable.ic_remove_duplicate_square_black, R.string.remove_duplicate_pages);
-        addFragmentPosition(homePageItems, R.id.invert_pdf, invert_pdf_fav, nav_invert_pdf, ic_invert_color_24dp, R.string.invert_pdf);
-        addFragmentPosition(homePageItems, R.id.zip_to_pdf, zip_to_pdf_fav, nav_zip_to_pdf, ic_zip_to_pdf, R.string.zip_to_pdf);
-        addFragmentPosition(homePageItems, R.id.add_text, add_text_fav, nav_add_text, ic_text_format_black_24dp, R.string.add_text);
+        addFragmentPosition(homePageItems, R.id.images_to_pdf,
+                images_to_pdf_fav, nav_camera, ic_menu_camera, R.string.images_to_pdf);
+        addFragmentPosition(homePageItems, qr_barcode_to_pdf,
+                qr_barcode_to_pdf_fav, nav_qrcode, ic_qrcode_24dp, qr_barcode_pdf);
+        addFragmentPosition(homePageItems, R.id.excel_to_pdf,
+                excel_to_pdf_fav, nav_excel_to_pdf, ic_excel, excel_to_pdf);
+        addFragmentPosition(homePageItems, view_files, view_files_fav,
+                nav_gallery, ic_menu_gallery, R.string.viewFiles);
+        addFragmentPosition(homePageItems, rotate_pages, rotate_pages_fav,
+                nav_gallery, baseline_crop_rotate_24, R.string.rotate_pages);
+        addFragmentPosition(homePageItems, extract_text, extract_text_fav,
+                nav_text_extract, ic_broken_image_black_24dp, R.string.extract_text);
+        addFragmentPosition(homePageItems, add_watermark, add_watermark_fav,
+                nav_add_watermark, ic_branding_watermark_black_24dp, R.string.add_watermark);
+        addFragmentPosition(homePageItems, merge_pdf, merge_pdf_fav,
+                nav_merge, ic_merge_type_black_24dp, R.string.merge_pdf);
+        addFragmentPosition(homePageItems, split_pdf, split_pdf_fav,
+                nav_split, ic_call_split_black_24dp, R.string.split_pdf);
+        addFragmentPosition(homePageItems, text_to_pdf, text_to_pdf_fav,
+                nav_text_to_pdf, ic_text_format_black_24dp, R.string.text_to_pdf);
+        addFragmentPosition(homePageItems, compress_pdf, compress_pdf_fav,
+                nav_compress_pdf, ic_compress_image, R.string.compress_pdf);
+        addFragmentPosition(homePageItems, remove_pages, remove_pages_fav,
+                nav_remove_pages, ic_remove_circle_black_24dp, R.string.remove_pages);
+        addFragmentPosition(homePageItems, rearrange_pages, rearrange_pages_fav,
+                nav_rearrange_pages, ic_rearrange, R.string.reorder_pages);
+        addFragmentPosition(homePageItems, extract_images, extract_images_fav,
+                nav_extract_images, ic_broken_image_black_24dp, R.string.extract_images);
+        addFragmentPosition(homePageItems, view_history, view_history_fav,
+                nav_history, ic_history_black_24dp, R.string.history);
+        addFragmentPosition(homePageItems, pdf_to_images, pdf_to_images_fav,
+                nav_pdf_to_images, ic_image_black_24dp, R.string.pdf_to_images);
+        addFragmentPosition(homePageItems, add_password, add_password_fav,
+                nav_add_password, ic_lock_black_24dp, R.string.add_password);
+        addFragmentPosition(homePageItems, remove_password, remove_password_fav,
+                nav_remove_password, ic_lock_open_black_24dp, R.string.remove_password);
+        addFragmentPosition(homePageItems, add_images, add_images_fav,
+                nav_add_images, ic_add_black_24dp, R.string.add_images);
+        addFragmentPosition(homePageItems, remove_duplicates_pages_pdf,
+                remove_duplicates_pages_pdf_fav, nav_remove_duplicate_pages, R.drawable.ic_remove_duplicate_square_black, R.string.remove_duplicate_pages);
+        addFragmentPosition(homePageItems, R.id.invert_pdf, invert_pdf_fav,
+                nav_invert_pdf, ic_invert_color_24dp, R.string.invert_pdf);
+        addFragmentPosition(homePageItems, R.id.zip_to_pdf, zip_to_pdf_fav,
+                nav_zip_to_pdf, ic_zip_to_pdf, R.string.zip_to_pdf);
+        addFragmentPosition(homePageItems, R.id.add_text, add_text_fav,
+                nav_add_text, ic_text_format_black_24dp, R.string.add_text);
         return mFragmentPositionMap;
     }
 
