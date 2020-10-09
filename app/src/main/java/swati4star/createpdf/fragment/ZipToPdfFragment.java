@@ -3,7 +3,6 @@ package swati4star.createpdf.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,7 +23,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ResultUtils;
-import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ZipToPdf;
 
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
