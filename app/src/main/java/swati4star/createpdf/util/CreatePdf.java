@@ -1,7 +1,5 @@
 package swati4star.createpdf.util;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
