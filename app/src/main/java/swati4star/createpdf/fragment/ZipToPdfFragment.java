@@ -3,7 +3,6 @@ package swati4star.createpdf.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,7 +23,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ResultUtils;
-import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ZipToPdf;
 
 import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
@@ -104,14 +102,10 @@ public class ZipToPdfFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length < 1)
-            return;
-        if (requestCode == PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mPermissionGranted = true;
-                showFileChooser();
-            } else
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_insufficient_permissions);
-        }
+        PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
+                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, () -> {
+                    mPermissionGranted = true;
+                    showFileChooser();
+                });
     }
 }
