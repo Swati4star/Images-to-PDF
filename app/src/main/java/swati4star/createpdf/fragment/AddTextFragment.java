@@ -73,9 +73,9 @@ import static swati4star.createpdf.util.Constants.pdfExtension;
 public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         BottomSheetPopulate, OnBackPressedInterface, OnItemClickListener {
     private Activity mActivity;
-    private String mPdfpath;
+    private static String mPdfpath;
     private String mFontTitle;
-    private String mTextPath;
+    private static String mTextPath;
     private FileUtils mFileUtils;
     private MorphButtonUtility mMorphButtonUtility;
     private BottomSheetUtils mBottomSheetUtils;
@@ -216,13 +216,13 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         if (requestCode == INTENT_REQUEST_PICK_PDF_FILE_CODE) {
             mPdfpath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
-            return;
         }
         if (requestCode == INTENT_REQUEST_PICK_TEXT_FILE_CODE) {
             mTextPath = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_txtselected));
         }
-        setTextAndActivateButtons(mPdfpath, mTextPath);
+        if (mPdfpath != null && mTextPath != null)
+            setTextAndActivateButtons(mPdfpath, mTextPath);
     }
 
     private void setTextAndActivateButtons(String pdfPath, String textPath) {
