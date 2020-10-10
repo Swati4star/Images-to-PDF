@@ -24,9 +24,6 @@ public class FileUtilsTest {
     private static final String FILE_NAME = "c.pdf";
 
     @Mock
-    FileUtils fileUtils;
-
-    @Mock
     File file;
 
     @Before
