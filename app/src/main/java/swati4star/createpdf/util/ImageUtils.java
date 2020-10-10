@@ -15,6 +15,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -22,12 +23,17 @@ import android.widget.RadioGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Rectangle;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
 import swati4star.createpdf.R;
 
+import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
@@ -239,6 +245,22 @@ public class ImageUtils {
         }
 
         return myDir + "/" + fileName;
+    }
+
+    /**
+     * Open a dialog to select some Images
+     * @param frag the fragment that should receive the Images
+     * @param requestCode the internal request code the fragment uses for image selection
+     */
+    public static void selectImages(Fragment frag, int requestCode) {
+        Matisse.from(frag)
+                .choose(MimeType.ofImage(), false)
+                .countable(true)
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, AUTHORITY_APP))
+                .maxSelectable(1000)
+                .imageEngine(new PicassoEngine())
+                .forResult(requestCode);
     }
 
     /**

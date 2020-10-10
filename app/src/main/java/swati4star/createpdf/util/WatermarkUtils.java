@@ -1,9 +1,7 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -71,11 +69,7 @@ public class WatermarkUtils {
         fontSizeInput.setText("50");
 
         watermarkTextInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
+                new DefaultTextWatcher() {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         mPositiveAction.setEnabled(s.toString().trim().length() > 0);
@@ -98,23 +92,13 @@ public class WatermarkUtils {
                 mWatermark.setWatermarkText(watermarkTextInput.getText().toString());
                 mWatermark.setFontFamily(((Font.FontFamily) fontFamilyInput.getSelectedItem()));
                 mWatermark.setFontStyle(getStyleValueFromName(((String) styleInput.getSelectedItem())));
-                if (StringUtils.getInstance().isEmpty(angleInput.getText())) {
-                    mWatermark.setRotationAngle(0);
-                } else {
-                    mWatermark.setRotationAngle(Integer.parseInt(angleInput.getText().toString()));
-                }
 
-                if (StringUtils.getInstance().isEmpty(fontSizeInput.getText())) {
-                    mWatermark.setTextSize(50);
-                } else {
-                    mWatermark.setTextSize(Integer.parseInt(fontSizeInput.getText().toString()));
-                }
-                mWatermark.setTextColor((new BaseColor(
-                        Color.red(colorPickerInput.getColor()),
-                        Color.green(colorPickerInput.getColor()),
-                        Color.blue(colorPickerInput.getColor()),
-                        Color.alpha(colorPickerInput.getColor())
-                )));
+                mWatermark.setRotationAngle(StringUtils.getInstance().parseIntOrDefault(angleInput.getText(), 0));
+                mWatermark.setTextSize(StringUtils.getInstance().parseIntOrDefault(fontSizeInput.getText(), 50));
+
+                //colorPickerInput.getColor() returns ans ARGB Color and BaseColor can use that ARGB as parameter
+                mWatermark.setTextColor((new BaseColor(colorPickerInput.getColor())));
+
                 String filePath = createWatermark(path);
                 dataSetChanged.updateDataset();
                 StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.watermark_added).setAction(

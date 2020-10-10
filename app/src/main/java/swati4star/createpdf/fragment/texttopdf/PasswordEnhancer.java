@@ -2,8 +2,6 @@ package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,6 +12,7 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.model.TextToPDFOptions;
+import swati4star.createpdf.util.DefaultTextWatcher;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.StringUtils;
 
@@ -52,18 +51,10 @@ public class PasswordEnhancer implements Enhancer {
         final EditText passwordInput = dialog.getCustomView().findViewById(R.id.password);
         passwordInput.setText(mBuilder.getPassword());
         passwordInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
+                new DefaultTextWatcher() {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         positiveAction.setEnabled(s.toString().trim().length() > 0);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable input) {
                     }
                 });
 

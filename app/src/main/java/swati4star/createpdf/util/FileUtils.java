@@ -14,6 +14,8 @@ import android.print.PrintManager;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.util.lambda.Consumer;
 
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
@@ -354,5 +357,34 @@ public class FileUtils {
         }
 
         return outputFileName;
+    }
+
+    /**
+     * Opens a Dialog to select a filename.
+     * If the file under that name already exists, an overwrite dialog gets opened.
+     * If the overwrite is cancelled, this first dialog gets opened again.
+     * @param preFillName a prefill Name for the file
+     * @param ext the file extension
+     * @param saveMethod the method that should be called when a filename is chosen
+     */
+    public void openSaveDialog(String preFillName, String ext, Consumer<String> saveMethod) {
+
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialog(mContext,
+                R.string.creating_pdf, R.string.enter_file_name);
+        builder.input(mContext.getString(R.string.example), preFillName, (dialog, input) -> {
+            if (StringUtils.getInstance().isEmpty(input)) {
+                StringUtils.getInstance().showSnackbar(mContext, R.string.snackbar_name_not_blank);
+            } else {
+                final String filename = input.toString();
+                if (!isFileExist(filename + ext)) {
+                    saveMethod.accept(filename);
+                } else {
+                    MaterialDialog.Builder builder2 = DialogUtils.getInstance().createOverwriteDialog(mContext);
+                    builder2.onPositive((dialog2, which) -> saveMethod.accept(filename))
+                            .onNegative((dialog1, which) ->
+                                    openSaveDialog(preFillName, ext, saveMethod)).show();
+                }
+            }
+        }).show();
     }
 }

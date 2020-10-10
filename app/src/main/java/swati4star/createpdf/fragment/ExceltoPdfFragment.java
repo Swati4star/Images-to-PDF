@@ -14,7 +14,6 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +41,7 @@ import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DefaultTextWatcher;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ExcelToPDFAsync;
 import swati4star.createpdf.util.FileUtils;
@@ -324,12 +324,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         positiveAction.setEnabled(false);
     }
 
-    private TextWatcher watcherImpl(View positiveAction) {
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+    private DefaultTextWatcher watcherImpl(View positiveAction) {
+        return new DefaultTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 positiveAction.setEnabled(s.toString().trim().length() > 0);

@@ -37,6 +37,7 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.PageSizeUtils;
+import swati4star.createpdf.util.SharedPreferencesUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
@@ -325,13 +326,9 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
                         style = Constants.PG_NUM_STYLE_X;
                     }
                     if (cbDefault.isChecked()) {
-                        editor.putString(Constants.PREF_PAGE_STYLE, style);
-                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, id);
-                        editor.apply();
+                        SharedPreferencesUtil.getInstance().setDefaultPageNumStyle(editor, style, id);
                     } else {
-                        editor.putString(Constants.PREF_PAGE_STYLE, null);
-                        editor.putInt(Constants.PREF_PAGE_STYLE_ID, -1);
-                        editor.commit();
+                        SharedPreferencesUtil.getInstance().clearDefaultPageNumStyle(editor);
                     }
                 }))
                 .build();

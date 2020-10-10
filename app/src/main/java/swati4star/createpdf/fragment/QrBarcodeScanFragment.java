@@ -148,25 +148,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
      * @param uri - uri where text is located
      */
     private void resultToTextPdf(Uri uri) {
-        new MaterialDialog.Builder(mActivity)
-                .title(R.string.creating_pdf)
-                .content(R.string.enter_file_name)
-                .input(getString(R.string.example), null, (dialog, input) -> {
-                    if (StringUtils.getInstance().isEmpty(input)) {
-                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
-                    } else {
-                        final String inputName = input.toString();
-                        if (!mFileUtils.isFileExist(inputName + getString(R.string.pdf_ext))) {
-                            createPdf(inputName, uri);
-                        } else {
-                            MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
-                            builder.onPositive((dialog12, which) -> createPdf(inputName, uri))
-                                    .onNegative((dialog1, which) -> resultToTextPdf(uri))
-                                    .show();
-                        }
-                    }
-                })
-                .show();
+        String ext = getString(R.string.pdf_ext);
+        mFileUtils.openSaveDialog(null, ext, filename -> createPdf(filename, uri));
     }
 
     /**

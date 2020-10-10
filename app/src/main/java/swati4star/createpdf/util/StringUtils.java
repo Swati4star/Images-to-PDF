@@ -71,4 +71,19 @@ public class StringUtils {
         return Environment.getExternalStorageDirectory().getAbsolutePath() +
                 pdfDirectory;
     }
+
+    /**
+     * if text is empty according to {@link StringUtils#isEmpty(CharSequence)} returns the default,
+     * if text is not empty, parses the text according to {@link Integer#parseInt(String)}
+     * @param text the input text
+     * @param def the default value
+     * @return the text parsed to an int or the default value
+     * @throws NumberFormatException if the text is not empty and not formatted as an int
+     */
+    public int parseIntOrDefault(CharSequence text, int def) throws NumberFormatException {
+        if (isEmpty(text))
+            return def;
+        else
+            return Integer.parseInt(text.toString());
+    }
 }
