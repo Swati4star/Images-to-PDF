@@ -58,7 +58,7 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
             // Create pdf copy object to copy current document to the output merged result file
             mFilename = mFilename + pdfExtension;
             mFinPath = mFinPath + mFilename;
-            PdfCopy copy = new PdfCopy(document, new FileOutputStream());
+            PdfCopy copy = new PdfCopy(document, new FileOutputStream(mFinPath));
             // Open the document
             if (mIsPasswordProtected) {
                 copy.setEncryption(mPassword.getBytes(),
