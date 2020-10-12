@@ -3,11 +3,14 @@ package swati4star.createpdf.util;
 import android.app.Activity;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.io.File;
 import java.util.Objects;
 
+import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 /**
