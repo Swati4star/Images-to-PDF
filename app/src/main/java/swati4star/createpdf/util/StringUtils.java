@@ -71,8 +71,8 @@ public class StringUtils {
     }
 
     public String getDefaultStorageLocation() {
-        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + PATH_SEPERATOR + pdfDirectory + PATH_SEPERATOR);
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),
+                            PATH_SEPERATOR + pdfDirectory + PATH_SEPERATOR);
         if (!dir.exists()) {
             boolean isDirectoryCreated = dir.mkdir();
             if (!isDirectoryCreated) {
