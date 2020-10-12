@@ -7,7 +7,6 @@ import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
 import java.io.FileOutputStream;
 
 import swati4star.createpdf.interfaces.MergeFilesListener;
