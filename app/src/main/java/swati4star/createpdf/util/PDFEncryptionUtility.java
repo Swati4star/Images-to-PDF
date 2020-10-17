@@ -120,7 +120,7 @@ public class PDFEncryptionUtility {
      * @param file - path of PDF file
      * @return true, if PDF is encrypted, otherwise false
      */
-    private boolean isPDFEncrypted(final String file) {
+    public boolean isPDFEncrypted(final String file) {
         PdfReader reader;
         String ownerPass = mContext.getString(R.string.app_name);
         try {
@@ -213,7 +213,7 @@ public class PDFEncryptionUtility {
         return null;
     }
 
-    private boolean removePasswordUsingDefMasterPassword(final String file,
+    public boolean removePasswordUsingDefMasterPassword(final String file,
                                                          final DataSetChanged dataSetChanged,
                                                          final String[] inputPassword) {
         String finalOutputFile;
@@ -247,7 +247,7 @@ public class PDFEncryptionUtility {
     }
 
 
-    private boolean removePasswordUsingInputMasterPassword(final String file,
+    public boolean removePasswordUsingInputMasterPassword(final String file,
                                                            final DataSetChanged dataSetChanged,
                                                            final String[] inputPassword) {
         String finalOutputFile;

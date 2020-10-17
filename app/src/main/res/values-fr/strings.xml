@@ -270,6 +270,8 @@
     <string name="watermarked_file">_watermarked.pdf</string>
     <string name="snackbar_watermark_cannot_be_blank">Le texte ne peut pas être vide</string>
     <string name="enter_watermark_text">Saisir du texte</string>
+    <string name="click_next_to_enter_passwords">Some of the PDFs selected are password protected. Please press Next to enter passwords for all the encrypted PDFs selected</string>
+    <string name="enter_password_with_file_name">Enter Password for file: </string>
     <string name="watermark_angle">Angle</string>
     <string name="choose_watermark_color">Choisissez une couleur</string>
     <string name="enter_watermark_font_size">Entrez la taille de la police</string>

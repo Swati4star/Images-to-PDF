@@ -477,4 +477,6 @@
     <string name="delete_alert_singular">Вы хотите удалить выбранный файл?</string>
     <string name="snackbar_files_deleted">Файлы удалены</string>
   <string name="lbl_recently_used">Недавно использованная особенность</string>
+    <string name="click_next_to_enter_passwords">Some of the PDFs selected are password protected. Please enter press Next to enter passwords for all the encrypted passwords selected</string>
+    <string name="enter_password_with_file_name">\"Enter Password for file: \"</string>
 </resources>

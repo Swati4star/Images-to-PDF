@@ -66,6 +66,8 @@
 
     <string name="set_password">Configurar la clave</string>
     <string name="enter_password">Introducir la contraseña</string>
+    <string name="click_next_to_enter_passwords">Some of the PDFs selected are password protected. Please press Next to enter passwords for all the encrypted PDFs selected</string>
+    <string name="enter_password_with_file_name">Enter Password for file: </string>
     <string name="snackbar_password_cannot_be_blank">La contraseña no puede estar en blanco</string>
     <string name="cannot_add_password">La contraseña no se pudo aplicar al PDF. Por favor revise el PDF nuevamente.</string>
 

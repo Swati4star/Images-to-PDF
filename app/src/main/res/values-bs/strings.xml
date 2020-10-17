@@ -169,6 +169,8 @@
     <string name="open_file">Otvori Datoteku</string>
     <string name="set_password">Postavi Lozinku</string>
     <string name="enter_password">Unesi Lozinku</string>
+    <string name="click_next_to_enter_passwords">Some of the PDFs selected are password protected. Please press Next to enter passwords for all the encrypted PDFs selected</string>
+    <string name="enter_password_with_file_name">Enter Password for file: </string>
     <string name="snackbar_password_cannot_be_blank">Lozinka ne može biti prazna</string>
     <string name="cannot_add_password">Lozinka nije dodana na PDF. Molimo provjerite PDF ponovo.</string>
     <string name="snackbar_imagecropped">Fotografije izrezane</string>

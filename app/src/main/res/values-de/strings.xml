@@ -143,6 +143,8 @@
 
     <string name="set_password">Passwort festlegen</string>
     <string name="enter_password">Passwort eingeben</string>
+    <string name="click_next_to_enter_passwords">Some of the PDFs selected are password protected. Please press Next to enter passwords for all the encrypted PDFs selected</string>
+    <string name="enter_password_with_file_name">Enter Password for file: </string>
     <string name="snackbar_password_cannot_be_blank">Das Passwort darf nicht leer sein</string>
     <string name="cannot_add_password">Das Passwort konnte nicht auf das PDF angewendet werden. Bitte überprüfe das PDF erneut.</string>
 

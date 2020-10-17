@@ -434,4 +434,6 @@
     <string name="delete_alert_singular">選択したファイルを削除しますか？</string>
     <string name="snackbar_files_deleted">削除されたファイル</string>
   <string name="lbl_recently_used">最近使用した機能</string>
+    <string name="click_next_to_enter_passwords">Some of the PDFs selected are password protected. Please enter press Next to enter passwords for all the encrypted passwords selected</string>
+    <string name="enter_password_with_file_name">\"Enter Password for file: \"</string>
 </resources>
