@@ -35,8 +35,10 @@ import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.HistoryAdapter;
 import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
@@ -76,6 +78,8 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         Arrays.fill(mFilterOptionState, Boolean.TRUE); //by default all options should be selected
         // by default all operations should be shown, so pass empty array
         new LoadHistory(mActivity).execute(new String[0]);
+        if (!PermissionsUtils.getInstance().checkRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS))
+            PermissionsUtils.getInstance().requestRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS, 100);
         return root;
     }
 

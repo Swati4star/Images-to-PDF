@@ -37,8 +37,10 @@ import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.SplitPDFUtils;
 import swati4star.createpdf.util.StringUtils;
@@ -106,6 +108,11 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
      */
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
+
+        if (!PermissionsUtils.getInstance().checkRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS))
+            PermissionsUtils.getInstance().requestRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS, 100);
+
+
         startActivityForResult(mFileUtils.getFileChooser(),
                 INTENT_REQUEST_PICKFILE_CODE);
     }

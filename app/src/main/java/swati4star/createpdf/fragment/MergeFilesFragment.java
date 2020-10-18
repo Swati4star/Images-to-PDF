@@ -47,12 +47,14 @@ import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DefaultTextWatcher;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MergePdfEnhancementOptionsUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
@@ -127,6 +129,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         setMorphingButtonState(false);
+
+        if (!PermissionsUtils.getInstance().checkRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS))
+            PermissionsUtils.getInstance().requestRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS, 100);
 
         return root;
     }

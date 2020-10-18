@@ -228,5 +228,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+        PermissionsUtils.getInstance().requestRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS, 200);
     }
 }

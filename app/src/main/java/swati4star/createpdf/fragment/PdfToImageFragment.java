@@ -39,12 +39,14 @@ import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ExtractImages;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PdfToImages;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
@@ -110,6 +112,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         resetView();
+        if (!PermissionsUtils.getInstance().checkRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS))
+            PermissionsUtils.getInstance().requestRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS, 100);
+        if (!PermissionsUtils.getInstance().checkRuntimePermissions(requireContext(), Constants.READ_WRITE_CAMERA_PERMISSIONS))
+            PermissionsUtils.getInstance().requestRuntimePermissions(requireContext(), Constants.READ_WRITE_CAMERA_PERMISSIONS, 200);
         return rootView;
     }
 

@@ -42,11 +42,13 @@ import swati4star.createpdf.interfaces.OnPdfReorderedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
@@ -113,6 +115,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
         resetValues();
+        if (!PermissionsUtils.getInstance().checkRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS))
+            PermissionsUtils.getInstance().requestRuntimePermissions(requireContext(), Constants.READ_WRITE_PERMISSIONS, 100);
         return rootview;
     }
 
