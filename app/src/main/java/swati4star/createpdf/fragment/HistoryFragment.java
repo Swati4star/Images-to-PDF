@@ -37,9 +37,13 @@ import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
+
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
+
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.appName;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickListener {
@@ -52,6 +56,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private List<History> mHistoryList;
     private HistoryAdapter mHistoryAdapter;
     private boolean[] mFilterOptionState;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -76,6 +81,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         Arrays.fill(mFilterOptionState, Boolean.TRUE); //by default all options should be selected
         // by default all operations should be shown, so pass empty array
         new LoadHistory(mActivity).execute(new String[0]);
+        getRuntimePermissions();
         return root;
     }
 
@@ -207,4 +213,15 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
             mEmptyStatusLayout.setVisibility(View.VISIBLE);
         }
     }
+
+    /**
+     * check runtime permissions for storage and camera
+     * */
+    private void getRuntimePermissions() {
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+    }
+
+
 }

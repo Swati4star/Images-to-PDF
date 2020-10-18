@@ -721,6 +721,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 REQUEST_PERMISSIONS_CODE);
     }
 
+
     /**
      * Opens Matisse activity to select Images
      */

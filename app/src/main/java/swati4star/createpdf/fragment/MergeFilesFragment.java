@@ -53,12 +53,14 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MergePdf;
 import swati4star.createpdf.util.MergePdfEnhancementOptionsUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 
@@ -81,6 +83,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private String mPassword;
     private SharedPreferences mSharedPrefs;
     private BottomSheetBehavior mSheetBehavior;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -127,6 +130,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         setMorphingButtonState(false);
+
+        getRuntimePermissions();
 
         return root;
     }
@@ -375,5 +380,14 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public boolean checkSheetBehaviour() {
         return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
+    }
+
+    /**
+     * check runtime permissions for storage and camera
+     * */
+    private void getRuntimePermissions() {
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }

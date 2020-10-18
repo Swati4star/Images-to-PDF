@@ -39,6 +39,7 @@ import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.SplitPDFUtils;
 import swati4star.createpdf.util.StringUtils;
@@ -46,6 +47,7 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 
 public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnBackPressedInterface {
@@ -58,6 +60,8 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private BottomSheetBehavior mSheetBehavior;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -91,6 +95,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+        getRuntimePermissions();
 
         resetValues();
         return rootview;
@@ -225,5 +230,14 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public boolean checkSheetBehaviour() {
         return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
+    }
+
+    /**
+     * check runtime permissions for storage and camera
+     * */
+    private void getRuntimePermissions() {
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }

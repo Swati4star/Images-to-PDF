@@ -38,11 +38,13 @@ import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 
 public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
@@ -55,6 +57,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private MaterialDialog mMaterialDialog;
     BottomSheetBehavior mSheetBehavior;
+    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
@@ -84,7 +87,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
-
+        getRuntimePermissions();
         resetValues();
         return rootview;
     }
@@ -192,6 +195,15 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     @Override
     public boolean checkSheetBehaviour() {
         return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
+    }
+
+    /**
+     * check runtime permissions for storage and camera
+     * */
+    private void getRuntimePermissions() {
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }
 
