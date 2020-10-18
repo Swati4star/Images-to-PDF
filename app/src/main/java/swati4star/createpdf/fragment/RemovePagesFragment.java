@@ -185,7 +185,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         return outputPath;
     }
 
-
     @OnClick(R.id.pdfCreate)
     public void parse() {
         StringUtils.getInstance().hideKeyboard(mActivity);

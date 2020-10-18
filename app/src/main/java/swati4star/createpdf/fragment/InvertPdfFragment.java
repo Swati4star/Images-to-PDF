@@ -117,7 +117,6 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         }
     }
 
-
     //Inverts colors in PDF
     @OnClick(R.id.invert)
     public void parse() {
@@ -206,6 +205,4 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
                 READ_WRITE_CAMERA_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
-
 }
-

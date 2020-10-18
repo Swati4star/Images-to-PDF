@@ -114,13 +114,11 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         }
     }
 
-
     //On click remove duplicate button
     @OnClick(R.id.remove)
     public void parse() {
         new RemoveDuplicates(mPath, this).execute();
     }
-
 
     private void resetValues() {
         mPath = null;
@@ -206,4 +204,3 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }
-

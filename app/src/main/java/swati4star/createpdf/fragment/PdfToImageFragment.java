@@ -73,7 +73,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     private PDFUtils mPDFUtils;
     private String[] mInputPassword;
 
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.bottom_sheet)

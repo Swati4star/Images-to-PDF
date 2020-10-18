@@ -42,7 +42,6 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
-
 import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.appName;
@@ -57,7 +56,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private List<History> mHistoryList;
     private HistoryAdapter mHistoryAdapter;
     private boolean[] mFilterOptionState;
-
 
     @Override
     public void onAttach(Context context) {
@@ -223,6 +221,4 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                 READ_WRITE_CAMERA_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
-
-
 }

@@ -20,7 +20,6 @@ import swati4star.createpdf.R;
  */
 public class PermissionsUtils {
 
-
     private static class SingletonHolder {
         static final PermissionsUtils INSTANCE = new PermissionsUtils();
     }

@@ -200,7 +200,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         imageToPDFOptions.setPasswordProtected(false);
     }
 
-
     @Override
     public void onPDFCreationStarted() {
         mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
