@@ -43,6 +43,7 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.appName;
 
@@ -56,7 +57,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private List<History> mHistoryList;
     private HistoryAdapter mHistoryAdapter;
     private boolean[] mFilterOptionState;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+
 
     @Override
     public void onAttach(Context context) {

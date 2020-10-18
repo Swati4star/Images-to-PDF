@@ -60,6 +60,7 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
@@ -83,7 +84,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private String mPassword;
     private SharedPreferences mSharedPrefs;
     private BottomSheetBehavior mSheetBehavior;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;

@@ -119,6 +119,8 @@ public class Constants {
             Manifest.permission.CAMERA
     };
 
+    public static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+
     public static final int MODIFY_STORAGE_LOCATION_CODE = 1;
 
 

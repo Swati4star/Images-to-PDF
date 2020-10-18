@@ -47,6 +47,7 @@ import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 
 public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -60,8 +61,6 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private BottomSheetBehavior mSheetBehavior;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
-
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;

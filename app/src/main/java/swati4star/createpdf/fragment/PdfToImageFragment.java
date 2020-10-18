@@ -52,6 +52,7 @@ import swati4star.createpdf.util.StringUtils;
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
@@ -71,7 +72,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     private Context mContext;
     private PDFUtils mPDFUtils;
     private String[] mInputPassword;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;

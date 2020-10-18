@@ -55,6 +55,7 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
@@ -76,8 +77,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private String mOperation;
     private MaterialDialog mMaterialDialog;
     private BottomSheetBehavior mSheetBehavior;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
-
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;

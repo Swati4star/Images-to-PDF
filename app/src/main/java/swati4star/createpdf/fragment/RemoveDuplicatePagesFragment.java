@@ -44,6 +44,7 @@ import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
 import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 
 public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -57,7 +58,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private MaterialDialog mMaterialDialog;
     BottomSheetBehavior mSheetBehavior;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
 
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
