@@ -75,7 +75,6 @@ public class Constants {
     public static final String PDF_TO_IMAGES = "pdf_to_images";
     public static final String EXTRACT_IMAGES = "extract_images";
 
-
     public static final String LAUNCH_COUNT = "launch_count";
 
     public static final String pdfDirectory = "/PDFfiles/";
