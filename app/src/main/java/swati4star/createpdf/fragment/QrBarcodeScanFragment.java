@@ -221,9 +221,9 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         resetValues();
     }
 
-    /**
+    /***
      * check runtime permission in Android M
-     */
+     ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_CAMERA_PERMISSIONS,

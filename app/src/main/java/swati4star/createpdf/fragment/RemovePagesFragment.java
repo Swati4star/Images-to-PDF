@@ -351,9 +351,9 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         StringUtils.getInstance().showSnackbar(mActivity, R.string.file_access_error);
     }
 
-    /**
+    /***
      * check runtime permissions for storage and camera
-     * */
+     ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_CAMERA_PERMISSIONS,

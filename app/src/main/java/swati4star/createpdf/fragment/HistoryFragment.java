@@ -213,9 +213,9 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         }
     }
 
-    /**
+    /***
      * check runtime permissions for storage and camera
-     * */
+     ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_CAMERA_PERMISSIONS,

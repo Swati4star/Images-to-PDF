@@ -195,9 +195,9 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
     }
 
-    /**
+    /***
      * check runtime permissions for storage and camera
-     * */
+     ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 READ_WRITE_CAMERA_PERMISSIONS,
