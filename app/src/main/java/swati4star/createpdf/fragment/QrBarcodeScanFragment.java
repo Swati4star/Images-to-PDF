@@ -49,11 +49,12 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
-import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
+
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private final String mTempFileName = "scan_result_temp.txt";
 
     private SharedPreferences mSharedPreferences;
@@ -199,7 +200,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         imageToPDFOptions.setPasswordProtected(false);
     }
 
-
     @Override
     public void onPDFCreationStarted() {
         mMaterialDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
@@ -221,12 +221,12 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         resetValues();
     }
 
-    /**
+    /***
      * check runtime permission in Android M
-     */
+     ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                READ_WRITE_PERMISSIONS,
+                READ_WRITE_CAMERA_PERMISSIONS,
                 PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }

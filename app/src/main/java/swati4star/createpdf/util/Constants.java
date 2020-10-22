@@ -7,7 +7,6 @@ public class Constants {
 
     public static final String DEFAULT_COMPRESSION = "DefaultCompression";
     public static final String SORTING_INDEX = "SORTING_INDEX";
-
     public static final String IMAGE_EDITOR_KEY = "first";
     public static final String DEFAULT_FONT_SIZE_TEXT = "DefaultFontSize";
     public static final int DEFAULT_FONT_SIZE = 11;
@@ -75,7 +74,6 @@ public class Constants {
     public static final String PDF_TO_IMAGES = "pdf_to_images";
     public static final String EXTRACT_IMAGES = "extract_images";
 
-
     public static final String LAUNCH_COUNT = "launch_count";
 
     public static final String pdfDirectory = "/PDFfiles/";
@@ -119,9 +117,10 @@ public class Constants {
             Manifest.permission.CAMERA
     };
 
+    public static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
+
     public static final int MODIFY_STORAGE_LOCATION_CODE = 1;
-
-
+    
     public static final int ROTATE_PAGES = 20;
     public static final int ADD_PASSWORD = 21;
     public static final int REMOVE_PASSWORD = 22;

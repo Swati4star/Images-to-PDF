@@ -47,6 +47,7 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFEncryptionUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
@@ -54,6 +55,8 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
@@ -111,6 +114,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         mOperation = getArguments().getString(BUNDLE_DATA);
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+        getRuntimePermissions();
 
         resetValues();
         return rootview;
@@ -180,7 +184,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         }
         return outputPath;
     }
-
 
     @OnClick(R.id.pdfCreate)
     public void parse() {
@@ -346,5 +349,14 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     public void onPdfReorderFailed() {
         mMaterialDialog.dismiss();
         StringUtils.getInstance().showSnackbar(mActivity, R.string.file_access_error);
+    }
+
+    /***
+     * check runtime permissions for storage and camera
+     ***/
+    private void getRuntimePermissions() {
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }

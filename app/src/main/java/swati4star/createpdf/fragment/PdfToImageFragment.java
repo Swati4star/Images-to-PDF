@@ -45,12 +45,15 @@ import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PdfToImages;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
+import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
+import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
@@ -110,6 +113,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         resetView();
+        getRuntimePermissions();
         return rootView;
     }
 
@@ -325,5 +329,14 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     @Override
     public boolean checkSheetBehaviour() {
         return CommonCodeUtils.getInstance().checkSheetBehaviourUtil(mSheetBehavior);
+    }
+
+    /***
+     * check runtime permissions for storage and camera
+     ***/
+    private void getRuntimePermissions() {
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                READ_WRITE_CAMERA_PERMISSIONS,
+                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
     }
 }
