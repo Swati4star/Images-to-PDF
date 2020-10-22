@@ -104,4 +104,4 @@ public class PermissionsUtils {
         } else
             StringUtils.getInstance().showSnackbar(context, R.string.snackbar_insufficient_permissions);
     }
-}
+} 
