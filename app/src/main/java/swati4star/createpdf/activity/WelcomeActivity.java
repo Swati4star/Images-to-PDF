@@ -39,8 +39,10 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
 
-        // layouts of all welcome sliders
-        // add few more layouts if you want
+        /**
+         * layouts of all welcome sliders
+         * add few more layouts if you want
+         */
         mLayouts = new int[]{
                 R.layout.fragment_step_create_pdf,
                 R.layout.fragment_step_view_file,
@@ -53,7 +55,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.fragment_step_excel_to_pdf,
                 R.layout.fragment_step_change_themes};
 
-        // adding bottom dots
+        /**
+         * adding bottom dots
+         */
         addBottomDots(0);
 
         MyViewPagerAdapter adapter = new MyViewPagerAdapter();
@@ -90,7 +94,9 @@ public class WelcomeActivity extends AppCompatActivity {
             mDots[currentPage].setTextColor(colorsActive[currentPage]);
     }
 
-    //  viewpager change listener
+    /**
+     * viewpager change listener
+     */
     private final ViewPager.OnPageChangeListener mViewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
