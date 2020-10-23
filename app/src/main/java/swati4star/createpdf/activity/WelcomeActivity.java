@@ -108,9 +108,9 @@ public class WelcomeActivity extends AppCompatActivity {
     };
 
 
-    /**
-     * View pager adapter
-     */
+    
+     // View pager adapter
+
     class MyViewPagerAdapter extends PagerAdapter {
 
         MyViewPagerAdapter() {
