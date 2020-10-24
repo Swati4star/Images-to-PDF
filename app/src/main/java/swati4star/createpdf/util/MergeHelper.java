@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
@@ -48,49 +43,50 @@ public class MergeHelper implements MergeFilesListener {
 
     public void mergeFiles() {
         String[] pdfpaths = mViewFilesAdapter.getSelectedFilePath().toArray(new String[0]);
-        List<Integer> encryptedPfdPathsIndex = new ArrayList<>();
         String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
-        int count = 0, i = 0;
-        for (String filePath : pdfpaths) {
-            if (mPDFEncryptUtils.isPDFEncrypted(filePath)) {
-                count++;
-                encryptedPfdPathsIndex.add(i);
-            }
-            i++;
-        }
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity);
-        List<EditText> passwords = new ArrayList<>();
-        for (int k = 0; k < count; k++) {
-            TextView textView = new TextView(mActivity);
-            String[] fileName = pdfpaths[k].split(".\\/");
-            textView.setText(mContext.getString(R.string.enter_password_with_file_name)
-                    + fileName[fileName.length - 1]);
-            EditText pass = new EditText(mActivity);
-            pass.setHint(mContext.getString(R.string.enter_password_with_file_name) + fileName[fileName.length - 1]);
-            passwords.add(pass);
-            builder.customView(textView, true);
-            builder.customView(pass, true);
-        }
-        builder.positiveText("Merge");
-        builder.negativeText("Cancel");
-        builder.onPositive((dialog, which) -> {
-            for (int k = 0; k < passwords.size(); k++) {
-                String[] mPass = {passwords.get(k).getText().toString()};
-                if (!mPDFEncryptUtils.removePasswordUsingDefMasterPassword(pdfpaths[k],
-                        mViewFilesAdapter, mPass)) {
-                    if (!mPDFEncryptUtils.removePasswordUsingInputMasterPassword(pdfpaths[k],
-                            mViewFilesAdapter, mPass)) {
-                        StringUtils.getInstance().showSnackbar(mActivity, R.string.master_password_changed);
-                        dialog.dismiss();
-                    }
-                }
-                pdfpaths[k] = pdfpaths[k].replace(mContext.getResources().getString(R.string.pdf_ext),
-                        mContext.getString(R.string.decrypted_file));
-            }
-            callMergeDialog(pdfpaths, masterpwd);
-        });
-        builder.onNegative((dialog, which) -> dialog.dismiss());
-        builder.show();
+        callMergeDialog(pdfpaths, masterpwd);
+//        List<Integer> encryptedPfdPathsIndex = new ArrayList<>();
+//        int count = 0, i = 0;
+//        for (String filePath : pdfpaths) {
+//            if (mPDFEncryptUtils.isPDFEncrypted(filePath)) {
+//                count++;
+//                encryptedPfdPathsIndex.add(i);
+//            }
+//            i++;
+//        }
+//        MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity);
+//        List<EditText> passwords = new ArrayList<>();
+//        for (int k = 0; k < count; k++) {
+//            TextView textView = new TextView(mActivity);
+//            String[] fileName = pdfpaths[k].split(".\\/");
+//            textView.setText(mContext.getString(R.string.enter_password_with_file_name)
+//                    + fileName[fileName.length - 1]);
+//            EditText pass = new EditText(mActivity);
+//            pass.setHint(mContext.getString(R.string.enter_password_with_file_name) + fileName[fileName.length - 1]);
+//            passwords.add(pass);
+//            builder.customView(textView, true);
+//            builder.customView(pass, true);
+//        }
+//        builder.positiveText("Merge");
+//        builder.negativeText("Cancel");
+//        builder.onPositive((dialog, which) -> {
+//            for (int k = 0; k < passwords.size(); k++) {
+//                String[] mPass = {passwords.get(k).getText().toString()};
+//                if (!mPDFEncryptUtils.removePasswordUsingDefMasterPassword(pdfpaths[k],
+//                        mViewFilesAdapter, mPass)) {
+//                    if (!mPDFEncryptUtils.removePasswordUsingInputMasterPassword(pdfpaths[k],
+//                            mViewFilesAdapter, mPass)) {
+//                        StringUtils.getInstance().showSnackbar(mActivity, R.string.master_password_changed);
+//                        dialog.dismiss();
+//                    }
+//                }
+//                pdfpaths[k] = pdfpaths[k].replace(mContext.getResources().getString(R.string.pdf_ext),
+//                        mContext.getString(R.string.decrypted_file));
+//            }
+//            callMergeDialog(pdfpaths, masterpwd);
+//        });
+//        builder.onNegative((dialog, which) -> dialog.dismiss());
+//        builder.show();
     }
 
     private void callMergeDialog(String[] pdfpaths, String masterpwd) {

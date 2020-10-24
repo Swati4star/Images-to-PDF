@@ -444,8 +444,16 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     if (!mSelectedFiles.contains(getAdapterPosition())) {
-                        mSelectedFiles.add(getAdapterPosition());
-                        itemSelectedListener.isSelected(true, mSelectedFiles.size());
+                        String mFileName = mFileList.get(getAdapterPosition()).getPdfFile().getPath();
+                        if (mPDFEncryptionUtils.isPDFEncrypted(mFileName)) {
+                            mPDFEncryptionUtils.removePassword(mFileName,
+                                    ViewFilesAdapter.this);
+                            mSelectedFiles.add(getAdapterPosition() + 1);
+                            itemSelectedListener.isSelected(true, mSelectedFiles.size());
+                        } else {
+                            mSelectedFiles.add(getAdapterPosition());
+                            itemSelectedListener.isSelected(true, mSelectedFiles.size());
+                        }
                     }
                 } else
                     mSelectedFiles.remove(Integer.valueOf(getAdapterPosition()));
