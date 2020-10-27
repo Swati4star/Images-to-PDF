@@ -1,6 +1,29 @@
 apply plugin: 'com.android.application'
 apply from: '../config/checkstyle.gradle'
 
+plugins {
+    id 'jacoco'
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/jacoco")
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
