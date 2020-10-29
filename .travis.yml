@@ -19,3 +19,7 @@ script:
    - ./gradlew checkstyle
    - ./gradlew test
    - ./gradlew jacocoTestReport
+   - ./gradlew connectedCheck
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
