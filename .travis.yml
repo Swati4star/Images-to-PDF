@@ -1,9 +1,5 @@
 language: android
 jdk: oraclejdk8
-env:
-  global:
-    - ANDROID_TARGET=android-22
-    - ANDROID_ABI=armeabi-v7a
 android:
   components:
     - platform-tools
@@ -13,8 +9,6 @@ android:
 # Support library
     - extra-android-support
     - extra-android-m2repository
-    - $ANDROID_TARGET
-    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
 before_script:
     - chmod +x gradlew
 
@@ -24,11 +18,6 @@ script:
    - ./gradlew checkstyle
    - ./gradlew test
    - ./gradlew jacocoTestReport
-   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-   - emulator -avd test -no-skin -no-audio -no-window &
-   - android-wait-for-emulator
-   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-   - ./gradlew connectedCheck
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
