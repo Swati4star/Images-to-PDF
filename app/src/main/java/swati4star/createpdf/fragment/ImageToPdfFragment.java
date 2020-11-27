@@ -108,10 +108,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     MorphingButton mCreatePdf;
     @BindView(R.id.pdfOpen)
     MorphingButton mOpenPdf;
-    @BindView(R.id.enhancement_options_recycle_view)
-    RecyclerView mEnhancementOptionsRecycleView;
     @BindView(R.id.tvNoOfImages)
     TextView mNoOfImages;
+    @BindView(R.id.optionsBelow)
+    RecyclerView viewEnhancements;
 
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
@@ -162,6 +162,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         // Get default values & show enhancement options
         resetValues();
 
+
         // Check for the images received
         checkForImagesInBundle();
 
@@ -205,17 +206,19 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     /**
      * Shows enhancement options
      */
-    private void showEnhancementOptions() {
+
+    private void showEnhancementOptions(RecyclerView recyclerView) {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
-        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        recyclerView.setLayoutManager(mGridLayoutManager);
         ImageEnhancementOptionsUtils imageEnhancementOptionsUtilsInstance = ImageEnhancementOptionsUtils.getInstance();
         ArrayList<EnhancementOptionsEntity> list = imageEnhancementOptionsUtilsInstance.getEnhancementOptions(mActivity,
                 mPdfOptions);
         EnhancementOptionsAdapter adapter =
                 new EnhancementOptionsAdapter(this, list);
-        mEnhancementOptionsRecycleView.setAdapter(adapter);
-    }
+        recyclerView.setAdapter(adapter);
 
+
+    }
     /**
      * Adding Images to PDF
      */
@@ -477,7 +480,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
                         } else {
                             mPdfOptions.setBorderWidth(value);
-                            showEnhancementOptions();
+                            showEnhancementOptions(viewEnhancements);
                         }
                     } catch (NumberFormatException e) {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
@@ -509,7 +512,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                                 editor.putInt(DEFAULT_COMPRESSION, check);
                                 editor.apply();
                             }
-                            showEnhancementOptions();
+                            showEnhancementOptions(viewEnhancements);
                         }
                     } catch (NumberFormatException e) {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.invalid_entry);
@@ -544,7 +547,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             } else {
                 mPdfOptions.setPassword(passwordInput.getText().toString());
                 mPdfOptions.setPasswordProtected(true);
-                showEnhancementOptions();
+                showEnhancementOptions(viewEnhancements);
                 dialog.dismiss();
             }
         });
@@ -553,7 +556,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             neutralAction.setOnClickListener(v -> {
                 mPdfOptions.setPassword(null);
                 mPdfOptions.setPasswordProtected(false);
-                showEnhancementOptions();
+                showEnhancementOptions(viewEnhancements);
                 dialog.dismiss();
                 StringUtils.getInstance().showSnackbar(mActivity, R.string.password_remove);
             });
@@ -621,7 +624,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                                     showSnackbar(mActivity, R.string.snackbar_watermark_cannot_be_blank);
                         } else {
                             watermark.setWatermarkText(input.toString());
-                            showEnhancementOptions();
+                            showEnhancementOptions(viewEnhancements);
                         }
                     }
                 });
@@ -631,7 +634,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
         neutralAction.setOnClickListener(v -> {
             mPdfOptions.setWatermarkAdded(false);
-            showEnhancementOptions();
+            showEnhancementOptions(viewEnhancements);
             dialog.dismiss();
             StringUtils.getInstance().showSnackbar(mActivity, R.string.watermark_remove);
         });
@@ -653,7 +656,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             )));
             mPdfOptions.setWatermark(watermark);
             mPdfOptions.setWatermarkAdded(true);
-            showEnhancementOptions();
+            showEnhancementOptions(viewEnhancements);
             dialog.dismiss();
             StringUtils.getInstance().showSnackbar(mActivity, R.string.watermark_added);
         });
@@ -743,7 +746,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         mPdfOptions.setPasswordProtected(false);
         mPdfOptions.setWatermarkAdded(false);
         mImagesUri.clear();
-        showEnhancementOptions();
+        showEnhancementOptions(viewEnhancements);
         mNoOfImages.setVisibility(View.GONE);
         ImageUtils.getInstance().mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALE_TYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);

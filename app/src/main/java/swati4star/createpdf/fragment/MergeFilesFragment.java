@@ -65,6 +65,8 @@ import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 
+
+
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
         MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListener,
         BottomSheetPopulate, OnBackPressedInterface {
