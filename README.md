@@ -28,7 +28,7 @@ Here is an easy to use Android app to convert images to PDF file!
   - Encrypt PDF
   - Decrypt PDF
   - Rotate Pages
-- Different themes
+- Select different themes
 - Merge existing PDFs
 - Split existing PDFs
 - Convert text file to PDFs
