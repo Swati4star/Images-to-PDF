@@ -82,7 +82,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootView);
 
-        mBuilder = new TextToPDFOptions.Builder(mActivity);
+        mBuilder = new TextToPDFOptions.Builder(getContext());
         addEnhancements();
         showEnhancementOptions();
         mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
@@ -273,7 +273,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         mCreateTextPdf.setEnabled(false);
         mTextFileUri = null;
         mButtonClicked = 0;
-        mBuilder = new TextToPDFOptions.Builder(mActivity);
+        mBuilder = new TextToPDFOptions.Builder(getContext());
     }
 
     @Override
