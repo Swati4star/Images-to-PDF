@@ -27,7 +27,7 @@ public class RealPathUtil {
      * @param fileUri - uri of file
      * @return - actual path
      */
-    public String getRealPath(Context context, Uri fileUri) {
+    public String getRealPath(Context context, Uri fileUri) throws IllegalAccessException {
         return getRealPathFromURI_API19(context, fileUri);
     }
 
@@ -39,7 +39,7 @@ public class RealPathUtil {
      * @param context The context.
      * @param uri     The Uri to query.
      */
-    private String getRealPathFromURI_API19(final Context context, final Uri uri) {
+    private String getRealPathFromURI_API19(final Context context, final Uri uri) throws IllegalAccessException {
         String path = null;
         // DocumentProvider
         if (isDriveFile(uri)) {
@@ -78,35 +78,66 @@ public class RealPathUtil {
      * @param hasSubFolders The flag that indicates if the file is in the root or in a subfolder
      * @return The absolute file path
      */
-    private String getDownloadsDocumentPath(Context context, Uri uri, boolean hasSubFolders) {
+    private String getDownloadsDocumentPath(Context context, Uri uri, boolean hasSubFolders) throws IllegalAccessException {
+       if(uri==null|| uri==Uri.parse(""))
+           throw new IllegalAccessException(" the path is empty");
         String fileName = getFilePath(context, uri);
-        String subFolderName = hasSubFolders ? getSubFolders(uri) : "";
-
+        String subFolderName = getSubFolderName(uri, hasSubFolders);
         if (fileName != null) {
-            if (subFolderName != null)
-                return Environment.getExternalStorageDirectory().toString() +
-                        "/Download/" + subFolderName + fileName;
-            else
-                return Environment.getExternalStorageDirectory().toString() +
-                        "/Download/" + fileName;
+            return getDownloadsDocumentPathFromFileNameAndSubFolderName(fileName, subFolderName);
         }
-        final String id = DocumentsContract.getDocumentId(uri);
+        return getDownloadsDocumentPathFromDownloadsProvider(context, uri);
+    }
 
-        String path = null;
-        if (!TextUtils.isEmpty(id)) {
-            if (id.startsWith("raw:")) {
-                path = id.replaceFirst("raw:", "");
-            }
-            try {
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
-                path = getDataColumn(context, contentUri, null, null);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
+//return the path of subfolder and file or only file with the root
+    private String getDownloadsDocumentPathFromFileNameAndSubFolderName(String fileName, String subFolderName) {
+        String downloadsPathRoot = Environment.getExternalStorageDirectory().toString() +
+                "/Download/";
+        if (subFolderName != null)
+            return downloadsPathRoot + subFolderName + fileName;
+        else
+            return downloadsPathRoot + fileName;
+
+
+    }
+//return the sub folder path if is founded
+    private String getSubFolderName(Uri uri, boolean hasSubFolders) {
+        if (hasSubFolders) {
+            return getSubFolders(uri);
+        }
+        return "";
+    }
+//get Id from uri from
+    private String getDownloadsDocumentPathFromDownloadsProvider(Context context, Uri uri) {
+        final String id = DocumentsContract.getDocumentId(uri);
+        return getDownloadsDocumentPathFromId(context, id);
+    }
+
+    private String getDownloadsDocumentPathFromIdContainedRaw(String id, String path) {
+        if (id.startsWith("raw:")) {
+            path = id.replaceFirst("raw:", "");
         }
         return path;
+    }
 
+    private String getDownloadsDocumentPathFromDownloadManager(Context context, String path, String id) {
+        try {
+            final Uri contentUri = ContentUris.withAppendedId(
+                    Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
+            path = getDataColumn(context, contentUri, null, null);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return path;
+    }
+
+    private String getDownloadsDocumentPathFromId(Context context, String id) {
+        String path = null;
+        if (!TextUtils.isEmpty(id)) {
+            path = getDownloadsDocumentPathFromIdContainedRaw(id, path);
+        }
+        path = getDownloadsDocumentPathFromDownloadManager(context, path, id);
+        return path;
     }
 
     /**
@@ -170,7 +201,7 @@ public class RealPathUtil {
      * @return The value of the _data column, which is typically a file path.
      */
     private String getDataColumn(Context context, Uri uri, String selection,
-                                        String[] selectionArgs) {
+                                 String[] selectionArgs) {
 
         final String column = "_data";
         final String[] projection = {
