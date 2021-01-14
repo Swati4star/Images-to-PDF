@@ -33,7 +33,7 @@ Build it & run the project on emulator / real device.
 At this point, you're ready to make your changes! Feel free to ask for help;
 everyone is a beginner at first :smile_cat:
 
-
+Israa Hamed
 ### 5. Test for all the checks
 
 There should be no errors while running the following commands:
