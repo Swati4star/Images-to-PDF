@@ -78,9 +78,10 @@ public class RealPathUtil {
      * @param hasSubFolders The flag that indicates if the file is in the root or in a subfolder
      * @return The absolute file path
      */
-    private String getDownloadsDocumentPath(Context context, Uri uri, boolean hasSubFolders) throws IllegalAccessException {
-       if(uri==null|| uri==Uri.parse(""))
-           throw new IllegalAccessException(" the path is empty");
+    private String getDownloadsDocumentPath(Context context, Uri uri, boolean hasSubFolders)
+            throws IllegalAccessException {
+        if (uri == null || uri == Uri.parse(""))
+            throw new IllegalAccessException(" the path is empty");
         String fileName = getFilePath(context, uri);
         String subFolderName = getSubFolderName(uri, hasSubFolders);
         if (fileName != null) {
@@ -89,25 +90,40 @@ public class RealPathUtil {
         return getDownloadsDocumentPathFromDownloadsProvider(context, uri);
     }
 
-//return the path of subfolder and file or only file with the root
+    //return the path of subfolder and file or only file with the root
     private String getDownloadsDocumentPathFromFileNameAndSubFolderName(String fileName, String subFolderName) {
         String downloadsPathRoot = Environment.getExternalStorageDirectory().toString() +
                 "/Download/";
         if (subFolderName != null)
-            return downloadsPathRoot + subFolderName + fileName;
+            return mixDownloadsPathRoot_SubFolderName_FileName(downloadsPathRoot, subFolderName, fileName);
         else
-            return downloadsPathRoot + fileName;
+            return mixDownloadsPathRoot_FileName(downloadsPathRoot, fileName);
 
 
     }
-//return the sub folder path if is founded
+
+    //return path with adding subfolder name and file name
+    private String mixDownloadsPathRoot_SubFolderName_FileName(
+            String downloadsPathRoot,
+            String subFolderName,
+            String fileName) {
+        return downloadsPathRoot + subFolderName + fileName;
+    }
+
+    //return path with adding file name
+    private String mixDownloadsPathRoot_FileName(String downloadsPathRoot, String fileName) {
+        return downloadsPathRoot + fileName;
+    }
+
+    //return the sub folder path if is founded
     private String getSubFolderName(Uri uri, boolean hasSubFolders) {
         if (hasSubFolders) {
             return getSubFolders(uri);
         }
         return "";
     }
-//get Id from uri from
+
+    //get Id from uri from
     private String getDownloadsDocumentPathFromDownloadsProvider(Context context, Uri uri) {
         final String id = DocumentsContract.getDocumentId(uri);
         return getDownloadsDocumentPathFromId(context, id);
