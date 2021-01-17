@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PDF Converter</string>
+    <string name="welcome_create_pdf_message">PDF dosyası oluşturma</string>
+    <string name="welcome_create_pdf_info">Oluşturulmuş PDF dosyalarını görüntüle ya da yeni bir tane oluştur!</string>
+    <string name="skip_text">Geç</string>
+    <string name="welcome_viewfiles_title">PDF dosyalarını görüntüleme</string>
+    <string name="welcome_viewfiles_message">Görüntüle, sil, yeniden isimlendir, paylaş ve PDF dosyana parola ekle</string>
+    <string name="welcome_merge_title">PDF dosyalarını birleştirme</string>
+    <string name="welcome_merge_message">Varolan farklı PDF dosyalarını birleştirip bir dosya haline getir</string>
+    <string name="welcome_text_to_pdf">Metinleri PDF dosyasına çevirme</string>
+    <string name="welcome_text_to_pdf_message">Metin dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
+    <string name="welcome_qrcode_to_pdf">QR Kodu PDF dosyasına çevirme</string>
+    <string name="welcome_qrcode_to_pdf_message">QR Kodlarını ve Barkodları basit bir şekilde PDF\'ye dönüştürün</string>
+    <string name="welcome_remove_pages">Sayfaları silme</string>
+    <string name="welcome_remove_pages_message">İstemediğin, artık ihtiyacın olmayan sayfaları silebilirsin</string>
+    <string name="reorder_pages">Sayfaları yeniden sıralama</string>
+    <string name="welcome_reorder_pages">Sayfaları yeniden sıralama</string>
+    <string name="welcome_reorder_pages_message">Sayfaları istediğiniz şekilde yeniden sıralayın ve yeniden düzenleyin</string>
+    <string name="welcome_extract_images">PDF\'den Görüntü çıkarma</string>
+    <string name="welcome_extract_images_message">Bir harekette PDF\'lerinizden olası tüm görüntüleri çıkarın</string>
+    <string name="welcome_themes_title">Farklı temalar</string>
+    <string name="welcome_themes_message">Ayarlar\'a gidin ve üç tür tema arasından seçim yapabilirsiniz: Siyah, Koyu, Beyaz</string>
+    <string name="welcome_excel_message">Excel dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
+    <string name="get_started_title">Haydi başlayalım!</string>
+
+</resources>
