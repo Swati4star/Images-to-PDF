@@ -206,7 +206,7 @@
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
-    <string name="feedback_text">Kindly write your precious feeback, or just drop a Hi! :)</string>
+    <string name="feedback_text">Kindly write your precious feedback, or just drop a Hi! :)</string>
     <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="feedback_chooser">"Send mail…"</string>
     <string name="no_pdf">No PDFs to show</string>
