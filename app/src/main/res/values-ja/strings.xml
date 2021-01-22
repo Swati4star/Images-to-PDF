@@ -108,7 +108,6 @@
     <string name="file_size_text">File Size</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached PDF(s) to this message</string>
-    <string name="btn_sav_text">savText</string>
     <string name="filter_images_Text">Filter Images</string>
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="compress_image">Image compression : %s%%</string>
@@ -129,12 +128,6 @@
     <string name="set_page_size_text">ページサイズを設定する</string>
     <string name="b0_to_b10">B0 to B10</string>
     <string name="a0_to_a10">A0 to A10</string>
-    <string name="tabloid">TABLOID</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTER</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
     <string name="default_page_size">DEFAULT ( %s )</string>
     <!-- Directory Strings -->
     <string name="directory">Directory</string>
@@ -157,7 +150,6 @@
     <string name="text_to_pdf">Text To PDF</string>
     <string name="text_file_selected">Text File Selected</string>
     <string name="select_file">Select a File to Upload</string>
-    <string name="text_type">text/plain</string>
     <string name="new_directory">New Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
@@ -215,7 +207,6 @@
     <string name="no_history_message">No history to show</string>
     <string name="view_history_here_message">View all your converted files history here!</string>
     <string name="delete_history_message">Are you sure you want to delete history?</string>
-    <string name="file_info">\n File Name : %1$s\n\n Path : %2$s\n\n Size : %3$s\n\n Date Modified %4$s</string>
     <string name="default_font_family_text">Font Family (Default : %s)</string>
     <string name="font_family_text">"Font Family : "</string>
     <string name="courier">COURIER</string>

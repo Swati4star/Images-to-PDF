@@ -129,7 +129,6 @@
     <string name="file_size_text">Размер файла</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">Я прикрепил файлы к этому сообщению</string>
-    <string name="btn_sav_text">savText</string>
     <string name="filter_images_Text">Фильтр изображений \n</string>
     <string name="nextimage_contentdesc">Следующее изображение</string>
     <string name="compress_image">Сжатие : %s%%</string>
@@ -149,12 +148,6 @@
     <string name="overwrite_message">Файл с указанным именем уже существует. Перезаписать его?</string>
     <string name="b0_to_b10">B0 в B10</string>
     <string name="a0_to_a10">A0 в A10</string>
-    <string name="tabloid">TABLOID</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTER</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
     <string name="default_page_size">По умолчанию ( %s )</string>
 
 
@@ -183,7 +176,6 @@
     <string name="text_to_pdf">Текст в PDF</string>
     <string name="text_file_selected">Текстовый файл выбран</string>
     <string name="select_file">"Выберите файл для загрузки"</string>
-    <string name="text_type">text/plain</string>
     <string name="new_directory">Новая директория</string>
     <string name="previous_image_content_desc">Предыдущее изображение</string>
     <string name="text_file_name">"Текстовый файл : "</string>
@@ -255,7 +247,6 @@
     <string name="extract_images_failed">В указанном PDF-файле не найдено изображений</string>
     <string name="extract_images_success">Обнаружено %1$d изображений в указанном файле. Они сохранены в папку PDF Files в корневой директории.</string>
 
-    <string name="file_info">\n  Файл : %1$s \n\n  Расположение : %2$s \n\n  Размер : %3$s \n\n  Дата изменения %4$s</string>
     <string name="default_font_family_text">Установить шрифт (по умолчанию : %s)</string>
     <string name="font_family_text">"Шрифт : "</string>
     <string name="courier">COURIER</string>

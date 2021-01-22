@@ -229,7 +229,6 @@
     <string name="file_size_text">文件大小</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">在此讯息我有附加文件</string>
-    <string name="btn_sav_text">savText</string>
 
     <string name="nextimage_contentdesc">下一张图像</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
@@ -251,12 +250,6 @@
     <string name="set_page_size_text">设置页面大小</string>
     <string name="b0_to_b10">B0 to B10</string>
     <string name="a0_to_a10">A0 to A10</string>
-    <string name="tabloid">TABLOID</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTER</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
     <string name="default_page_size">默认 ( %s )</string>
     <string name="master_password_changed">此密码看来并不正确，或者你可能已更改主密码。</string>
 
@@ -290,7 +283,6 @@
     <string name="text_to_pdf">文字转PDF</string>
     <string name="text_file_selected">已选择文字</string>
     <string name="select_file">"选择要上传的文件"</string>
-    <string name="text_type">text/plain</string>
     <string name="new_directory">新文件夹</string>
     <string name="previous_image_content_desc">上一张图像</string>
     <string name="text_file_name">"文字文档："</string>
@@ -367,7 +359,6 @@
     <!--  Extract Text-->
     <string name="extract_text">摘取文字</string>
     <string name="pdf_selected">已选择PDF文件： </string>
-    <string name="file_info">\n  文件名称： %1$s \n\n  路径： %2$s \n\n  大小： %3$s \n\n  变更日期 %4$s</string>
 
 
     <!-- Text To PDF   FontFamily-->
