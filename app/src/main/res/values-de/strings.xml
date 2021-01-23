@@ -320,11 +320,6 @@
 
     <string name="default_font_family_text">Schriftart (Standard:%s)</string>
     <string name="font_family_text">"Schriftart: "</string>
-    <string name="courier">COURIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">NICHT DEFINIERT</string>
     <string name="selected_image">Ausgewähltes Bild</string>
     <string name="arrow_up">Pfeil nach oben</string>
@@ -406,7 +401,6 @@
 
     <string name="rotate_pages">Seiten drehen</string>
     <string name="enter_rotation_angle">Drehwinkel eingeben</string>
-    <string name="rotated_file_name">%1$s_rotated_%2$s%3$s</string>
     <string name="share_files">Dateien teilen</string>
     <string name="pdf_removed_from_list">PDF wurde aus der Liste entfernt.</string>
     <string name="pdf_added_to_list">PDF wurde der Liste hinzugefügt.</string>

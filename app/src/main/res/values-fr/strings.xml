@@ -169,11 +169,6 @@
     <string name="delete_history_message">Êtes-vous sûr de vouloir supprimer l\'historique \?</string>
     <string name="default_font_family_text">Famille de police de caractères (par défaut : %s)</string>
     <string name="font_family_text">"Famille de la police : "</string>
-    <string name="courier">COURRIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">NON DÉFINIT</string>
     <string name="delete_alert_selected">Voulez-vous supprimer tous les fichiers sélectionnés \?</string>
     <string name="sort_by_title">Trier par</string>
@@ -350,7 +345,6 @@
     <string name="error_occurred">Une erreur s’est produite</string>
     <string name="rotate_pages">Tourner les pages</string>
     <string name="enter_rotation_angle">Entrez l’angle de rotation</string>
-    <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="compression_image_edit">Modifier la valeur de compression des images</string>
     <string name="font_family_edit">Changer la famille de la police par défaut</string>
     <string name="font_size_edit">Changer la taille de la police par défaut</string>

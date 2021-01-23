@@ -209,11 +209,6 @@
     <string name="delete_history_message">Are you sure you want to delete history?</string>
     <string name="default_font_family_text">Font Family (Default : %s)</string>
     <string name="font_family_text">"Font Family : "</string>
-    <string name="courier">COURIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
     <string name="delete_alert_selected">Do you want to delete all selected files?</string>
     <string name="sort_by_title">Sort by</string>
@@ -253,7 +248,6 @@
     <string name="error_occurred">Error Occurred</string>
     <string name="rotate_pages">Rotate Pages</string>
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
-    <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="rotated">Rotated</string>
     <string name="encrypted">Encrypted</string>
     <string name="decrypted">Decrypted</string>

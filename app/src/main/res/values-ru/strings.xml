@@ -249,11 +249,6 @@
 
     <string name="default_font_family_text">Установить шрифт (по умолчанию : %s)</string>
     <string name="font_family_text">"Шрифт : "</string>
-    <string name="courier">COURIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
     <string name="selected_image">Выбранное изображение</string>
     <string name="arrow_up">Стрелка вверх</string>
@@ -310,7 +305,6 @@
 
     <string name="rotate_pages">Повернуть страницы</string>
     <string name="enter_rotation_angle">Введите угол поворота</string>
-    <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="share_files">Поделиться файлами</string>
     <string name="pdf_removed_from_list">PDF удален из списка</string>
     <string name="pdf_added_to_list">PDF добавлен в список.</string>
