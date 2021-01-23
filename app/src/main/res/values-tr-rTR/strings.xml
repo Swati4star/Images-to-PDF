@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PDF Converter</string>
+    <string name="app_name">PDF Dönüştürücü</string>
     <string name="welcome_create_pdf_message">PDF dosyası oluşturma</string>
     <string name="welcome_create_pdf_info">Oluşturulmuş PDF dosyalarını görüntüle ya da yeni bir tane oluştur!</string>
     <string name="skip_text">Geç</string>
@@ -46,7 +46,7 @@
     <string name="help">Yardım</string>
     <string name="images_to_pdf">Resimden PDF\'ye</string>
     <string name="page_color">Sayfa Rengi</string>
-    <string name="filter_images_Text">Resimleri Filtrele[...]</string>
+    <string name="filter_images_Text">Resimleri Filtrele</string>
     <string name="preview_image_to_pdf">PDF Ön izleme</string>
     <string name="choose_page_number_style">Sayfa Numarası Sitilini Seç</string>
     <string name="show_pg_num">Sayfa numaralarını göster</string>
@@ -274,7 +274,7 @@
     <string name="file_order">Dosyada hiçbir değişiklik yapılmadı</string>
     <string name="compress_pdf">PDF\'yi Sıkıştır</string>
     <string name="compress_pdf_prompt">PDF\'nin sıkıştırma yüzdesini girin :</string>
-    <string name="compress_info">Tebrikler! PDF dosyanız sıkıştırıldı: [...]</string>
+    <string name="compress_info">Tebrikler! PDF dosyanız sıkıştırıldı: Orjinal PDF Boyutu : %s   Sıkıştırılmış PDF Boyutu: %s</string>
     <string name="pdf_to_images">PDF\'den Resime</string>
     <string name="create_images">Resim Oluştur</string>
     <string name="select_pdf_file">PDF Dosyası Seçin</string>
@@ -289,5 +289,125 @@
     <string name="invert_pdf_title">PDF\'yi ters çevir</string>
     <string name="rate_positive">Şimdi Değerlendir</string>
     <string name="rate_negative">Hayır, teşekkürler</string>
+    <string name="rate_title">Bizi değerlendir!</string>
+    <string name="rate_dialog_text">Bu uygulamayı beğendiyseniz, lütfen bu uygulamayı değerlendirmek için bir dakikanızı ayırın. Desteğiniz için teşekkür ederiz! :)</string>
+    <string name="rate_us_never">Asla</string>
+    <string name="error_occurred">Hata Oluştu</string>
+    <string name="rotate_pages">Sayfaları Döndür</string>
+    <string name="enter_rotation_angle">Dönüş Açısını Giriniz</string>
+    <string name="share_files">Dosyalar Paylaş</string>
+    <string name="pdf_removed_from_list">PDF listeden kaldırıldı.</string>
+    <string name="pdf_added_to_list">PDF listeye eklendi.</string>
+    <string name="select_files">Dosyaları Seçin</string>
+    <string name="settings">Ayarlar</string>
+    <string name="compression_image_edit">Resim sıkıştırma değerini değiştir</string>
+    <string name="font_family_edit">"Varsayılan yazı tipi ailesini değiştirin "</string>
+    <string name="font_size_edit">Varsayılan yazı tipi boyutunu değiştirin</string>
+    <string name="theme_edit">Varsayılan temayı değiştirin</string>
+    <string name="image_compression_value_default">Varsayılan Resim Sıkıştırma Değeri : %d %%</string>
+    <string name="theme_value_def">Varsayılan tema değeri : %s</string>
+    <string name="page_size_value_def">Varsayılan sayfa boyutu değeri : %s</string>
+    <string name="font_size_value_def">Varsayılan yazı tipi boyutu değeri : %d</string>
+    <string name="font_family_value_def">Varsayılan yazı tipi ailesi değeri : %s</string>
+    <string name="settings_info">Çeşitli ayarlar için varsayılan değeri buradan değiştirebilirsiniz.</string>
+    <string name="storage_location_modified">Depolama yeri değişti</string>
+    <string name="storage_location_info">Depolama yerini değiştir</string>
+    <string name="theme_white">Aydınlık</string>
+    <string name="theme_dark">Karanlık</string>
+    <string name="theme_black">Koyu</string>
+    <string name="change_master_pwd">Ana parolayı değiştir</string>
+    <string name="current_master_pwd">Her PDF\'yi şifrelemek için şu anki ana parola \"%1$s\". Buradan değiştirebilirsiniz:</string>
+    <string name="home_page">Ana Sayfa</string>
+    <string name="create_new_pdfs">Yeni PDF oluştur</string>
+    <string name="view_pdfs">PDF\'leri Görüntüle</string>
+    <string name="view_pdf">PDF Görüntüle</string>
+    <string name="modify_existing_pdfs">Mevcut PDF\'leri değiştirin</string>
+    <string name="more_options">Daha fazla Seçenek</string>
+    <string name="add_password">Parola ekle</string>
+    <string name="add_text">Metin ekle</string>
+    <string name="remove_password">Parolayı kaldır</string>
+    <string name="enhance_created_pdfs">Oluşturulan PDF\'leri Geliştirin</string>
+    <string name="viewfiles_rotatepages">1. Döndürmek istediğiniz PDF\'yi seçin.  \n2. Sayfaları Döndür\'ü seçin.  \n3. Dönme açısını seçin. Tamam\'ı seçin.  \n4. Yeni döndürülmüş PDF oluşturulacaktır.</string>
+    <string name="file_info">"   Dosya İsmi : %1$s     Dosya Yolu : %2$s     Boyut : %3$s     Tarih Değiştirildi  %4$s"</string>
+    <string name="viewfiles_addpassword">1. Parola koymak istediğiniz PDF\'yi seçin.  \n2. Parola Ekleyi Seçin.  \n3. Yeni parolayı yazın. Tamam\'ı seçin.  \n4. Parola korumalı yeni PDF oluşturuldu.</string>
+    <string name="viewfiles_removepassword">1. Parolasını kaldırmak istediğiniz PDF\'yi seçin.  \n2. Parola Kaldırı Seçin.  \n3. PDF parolasını yazın. Tamam\'ı seçin.  \n4. Şifresiz yeni PDF oluşturulacaktır.</string>
+    <string name="grayscale_images">Gri tonlamalı PDF oluşturun</string>
+    <string name="title">PDF Hareketleri</string>
+    <string name="filter_saved">Resim kaydedildi</string>
+    <string name="filter_grain">Taneleştir</string>
+    <string name="filter_vig">Skeç</string>
+    <string name="filter_saturate">Doygunlaştır</string>
+    <string name="filter_sharpen">Netleştir</string>
+    <string name="filter_lomish">Lomish</string>
+    <string name="filter_negative">Negatifleştir</string>
+    <string name="filter_poster">Posterleştir</string>
+    <string name="filter_rotate">Döndür</string>
+    <string name="filter_sepia">Sepya</string>
+    <string name="filter_temp">Sıcaklık</string>
+    <string name="filter_tint">Renkleştir</string>
+    <string name="whatsnew_continue">Devam et</string>
+    <string name="whatsnew_title">Yeni Ne Var</string>
+    <string name="watermark_added">Filigran Eklendi</string>
+    <string name="watermarked">Filigranlı</string>
+    <string name="watermarked_file">_filigranlı.pdf</string>
+    <string name="watermark_remove">Filigran Kaldırıldı</string>
+    <string name="snackbar_watermark_cannot_be_blank">Metin boş olamaz</string>
+    <string name="cannot_add_watermark">PDF\'ye Filigran eklenemedi. Lütfen PDF\'yi tekrar kontrol ediniz.</string>
+    <string name="add_watermark">Filigran Ekle</string>
+    <string name="enter_watermark_text">Metin giriniz</string>
+    <string name="enter_watermark_angle">Açı giriniz</string>
+    <string name="watermark_angle">Açı</string>
+    <string name="choose_watermark_color">Renk seçin</string>
+    <string name="enter_watermark_font_size">Yazı tipini boyutunu giriniz</string>
+    <string name="choose_watermark_font_family">Yazı tipi ailesini seçiniz</string>
+    <string name="watermark_font_size">Yazı tipi boyutu</string>
+    <string name="choose_watermark_style">Stil seçin</string>
+    <string name="viewfiles_addwatermark">1. Filigran eklemek istediğiniz PDF\'yi seçin. 2. Filigran Ekle\'yi seçin. 3. Gerekli bilgileri doldurun. Tamam\'ı seçin. 4. Filigranlı yeni PDF oluşturulacaktır.</string>
+    <string name="add_images">Resim Ekle</string>
+    <string name="selected_images_text">Seçtiğiniz resimler, seçili PDF\'nin sonuna eklenecektir.</string>
+    <string name="no_images_selected">Hiçbir resim seçilmedi</string>
+    <string name="title_filter_history_dialog">İşlem türüne göre filtrele</string>
+    <string name="zip_to_pdf">Zip\'ten PDF\'ye</string>
+    <string name="convert_to_pdf">PDF\'ye dönüştür</string>
+    <string name="error_no_image_in_zip">Zip dosyası resim içermiyor</string>
+    <string name="error_open_file">Dosya açılırken bir hata meydana geldi. Lütfen yeniden açmayı deneyin.</string>
+    <string name="error_pdf_not_created">Üzgünüm, PDF oluşturulamadı. Lütfen tekrar deneyin.</string>
+    <string name="favourites">Favoriler</string>
+    <string name="add_to_favourite">Favorilere Ekle</string>
+    <string name="favourites_text">En sevdiğiniz özellikleri eklemek için + simgesini seçin!</string>
+    <string name="no_excel_file">Hiçbir excel dosyası seçilmedi</string>
+    <string name="split_range_alert">Bölünmüş aralığa girildiğinde tekrar Seçili PDF oluşturulur!</string>
+    <string name="reordering_pages_dialog">Sayfalarınız yeniden sıralanıyor...</string>
+    <string name="delete_alert_singular">Seçili dosyayı silmek istediğinizden emin misiniz?</string>
+    <string name="snackbar_files_deleted">Dosyalar Silindi</string>
+    <string name="lbl_recently_used">Son Kullanılan Özellikler</string>
+    <string name="faqSearch">SSS Ara</string>
+    <string name="faqs" translatable="false">SSS</string>
 
+    <string-array name="faq_question_answers">
+        <item>Resim dosyası formatı olarak hangi formatlar destekleniyor?#####Uygulama şunları destekliyor: jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
+        <item>Uygulamayı kullanarak yeni bir metin dosyası oluşturabilir miyim?#####Yalnızca mevcut PDF\'lerden metinleri çıkararak yeni bir metin dosyası oluşturabilirsiniz. Metin dosyası oluşturmak için, \n1) Ana sayfadaki <strong>Metin Çıkar</strong> seçeneğine tıkla \n2)  <strong>PDF Dosyası Seçin</strong> butonunu kullanarak PDF\'yi seçin. \n3) Sonra, <strong>Metin Çıkar</strong>\'a tıklayın. \n4) Tamamlandığında, PDF dosyasındaki metinleri içeren bir metin dosyası oluşturulacaktır.</item>
+        <item> PDF oluşturmak için tek seferde ekleyebileceğim resim sayısında bir sınır var mı? ##### Hayır, herhangi bir kısıtlama yok. </item>
+        <item> Ekleyebileceğim resim boyutu için bir sınır var mı? ##### Hayır, sınır yok. Ancak, boyutu <strong> 10 MB\'den küçük </strong> olarak sınırlamanızı öneririz. Birden çok büyük resim dosyasının dönüştürülmesi 10 saniyeden fazla sürer. </item>
+        <item> Ekledikten sonra resme başlık ekleyebilir miyim? ##### Hayır, resmin kendisinde aksi şekilde düzenlenmedikçe resimlere başlık eklenemez. </item>
+        <item> Uygulamayı kullanarak PDF dosyalarını okuyabilir miyim? ##### Hayır, şu an için okuyamazsınız. Bu uygulama bir PDF görüntüleyici olarak çalışmıyor. </item>
+        <item> Uygulamayı kullanarak oluşturduğum PDF dosyaları nereye kaydedildi? ##### Uygulama ile oluşturulan PDF dosyaları, cihazınızın depolama alanındaki PDFfiles adlı klasöre otomatik olarak kaydedilir. \nVarsayılan konumu <strong> Ayarlar </strong> bölümünde de değiştirebilirsiniz. </item>
+        <item> Varsayılan depolama konumu nasıl değiştirilir? ##### Varsayılan depolama konumunu değiştirmek için, \n1) Sol üst köşedeki <strong> Hamburger simgesini </strong> (üç yatay çizgi) tıklayın. \n2) Aşağı kaydırın ve <strong> Ayarlar </strong> \'ı tıklayın. \n3) Ayarlar sayfasında, <strong> Depolama konumunu değiştir </strong> metninin hemen altındaki alanı tıklayın. \n4) Tercih edilen kaydetme konumunu açın ve üstteki <strong> Seç simgesini </strong> tıklayın. \nDeğiştikten sonra, uygulama kullanılarak oluşturulan dosyalar yeni konumda depolanacaktır. </item>
+        <item> Uygulama kullanılarak düzenlenen / oluşturulan PDF dosyalarını nasıl paylaşabilirim? ##### Düzenlediğiniz / oluşturduğunuz PDF dosyalarına doğrudan uygulamadan erişebilir ve bunları paylaşabilirsiniz. PDF dosyalarını paylaşmak için \n1) Ana sayfada <strong> Dosyaları Görüntüle </strong> seçeneğini tıklayın. \n2) Onay kutusunu kullanarak paylaşmak istediğiniz dosyaları seçin. \n3) Ardından, sağ üstteki <strong> Diğer seçeneği </strong> (üç dikey nokta) ve <strong> Paylaş </strong> \'ı tıklayın. \n4) Dosyaları paylaşmak için istediğiniz yöntemi seçin. </item>
+        <item> Uygulamayı kullanarak bir PDF dosyasının unutulmuş şifresini kurtarabilir miyim? ##### Hayır, kayıp bir şifre kurtarılamaz. </item>
+        <item> Bir PDF dosyasının şifresini değiştirebilir miyim? ##### Evet, ancak yalnızca mevcut şifreyi kaldırırsanız. Şifre kaldırıldıktan sonra, şifreyi değiştirmek için ana sayfadaki <strong> Şifreyi Kaldır </strong> seçeneğini kullanın. </item>
+        <item> PDF oluşturmadan önce resimleri sıkıştırabilir miyim? ##### Evet, yapabilirsiniz. Resimleri sıkıştırmak için \n1) Ana sayfadaki <strong> Resimleri PDF\'ye Dönüştür </strong> seçeneğini tıklayın. \n2) <strong>RESİM SEÇ </strong> düğmesini kullanarak resimleri seçin. \n3) Ardından, görüntüleri sıkıştırmak için <strong> Görüntü sıkıştırma </strong> seçeneğini seçin. </item>
+        <item> PDF\'den ayıklanan görüntülerin biçimi nedir? ##### PDF\'den ayıklanan görüntüler <strong> .png </strong> biçiminde olacaktır. </item>
+        <item> Buluttan / çevrimiçi depolamadan dosya ekleyebilir miyim? ##### Şu an için yapamazsınız. Ancak, geliştirme yol haritasındadır ve yakında kullanıma sunulacaktır. </item>
+        <item> Oluşturulan / değiştirilen dosyaların geçmişi nasıl kontrol edilir? ##### Uygulamada oluşturduğunuz / değiştirdiğiniz tüm dosyaları görmek için. \nBunu yapmak için ana sayfadaki <strong> Geçmiş </strong> seçeneğini tıklayın. </item>
+        <item> Birden çok PDF dosyası nasıl birleştirilir? ##### Birden çok PDF\'yi birleştirmek için, \n1) Ana sayfadaki <strong> PDF Birleştir </strong> seçeneğini tıklayın. \n2) <strong> DOSYA SEÇ </strong> düğmesini kullanarak PDF dosyalarını seçin. \n3) Seçildikten sonra, <strong> DOSYALARI BİRLEŞTİR </strong> düğmesini tıklayın. </item>
+        <item> PDF oluştururken resimleri düzenleyebilir miyim? ##### Evet, yapabilirsiniz. Bunu yapmak için \n1) Ana sayfadaki <strong> Görüntüler PDF\'ye Dönüştür </strong> seçeneğini tıklayın. \n2) <strong> RESİM SEÇ </strong> düğmesini kullanarak resimleri seçin. \n3) Seçildikten sonra, gereksiniminize göre <strong> Resimleri Düzenle </strong> veya <strong> Resimleri Filtrele </strong> seçeneğini tıklayın. \n4) Filtreyi düzenlemeyi veya uygulamayı bitirin. \n5) Şimdi, <strong> GÖRÜNTÜ SEÇ </strong> düğmesini kullanarak düzenlenen resimleri seçin ve PDF\'yi oluşturmak için <strong> PDF OLUŞTUR </strong> \'u tıklayın. </item>
+        <item> PDF\'ye nasıl filigran eklenir? ##### Filigran eklemek için, soldan sağa kaydırarak ana sayfada veya seçenekler menüsünde <strong> Oluşturulan PDF\'leri Geliştir </strong> seçeneğine gidin ve <strong> Filigran Ekle </strong>. </item>
+        <item> PDF\'deki sayfaları yeniden sıralayabilir miyim? ##### Evet, yapabilirsiniz. Sayfayı yeniden sıralamak için \n1) Ana sayfada <strong> Sayfaları Yeniden Sırala </strong> seçeneğini tıklayın. \n2) <strong> BİR DOSYA SEÇ </strong> düğmesini kullanarak PDF dosyasını seçin. \n3) <strong> PDF OLUŞTUR </strong> \'u tıklayın. \n4) Sayfaları yeniden sıralamak için yukarı ve aşağı okları kullanın. \n5) Yeniden sıralandıktan sonra, yeni güncellenmiş PDF dosyasını oluşturmak için sol üstteki <strong> Geri okunu </strong> tıklayın. </item>
+        <item> PDF\'den görüntüler nasıl ayıklanır? ##### Görüntüleri çıkarmak için \n1) Ana sayfadaki Görüntüleri Ayıkla seçeneğini tıklayın. \n2) DOSYA SEÇ düğmesini kullanarak PDF dosyasını seçin. \n3) Seçildikten sonra, GÖRÜNTÜ OLUŞTUR düğmesini tıklayın. </item>
+        <item> PDF\'leri PPT, PPTX, ODT, DOC, DOCX biçimlerine dönüştürebilir miyim? ##### Hayır, PDF\'ler şu anda yalnızca metin biçimine dönüştürülebilir. </item>
+        <item> PDF DÖNÜŞTÜRÜCÜ: Dosyadan PDF uygulamasına nereden indirebilirim? ##### Uygulama Google PlayStore ve F-Droid\'de mevcuttur </item>
+        <item> Bu uygulamaya katkıda bulunabilir miyim? ##### Evet, yapabilirsiniz. <strong> Swati4star / Images-to-PDF </strong> proje adını kullanarak bizi GitHub\'da bulun. \nFikirlerinizi (özellik istekleri) paylaşmaktan, bir hata göndermekten veya eklenmesi gerektiğini düşündüğünüz herhangi bir şey için talepte bulunmaktan çekinmeyin. \nBu projede, tek bir satır değişikliği kadar az ekleyen birden fazla katılımcı var. Başlamak için <strong> Katkıda Bulunanlar kılavuzunu </strong> okuyun. </item>
+        <item> Bu SSS belgesinde olmayan bazı sorularım var. Geliştiriciyle nasıl iletişim kurabilirim? ##### Daha fazla soru için, <strong>swati4star@gmail.com</strong> </item> adresinden geliştiriciye e-posta gönderin.
+    </string-array>
 </resources>
