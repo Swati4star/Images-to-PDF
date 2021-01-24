@@ -505,12 +505,14 @@
     <string name="welcome_qrcode_to_pdf">QR Code to PDF</string>
     <string name="welcome_qrcode_to_pdf_message">Convert QR Codes and Barcodes to PDF in a simplistic manner</string>
     <string name="welcome_remove_pages">Remove Pages</string>
-    <string name="welcome_remove_pages_message">Remove the unwanted pages you do not need anymore</string>
-    <string name="welcome_reorder_pages">e</string>
+    <string name="welcome_remove_pages_message">Remove the pages you do not need in your PDF</string>
+    <string name="welcome_reorder_pages">Reorder Pages</string>
     <string name="welcome_reorder_pages_message">Reorder and rearrange the pages in a way you desire</string>
     <string name="welcome_extract_images">Extract Images from PDF</string>
     <string name="welcome_extract_images_message">Extract all possible images from your PDFs at a go</string>
-    <string name="welcome_merge_message">Merge different existing PDF in your phone in one file</string>
+    <string name="welcome_merge_message">Merge different existing PDFs in your phone in one PDF file</string>
+    <string name="welcome_excel_to_pdf">Excel to PDF</string>
+    <string name="welcome_excel_to_pdf_message">Convert your Excel files to PDF easily</string>
     <string name="welcome_viewfiles_title">Viewing the PDF files</string>
     <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your PDF file</string>
     <string name="skip_text">Skip</string>

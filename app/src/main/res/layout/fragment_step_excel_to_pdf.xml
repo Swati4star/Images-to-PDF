@@ -19,7 +19,7 @@
         android:layout_above="@id/tv_desc"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/half_margin"
-        android:text="@string/welcome_merge_title"
+        android:text="@string/welcome_excel_to_pdf"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="45dp"
-        android:text="@string/welcome_merge_message"
+        android:text="@string/welcome_excel_to_pdf_message"
         android:textAlignment="center" />
 
 </RelativeLayout>
