@@ -360,7 +360,7 @@
     <!--  Extract Text-->
     <string name="extract_text">Izdvoji Tekst</string>
     <string name="pdf_selected">Odabrana PDF datoteka: </string>
-
+    <string name="file_info">\n  Naziv Datoteke : %1$s \n\n  Putanja : %2$s \n\n  Veličina : %3$s \n\n  Datum Izmjene %4$s</string>
 
     <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">Vrsta Slova (Zadano : %s)</string>

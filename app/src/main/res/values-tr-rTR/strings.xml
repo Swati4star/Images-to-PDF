@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PDF Dönüştürücü</string>
-    <string name="welcome_create_pdf_message">PDF dosyası oluşturma</string>
-    <string name="welcome_create_pdf_info">Oluşturulmuş PDF dosyalarını görüntüle ya da yeni bir tane oluştur!</string>
-    <string name="skip_text">Geç</string>
-    <string name="welcome_viewfiles_title">PDF dosyalarını görüntüleme</string>
-    <string name="welcome_viewfiles_message">Görüntüle, sil, yeniden isimlendir, paylaş ve PDF dosyana parola ekle</string>
-    <string name="welcome_merge_title">PDF dosyalarını birleştirme</string>
-    <string name="welcome_merge_message">Varolan farklı PDF dosyalarını birleştirip bir dosya haline getir</string>
-    <string name="welcome_text_to_pdf">Metinleri PDF dosyasına çevirme</string>
-    <string name="welcome_text_to_pdf_message">Metin dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
-    <string name="welcome_qrcode_to_pdf">QR Kodu PDF dosyasına çevirme</string>
-    <string name="welcome_qrcode_to_pdf_message">QR Kodlarını ve Barkodları basit bir şekilde PDF\'ye dönüştürün</string>
-    <string name="welcome_remove_pages">Sayfaları silme</string>
-    <string name="welcome_remove_pages_message">İstemediğin, artık ihtiyacın olmayan sayfaları silebilirsin</string>
-    <string name="reorder_pages">Sayfaları yeniden sıralama</string>
-    <string name="welcome_reorder_pages">Sayfaları yeniden sıralama</string>
-    <string name="welcome_reorder_pages_message">Sayfaları istediğiniz şekilde yeniden sıralayın ve yeniden düzenleyin</string>
-    <string name="welcome_extract_images">PDF\'den Görüntü çıkarma</string>
-    <string name="welcome_extract_images_message">Bir harekette PDF\'lerinizden olası tüm görüntüleri çıkarın</string>
-    <string name="welcome_themes_title">Farklı temalar</string>
-    <string name="welcome_themes_message">Ayarlar\'a gidin ve üç tür tema arasından seçim yapabilirsiniz: Siyah, Koyu, Beyaz</string>
-    <string name="welcome_excel_message">Excel dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
-    <string name="get_started_title">Haydi başlayalım!</string>
+    <string name="title">PDF Hareketleri</string>
+
     <string name="file_name_text">Dosya Adı</string>
     <string name="select_images_text">Resimleri Seç</string>
     <string name="password_protect_pdf_text">Parola Korumalı PDF</string>
@@ -34,25 +14,57 @@
     <string name="search">ara</string>
     <string name="default_content_description">açıklama yok</string>
     <string name="prompt_input">Buraya girin</string>
+
+    <!--   Items  -->
+    <array name = "items">
+        <item>Dosya Aç</item>
+        <item>Dosyayı Sil</item>
+        <item>Dosyayı Yeniden Adlandır</item>
+        <item>Dosyayı Yazdır</item>
+        <item>Dosyayı Paylaş</item>
+        <item>Ayrıntıları Göster</item>
+        <item>Şifre Ekle</item>
+        <item>Şifreyi Kaldır</item>
+        <item>Sayfaları Döndür</item>
+        <item>Filigran Ekle</item>
+    </array>
+
+    <array name = "itemIds" translatable = "false">
+        <item>açık</item>
+        <item>sil</item>
+        <item>yeniden adlandır</item>
+        <item>yazdır</item>
+        <item>e-posta</item>
+        <item>ayrıntılar</item>
+    </array>
+
     <string name="please_wait">Lütfen Bekleyin</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Üzgünüz! Resimler eklenemedi. Lütfen **Resimleri Seç** seçeneğimizden resimleri seçin.</string>
     <string name="successToast">Resimler başarılı bir şekilde eklendi.</string>
+
+    <!-- Navigation drawer strings -->
     <string name="create_pdf">PDF Oluştur</string>
     <string name="qr_barcode_pdf">QR &amp; Barkodlar</string>
     <string name="viewFiles">Dosyaları Görüntüle</string>
     <string name="extras">Ekstralar</string>
     <string name="share">Paylaş</string>
     <string name="help">Yardım</string>
+    <string name="faqs">SSS</string>
+
+    <!-- images to PDF -->
     <string name="images_to_pdf">Resimden PDF\'ye</string>
     <string name="page_color">Sayfa Rengi</string>
     <string name="filter_images_Text">Resimleri Filtrele</string>
+    <!--    Image to PDF -Preview PDF-->
     <string name="preview_image_to_pdf">PDF Ön izleme</string>
+    <!--    Image to PDF-show page number-->
     <string name="choose_page_number_style">Sayfa Numarası Sitilini Seç</string>
     <string name="show_pg_num">Sayfa numaralarını göster</string>
     <string name="page_x_of_n">Sayfa X/N</string>
     <string name="page_x">X/N</string>
     <string name="x">X</string>
+    <!--    Image to PDF -Rearrange images-->
     <string name="arrow_up">Yukarı Ok</string>
     <string name="arrow_down">Aşağı Ok</string>
     <string name="rearrange_images">Resimleri Yeniden Düzenle</string>
@@ -62,27 +74,38 @@
     <string name="pdf_does_not_exist_message">PDF mevcut değil.</string>
     <string name="image_rearranging_options">Resim Yeniden Düzenleme Seçenekleri</string>
     <string name="filter_file_name">%s_%s.jpg</string>
+
+    <!--    Image compression-->
     <string name="compress_image">Resim sıkıştırma : %s %%</string>
     <string name="quality_image">Resmin sıkıştırma yüzedesini gir :</string>
     <string name="invalid_entry">Geçersiz Girdi</string>
     <string name="compress_dialog_enter_prompt">Buraya girin</string>
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Varsayılan olarak ayarla</string>
+    <!--    Image to PDf -Add margins-->
     <string name="add_margins">Kenar Boşlukları Ekle</string>
     <string name="top">Üst</string>
     <string name="bottom">Alt</string>
     <string name="right">Sağ</string>
     <string name="left">Sol</string>
+
+    <!--  Add Image Border  -->
     <string name="border">Resim Kenarlığı Ekle</string>
     <string name="border_dialog_title">Kenarlık genişliği : %d</string>
     <string name="border_width_prompt">Kenarlık genişliği birimlerini giriniz</string>
+
+    <!--  set Image Scale type  -->
     <string name="image_scale_type">Resim Ölçeği Türünü Ayarla</string>
     <string name="stretch_image">Resmi sayfaya sığacak şekilde uzat</string>
     <string name="maintain_aspect_ratio">Resimlerin en boy oranını koruyun</string>
+
+    <!--QR & Barcode Scan-->
     <string name="scan_qrcode">QR kodu Tara</string>
     <string name="scan_barcode">Barkodu Tara</string>
     <string name="qrbarcodes_to_pdf">QR &amp; Barkod ile PDF oluştur</string>
     <string name="scan_cancelled">Kullanıcı tarafından Tarama iptal edildi</string>
+
+    <!--Snackbar strings -->
     <string name="snackbar_no_images">Resim seçilmedi</string>
     <string name="snackbar_no_pdfs_selected">PDF seçilmedi</string>
     <string name="snackbar_name_not_blank">İsim boş olamaz</string>
@@ -122,14 +145,24 @@
     <string name="snackbar_invert_unsuccessful">PDF tersine çevrilemedi</string>
     <string name="snackbar_invert_successfull">Tersine çevrildi</string>
     <string name="snackbar_color_too_close">Yazı tipi renginiz ve arka plan renginiz çok benzer</string>
+
+    <!-- Excel to PDF   -->
     <string name="excel_selected">Excel dosyası seçildi</string>
     <string name="excel_to_pdf">Excel\'den PDF</string>
     <string name="excel_tv_view_text">Excel dosyası seçildi:</string>
     <string name="select_excel_file">Excel dosyasını seç</string>
+
+    <!-- Share strings -->
     <string name="share_chooser">Mesaj göndermek için uygulama seçin...</string>
+
+    <!-- Rate us strings -->
     <string name="rate_us_text">Merhaba, bu uygulamayı PlayStore\'dan indirdim. Denemek için : https://play.google.com/store/apps/details?id=swati4star.createpdf Resimleri kolay bir şekilde PDF dosyasına çevirebiliyor üstelik açık kaynak kodlu :)</string>
     <string name="snackbar_no_share_app">Paylaşacak uygulama yok.</string>
+
+    <!-- Select Images string -->
     <string name="images_selected">" %1$d resim seçildi."</string>
+
+    <!-- Feedback Strings -->
     <string name="feedback_subject">PDF Converter için Öneriler</string>
     <string name="feedback_text">Değerli geri bildirimlerinizi bize yazın ya  da bir Merhaba diyin! :)</string>
     <string name="snackbar_no_email_clients">Yüklü e-posta istemcisi yok.</string>
@@ -138,10 +171,14 @@
     <string name="get_started">Şimdi Başla</string>
     <string name="view_files_text">Dönüştürülen tüm dosyalarınızı burada görüntüleyin!</string>
     <string name="empty_image_description">PDF yok</string>
+
+    <!--  Add Password -->
     <string name="enter_password_custom">Parola Gir</string>
     <string name="example_pass_123">p4rol4@!23</string>
     <string name="remove_dialog">KALDIR</string>
     <string name="password_remove">Parola Kaldırıldı</string>
+
+    <!-- Merge PDF  -->
     <string name="merge_pdf">PDF Birleştirme</string>
     <string name="merge_file_select">Bir dosya Seç</string>
     <string name="File_hint_two">PDF\'nin Dosya Yolu</string>
@@ -150,9 +187,11 @@
     <string name="file_size_text">Dosya Boyutu</string>
     <string name="encrypted_file">_şifrelenmiş.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">Bu mesaja dosya eklendi.</string>
+
     <string name="nextimage_contentdesc">Sonraki Resim</string>
     <string name="decrypted_file">_şifrelenmemiş.pdf</string>
     <string name="decrypt_message">Devam etmek için parola giriniz</string>
+
     <string name="snackbar_txtselected">Metin Dosyası seçildi!</string>
     <string name="decrypt_protected_file">Parola korumalı bir pdf seçildi. Devam etmek için parola giriniz...</string>
     <string name="not_encrypted">PDF Şifrelenmemiş</string>
@@ -164,15 +203,21 @@
     <string name="Filter_image_preview">Resim Önizlemesini Filtrele</string>
     <string name="warning">Uyarı</string>
     <string name="overwrite_message">Aynı isimde bir dosya zaten mevcut. Bu dosyanın üzerine yazmak istiyor musunuz?</string>
+
+    <!--  Text To PDF -Set Page Size-->
     <string name="set_page_size_text">Sayfa Boyutunu Ayarla</string>
     <string name="b0_to_b10">B0 \'dan B10 \'a</string>
     <string name="a0_to_a10">A0 \'dan A10 \'a</string>
     <string name="default_page_size">VARSAYILAN ( %s )</string>
     <string name="master_password_changed">Parola yanlış görünüyor. Muhtemelen, ana parolanızı değiştirmelisiniz.</string>
+
+    <!--View File options    -->
     <string name="delete_alert_selected">Seçilmiş tüm dosyaları silmek ister misiniz?</string>
     <string name="sort_by_title">Başlığa Göre Sırala</string>
     <string name="delete">Sil</string>
     <string name="sort">Sırala</string>
+
+    <!-- Directory Strings -->
     <string name="directory">Dizin</string>
     <string name="moving_files">Dosyalarınızı taşıma</string>
     <string name="success_move">Dosyalarınız başarıyla taşındı</string>
@@ -190,6 +235,8 @@
     <string name="converting_file_message">Dosyalarınız PDF\'ye dönüştürülüyor.</string>
     <string name="select_text_file">Metin Dosyasını Seçin</string>
     <string name="install_file_manager">Lütfen bir Dosya Yöneticisi yükleyiniz</string>
+
+    <!-- Text to PDF   -->
     <string name="text_to_pdf">"Metinden PDF'ye "</string>
     <string name="text_file_selected">Metin Dosyası Seçildi</string>
     <string name="select_file">Yüklenecek Bir Dosya Seçin</string>
@@ -203,6 +250,8 @@
     <string name="example_font">Örnek : 10</string>
     <string name="font_size_changed">Yazı Tipi Boyutu Değiştirildi</string>
     <string name="font_size">Yazı Tipi Boyutu : %1$s</string>
+
+    <!--  About US & App Description & Contact US  -->
     <string name="about_us">Hakkımızda</string>
     <string name="rate_us">Bizi Değerlendirin</string>
     <string name="app_description">Android Uygulama kullanarak dosyalarınızı PDF\'ye çevirmenin kolay yolu.</string>
@@ -216,8 +265,12 @@
     <string name="website">Sitemizi ziyaret edin</string>
     <string name="license">Lisans</string>
     <string name="playstore">PlayStore\'da bizi değerlendirin</string>
+
+    <!-- Preview strings -->
     <string name="swipe_to_view_next">Sonraki resmi görüntülemek için sola kaydırın</string>
     <string name="showing_image">%2$d Resimden %1$d resim gösteriliyor</string>
+
+    <!-- Filter strings -->
     <string name="filter_brush">Fırça</string>
     <string name="filter_none">Yok</string>
     <string name="filter_autofix">Otomatik Düzeltme</string>
@@ -230,6 +283,18 @@
     <string name="filter_filllight">Işık Doldur</string>
     <string name="filter_filpver">Dikey Çevir</string>
     <string name="filter_fliphor">Yatay Çevir</string>
+    <string name="filter_saved">Resim kaydedildi</string>
+    <string name="filter_grain">Taneleştir</string>
+    <string name="filter_vig">Skeç</string>
+    <string name="filter_saturate">Doygunlaştır</string>
+    <string name="filter_sharpen">Netleştir</string>
+    <string name="filter_lomish">Lomish</string>
+    <string name="filter_negative">Negatifleştir</string>
+    <string name="filter_poster">Posterleştir</string>
+    <string name="filter_rotate">Döndür</string>
+    <string name="filter_sepia">Sepya</string>
+    <string name="filter_temp">Sıcaklık</string>
+    <string name="filter_tint">Renkleştir</string>
     <string name="created">Oluşturuldu</string>
     <string name="printed">Basıldı</string>
     <string name="renamed">Yeniden isimlendirildi</string>
@@ -241,11 +306,18 @@
     <string name="no_history_message">Gösterilecek geçmiş yok</string>
     <string name="view_history_here_message">Dönüştürülen tüm dosya geçmişinizi burada görünütüleyin!</string>
     <string name="delete_history_message">Geçmişinizi silmek istediğinize emin misiniz?</string>
+
+    <!-- Extract images -->
     <string name="extract_images">Resimleri Çıkar</string>
     <string name="extract_images_failed">Seçilmiş PDF\'de hiç resim bulunamadı.</string>
     <string name="extract_images_success">Seçilmiş PDF\'de %1$d adet resim bulundu. Kök dizindeki PDF Dosyaları klasörüne kaydedilmiştir.</string>
+
+    <!--  Extract Text-->
     <string name="extract_text">Metin Çıkar</string>
     <string name="pdf_selected">PDF dosyası seçildi:</string>
+    <string name="file_info">\n   Dosya İsmi : %1$s \n\n  Dosya Yolu : %2$s \n\n  Boyut : %3$s \n\n  Tarih Değiştirildi  %4$s"</string>
+
+    <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">Yazı Tipi Ailesi (Varsayılan : %s)</string>
     <string name="font_family_text">Yazı Tipi Ailesi :</string>
     <string name="undefined">TANIMSIZ</string>
@@ -255,11 +327,16 @@
     <string name="done">Bitti</string>
     <string name="image_successfully_cropped">Resim başarıyla kırpıldı</string>
     <string name="confirm_exit_message">Çıkmak için tekrar geri basın</string>
+
     <string name="filter_not_saved">Resim kaydedilemedi</string>
     <string name="remove_image_message">Bu resmi kaldırmak istediğinizden emin misiniz?</string>
     <string name="dont_show_again">Tekrar gösterme</string>
     <string name="remove_page_message">Bu sayfayı kaldırmak istediğinizden emin misiniz?</string>
+
+    <!-- Watermark Strings -->
     <string name="encrypted_file_text">şifrelenmiş dosya</string>
+
+    <!-- Split PDF -->
     <string name="split_pdf">PDF\'yi Böl</string>
     <string name="split_success">Seçilmiş PDF başarıyla bölündü. %1$d PDF\'ye bölündü.</string>
     <string name="split_info">PDF, birden fazla PDF\'ye bölünecektir. Biçim örneği: 1&#8211;5,6&#8211;7,8,9</string>
@@ -267,23 +344,35 @@
     <string name="error_page_range">Geçersiz aralık girişi</string>
     <string name="error_invalid_input">Geçersiz giriş</string>
     <string name="split_one_page_pdf_alert">Seçilmiş PDF bölünemez çünkü sadece 1 sayfa!</string>
+
+    <!-- Remove Pages -->
     <string name="remove_pages">Sayfaları Kaldır</string>
     <string name="remove_pages_error">Giriş değeri geçerli değil</string>
     <string name="encrypted_pdf">PDF parola ile korumalı</string>
     <string name="file_access_error">PDF\'ye erişemedik. Dosya şifrelenmiş olabilir veya harici depolamada olabilir.</string>
     <string name="file_order">Dosyada hiçbir değişiklik yapılmadı</string>
+
+    <!-- Reorder Pages -->
+
+    <!-- Compress PDF -->
     <string name="compress_pdf">PDF\'yi Sıkıştır</string>
     <string name="compress_pdf_prompt">PDF\'nin sıkıştırma yüzdesini girin :</string>
-    <string name="compress_info">Tebrikler! PDF dosyanız sıkıştırıldı: Orjinal PDF Boyutu : %s   Sıkıştırılmış PDF Boyutu: %s</string>
+    <string name="compress_info">Tebrikler! PDF dosyanız sıkıştırıldı: \n Orjinal PDF Boyutu : %s \n Sıkıştırılmış PDF Boyutu: %s</string>
+
+    <!-- PDF to Images string resources-->
     <string name="pdf_to_images">PDF\'den Resime</string>
     <string name="create_images">Resim Oluştur</string>
     <string name="select_pdf_file">PDF Dosyası Seçin</string>
     <string name="share_images">Resimleri Paylaş</string>
     <string name="view_images">Resimleri Görüntüle</string>
     <string name="view_in_gallery">Galerideki Resimleri Görüntüle</string>
+
+    <!-- Remove Duplicate Pages -->
     <string name="remove_duplicate_pages">Tekrarlı Sayfaları Kaldır</string>
     <string name="remove_duplicate_info">PDF\'deki tekrarlı sayfalar kaldırılacaktır.</string>
     <string name="remove_duplicate">Tekrarlı Sayfaları Kaldır.</string>
+
+    <!-- Invert Pdf -->
     <string name="invert_pdf">PDF\'yi ters çevir</string>
     <string name="invert_pdf_info">PDF\'deki tüm renkler ters çevrildi.</string>
     <string name="invert_pdf_title">PDF\'yi ters çevir</string>
@@ -293,12 +382,16 @@
     <string name="rate_dialog_text">Bu uygulamayı beğendiyseniz, lütfen bu uygulamayı değerlendirmek için bir dakikanızı ayırın. Desteğiniz için teşekkür ederiz! :)</string>
     <string name="rate_us_never">Asla</string>
     <string name="error_occurred">Hata Oluştu</string>
+
+    <!-- Rate us strings -->
     <string name="rotate_pages">Sayfaları Döndür</string>
     <string name="enter_rotation_angle">Dönüş Açısını Giriniz</string>
     <string name="share_files">Dosyalar Paylaş</string>
     <string name="pdf_removed_from_list">PDF listeden kaldırıldı.</string>
     <string name="pdf_added_to_list">PDF listeye eklendi.</string>
     <string name="select_files">Dosyaları Seçin</string>
+
+    <!-- Settings page -->
     <string name="settings">Ayarlar</string>
     <string name="compression_image_edit">Resim sıkıştırma değerini değiştir</string>
     <string name="font_family_edit">"Varsayılan yazı tipi ailesini değiştirin "</string>
@@ -317,6 +410,8 @@
     <string name="theme_black">Koyu</string>
     <string name="change_master_pwd">Ana parolayı değiştir</string>
     <string name="current_master_pwd">Her PDF\'yi şifrelemek için şu anki ana parola \"%1$s\". Buradan değiştirebilirsiniz:</string>
+
+    <!-- Home page -->
     <string name="home_page">Ana Sayfa</string>
     <string name="create_new_pdfs">Yeni PDF oluştur</string>
     <string name="view_pdfs">PDF\'leri Görüntüle</string>
@@ -325,28 +420,42 @@
     <string name="more_options">Daha fazla Seçenek</string>
     <string name="add_password">Parola ekle</string>
     <string name="add_text">Metin ekle</string>
+    <string name="reorder_pages">Sayfaları yeniden sıralama</string>
     <string name="remove_password">Parolayı kaldır</string>
     <string name="enhance_created_pdfs">Oluşturulan PDF\'leri Geliştirin</string>
     <string name="viewfiles_rotatepages">1. Döndürmek istediğiniz PDF\'yi seçin.  \n2. Sayfaları Döndür\'ü seçin.  \n3. Dönme açısını seçin. Tamam\'ı seçin.  \n4. Yeni döndürülmüş PDF oluşturulacaktır.</string>
-    <string name="file_info">"   Dosya İsmi : %1$s     Dosya Yolu : %2$s     Boyut : %3$s     Tarih Değiştirildi  %4$s"</string>
     <string name="viewfiles_addpassword">1. Parola koymak istediğiniz PDF\'yi seçin.  \n2. Parola Ekleyi Seçin.  \n3. Yeni parolayı yazın. Tamam\'ı seçin.  \n4. Parola korumalı yeni PDF oluşturuldu.</string>
     <string name="viewfiles_removepassword">1. Parolasını kaldırmak istediğiniz PDF\'yi seçin.  \n2. Parola Kaldırı Seçin.  \n3. PDF parolasını yazın. Tamam\'ı seçin.  \n4. Şifresiz yeni PDF oluşturulacaktır.</string>
     <string name="grayscale_images">Gri tonlamalı PDF oluşturun</string>
-    <string name="title">PDF Hareketleri</string>
-    <string name="filter_saved">Resim kaydedildi</string>
-    <string name="filter_grain">Taneleştir</string>
-    <string name="filter_vig">Skeç</string>
-    <string name="filter_saturate">Doygunlaştır</string>
-    <string name="filter_sharpen">Netleştir</string>
-    <string name="filter_lomish">Lomish</string>
-    <string name="filter_negative">Negatifleştir</string>
-    <string name="filter_poster">Posterleştir</string>
-    <string name="filter_rotate">Döndür</string>
-    <string name="filter_sepia">Sepya</string>
-    <string name="filter_temp">Sıcaklık</string>
-    <string name="filter_tint">Renkleştir</string>
+
+    <!-- Welcome screens-->
+    <string name="welcome_create_pdf_message">PDF dosyası oluşturma</string>
+    <string name="welcome_create_pdf_info">Oluşturulmuş PDF dosyalarını görüntüle ya da yeni bir tane oluştur!</string>
+    <string name="welcome_viewfiles_title">PDF dosyalarını görüntüleme</string>
+    <string name="welcome_viewfiles_message">Görüntüle, sil, yeniden isimlendir, paylaş ve PDF dosyana parola ekle</string>
+    <string name="welcome_merge_title">PDF dosyalarını birleştirme</string>
+    <string name="welcome_merge_message">Varolan farklı PDF dosyalarını birleştirip bir dosya haline getir</string>
+    <string name="welcome_text_to_pdf">Metinleri PDF dosyasına çevirme</string>
+    <string name="welcome_text_to_pdf_message">Metin dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
+    <string name="welcome_qrcode_to_pdf">QR Kodu PDF dosyasına çevirme</string>
+    <string name="welcome_qrcode_to_pdf_message">QR Kodlarını ve Barkodları basit bir şekilde PDF\'ye dönüştürün</string>
+    <string name="welcome_remove_pages">Sayfaları silme</string>
+    <string name="welcome_remove_pages_message">İstemediğin, artık ihtiyacın olmayan sayfaları silebilirsin</string>
+    <string name="welcome_reorder_pages">Sayfaları yeniden sıralama</string>
+    <string name="welcome_reorder_pages_message">Sayfaları istediğiniz şekilde yeniden sıralayın ve yeniden düzenleyin</string>
+    <string name="welcome_extract_images">PDF\'den Görüntü çıkarma</string>
+    <string name="welcome_extract_images_message">Bir harekette PDF\'lerinizden olası tüm görüntüleri çıkarın</string>
+    <string name="welcome_themes_title">Farklı temalar</string>
+    <string name="welcome_themes_message">Ayarlar\'a gidin ve üç tür tema arasından seçim yapabilirsiniz: Siyah, Koyu, Beyaz</string>
+    <string name="welcome_excel_message">Excel dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
+    <string name="skip_text">Geç</string>
+    <string name="get_started_title">Haydi başlayalım!</string>
+
+    <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Devam et</string>
     <string name="whatsnew_title">Yeni Ne Var</string>
+
+    <!--watermark strings -->
     <string name="watermark_added">Filigran Eklendi</string>
     <string name="watermarked">Filigranlı</string>
     <string name="watermarked_file">_filigranlı.pdf</string>
@@ -362,28 +471,38 @@
     <string name="choose_watermark_font_family">Yazı tipi ailesini seçiniz</string>
     <string name="watermark_font_size">Yazı tipi boyutu</string>
     <string name="choose_watermark_style">Stil seçin</string>
-    <string name="viewfiles_addwatermark">1. Filigran eklemek istediğiniz PDF\'yi seçin. 2. Filigran Ekle\'yi seçin. 3. Gerekli bilgileri doldurun. Tamam\'ı seçin. 4. Filigranlı yeni PDF oluşturulacaktır.</string>
+    <string name="viewfiles_addwatermark">1. Filigran eklemek istediğiniz PDF\'yi seçin. \n2. Filigran Ekle\'yi seçin. \n3. Gerekli bilgileri doldurun. Tamam\'ı seçin. \n4. Filigranlı yeni PDF oluşturulacaktır.</string>
+
+    <!--<nav add images>-->
     <string name="add_images">Resim Ekle</string>
     <string name="selected_images_text">Seçtiğiniz resimler, seçili PDF\'nin sonuna eklenecektir.</string>
     <string name="no_images_selected">Hiçbir resim seçilmedi</string>
     <string name="title_filter_history_dialog">İşlem türüne göre filtrele</string>
+
+    <!--zip to pdf-->
     <string name="zip_to_pdf">Zip\'ten PDF\'ye</string>
     <string name="convert_to_pdf">PDF\'ye dönüştür</string>
     <string name="error_no_image_in_zip">Zip dosyası resim içermiyor</string>
     <string name="error_open_file">Dosya açılırken bir hata meydana geldi. Lütfen yeniden açmayı deneyin.</string>
+
+    <!--text to pdf-->
     <string name="error_pdf_not_created">Üzgünüm, PDF oluşturulamadı. Lütfen tekrar deneyin.</string>
+
+    <!--favourite fragment-->
     <string name="favourites">Favoriler</string>
     <string name="add_to_favourite">Favorilere Ekle</string>
     <string name="favourites_text">En sevdiğiniz özellikleri eklemek için + simgesini seçin!</string>
     <string name="no_excel_file">Hiçbir excel dosyası seçilmedi</string>
+
+    <!--file name suffix-->
     <string name="split_range_alert">Bölünmüş aralığa girildiğinde tekrar Seçili PDF oluşturulur!</string>
     <string name="reordering_pages_dialog">Sayfalarınız yeniden sıralanıyor...</string>
     <string name="delete_alert_singular">Seçili dosyayı silmek istediğinizden emin misiniz?</string>
     <string name="snackbar_files_deleted">Dosyalar Silindi</string>
     <string name="lbl_recently_used">Son Kullanılan Özellikler</string>
-    <string name="faqSearch">SSS Ara</string>
-    <string name="faqs" translatable="false">SSS</string>
 
+    <!--  FAQs  -->
+    <string name="faqSearch">SSS Ara</string>
     <string-array name="faq_question_answers">
         <item>Resim dosyası formatı olarak hangi formatlar destekleniyor?#####Uygulama şunları destekliyor: jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Uygulamayı kullanarak yeni bir metin dosyası oluşturabilir miyim?#####Yalnızca mevcut PDF\'lerden metinleri çıkararak yeni bir metin dosyası oluşturabilirsiniz. Metin dosyası oluşturmak için, \n1) Ana sayfadaki <strong>Metin Çıkar</strong> seçeneğine tıkla \n2)  <strong>PDF Dosyası Seçin</strong> butonunu kullanarak PDF\'yi seçin. \n3) Sonra, <strong>Metin Çıkar</strong>\'a tıklayın. \n4) Tamamlandığında, PDF dosyasındaki metinleri içeren bir metin dosyası oluşturulacaktır.</item>

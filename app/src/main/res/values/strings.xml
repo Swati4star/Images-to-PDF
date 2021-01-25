@@ -367,7 +367,7 @@
     <!--  Extract Text-->
     <string name="extract_text">Extract Text</string>
     <string name="pdf_selected">PDF file selected: </string>
-    <string name="file_info">"   File Name : %1$s     Path : %2$s     Size : %3$s     Date Modified %4$s"</string>
+    <string name="file_info">\n  File Name : %1$s \n\n  Path : %2$s \n\n  Size : %3$s \n\n  Date Modified %4$s</string>
 
 
     <!-- Text To PDF   FontFamily-->
@@ -416,7 +416,7 @@
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
     <string name="compress_pdf_prompt">Enter % compression of PDF : </string>
-    <string name="compress_info">Congratulations! Your PDF is compressed:   Original PDF Size : %s   Compressed PDF Size: %s</string>
+    <string name="compress_info">Congratulations! Your PDF is compressed: \n Original PDF Size : %s \n Compressed PDF Size: %s</string>
 
     <!-- PDF to Images string resources-->
     <string name="pdf_to_images">PDF to Images</string>
@@ -513,6 +513,7 @@
     <string name="welcome_merge_message">Merge different existing PDF in your phone in one file</string>
     <string name="welcome_viewfiles_title">Viewing the PDF files</string>
     <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your PDF file</string>
+    <string name="welcome_excel_message">Convert your excel files into your most desired PDFs at ease</string>
     <string name="skip_text">Skip</string>
     <string name="get_started_title">Get Started!</string>
 
@@ -536,7 +537,7 @@
     <string name="choose_watermark_font_family">Choose font family</string>
     <string name="watermark_font_size">Font size</string>
     <string name="choose_watermark_style">Choose style</string>
-    <string name="viewfiles_addwatermark">1. Select the PDF you wish to add watermark to.  2. Select Add Watermark.  3. Fill the required information. Select OK.  4. New PDF with watermark will be created.</string>
+    <string name="viewfiles_addwatermark">1. Select the PDF you wish to add watermark to. \n2. Select Add Watermark. \n3. Fill the required information. Select OK. \n4. New PDF with watermark will be created.</string>
 
     <!--<nav add images>-->
     <string name="add_images">Add Images</string>
@@ -569,7 +570,6 @@
 
     <!--  FAQs  -->
     <string name="faqSearch">Search FAQ</string>
-    <string name="welcome_excel_message">Convert your excel files into your most desired PDFs at ease</string>
     <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTRACT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
