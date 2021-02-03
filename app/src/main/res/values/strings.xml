@@ -495,6 +495,7 @@
     <string name="grayscale_images">Create grayscale PDF</string>
 
     <!-- Welcome screens-->
+    <string name="welcome_excel_to_pdf_message">Convert your excel files into your most desired PDFs at ease</string>
     <string name="welcome_create_pdf_message">Creating a PDF file</string>
     <string name="welcome_create_pdf_info">View the PDF files previously created or create a new one!</string>
     <string name="welcome_themes_title">Different themes</string>
