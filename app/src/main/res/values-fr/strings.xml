@@ -103,12 +103,6 @@
     <string name="set_page_size_text">Définir la taille de page</string>
     <string name="b0_to_b10">B0 à B10</string>
     <string name="a0_to_a10">A0 à A10</string>
-    <string name="tabloid">TABLOÏD</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTRE</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
     <string name="default_page_size">PAR DÉFAUT ( %s )</string>
     <!-- Directory Strings -->
     <string name="success_move">Vos fichiers ont été déplacés avec succès</string>
@@ -173,14 +167,8 @@
     <string name="deleted">Supprimé</string>
     <string name="no_history_message">Aucun historique à afficher</string>
     <string name="delete_history_message">Êtes-vous sûr de vouloir supprimer l\'historique \?</string>
-    <string name="file_info">\n Nom du fichier : %1$s\n\n Chemin : %2$s\n\n Taille : %3$s\n\n Date de modification %4$s</string>
     <string name="default_font_family_text">Famille de police de caractères (par défaut : %s)</string>
     <string name="font_family_text">"Famille de la police : "</string>
-    <string name="courier">COURRIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">NON DÉFINIT</string>
     <string name="delete_alert_selected">Voulez-vous supprimer tous les fichiers sélectionnés \?</string>
     <string name="sort_by_title">Trier par</string>
@@ -322,12 +310,10 @@
     <string name="enter_password_custom">Entrez le mot de passe</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">Chemin d’accès au second fichier PDF</string>
     <string name="i_have_attached_pdfs_to_this_message">J’ai attaché des fichiers à ce message</string>
-    <string name="btn_sav_text">savText</string>
     <string name="decrypt_protected_file">Le PDF est protégé par mot de passe. Entrez le mot de passe pour continuer …</string>
     <string name="save_first">Sauvegarder la présente image d’abord</string>
     <string name="moving_files">Déplacement de vos fichiers</string>
     <string name="move_files_delete_dir">Déplacement des fichiers et suppression du dossier</string>
-    <string name="text_type">text/plain</string>
     <string name="font_size_changed">La taille de la police a été modifiée</string>
     <string name="swipe_to_view_next">Glissez à gauche pour voir l’image suivante</string>
     <string name="filter_autofix">Correction automatique</string>
@@ -359,7 +345,6 @@
     <string name="error_occurred">Une erreur s’est produite</string>
     <string name="rotate_pages">Tourner les pages</string>
     <string name="enter_rotation_angle">Entrez l’angle de rotation</string>
-    <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="compression_image_edit">Modifier la valeur de compression des images</string>
     <string name="font_family_edit">Changer la famille de la police par défaut</string>
     <string name="font_size_edit">Changer la taille de la police par défaut</string>

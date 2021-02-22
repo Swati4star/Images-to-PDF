@@ -230,7 +230,6 @@
     <string name="file_size_text">Veličina Datoteke</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">Zakačio/la sam PDF datoteke u ovu poruku</string>
-    <string name="btn_sav_text">savText</string>
 
     <string name="nextimage_contentdesc">Slijedeća Fotografija</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
@@ -252,12 +251,6 @@
     <string name="set_page_size_text">Odaberite Veličinu Stranice</string>
     <string name="b0_to_b10">B0 do B10</string>
     <string name="a0_to_a10">A0 do A10</string>
-    <string name="tabloid">TABLOID</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTER</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
     <string name="default_page_size">ZADANA ( %s )</string>
     <string name="master_password_changed">Lozinka nije tačna. Može biti da ste zamijenili glavnu lozinku.</string>
 
@@ -291,7 +284,6 @@
     <string name="text_to_pdf">Tekst u PDF</string>
     <string name="text_file_selected">Tekstualna datoteka odabrana</string>
     <string name="select_file">"Odaberite Datoteku za Slanje"</string>
-    <string name="text_type">text/plain</string>
     <string name="new_directory">Nova Mapa</string>
     <string name="previous_image_content_desc">Prethodna Fotografija</string>
     <string name="text_file_name">"Tekstualna Datoteka : "</string>
@@ -370,15 +362,9 @@
     <string name="pdf_selected">Odabrana PDF datoteka: </string>
     <string name="file_info">\n  Naziv Datoteke : %1$s \n\n  Putanja : %2$s \n\n  Veličina : %3$s \n\n  Datum Izmjene %4$s</string>
 
-
     <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">Vrsta Slova (Zadano : %s)</string>
     <string name="font_family_text">"Vrsta Slova : "</string>
-    <string name="courier">COURIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
     <string name="selected_image">Odabrana Fotografija</string>
     <string name="reset">Poništi</string>
@@ -449,10 +435,6 @@
     <!--Rotate Pages    -->
     <string name="rotate_pages">Zakreni Stranice</string>
     <string name="enter_rotation_angle">Unesite Ugao Zakretanja</string>
-    <string name="rotated_file_name">%s_rotated_%s%s</string>
-    <string name="degree_90" translatable="false">90 &#xb0;</string>
-    <string name="degree_180" translatable="false">180 &#xb0;</string>
-    <string name="degree_270" translatable="false">270 &#xb0;</string>
     <string name="share_files">Podijeli Datoteke</string>
     <string name="pdf_removed_from_list">PDF je izbrisan iz liste.</string>
     <string name="pdf_added_to_list">PDF je dodan na listu.</string>
@@ -562,7 +544,6 @@
     <string name="split_range_alert">Unešeni raspon za dijeljenje će izraditi odabrani PDF ponovo!</string>
 
     <!--file name suffix-->
-    <string name="pdf_suffix" translatable="false">_pdf</string>
     <string name="reordering_pages_dialog">Preuređujem stranice...</string>
     <string name="delete_alert_singular">Da li želite izbrisati odabrane datoteke?</string>
     <string name="snackbar_files_deleted">Datoteke Izbrisane</string>

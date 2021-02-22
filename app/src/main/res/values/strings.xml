@@ -88,7 +88,7 @@
     <string name="extras">Extras</string>
     <string name="share">Share</string>
     <string name="help">Help</string>
-    <string name="faqs" translatable="false">FAQ</string>
+    <string name="faqs">FAQ</string>
 
     <!-- images to PDF -->
     <string name="images_to_pdf">Images to PDF</string>
@@ -206,7 +206,7 @@
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
-    <string name="feedback_text">Kindly write your precious feeback, or just drop a Hi! :)</string>
+    <string name="feedback_text">Kindly write your precious feedback, or just drop a Hi! :)</string>
     <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="feedback_chooser">"Send mail…"</string>
     <string name="no_pdf">No PDFs to show</string>
@@ -229,7 +229,7 @@
     <string name="file_size_text">File Size</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached file(s) to this message</string>
-    <string name="btn_sav_text">savText</string>
+    <string name="btn_sav_text" translatable="false">savText</string>
 
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
@@ -251,12 +251,12 @@
     <string name="set_page_size_text">Set Page Size</string>
     <string name="b0_to_b10">B0 to B10</string>
     <string name="a0_to_a10">A0 to A10</string>
-    <string name="tabloid">TABLOID</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTER</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
+    <string name="tabloid" translatable="false">TABLOID</string>
+    <string name="executive" translatable="false">EXECUTIVE</string>
+    <string name="ledger" translatable="false">LEDGER</string>
+    <string name="letter" translatable="false">LETTER</string>
+    <string name="legal" translatable="false">LEGAL</string>
+    <string name="a4" translatable="false">A4</string>
     <string name="default_page_size">DEFAULT ( %s )</string>
     <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
 
@@ -290,7 +290,7 @@
     <string name="text_to_pdf">Text To PDF</string>
     <string name="text_file_selected">Text File Selected</string>
     <string name="select_file">"Select a File to Upload"</string>
-    <string name="text_type">text/plain</string>
+    <string name="text_type" translatable="false">text/plain</string>
     <string name="new_directory">New Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
@@ -373,11 +373,11 @@
     <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">Font Family (Default : %s)</string>
     <string name="font_family_text">"Font Family : "</string>
-    <string name="courier">COURIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
+    <string name="courier" translatable="false">COURIER</string>
+    <string name="helvetica" translatable="false">HELVETICA</string>
+    <string name="times_roman" translatable="false">TIMES_ROMAN</string>
+    <string name="symbol" translatable="false">SYMBOL</string>
+    <string name="zapfdingbats" translatable="false">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
     <string name="selected_image">Selected Image</string>
     <string name="reset">Reset</string>
@@ -448,7 +448,7 @@
     <!--Rotate Pages    -->
     <string name="rotate_pages">Rotate Pages</string>
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
-    <string name="rotated_file_name">%s_rotated_%s%s</string>
+    <string name="rotated_file_name" translatable="false">%s_rotated_%s%s</string>
     <string name="degree_90" translatable="false">90 &#xb0;</string>
     <string name="degree_180" translatable="false">180 &#xb0;</string>
     <string name="degree_270" translatable="false">270 &#xb0;</string>
@@ -506,13 +506,14 @@
     <string name="welcome_qrcode_to_pdf_message">Convert QR Codes and Barcodes to PDF in a simplistic manner</string>
     <string name="welcome_remove_pages">Remove Pages</string>
     <string name="welcome_remove_pages_message">Remove the unwanted pages you do not need anymore</string>
-    <string name="welcome_reorder_pages">e</string>
+    <string name="welcome_reorder_pages">Reorder Pages</string>
     <string name="welcome_reorder_pages_message">Reorder and rearrange the pages in a way you desire</string>
     <string name="welcome_extract_images">Extract Images from PDF</string>
     <string name="welcome_extract_images_message">Extract all possible images from your PDFs at a go</string>
     <string name="welcome_merge_message">Merge different existing PDF in your phone in one file</string>
     <string name="welcome_viewfiles_title">Viewing the PDF files</string>
     <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your PDF file</string>
+    <string name="welcome_excel_message">Convert your excel files into your most desired PDFs at ease</string>
     <string name="skip_text">Skip</string>
     <string name="get_started_title">Get Started!</string>
 
@@ -569,9 +570,9 @@
 
     <!--  FAQs  -->
     <string name="faqSearch">Search FAQ</string>
-  <string-array name="faq_question_answers">
+    <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
-        <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTARCT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
+        <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTRACT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
         <item>Is there a limit on number of images I can add at once to create a PDF?#####No, there are no restrictions.</item>
         <item>Is there a limit to the image size I can add?#####No, there are no limits. However, we advise to restrict the size to <strong>less than 10MB</strong>. The conversion of multiple large image files take upwards of 10 seconds.</item>
         <item>Can I insert captions in the image after adding?#####No, captions cannot be inserted on images except otherwise edited on the image itself.</item>

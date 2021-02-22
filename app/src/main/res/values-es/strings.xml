@@ -106,7 +106,6 @@
     <string name="file_size_text">Peso del Archivo</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">He adjuntado PDF(s) a este mensaje</string>
-    <string name="btn_sav_text">savText</string>
     <string name="filter_images_Text">Filtrar Imágenes</string>
     <string name="nextimage_contentdesc">Siguiente Imagen</string>
     <string name="compress_image">Compresión de Imagen : %s %%</string>
@@ -127,12 +126,6 @@
     <string name="set_page_size_text">Establecer tamaño de página</string>
     <string name="b0_to_b10">B0 a B10</string>
     <string name="a0_to_a10">A0 a A10</string>
-    <string name="tabloid">TABLOID</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTER</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
     <string name="default_page_size">DEFAULT ( %s )</string>
     <!-- Directory Strings -->
     <string name="text_file_selected">Archivo de Texto Seleccionado</string>
@@ -155,7 +148,6 @@
     <string name="install_file_manager">Por favor instale un Gestor de Archivos</string>
     <string name="text_to_pdf">Texto A PDF</string>
     <string name="select_file">Seleccione un Archivo a Cargar</string>
-    <string name="text_type">texto/plano</string>
     <string name="new_directory">Nuevo Directorio</string>
     <string name="previous_image_content_desc">Imagen Anterior</string>
     <string name="text_file_name">"Archivo de Texto : "</string>
@@ -213,14 +205,8 @@
     <string name="no_history_message">Sin historial que mostrar</string>
     <string name="view_history_here_message">¡Vea el historial de todos sus archivos convertidos aquí!</string>
     <string name="delete_history_message">¿Está seguro que quiere eliminar el historial?</string>
-    <string name="file_info">\n Nombre del Archivo : %1$s\n\n Ruta : %2$s\n\n Tamaño : %3$s\n\n Fehca de modificación %4$s</string>
     <string name="default_font_family_text">Letra Fuente (Por defecto : %s)</string>
     <string name="font_family_text">"Letra Fuente : "</string>
-    <string name="courier">COURIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">UNDEFINED</string>
     <string name="delete_alert_selected">¿Está seguro que quiere eliminar los archivos seleccionados?</string>
     <string name="sort_by_title">Ordenar por</string>
@@ -272,7 +258,6 @@
     <string name="error_occurred">Ocurrió un Error</string>
     <string name="rotate_pages">Rotar Páginas</string>
     <string name="enter_rotation_angle">Ingresar Ángulo de Rotación</string>
-    <string name="rotated_file_name">%s_rotated_%s%s</string>
     <string name="rotated">Rotado</string>
     <string name="encrypted">Encriptado</string>
     <string name="decrypted">Descifrado</string>

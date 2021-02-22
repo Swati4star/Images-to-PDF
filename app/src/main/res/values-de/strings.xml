@@ -195,7 +195,6 @@
     <string name="file_size_text">Dateigröße</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">Ich habe eine oder mehrere Dateien an diese Nachricht angehängt</string>
-    <string name="btn_sav_text">savText</string>
     <string name="filter_images_Text">Filter auf Bilder anwenden \n</string>
     <string name="nextimage_contentdesc">Nächstes Bild</string>
     <string name="compress_image">Bildkomprimierung: %s %%</string>
@@ -220,12 +219,6 @@
     <string name="overwrite_message">Es existiert bereits eine gleichnamige Datei. Möchtest du sie überschreiben?</string>
     <string name="b0_to_b10">B0 bis B10</string>
     <string name="a0_to_a10">A0 bis A10</string>
-    <string name="tabloid">TABLOID</string>
-    <string name="executive">EXECUTIVE</string>
-    <string name="ledger">LEDGER</string>
-    <string name="letter">LETTER</string>
-    <string name="legal">LEGAL</string>
-    <string name="a4">A4</string>
     <string name="default_page_size">STANDARD (%s)</string>
     <string name="master_password_changed">Das Passwort scheint falsch zu sein. Möglicherweise hast du das Master-Passwort geändert.</string>
 
@@ -255,7 +248,6 @@
     <string name="text_to_pdf">Text zu PDF</string>
     <string name="text_file_selected">Textdatei ausgewählt</string>
     <string name="select_file">"Datei zum Hochladen auswählen"</string>
-    <string name="text_type">text/plain</string>
     <string name="new_directory">Neues Verzeichnis</string>
     <string name="previous_image_content_desc">Vorheriges Bild</string>
     <string name="text_file_name">"Textdatei: "</string>
@@ -326,14 +318,8 @@
     <string name="extract_images_failed">Im ausgewählten PDF konnten keine Bilder gefunden werden.</string>
     <string name="extract_images_success">Wir haben %1$d Bilder im ausgewählten PDF gefunden. Sie wurden im Ordner PDF-Dateien im Stammverzeichnis gespeichert.</string>
 
-    <string name="file_info">\n Dateiname: %1$s \n\n Pfad: %2$s \n\n Größe: %3$s \n\n Änderungsdatum: %4$s</string>
     <string name="default_font_family_text">Schriftart (Standard:%s)</string>
     <string name="font_family_text">"Schriftart: "</string>
-    <string name="courier">COURIER</string>
-    <string name="helvetica">HELVETICA</string>
-    <string name="times_roman">TIMES_ROMAN</string>
-    <string name="symbol">SYMBOL</string>
-    <string name="zapfdingbats">ZAPFDINGBATS</string>
     <string name="undefined">NICHT DEFINIERT</string>
     <string name="selected_image">Ausgewähltes Bild</string>
     <string name="arrow_up">Pfeil nach oben</string>
@@ -415,7 +401,6 @@
 
     <string name="rotate_pages">Seiten drehen</string>
     <string name="enter_rotation_angle">Drehwinkel eingeben</string>
-    <string name="rotated_file_name">%1$s_rotated_%2$s%3$s</string>
     <string name="share_files">Dateien teilen</string>
     <string name="pdf_removed_from_list">PDF wurde aus der Liste entfernt.</string>
     <string name="pdf_added_to_list">PDF wurde der Liste hinzugefügt.</string>
