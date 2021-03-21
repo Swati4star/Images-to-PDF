@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply from: '../config/checkstyle.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "swati4star.createpdf"
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion 21
+        minSdkVersion 16
         multiDexEnabled true
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 108
         versionName "8.8.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -108,7 +108,7 @@ dependencies {
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     // Image picker, and folder picker
-    implementation 'com.zhihu.android:matisse:0.5.2-beta4'
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
     implementation 'lib.kashif:folderpicker:2.4'
 
     // Zxing - for scanning qr code
