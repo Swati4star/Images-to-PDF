@@ -5,44 +5,45 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:fitsSystemWindows="false">
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".activity.MainActivity">
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:theme="@style/ToolbarTheme"
                 app:titleTextColor="?attr/titleToolbarTextColor"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize" />
+                app:navigationIcon="@drawable/ic_menu"/>
 
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="56dp"/>
-
-    </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:itemIconTint="?attr/navigationIconTint"
+        android:background="@color/white"
+        android:fitsSystemWindows="false"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer"/>
+        app:itemBackground="@drawable/navigation_item_selected_bg_selector"
+        app:itemIconTint="@drawable/navigation_drawer_icon_tint_selector"
+        app:itemTextColor="@drawable/navigation_drawer_text_color_selector"
+        app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

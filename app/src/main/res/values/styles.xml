@@ -23,6 +23,7 @@
         <item name="actionMenuTextColor">@color/mb_white</item>
         <item name="searchFileRaw">@raw/search_file_dark</item>
         <item name="android:actionMenuTextColor">@color/mb_white</item>
+        <item name="android:scrollbarThumbVertical">@android:color/transparent</item>
     </style>
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
