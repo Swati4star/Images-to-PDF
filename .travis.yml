@@ -4,11 +4,14 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-28.0.3
+    - build-tools-30.0.3
     - android-28
 # Support library
     - extra-android-support
     - extra-android-m2repository
+  licenses:
+    - android-sdk-license-.+
+    - android-sdk-preview-license-.+
 
 before_script:
     - chmod +x gradlew
@@ -18,3 +21,6 @@ script:
    - ./gradlew assembleDebug assembleRelease
    - ./gradlew checkstyle
    - ./gradlew test
+
+before_install:
+    - yes | sdkmanager "build-tools;30.0.3"
