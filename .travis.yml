@@ -12,6 +12,8 @@ android:
 
 before_script:
     - chmod +x gradlew
+    - mkdir -p "$ANDROID_HOME/licenses"
+    - cp ./sdk-licenses/ "$ANDROID_HOME/licenses/"
 
 script:
    - chmod +x ./gradlew
