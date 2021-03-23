@@ -23,4 +23,4 @@ script:
    - ./gradlew test
 
 before_install:
-    - yes | sdkmanager --licenses
+    - yes | sdkmanager "build-tools;30.0.3"
