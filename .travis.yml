@@ -21,3 +21,6 @@ script:
    - ./gradlew assembleDebug assembleRelease
    - ./gradlew checkstyle
    - ./gradlew test
+
+before_install:
+    - yes | sdkmanager --licenses
