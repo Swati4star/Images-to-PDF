@@ -3,7 +3,6 @@ apply from: '../config/checkstyle.gradle'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "swati4star.createpdf"
         vectorDrawables.useSupportLibrary = true
