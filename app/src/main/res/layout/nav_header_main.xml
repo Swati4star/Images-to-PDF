@@ -22,7 +22,6 @@
             android:layout_height="30dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_logo_round" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
