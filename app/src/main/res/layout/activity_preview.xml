@@ -45,12 +45,6 @@
         android:layout_above="@+id/info"
         android:orientation="horizontal" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/info"
-        android:background="?attr/customDividerColor" />
-
     <TextView
         android:id="@+id/info"
         android:layout_width="match_parent"
@@ -59,6 +53,8 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:text="@string/swipe_to_view_next" />
+        android:text="@string/swipe_to_view_next"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"/>
 
 </RelativeLayout>

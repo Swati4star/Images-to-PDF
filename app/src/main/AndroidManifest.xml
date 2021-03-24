@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- suppress AndroidDomInspection -->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="swati4star.createpdf">
@@ -24,6 +24,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeWhite"
         tools:ignore="GoogleAppIndexingWarning,RtlEnabled">
+        <activity android:name=".activity.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -32,21 +40,19 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="image/*" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="image/*" />
             </intent-filter>
 
@@ -72,8 +78,7 @@
         <activity android:name=".activity.RearrangeImages" />
         <activity android:name=".activity.ImagesPreviewActivity" />
         <activity android:name=".activity.RearrangePdfPages" />
-        <activity android:name=".activity.FavouritesActivity"/>
-
+        <activity android:name=".activity.FavouritesActivity" />
     </application>
 
 </manifest>

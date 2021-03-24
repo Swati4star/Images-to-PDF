@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".utilities.AboutUsFragment">
+        tools:context=".utilities.AboutUsFragment"
+        android:paddingTop="25dp">
 
         <ImageView
             android:layout_width="80dp"
@@ -17,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/default_content_description"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_logo_round" />
 
         <TextView
             android:layout_width="match_parent"

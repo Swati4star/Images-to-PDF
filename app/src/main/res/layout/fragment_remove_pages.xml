@@ -30,7 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/compress_pdf_prompt" />
+            android:text="@string/compress_pdf_prompt"
+            android:layout_marginHorizontal="24dp"/>
 
         <EditText
             android:labelFor="@id/infoText"
@@ -39,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_marginHorizontal="24dp"/>
 
         <TextView
             android:id="@+id/compressionInfoText"

@@ -1,6 +1,7 @@
 package swati4star.createpdf.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.design.card.MaterialCardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,10 +55,14 @@ public class EnhancementOptionsAdapter
         @BindView(R.id.option_name)
         TextView optionName;
 
+        MaterialCardView cardView;
+
         EnhancementOptionsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
+            cardView = itemView.findViewById(R.id.container_card_view);
+            cardView.setBackgroundResource(R.drawable.mycardview_ripple_effect);
         }
 
         @Override

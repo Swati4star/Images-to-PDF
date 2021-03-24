@@ -2,11 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:top="3dp"
         android:bottom="3dp"
-        android:left="5dp"
-        android:right="5dp">
+        android:right="20dp">
         <shape android:shape="rectangle">
-            <solid android:color="#23FFC107"/>
-            <corners android:radius="40dp"/>
+            <solid android:color="#20FA7443"/>
+            <corners android:topRightRadius="40dp"
+                android:bottomRightRadius="40dp"/>
         </shape>
     </item>
 </layer-list>
