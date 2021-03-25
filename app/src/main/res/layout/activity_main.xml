@@ -35,7 +35,6 @@
                     app:titleTextAppearance="@style/ToolbarTheme"
                     app:navigationIcon="@drawable/ic_menu"
                     app:titleTextColor="?attr/titleToolbarTextColor" />
-
             </com.google.android.material.appbar.AppBarLayout>
         </RelativeLayout>
 
