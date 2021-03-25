@@ -3,7 +3,7 @@ package swati4star.createpdf.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.itextpdf.text.Rectangle;
 

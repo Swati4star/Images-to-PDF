@@ -2,7 +2,7 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;

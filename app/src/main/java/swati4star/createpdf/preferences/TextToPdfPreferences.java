@@ -3,7 +3,7 @@ package swati4star.createpdf.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import swati4star.createpdf.util.Constants;
 

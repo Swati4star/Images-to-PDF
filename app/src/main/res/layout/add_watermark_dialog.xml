@@ -13,18 +13,18 @@
         android:text="@string/enter_watermark_text"
         android:textSize="20sp" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/watermarkLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/watermarkText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:padding="5dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/enter_watermark_angle"

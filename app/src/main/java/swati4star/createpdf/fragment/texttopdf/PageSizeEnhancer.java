@@ -1,7 +1,7 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.interfaces.Enhancer;

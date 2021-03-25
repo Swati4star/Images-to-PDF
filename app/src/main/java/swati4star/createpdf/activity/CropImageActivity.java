@@ -5,25 +5,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.util.FileUtils;
@@ -38,15 +35,7 @@ public class CropImageActivity extends AppCompatActivity {
     private final HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
     private boolean mCurrentImageEdited = false;
     private boolean mFinishedClicked = false;
-
-    @BindView(R.id.imagecount)
-    TextView mImageCount;
-
-    @BindView(R.id.cropImageView)
-    CropImageView mCropImageView;
-
-    @BindView(R.id.cropButton)
-    Button cropImageButton;
+    private CropImageView mCropImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,10 +43,11 @@ public class CropImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crop_image_activity);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        mCropImageView = findViewById(R.id.cropImageView);
 
         setUpCropImageView();
 
@@ -71,9 +61,18 @@ public class CropImageActivity extends AppCompatActivity {
             finish();
 
         setImage(0);
+        Button cropImageButton = findViewById(R.id.cropButton);
+        cropImageButton.setOnClickListener(view -> cropButtonClicked());
+
+        Button rotateButton = findViewById(R.id.rotateButton);
+        rotateButton.setOnClickListener(view -> rotateButtonClicked());
+
+        ImageView nextImageButton = findViewById(R.id.nextimageButton);
+        nextImageButton.setOnClickListener(view -> nextImageClicked());
+        ImageView previousImageButton = findViewById(R.id.previousImageButton);
+        previousImageButton.setOnClickListener(view -> prevImgBtnClicked());
     }
 
-    @OnClick(R.id.cropButton)
     public void cropButtonClicked() {
         mCurrentImageEdited = false;
         String root = Environment.getExternalStorageDirectory().toString();
@@ -95,13 +94,11 @@ public class CropImageActivity extends AppCompatActivity {
         mCropImageView.saveCroppedImageAsync(Uri.fromFile(file));
     }
 
-    @OnClick(R.id.rotateButton)
     public void rotateButtonClicked() {
         mCurrentImageEdited = true;
         mCropImageView.rotateImage(90);
     }
 
-    @OnClick(R.id.nextimageButton)
     public void nextImageClicked() {
         if ( mImages.size() == 0)
             return;
@@ -114,7 +111,6 @@ public class CropImageActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.previousImageButton)
     public void prevImgBtnClicked() {
         if ( mImages.size() == 0)
             return;
@@ -140,20 +136,15 @@ public class CropImageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                setResult(Activity.RESULT_CANCELED);
-                finish();
-                return true;
-            case R.id.action_done:
-                mFinishedClicked = true;
-                cropButtonClicked();
-                return true;
-            case R.id.action_skip:
-                mCurrentImageEdited = false;
-                nextImageClicked();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        } else if (item.getItemId() == R.id.action_done) {
+            mFinishedClicked = true;
+            cropButtonClicked();
+        } else if (item.getItemId() == R.id.action_skip) {
+            mCurrentImageEdited = false;
+            nextImageClicked();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -184,8 +175,9 @@ public class CropImageActivity extends AppCompatActivity {
         mCurrentImageEdited = false;
         if (index < 0 || index >= mImages.size())
             return;
-
-        mImageCount.setText(getString(R.string.cropImage_activityTitle) + " " + (index + 1) + " of " + mImages.size());
+        TextView mImageCount = findViewById(R.id.imagecount);
+        mImageCount.setText(String.format("%s %d of %d", getString(R.string.cropImage_activityTitle)
+                , index + 1, mImages.size()));
         mCropImageView.setImageUriAsync(mCroppedImageUris.get(index));
     }
 }

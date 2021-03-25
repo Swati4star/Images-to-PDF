@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="android.support.multidex.MultiDexApplication"
+        android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:hardwareAccelerated="true"
@@ -63,7 +63,7 @@
         <activity android:name=".activity.CropImageActivity" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.swati4star.shareFile"
             android:exported="false"
             android:grantUriPermissions="true">
