@@ -12,7 +12,7 @@
 Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
 Here is an easy to use Android app to convert images to PDF file!
 
-<img src="./screenshots/image_to_pdf.gif"  width="300px">
+<img src="./screenshots/image_to_pdf2.gif"  width="300px">
 
 
 ### Support Us
