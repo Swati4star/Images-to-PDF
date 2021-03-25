@@ -41,9 +41,10 @@
             android:layout_below="@id/createImages"
             android:layout_margin="10dp"
             android:text="@string/extract_images_success"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:textColor="@color/colorBlackAlt"
+            android:gravity="center"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/created_images"
@@ -73,7 +74,10 @@
                 android:drawableTint="?attr/bottomSheetTextColor"
                 android:padding="15dp"
                 android:text="@string/view_in_gallery"
-                android:textColor="?attr/bottomSheetTextColor" />
+                android:textColor="?attr/bottomSheetTextColor"
+                android:textAllCaps="false"
+                android:letterSpacing="0"
+                android:textSize="17sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,7 +96,10 @@
                     android:drawableTint="?attr/bottomSheetTextColor"
                     android:padding="15dp"
                     android:text="@string/share_images"
-                    android:textColor="?attr/bottomSheetTextColor" />
+                    android:textColor="?attr/bottomSheetTextColor"
+                    android:textAllCaps="false"
+                    android:letterSpacing="0"
+                    android:textSize="17sp"/>
 
                 <Button
                     android:id="@+id/viewImages"
@@ -105,7 +112,10 @@
                     android:drawableTint="?attr/bottomSheetTextColor"
                     android:padding="15dp"
                     android:text="@string/view_images"
-                    android:textColor="?attr/bottomSheetTextColor" />
+                    android:textColor="?attr/bottomSheetTextColor"
+                    android:textAllCaps="false"
+                    android:letterSpacing="0"
+                    android:textSize="17sp"/>
 
             </LinearLayout>
         </LinearLayout>

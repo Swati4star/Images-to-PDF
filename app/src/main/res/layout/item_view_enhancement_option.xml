@@ -3,20 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <android.support.design.card.MaterialCardView
         android:id="@+id/container_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_margin="5dp"
+        app:cardCornerRadius="9dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/transparent">
 
         <LinearLayout
             android:id="@+id/passwordProtectedPDF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginVertical="8dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -24,7 +27,7 @@
                 android:id="@+id/option_image"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_margin="8dp"
+                android:layout_margin="5dp"
                 android:contentDescription="@string/app_name"
                 android:tint="?attr/iconTintOnCard"
                 tools:srcCompat="@drawable/baseline_enhanced_encryption_24" />
@@ -36,10 +39,11 @@
                 android:layout_margin="4dp"
                 android:gravity="center_horizontal"
                 android:lines="2"
-                tools:text="@string/password_protect_pdf_text" />
+                tools:text="@string/password_protect_pdf_text"
+                android:textSize="15sp"/>
             
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </android.support.design.card.MaterialCardView>
 
 </LinearLayout>
