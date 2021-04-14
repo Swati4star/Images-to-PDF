@@ -1,14 +1,19 @@
 package swati4star.createpdf.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -66,8 +71,9 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -184,11 +190,14 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     @OnClick(R.id.create_pdf_added_text)
     public void openPdfNameDialog() {
-        if (!mPermissionGranted) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    READ_WRITE_PERMISSIONS,
-                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+        if (isStoragePermissionGranted()) {
+            openPdfNameDialog_();
+        } else {
+            getRuntimePermissions();
         }
+    }
+
+    private void openPdfNameDialog_() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
                 .content(R.string.enter_file_name)
@@ -309,13 +318,26 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         }
     }
 
+    private boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+    private void getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT < 29) {
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                    WRITE_PERMISSIONS,
+                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, () -> {
-                    mPermissionGranted = true;
-                });
+                requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::openPdfNameDialog_);
     }
 
     @Override

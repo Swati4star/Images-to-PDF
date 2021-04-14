@@ -1,12 +1,17 @@
 package swati4star.createpdf.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,6 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,14 +32,11 @@ import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.DirectoryUtils;
-import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
-import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 
 public class MainActivity extends AppCompatActivity
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
 
-    private static final int PERMISSION_REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +79,10 @@ public class MainActivity extends AppCompatActivity
         handleReceivedImagesIntent(fragment);
 
         displayFeedBackAndWhatsNew();
-        getRuntimePermissions();
-
+//        if (!isStoragePermissionGranted()) {
+//            Log.d("TTTG", "onCreate: here1");
+//            getRuntimePermissions();
+//        }
         //check for welcome activity
         openWelcomeActivity();
     }
@@ -246,16 +250,13 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setCheckedItem(id);
     }
 
-    private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                READ_WRITE_CAMERA_PERMISSIONS,
-                PERMISSION_REQUEST_CODE);
-    }
-
     private boolean isStoragePermissionGranted() {
-        return PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
     }
-
     /**
      * puts image uri's in a bundle and start ImageToPdf fragment with this bundle
      * as argument

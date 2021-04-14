@@ -469,7 +469,7 @@
     <string name="font_family_value_def">Font family default value : %s </string>
     <string name="settings_info">You can modify the default value for various settings here.</string>
     <string name="storage_location_modified">Storage location changed</string>
-    <string name="storage_location_info">Change storage location</string>
+    <string name="storage_location_info">Storage location(non-changeable)</string>
     <string name="theme_white">White</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
