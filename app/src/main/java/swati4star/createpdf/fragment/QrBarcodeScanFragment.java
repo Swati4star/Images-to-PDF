@@ -45,6 +45,7 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PageSizeUtils;
+import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.TextToPDFUtils;
 
@@ -57,7 +58,10 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
     private final String mTempFileName = "scan_result_temp.txt";
 
@@ -126,7 +130,11 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             case R.id.scan_qrcode:
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (isCameraPermissionGranted()) {
-                        openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
+                        if (isStoragePermissionGranted()) {
+                            openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
+                        } else {
+                            getRuntimePermissions();
+                        }
                     } else {
                         requestCameraPermissionForQrCodeScan();
                     }
@@ -135,7 +143,11 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             case R.id.scan_barcode:
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (isCameraPermissionGranted()) {
-                        openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
+                        if (isStoragePermissionGranted()) {
+                            openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
+                        } else {
+                            getRuntimePermissions();
+                        }
                     } else {
                         requestCameraPermissionForBarCodeScan();
                     }
@@ -244,6 +256,13 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private boolean isCameraPermissionGranted() {
         return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
+    private boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
 
     private void requestCameraPermissionForQrCodeScan() {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_FOR_QR_CODE);
@@ -251,17 +270,33 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private void requestCameraPermissionForBarCodeScan() {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_FOR_BARCODE);
     }
+    private void getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT < 29) {
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                    WRITE_PERMISSIONS,
+                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if ((requestCode == REQUEST_CODE_FOR_QR_CODE || requestCode == REQUEST_CODE_FOR_BARCODE) && grantResults.length > 0) {
+        if ((requestCode == REQUEST_CODE_FOR_QR_CODE || requestCode == REQUEST_CODE_FOR_BARCODE || requestCode == REQUEST_CODE_FOR_WRITE_PERMISSION) && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (requestCode == REQUEST_CODE_FOR_QR_CODE) {
-                    openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
+                    if (isStoragePermissionGranted()) {
+                        openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
+                    } else {
+                        getRuntimePermissions();
+                    }
                 } else if (requestCode == REQUEST_CODE_FOR_BARCODE) {
-                    openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
+                    if (isStoragePermissionGranted()) {
+                        openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
+                    } else {
+                        getRuntimePermissions();
+                    }
                 }
             } else {
                 showPermissionDenyDialog(requestCode);
@@ -269,23 +304,31 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         }
     }
     private void showPermissionDenyDialog(int requestCode) {
-        String scanType;
+        String scanType, permissionType;
         if (requestCode == REQUEST_CODE_FOR_QR_CODE) {
             scanType = "QR-Code";
+            permissionType = "Camera";
         } else if (requestCode == REQUEST_CODE_FOR_BARCODE) {
             scanType = "Bar-Code";
+            permissionType = "Camera";
+        } else if (requestCode == REQUEST_CODE_FOR_WRITE_PERMISSION) {
+            scanType = "and create pdf";
+            permissionType = "Storage";
         } else {
             scanType = "unknown";
+            permissionType = "unknown";
         }
         if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
             new AlertDialog.Builder(getContext())
                     .setTitle("Permission Denied")
-                    .setMessage("Camera permission is needed to scan " + scanType)
+                    .setMessage(permissionType + " permission is needed to scan " + scanType)
                     .setPositiveButton("Re-try", (dialog, which) -> {
                         if (requestCode == REQUEST_CODE_FOR_QR_CODE) {
                             requestCameraPermissionForQrCodeScan();
                         } else if (requestCode == REQUEST_CODE_FOR_BARCODE) {
                             requestCameraPermissionForBarCodeScan();
+                        } else if (requestCode == REQUEST_CODE_FOR_WRITE_PERMISSION) {
+                            getRuntimePermissions();
                         }
                         dialog.dismiss();
                     })
@@ -295,7 +338,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         } else if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
             new AlertDialog.Builder(getContext())
                     .setTitle("Permission Denied")
-                    .setMessage("You have chosen to never ask the permission again, but camera permission is needed to scan " + scanType)
+                    .setMessage("You have chosen to never ask the permission again, but " + permissionType + " permission is needed to scan " + scanType)
                     .setPositiveButton("Enable from settings", (dialog, which) -> {
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
