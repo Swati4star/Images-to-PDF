@@ -76,7 +76,7 @@ public class Constants {
 
     public static final String LAUNCH_COUNT = "launch_count";
 
-    public static final String pdfDirectory = "/PDFfiles/";
+    public static final String pdfDirectory = "/PDF Converter/";
     public static final String pdfExtension = ".pdf";
     public static final String appName = "PDF Converter";
     public static final String PATH_SEPERATOR = "/";
@@ -107,20 +107,20 @@ public class Constants {
     public static final String PREF_PAGE_STYLE = "pref_page_number_style";
     public static final String PREF_PAGE_STYLE_ID = "pref_page_number_style_rb_id";
 
-    public static final String[] READ_WRITE_PERMISSIONS = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    public static final int REQUEST_CODE_FOR_WRITE_PERMISSION = 4;
+    public static final int REQUEST_CODE_FOR_READ_PERMISSION = 5;
+
+
+    public static final String[] WRITE_PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+    public static final String[] READ_PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
-    public static final String[] READ_WRITE_CAMERA_PERMISSIONS = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-    };
 
-    public static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
 
     public static final int MODIFY_STORAGE_LOCATION_CODE = 1;
-    
+
     public static final int ROTATE_PAGES = 20;
     public static final int ADD_PASSWORD = 21;
     public static final int REMOVE_PASSWORD = 22;

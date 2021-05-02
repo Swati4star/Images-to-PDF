@@ -8,7 +8,7 @@
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="40dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <RelativeLayout
         android:id="@+id/layout"
@@ -35,8 +35,8 @@
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/arrow_down"
             android:visibility="gone"
-            android:tint="?attr/bottomSheetTextColor"
-            app:srcCompat="@drawable/ic_arrow_down_black_24dp" />
+            app:srcCompat="@drawable/ic_arrow_down_black_24dp"
+            app:tint="?attr/bottomSheetTextColor" />
 
         <ImageView
             android:id="@+id/upArrow"
@@ -44,8 +44,8 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/arrow_down"
-            android:tint="?attr/bottomSheetTextColor"
-            app:srcCompat="@drawable/ic_arrow_up_black_24dp" />
+            app:srcCompat="@drawable/ic_arrow_up_black_24dp"
+            app:tint="?attr/bottomSheetTextColor" />
     </RelativeLayout>
 
     <FrameLayout
@@ -67,7 +67,7 @@
             />
 
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFiles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

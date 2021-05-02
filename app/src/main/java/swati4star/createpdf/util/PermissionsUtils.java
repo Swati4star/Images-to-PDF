@@ -2,15 +2,22 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.provider.Settings;
 
-import swati4star.createpdf.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
+import static swati4star.createpdf.util.Constants.READ_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
 /**
  * !! IMPORTANT !!
@@ -30,7 +37,7 @@ public class PermissionsUtils {
 
     /**
      * checkRuntimePermissions takes in an Object instance(can be of type Activity or Fragment),
-     * an array of permission and checks for if all the permissions are granted ot not
+     * an array of permission and checks for if all the permissions are granted or not
      *
      * @param context     can be of type Activity or Fragment
      * @param permissions string array of permissions
@@ -92,16 +99,51 @@ public class PermissionsUtils {
      */
     public void handleRequestPermissionsResult(Activity context, @NonNull int[] grantResults,
                                                int requestCode, int expectedRequest, @NonNull Runnable whenSuccessful) {
-        if (requestCode != expectedRequest)
-            return;
-        if (grantResults.length < 1) {
-            StringUtils.getInstance().showSnackbar(context, R.string.snackbar_insufficient_permissions);
-            return;
+
+        if (requestCode == expectedRequest && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                whenSuccessful.run();
+            } else {
+                showPermissionDenyDialog(context, requestCode);
+            }
         }
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            whenSuccessful.run();
-            StringUtils.getInstance().showSnackbar(context, R.string.snackbar_permissions_given);
-        } else
-            StringUtils.getInstance().showSnackbar(context, R.string.snackbar_insufficient_permissions);
+    }
+
+    private void showPermissionDenyDialog(Activity activity, int requestCode) {
+        String[] permission;
+        if (requestCode == REQUEST_CODE_FOR_WRITE_PERMISSION) {
+            permission = WRITE_PERMISSIONS;
+        } else {
+            permission = READ_PERMISSIONS;
+        }
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission[0])) {
+            new AlertDialog.Builder(activity)
+                    .setTitle("Permission Denied")
+                    .setMessage("Storage permission is needed for proper functioning of app.")
+                    .setPositiveButton("Re-try", (dialog, which) -> {
+                        requestRuntimePermissions(activity, permission, REQUEST_CODE_FOR_WRITE_PERMISSION);
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        dialog.dismiss();
+                    }).show();
+        } else if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission[0])) {
+            new AlertDialog.Builder(activity)
+                    .setTitle("Permission Denied")
+                    .setMessage("You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app. ")
+                    .setPositiveButton("Enable from settings", (dialog, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+                        intent.setData(uri);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                        activity.startActivity(intent);
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        dialog.dismiss();
+                    }).show();
+        }
     }
 }

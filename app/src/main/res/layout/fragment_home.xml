@@ -32,11 +32,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recent_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:orientation="vertical"
                 app:spanCount="3"/>
 

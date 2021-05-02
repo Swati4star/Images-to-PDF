@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:theme="@style/ToolbarTheme"
-            app:titleTextColor="?attr/titleToolbarTextColor" />
+            android:layout_height="wrap_content"
+            app:titleTextColor="?attr/titleToolbarTextColor"
+            app:title="Edit Images"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:navigationIconTint="@color/white"/>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,7 +77,7 @@
                 android:contentDescription="@string/previous_image_content_desc"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:tint="?attr/bottomSheetColor"
+                app:tint="?attr/bottomSheetColor"
                 app:srcCompat="@drawable/ic_navigate_before_white_24dp"
                 tools:targetApi="lollipop" />
 
@@ -96,7 +97,7 @@
                 android:contentDescription="@string/nextimage_contentdesc"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:tint="?attr/bottomSheetColor"
+                app:tint="?attr/bottomSheetColor"
                 app:srcCompat="@drawable/ic_navigate_next_black_24dp"
                 tools:targetApi="lollipop" />
 
@@ -104,4 +105,4 @@
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

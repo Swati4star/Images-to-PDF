@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.texttopdf.TextToPdfFragment">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -45,7 +45,7 @@
                     android:padding="10dp"
                     android:text="@string/create_pdf" />
             </LinearLayout>
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="30dp"
@@ -60,7 +60,7 @@
                     android:gravity="bottom|center"
                     android:orientation="vertical"
                     tools:targetApi="lollipop">
-                    <android.support.design.card.MaterialCardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="50dp"
                         android:layout_height="5dp"
                         app:cardCornerRadius="2.5dp"
@@ -76,7 +76,7 @@
                         android:layout_marginVertical="10dp"
                         android:textColor="@color/white"/>
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/enhancement_options_recycle_view_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,9 +85,9 @@
                         android:layout_marginVertical="15dp"
                         android:layout_marginHorizontal="5dp"/>
                 </LinearLayout>
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/tv_file_name"

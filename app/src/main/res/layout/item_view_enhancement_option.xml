@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.design.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/container_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,8 +29,8 @@
                 android:layout_height="48dp"
                 android:layout_margin="5dp"
                 android:contentDescription="@string/app_name"
-                android:tint="?attr/iconTintOnCard"
-                tools:srcCompat="@drawable/baseline_enhanced_encryption_24" />
+                tools:srcCompat="@drawable/baseline_enhanced_encryption_24"
+                app:tint="?attr/iconTintOnCard" />
 
             <TextView
                 android:id="@+id/option_name"
@@ -44,6 +44,6 @@
             
         </LinearLayout>
 
-    </android.support.design.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

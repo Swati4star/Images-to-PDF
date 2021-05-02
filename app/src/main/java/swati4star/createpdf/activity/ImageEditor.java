@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -185,9 +185,11 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      */
     private void saveCurrentImage() {
         try {
-            File sdCard = Environment.getExternalStorageDirectory();
+            File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
             File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
-            dir.mkdirs();
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
             String fileName = String.format(getString(R.string.filter_file_name),
                     String.valueOf(System.currentTimeMillis()), mFilterName);
             File outFile = new File(dir, fileName);

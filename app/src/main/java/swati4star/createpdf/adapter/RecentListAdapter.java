@@ -1,8 +1,10 @@
 package swati4star.createpdf.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.design.card.MaterialCardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import com.google.android.material.card.MaterialCardView;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +52,8 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
         recentItemViewHolder.name.setText(recentItemViewHolder.itemView.getContext().getString(
                 Integer.parseInt(mValues.get(i).keySet().iterator().next())
         ));
-        recentItemViewHolder.icon.setImageDrawable(recentItemViewHolder.itemView.getContext()
-                .getDrawable(Integer.parseInt(mValues.get(i).values().iterator().next())
-        ));
+        recentItemViewHolder.icon.setImageDrawable(ContextCompat.getDrawable(recentItemViewHolder.itemView.getContext(),
+                Integer.parseInt(mValues.get(i).values().iterator().next())));
 
         recentItemViewHolder.itemView.setId(Integer.parseInt(mKeys.get(i)));
         recentItemViewHolder.itemView.setOnClickListener(mOnClickListener);

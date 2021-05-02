@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +27,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import lib.folderpicker.FolderPicker;
+//import butterknife.OnClick;
+//import lib.folderpicker.FolderPicker;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListener;
@@ -80,11 +80,11 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
         return root;
     }
 
-    @OnClick(R.id.storagelocation)
-    void modifyStorageLocation() {
-        Intent intent = new Intent(mActivity, FolderPicker.class);
-        startActivityForResult(intent, MODIFY_STORAGE_LOCATION_CODE);
-    }
+//    @OnClick(R.id.storagelocation)
+//    void modifyStorageLocation() {
+////        Intent intent = new Intent(mActivity, FolderPicker.class);
+////        startActivityForResult(intent, MODIFY_STORAGE_LOCATION_CODE);
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

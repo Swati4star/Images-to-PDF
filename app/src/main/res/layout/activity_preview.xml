@@ -5,21 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".activity.PreviewActivity">
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/view"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.view.PagerTabStrip
+        <androidx.viewpager.widget.PagerTabStrip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:paddingTop="5dp"
             android:paddingBottom="5dp" />
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
     <View
         android:id="@+id/view"
@@ -38,7 +38,7 @@
         android:text="@string/image_rearranging_options"
         android:textStyle="bold" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

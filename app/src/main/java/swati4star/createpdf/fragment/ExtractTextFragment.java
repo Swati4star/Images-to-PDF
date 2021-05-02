@@ -1,17 +1,22 @@
 package swati4star.createpdf.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.Fragment;
-import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,8 +55,9 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.textExtension;
 
 public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -84,7 +90,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
-    private boolean mPermissionGranted = false;
     private boolean mButtonClicked = false;
     private String mFileName;
     private final int mFileSelectCode = 0;
@@ -95,7 +100,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         View rootView = inflater.inflate(R.layout.fragment_extract_text, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         ButterKnife.bind(this, rootView);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -160,14 +164,26 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+    private void getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT < 29) {
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                    WRITE_PERMISSIONS,
+                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, () -> {
-                    mPermissionGranted = true;
-                    openExtractText();
-                });
+                requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::openExtractText);
     }
 
     /**
@@ -176,13 +192,13 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      */
     @OnClick(R.id.extract_text)
     public void openExtractText() {
-        if (!mPermissionGranted) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    READ_WRITE_PERMISSIONS,
-                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-            return;
+        if (isStoragePermissionGranted()) {
+            openText();
+        } else {
+            getRuntimePermissions();
         }
-
+    }
+    private void openText() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_txt)
                 .content(R.string.enter_file_name)

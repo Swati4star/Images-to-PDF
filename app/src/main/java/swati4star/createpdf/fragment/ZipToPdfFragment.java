@@ -1,14 +1,18 @@
 package swati4star.createpdf.fragment;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +29,8 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ResultUtils;
 import swati4star.createpdf.util.ZipToPdf;
 
-import static swati4star.createpdf.util.Constants.READ_WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
 public class ZipToPdfFragment extends Fragment {
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
@@ -48,19 +53,20 @@ public class ZipToPdfFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_zip_to_pdf, container, false);
         ButterKnife.bind(this, rootView);
         mActivity = getActivity();
-        mPermissionGranted = PermissionsUtils.getInstance().checkRuntimePermissions(this, READ_WRITE_PERMISSIONS);
         return rootView;
     }
 
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
-        if (!mPermissionGranted) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    READ_WRITE_PERMISSIONS,
-                    PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
-            return;
+        if (isStoragePermissionGranted()) {
+            chooseFile();
+        } else {
+            getRuntimePermissions();
         }
-        String folderPath = Environment.getExternalStorageDirectory() + "/";
+    }
+
+    private void chooseFile() {
+        String folderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/";
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         Uri myUri = Uri.parse(folderPath);
@@ -69,6 +75,7 @@ public class ZipToPdfFragment extends Fragment {
         startActivityForResult(Intent.createChooser(intent, getString(R.string.merge_file_select)),
                 INTENT_REQUEST_PICK_FILE_CODE);
     }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
         if (!ResultUtils.getInstance().checkResultValidity(resultCode, data))
@@ -99,13 +106,24 @@ public class ZipToPdfFragment extends Fragment {
         convertButton.unblockTouch();
     }
 
+    private boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+    private void getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT < 29) {
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                    WRITE_PERMISSIONS,
+                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+        }
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, () -> {
-                    mPermissionGranted = true;
-                    showFileChooser();
-                });
+                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, this::chooseFile);
     }
 }

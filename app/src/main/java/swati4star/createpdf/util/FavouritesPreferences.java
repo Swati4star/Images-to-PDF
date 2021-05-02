@@ -3,7 +3,7 @@ package swati4star.createpdf.util;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceFragmentCompat;
 
 import swati4star.createpdf.R;
 

@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 

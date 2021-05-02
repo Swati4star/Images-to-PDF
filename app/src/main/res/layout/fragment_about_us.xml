@@ -39,7 +39,7 @@
             android:text="@string/app_description"
             android:textSize="13sp" />
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_version_code"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -63,9 +63,9 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp">
@@ -81,9 +81,9 @@
                 android:text="@string/developer"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -100,9 +100,9 @@
                 android:text="@string/mail"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_github"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -119,9 +119,9 @@
                 android:text="@string/github_repo"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_contri"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -138,9 +138,9 @@
                 android:text="@string/view_contributors"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_playstore"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -157,9 +157,9 @@
                 android:text="@string/playstore"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_website"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -176,9 +176,9 @@
                 android:text="@string/website"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_slack"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -195,9 +195,9 @@
                 android:text="@string/join_slack"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_privacy"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -214,9 +214,9 @@
                 android:text="@string/privacy_policy"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/layout_license"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -233,7 +233,7 @@
                 android:text="@string/license"
                 tools:targetApi="m" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </ScrollView>

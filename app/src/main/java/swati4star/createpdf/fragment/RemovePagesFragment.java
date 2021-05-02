@@ -5,11 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,12 +56,12 @@ import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.ADD_PWD;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
-import static swati4star.createpdf.util.Constants.PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT;
-import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
 import static swati4star.createpdf.util.Constants.REMOVE_PWd;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.FileInfoUtils.getFormattedSize;
 
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
@@ -355,8 +356,10 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
      * check runtime permissions for storage and camera
      ***/
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                READ_WRITE_CAMERA_PERMISSIONS,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT);
+        if (Build.VERSION.SDK_INT < 29) {
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                    WRITE_PERMISSIONS,
+                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+        }
     }
 }

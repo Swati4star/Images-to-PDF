@@ -45,9 +45,9 @@
             android:layout_marginStart="5dp"
             android:contentDescription="@string/previous_image_content_desc"
             android:gravity="center"
-            android:tint="?attr/bottomSheetColor"
             app:srcCompat="@drawable/ic_navigate_before_white_24dp"
-            tools:targetApi="lollipop" />
+            tools:targetApi="lollipop"
+            app:tint="?attr/bottomSheetColor" />
 
         <TextView
             android:id="@+id/imagecount"
@@ -62,9 +62,9 @@
             android:layout_height="40dp"
             android:contentDescription="@string/nextimage_contentdesc"
             android:gravity="center"
-            android:tint="?attr/bottomSheetColor"
             app:srcCompat="@drawable/ic_navigate_next_black_24dp"
-            tools:targetApi="lollipop" />
+            tools:targetApi="lollipop"
+            app:tint="?attr/bottomSheetColor" />
 
     </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:progress="30"
             android:visibility="gone" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/doodle_colors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,14 +102,14 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="gone"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 

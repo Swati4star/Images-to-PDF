@@ -1,7 +1,7 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;

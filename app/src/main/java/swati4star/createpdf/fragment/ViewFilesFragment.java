@@ -1,22 +1,26 @@
 package swati4star.createpdf.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,8 +51,9 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.READ_WRITE_CAMERA_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.SORTING_INDEX;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.appName;
 
 public class ViewFilesFragment extends Fragment
@@ -304,11 +309,24 @@ public class ViewFilesFragment extends Fragment
 
     @OnClick(R.id.provide_permissions)
     public void providePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(
-                this,
-                READ_WRITE_CAMERA_PERMISSIONS,
-                PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT
-        );
+        if (!isStoragePermissionGranted()) {
+            getRuntimePermissions();
+        }
+    }
+
+    private boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+    private void getRuntimePermissions() {
+        if (Build.VERSION.SDK_INT < 29) {
+            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                    WRITE_PERMISSIONS,
+                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+        }
     }
 
     /**
@@ -323,7 +341,7 @@ public class ViewFilesFragment extends Fragment
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, this::onRefresh);
+                requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::onRefresh);
     }
 
     @Override
