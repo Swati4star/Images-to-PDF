@@ -68,7 +68,7 @@ Hurray! PDF files of selected images are created.
 <img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
 
 ### Different themes
-Go to Settings, and you can have three type of themes : Black, Dark, White
+Go to Settings, and you can have three type of themes : Black, Dark and White
 
 Black | Dark | White |
 --- | --- | --- |
