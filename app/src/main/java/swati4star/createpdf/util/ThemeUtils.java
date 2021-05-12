@@ -2,12 +2,14 @@ package swati4star.createpdf.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
 import swati4star.createpdf.R;
 
 import static swati4star.createpdf.util.Constants.THEME_BLACK;
 import static swati4star.createpdf.util.Constants.THEME_DARK;
+import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
 import static swati4star.createpdf.util.Constants.THEME_WHITE;
 
 public class ThemeUtils {
@@ -40,6 +42,13 @@ public class ThemeUtils {
             case THEME_DARK:
                 context.setTheme(R.style.ActivityThemeDark);
                 break;
+            case THEME_SYSTEM:
+            default:
+                if ((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
+                    context.setTheme(R.style.ActivityThemeDark);
+                } else {
+                    context.setTheme(R.style.AppThemeWhite);
+                }
         }
     }
 

@@ -98,6 +98,7 @@ public class Constants {
     public static final String THEME_WHITE = "White";
     public static final String THEME_BLACK = "Black";
     public static final String THEME_DARK = "Dark";
+    public static final String THEME_SYSTEM = "System";
 
     public static final String IS_WELCOME_ACTIVITY_SHOWN = "is_Welcome_activity_shown";
     public static final String SHOW_WELCOME_ACT = "show_welcome_activity";
