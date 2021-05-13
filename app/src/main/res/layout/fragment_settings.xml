@@ -22,23 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:drawableStart="@drawable/ic_folder_black_24dp"
         android:drawablePadding="15dp"
-        android:drawableTint="?attr/historyIconColor"
         android:padding="8dp"
         tools:targetApi="m"
-        android:layout_marginHorizontal="20dp"/>
+        android:layout_marginHorizontal="20dp"
+        app:drawableStartCompat="@drawable/ic_folder_black_24dp"
+        app:drawableTint="?attr/historyIconColor" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="5dp"
-        app:contentPadding="10dp"
-        android:layout_marginBottom="-30dp"
-        app:contentPaddingBottom="30dp"
-        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,13 +36,13 @@
             android:layout_gravity="top"
             android:gravity="center"
             android:orientation="vertical"
-            tools:targetApi="lollipop">
+            tools:targetApi="lollipop"
+            android:paddingHorizontal="10dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="50dp"
                 android:layout_height="5dp"
                 android:layout_marginTop="10dp"
-                app:cardBackgroundColor="#F38237"
                 app:cardCornerRadius="2.5dp" />
 
             <TextView
@@ -63,7 +53,6 @@
                 android:text="@string/settings_info"
                 android:textAllCaps="false"
                 android:gravity="center"
-                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -75,5 +64,4 @@
                 android:isScrollContainer="false"
                 android:nestedScrollingEnabled="false" />
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

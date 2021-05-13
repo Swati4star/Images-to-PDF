@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="10dp">
+    android:paddingHorizontal="10dp"
+    android:scrollbarSize="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,9 +37,9 @@
                 android:id="@+id/recent_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:orientation="vertical"
-                app:spanCount="3"/>
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3" />
 
         </LinearLayout>
 

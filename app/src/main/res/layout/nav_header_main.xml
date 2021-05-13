@@ -8,7 +8,6 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingVertical="24dp"
         android:paddingHorizontal="@dimen/activity_vertical_margin"
@@ -27,17 +26,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@string/app_name"
-            android:textColor="@color/colorBlackAlt"
             android:textSize="19sp"
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/light_gray"
-        android:layout_below="@id/layout"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"/>
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height=".7dp"-->
+<!--        android:background="#E3E3E3"-->
+<!--        android:layout_below="@id/layout"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentEnd="true"/>-->
 </RelativeLayout>
 

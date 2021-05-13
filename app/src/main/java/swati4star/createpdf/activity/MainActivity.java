@@ -4,11 +4,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
+
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.core.content.ContextCompat;
@@ -23,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -30,6 +35,7 @@ import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.ThemeUtils;
@@ -37,6 +43,10 @@ import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+import static swati4star.createpdf.util.Constants.THEME_BLACK;
+import static swati4star.createpdf.util.Constants.THEME_DARK;
+import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
+import static swati4star.createpdf.util.Constants.THEME_WHITE;
 import static swati4star.createpdf.util.Constants.VERSION_NAME;
 
 public class MainActivity extends AppCompatActivity
@@ -55,6 +65,50 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        mNavigationView = findViewById(R.id.nav_view);
+
+        RelativeLayout toolbarBackgroundLayout = findViewById(R.id.toolbar_background_layout);
+        MaterialCardView content = findViewById(R.id.content);
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+                Constants.DEFAULT_THEME);
+        switch (themeName) {
+            case THEME_WHITE:
+                toolbarBackgroundLayout.setBackgroundResource(R.drawable.toolbar_bg);
+                content.setCardBackgroundColor(getResources().getColor(R.color.lighter_gray));
+                mNavigationView.setBackgroundResource(R.color.white);
+                break;
+            case THEME_BLACK:
+                toolbarBackgroundLayout.setBackgroundResource(R.color.black);
+                content.setCardBackgroundColor(getResources().getColor(R.color.black));
+                mNavigationView.setBackgroundResource(R.color.black);
+                mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
+                break;
+            case THEME_DARK:
+                toolbarBackgroundLayout.setBackgroundResource(R.color.colorBlackAltLight);
+                content.setCardBackgroundColor(getResources().getColor(R.color.colorBlackAlt));
+                mNavigationView.setBackgroundResource(R.color.colorBlackAlt);
+                mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
+                break;
+            case THEME_SYSTEM:
+            default:
+                if ((this.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
+                    toolbarBackgroundLayout.setBackgroundResource(R.color.colorBlackAltLight);
+                    content.setCardBackgroundColor(getResources().getColor(R.color.colorBlackAlt));
+                    mNavigationView.setBackgroundResource(R.color.colorBlackAlt);
+                    mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                    mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                    mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
+                } else {
+                    toolbarBackgroundLayout.setBackgroundResource(R.drawable.toolbar_bg);
+                    content.setCardBackgroundColor(getResources().getColor(R.color.lighter_gray));
+                    mNavigationView.setBackgroundResource(R.color.white);
+                }
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -167,7 +221,6 @@ public class MainActivity extends AppCompatActivity
      */
     private void initializeValues() {
         mFeedbackUtils = new FeedbackUtils(this);
-        mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_home);
 

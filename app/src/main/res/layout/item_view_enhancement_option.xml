@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         app:cardCornerRadius="9dp"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/transparent">
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:id="@+id/passwordProtectedPDF"

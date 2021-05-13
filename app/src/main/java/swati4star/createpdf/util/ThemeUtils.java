@@ -62,12 +62,14 @@ public class ThemeUtils {
         String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
         switch (themeName) {
+            case THEME_SYSTEM:
+                return 0;
             case THEME_BLACK:
-                return  0;
-            case THEME_DARK:
                 return  1;
-            case THEME_WHITE:
+            case THEME_DARK:
                 return  2;
+            case THEME_WHITE:
+                return  3;
         }
         return 0;
     }

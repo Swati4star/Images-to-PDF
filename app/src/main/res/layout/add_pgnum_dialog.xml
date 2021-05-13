@@ -1,6 +1,7 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -35,11 +36,9 @@
         android:id="@+id/set_as_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/radioGroup"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
         android:checked="false"
         android:text="@string/set_as_default"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginHorizontal="16dp"/>
 
-</RelativeLayout>
+</LinearLayout>

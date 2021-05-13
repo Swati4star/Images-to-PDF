@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".fragment.ImageToPdfFragment"
@@ -12,8 +12,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true">
 
@@ -38,7 +38,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="@string/select_images_text"/>
+                    android:text="@string/select_images_text" />
 
                 <com.dd.morphingbutton.MorphingButton
                     android:id="@+id/pdfOpen"
@@ -64,47 +64,41 @@
                     android:padding="10dp"
                     android:text="@string/create_pdf_text" />
             </LinearLayout>
-            <com.google.android.material.card.MaterialCardView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="30dp"
-                app:contentPadding="10dp"
-                android:layout_marginVertical="25dp"
-                app:cardElevation="5dp"
-                app:cardBackgroundColor="@color/colorPrimary">
-                <LinearLayout
+                android:layout_gravity="bottom"
+                android:gravity="bottom|center"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp"
+                tools:targetApi="lollipop">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="50dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="2.5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:text="@string/more_options_text"
+                    android:textAllCaps="false"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/enhancement_options_recycle_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:gravity="bottom|center"
-                    android:orientation="vertical"
-                    tools:targetApi="lollipop">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="50dp"
-                        android:layout_height="5dp"
-                        app:cardCornerRadius="2.5dp"
-                        app:cardBackgroundColor="#F38237"
-                        android:layout_marginTop="10dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/more_options_text"
-                        android:textAllCaps="false"
-                        android:textSize="18sp"
-                        android:layout_marginVertical="10dp"
-                        android:textColor="@color/white"/>
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginVertical="15dp"
+                    android:isScrollContainer="false"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/enhancement_options_recycle_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        android:isScrollContainer="false"
-                        android:layout_marginVertical="15dp"
-                        android:layout_marginHorizontal="5dp"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,9 +115,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="?attr/bottomSheetColor"
         android:gravity="center_horizontal"
         android:padding="8dp"
-        android:background="?attr/bottomSheetColor"
         android:textColor="?attr/bottomSheetTextColor"
         android:visibility="gone" />
 

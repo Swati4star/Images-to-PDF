@@ -2,7 +2,6 @@ package swati4star.createpdf.activity;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class SplashActivity extends AppCompatActivity {
