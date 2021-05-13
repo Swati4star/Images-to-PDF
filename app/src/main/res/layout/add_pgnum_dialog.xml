@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,7 +8,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
 
         <RadioButton
             android:id="@+id/page_num_opt1"
@@ -33,6 +35,7 @@
     </RadioGroup>
 
     <CheckBox
+        android:layout_below="@id/radioGroup"
         android:id="@+id/set_as_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,4 +44,4 @@
         android:textSize="18sp"
         android:layout_marginHorizontal="16dp"/>
 
-</LinearLayout>
+</RelativeLayout>
