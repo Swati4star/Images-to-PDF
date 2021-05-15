@@ -62,7 +62,6 @@ public class EnhancementOptionsAdapter
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
             cardView = itemView.findViewById(R.id.container_card_view);
-            cardView.setBackgroundResource(R.drawable.mycardview_ripple_effect);
         }
 
         @Override

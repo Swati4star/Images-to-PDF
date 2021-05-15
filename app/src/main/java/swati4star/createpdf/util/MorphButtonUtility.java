@@ -3,18 +3,29 @@ package swati4star.createpdf.util;
 import android.app.Activity;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DimenRes;
+
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.widget.FrameLayout;
 
 import com.dd.morphingbutton.MorphingButton;
 
 import swati4star.createpdf.R;
 
+import static swati4star.createpdf.util.Constants.THEME_BLACK;
+import static swati4star.createpdf.util.Constants.THEME_DARK;
+import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
+import static swati4star.createpdf.util.Constants.THEME_WHITE;
+
 public class MorphButtonUtility {
 
     private final Activity mActivity;
+    private boolean mDarkModeEnabled = false;
 
     public MorphButtonUtility(Activity activity) {
         mActivity = activity;
+        checkDarkMode();
     }
     public int integer() {
         return mActivity.getResources().getInteger(R.integer.mb_animation);
@@ -28,6 +39,23 @@ public class MorphButtonUtility {
         return mActivity.getResources().getColor(resId);
     }
 
+    private void checkDarkMode() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        String themeName = sharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+                Constants.DEFAULT_THEME);
+        switch (themeName) {
+            case THEME_WHITE:
+                mDarkModeEnabled = false;
+                break;
+            case THEME_BLACK:
+            case THEME_DARK:
+                mDarkModeEnabled = true;
+                break;
+            case THEME_SYSTEM:
+            default:
+                mDarkModeEnabled = (mActivity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        }
+    }
     /**
      * Converts morph button ot square shape
      *
@@ -39,8 +67,13 @@ public class MorphButtonUtility {
         String text = btnMorph.getText().toString().isEmpty() ?
                 mActivity.getString(R.string.create_pdf) :
                 btnMorph.getText().toString();
-        square.color(color(R.color.mb_blue));
-        square.colorPressed(color(R.color.mb_blue_dark));
+        if (mDarkModeEnabled) {
+            square.color(color(R.color.colorBlackAltLight));
+            square.colorPressed(color(R.color.colorBlackAlt));
+        } else {
+            square.color(color(R.color.mb_blue));
+            square.colorPressed(color(R.color.mb_blue_dark));
+        }
         square.text(text);
         btnMorph.morph(square);
     }
@@ -101,16 +134,20 @@ public class MorphButtonUtility {
     public void initializeButton(MorphingButton button,
                                  MorphingButton buttonToDisable) {
         button.setText(R.string.merge_file_select);
-        button.setBackgroundResource(R.drawable.button_bg);
+        if (mDarkModeEnabled) {
+            button.setBackgroundColor(color(R.color.colorBlackAltLight));
+        }
         morphToGrey(buttonToDisable, integer());
         buttonToDisable.setEnabled(false);
     }
     public void initializeButtonForAddText(MorphingButton pdfButton, MorphingButton textButton,
                                  MorphingButton buttonToDisable) {
         pdfButton.setText(R.string.select_pdf_file);
-        pdfButton.setBackgroundResource(R.drawable.button_bg);
         textButton.setText(R.string.select_text_file);
-        textButton.setBackgroundResource(R.drawable.button_bg);
+        if (mDarkModeEnabled) {
+            pdfButton.setBackgroundColor(color(R.color.colorBlackAltLight));
+            textButton.setBackgroundColor(color(R.color.colorBlackAltLight));
+        }
         morphToGrey(buttonToDisable, integer());
         buttonToDisable.setEnabled(false);
     }

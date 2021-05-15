@@ -22,7 +22,7 @@ public class Constants {
     public static final String DEFAULT_PAGE_COLOR_ITP = "DefaultPageColorITP";
     public static final int DEFAULT_PAGE_COLOR = Color.WHITE;
     public static final String DEFAULT_THEME_TEXT = "DefaultTheme";
-    public static final String DEFAULT_THEME = "White";
+    public static final String DEFAULT_THEME = "System";
     public static final String DEFAULT_IMAGE_BORDER_TEXT = "Image_border_text";
     public static final String RESULT = "result";
     public static final String SAME_FILE = "SameFile";
@@ -98,6 +98,7 @@ public class Constants {
     public static final String THEME_WHITE = "White";
     public static final String THEME_BLACK = "Black";
     public static final String THEME_DARK = "Dark";
+    public static final String THEME_SYSTEM = "System";
 
     public static final String IS_WELCOME_ACTIVITY_SHOWN = "is_Welcome_activity_shown";
     public static final String SHOW_WELCOME_ACT = "show_welcome_activity";
