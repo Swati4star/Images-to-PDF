@@ -30,12 +30,5 @@
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height=".7dp"-->
-<!--        android:background="#E3E3E3"-->
-<!--        android:layout_below="@id/layout"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentEnd="true"/>-->
 </RelativeLayout>
 

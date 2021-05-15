@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".QrBarcodeScanFragment"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".QrBarcodeScanFragment">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:text="@string/qrbarcodes_to_pdf"
-            android:textSize="15sp"
-            android:textStyle="bold"
             android:layout_marginTop="9dp"
             android:layout_marginBottom="3dp"
-            android:textColor="@color/grey"/>
+            android:padding="5sp"
+            android:text="@string/qrbarcodes_to_pdf"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,8 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 app:option_icon="@drawable/ic_qrcode_24dp"
-                app:option_text="@string/scan_qrcode"
-                android:background="@drawable/mycardview_ripple_effect"/>
+                app:option_text="@string/scan_qrcode" />
 
             <swati4star.createpdf.customviews.MyCardView
                 android:id="@+id/scan_barcode"
@@ -46,8 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 app:option_icon="@drawable/ic_barcode_24dp"
-                app:option_text="@string/scan_barcode"
-                android:background="@drawable/mycardview_ripple_effect"/>
+                app:option_text="@string/scan_barcode" />
 
         </LinearLayout>
 

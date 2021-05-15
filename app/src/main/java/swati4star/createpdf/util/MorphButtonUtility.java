@@ -40,8 +40,8 @@ public class MorphButtonUtility {
     }
 
     private void checkDarkMode() {
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        String themeName = sharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
         switch (themeName) {
             case THEME_WHITE:

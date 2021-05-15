@@ -67,48 +67,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         mNavigationView = findViewById(R.id.nav_view);
 
-        RelativeLayout toolbarBackgroundLayout = findViewById(R.id.toolbar_background_layout);
-        MaterialCardView content = findViewById(R.id.content);
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
-                Constants.DEFAULT_THEME);
-        switch (themeName) {
-            case THEME_WHITE:
-                toolbarBackgroundLayout.setBackgroundResource(R.drawable.toolbar_bg);
-                content.setCardBackgroundColor(getResources().getColor(R.color.lighter_gray));
-                mNavigationView.setBackgroundResource(R.color.white);
-                break;
-            case THEME_BLACK:
-                toolbarBackgroundLayout.setBackgroundResource(R.color.black);
-                content.setCardBackgroundColor(getResources().getColor(R.color.black));
-                mNavigationView.setBackgroundResource(R.color.black);
-                mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
-                break;
-            case THEME_DARK:
-                toolbarBackgroundLayout.setBackgroundResource(R.color.colorBlackAltLight);
-                content.setCardBackgroundColor(getResources().getColor(R.color.colorBlackAlt));
-                mNavigationView.setBackgroundResource(R.color.colorBlackAlt);
-                mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
-                break;
-            case THEME_SYSTEM:
-            default:
-                if ((this.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
-                    toolbarBackgroundLayout.setBackgroundResource(R.color.colorBlackAltLight);
-                    content.setCardBackgroundColor(getResources().getColor(R.color.colorBlackAlt));
-                    mNavigationView.setBackgroundResource(R.color.colorBlackAlt);
-                    mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                    mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                    mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
-                } else {
-                    toolbarBackgroundLayout.setBackgroundResource(R.drawable.toolbar_bg);
-                    content.setCardBackgroundColor(getResources().getColor(R.color.lighter_gray));
-                    mNavigationView.setBackgroundResource(R.color.white);
-                }
-        }
+        setThemeOnActivityExclusiveComponents();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -362,5 +321,50 @@ public class MainActivity extends AppCompatActivity
     private void setTitleFragment(int title) {
         if (title != 0)
             setTitle(title);
+    }
+
+    private void setThemeOnActivityExclusiveComponents() {
+        RelativeLayout toolbarBackgroundLayout = findViewById(R.id.toolbar_background_layout);
+        MaterialCardView content = findViewById(R.id.content);
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+                Constants.DEFAULT_THEME);
+        switch (themeName) {
+            case THEME_WHITE:
+                toolbarBackgroundLayout.setBackgroundResource(R.drawable.toolbar_bg);
+                content.setCardBackgroundColor(getResources().getColor(R.color.lighter_gray));
+                mNavigationView.setBackgroundResource(R.color.white);
+                break;
+            case THEME_BLACK:
+                toolbarBackgroundLayout.setBackgroundResource(R.color.black);
+                content.setCardBackgroundColor(getResources().getColor(R.color.black));
+                mNavigationView.setBackgroundResource(R.color.black);
+                mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
+                break;
+            case THEME_DARK:
+                toolbarBackgroundLayout.setBackgroundResource(R.color.colorBlackAltLight);
+                content.setCardBackgroundColor(getResources().getColor(R.color.colorBlackAlt));
+                mNavigationView.setBackgroundResource(R.color.colorBlackAlt);
+                mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
+                break;
+            case THEME_SYSTEM:
+            default:
+                if ((this.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
+                    toolbarBackgroundLayout.setBackgroundResource(R.color.colorBlackAltLight);
+                    content.setCardBackgroundColor(getResources().getColor(R.color.colorBlackAlt));
+                    mNavigationView.setBackgroundResource(R.color.colorBlackAlt);
+                    mNavigationView.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                    mNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                    mNavigationView.setItemBackgroundResource(R.drawable.navigation_item_selected_bg_selector_dark);
+                } else {
+                    toolbarBackgroundLayout.setBackgroundResource(R.drawable.toolbar_bg);
+                    content.setCardBackgroundColor(getResources().getColor(R.color.lighter_gray));
+                    mNavigationView.setBackgroundResource(R.color.white);
+                }
+        }
     }
 }
