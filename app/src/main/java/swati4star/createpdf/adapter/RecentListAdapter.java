@@ -73,7 +73,6 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
             super(itemView);
             ButterKnife.bind(this, itemView);
             cardView = itemView.findViewById(R.id.container_card_view);
-//            cardView.setBackgroundResource(R.drawable.mycardview_ripple_effect);
         }
     }
 }
