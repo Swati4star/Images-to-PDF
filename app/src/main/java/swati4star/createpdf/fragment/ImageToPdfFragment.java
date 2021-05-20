@@ -12,14 +12,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +26,12 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -93,7 +93,6 @@ import static swati4star.createpdf.util.Constants.READ_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_READ_PERMISSION;
 import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.WatermarkUtils.getStyleNameFromFont;
@@ -159,8 +158,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         mPageSizeUtils = new PageSizeUtils(mActivity);
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
                 DEFAULT_PAGE_COLOR);
-        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation());
+        mHomePath = StringUtils.getInstance().getStorageDir(getContext());
 
         // Get default values & show enhancement options
         resetValues();
@@ -449,10 +447,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private void saveImagesInGrayScale() {
         ArrayList<String> tempImageUri = new ArrayList<>();
         try {
-            File sdCard = Environment.getExternalStorageDirectory();
-            File dir = new File(sdCard.getAbsolutePath() + "/PDFfilter");
-            dir.mkdirs();
-
+            String dir = StringUtils.getInstance().getStorageDir(getContext());
             int size = mImagesUri.size();
             for (int i = 0; i < size; i++) {
                 String fileName = String.format(getString(R.string.filter_file_name),

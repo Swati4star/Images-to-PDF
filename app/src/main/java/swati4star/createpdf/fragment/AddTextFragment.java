@@ -10,14 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +21,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
@@ -72,7 +72,6 @@ import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
@@ -90,7 +89,6 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private int mFontSize = 0;
     private static final int INTENT_REQUEST_PICK_PDF_FILE_CODE = 10;
     private static final int INTENT_REQUEST_PICK_TEXT_FILE_CODE = 0;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private BottomSheetBehavior mSheetBehavior;
 
     @BindView(R.id.select_pdf_file)
@@ -272,8 +270,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
      * @param fileName - the name of the new pdf that is to be created.
      */
     private void addText(String fileName, int fontSize, Font.FontFamily fontFamily) {
-        String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation());
+        String mStorePath = StringUtils.getInstance().getStorageDir(getContext());
         String mPath = mStorePath + fileName + pdfExtension;
         try {
             StringBuilder text = new StringBuilder();

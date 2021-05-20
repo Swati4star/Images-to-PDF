@@ -1,11 +1,12 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import swati4star.createpdf.R;
 
@@ -43,8 +44,8 @@ public class FeedbackUtils {
      * Open application in play store, so that user can rate
      */
     public void rateUs() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle(mContext.getString(R.string.rate_title))
+        new MaterialAlertDialogBuilder(mContext)
+                .setTitle(mContext.getString(R.string.rate_title))
                 .setMessage(mContext.getString(R.string.rate_dialog_text))
                 .setNegativeButton(mContext.getString(R.string.rate_negative),
                         (dialogInterface, i) -> {
@@ -67,8 +68,7 @@ public class FeedbackUtils {
                 .setNeutralButton(mContext.getString(R.string.rate_us_never), (dialogInterface, i) -> {
                     mSharedPreferences.edit().putInt(LAUNCH_COUNT, -1).apply();
                     dialogInterface.cancel();
-                });
-        builder.create().show();
+                }).show();
     }
 
 

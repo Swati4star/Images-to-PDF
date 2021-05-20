@@ -2,12 +2,14 @@ package swati4star.createpdf.providers.fragmentmanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.navigation.NavigationView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 

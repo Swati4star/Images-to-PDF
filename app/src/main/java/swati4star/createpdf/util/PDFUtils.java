@@ -9,9 +9,10 @@ import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-import android.widget.TextView;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

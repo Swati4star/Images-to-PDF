@@ -28,6 +28,7 @@
         <item name="android:listDivider">@color/lighter_gray</item>
         <item name="android:textColor">@color/colorBlackAlt</item>
         <item name="materialCardViewStyle">@style/MaterialCardviewStyleLight</item>
+        <item name="materialAlertDialogTheme">@style/CustomMaterialDialogWhite</item>
     </style>
 
     <style name="AppThemeBlack" parent="Theme.MaterialComponents.NoActionBar">
@@ -48,6 +49,7 @@
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:textColor">@color/white</item>
         <item name="materialCardViewStyle">@style/MaterialCardviewStyleBlack</item>
+        <item name="materialAlertDialogTheme">@style/CustomMaterialDialogDark</item>
     </style>
 
     <style name="ActivityThemeDark" parent="Theme.MaterialComponents.NoActionBar">
@@ -70,6 +72,7 @@
         <item name="android:statusBarColor">@color/colorBlackAlt</item>
         <item name="android:textColor">@color/white</item>
         <item name="materialCardViewStyle">@style/MaterialCardviewStyleDark</item>
+        <item name="materialAlertDialogTheme">@style/CustomMaterialDialogDark</item>
     </style>
 
     <style name="ToolbarTheme" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
@@ -120,5 +123,24 @@
     </style>
     <style name="MaterialCardviewStyleLight" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="CustomMaterialDialogWhite" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Background Color-->
+        <item name="android:background">@color/colorPrimary</item>
+        <!-- Text Color for title and message -->
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Text Color for buttons -->
+        <item name="colorPrimary">@color/white</item>
+        ....
+    </style>
+
+    <style name="CustomMaterialDialogDark" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Background Color-->
+        <item name="android:background">@color/colorBlackAltLight</item>
+        <!-- Text Color for title and message -->
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Text Color for buttons -->
+        <item name="colorPrimary">@color/white</item>
     </style>
 </resources>
