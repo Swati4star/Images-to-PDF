@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>Nome</item>
+        <item>Data</item>
+        <item>Tamanho  ▲</item>
+        <item>Tamanho  ▼</item>
+    </string-array>
+
+    <string-array name="sort_options_images">
+        <item>Nome ▲</item>
+        <item>Nome ▼</item>
+        <item>Data ▲</item>
+        <item>Data ▼</item>
+    </string-array>
+
+    <string-array name="filter_options_history">
+        <item>Criado</item>
+        <item>Excluído</item>
+        <item>Renomeado</item>
+        <item>Girado</item>
+        <item>Imprimido</item>
+        <item>Descriptografado</item>
+        <item>Criptografado</item>
+        <item>Invertido</item>
+    </string-array>
+</resources>
