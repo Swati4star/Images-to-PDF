@@ -22,7 +22,6 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.model.TextToPDFOptions;
 
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 
 public class TextToPDFUtils {
@@ -57,8 +56,7 @@ public class TextToPDFUtils {
         pageSize.setBackgroundColor(getBaseColor(mTextToPDFOptions.getPageColor()));
         Document document = new Document(pageSize);
 
-        String finalOutput = mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation()) +
+        String finalOutput = StringUtils.getInstance().getStorageDir(mContext) +
                 mTextToPDFOptions.getOutFileName() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(finalOutput));
         writer.setPdfVersion(PdfWriter.VERSION_1_7);

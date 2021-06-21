@@ -13,7 +13,6 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 
 public class MergeHelper implements MergeFilesListener {
@@ -30,10 +29,8 @@ public class MergeHelper implements MergeFilesListener {
     public MergeHelper(Activity activity, ViewFilesAdapter viewFilesAdapter) {
         mActivity = activity;
         mFileUtils = new FileUtils(mActivity);
-        mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
-                .getString(STORAGE_LOCATION,
-                        StringUtils.getInstance().getDefaultStorageLocation());
         mContext = mActivity;
+        mHomePath = StringUtils.getInstance().getStorageDir(mContext);
         mViewFilesAdapter = viewFilesAdapter;
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
     }

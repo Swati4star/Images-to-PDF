@@ -4,8 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import androidx.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -17,7 +18,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
@@ -85,9 +85,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     }
 
     private void setFilePath() {
-        File folder = new File(mPath);
-        if (!folder.exists())
-            folder.mkdir();
         mPath = mPath + mFileName + pdfExtension;
     }
 

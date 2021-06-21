@@ -1,9 +1,8 @@
 package swati4star.createpdf.util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Environment;
-import android.preference.PreferenceManager;
+import android.content.Intent;
+import android.net.Uri;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.Set;
 
 import swati4star.createpdf.R;
 
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.excelExtension;
 import static swati4star.createpdf.util.Constants.excelWorkbookExtension;
 import static swati4star.createpdf.util.Constants.pdfExtension;
@@ -23,12 +21,10 @@ import static swati4star.createpdf.util.Constants.pdfExtension;
 public class DirectoryUtils {
 
     private final Context mContext;
-    private final SharedPreferences mSharedPreferences;
     private ArrayList<String> mFilePaths;
 
     public DirectoryUtils(Context context) {
         mContext = context;
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
@@ -122,11 +118,7 @@ public class DirectoryUtils {
      * create PDF directory if directory does not exists
      */
     public File getOrCreatePdfDirectory() {
-        File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation()));
-        if (!folder.exists())
-            folder.mkdir();
-        return folder;
+        return new File(StringUtils.getInstance().getStorageDir(mContext));
     }
 
     /**
@@ -149,7 +141,7 @@ public class DirectoryUtils {
      */
     ArrayList<String> getAllPDFsOnDevice() {
         mFilePaths = new ArrayList<>();
-        walkDir(Environment.getExternalStorageDirectory());
+        walkDir(new File(StringUtils.getInstance().getStorageDir(mContext)));
         return mFilePaths;
     }
 
@@ -191,16 +183,15 @@ public class DirectoryUtils {
      */
     ArrayList<String> getAllExcelDocumentsOnDevice() {
         mFilePaths = new ArrayList<>();
-        walkDir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
+        walkDir(new File(StringUtils.getInstance().getStorageDir(mContext)), Arrays.asList(excelExtension, excelWorkbookExtension));
         return mFilePaths;
     }
 
     /**
      * creates new folder for temp files
      */
-    public static void makeAndClearTemp() {
-        String dest = Environment.getExternalStorageDirectory().toString() +
-                Constants.pdfDirectory + Constants.tempDirectory;
+    public static void makeAndClearTemp(String storageDir) {
+        String dest = storageDir + Constants.tempDirectory;
         File folder = new File(dest);
         boolean result = folder.mkdir();
 
@@ -211,5 +202,21 @@ public class DirectoryUtils {
                 new File(folder, child).delete();
             }
         }
+    }
+
+    public static void getPersistablePermissionOfStorageDir(Context context, Uri storageUri) {
+        context.getContentResolver().takePersistableUriPermission(storageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+    }
+
+    public static void releasePersistablePermissionOfOldStorageDir(Context context, Uri oldStorageUri) {
+        context.getContentResolver().takePersistableUriPermission(oldStorageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+    }
+
+    public static boolean isStorageDirNotExist(Context context) {
+        String storageDirPath = StringUtils.getInstance().getStorageDir(context);
+        File storageDir = new File(storageDirPath);
+        return !storageDir.exists();
     }
 }

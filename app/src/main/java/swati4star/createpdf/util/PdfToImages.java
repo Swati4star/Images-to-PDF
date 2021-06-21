@@ -31,8 +31,9 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     private PDFEncryptionUtility mPDFEncryptionUtility;
     private final Context mContext;
     private String mDecryptedPath;
+    private String mStorageDir;
 
-    public PdfToImages(Context context, String[] password, String mPath, Uri mUri,
+    public PdfToImages(Context context, String[] password, String mPath, String storageDir, Uri mUri,
                        ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
         this.mUri = mUri;
@@ -40,6 +41,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
         mOutputFilePaths = new ArrayList<>();
         this.mPassword = password;
         this.mContext = context;
+        this.mStorageDir = storageDir;
     }
 
     @Override
@@ -91,7 +93,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
                     // generate numbered image file names
                     String filename = getFileNameWithoutExtension(mPath) +
                             "_" + (i + 1);
-                    String path = saveImage(filename, bitmap);
+                    String path = saveImage(filename, bitmap, mStorageDir);
                     if (path != null) {
                         mOutputFilePaths.add(path);
                         mImagesCount++;

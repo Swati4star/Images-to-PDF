@@ -2,7 +2,6 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.os.Environment;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -17,7 +16,6 @@ import java.util.zip.ZipInputStream;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 
-import static swati4star.createpdf.util.Constants.pdfDirectory;
 import static swati4star.createpdf.util.Constants.tempDirectory;
 
 public class ZipToPdf {
@@ -41,9 +39,8 @@ public class ZipToPdf {
 
         BufferedOutputStream bufferedOutputStream;
         ArrayList<Uri> imageUris = new ArrayList<>();
-        DirectoryUtils.makeAndClearTemp();
-        String dest = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() +
-                pdfDirectory + tempDirectory;
+        DirectoryUtils.makeAndClearTemp(StringUtils.getInstance().getStorageDir(context));
+        String dest = StringUtils.getInstance().getStorageDir(context) + tempDirectory;
 
         try {
             FileInputStream fileInputStream = new FileInputStream(path);

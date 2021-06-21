@@ -1,9 +1,10 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 

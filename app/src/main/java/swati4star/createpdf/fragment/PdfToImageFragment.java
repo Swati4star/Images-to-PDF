@@ -7,10 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -218,10 +219,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     private void pdfToImage(String[] mInputPassword) {
         if (mOperation.equals(PDF_TO_IMAGES)) {
-            new PdfToImages(mContext, mInputPassword, mPath, mUri, this)
+            new PdfToImages(mContext, mInputPassword, mPath, StringUtils.getInstance().getStorageDir(getContext()), mUri, this)
                     .execute();
         } else
-            new ExtractImages(mPath, this).execute();
+            new ExtractImages(mPath, StringUtils.getInstance().getStorageDir(getContext()), this).execute();
     }
 
     @Override

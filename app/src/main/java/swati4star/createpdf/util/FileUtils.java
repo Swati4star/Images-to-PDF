@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,7 +27,6 @@ import swati4star.createpdf.util.lambda.Consumer;
 
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class FileUtils {
@@ -180,8 +179,7 @@ public class FileUtils {
      */
 
     public boolean isFileExist(String mFileName) {
-        String path = mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation()) + mFileName;
+        String path = StringUtils.getInstance().getStorageDir(mContext) + mFileName;
         File file = new File(path);
 
         return file.exists();
@@ -329,11 +327,9 @@ public class FileUtils {
      * @return - intent
      */
     public Intent getFileChooser() {
-        String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        Uri myUri = Uri.parse(folderPath);
-        intent.setDataAndType(myUri, mContext.getString(R.string.pdf_type));
+        intent.setType(mContext.getString(R.string.pdf_type));
 
         return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
     }

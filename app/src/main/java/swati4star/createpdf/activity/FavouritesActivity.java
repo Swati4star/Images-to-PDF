@@ -1,17 +1,27 @@
 package swati4star.createpdf.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-import androidx.appcompat.widget.Toolbar;
+import android.provider.DocumentsContract;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Objects;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.Preference;
+import swati4star.createpdf.util.RealPathUtil;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
@@ -31,6 +41,8 @@ import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD_KEY;
 import static swati4star.createpdf.util.Constants.REORDER_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import static swati4star.createpdf.util.Constants.SPLIT_PDF_KEY;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION_URI;
 import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
 import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
@@ -139,5 +151,41 @@ public class FavouritesActivity extends AppCompatActivity {
         mSharedPreferences.edit().putBoolean(PDF_TO_IMAGES_KEY, mKeyState[18]).apply();
         mSharedPreferences.edit().putBoolean(EXCEL_TO_PDF_KEY, mKeyState[19]).apply();
         mSharedPreferences.edit().putBoolean(ZIP_TO_PDF_KEY, mKeyState[20]).apply();
+    }
+
+    private void checkAndAskForStorageDir() {
+        if (Preference.getStringPref(this, STORAGE_LOCATION).isEmpty() || DirectoryUtils.isStorageDirNotExist(this)) {
+            askUserToSelectStorageDir();
+        }
+    }
+
+    private void askUserToSelectStorageDir() {
+        new MaterialAlertDialogBuilder(this).setTitle("Storage folder not found!")
+                .setMessage("Storage directory not found. Please select a folder to save PDF")
+                .setCancelable(false)
+                .setNeutralButton("Choose Folder", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE);
+                }).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null || resultCode != RESULT_OK)
+            return;
+        if (requestCode == Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE) {
+            Uri uri = DocumentsContract.buildDocumentUriUsingTree(data.getData(), DocumentsContract.getTreeDocumentId(data.getData()));
+            String storagePath = RealPathUtil.getInstance().getRealPath(this, uri);
+            Preference.setStringPref(this, STORAGE_LOCATION, storagePath);
+            Preference.setStringPref(this, STORAGE_LOCATION_URI, data.getData().toString());
+            DirectoryUtils.getPersistablePermissionOfStorageDir(this, data.getData());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkAndAskForStorageDir();
     }
 }

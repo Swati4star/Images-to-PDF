@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.provider.DocumentsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +18,11 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
 
@@ -27,24 +30,27 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-//import butterknife.OnClick;
-//import lib.folderpicker.FolderPicker;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
+import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.PageSizeUtils;
+import swati4star.createpdf.util.Preference;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.SharedPreferencesUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
+import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION_URI;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
 
@@ -74,30 +80,38 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, root);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation()));
+        storageLocation.setText(StringUtils.getInstance().getStorageDir(getContext()));
         showSettingsOptions();
         return root;
     }
 
-//    @OnClick(R.id.storagelocation)
-//    void modifyStorageLocation() {
-////        Intent intent = new Intent(mActivity, FolderPicker.class);
-////        startActivityForResult(intent, MODIFY_STORAGE_LOCATION_CODE);
-//    }
+    @OnClick(R.id.storagelocation)
+    void modifyStorageLocation() {
+        askUserToSelectStorageDir();
+    }
+    private void askUserToSelectStorageDir() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        startActivityForResult(intent, Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MODIFY_STORAGE_LOCATION_CODE) {
-            if (data.getExtras() != null) {
-                String folderLocation = data.getExtras().getString("data") + "/";
-                mSharedPreferences.edit().putString(STORAGE_LOCATION, folderLocation).apply();
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.storage_location_modified);
-                storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
-                        StringUtils.getInstance().getDefaultStorageLocation()));
-            }
+        if (requestCode == Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE && resultCode == RESULT_OK) {
+            Uri newStorageUri = DocumentsContract.buildDocumentUriUsingTree(data.getData(), DocumentsContract.getTreeDocumentId(data.getData()));
+            Uri oldStorageUri = Uri.parse(Preference.getStringPref(getContext(), STORAGE_LOCATION_URI));
+            String newStoragePath = RealPathUtil.getInstance().getRealPath(getContext(), newStorageUri);
+            Preference.setStringPref(getContext(), STORAGE_LOCATION, newStoragePath);
+            Preference.setStringPref(getContext(), STORAGE_LOCATION_URI, newStorageUri.toString());
+            managePersistedPermissionsOfStorageDir(data.getData(), oldStorageUri);
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.storage_location_modified);
+            storageLocation.setText(StringUtils.getInstance().getStorageDir(getContext()));
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void managePersistedPermissionsOfStorageDir(Uri newStorageUri, Uri oldStorageUri) {
+        DirectoryUtils.getPersistablePermissionOfStorageDir(getContext(), newStorageUri);
+        DirectoryUtils.releasePersistablePermissionOfOldStorageDir(getContext(), oldStorageUri);
     }
 
     private void showSettingsOptions() {

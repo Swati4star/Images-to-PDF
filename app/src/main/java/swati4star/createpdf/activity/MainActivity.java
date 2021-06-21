@@ -10,24 +10,26 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.provider.DocumentsContract;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -36,13 +38,18 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
 import swati4star.createpdf.util.Constants;
-import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FeedbackUtils;
+import swati4star.createpdf.util.Preference;
+import swati4star.createpdf.util.RealPathUtil;
+import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION_URI;
 import static swati4star.createpdf.util.Constants.THEME_BLACK;
 import static swati4star.createpdf.util.Constants.THEME_DARK;
 import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
@@ -57,7 +64,6 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,13 +142,14 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         if (isStoragePermissionGranted()) {
-            DirectoryUtils.makeAndClearTemp();
+            DirectoryUtils.makeAndClearTemp(StringUtils.getInstance().getStorageDir(this));
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        checkAndAskForStorageDir();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         if (actionBar != null)
@@ -365,6 +372,36 @@ public class MainActivity extends AppCompatActivity
                     content.setCardBackgroundColor(getResources().getColor(R.color.lighter_gray));
                     mNavigationView.setBackgroundResource(R.color.white);
                 }
+        }
+    }
+
+    private void checkAndAskForStorageDir() {
+        if (Preference.getStringPref(this, STORAGE_LOCATION).isEmpty() || DirectoryUtils.isStorageDirNotExist(this)) {
+            askUserToSelectStorageDir();
+        }
+    }
+
+    private void askUserToSelectStorageDir() {
+        new MaterialAlertDialogBuilder(this).setTitle("Storage folder not found!")
+                .setMessage("Storage directory not found. Please select a folder to save PDF")
+                .setCancelable(false)
+                .setNeutralButton("Choose Folder", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE);
+                }).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null || resultCode != RESULT_OK)
+            return;
+        if (requestCode == Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE) {
+            Uri uri = DocumentsContract.buildDocumentUriUsingTree(data.getData(), DocumentsContract.getTreeDocumentId(data.getData()));
+            String storagePath = RealPathUtil.getInstance().getRealPath(this, uri);
+            Preference.setStringPref(this, STORAGE_LOCATION, storagePath);
+            Preference.setStringPref(this, STORAGE_LOCATION_URI, data.getData().toString());
+            DirectoryUtils.getPersistablePermissionOfStorageDir(this, data.getData());
         }
     }
 }

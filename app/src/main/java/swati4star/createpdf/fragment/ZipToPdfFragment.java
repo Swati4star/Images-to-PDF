@@ -5,18 +5,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.dd.morphingbutton.MorphingButton;
 
@@ -66,11 +65,9 @@ public class ZipToPdfFragment extends Fragment {
     }
 
     private void chooseFile() {
-        String folderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/";
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        Uri myUri = Uri.parse(folderPath);
-        intent.setDataAndType(myUri, "application/zip");
+        intent.setType("application/zip");
 
         startActivityForResult(Intent.createChooser(intent, getString(R.string.merge_file_select)),
                 INTENT_REQUEST_PICK_FILE_CODE);

@@ -1,17 +1,15 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
-import android.os.Environment;
-import com.google.android.material.snackbar.Snackbar;
+import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import java.io.File;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Objects;
 
-//import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
-import static swati4star.createpdf.util.Constants.pdfDirectory;
-//import static swati4star.createpdf.util.Constants.pdfDirectory;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 
 /**
  * Created by anandparmar on 18/06/18.
@@ -70,15 +68,8 @@ public class StringUtils {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public String getDefaultStorageLocation() {
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-//        if (!dir.exists()) {
-//            boolean isDirectoryCreated = dir.mkdir();
-//            if (!isDirectoryCreated) {
-//                Log.e("Error", "Directory could not be created");
-//            }
-//        }
-        return dir.getAbsolutePath() + pdfDirectory;
+    public String getStorageDir(Context context) {
+        return Preference.getStringPref(context, STORAGE_LOCATION) + "/";
     }
 
     /**

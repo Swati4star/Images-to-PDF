@@ -18,7 +18,6 @@ import java.util.Arrays;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
 public class SplitPDFUtils {
@@ -56,8 +55,7 @@ public class SplitPDFUtils {
             return outputPaths;
 
         try {
-            String folderPath = mSharedPreferences.getString(STORAGE_LOCATION,
-                    StringUtils.getInstance().getDefaultStorageLocation());
+            String folderPath = StringUtils.getInstance().getStorageDir(mContext);
             PdfReader reader = new PdfReader(path);
             PdfCopy copy;
             Document document;

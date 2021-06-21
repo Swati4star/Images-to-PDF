@@ -23,11 +23,13 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
     private final ExtractImagesListener mExtractImagesListener;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
+    private String mStorageDir;
 
-    public ExtractImages(String mPath, ExtractImagesListener mExtractImagesListener) {
+    public ExtractImages(String mPath, String storageDir, ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
         this.mExtractImagesListener = mExtractImagesListener;
         mOutputFilePaths = new ArrayList<>();
+        this.mStorageDir = storageDir;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                                 image.length);
                         String filename = getFileNameWithoutExtension(mPath) +
                                 "_" + (mImagesCount + 1);
-                        String path = saveImage(filename, bmp);
+                        String path = saveImage(filename, bmp, mStorageDir);
                         if (path != null) {
                             mOutputFilePaths.add(path);
                             mImagesCount++;

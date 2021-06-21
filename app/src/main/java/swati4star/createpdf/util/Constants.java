@@ -32,6 +32,7 @@ public class Constants {
     public static final int DEFAULT_QUALITY_VALUE = 30;
     public static final int DEFAULT_BORDER_WIDTH = 0;
     public static final String STORAGE_LOCATION = "storage_location";
+    public static final String STORAGE_LOCATION_URI = "storage_location_uri";
     public static final String DEFAULT_IMAGE_SCALE_TYPE_TEXT = "image_scale_type";
     public static final String IMAGE_SCALE_TYPE_STRETCH = "stretch_image";
     public static final String IMAGE_SCALE_TYPE_ASPECT_RATIO = "maintain_aspect_ratio";
@@ -76,7 +77,6 @@ public class Constants {
 
     public static final String LAUNCH_COUNT = "launch_count";
 
-    public static final String pdfDirectory = "/PDF Converter/";
     public static final String pdfExtension = ".pdf";
     public static final String appName = "PDF Converter";
     public static final String PATH_SEPERATOR = "/";
@@ -110,6 +110,8 @@ public class Constants {
 
     public static final int REQUEST_CODE_FOR_WRITE_PERMISSION = 4;
     public static final int REQUEST_CODE_FOR_READ_PERMISSION = 5;
+
+    public static final int REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE = 101;
 
 
     public static final String[] WRITE_PERMISSIONS = {

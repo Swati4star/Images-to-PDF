@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import androidx.appcompat.app.AppCompatActivity;
+import android.provider.DocumentsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,20 +12,31 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
+import swati4star.createpdf.util.Constants;
+import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FileUtils;
+import swati4star.createpdf.util.Preference;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
-import static swati4star.createpdf.util.Constants.pdfDirectory;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION_URI;
 
 public class CropImageActivity extends AppCompatActivity {
 
@@ -75,8 +85,9 @@ public class CropImageActivity extends AppCompatActivity {
 
     public void cropButtonClicked() {
         mCurrentImageEdited = false;
-        String root = Environment.getExternalStorageDirectory().toString();
-        File folder = new File(root + pdfDirectory);
+        String root = StringUtils.getInstance().getStorageDir(this);
+        File folder = new File(root);
+
         Uri uri = mCropImageView.getImageUri();
 
         if (uri == null) {
@@ -179,5 +190,41 @@ public class CropImageActivity extends AppCompatActivity {
         mImageCount.setText(String.format("%s %d of %d", getString(R.string.cropImage_activityTitle)
                 , index + 1, mImages.size()));
         mCropImageView.setImageUriAsync(mCroppedImageUris.get(index));
+    }
+
+    private void checkAndAskForStorageDir() {
+        if (Preference.getStringPref(this, STORAGE_LOCATION).isEmpty() || DirectoryUtils.isStorageDirNotExist(this)) {
+            askUserToSelectStorageDir();
+        }
+    }
+
+    private void askUserToSelectStorageDir() {
+        new MaterialAlertDialogBuilder(this).setTitle("Storage folder not found!")
+                .setMessage("Storage directory not found. Please select a folder to save PDF")
+                .setCancelable(false)
+                .setNeutralButton("Choose Folder", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE);
+                }).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null || resultCode != RESULT_OK)
+            return;
+        if (requestCode == Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE) {
+            Uri uri = DocumentsContract.buildDocumentUriUsingTree(data.getData(), DocumentsContract.getTreeDocumentId(data.getData()));
+            String storagePath = RealPathUtil.getInstance().getRealPath(this, uri);
+            Preference.setStringPref(this, STORAGE_LOCATION, storagePath);
+            Preference.setStringPref(this, STORAGE_LOCATION_URI, data.getData().toString());
+            DirectoryUtils.getPersistablePermissionOfStorageDir(this, data.getData());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkAndAskForStorageDir();
     }
 }

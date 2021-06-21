@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
+import android.provider.DocumentsContract;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,11 +29,16 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.RearrangeImagesAdapter;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
+import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.ImageSortUtils;
+import swati4star.createpdf.util.Preference;
+import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ThemeUtils;
 
 import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
 import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION_URI;
 
 public class RearrangeImages extends AppCompatActivity implements RearrangeImagesAdapter.OnClickListener {
 
@@ -144,6 +153,42 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
     @OnClick(R.id.sort)
     void sortImg() {
         sortImages();
+    }
+
+    private void checkAndAskForStorageDir() {
+        if (Preference.getStringPref(this, STORAGE_LOCATION).isEmpty() || DirectoryUtils.isStorageDirNotExist(this)) {
+            askUserToSelectStorageDir();
+        }
+    }
+
+    private void askUserToSelectStorageDir() {
+        new MaterialAlertDialogBuilder(this).setTitle("Storage folder not found!")
+                .setMessage("Storage directory not found. Please select a folder to save PDF")
+                .setCancelable(false)
+                .setNeutralButton("Choose Folder", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE);
+                }).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null || resultCode != RESULT_OK)
+            return;
+        if (requestCode == Constants.REQUEST_CODE_FOR_ACTION_OPEN_DOCUMENT_TREE) {
+            Uri uri = DocumentsContract.buildDocumentUriUsingTree(data.getData(), DocumentsContract.getTreeDocumentId(data.getData()));
+            String storagePath = RealPathUtil.getInstance().getRealPath(this, uri);
+            Preference.setStringPref(this, STORAGE_LOCATION, storagePath);
+            Preference.setStringPref(this, STORAGE_LOCATION_URI, data.getData().toString());
+            DirectoryUtils.getPersistablePermissionOfStorageDir(this, data.getData());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkAndAskForStorageDir();
     }
 }
 

@@ -10,13 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
@@ -56,7 +56,6 @@ import swati4star.createpdf.util.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.textExtension;
 
@@ -89,7 +88,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
 
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private boolean mButtonClicked = false;
     private String mFileName;
     private final int mFileSelectCode = 0;
@@ -227,8 +225,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      * @param inputName -  input pdf filename
      */
     private void extractTextFromPdf(String inputName) {
-        String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation());
+        String mStorePath = StringUtils.getInstance().getStorageDir(getContext());
         String mPath = mStorePath + inputName + textExtension;
         try {
             StringBuilder parsedText = new StringBuilder();
