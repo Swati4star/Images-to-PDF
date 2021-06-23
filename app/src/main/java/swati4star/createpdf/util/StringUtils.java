@@ -3,6 +3,7 @@ package swati4star.createpdf.util;
 import android.app.Activity;
 import android.os.Environment;
 import com.google.android.material.snackbar.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -72,12 +73,12 @@ public class StringUtils {
 
     public String getDefaultStorageLocation() {
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-//        if (!dir.exists()) {
-//            boolean isDirectoryCreated = dir.mkdir();
-//            if (!isDirectoryCreated) {
-//                Log.e("Error", "Directory could not be created");
-//            }
-//        }
+        if (!dir.exists()) {
+            boolean isDirectoryCreated = dir.mkdir();
+            if (!isDirectoryCreated) {
+                Log.e("Error", "Directory could not be created");
+            }
+        }
         return dir.getAbsolutePath() + pdfDirectory;
     }
 
