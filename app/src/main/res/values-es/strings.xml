@@ -64,8 +64,8 @@
     <string name="qrbarcodes_to_pdf">Crear PDF desde un código QR o de Barras</string>
     <string name="scan_cancelled">Escaneo cancelado por el usuario</string>
 
-    <string name="set_password">Configurar la clave</string>
-    <string name="enter_password">Introducir la contraseña</string>
+    <string name="set_password">Establecer contraseña</string>
+    <string name="enter_password">Introduzca la contraseña</string>
     <string name="snackbar_password_cannot_be_blank">La contraseña no puede estar en blanco</string>
     <string name="cannot_add_password">La contraseña no se pudo aplicar al PDF. Por favor revise el PDF nuevamente.</string>
 
@@ -77,11 +77,11 @@
     <string name="snackbar_viewAction">Ver</string>
     <string name="more_options_text">Más opciones de mejoramiento</string>
     <string name="delete">Borrar</string>
-    <string name="feedback_text">Amablemente escriba su anterior realimentación, o simplemente deje un ¡Hola! :)</string>
+    <string name="feedback_text">Escriba amablemente su anterior realimentación, o simplemente deje un ¡Hola! :)</string>
     <string name="feedback_subject">Sugerencias para PDF Converter</string>
     <string name="snackbar_no_email_clients">No hay ningún cliente de correo instalado.</string>
     <string name="share">Compartir</string>
-    <string name="rate_us_text">"¡Hola! acabo de checar esta app en la playstore. Pruébalo en : https://play.google.com/store/apps/details?id=swati4star.createpdf .     Convierte imágenes a PDF ágilmente. :) "</string>
+    <string name="rate_us_text">"¡Hola! acabo de revisar esta app en la playstore. Pruébalo en : https://play.google.com/store/apps/details?id=swati4star.createpdf .     Convierte imágenes a PDF ágilmente. :) "</string>
     <string name="snackbar_no_share_app">Ninguna aplicación para compartir.</string>
     <string name="extras">Extras</string>
     <string name="share_chooser">Seleccione la app para enviar el mensaje…</string>
@@ -116,7 +116,7 @@
     <string name="set_as_default">Establecer por defecto</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">Ingrese la contraseña para continuar</string>
-    <string name="not_encrypted">PDF no está Encriptado</string>
+    <string name="not_encrypted">PDF no está Cifrado</string>
     <string name="save_current">Guardar</string>
     <string name="save_first">Guardar Imagen Actual Primero</string>
     <string name="Filter_name">Filtro</string>
@@ -128,7 +128,7 @@
     <string name="a0_to_a10">A0 a A10</string>
     <string name="default_page_size">DEFAULT ( %s )</string>
     <!-- Directory Strings -->
-    <string name="text_file_selected">Archivo de Texto Seleccionado</string>
+    <string name="text_file_selected">Archivo de Texto seleccionado</string>
     <string name="directory">Directorio</string>
     <string name="moving_files">Moviendo sus archivos</string>
     <string name="success_move">Se movieron sus archivos con éxito</string>
@@ -140,7 +140,7 @@
     <string name="dialog_new_dir">Ingrese el nombre del nuevo directorio</string>
     <string name="dialog_dir">Ingrese el nombre del directorio</string>
     <string name="cancel">Cancelar</string>
-    <string name="ok">OK</string>
+    <string name="ok">Aceptar</string>
     <string name="yes">Sí</string>
     <string name="select_all">Seleccionar Todo</string>
     <string name="converting_file_message">Convirtiendo sus archivos a PDF.</string>
@@ -156,8 +156,8 @@
     <string name="example_font">Ejemplo : 10</string>
     <string name="font_size_changed">Tamaño del Texto cambiado</string>
     <string name="font_size">Tamaño del Texto : %1$s</string>
-    <string name="about_us">Acerca De</string>
-    <string name="rate_us">Nos califica</string>
+    <string name="about_us">Acerca de</string>
+    <string name="rate_us">Califíquenos</string>
     <string name="app_description">Una aplicación Android fácil de usar para convertir sus archivos a PDF.</string>
     <string name="version">Versión : </string>
     <string name="developer">Desarrollador : Swati Garg</string>
@@ -185,9 +185,9 @@
     <string name="filter_fliphor">Girar Horizontalmente</string>
     <string name="filter_grain">Granular</string>
     <string name="filter_lomish">Lomish</string>
-    <string name="save">Save</string>
-    <string name="choose_color_text">Choose a color :</string>
-    <string name="view_in_gallery">View Images in Gallery</string>
+    <string name="save">Guardar</string>
+    <string name="choose_color_text">Seleccione un color :</string>
+    <string name="view_in_gallery">Ver Imágenes en Galería</string>
     <string name="filter_negative">Negativo</string>
     <string name="filter_poster">Posterizar</string>
     <string name="filter_rotate">Rotar</string>
@@ -205,14 +205,14 @@
     <string name="no_history_message">Sin historial que mostrar</string>
     <string name="view_history_here_message">¡Vea el historial de todos sus archivos convertidos aquí!</string>
     <string name="delete_history_message">¿Está seguro que quiere eliminar el historial?</string>
-    <string name="default_font_family_text">Letra Fuente (Por defecto : %s)</string>
-    <string name="font_family_text">"Letra Fuente : "</string>
-    <string name="undefined">UNDEFINED</string>
+    <string name="default_font_family_text">Tipografía (Por defecto : %s)</string>
+    <string name="font_family_text">"Tipografía : "</string>
+    <string name="undefined">NO DEFINIDO</string>
     <string name="delete_alert_selected">¿Está seguro que quiere eliminar los archivos seleccionados?</string>
     <string name="sort_by_title">Ordenar por</string>
     <string name="selected_image">Imagen Seleccionada</string>
-    <string name="arrow_up">Arrow Up</string>
-    <string name="arrow_down">Arrow Down</string>
+    <string name="arrow_up">Flecha arriba</string>
+    <string name="arrow_down">Flecha abajo</string>
     <string name="rearrange_images">Reordenar Imágenes</string>
     <string name="rearrange_text">Reordenar</string>
     <string name="snackbar_undoAction">Deshacer</string>
@@ -220,20 +220,20 @@
     <string name="image_rearranging_options">Opciones de Reordenado de Imagen</string>
     <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reiniciar</string>
-    <string name="excel_selected">Excel file selected</string>
-    <string name="excel_to_pdf">Excel to PDF</string>
-    <string name="excel_tv_view_text">Excel file selected: </string>
-    <string name="select_excel_file">Select Excel file</string>
-    <string name="pdf_selected">PDF file selected: </string>
+    <string name="excel_selected">Archivo Excel seleccionado</string>
+    <string name="excel_to_pdf">Excel a PDF</string>
+    <string name="excel_tv_view_text">Archivo Excel seleccionado: </string>
+    <string name="select_excel_file">Seleccionar archivo Excel</string>
+    <string name="pdf_selected">Archivo PDF seleccionado: </string>
 
     <string name="confirm_exit_message">Presione de nuevo para salir</string>
     <string name="border">Agregar Borde a Imagen</string>
-    <string name="extract_text">Extract Text</string>
-    <string name="snackbar_txtExtracted">Text extracted!</string>
-    <string name="snackbar_pdfselected">PDF file selected!</string>
-    <string name="add_text">Add Text</string>
-    <string name="snackbar_txtselected">Text File selected!</string>
-    <string name="decrypt_protected_file">Selected pdf is password protected. Enter the password to continue…</string>
+    <string name="extract_text">Extraer Texto</string>
+    <string name="snackbar_txtExtracted">¡Texto extraído!</string>
+    <string name="snackbar_pdfselected">¡Archivo PDF seleccionado!</string>
+    <string name="add_text">Añadir Texto</string>
+    <string name="snackbar_txtselected">¡Archivo de Texto seleccionado!</string>
+    <string name="decrypt_protected_file">El PDF seleccionado está protegido por contraseña. Ingresa la contraseña para continuar…</string>
     <string name="creating_txt">Creating Text File</string>
     <string name="filter_brush">Pincel</string>
     <string name="filter_saved">Imagen guardada</string>
@@ -244,7 +244,7 @@
     <string name="extract_images_success">Encontramos %1$d imágenes en el PDF seleccionado. Estas han sido guardadas en la carpeta de Archivos PDF en el directorio raíz.</string>
     <string name="remove_image_message">¿Está seguro de remover esta imagen?</string>
     <string name="dont_show_again">No mostrar de nuevo</string>
-    <string name="encrypted_file_text">archivo encriptado</string>
+    <string name="encrypted_file_text">archivo cifrado</string>
     <string name="split_pdf">Dividir PDF</string>
     <string name="split_success">El PDF seleccionado se dividió correctamente. Fue dividido en %1$d PDF(s)</string>
     <string name="rate_positive">Calificar</string>
@@ -258,8 +258,8 @@
     <string name="error_occurred">Ocurrió un Error</string>
     <string name="rotate_pages">Rotar Páginas</string>
     <string name="enter_rotation_angle">Ingresar Ángulo de Rotación</string>
-    <string name="rotated">Rotado</string>
-    <string name="encrypted">Encriptado</string>
+    <string name="rotated">Rotada</string>
+    <string name="encrypted">Cifrado</string>
     <string name="decrypted">Descifrado</string>
     <string name="reorder_pages">Reordenar Páginas</string>
     <string name="share_files">Compartir Archivos</string>
@@ -279,7 +279,7 @@
     <string name="font_family_edit">Cambiar valor de la letra fuente por defecto</string>
     <string name="font_size_edit">Cambiar valor del Tamaño del Texto por defecto</string>
     <string name="settings_info">Puede modificar los valores por defecto de varias opciones aquí.</string>
-    <string name="split_info">The PDF will be split into multiple PDFs.Format example: 1&#8211;5,6&#8211;7,8,9</string>
+    <string name="split_info">El PDF será dividido en múltiples PDFs. Formato de ejemplo: 1&#8211;5,6&#8211;7,8,9</string>
     <string name="border_width_prompt">Ingrese unidades anchura del borde</string>
     <string name="default_content_description">sin descripción</string>
     <string name="prompt_input">Ingrese aquí</string>
@@ -289,7 +289,7 @@
     <string name="prompt_give_permission">Otorgar permisos</string>
     <string name="create_new_pdfs">Crear nuevo PDF</string>
     <string name="view_pdfs">Ver PDFs</string>
-    <string name="view_pdf">View PDF</string>
+    <string name="view_pdf">Ver PDF</string>
     <string name="modify_existing_pdfs">Modificar PDFs existentes</string>
     <string name="more_options">Más Opciones</string>
     <string name="add_password">Agregar Contraseña</string>
@@ -306,7 +306,7 @@
     <string name="theme_dark">Obscuro</string>
     <string name="theme_black">Negro</string>
     <string name="remove_page_message">¿Está seguro de que quiere remover esta página?</string>
-    <string name="file_access_error">No se logró acceder al PDF. Quizá los archivos están encriptados o en el almacenamiento externo.</string>
+    <string name="file_access_error">No se logró acceder al PDF. Quizá los archivos están cifrados o en el almacenamiento externo.</string>
     <string name="add_margins">Agregar Márgenes</string>
     <string name="show_pg_num">Mostrar Número de Página</string>
     <string name="choose_page_number_style">Elegir el Estilo de Número de Página</string>
@@ -319,16 +319,16 @@
     <string name="welcome_themes_title">Temas diferentes</string>
     <string name="welcome_themes_message">Vaya a Ajustes, usted puede tener tres tipos de temas : Negro, Obscuro, Blanco</string>
     <string name="welcome_merge_title">Unir archivo PDF</string>
-    <string name="welcome_text_to_pdf">Text to PDF</string>
-    <string name="welcome_text_to_pdf_message">Convert your text files into your most desired PDFs at ease</string>
-    <string name="welcome_qrcode_to_pdf">QR Code to PDF</string>
-    <string name="welcome_qrcode_to_pdf_message">Convert QR Codes and Barcodes to PDF in a simplistic manner</string>
-    <string name="welcome_remove_pages">Remove Pages</string>
-    <string name="welcome_remove_pages_message">Remove the unwanted pages you do not need anymore</string>
-    <string name="welcome_reorder_pages">Reorder Pages</string>
-    <string name="welcome_reorder_pages_message">Reorder and rearrange the pages in a way you desire</string>
-    <string name="welcome_extract_images">Extract Images from PDF</string>
-    <string name="welcome_extract_images_message">Extract all possible images from your PDFs at a go</string>
+    <string name="welcome_text_to_pdf">Texto a PDF</string>
+    <string name="welcome_text_to_pdf_message">Convierte sus archivos de texto en soñados PDF con facilidad</string>
+    <string name="welcome_qrcode_to_pdf">Código QR a PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">Convierte Código QR o de Barras a PDF de forma simple</string>
+    <string name="welcome_remove_pages">Remover Páginas</string>
+    <string name="welcome_remove_pages_message">Quita las páginas que no deseas más</string>
+    <string name="welcome_reorder_pages">Reordenar Páginas</string>
+    <string name="welcome_reorder_pages_message">Reorganiza y reajusta las páginas a su gusto</string>
+    <string name="welcome_extract_images">Extraer Imágenes de PDF</string>
+    <string name="welcome_extract_images_message">Extrae todas las posibles imágenes de su PDFs en el momento</string>
     <string name="welcome_merge_message">Una distintos archivos PDFs de su celular en uno solo.</string>
     <string name="welcome_viewfiles_title">Ver archivos PDF</string>
     <string name="welcome_viewfiles_message">Vea, borre, renombre, comparta y agregue contraseña a su archivo PDF</string>
@@ -350,7 +350,7 @@
     <string name="page_x">X de N</string>
     <string name="x">X</string>
     <string name="master_password_changed">La contraseña parece ser incorrecta. Quizá ha cambiado la contraseña maestra.</string>
-    <string name="current_master_pwd">La contraseña maestra actual es %1$s para cada PDF encriptado. La puedes cambiar aquí:</string>
+    <string name="current_master_pwd">La contraseña maestra actual es %1$s para cada PDF cifrado. La puedes cambiar aquí:</string>
     <string name="change_master_pwd">Cambiar la Contraseña Maestra</string>
     <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Continuar</string>
@@ -382,42 +382,42 @@
     <string name="no_images_selected">Ninguna imagen seleccionada</string>
 
     <!-- Remove Duplicate Pages -->
-    <string name="remove_duplicate_pages">Remove Duplicate Pages</string>
-    <string name="remove_duplicate_info">The duplicate pages in the PDF will be removed.</string>
-    <string name="remove_duplicate">Remove Duplicate Pages.</string>
-    <string name="invert_pdf">Invert Pdf</string>
-    <string name="invert_pdf_info">All the colors in the pdf will be inverted</string>
-    <string name="invert_pdf_title">Invert PDF</string>
-    <string name="snackbar_invert_unsuccessful">The PDF could not be inverted</string>
-    <string name="snackbar_invert_successfull">Inverted</string>
+    <string name="remove_duplicate_pages">Remover Páginas Duplicadas</string>
+    <string name="remove_duplicate_info">Las páginas duplicadas del PDF se quitarán.</string>
+    <string name="remove_duplicate">Remover Páginas Duplicadas.</string>
+    <string name="invert_pdf">Invertir Pdf</string>
+    <string name="invert_pdf_info">Todos los colores en el pdf se invertirán</string>
+    <string name="invert_pdf_title">Invertir PDF</string>
+    <string name="snackbar_invert_unsuccessful">El PDF no pudo invertirse</string>
+    <string name="snackbar_invert_successfull">Invertir</string>
 
-    <string name="error_page_number">Invalid page number</string>
-    <string name="error_page_range">Invalid range input</string>
-    <string name="title_filter_history_dialog">Filter by operation type</string>
+    <string name="error_page_number">Número de página inválido</string>
+    <string name="error_page_range">Rango de introducción inválido</string>
+    <string name="title_filter_history_dialog">Filtrar por tipo de operación</string>
     <string name="error_invalid_input">Invalid input</string>
     <string name="file_order">No se han realizado cambios en el archivo.</string>
-    <string name="zip_to_pdf">ZIP to PDF</string>
-    <string name="convert_to_pdf">convert to PDF</string>
-    <string name="error_no_image_in_zip">ZIP file contains no image</string>
+    <string name="zip_to_pdf">ZIP a PDF</string>
+    <string name="convert_to_pdf">convertir a PDF</string>
+    <string name="error_no_image_in_zip">El archivo ZIP no tiene imagen</string>
     <string name="error_open_file">Se produjo un error al abrir el archivo. Por favor intente reabrir</string>
 
-    <string name="images_to_pdf">Images to PDF</string>
-  
-    <string name="font_color">Font Color</string>
-    <string name="page_color">Page Color</string>
-    <string name="add_to_favourite">Add to Favourite</string>
-    <string name="favourites">Favourites</string>
+    <string name="images_to_pdf">Imágenes a PDF</string>
+
+    <string name="font_color">Color de Fuente</string>
+    <string name="page_color">Color de Página</string>
+    <string name="add_to_favourite">Añadir a Favoritos</string>
+    <string name="favourites">Favoritos</string>
 
 
     <!--text to pdf-->
     <string name="error_pdf_not_created">Lo sentimos, no se creó el pdf. Inténtalo de nuevo.</string>
 
-    <string name="favourites_text">Selecciona el ícono + para agregar tus funciones favoritas!</string>
+    <string name="favourites_text">Seleccione el ícono + para agregar sus funciones favoritas!</string>
     <string name="split_one_page_pdf_alert">¡El PDF seleccionado no se puede dividir porque solo tiene 1 página!</string>
     <string name="no_excel_file">Ningún archivo excel seleccionado</string>
-    <string name="split_range_alert">Entered split range will create Selected PDF again!</string>
-    <string name="reordering_pages_dialog">Reordenando tus páginas</string>
-    <string name="delete_alert_singular">¿Quieres eliminar el archivo seleccionado?</string>
+    <string name="split_range_alert">¡El rango de división introducido creará de nuevo el PDF seleccionado!</string>
+    <string name="reordering_pages_dialog">Reordenando sus páginas</string>
+    <string name="delete_alert_singular">¿Desea eliminar el archivo seleccionado?</string>
     <string name="snackbar_files_deleted">Archivos eliminados</string>
     <string name="lbl_recently_used">Característica recientemente utilizada</string>
 </resources>
