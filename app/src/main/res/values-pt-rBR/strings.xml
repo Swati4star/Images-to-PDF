@@ -24,7 +24,7 @@
         <item>Adicionar senha</item>
         <item>Remover senha</item>
         <item>Girar páginas</item>
-        <item>Adicione marca d'água</item>
+        <item>Adicione marca d\'água</item>
     </array>    
  
     <string name="please_wait">Aguarde</string>
@@ -39,7 +39,6 @@
     <string name="extras">Extras</string>
     <string name="share">Compartilhe</string>
     <string name="help">Ajuda</string>
-    <string name="faqs">FAQ</string>
 
     <!-- images to PDF -->
     <string name="images_to_pdf">Imagens a PDF</string>
@@ -62,7 +61,7 @@
     <string name="snackbar_undoAction">Desfazer</string>
     <string name="pdf_does_not_exist_message">O PDF não existe.</string>
     <string name="image_rearranging_options">Opções para reordenar imagens</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
+    <string name="filter_file_name">%1$s_%2$s.jpg</string>
 
     <!--    Image compression-->
     <string name="compress_image">Compressão de imagem : %s %%</string>
@@ -353,7 +352,7 @@
     <!-- Compress PDF -->
     <string name="compress_pdf">Compactar PDF</string>
     <string name="compress_pdf_prompt">Digite % compressão de PDF : </string>
-    <string name="compress_info">Parabéns! Seu PDF foi compactado: \n Tamanho original do PDF : %s \n Tamanho do PDF compactado: %s</string>
+    <string name="compress_info">Parabéns! Seu PDF foi compactado: \n Tamanho original do PDF : %1$s \n Tamanho do PDF compactado: %2$s</string>
 
     <!-- PDF to Images string resources-->
     <string name="pdf_to_images">PDF para Imagens</string>
@@ -456,13 +455,13 @@
     <string name="whatsnew_title">Novidades</string>
 
     <!--watermark strings -->
-    <string name="watermark_added">Marca d'água adicionada</string>
-    <string name="watermarked">Marca d'água feita</string>
+    <string name="watermark_added">Marca d\'água adicionada</string>
+    <string name="watermarked">Marca d\'água feita</string>
     <string name="watermarked_file">_marcadeagua.pdf</string>
-    <string name="watermark_remove">Marca d'água excluída</string>
+    <string name="watermark_remove">Marca d\'água excluída</string>
     <string name="snackbar_watermark_cannot_be_blank">O texto não pode estar em branco</string>
-    <string name="cannot_add_watermark">A marca d'água não podia ser adicionada ao PDF. Por favor, verifique novamente o PDF.</string>
-    <string name="add_watermark">Adicionar marca d'água</string>
+    <string name="cannot_add_watermark">A marca d\'água não podia ser adicionada ao PDF. Por favor, verifique novamente o PDF.</string>
+    <string name="add_watermark">Adicionar marca d\'água</string>
     <string name="enter_watermark_text">Digite um texto</string>
     <string name="enter_watermark_angle">Definir ângulo</string>
     <string name="watermark_angle">Ângulo</string>
@@ -471,7 +470,7 @@
     <string name="choose_watermark_font_family">Escolha a família de fontes</string>
     <string name="watermark_font_size">Tamanho de fonte</string>
     <string name="choose_watermark_style">Escolha o tipo</string>
-    <string name="viewfiles_addwatermark">1. Selecione o PDF ao qual você quer adicionar a marca d'água. \n2. Selecione adicionar marca d'água. \n3. Digite as informações necessárias. Clique no OK. \n4. Será criado um novo PDF com marca d'água.</string>
+    <string name="viewfiles_addwatermark">1. Selecione o PDF ao qual você quer adicionar a marca d\'água. \n2. Selecione adicionar marca d\'água. \n3. Digite as informações necessárias. Clique no OK. \n4. Será criado um novo PDF com marca d\'água.</string>
 
     <!--<nav add images>-->
     <string name="add_images">Adicionar imagens</string>
@@ -496,7 +495,7 @@
     <string name="split_range_alert">A faixa dividida inserida criará o PDF selecionado de novo!</string>
 
     <!--file name suffix-->
-    <string name="reordering_pages_dialog">Reordenando suas páginas...</string>
+    <string name="reordering_pages_dialog">Reordenando suas páginas…</string>
     <string name="delete_alert_singular">Quer excluir o arquivo selecionado?</string>
     <string name="snackbar_files_deleted">Arquivos excluídos</string>
     <string name="lbl_recently_used">Recursos recentemente usados</string>
@@ -521,7 +520,7 @@
         <item>Como verificar o histórico dos arquivos criados/modificados?#####Para ver todos os arquivos que você criou/modificou no App. \nClique na opção <strong>Histórico</strong> na tela inicial.</item>
         <item>Como agregar vários arquivos de PDF?#####Para agregar vários PDFs, \n1) Clique na opção <strong>Agregar PDF</strong> na tela inicial. \n2) Selecione os arquivos de PDF usando o botão <strong>SELECIONE ARQUIVOS</strong>. \n3) Uma vez selecionado, clique no botão <strong>AGREGAR ARQUIVOS</strong>.</item>
         <item>Posso editar imagens ao criar um PDF?#####Sim, pode. Para fazer isso, \n1) Clique na opção <strong>Imagens para PDF</strong> na tela inicial. \n2) Selecione as imagens usando o botão <strong>SELECIONE IMAGENS</strong>. \n3) Uma vez selecionadas, clique na opção <strong>Editar Imagens</strong> ou <strong>Filtrar Imagens</strong> dependendo da sua exigência. \n4) Acabe de editar ou aplicar o filtro. \n5) Agora, selecione as imagens editadas usando o botão <strong>SELECIONE IMAGENS</strong> e clique em <strong>CRIAR PDF</strong>.</item>
-        <item>Como adicionar marca d'água ao PDF?#####Para adicionar a marca d'água, deslize para <strong>Enriquecer PDFs criados</strong> na tela inicial ou no menu de opções, deslize da esquerda à direita e clique em <strong>Adicionar marca d'água</strong>.</item>
+        <item>Como adicionar marca d\'água ao PDF?#####Para adicionar a marca d\'água, deslize para <strong>Enriquecer PDFs criados</strong> na tela inicial ou no menu de opções, deslize da esquerda à direita e clique em <strong>Adicionar marca d\'água</strong>.</item>
         <item>Posso reordenar as páginas num PDF?#####Sim, pode. Para reordenar as páginas, \n1)Clique na opção <strong>Reordenar páginas</strong> na tela inicial. \n2)Selecione o arquivo de PDF usando o botão <strong>SELECIONE UM ARQUIVO</strong>. \n3) Clique em <strong>CRIAR PDF</strong>. \n4) Use a seta para cima e para baixo para reordenar as páginas. \n5) Uma vez reordenadas, clique <strong>Seta para trás</strong> no canto superior esquerdo para criar o novo arquivo de PDF modificado.</item>
         <item>Como extrair imagens de um PDF?#####Para extrair imagens, \n1) Clique na opção <strong>Extrair imagens</strong> na tela inicial. \n2) Selecione um arquivo de PDF usando o botão <strong>SELECIONE ARQUIVO</strong>. \n3) Uma vez selecionado, clique no botão <strong>CRIAR IMAGENS</strong>.</item>
         <item>Posso converter os PDFs para formatos de PPT, PPTX, ODT, DOC, DOCX?#####Não, neste momento os PDFs só podem ser convertidos para formato de texto.</item>

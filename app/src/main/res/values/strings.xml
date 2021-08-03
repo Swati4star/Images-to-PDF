@@ -211,7 +211,7 @@
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
     <string name="view_files_text">View all your converted files here!</string>
-    <string name="empty_image_description">NoPdfs</string>
+    <string name="empty_image_description">No Pdfs</string>
 
     <!--  Add Password -->
     <string name="enter_password_custom">Enter Password</string>
@@ -228,7 +228,7 @@
     <string name="file_size_text">File Size</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached file(s) to this message</string>
-    <string name="btn_sav_text" translatable="false">savText</string>
+    <string name="btn_sav_text" translatable="false">Save Text</string>
 
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
