@@ -73,9 +73,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name = "pdf_ext" translatable = "false">. pdf </string>
-    <string name = "pdf_type" translatable = "false"> application / pdf </string>
-    <string name = "txt_type" translatable = "false"> text / * </string>
     <string name = "please_wait"> Attendere un momento </string>
     <string name = "bundleKey"> URI immagine </string>
     <string name = "whatsappToast"> Scusa! Impossibile aggiungere l&#38;immagine, seleziona un&#38;immagine dall&#38;opzione ** Seleziona immagine **. </string>
@@ -88,7 +85,6 @@
     <string name = "extras"> Altro </string>
     <string name = "share"> Condividi </string>
     <string name = "help"> Guida </string>
-    <string name = "faqs" translatable = "false"> FAQ </string>
 
     <!-- images to PDF -->
     <string name = "images_to_pdf"> Immagine in PDF </string>
@@ -251,12 +247,7 @@
     <string name = "set_page_size_text"> Imposta dimensioni pagina </string>
     <string name = "b0_to_b10"> Da B0 a B10 </string>
     <string name = "a0_to_a10"> Da A0 a A10 </string>
-    <string name = "tabloid" translatable = "false"> TABLOID </string>
-    <string name = "executive" translatable = "false"> EXECUTIVE </string>
-    <string name = "ledger" translatable = "false"> LEDGER </string>
-    <string name = "letter" translatable = "false"> LETTERA </string>
     <string name = "legal" translatable = "false"> LEGALE </string>
-    <string name = "a4" translatable = "false"> A4 </string>
     <string name = "default_page_size"> DEFAULT (% s) </string>
     <string name = "master_password_changed"> La password sembra non essere corretta. Forse hai cambiato la password principale. </string>
 

@@ -74,9 +74,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="pdf_ext" translatable="false">.pdf</string>
-    <string name="pdf_type" translatable="false">application/pdf</string>
-    <string name="txt_type" translatable="false">text/*</string>
     <string name="please_wait">Molimo pričekajte</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Žao nam je! Fotografije nisu dodane. Molimo odaberite našu **Odaberi fotografije** opciju.</string>
@@ -89,7 +86,6 @@
     <string name="extras">Dodaci</string>
     <string name="share">Podijeli</string>
     <string name="help">Pomoć</string>
-    <string name="faqs" translatable="false">FAQ</string>
 
     <!-- images to PDF -->
     <string name="images_to_pdf">Fotografije u PDF</string>
