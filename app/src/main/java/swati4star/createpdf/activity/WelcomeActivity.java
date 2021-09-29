@@ -142,7 +142,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object obj) {
-            return view == obj;
+             if (view == obj)
+            return true;
+            else
+            return false;
         }
 
 
