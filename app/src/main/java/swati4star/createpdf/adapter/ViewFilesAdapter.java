@@ -199,7 +199,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * Sets the action bar title to app name when all files have been unchecked
      */
     private void updateActionBarTitle() {
-        mActivity.setTitle(R.string.app_name);
+        mActivity.setTitle(R.string.app_name.toString());
     }
 
     /**
@@ -218,7 +218,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     @Override
     public int getItemCount() {
-        return mFileList == null ? 0 : mFileList.size();
+         if mFileList == null 
+        return 0 
+        else
+         return  mFileList.size();
     }
 
     @Override
@@ -293,6 +296,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                 .setCancelable(true)
                 .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
                 .setTitle(messageAlert)
+                 .setMessage("ALERT").
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
                     ArrayList<String> filePath = new ArrayList<>();
 
