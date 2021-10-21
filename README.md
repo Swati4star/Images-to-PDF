@@ -24,7 +24,7 @@ Here is an easy to use Android app to convert images to PDF file!
 - View your converted PDFs
   - Open, Rename, Delete, print, share files
   - Sort the files order based on a number of options
-  - View File details (Path, size, date created ...)
+  - View File details
   - Encrypt PDF
   - Decrypt PDF
   - Rotate Pages

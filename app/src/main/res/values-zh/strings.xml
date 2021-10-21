@@ -73,9 +73,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="pdf_ext" translatable="false">.pdf</string>
-    <string name="pdf_type" translatable="false">application/pdf</string>
-    <string name="txt_type" translatable="false">text/*</string>
     <string name="please_wait">请稍等</string>
     <string name="bundleKey">图像URI</string>
     <string name="whatsappToast">抱歉！图像加入失败，请从 **选择图像** 选项中选择图像。</string>
@@ -88,7 +85,6 @@
     <string name="extras">其他</string>
     <string name="share">分享</string>
     <string name="help">帮助</string>
-    <string name="faqs" translatable="false">FAQ</string>
 
     <!-- images to PDF -->
     <string name="images_to_pdf">图像转PDF</string>
