@@ -576,6 +576,10 @@
     <string name="enable_from_settings_text">Enable from settings</string>
     <string name="cancel_text">Cancel</string>
     <string name="ask_again_text">Ask Again</string>
+    <string name="one_more_thing_text">One more thing!</string>
+    <string name="storage_manager_permission_rationale">In Android 11, you need to allow a special storage permission</string>
+    <string name="close_app_text">Close App</string>
+    <string name="allow_text">Allow</string>
     <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTRACT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>

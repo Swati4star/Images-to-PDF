@@ -305,17 +305,17 @@ public class MainActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
                 new AlertDialog.Builder(this)
-                        .setTitle("One more thing!")
-                        .setMessage("In Android 11, you need to allow a special storage permission")
+                        .setTitle(R.string.one_more_thing_text)
+                        .setMessage(R.string.storage_manager_permission_rationale)
                         .setCancelable(false)
-                        .setPositiveButton("Allow", (dialog, which) -> {
+                        .setPositiveButton(R.string.allow_text, (dialog, which) -> {
                             Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                             Uri uri = Uri.fromParts("package", getPackageName(), null);
                             intent.setData(uri);
                             mSettingsActivityOpenedForManageStoragePermission = true;
                             startActivity(intent);
                             dialog.dismiss();
-                        }).setNegativeButton("Close App", ((dialog, which) -> finishAndRemoveTask()))
+                        }).setNegativeButton(R.string.close_app_text, ((dialog, which) -> finishAndRemoveTask()))
                         .show();
             }
         }
