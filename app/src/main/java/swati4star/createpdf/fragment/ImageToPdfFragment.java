@@ -1,22 +1,18 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,8 +85,6 @@ import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
-import static swati4star.createpdf.util.Constants.READ_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_READ_PERMISSION;
 import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
@@ -225,7 +219,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     @OnClick(R.id.addImages)
     void startAddingImages() {
         if (!mIsButtonAlreadyClicked) {
-            if (isStoragePermissionGranted()) {
+            if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
                 selectImages();
                 mIsButtonAlreadyClicked = true;
             } else {
@@ -275,14 +269,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
 
-    private boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        } else if (Build.VERSION.SDK_INT >= 29) {
-            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        } else
-            return true;
-    }
 
     /**
      * Called after user is asked to grant permissions
@@ -295,13 +281,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (Build.VERSION.SDK_INT >= 29) {
-            PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                    requestCode, REQUEST_CODE_FOR_READ_PERMISSION, this::selectImages);
-        } else {
-            PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                    requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::selectImages);
-        }
+        PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
+                requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::selectImages);
     }
 
     /**
@@ -729,15 +710,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     private void getRuntimePermissions() {
-        if (Build.VERSION.SDK_INT < 29) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
-        } else if (Build.VERSION.SDK_INT >= 29) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    READ_PERMISSIONS,
-                    REQUEST_CODE_FOR_READ_PERMISSION);
-        }
     }
 
     /**

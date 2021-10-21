@@ -1,16 +1,13 @@
 package swati4star.createpdf.fragment.texttopdf;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,7 +57,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     private Uri mTextFileUri = null;
     private String mFileExtension;
     private int mButtonClicked = 0;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private MaterialDialog mMaterialDialog;
     private String mFileNameWithType = null;
 
@@ -167,7 +163,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
      */
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
-        if (isStoragePermissionGranted()) {
+        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
             selectFile();
         } else {
             getRuntimePermissions();
@@ -236,13 +232,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         mDirectoryUtils = new DirectoryUtils(mActivity);
     }
 
-    private boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
-    }
     private void getRuntimePermissions() {
         if (Build.VERSION.SDK_INT < 29) {
             PermissionsUtils.getInstance().requestRuntimePermissions(this,
