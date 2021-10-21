@@ -1,0 +1,592 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">PDF Converter</string>
+    <string name="title">PDF Operativo</string>
+
+    <string name="file_name_text">Nome del file</string>
+    <string name="select_images_text">Seleziona un&#38;immagine</string>
+    <string name="password_protect_pdf_text">PDF protezione password</string>
+    <string name="edit_images_text">Modifica immagine</string>
+    <string name="open_pdf_text">Apri PDF</string>
+    <string name="create_pdf_text">Crea PDF</string>
+    <string name="details"><b>Dettagli</b></string>
+    <string name="search_hint">Nome file</string>
+    <string name="search">Cerca</string>
+    <string name="default_content_description">Nessuna descrizione</string>
+    <string name="prompt_input">Inserisci qui</string>
+    <!--   Items  -->
+    <array name="items">
+        <item> Apri file </item>
+        <item> Elimina file </item>
+        <item> Rinomina file </item>
+        <item> Stampa documento </item>
+        <item> Condividi file </item>
+        <item> Mostra dettagli </item>
+        <item> Aggiungi password </item>
+        <item> Rimuovi password </item>
+        <item> Ruota la pagina </item>
+        <item> Aggiungi filigrana </item>
+    </array>
+
+    <array name="itemIds" translatable="false">
+        <item> apri </item>
+        <item> elimina </item>
+        <item> rinomina </item>
+        <item> stampa </item>
+        <item> posta elettronica </item>
+        <item> dettagli </item>
+    </array>
+
+    <string-array name="array_page_sizes_b0_b10" translatable="false">
+        <item>B0 (1000 x 1414 mm)</item>
+        <item>B1 (707 x 1000 mm)</item>
+        <item>B2 (500 x 707 mm)</item>
+        <item>B3 (353 x 500 mm)</item>
+        <item>B4 (250 x 353 mm)</item>
+        <item>B5 (176 x 250 mm)</item>
+        <item>B6 (125 x 176 mm)</item>
+        <item>B7 (88 x 125 mm)</item>
+        <item>B8 (62 x 88 mm)</item>
+        <item>B9 (44 x 62 mm)</item>
+        <item>B10 (31 x 44 mm)</item>
+    </string-array>
+
+    <string-array name="array_page_sizes_a0_b10" translatable="false">
+        <item>A0 (841 x 1189 mm)</item>
+        <item>A1 (594 x 841 mm)</item>
+        <item>A2 (420 x 594 mm)</item>
+        <item>A3 (297 x 420 mm)</item>
+        <item>A4 (210 x 297 mm)</item>
+        <item>A5 (148 x 210 mm)</item>
+        <item>A6 (105 x 148 mm)</item>
+        <item>A7 (74 x 105 mm)</item>
+        <item>A8 (52 x 74 mm)</item>
+        <item>A9 (37 x 52 mm)</item>
+        <item>A10 (26 x 37 mm)</item>
+    </string-array>
+
+    <string-array name="fontStyles" translatable="false">
+        <item>NORMAL</item>
+        <item>BOLD</item>
+        <item>ITALIC</item>
+        <item>UNDERLINE</item>
+        <item>STRIKETHRU</item>
+        <item>BOLDITALIC</item>
+    </string-array>
+
+    <string name = "please_wait"> Attendere un momento </string>
+    <string name = "bundleKey"> URI immagine </string>
+    <string name = "whatsappToast"> Scusa! Impossibile aggiungere l&#38;immagine, seleziona un&#38;immagine dall&#38;opzione ** Seleziona immagine **. </string>
+    <string name = "successToast"> è stato aggiunto con successo all&#38;immagine </string>
+
+    <!-- Navigation drawer strings -->
+    <string name = "create_pdf"> Crea PDF </string>
+    <string name = "qr_barcode_pdf"> Codice bidimensionale e codice a barre </string>
+    <string name = "viewFiles"> Visualizza i file </string>
+    <string name = "extras"> Altro </string>
+    <string name = "share"> Condividi </string>
+    <string name = "help"> Guida </string>
+
+    <!-- images to PDF -->
+    <string name = "images_to_pdf"> Immagine in PDF </string>
+    <string name = "page_color"> Colore della pagina </string>
+    <string name = "filter_images_Text"> Filtra immagini \n </string>
+    <!--    Image to PDF -Preview PDF-->
+    <string name="preview_image_to_pdf">Anteprima PDF</string>
+    <!--    Image to PDF-show page number-->
+    <string name = "choose_page_number_style"> Scegli la forma del numero di pagina </string>
+    <string name = "show_pg_num"> Seleziona il numero di pagina </string>
+    <string name = "page_x_of_n"> Pagina X / N </string>
+    <string name = "page_x"> X / N </string>
+    <string name = "x"> X </string>
+    <!--    Image to PDF -Rearrange images-->
+    <string name = "arrow_up"> Freccia su </string>
+    <string name = "arrow_down"> Freccia giù </string>
+    <string name = "rearrange_images"> riorganizza le immagini </string>
+    <string name = "rearrange_text"> riorganizza </string>
+    <string name = "images_rearranged"> le immagini sono state riorganizzate </string>
+    <string name = "snackbar_undoAction"> ripristina </string>
+    <string name = "pdf_does_not_exist_message"> Il PDF non esiste. </string>
+    <string name = "image_rearranging_options"> opzioni di riorganizzazione dell\'immagine </string>
+    <string name = "filter_file_name">% s_% s.jpg </string>
+
+    <!--    Image compression-->
+    <string name = "compress_image"> Compressione immagine:% s %% </string>
+    <string name = "quality_image"> percentuale di compressione dell\'immagine in ingresso: </string>
+    <string name = "invalid_entry"> input non valido </string>
+    <string name = "compress_dialog_enter_prompt"> inserisci qui </string>
+    <string name = "compress_dialog_percentage">% </string>
+    <string name = "set_as_default"> impostato sul valore predefinito </string>
+    <!--    Image to PDf -Add margins-->
+    <string name = "add_margins"> unisciti al margine </string>
+    <string name = "top"> Su </string>
+    <string name = "bottom"> giù </string>
+    <string name = "right"> right </string>
+    <string name = "left"> sinistra </string>
+
+    <!--  Add Image Border  -->
+    <string name = "border"> Aggiungi bordo immagine </string>
+    <string name = "border_dialog_title"> Larghezza del bordo:% d </string>
+    <string name = "border_width_prompt"> Inserisci le unità di larghezza del bordo </string>
+
+    <!--  set Image Scale type  -->
+    <string name = "image_scale_type"> Imposta il tipo di scala dell\'immagine </string>
+    <string name = "stretch_image"> Allunga l\'immagine per adattarla alla pagina </string>
+    <string name = "maintain_aspect_ratio"> Mantieni le proporzioni delle immagini </string>
+
+
+    <!--QR & Barcode Scan-->
+    <string name = "scan_qrcode"> Scansiona codice QR </string>
+    <string name = "scan_barcode"> Scansiona codice a barre </string>
+    <string name = "qrbarcodes_to_pdf"> Crea PDF da QR &amp; Codice a barre </string>
+    <string name = "scan_cancelled"> Scansione annullata dall\'utente </string>
+
+    <!--Snackbar strings -->
+    <string name = "snackbar_no_images"> Nessuna immagine selezionata </string>
+    <string name = "snackbar_no_pdfs_selected"> Nessun PDF selezionato </string>
+    <string name = "snackbar_name_not_blank"> Il nome non può essere vuoto </string>
+    <string name = "snackbar_permissions_given"> Autorizzazioni fornite! </string>
+    <string name = "snackbar_insufficient_permissions"> Autorizzazioni insufficienti! </string>
+    <string name = "no_permissions"> Fornisci le autorizzazioni di archiviazione per visualizzare i tuoi file. </string>
+    <string name = "prompt_give_permission"> Fornisci autorizzazioni </string>
+    <string name = "snackbar_images_added"> Immagini aggiunte </string>
+    <string name = "snackbar_file_renamed"> File rinominato. </string>
+    <string name = "snackbar_file_not_renamed"> Il file non può essere rinominato. </string>
+    <string name = "snackbar_file_deleted"> File eliminato. </string>
+    <string name = "snackbar_file_not_deleted"> Il file non può essere eliminato. </string>
+    <string name = "snackbar_folder_not_created"> Errore durante la creazione della cartella dell\'applicazione. </string>
+    <string name = "pdf_merged"> PDF uniti </string>
+    <string name = "error_path_not_found"> ​​Spiacenti, non siamo in grado di accedere al file in questa posizione </string>
+    <string name = "creating_pdf"> Creazione di PDF </string>
+    <string name = "creating_txt"> Creazione di file di testo </string>
+    <string name = "enter_file_name"> Inserisci il nome del file </string>
+    <string name = "example"> Esempio: abc </string>
+    <string name = "snackbar_no_pdf_app"> Nessuna app per leggere il file PDF </string>
+    <string name = "open_file"> Apri file </string>
+    <string name = "set_password"> Imposta password </string>
+    <string name = "enter_password"> Inserisci password </string>
+    <string name = "snackbar_password_cannot_be_blank"> La password non può essere vuota </string>
+    <string name = "cannot_add_password"> Impossibile applicare la password al PDF. Controlla di nuovo il PDF. </string>
+    <string name = "snackbar_imagecropped"> Immagini ritagliate </string>
+    <string name = "cropImage_activityTitle"> Ritaglia immagine </string>
+    <string name = "snackbar_pdfCreated"> PDF creato! </string>
+    <string name = "error_uri_not_found"> ​​Spiacenti, non siamo in grado di accedere all\'immagine ritagliata. Riprova </string>
+    <string name = "snack_bar_empty_txt_in_pdf"> Il PDF scelto non ha testo da estrarre! </string>
+    <string name = "snackbar_txtExtracted"> Testo estratto! </string>
+    <string name = "snackbar_pdfselected"> File PDF selezionato! </string>
+    <string name = "snackbar_viewAction"> Visualizza </string>
+    <string name = "more_options_text"> Altre opzioni di miglioramento </string>
+    <string name = "snackbar_no_duplicate_pdf"> Pagine duplicate non trovate. Nessun nuovo PDF creato. </string>
+    <string name = "snackbar_duplicate_removed"> Viene creato un nuovo PDF dopo la rimozione delle pagine duplicate. </string>
+    <string name = "snackbar_invert_unsuccessful"> Impossibile invertire il PDF </string>
+    <string name = "snackbar_invert_successfull"> Invertito </string>
+    <string name = "snackbar_color_too_close"> Il colore del tuo carattere e il colore dello sfondo sono troppo simili </string>
+
+
+    <!-- Excel to PDF   -->
+    <string name = "excel_selected"> File Excel selezionato </string>
+    <string name = "excel_to_pdf"> Da Excel a PDF </string>
+    <string name = "excel_tv_view_text"> File Excel selezionato: </string>
+    <string name = "select_excel_file"> Seleziona file Excel </string>
+
+
+
+    <!-- Share strings -->
+    <string name = "share_chooser"> Seleziona l\'app per inviare il messaggio… </string>
+
+    <!-- Rate us strings -->
+    <string name = "rate_us_text"> Ciao! Ho appena controllato questa app nel Playstore. Provalo: https://play.google.com/store/apps/details?id=swati4star.createpdf. Converte le immagini in PDF in modo così fluido. :) </string>
+    <string name = "snackbar_no_share_app"> Nessuna applicazione da condividere. </string>
+
+    <!-- Select Images string -->
+    <string name = "images_selected">% 1 $ d immagini selezionate. </string>
+
+    <!-- Feedback Strings -->
+    <string name = "feedback_subject"> Suggerimenti per il convertitore di immagini in PDF </string>
+    <string name = "feedback_text"> Scrivi gentilmente il tuo prezioso feedback, o semplicemente invia un ciao! :) </string>
+    <string name = "snackbar_no_email_clients"> Non ci sono client di posta installati. </string>
+    <string name = "feedback_chooser"> "Invia messaggio …" </string>
+    <string name = "no_pdf"> Nessun PDF da mostrare </string>
+    <string name = "get_started"> Inizia ora </string>
+    <string name = "view_files_text"> Visualizza tutti i tuoi file convertiti qui! </string>
+    <string name = "empty_image_description"> NoPdfs </string>
+
+    <!--  Add Password -->
+    <string name = "enter_password_custom"> Inserisci password </string>
+    <string name = "example_pass_123"> passa @ 123 </string>
+    <string name = "remove_dialog"> RIMUOVI </string>
+    <string name = "password_remove"> Password rimossa </string>
+
+    <!-- Merge PDF  -->
+    <string name = "merge_pdf"> Unisci PDF </string>
+    <string name = "merge_file_select"> Seleziona un file </string>
+    <string name = "File_hint_two" tools:keep = "@ string / File_hint_two"> Percorso file per PDF due </string>
+    <string name = "merge_files"> UNISCI FILE </string>
+    <string name = "file_date_text"> Data file </string>
+    <string name = "file_size_text"> Dimensione file </string>
+    <string name = "encrypted_file"> _ encrypted.pdf </string>
+    <string name = "i_have_attached_pdfs_to_this_message"> Ho allegato / i file a questo messaggio </string>
+    <string name = "btn_sav_text" translatable = "false"> savText </string>
+
+    <string name = "nextimage_contentdesc"> Immagine successiva </string>
+    <string name = "decrypted_file"> _ unencrypted.pdf </string>
+    <string name = "decrypt_message"> Inserisci la password per continuare </string>
+
+    <string name = "snackbar_txtselected"> File di testo selezionato! </string>
+    <string name = "decrypt_protected_file"> Il pdf selezionato è protetto da password. Immettere la password per continuare … </string>
+    <string name = "not_encrypted"> Il PDF non è crittografato </string>
+    <string name = "save_current"> Salva </string>
+    <string name = "save"> Salva </string>
+    <string name = "choose_color_text"> Scegli un colore: </string>
+    <string name = "save_first"> Salva prima l\'immagine corrente </string>
+    <string name = "Filter_name"> Filtro </string>
+    <string name = "Filter_image_preview"> Anteprima immagine filtro </string>
+    <string name = "warning"> Avviso </string>
+    <string name = "overwrite_message"> Esiste già un file con lo stesso nome. Vuoi sovrascrivere? </string>
+
+    <!--  Text To PDF -Set Page Size-->
+    <string name = "set_page_size_text"> Imposta dimensioni pagina </string>
+    <string name = "b0_to_b10"> Da B0 a B10 </string>
+    <string name = "a0_to_a10"> Da A0 a A10 </string>
+    <string name = "legal" translatable = "false"> LEGALE </string>
+    <string name = "default_page_size"> DEFAULT (% s) </string>
+    <string name = "master_password_changed"> La password sembra non essere corretta. Forse hai cambiato la password principale. </string>
+
+
+    <!--View File options    -->
+    <string name = "delete_alert_selected"> Vuoi eliminare tutti i file selezionati? </string>
+    <string name = "sort_by_title"> Ordina per </string>
+    <string name = "delete"> Elimina </string>
+    <string name = "sort"> Ordina </string>
+
+    <!-- Directory Strings -->
+    <string name = "directory"> Directory </string>
+    <string name = "moving_files"> Spostamento dei file </string>
+    <string name = "success_move"> I file sono stati spostati correttamente </string>
+    <string name = "dir_does_not_exists"> La directory non esiste </string>
+    <string name = "move_files_delete_dir"> Spostamento di file ed eliminazione della directory </string>
+    <string name = "directory_deleted"> Directory eliminata </string>
+    <string name = "success_delete_directory"> Eliminata la directory con successo </string>
+    <string name = "moved_files"> File spostati correttamente </string>
+    <string name = "dialog_new_dir"> Inserisci il nuovo nome della directory </string>
+    <string name = "dialog_dir"> Immettere il nome della directory </string>
+    <string name = "cancel"> Annulla </string>
+    <string name = "ok"> OK </string>
+    <string name = "yes"> Sì </string>
+    <string name = "select_all"> Seleziona tutto </string>
+    <string name = "converting_file_message"> Conversione dei file in PDF. </string>
+    <string name = "select_text_file"> Seleziona file di testo </string>
+    <string name = "install_file_manager"> Installa un file manager </string>
+
+    <!-- Text to PDF   -->
+    <string name = "text_to_pdf"> Testo in PDF </string>
+    <string name = "text_file_selected"> File di testo selezionato </string>
+    <string name = "select_file"> "Seleziona un file da caricare" </string>
+    <string name = "text_type" translatable = "false"> text / plain </string>
+    <string name = "new_directory"> Nuova directory </string>
+    <string name = "previous_image_content_desc"> Immagine precedente </string>
+    <string name = "text_file_name"> "File di testo:" </string>
+    <string name = "extension_not_supported"> Spiacenti! Questo tipo di file non è attualmente supportato. </string>
+    <string name = "font_color"> Colore carattere </string>
+    <string name = "edit_font_size"> Dimensione carattere (predefinito:% d) </string>
+    <string name = "enter_font_size"> Inserisci la dimensione del carattere </string>
+    <string name = "example_font"> Esempio: 10 </string>
+    <string name = "font_size_changed"> Dimensione carattere modificata </string>
+    <string name = "font_size"> Dimensione carattere:% 1 $ s </string>
+
+    <!--  About US & App Description & Contact US  -->
+    <string name = "about_us"> Chi siamo </string>
+    <string name = "rate_us"> Valutaci </string>
+    <string name = "app_description"> Un\'applicazione Android facile da usare per convertire i tuoi file in PDF. </string>
+    <string name = "version"> Versione: </string>
+    <string name = "developer"> Sviluppatore: Swati Garg </string>
+    <string name = "github_repo"> Repository Github </string>
+    <string name = "view_contributors"> Visualizza collaboratori </string>
+    <string name = "privacy_policy"> Norme sulla privacy </string>
+    <string name = "mail"> Invia un messaggio </string>
+    <string name = "join_slack"> Unisciti a noi su Slack </string>
+    <string name = "website"> Visita il nostro sito web </string>
+    <string name = "license"> Licenza </string>
+    <string name = "playstore"> Valutaci su Playstore </string>
+
+    <!-- Preview strings -->
+    <string name = "swipe_to_view_next"> Scorri verso sinistra per visualizzare l\'immagine successiva </string>
+    <string name = "showing_image"> Visualizzazione di% 1 $ d di% 2 $ d immagini </string>
+
+    <!-- Filter strings -->
+    <string name = "filter_brush"> Pennello </string>
+    <string name = "filter_none"> Nessuno </string>
+    <string name = "filter_autofix"> Correzione automatica </string>
+    <string name = "filter_grayscale"> Scala di grigi </string>
+    <string name = "filter_brightness"> Luminosità </string>
+    <string name = "filter_contrast"> Contrasto </string>
+    <string name = "filter_cross"> Cross Process </string>
+    <string name = "filter_documentary"> Documentario </string>
+    <string name = "filter_duetone"> Due toni </string>
+    <string name = "filter_filllight"> Luce di riempimento </string>
+    <string name = "filter_filpver"> Capovolgi verticalmente </string>
+    <string name = "filter_fliphor"> Capovolgi orizzontalmente </string>
+    <string name = "filter_grain"> Grain </string>
+    <string name = "filter_lomish"> Lomish </string>
+    <string name = "filter_negative"> Negativo </string>
+    <string name = "filter_poster"> Posterizza </string>
+    <string name = "filter_rotate"> Ruota </string>
+    <string name = "filter_saturate"> Saturate </string>
+    <string name = "filter_sepia"> Seppia </string>
+    <string name = "filter_sharpen"> Contrasta </string>
+    <string name = "filter_temp"> Temperatura </string>
+    <string name = "filter_tint"> Tinta </string>
+    <string name = "filter_vig"> Vignetta </string>
+    <string name = "filter_saved"> Immagine salvata </string>
+    <string name = "created"> Creato </string>
+    <string name = "printed"> Stampato </string>
+    <string name = "renamed"> Rinominato </string>
+    <string name = "deleted"> Eliminato </string>
+    <string name = "rotated"> Ruotato </string>
+    <string name = "encrypted"> Crittografato </string>
+    <string name = "decrypted"> Decrypted </string>
+    <string name = "history"> Cronologia </string>
+    <string name = "no_history_message"> Nessuna cronologia da mostrare </string>
+    <string name = "view_history_here_message"> Visualizza qui tutta la cronologia dei file convertiti! </string>
+    <string name = "delete_history_message"> Sei sicuro di voler eliminare la cronologia? </string>
+
+    <!-- Extract images -->
+    <string name = "extract_images"> Estrai immagini </string>
+    <string name = "extract_images_failed"> Impossibile trovare immagini nel PDF selezionato. </string>
+    <string name = "extract_images_success"> Abbiamo trovato% 1 $ d immagini nel PDF selezionato. Sono stati salvati nella cartella File PDF nella directory principale. </string>
+
+
+    <!--  Extract Text-->
+    <string name = "extract_text"> Estrai testo </string>
+    <string name = "pdf_selected"> File PDF selezionato: </string>
+    <string name = "file_info"> \ n Nome file:% 1 $ s \ n \ n Percorso:% 2 $ s \ n \ n Dimensione:% 3 $ s \ n \ n Data modifica% 4 $ s </string >
+
+
+    <!-- Text To PDF   FontFamily-->
+    <string name = "default_font_family_text"> Famiglia di caratteri (predefinito:% s) </string>
+    <string name = "font_family_text"> "Famiglia di caratteri:" </string>
+    <string name = "courier" translatable = "false"> CORRIERE </string>
+    <string name = "helvetica" translatable = "false"> HELVETICA </string>
+    <string name = "times_roman" translatable = "false"> TIMES_ROMAN </string>
+    <string name = "symbol" translatable = "false"> SIMBOLO </string>
+    <string name = "zapfdingbats" translatable = "false"> ZAPFDINGBATS </string>
+    <string name = "undefined"> UNDEFINED </string>
+    <string name = "selected_image"> Immagine selezionata </string>
+    <string name = "reset"> Reimposta </string>
+    <string name = "rotate"> Ruota </string>
+    <string name = "done"> Fine </string>
+    <string name = "image_successfully_cropped"> Immagine ritagliata correttamente </string>
+    <string name = "confirm_exit_message"> Premi di nuovo indietro per uscire </string>
+
+    <string name = "filter_not_saved"> Impossibile salvare l\'immagine </string>
+    <string name = "remove_image_message"> Sei sicuro di voler rimuovere questa immagine? </string>
+    <string name = "dont_show_again"> Non mostrare più </string>
+    <string name = "remove_page_message"> Sei sicuro di voler rimuovere questa pagina? </string>
+
+    <!-- Watermark Strings -->
+    <string name = "encrypted_file_text"> file crittografato </string>
+
+    <!-- Split PDF -->
+    <string name = "split_pdf"> Dividi PDF </string>
+    <string name = "split_success"> Il PDF selezionato è stato diviso correttamente. È stato suddiviso in %1$d PDF </string>
+    <string name = "split_info"> Il PDF verrà suddiviso in più PDF. Esempio di formato: 1 &#8211;5,6&#8211;7,8,9</string>
+    <string name = "error_page_number"> Numero di pagina non valido </string>
+    <string name = "error_page_range"> Input di intervallo non valido </string>
+    <string name = "error_invalid_input"> Input non valido </string>
+    <string name = "split_one_page_pdf_alert"> Il PDF selezionato non può essere diviso perché ha solo 1 pagina! </string>
+
+    <!-- Remove Pages -->
+    <string name = "remove_pages"> Rimuovi pagine </string>
+    <string name = "remove_pages_error"> Il valore di input non è valido </string>
+    <string name = "encrypted_pdf"> Il PDF è protetto da password </string>
+    <string name = "file_access_error"> Impossibile accedere al PDF. I file possono essere crittografati o nella memoria esterna. </string>
+    <string name = "file_order"> Nessuna modifica apportata al file </string>
+
+    <!-- Reorder Pages -->
+
+
+    <!-- Compress PDF -->
+    <string name = "compress_pdf"> Comprimi PDF </string>
+    <string name = "compress_pdf_prompt"> Immettere la % di compressione del PDF: </string>
+    <string name = "compress_info"> Congratulazioni! Il tuo PDF è compresso: \n Dimensione PDF originale: %1$s \n Dimensione PDF compresso: %2$s </string>
+
+    <!-- PDF to Images string resources-->
+    <string name = "pdf_to_images"> Da PDF a immagini </string>
+    <string name = "create_images"> Crea immagini </string>
+    <string name = "select_pdf_file"> Seleziona file PDF </string>
+    <string name = "share_images"> Condividi immagini </string>
+    <string name = "view_images"> Visualizza immagini </string>
+    <string name = "view_in_gallery"> Visualizza immagini nella galleria </string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name = "remove_duplicate_pages"> Rimuovi pagine duplicate </string>
+    <string name = "remove_duplicate_info"> Le pagine duplicate nel PDF verranno rimosse. </string>
+    <string name = "remove_duplicate"> Rimuovi pagine duplicate. </string>
+
+    <!-- Invert Pdf -->
+    <string name = "invert_pdf"> Inverti Pdf </string>
+    <string name = "invert_pdf_info"> Tutti i colori nel pdf verranno invertiti </string>
+    <string name = "invert_pdf_title"> Inverti PDF </string>
+
+    <!-- Rate us strings -->
+    <string name = "rate_positive"> Valuta ora </string>
+    <string name = "rate_negative"> No, grazie </string>
+    <string name = "rate_title"> Valutaci! </string>
+    <string name = "rate_dialog_text"> Se ti piace questa app, prenditi un momento per valutarla. Non ci vorrà più di un minuto. Grazie per il vostro sostegno! :) </string>
+    <string name = "rate_us_never"> Mai </string>
+    <string name = "error_occurred"> Si è verificato un errore </string>
+
+
+    <!--Rotate Pages    -->
+    <string name = "rotate_pages"> Ruota pagine </string>
+    <string name = "enter_rotation_angle"> Immettere l\'angolo di rotazione </string>
+    <string name = "rotated_file_name" translatable = "false">% s_rotated_% s% s </string>
+    <string name = "degree_90" translatable = "false"> 90 &#xb0; </string>
+    <string name = "degree_180" translatable = "false"> 180 &#xb0; </string>
+    <string name = "degree_270" translatable = "false"> 270 &#xb0; </string>
+    <string name = "share_files"> Condividi file </string>
+    <string name = "pdf_removed_from_list"> Il PDF è stato rimosso dall\'elenco. </string>
+    <string name = "pdf_added_to_list"> PDF è stato aggiunto all\'elenco. </string>
+    <string name = "select_files"> Seleziona file </string>
+
+    <!-- Settings page -->
+    <string name = "settings"> Impostazioni </string>
+    <string name = "compression_image_edit"> Modifica il valore di compressione dell\'mmagine </string>
+    <string name = "font_family_edit"> Cambia la famiglia di caratteri predefinita </string>
+    <string name = "font_size_edit"> Modifica la dimensione del carattere predefinita </string>
+    <string name = "theme_edit"> Cambia tema predefinito </string>
+    <string name = "image_compression_value_default"> Valore predefinito di compressione immagine:% d %% </string>
+    <string name = "theme_value_def"> Valore predefinito del tema:% s </string>
+    <string name = "page_size_value_def"> Valore predefinito dimensione pagina:% s </string>
+    <string name = "font_size_value_def"> Valore predefinito dimensione carattere:% d </string>
+    <string name = "font_family_value_def"> Valore predefinito della famiglia di caratteri:% s </string>
+    <string name = "settings_info"> Puoi modificare il valore predefinito per varie impostazioni qui. </string>
+    <string name = "storage_location_modified"> Posizione di archiviazione modificata </string>
+    <string name = "storage_location_info"> Posizione di archiviazione (non modificabile) </string>
+    <string name = "theme_white"> Bianco </string>
+    <string name = "theme_dark"> Scuro </string>
+    <string name = "theme_black"> Nero </string>
+    <string name = "theme_system" tools:ignore = "MissingTranslation"> Sistema </string>
+    <string name = "change_master_pwd"> Cambia password principale </string>
+    <string name = "current_master_pwd"> La password principale corrente è \"%1$s\" per ogni PDF crittografato. Puoi cambiarlo qui: </string>
+
+    <!-- Home page -->
+    <string name = "home_page"> Home </string>
+    <string name = "create_new_pdfs"> Crea nuovo PDF </string>
+    <string name = "view_pdfs"> Visualizza PDF </string>
+    <string name = "view_pdf"> Visualizza PDF </string>
+    <string name = "modify_existing_pdfs"> Modifica PDF esistenti </string>
+    <string name = "more_options"> Altre opzioni </string>
+    <string name = "add_password"> Aggiungi password </string>
+    <string name = "add_text"> Aggiungi testo </string>
+    <string name = "reorder_pages"> Riordina pagine </string>
+    <string name = "remove_password"> Rimuovi password </string>
+    <string name = "enhance_created_pdfs"> Migliora i PDF creati </string>
+    <string name = "viewfiles_rotatepages"> 1. Seleziona il PDF che desideri ruotare. \n2. Seleziona Ruota pagine. \n3. Seleziona l&#49;angolo di rotazione. Seleziona OK. \n4. Verrà creato un nuovo PDF ruotato. </string>
+    <string name = "viewfiles_addpassword"> 1. Seleziona il PDF a cui desideri aggiungere la password. \ n2. Seleziona Aggiungi password. \ n3. Digita la nuova password. Seleziona OK. \ n4. Creare un nuovo PDF con password. </string>
+    <string name = "viewfiles_removepassword"> 1. Seleziona il PDF da cui desideri rimuovere la password. \ n2. Seleziona Rimuovi password. \ n3. Digita la password PDF. Seleziona OK. \ n4. Verrà creato un nuovo PDF senza PDF. </string>
+    <string name = "grayscale_images"> Crea PDF in scala di grigi </string>
+
+    <!-- Welcome screens-->
+    <string name = "welcome_create_pdf_message"> Creazione di un file PDF </string>
+    <string name = "welcome_create_pdf_info"> Visualizza i file PDF precedentemente creati o creane uno nuovo! </string>
+    <string name = "welcome_themes_title"> Temi diversi </string>
+    <string name = "welcome_themes_message"> Vai su Impostazioni e puoi scegliere tra tre tipi di temi: Nero, Scuro, Bianco </string>
+    <string name = "welcome_merge_title"> Unisci file PDF </string>
+    <string name = "welcome_text_to_pdf"> Testo in PDF </string>
+    <string name = "welcome_text_to_pdf_message"> Converti facilmente i tuoi file di testo nei tuoi PDF preferiti </string>
+    <string name = "welcome_qrcode_to_pdf"> Codice QR in PDF </string>
+    <string name = "welcome_qrcode_to_pdf_message"> Converti codici QR e codici a barre in PDF in modo semplicistico </string>
+    <string name = "welcome_remove_pages"> Rimuovi pagine </string>
+    <string name = "welcome_remove_pages_message"> Rimuovi le pagine indesiderate che non ti servono più </string>
+    <string name = "welcome_reorder_pages"> Riordina pagine </string>
+    <string name = "welcome_reorder_pages_message"> Riordina e riorganizza le pagine come desideri </string>
+    <string name = "welcome_extract_images"> Estrai immagini da PDF </string>
+    <string name = "welcome_extract_images_message"> Estrai tutte le immagini possibili dai tuoi PDF in un attimo </string>
+    <string name = "welcome_merge_message"> Unisci diversi PDF esistenti nel telefono in un unico file </string>
+    <string name = "welcome_viewfiles_title"> Visualizzazione dei file PDF </string>
+    <string name = "welcome_viewfiles_message"> Visualizza, elimina, rinomina, condividi e aggiungi password al tuo file PDF </string>
+    <string name = "welcome_excel_message"> Converti facilmente i tuoi file Excel nei tuoi PDF preferiti </string>
+    <string name = "skip_text"> Salta </string>
+    <string name = "get_started_title"> Inizia! </string>
+
+    <!-- Whats New Dialog -->
+    <string name = "whatsnew_continue"> Continua </string>
+    <string name = "whatsnew_title"> Novità </string>
+
+    <!--watermark strings -->
+    <string name = "watermark_added"> Filigrana aggiunta </string>
+    <string name = "watermarked"> Watermarked </string>
+    <string name = "watermarked_file"> _ watermarked.pdf </string>
+    <string name = "watermark_remove"> Filigrana rimossa </string>
+    <string name = "snackbar_watermark_cannot_be_blank"> Il testo non può essere vuoto </string>
+    <string name = "cannot_add_watermark"> Impossibile aggiungere la filigrana al PDF. Controlla di nuovo il PDF. </string>
+    <string name = "add_watermark"> Aggiungi filigrana </string>
+    <string name = "enter_watermark_text"> Inserisci testo </string>
+    <string name = "enter_watermark_angle"> Inserisci angolo </string>
+    <string name = "watermark_angle"> Angolo </string>
+    <string name = "choose_watermark_color"> Scegli il colore </string>
+    <string name = "enter_watermark_font_size"> Inserisci la dimensione del carattere </string>
+    <string name = "choose_watermark_font_family"> Scegli la famiglia di caratteri </string>
+    <string name = "watermark_font_size"> Dimensione carattere </string>
+    <string name = "choose_watermark_style"> Scegli lo stile </string>
+    <string name = "viewfiles_addwatermark"> 1. Seleziona il PDF che desideri aggiungere watermark to. \ n2. Seleziona Aggiungi filigrana. \ n3. Compila le informazioni richieste. Seleziona OK. \ n4. Verrà creato un nuovo PDF con filigrana. </string>
+
+    <!--<nav add images>-->
+    <string name = "add_images"> Aggiungi immagini </string>
+    <string name = "selected_images_text"> Le immagini selezionate verranno aggiunte alla fine del PDF selezionato. </string>
+    <string name = "no_images_selected"> Nessuna immagine selezionata </string>
+    <string name = "title_filter_history_dialog"> Filtra per tipo di operazione </string>
+
+    <!--zip to pdf-->
+    <string name = "zip_to_pdf"> ZIP in PDF </string>
+    <string name = "convert_to_pdf"> converti in PDF </string>
+    <string name = "error_no_image_in_zip"> Il file ZIP non contiene immagini </string>
+    <string name = "error_open_file"> Si è verificato un errore durante l\'apertura del file. Prova a riaprire </string>
+
+    <!--text to pdf-->
+    <string name = "error_pdf_not_created"> Spiacenti, il PDF non è stato creato. Riprova </string>
+
+    <!--favourite fragment-->
+    <string name = "favourites"> Preferiti </string>
+    <string name = "add_to_favourite"> Aggiungi ai preferiti </string>
+    <string name = "favourites_text"> Seleziona + icona per aggiungere le tue funzionalità preferite! </string>
+    <string name = "no_excel_file"> Nessun file Excel selezionato </string>
+    <string name = "split_range_alert"> L\'intervallo diviso inserito creerà nuovamente il PDF selezionato! </string>
+
+    <!--file name suffix-->
+    <string name = "pdf_suffix" translatable = "false"> _ pdf </string>
+    <string name = "reordering_pages_dialog"> Riordino delle tue pagine … </string>
+    <string name = "delete_alert_singular"> Vuoi eliminare il file selezionato? </string>
+    <string name = "snackbar_files_deleted"> File eliminati </string>
+    <string name = "lbl_recently_used"> Funzioni utilizzate di recente </string>
+
+    <!--  FAQs  -->
+    <string name = "faqSearch"> Domande frequenti sulla ricerca </string>
+    <string-array name="faq_question_answers">
+        <item> Quali formati di file immagine sono supportati? ##### L\'app supporta jpeg, jpg, tiff, gif, psd, bmp, eps, png, ecc. </item>
+        <item> Posso creare un nuovo file di testo utilizzando l\'app? ##### Puoi creare un nuovo file di testo solo estraendo il testo da un PDF esistente. Per creare un file di testo, \ n1) Fai clic sull\'opzione <strong> Estrai testo </strong> nella home page. \ n2) Seleziona il PDF utilizzando il pulsante <strong> SELEZIONA FILE PDF </strong>. \ n3) Quindi, fai clic su <strong> ESTRATTA TESTO </strong>. \ n4) Una volta terminato, verrà creato un file di testo con i testi del file PDF. </item>
+        <item> Esiste un limite al numero di immagini che posso aggiungere contemporaneamente per creare un PDF? ##### No, non ci sono restrizioni. </item>
+        <item> C\'è un limite alla dimensione dell\'immagine che posso aggiungere? ##### No, non ci sono limiti. Tuttavia, consigliamo di limitare le dimensioni a <strong> meno di 10 MB </strong>. La conversione di più file di immagini di grandi dimensioni richiede fino a 10 secondi. </item>
+        <item> Posso inserire didascalie nell\'immagine dopo averle aggiunte? ##### No, le didascalie non possono essere inserite sulle immagini se non diversamente modificate sull\'immagine stessa. </item>
+        <item> Posso leggere i file PDF utilizzando l\'app? ##### No, al momento non puoi farlo. Questa app non funziona come visualizzatore di PDF. </item>
+        <item> Dove vengono salvati i file PDF che ho creato utilizzando l\'app? ##### I file dei file PDF creati con l\'app vengono salvati automaticamente nella cartella denominata PDFfiles sulla memoria del dispositivo. \ nPuoi anche modificare la posizione predefinita nella sezione <strong> Impostazioni </strong>. </item>
+        <item> Come modificare la posizione di archiviazione predefinita? ##### Per modificare la posizione di archiviazione predefinita, \ n1) Fare clic sull \'<strong> icona Hamburger </strong> (tre linee orizzontali) nell\'angolo in alto a sinistra. \ n2) Scorri verso il basso e fai clic su <strong> Impostazioni </strong>. \ n3) Nella pagina delle impostazioni, fai clic sul campo appena sotto il testo <strong> Cambia posizione di archiviazione </strong>. \ n4) Apri il percorso di salvataggio preferito e fai clic sull \'<strong> icona di selezione </strong> in alto. \ nUna volta modificati, i file creati utilizzando l\'app verranno archiviati nella nuova posizione. </item>
+        <item> Come posso condividere i file PDF che vengono modificati / creati utilizzando l\'app? ##### Puoi accedere e condividere i file PDF che hai modificato / creato direttamente dall\'app. Per condividere i file PDF, \ n1) Fare clic sull\'opzione <strong> Visualizza file </strong> nella home page. \ n2) Seleziona i file che desideri condividere utilizzando la casella di controllo. \ n3) Successivamente, fai clic su <strong> Altro </strong> (tre punti verticali) in alto a destra e fai clic su <strong> Condividi </strong>. \ n4) Seleziona il metodo desiderato per condividere i file. </item>
+        <item> Posso recuperare la password dimenticata di un file PDF utilizzando l\'app? ##### No, una password persa non può essere recuperata. </item>
+        <item> Posso cambiare la password di un file PDF? ##### Sì, ma solo se rimuovi la password esistente. Una volta rimossa la password, utilizza l\'opzione <strong> Rimuovi Passowrd </strong> nella home page per modificare la password. </item>
+        <item> Posso comprimere le immagini prima di creare un PDF? ##### Sì, puoi. Per comprimere le immagini, \ n1) Fare clic sull\'opzione <strong> Immagini in PDF </strong> nella home page. \ n2) Seleziona le immagini utilizzando il pulsante <strong> SELEZIONA IMMAGINI </strong>. \ n3) Quindi, selezional\opzione <strong> Compressione immagine </strong> per comprimere le immagini. </item>
+        <item> Qual è il formato delle immagini estratte da un PDF? ##### Le immagini estratte da un PDF saranno in formato <strong> .png </strong>. </item>
+        <item> Posso aggiungere file dal cloud / archiviazione online? ##### Per ora non è possibile. Ma è sulla roadmap di sviluppo e sarà presto disponibile. </item>
+        <item> Come controllare la cronologia dei file creati / modificati? ##### Per vedere tutti i file che hai creato / modificato nell\'app. \ nPer farlo, fai clic sull\'opzione <strong> Cronologia </strong> nella home page. </item>
+        <item> Come unire più file PDF? ##### Per unire più PDF, \ n1) Fare clic sull\'opzione <strong> Unisci PDF </strong> nella home page. \ n2) Seleziona i file PDF utilizzando il pulsante <strong> SELEZIONA FILE </strong>. \ n3) Una volta selezionato, fai clic sul pulsante <strong> UNISCI FILE </strong>. </item>
+        <item> Posso modificare le immagini durante la creazione di un PDF? ##### Sì, puoi. A tale scopo, \ n1) Fare clic sull\'opzione <strong> Immagini in PDF </strong> nella home page. \ n2) Seleziona le immagini utilizzando il pulsante <strong> SELEZIONA IMMAGINI </strong>. \ n3) Una volta selezionata, fai clic sull\'opzione <strong> Modifica immagini </strong> o <strong> Filtra immagini </strong> in base alle tue esigenze. \ n4) Completa la modifica o l\'applicazione del filtro. \ n5) Ora, seleziona le immagini modificate utilizzando il pulsante <strong> SELEZIONA IMMAGINI </strong> e fai clic su <strong> CREA PDF </strong> per creare il PDF. </item>
+        <item> Come aggiungere la filigrana al PDF? ##### Per aggiungere la filigrana scorri verso il basso fino a <strong> Migliora i PDF creati </strong> sulla home page o nel menu delle opzioni scorrendo da sinistra a destra e fai clic su <strong> Aggiungi filigrana </strong>. </item>
+        <item> Posso riordinare le pagine in un PDF? ##### Sì, puoi. Per riordinare la pagina, \ n1) Fai clic sull\'opzione <strong> Riordina pagine </strong> nella home page. \ n2) Seleziona il file PDF utilizzando il pulsante <strong> SELEZIONA UN FILE </strong>. \ n3) Fai clic su <strong> CREA PDF </strong>. \ n4) Usa le frecce su e giù per riordinare le pagine. \ n5) Una volta riordinato, fai clic su <strong> Freccia indietro </strong> in alto a sinistra per creare il nuovo file PDF aggiornato. </item>
+        <item> Come estrarre immagini da un PDF? ##### Per estrarre immagini, \ n1) Fare clic sull\'opzione Estrai immagini nella home page. \ n2) Selezionare il file PDF utilizzando il pulsante SELEZIONA UN FILE. \ n3) Una volta selezionato, fai clic sul pulsante CREA IMMAGINI. </item>
+        <item> Posso convertire i PDF nei formati PPT, PPTX, ODT, DOC, DOCX? ##### No, al momento i PDF possono essere convertiti solo in formato testo. </item>
+        <item> Dove posso scaricare l\'app PDF CONVERTER: Files to PDF? ##### L\'app è disponibile su Google PlayStore e F-Droid </item>
+        <item> Posso contribuire a questa app? ##### Sì, puoi. Trovaci su GitHub utilizzando il nome del progetto <strong> Swati4star / Images-to-PDF </strong>. \ nSentiti libero di condividere le tue idee (richieste di funzionalità), inviare un bug o richiedere un pull per qualsiasi cosa che ritieni debba essere aggiunta. \ nQuesto progetto ha più contributori che aggiungono un solo cambio di riga. Leggi la <strong> Guida del collaboratore </strong> del progetto per iniziare. </item>
+        <item> Ho alcune domande che non sono in questo documento delle FAQ. Come posso contattare lo sviluppatore? ##### Per ulteriori domande, invia un\'e-mail allo sviluppatore all\'indirizzo <strong>swati4star@gmail.com</strong></item>
+    </string-array>
+
+</resources>

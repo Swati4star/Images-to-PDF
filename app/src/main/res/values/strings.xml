@@ -211,7 +211,7 @@
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
     <string name="view_files_text">View all your converted files here!</string>
-    <string name="empty_image_description">NoPdfs</string>
+    <string name="empty_image_description">No Pdfs</string>
 
     <!--  Add Password -->
     <string name="enter_password_custom">Enter Password</string>
@@ -228,7 +228,7 @@
     <string name="file_size_text">File Size</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">I have attached file(s) to this message</string>
-    <string name="btn_sav_text" translatable="false">savText</string>
+    <string name="btn_sav_text" translatable="false">Save Text</string>
 
     <string name="nextimage_contentdesc">Next Image</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
@@ -581,7 +581,7 @@
         <item>How to change the default storgae location?#####To change the default storage location, \n1) Click the <strong>Hamburger icon</strong> (three horizontal line) at the top-left corner. \n2) Scroll down and click <strong>Settings</strong>. \n3) In the settings page, click the field just beneath the text <strong>Change storage location</strong>. \n4) Open the preferred save location and click the <strong>Select icon</strong> at the top. \nOnce changed, the files created using the app will be stored in the new location.</item>
         <item>How can I share the PDF files that are edited/created using the app?#####You can access and share the PDF files which you have edited/created directly from the app. To share the PDF files, \n1) Click <strong>View Files</strong> option on the homepage. \n2) Select the file(s) you want to share using the checkbox. \n3) Next, click the <strong>More option</strong> (three vertical dots) at the top-right and click <strong>Share</strong>. \n4) Select the desired method to share the files.</item>
         <item>Can I recover the forgotten password of a PDF file using the app?#####No, a lost password cannot be recovered.</item>
-        <item>Can I change the password of a PDF file?#####Yes, but only if you remove the existing password. Once the password is removed, use the <strong>Remove Passowrd</strong> option in the homepage to change the password.</item>
+        <item>Can I change the password of a PDF file?#####Yes, but only if you remove the existing password. Once the password is removed, use the <strong>Change Password</strong> option in the homepage to change the password.</item>
         <item>Can I compress the images before creating a PDF?#####Yes, you can. To compress the images, \n1) Click the <strong>Images to PDF</strong> option on the homepage. \n2) Select the images using the <strong>SELECT IMAGES</strong> button. \n3) Next, select the <strong>Image compression</strong> option to compress the images.</item>
         <item>What is the format of the images extracted from a PDF?#####The images extracted from a PDF will be in <strong>.png</strong> format.</item>
         <item>Can I add files from cloud/online storage?#####As of now, you cannot. But it is on the development roadmap and will be available soon.</item>
