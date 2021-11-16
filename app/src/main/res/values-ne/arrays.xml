@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>नाम</item>
+        <item>मिति</item>
+        <item>साइज ▲</item>
+        <item>साइज ▼</item>
+    </string-array>
+    <string-array name="sort_options_images">
+        <item>नाम ▲</item>
+        <item>नाम ▼</item>
+        <item>मिति ▲</item>
+        <item>मिति ▼</item>
+    </string-array>
+    <string-array name="filter_options_history">
+        <item>सिर्जना गरियो</item>
+        <item>मेटाइयो</item>
+        <item>पुन: नामाकरण गरियो</item>
+        <item>घुमाइएको</item>
+        <item>छापिएको</item>
+        <item>डिक्रिप्ट गरिएको</item>
+        <item>इन्क्रिप्टेड</item>
+        <item>उल्टो</item>
+    </string-array>
+</resources>

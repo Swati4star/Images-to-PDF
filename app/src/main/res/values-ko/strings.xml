@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">PDF 변환기</string>
+    <string name="title">PDF 작업</string>
+    <string name="file_name_text">파일 이름</string>
+    <string name="select_images_text">이미지 선택</string>
+    <string name="password_protect_pdf_text">비밀번호 보호 PDF</string>
+    <string name="edit_images_text">이미지 편집</string>
+    <string name="open_pdf_text">PDF 열기</string>
+    <string name="create_pdf_text">PDF 작성</string>
+    <string name="details">
+<b> 세부</b>
+</string>
+    <string name="search_hint">파일 이름</string>
+    <string name="search">검색</string>
+    <string name="default_content_description">설명 없음</string>
+    <string name="prompt_input">여기에 입력</string>
+    <array name="items">
+        <item>Open File</item>
+        <item>Delete File</item>
+        <item>Rename File</item>
+        <item>Print File</item>
+        <item>Share File</item>
+        <item>Show Details</item>
+        <item>Add Password</item>
+        <item>Remove Password</item>
+        <item>Rotate Pages</item>
+        <item>Add Watermark</item>
+    </array>
+    <array name="itemIds" translatable="false">
+        <item>open</item>
+        <item>delete</item>
+        <item>rename</item>
+        <item>print</item>
+        <item>e-mail</item>
+        <item>details</item>
+    </array>
+    <string-array name="array_page_sizes_b0_b10" translatable="false">
+        <item>B0(1000 x 1414mm)</item>
+        <item>B1(707 x 1000mm)</item>
+        <item>B2(500 x 707mm)</item>
+        <item>B3(353 x 500mm)</item>
+        <item>B4(250 x 353mm)</item>
+        <item>B5(176 x 250mm)</item>
+        <item>B6(125 x 176mm)</item>
+        <item>B7(88 x 125mm)</item>
+        <item>B8(62 x 88mm)</item>
+        <item>B9(44 x 62mm)</item>
+        <item>B10(31 x 44mm)</item>
+    </string-array>
+    <string-array name="array_page_sizes_a0_b10" translatable="false">
+        <item>A0(841 x 1189mm)</item>
+        <item>A1(594 x 841mm)</item>
+        <item>A2(420 x 594mm)</item>
+        <item>A3(297 x 420mm)</item>
+        <item>A4(210 x 297mm)</item>
+        <item>A5(148 x 210mm)</item>
+        <item>A6(105 x 148mm)</item>
+        <item>A7(74 x 105mm)</item>
+        <item>A8(52 x 74mm)</item>
+        <item>A9(37 x 52mm)</item>
+        <item>A10(26 x 37mm)</item>
+    </string-array>
+    <string-array name="fontStyles" translatable="false">
+        <item>정상</item>
+        <item>굵게</item>
+        <item>이탤릭체</item>
+        <item>밑줄</item>
+        <item>스트라이크트루</item>
+        <item>굵게 이탤릭체</item>
+    </string-array>
+    <string name="pdf_ext" translatable="false">.pdf</string>
+    <string name="pdf_type" translatable="false">application/pdf</string>
+    <string name="txt_type" translatable="false">text/*</string>
+    <string name="please_wait">기다리세요</string>
+    <string name="bundleKey">이미지우리</string>
+    <string name="whatsappToast">
+죄송합니다! 이미지를 추가할 수 없습니다. **이미지 선택** 옵션에서 이미지를 선택하세요.
+</string>
+    <string name="successToast">이미지가 성공적으로 추가되었습니다.</string>
+    <string name="create_pdf">PDF 작성</string>
+    <string name="qr_barcode_pdf">QR</string>
+    <string name="viewFiles">파일 보기</string>
+    <string name="extras">엑스트라</string>
+    <string name="share">공유하다</string>
+    <string name="help">돕다</string>
+    <string name="faqs">자주하는 질문</string>
+    <string name="images_to_pdf">이미지를 PDF로</string>
+    <string name="page_color">페이지 색상</string>
+    <string name="filter_images_Text">이미지 필터링 \n</string>
+    <string name="preview_image_to_pdf">PDF 미리보기</string>
+    <string name="choose_page_number_style">페이지 번호 스타일 선택</string>
+    <string name="show_pg_num">페이지 번호 표시</string>
+    <string name="page_x_of_n">N의 페이지 X</string>
+    <string name="page_x">N의 X</string>
+    <string name="x">NS</string>
+    <string name="arrow_up">화살표 위로</string>
+    <string name="arrow_down">아래쪽 화살표</string>
+    <string name="rearrange_images">이미지 재정렬</string>
+    <string name="rearrange_text">재정렬</string>
+    <string name="images_rearranged">이미지 재정렬</string>
+    <string name="snackbar_undoAction">실행 취소</string>
+    <string name="pdf_does_not_exist_message">PDF가 존재하지 않습니다.</string>
+    <string name="image_rearranging_options">이미지 재정렬 옵션</string>
+    <string name="filter_file_name">%s_%s.jpg</string>
+    <string name="compress_image">이미지 압축: %s %%</string>
+    <string name="quality_image">이미지 압축률 입력:</string>
+    <string name="invalid_entry">부적합한 입력</string>
+    <string name="compress_dialog_enter_prompt">여기에 입력</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">기본값으로 설정</string>
+    <string name="add_margins">여백 추가</string>
+    <string name="top">맨 위</string>
+    <string name="bottom">맨 아래</string>
+    <string name="right">오른쪽</string>
+    <string name="left">왼쪽</string>
+    <string name="border">이미지 테두리 추가</string>
+    <string name="border_dialog_title">테두리 너비: %d</string>
+    <string name="border_width_prompt">테두리 너비 단위 입력</string>
+    <string name="image_scale_type">이미지 스케일 유형 설정</string>
+    <string name="stretch_image">페이지에 맞게 이미지 늘이기</string>
+    <string name="maintain_aspect_ratio">이미지의 종횡비 유지</string>
+    <string name="scan_qrcode">QR 코드 스캔</string>
+    <string name="scan_barcode">바코드 스캔</string>
+    <string name="qrbarcodes_to_pdf">QR에서 PDF 만들기</string>
+    <string name="scan_cancelled">취소된 사용자 스캔</string>
+    <string name="snackbar_no_images">선택한 이미지가 없습니다.</string>
+    <string name="snackbar_no_pdfs_selected">선택한 PDF 없음</string>
+    <string name="snackbar_name_not_blank">이름은 비워둘 수 없습니다.</string>
+    <string name="snackbar_permissions_given">권한 부여!</string>
+    <string name="snackbar_insufficient_permissions">권한이 부족합니다!</string>
+    <string name="no_permissions">파일을 볼 수 있는 저장소 권한을 제공하세요.</string>
+    <string name="prompt_give_permission">권한 제공</string>
+    <string name="snackbar_images_added">추가된 이미지</string>
+    <string name="snackbar_file_renamed">파일 이름이 변경되었습니다.</string>
+    <string name="snackbar_file_not_renamed">파일 이름을 바꿀 수 없습니다.</string>
+    <string name="snackbar_file_deleted">파일이 삭제되었습니다.</string>
+    <string name="snackbar_file_not_deleted">파일을 삭제할 수 없습니다.</string>
+    <string name="snackbar_folder_not_created">응용 프로그램 폴더를 만드는 중 오류가 발생했습니다.</string>
+    <string name="pdf_merged">병합된 PDF</string>
+    <string name="error_path_not_found">죄송합니다. 이 위치의 파일에 액세스할 수 없습니다.</string>
+    <string name="creating_pdf">PDF 작성</string>
+    <string name="creating_txt">텍스트 파일 생성</string>
+    <string name="enter_file_name">파일 이름 입력</string>
+    <string name="example">예 : ABC</string>
+    <string name="snackbar_no_pdf_app">PDF 파일을 읽을 수 있는 앱이 없습니다</string>
+    <string name="open_file">파일 열기</string>
+    <string name="set_password">암호를 설정하세요</string>
+    <string name="enter_password">암호를 입력</string>
+    <string name="snackbar_password_cannot_be_blank">비밀번호는 비워둘 수 없습니다.</string>
+    <string name="cannot_add_password">PDF에 암호를 적용할 수 없습니다. PDF를 다시 확인하십시오.</string>
+    <string name="snackbar_imagecropped">잘린 이미지</string>
+    <string name="cropImage_activityTitle">이미지 자르기</string>
+    <string name="snackbar_pdfCreated">PDF가 생성되었습니다!</string>
+    <string name="error_uri_not_found">죄송합니다. 자른 이미지에 액세스할 수 없습니다. 다시 시도하십시오</string>
+    <string name="snack_bar_empty_txt_in_pdf">선택한 PDF에 추출할 텍스트가 없습니다!</string>
+    <string name="snackbar_txtExtracted">텍스트 추출!</string>
+    <string name="snackbar_pdfselected">PDF 파일이 선택되었습니다!</string>
+    <string name="snackbar_viewAction">보다</string>
+    <string name="more_options_text">추가 개선 옵션</string>
+    <string name="snackbar_no_duplicate_pdf">중복 페이지를 찾을 수 없습니다. 새 PDF가 생성되지 않았습니다.</string>
+    <string name="snackbar_duplicate_removed">중복 페이지를 제거한 후 새 PDF가 생성됩니다.</string>
+    <string name="snackbar_invert_unsuccessful">PDF를 뒤집을 수 없습니다</string>
+    <string name="snackbar_invert_successfull">거꾸로</string>
+    <string name="snackbar_color_too_close">글꼴 색상과 배경 색상이 너무 비슷합니다.</string>
+    <string name="excel_selected">Excel 파일 선택됨</string>
+    <string name="excel_to_pdf">엑셀을 PDF로</string>
+    <string name="excel_tv_view_text">선택한 Excel 파일:</string>
+    <string name="select_excel_file">엑셀 파일 선택</string>
+    <string name="share_chooser">메시지를 보낼 앱 선택…</string>
+    <string name="rate_us_text">
+안녕하세요! 방금 플레이 스토어에서 이 앱을 확인했습니다. 사용해 보기: https://play.google.com/store/apps/details?id=swati4star.createpdf . 이미지를 PDF로 매우 부드럽게 변환합니다. :)
+</string>
+    <string name="snackbar_no_share_app">공유할 애플리케이션이 없습니다.</string>
+    <string name="images_selected">%1$d개의 이미지가 선택되었습니다.</string>
+    <string name="feedback_subject">PDF 변환기 이미지에 대한 제안</string>
+    <string name="feedback_text">소중한 피드백을 작성하거나 그냥 Hi! :)</string>
+    <string name="snackbar_no_email_clients">설치된 이메일 클라이언트가 없습니다.</string>
+    <string name="feedback_chooser">"메일을 보내다…"</string>
+    <string name="no_pdf">표시할 PDF가 없습니다.</string>
+    <string name="get_started">지금 시작하기</string>
+    <string name="view_files_text">여기에서 변환된 모든 파일을 보십시오!</string>
+    <string name="empty_image_description">PDF 없음</string>
+    <string name="enter_password_custom">암호를 입력</string>
+    <string name="example_pass_123">패스@123</string>
+    <string name="remove_dialog">제거하다</string>
+    <string name="password_remove">비밀번호가 제거되었습니다.</string>
+    <string name="merge_pdf">PDF 병합</string>
+    <string name="merge_file_select">파일 선택</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">PDF 2의 파일 경로</string>
+    <string name="merge_files">파일 병합</string>
+    <string name="file_date_text">파일 날짜</string>
+    <string name="file_size_text">파일 크기</string>
+    <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">이 메시지에 파일을 첨부했습니다.</string>
+    <string name="btn_sav_text" translatable="false">Save Text</string>
+    <string name="nextimage_contentdesc">다음 이미지</string>
+    <string name="decrypted_file">_암호화되지 않은.pdf</string>
+    <string name="decrypt_message">계속하려면 비밀번호를 입력하세요</string>
+    <string name="snackbar_txtselected">텍스트 파일이 선택되었습니다!</string>
+    <string name="decrypt_protected_file">선택한 PDF는 비밀번호로 보호되어 있습니다. 계속하려면 비밀번호를 입력하세요...</string>
+    <string name="not_encrypted">PDF가 암호화되지 않았습니다</string>
+    <string name="save_current">구하다</string>
+    <string name="save">구하다</string>
+    <string name="choose_color_text">색상 선택:</string>
+    <string name="save_first">현재 이미지를 먼저 저장</string>
+    <string name="Filter_name">필터</string>
+    <string name="Filter_image_preview">필터 이미지 미리보기</string>
+    <string name="warning">경고</string>
+    <string name="overwrite_message">같은 이름의 파일이 이미 있습니다. 덮어쓰시겠습니까?</string>
+    <string name="set_page_size_text">페이지 크기 설정</string>
+    <string name="b0_to_b10">B0 ~ B10</string>
+    <string name="a0_to_a10">A0 ~ A10</string>
+    <string name="tabloid" translatable="false">TABLOID</string>
+    <string name="executive" translatable="false">EXECUTIVE</string>
+    <string name="ledger" translatable="false">LEDGER</string>
+    <string name="letter" translatable="false">LETTER</string>
+    <string name="legal" translatable="false">LEGAL</string>
+    <string name="a4" translatable="false">A4</string>
+    <string name="default_page_size">기본값( %s )</string>
+    <string name="master_password_changed">비밀번호가 잘못된 것 같습니다. 마스터 비밀번호를 변경했을 수 있습니다.</string>
+    <string name="delete_alert_selected">선택한 모든 파일을 삭제하시겠습니까?</string>
+    <string name="sort_by_title">정렬 기준</string>
+    <string name="delete">삭제</string>
+    <string name="sort">종류</string>
+    <string name="directory">예배 규칙서</string>
+    <string name="moving_files">파일 이동</string>
+    <string name="success_move">파일을 성공적으로 이동했습니다</string>
+    <string name="dir_does_not_exists">디렉토리가 존재하지 않습니다</string>
+    <string name="move_files_delete_dir">파일 이동 및 디렉토리 삭제</string>
+    <string name="directory_deleted">디렉토리 삭제됨</string>
+    <string name="success_delete_directory">디렉토리를 성공적으로 삭제했습니다</string>
+    <string name="moved_files">파일이 성공적으로 이동되었습니다.</string>
+    <string name="dialog_new_dir">새 디렉토리 이름 입력</string>
+    <string name="dialog_dir">디렉토리 이름을 입력하십시오</string>
+    <string name="cancel">취소</string>
+    <string name="ok">좋아요</string>
+    <string name="yes">예</string>
+    <string name="select_all">모두 선택</string>
+    <string name="converting_file_message">파일을 PDF로 변환합니다.</string>
+    <string name="select_text_file">텍스트 파일 선택</string>
+    <string name="install_file_manager">파일 관리자를 설치하십시오</string>
+    <string name="text_to_pdf">텍스트를 PDF로</string>
+    <string name="text_file_selected">선택한 텍스트 파일</string>
+    <string name="select_file">"업로드할 파일 선택"</string>
+    <string name="text_type" translatable="false">text/plain</string>
+    <string name="new_directory">새 디렉토리</string>
+    <string name="previous_image_content_desc">이전 이미지</string>
+    <string name="text_file_name">"텍스트 파일: "</string>
+    <string name="extension_not_supported">죄송합니다! 이 파일 형식은 현재 지원되지 않습니다.</string>
+    <string name="font_color">글꼴 색상</string>
+    <string name="edit_font_size">글꼴 크기(기본값: %d)</string>
+    <string name="enter_font_size">글꼴 크기 입력</string>
+    <string name="example_font">예 : 10</string>
+    <string name="font_size_changed">글꼴 크기 변경됨</string>
+    <string name="font_size">글꼴 크기: %1$s</string>
+    <string name="about_us">회사 소개</string>
+    <string name="rate_us">평가</string>
+    <string name="app_description">사용하기 쉬운 Android 애플리케이션으로 파일을 PDF로 변환합니다.</string>
+    <string name="version">버전 :</string>
+    <string name="developer">개발자 : 스와티 가그</string>
+    <string name="github_repo">Github 리포지토리</string>
+    <string name="view_contributors">기여자 보기</string>
+    <string name="privacy_policy">개인 정보 정책</string>
+    <string name="mail">메일 보내기</string>
+    <string name="join_slack">Slack에서 우리와 함께하세요</string>
+    <string name="website">우리 홈페이지에 방문 해주세요</string>
+    <string name="license">특허</string>
+    <string name="playstore">Play 스토어에서 평가</string>
+    <string name="swipe_to_view_next">다음 이미지를 보려면 왼쪽으로 스와이프하세요.</string>
+    <string name="showing_image">%2$d 이미지 중 %1$d 표시 중</string>
+    <string name="filter_brush">브러시</string>
+    <string name="filter_none">없음</string>
+    <string name="filter_autofix">자동 수정</string>
+    <string name="filter_grayscale">그레이스케일</string>
+    <string name="filter_brightness">명도</string>
+    <string name="filter_contrast">차이</string>
+    <string name="filter_cross">크로스 프로세스</string>
+    <string name="filter_documentary">기록한 것</string>
+    <string name="filter_duetone">듀톤</string>
+    <string name="filter_filllight">빛을 채우다</string>
+    <string name="filter_filpver">수직으로 뒤집기</string>
+    <string name="filter_fliphor">수평으로 뒤집기</string>
+    <string name="filter_grain">곡물</string>
+    <string name="filter_lomish">로미쉬</string>
+    <string name="filter_negative">부정적인</string>
+    <string name="filter_poster">포스터화하다</string>
+    <string name="filter_rotate">회전</string>
+    <string name="filter_saturate">가득한</string>
+    <string name="filter_sepia">세피아</string>
+    <string name="filter_sharpen">갈다</string>
+    <string name="filter_temp">온도</string>
+    <string name="filter_tint">색조</string>
+    <string name="filter_vig">삽화</string>
+    <string name="filter_saved">이미지 저장됨</string>
+    <string name="created">만들어진</string>
+    <string name="printed">인쇄</string>
+    <string name="renamed">이름이 변경됨</string>
+    <string name="deleted">삭제됨</string>
+    <string name="rotated">회전</string>
+    <string name="encrypted">암호화</string>
+    <string name="decrypted">복호화</string>
+    <string name="history">역사</string>
+    <string name="no_history_message">표시할 기록이 없습니다.</string>
+    <string name="view_history_here_message">여기에서 변환된 모든 파일 기록을 보십시오!</string>
+    <string name="delete_history_message">기록을 삭제하시겠습니까?</string>
+    <string name="extract_images">이미지 추출</string>
+    <string name="extract_images_failed">선택한 PDF에서 이미지를 찾을 수 없습니다.</string>
+    <string name="extract_images_success">
+선택한 PDF에서 %1$d개의 이미지를 찾았습니다. 루트 디렉토리의 PDF 파일 폴더에 저장되었습니다.
+</string>
+    <string name="extract_text">텍스트 추출</string>
+    <string name="pdf_selected">선택한 PDF 파일:</string>
+    <string name="file_info">
+\n파일 이름: %1$s \n\n경로: %2$s \n\n크기: %3$s \n\n수정한 날짜 %4$s
+</string>
+    <string name="default_font_family_text">글꼴 모음(기본값: %s)</string>
+    <string name="font_family_text">"글꼴 패밀리 : "</string>
+    <string name="courier" translatable="false">COURIER</string>
+    <string name="helvetica" translatable="false">HELVETICA</string>
+    <string name="times_roman" translatable="false">TIMES_ROMAN</string>
+    <string name="symbol" translatable="false">SYMBOL</string>
+    <string name="zapfdingbats" translatable="false">ZAPFDINGBATS</string>
+    <string name="undefined">찾으시는 주소가 없습니다</string>
+    <string name="selected_image">선택한 이미지</string>
+    <string name="reset">초기화</string>
+    <string name="rotate">회전</string>
+    <string name="done">완료</string>
+    <string name="image_successfully_cropped">이미지 잘림</string>
+    <string name="confirm_exit_message">종료하려면 뒤로를 다시 누르세요.</string>
+    <string name="filter_not_saved">이미지를 저장할 수 없습니다</string>
+    <string name="remove_image_message">이 이미지를 삭제하시겠습니까?</string>
+    <string name="dont_show_again">다시 표시하지 않음</string>
+    <string name="remove_page_message">이 페이지를 삭제하시겠습니까?</string>
+    <string name="encrypted_file_text">암호화된 파일</string>
+    <string name="split_pdf">PDF 분할</string>
+    <string name="split_success">선택한 PDF가 성공적으로 분할되었습니다. %1$d PDF로 분할되었습니다.</string>
+    <string name="split_info">PDF는 여러 PDF로 분할됩니다. 형식 예: 1–5,6–7,8,9</string>
+    <string name="error_page_number">잘못된 페이지 번호</string>
+    <string name="error_page_range">잘못된 범위 입력</string>
+    <string name="error_invalid_input">잘못된 입력</string>
+    <string name="split_one_page_pdf_alert">선택한 PDF는 1페이지이므로 분할할 수 없습니다!</string>
+    <string name="remove_pages">페이지 제거</string>
+    <string name="remove_pages_error">입력 값이 유효하지 않습니다</string>
+    <string name="encrypted_pdf">PDF는 암호로 보호되어 있습니다</string>
+    <string name="file_access_error">PDF에 액세스할 수 없습니다. 파일은 암호화되거나 외부 저장소에 있을 수 있습니다.</string>
+    <string name="file_order">파일에 변경 사항이 없습니다.</string>
+    <string name="compress_pdf">PDF 압축</string>
+    <string name="compress_pdf_prompt">PDF 압축률 입력:</string>
+    <string name="compress_info">
+축하합니다! PDF가 압축되었습니다. \n원본 PDF 크기: %s \n압축된 PDF 크기: %s
+</string>
+    <string name="pdf_to_images">PDF를 이미지로</string>
+    <string name="create_images">이미지 만들기</string>
+    <string name="select_pdf_file">PDF 파일 선택</string>
+    <string name="share_images">이미지 공유</string>
+    <string name="view_images">이미지 보기</string>
+    <string name="view_in_gallery">갤러리에서 이미지 보기</string>
+    <string name="remove_duplicate_pages">중복 페이지 제거</string>
+    <string name="remove_duplicate_info">PDF의 중복 페이지가 제거됩니다.</string>
+    <string name="remove_duplicate">중복 페이지를 제거합니다.</string>
+    <string name="invert_pdf">PDF 반전</string>
+    <string name="invert_pdf_info">pdf의 모든 색상이 반전됩니다.</string>
+    <string name="invert_pdf_title">PDF 반전</string>
+    <string name="rate_positive">지금 평가</string>
+    <string name="rate_negative">고맙지 만 사양 할게</string>
+    <string name="rate_title">우리를 평가!</string>
+    <string name="rate_dialog_text">
+이 앱이 마음에 드시면 잠시 시간을 내어 이 앱을 평가해 주세요. 1분도 채 걸리지 않습니다. 지원해 주셔서 감사합니다! :)
+</string>
+    <string name="rate_us_never">절대</string>
+    <string name="error_occurred">오류 발생</string>
+    <string name="rotate_pages">페이지 회전</string>
+    <string name="enter_rotation_angle">회전 각도 입력</string>
+    <string name="rotated_file_name" translatable="false">%s_rotated_%s%s</string>
+    <string name="degree_90" translatable="false">90 °</string>
+    <string name="degree_180" translatable="false">180 °</string>
+    <string name="degree_270" translatable="false">270 °</string>
+    <string name="share_files">파일 공유</string>
+    <string name="pdf_removed_from_list">PDF가 목록에서 제거되었습니다.</string>
+    <string name="pdf_added_to_list">PDF가 목록에 추가되었습니다.</string>
+    <string name="select_files">파일 선택</string>
+    <string name="settings">설정</string>
+    <string name="compression_image_edit">이미지 압축 값 변경</string>
+    <string name="font_family_edit">기본 글꼴 모음 변경</string>
+    <string name="font_size_edit">기본 글꼴 크기 변경</string>
+    <string name="theme_edit">기본 테마 변경</string>
+    <string name="image_compression_value_default">이미지 압축 기본값: %d %%</string>
+    <string name="theme_value_def">테마 기본값: %s</string>
+    <string name="page_size_value_def">페이지 크기 기본값: %s</string>
+    <string name="font_size_value_def">글꼴 크기 기본값: %d</string>
+    <string name="font_family_value_def">글꼴 모음 기본값: %s</string>
+    <string name="settings_info">여기에서 다양한 설정의 기본값을 수정할 수 있습니다.</string>
+    <string name="storage_location_modified">저장 위치가 변경됨</string>
+    <string name="storage_location_info">보관 위치(변경 불가)</string>
+    <string name="theme_white">하얀</string>
+    <string name="theme_dark">어두운</string>
+    <string name="theme_black">검은 색</string>
+    <string name="theme_system" tools:ignore="MissingTranslation">체계</string>
+    <string name="change_master_pwd">마스터 비밀번호 변경</string>
+    <string name="current_master_pwd">
+현재 마스터 암호는 암호화된 모든 PDF의 \"%1$s\"입니다. 여기에서 변경할 수 있습니다.
+</string>
+    <string name="home_page">집</string>
+    <string name="create_new_pdfs">새 PDF 만들기</string>
+    <string name="view_pdfs">PDF 보기</string>
+    <string name="view_pdf">PDF 보기</string>
+    <string name="modify_existing_pdfs">기존 PDF 수정</string>
+    <string name="more_options">추가 옵션</string>
+    <string name="add_password">비밀번호 추가</string>
+    <string name="add_text">텍스트 추가</string>
+    <string name="reorder_pages">페이지 재정렬</string>
+    <string name="remove_password">비밀번호 제거</string>
+    <string name="enhance_created_pdfs">생성된 PDF 향상</string>
+    <string name="viewfiles_rotatepages">
+1. 회전할 PDF를 선택합니다. \n2. 페이지 회전을 선택합니다. \n3. 회전 각도를 선택합니다. 확인을 선택합니다. \n4. 새로운 회전 PDF가 생성됩니다.
+</string>
+    <string name="viewfiles_addpassword">
+1. 비밀번호를 추가할 PDF를 선택합니다. \n2. 비밀번호 추가를 선택합니다. \n3. 새 암호를 입력합니다. 확인을 선택합니다. \n4. 비밀번호가 있는 새 PDF가 생성됩니다.
+</string>
+    <string name="viewfiles_removepassword">
+1. 비밀번호를 제거할 PDF를 선택합니다. \n2. 비밀번호 제거를 선택합니다. \n3. PDF 비밀번호를 입력하세요. 확인을 선택합니다. \n4. PDF가 없는 새 PDF가 생성됩니다.
+</string>
+    <string name="grayscale_images">회색조 PDF 만들기</string>
+    <string name="welcome_create_pdf_message">PDF 파일 만들기</string>
+    <string name="welcome_create_pdf_info">이전에 만든 PDF 파일을 보거나 새 파일을 만드세요!</string>
+    <string name="welcome_themes_title">다른 테마</string>
+    <string name="welcome_themes_message">
+설정으로 이동하면 검은색, 어두운색, 흰색의 세 가지 테마 유형 중에서 선택할 수 있습니다.
+</string>
+    <string name="welcome_merge_title">PDF 파일 병합</string>
+    <string name="welcome_text_to_pdf">텍스트를 PDF로</string>
+    <string name="welcome_text_to_pdf_message">텍스트 파일을 가장 원하는 PDF로 쉽게 변환</string>
+    <string name="welcome_qrcode_to_pdf">QR 코드를 PDF로</string>
+    <string name="welcome_qrcode_to_pdf_message">QR 코드 및 바코드를 간단한 방식으로 PDF로 변환</string>
+    <string name="welcome_remove_pages">페이지 제거</string>
+    <string name="welcome_remove_pages_message">더 이상 필요하지 않은 원치 않는 페이지 제거</string>
+    <string name="welcome_reorder_pages">페이지 재정렬</string>
+    <string name="welcome_reorder_pages_message">원하는 방식으로 페이지 재정렬 및 ​​재정렬</string>
+    <string name="welcome_extract_images">PDF에서 이미지 추출</string>
+    <string name="welcome_extract_images_message">이동 중에 PDF에서 가능한 모든 이미지 추출</string>
+    <string name="welcome_merge_message">하나의 파일로 휴대폰에 있는 다른 기존 PDF 병합</string>
+    <string name="welcome_viewfiles_title">PDF 파일 보기</string>
+    <string name="welcome_viewfiles_message">PDF 파일 보기, 삭제, 이름 변경, 공유 및 암호 추가</string>
+    <string name="welcome_excel_message">Excel 파일을 가장 원하는 PDF로 쉽게 변환</string>
+    <string name="skip_text">건너 뛰다</string>
+    <string name="get_started_title">시작하다!</string>
+    <string name="whatsnew_continue">계속하다</string>
+    <string name="whatsnew_title">새로운 기능</string>
+    <string name="watermark_added">워터마크 추가됨</string>
+    <string name="watermarked">워터마크</string>
+    <string name="watermarked_file">_watermarked.pdf</string>
+    <string name="watermark_remove">워터마크 제거됨</string>
+    <string name="snackbar_watermark_cannot_be_blank">텍스트는 비워둘 수 없습니다.</string>
+    <string name="cannot_add_watermark">PDF에 워터마크를 추가할 수 없습니다. PDF를 다시 확인하십시오.</string>
+    <string name="add_watermark">워터 마크를 추가</string>
+    <string name="enter_watermark_text">텍스트 입력</string>
+    <string name="enter_watermark_angle">각도 입력</string>
+    <string name="watermark_angle">각도</string>
+    <string name="choose_watermark_color">색상 선택</string>
+    <string name="enter_watermark_font_size">글꼴 크기 입력</string>
+    <string name="choose_watermark_font_family">글꼴 모음 선택</string>
+    <string name="watermark_font_size">글꼴 크기</string>
+    <string name="choose_watermark_style">스타일 선택</string>
+    <string name="viewfiles_addwatermark">
+1. 워터마크를 추가할 PDF를 선택합니다. \n2. 워터마크 추가를 선택합니다. \n3. 필수 정보를 입력하세요. 확인을 선택합니다. \n4. 워터마크가 있는 새 PDF가 생성됩니다.
+</string>
+    <string name="add_images">이미지 추가</string>
+    <string name="selected_images_text">선택한 이미지는 선택한 PDF의 끝에 추가됩니다.</string>
+    <string name="no_images_selected">선택한 이미지가 없습니다.</string>
+    <string name="title_filter_history_dialog">작업 유형별 필터링</string>
+    <string name="zip_to_pdf">ZIP을 PDF로</string>
+    <string name="convert_to_pdf">PDF로 변환</string>
+    <string name="error_no_image_in_zip">ZIP 파일에 이미지가 없습니다.</string>
+    <string name="error_open_file">파일을 여는 동안 오류가 발생했습니다. 다시 열어주세요</string>
+    <string name="error_pdf_not_created">죄송합니다. PDF가 생성되지 않았습니다. 다시 시도하십시오</string>
+    <string name="favourites">즐겨찾기</string>
+    <string name="add_to_favourite">즐겨찾기에 추가</string>
+    <string name="favourites_text">아이콘을 선택하여 좋아하는 기능을 추가하세요!</string>
+    <string name="no_excel_file">선택한 엑셀 파일이 없습니다</string>
+    <string name="split_range_alert">입력한 분할 범위는 선택한 PDF를 다시 생성합니다!</string>
+    <string name="pdf_suffix" translatable="false">_pdf</string>
+    <string name="reordering_pages_dialog">페이지 재정렬 중...</string>
+    <string name="delete_alert_singular">선택한 파일을 삭제하시겠습니까?</string>
+    <string name="snackbar_files_deleted">삭제된 파일</string>
+    <string name="lbl_recently_used">최근에 사용한 기능</string>
+    <string name="faqSearch">자주 묻는 질문 검색</string>
+    <string-array name="faq_question_answers">
+        <item>지원되는 이미지 파일 형식은 무엇입니까?</item>
+        <item>
+앱을 사용하여 새 텍스트 파일을 만들 수 있습니까?
+<strong> 텍스트 추출</strong>
+홈페이지에서 옵션. \n2) 다음을 사용하여 PDF를 선택하십시오.
+<strong> PDF 파일 선택</strong>
+단추. \n3) 그런 다음
+<strong> 텍스트 추출</strong>
+. \n4) 완료되면 PDF 파일의 텍스트가 포함된 텍스트 파일이 생성됩니다.
+</item>
+        <item>PDF를 만들기 위해 한 번에 추가할 수 있는 이미지 수에 제한이 있습니까?</item>
+        <item>
+추가할 수 있는 이미지 크기에 제한이 있습니까?
+<strong> 10MB 미만</strong>
+. 여러 개의 큰 이미지 파일을 변환하는 데 10초 이상이 걸립니다.
+</item>
+        <item>추가한 후 이미지에 캡션을 삽입할 수 있습니까?</item>
+        <item>앱을 사용하여 PDF 파일을 읽을 수 있습니까?</item>
+        <item>
+앱을 사용하여 만든 PDF 파일은 어디에 저장되나요?
+<strong> 설정</strong>
+부분.
+</item>
+        <item>
+기본 창고 위치를 변경하는 방법은 무엇입니까?
+<strong> 햄버거 아이콘</strong>
+(세 개의 가로선) 왼쪽 상단 모서리에 있습니다. \n2) 아래로 스크롤하여 클릭
+<strong> 설정</strong>
+. \n3) 설정 페이지에서 텍스트 바로 아래 필드를 클릭합니다.
+<strong> 저장 위치 변경</strong>
+. \n4) 원하는 저장 위치를 ​​열고
+<strong> 아이콘 선택</strong>
+상단에. \n변경되면 앱을 사용하여 생성된 파일은 새 위치에 저장됩니다.
+</item>
+        <item>
+앱을 사용하여 편집/생성한 PDF 파일을 공유하려면 어떻게 해야 하나요?
+<strong> 파일 보기</strong>
+홈페이지에서 옵션. \n2) 확인란을 사용하여 공유하려는 파일을 선택합니다. \n3) 다음으로
+<strong> 추가 옵션</strong>
+(세로 점 3개) 오른쪽 상단에 있는
+<strong> 공유하다</strong>
+. \n4) 원하는 파일 공유 방법을 선택하세요.
+</item>
+        <item>앱을 사용하여 PDF 파일의 잊어버린 비밀번호를 복구할 수 있습니까?</item>
+        <item>
+PDF 파일의 비밀번호를 변경할 수 있습니까?
+<strong> 비밀번호 변경</strong>
+비밀번호를 변경하려면 홈페이지에서 옵션을 선택하십시오.
+</item>
+        <item>
+PDF를 만들기 전에 이미지를 압축할 수 있습니까?
+<strong> 이미지를 PDF로</strong>
+홈페이지에서 옵션. \n2) 다음을 사용하여 이미지를 선택합니다.
+<strong> 이미지 선택</strong>
+단추. \n3) 다음으로
+<strong> 이미지 압축</strong>
+이미지를 압축하는 옵션입니다.
+</item>
+        <item>
+PDF에서 추출한 이미지의 형식은 무엇입니까?
+<strong> .png</strong>
+체재.
+</item>
+        <item>클라우드/온라인 스토리지에서 파일을 추가할 수 있습니까?</item>
+        <item>
+생성/수정된 파일의 이력을 확인하는 방법은 무엇입니까?
+<strong> 역사</strong>
+홈페이지에서 옵션.
+</item>
+        <item>
+여러 PDF 파일을 병합하는 방법은 무엇입니까?
+<strong> PDF 병합</strong>
+홈페이지에서 옵션. \n2) 다음을 사용하여 PDF 파일을 선택하십시오.
+<strong> 파일 선택</strong>
+단추. \n3) 선택한 후
+<strong> 파일 병합</strong>
+단추.
+</item>
+        <item>
+PDF를 만드는 동안 이미지를 편집할 수 있습니까?
+<strong> 이미지를 PDF로</strong>
+홈페이지에서 옵션. \n2) 다음을 사용하여 이미지 선택
+<strong> 이미지 선택</strong>
+단추. \n3) 선택한 후
+<strong> 이미지 편집</strong>
+또는
+<strong> 이미지 필터링</strong>
+귀하의 요구 사항에 따라 옵션. \n4) 필터 편집 또는 적용을 완료하십시오. \n5) 이제 다음을 사용하여 편집된 이미지를 선택합니다.
+<strong> 이미지 선택</strong>
+버튼과 클릭
+<strong> PDF 만들기</strong>
+PDF를 생성합니다.
+</item>
+        <item>
+PDF에 워터마크를 추가하는 방법은 무엇입니까?
+<strong> 생성된 PDF 향상</strong>
+홈페이지 또는 옵션 메뉴에서 왼쪽에서 오른쪽으로 스와이프하여
+<strong> 워터 마크를 추가</strong>
+.
+</item>
+        <item>
+PDF에서 페이지를 재정렬할 수 있습니까?
+<strong> 페이지 재정렬</strong>
+홈페이지에서 옵션. \n2) 다음을 사용하여 PDF 파일을 선택하십시오.
+<strong> 파일 선택</strong>
+단추. \n3) 클릭
+<strong> PDF 만들기</strong>
+. \n4) 위쪽 및 아래쪽 화살표를 사용하여 페이지를 재정렬합니다. \n5) 재정렬되면 다음을 클릭하십시오.
+<strong> 뒤로 화살표</strong>
+새 업데이트된 PDF 파일을 만들려면 왼쪽 상단에서
+</item>
+        <item>PDF에서 이미지를 추출하는 방법은 무엇입니까?</item>
+        <item>PDF를 PPT, PPTX, ODT, DOC, DOCX 형식으로 변환할 수 있습니까?</item>
+        <item>PDF CONVERTER: Files to PDF 앱은 어디에서 다운로드할 수 있습니까?</item>
+        <item>
+이 앱에 기여할 수 있습니까?
+<strong> Swati4star/이미지를 PDF로</strong>
+. \n자유롭게 아이디어(기능 요청)를 공유하거나 버그를 제출하거나 추가해야 한다고 생각하는 항목에 대한 pull 요청을 제출하세요. \n이 프로젝트에는 한 줄의 변경 사항만 추가하는 여러 기여자가 있습니다. 프로젝트 읽기
+<strong> 기고자 가이드</strong>
+시작합니다.
+</item>
+        <item>
+이 FAQ 문서에 없는 몇 가지 질문이 있습니다. 개발자에게 어떻게 연락할 수 있습니까?
+<strong> swati4star@gmail.com</strong>
+</item>
+    </string-array>
+</resources>
