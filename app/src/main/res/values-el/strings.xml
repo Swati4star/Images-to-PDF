@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Μετατροπέας PDF</string>
+    <string name="title">Ενέργειες PDF</string>
+    <string name="file_name_text">Ονομα αρχείου</string>
+    <string name="select_images_text">Επιλέξτε Εικόνες</string>
+    <string name="password_protect_pdf_text">PDF Προστασία με κωδικό πρόσβασης</string>
+    <string name="edit_images_text">Επεξεργασία εικόνων</string>
+    <string name="open_pdf_text">Ανοίξτε το PDF</string>
+    <string name="create_pdf_text">Δημιουργία PDF</string>
+    <string name="details">
+<b> Λεπτομέριες</b>
+</string>
+    <string name="search_hint">Όνομα αρχείου</string>
+    <string name="search">Αναζήτηση</string>
+    <string name="default_content_description">Χωρίς περιγραφή</string>
+    <string name="prompt_input">Μπείτε εδώ</string>
+    <array name="items">
+        <item>Open File</item>
+        <item>Delete File</item>
+        <item>Rename File</item>
+        <item>Print File</item>
+        <item>Share File</item>
+        <item>Show Details</item>
+        <item>Add Password</item>
+        <item>Remove Password</item>
+        <item>Rotate Pages</item>
+        <item>Add Watermark</item>
+    </array>
+    <array name="itemIds" translatable="false">
+        <item>open</item>
+        <item>delete</item>
+        <item>rename</item>
+        <item>print</item>
+        <item>e-mail</item>
+        <item>details</item>
+    </array>
+    <string-array name="array_page_sizes_b0_b10" translatable="false">
+        <item>B0 (1000 x 1414 mm)</item>
+        <item>B1 (707 x 1000 mm)</item>
+        <item>B2 (500 x 707 mm)</item>
+        <item>B3 (353 x 500 mm)</item>
+        <item>B4 (250 x 353 mm)</item>
+        <item>B5 (176 x 250 mm)</item>
+        <item>B6 (125 x 176 χλστ.)</item>
+        <item>B7 (88 x 125 mm)</item>
+        <item>B8 (62 x 88 mm)</item>
+        <item>B9 (44 x 62 mm)</item>
+        <item>B10 (31 x 44 mm)</item>
+    </string-array>
+    <string-array name="array_page_sizes_a0_b10" translatable="false">
+        <item>A0 (841 x 1189 χλστ.)</item>
+        <item>A1 (594 x 841 χλστ.)</item>
+        <item>A2 (420 x 594 mm)</item>
+        <item>A3 (297 x 420 mm)</item>
+        <item>A4 (210 x 297 χλστ.)</item>
+        <item>A5 (148 x 210 mm)</item>
+        <item>A6 (105 x 148 mm)</item>
+        <item>A7 (74 x 105 mm)</item>
+        <item>Α8 (52 χ 74 mm)</item>
+        <item>A9 (37 x 52 mm)</item>
+        <item>A10 (26 x 37 mm)</item>
+    </string-array>
+    <string-array name="fontStyles" translatable="false">
+        <item>ΚΑΝΟΝΙΚΟΣ</item>
+        <item>ΤΟΛΜΗΡΟΣ</item>
+        <item>ΠΛΑΓΟΣ</item>
+        <item>ΥΠΟΓΡΑΜΜΙΖΩ</item>
+        <item>ΣΤΡΙΚΕΘΡΟΥ</item>
+        <item>ΕΝΤΟΝΑ ΠΛΑΓΙΑΣΤΑ</item>
+    </string-array>
+    <string name="pdf_ext" translatable="false">.pdf</string>
+    <string name="pdf_type" translatable="false">application/pdf</string>
+    <string name="txt_type" translatable="false">text/*</string>
+    <string name="please_wait">Παρακαλώ περιμένετε</string>
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">
+Συγνώμη! Δεν ήταν δυνατή η προσθήκη εικόνων. Επιλέξτε τις εικόνες από την επιλογή **Επιλογή εικόνων**.
+</string>
+    <string name="successToast">Οι εικόνες προστέθηκαν με επιτυχία.</string>
+    <string name="create_pdf">Δημιουργία PDF</string>
+    <string name="qr_barcode_pdf">QR</string>
+    <string name="viewFiles">Προβολή αρχείων</string>
+    <string name="extras">Πρόσθετα</string>
+    <string name="share">Μερίδιο</string>
+    <string name="help">Βοήθεια</string>
+    <string name="faqs">FAQ</string>
+    <string name="images_to_pdf">Εικόνες σε PDF</string>
+    <string name="page_color">Χρώμα σελίδας</string>
+    <string name="filter_images_Text">Φιλτράρισμα εικόνων \n</string>
+    <string name="preview_image_to_pdf">Προεπισκόπηση PDF</string>
+    <string name="choose_page_number_style">Επιλέξτε Στυλ αριθμού σελίδας</string>
+    <string name="show_pg_num">Εμφάνιση αριθμών σελίδων</string>
+    <string name="page_x_of_n">Σελίδα Χ από Ν</string>
+    <string name="page_x">Χ του Ν</string>
+    <string name="x">Χ</string>
+    <string name="arrow_up">Βέλος επάνω</string>
+    <string name="arrow_down">Βέλος προς τα κάτω</string>
+    <string name="rearrange_images">Αναδιάταξη εικόνων</string>
+    <string name="rearrange_text">Τακτοποιώ</string>
+    <string name="images_rearranged">Οι εικόνες αναδιατάχθηκαν</string>
+    <string name="snackbar_undoAction">Ξεκάνω</string>
+    <string name="pdf_does_not_exist_message">Το PDF δεν υπάρχει.</string>
+    <string name="image_rearranging_options">Επιλογές αναδιάταξης εικόνας</string>
+    <string name="filter_file_name">%s_%s.jpg</string>
+    <string name="compress_image">Συμπίεση εικόνας : %s %%</string>
+    <string name="quality_image">Εισαγάγετε % συμπίεση της εικόνας:</string>
+    <string name="invalid_entry">Μη έγκυρη καταχώρηση</string>
+    <string name="compress_dialog_enter_prompt">Μπείτε εδώ</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">Ορίσετε ως προεπιλογή</string>
+    <string name="add_margins">Προσθήκη περιθωρίων</string>
+    <string name="top">Μπλουζα</string>
+    <string name="bottom">Κάτω μέρος</string>
+    <string name="right">σωστά</string>
+    <string name="left">Αριστερά</string>
+    <string name="border">Προσθήκη περιγράμματος εικόνας</string>
+    <string name="border_dialog_title">Πλάτος περιγράμματος : %d</string>
+    <string name="border_width_prompt">Εισαγάγετε μονάδες πλάτους περιγράμματος</string>
+    <string name="image_scale_type">Ορίστε τον τύπο κλίμακας εικόνας</string>
+    <string name="stretch_image">Τεντώστε την εικόνα ώστε να χωράει στη σελίδα</string>
+    <string name="maintain_aspect_ratio">Διατηρήστε την αναλογία διαστάσεων των εικόνων</string>
+    <string name="scan_qrcode">Σάρωση κωδικού QR</string>
+    <string name="scan_barcode">Σάρωση γραμμικού κώδικα</string>
+    <string name="qrbarcodes_to_pdf">Δημιουργία PDF από QR</string>
+    <string name="scan_cancelled">Ακυρώθηκε η σάρωση από χρήστη</string>
+    <string name="snackbar_no_images">Δεν επιλέχθηκαν εικόνες</string>
+    <string name="snackbar_no_pdfs_selected">Δεν έχουν επιλεγεί αρχεία PDF</string>
+    <string name="snackbar_name_not_blank">Το όνομα δεν μπορεί να είναι κενό</string>
+    <string name="snackbar_permissions_given">Δόθηκαν δικαιώματα!</string>
+    <string name="snackbar_insufficient_permissions">Ανεπαρκή δικαιώματα!</string>
+    <string name="no_permissions">
+Δώστε δικαιώματα αποθήκευσης για την προβολή των αρχείων σας.
+</string>
+    <string name="prompt_give_permission">Παροχή αδειών</string>
+    <string name="snackbar_images_added">Προστέθηκαν εικόνες</string>
+    <string name="snackbar_file_renamed">Το αρχείο μετονομάστηκε.</string>
+    <string name="snackbar_file_not_renamed">Το αρχείο δεν μπορεί να μετονομαστεί.</string>
+    <string name="snackbar_file_deleted">Το αρχείο διαγράφηκε.</string>
+    <string name="snackbar_file_not_deleted">Το αρχείο δεν μπορεί να διαγραφεί.</string>
+    <string name="snackbar_folder_not_created">Σφάλμα κατά τη δημιουργία φακέλου εφαρμογής.</string>
+    <string name="pdf_merged">Τα PDF συγχωνεύτηκαν</string>
+    <string name="error_path_not_found">
+Λυπούμαστε, δεν μπορούμε να έχουμε πρόσβαση στο αρχείο σε αυτήν την τοποθεσία
+</string>
+    <string name="creating_pdf">Δημιουργία PDF</string>
+    <string name="creating_txt">Δημιουργία αρχείου κειμένου</string>
+    <string name="enter_file_name">Εισαγάγετε το όνομα αρχείου</string>
+    <string name="example">Παράδειγμα: abc</string>
+    <string name="snackbar_no_pdf_app">Δεν υπάρχει εφαρμογή για ανάγνωση αρχείου PDF</string>
+    <string name="open_file">Ανοιγμα αρχείου</string>
+    <string name="set_password">Ορίστε κωδικό</string>
+    <string name="enter_password">Εισάγετε τον κωδικό πρόσβασης</string>
+    <string name="snackbar_password_cannot_be_blank">Ο κωδικός πρόσβασης δεν μπορεί να είναι κενός</string>
+    <string name="cannot_add_password">
+Δεν ήταν δυνατή η εφαρμογή του κωδικού πρόσβασης στο PDF. Ελέγξτε ξανά το PDF.
+</string>
+    <string name="snackbar_imagecropped">Οι εικόνες περικόπηκαν</string>
+    <string name="cropImage_activityTitle">Κόψε την εικονα</string>
+    <string name="snackbar_pdfCreated">Το PDF δημιουργήθηκε!</string>
+    <string name="error_uri_not_found">
+Λυπούμαστε, δεν μπορούμε να έχουμε πρόσβαση στην περικομμένη εικόνα. ΠΑΡΑΚΑΛΩ προσπαθησε ξανα
+</string>
+    <string name="snack_bar_empty_txt_in_pdf">Το επιλεγμένο PDF δεν έχει κείμενο για εξαγωγή!</string>
+    <string name="snackbar_txtExtracted">Εξαγωγή κειμένου!</string>
+    <string name="snackbar_pdfselected">Επιλέχθηκε το αρχείο PDF!</string>
+    <string name="snackbar_viewAction">Θέα</string>
+    <string name="more_options_text">Περισσότερες επιλογές βελτίωσης</string>
+    <string name="snackbar_no_duplicate_pdf">
+Δεν βρέθηκαν διπλότυπες σελίδες. Δεν δημιουργήθηκε νέο PDF.
+</string>
+    <string name="snackbar_duplicate_removed">
+Ένα νέο PDF δημιουργείται μετά την αφαίρεση των διπλότυπων σελίδων.
+</string>
+    <string name="snackbar_invert_unsuccessful">Δεν ήταν δυνατή η αντιστροφή του PDF</string>
+    <string name="snackbar_invert_successfull">Αντεστραμμένο</string>
+    <string name="snackbar_color_too_close">
+Το χρώμα της γραμματοσειράς και το χρώμα του φόντου είναι πολύ παρόμοια
+</string>
+    <string name="excel_selected">Επιλέχθηκε το αρχείο Excel</string>
+    <string name="excel_to_pdf">Excel σε PDF</string>
+    <string name="excel_tv_view_text">Επιλεγμένο αρχείο Excel:</string>
+    <string name="select_excel_file">Επιλέξτε αρχείο Excel</string>
+    <string name="share_chooser">Επιλέξτε εφαρμογή για αποστολή μηνύματος…</string>
+    <string name="rate_us_text">
+Γεια! Μόλις τσέκαρα αυτήν την εφαρμογή στο playstore. Δοκιμάστε το: https://play.google.com/store/apps/details?id=swati4star.createpdf. Μετατρέπει τις εικόνες σε PDF τόσο ομαλά. :)
+</string>
+    <string name="snackbar_no_share_app">Δεν υπάρχει εφαρμογή για κοινή χρήση.</string>
+    <string name="images_selected">Επιλέχθηκε %1$d εικόνα(ες).</string>
+    <string name="feedback_subject">Προτάσεις για μετατροπέα εικόνων σε PDF</string>
+    <string name="feedback_text">
+Γράψτε ευγενικά τα πολύτιμα σχόλιά σας ή απλώς στείλτε ένα γεια! :)
+</string>
+    <string name="snackbar_no_email_clients">
+Δεν υπάρχουν εγκατεστημένα προγράμματα-πελάτες email.
+</string>
+    <string name="feedback_chooser">"Αποστολή αλληλογραφίας..."</string>
+    <string name="no_pdf">Δεν υπάρχουν αρχεία PDF για εμφάνιση</string>
+    <string name="get_started">Ξεκινήστε τώρα</string>
+    <string name="view_files_text">Δείτε όλα τα αρχεία που έχετε μετατρέψει εδώ!</string>
+    <string name="empty_image_description">Χωρίς Pdf</string>
+    <string name="enter_password_custom">Εισάγετε τον κωδικό πρόσβασης</string>
+    <string name="example_pass_123">pass@123</string>
+    <string name="remove_dialog">ΑΦΑΙΡΩ</string>
+    <string name="password_remove">Καταργήθηκε ο κωδικός πρόσβασης</string>
+    <string name="merge_pdf">Συγχώνευση PDF</string>
+    <string name="merge_file_select">Επιλέξτε ένα αρχείο</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">Διαδρομή αρχείου για PDF δύο</string>
+    <string name="merge_files">ΣΥΓΧΩΝΕΥΣΗ ΑΡΧΕΙΩΝ</string>
+    <string name="file_date_text">Ημερομηνία αρχείου</string>
+    <string name="file_size_text">Μέγεθος αρχείου</string>
+    <string name="encrypted_file">_encrypted.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">Έχω επισυνάψει αρχεία σε αυτό το μήνυμα</string>
+    <string name="btn_sav_text" translatable="false">Save Text</string>
+    <string name="nextimage_contentdesc">Επόμενη εικόνα</string>
+    <string name="decrypted_file">_uncrypted.pdf</string>
+    <string name="decrypt_message">Εισαγάγετε τον κωδικό πρόσβασης για να συνεχίσετε</string>
+    <string name="snackbar_txtselected">Επιλέχθηκε το αρχείο κειμένου!</string>
+    <string name="decrypt_protected_file">
+Το επιλεγμένο pdf προστατεύεται με κωδικό πρόσβασης. Εισαγάγετε τον κωδικό πρόσβασης για να συνεχίσετε…
+</string>
+    <string name="not_encrypted">Το PDF δεν είναι κρυπτογραφημένο</string>
+    <string name="save_current">Αποθηκεύσετε</string>
+    <string name="save">Αποθηκεύσετε</string>
+    <string name="choose_color_text">Επιλέξτε ένα χρώμα:</string>
+    <string name="save_first">Πρώτα αποθηκεύστε την τρέχουσα εικόνα</string>
+    <string name="Filter_name">Φίλτρο</string>
+    <string name="Filter_image_preview">Προεπισκόπηση εικόνας φίλτρου</string>
+    <string name="warning">Προειδοποίηση</string>
+    <string name="overwrite_message">
+Υπάρχει ήδη ένα αρχείο με το ίδιο όνομα. Θέλετε να αντικαταστήσετε;
+</string>
+    <string name="set_page_size_text">Ορισμός μεγέθους σελίδας</string>
+    <string name="b0_to_b10">Β0 έως Β10</string>
+    <string name="a0_to_a10">Α0 έως Α10</string>
+    <string name="tabloid" translatable="false">TABLOID</string>
+    <string name="executive" translatable="false">EXECUTIVE</string>
+    <string name="ledger" translatable="false">LEDGER</string>
+    <string name="letter" translatable="false">LETTER</string>
+    <string name="legal" translatable="false">LEGAL</string>
+    <string name="a4" translatable="false">A4</string>
+    <string name="default_page_size">ΠΡΟΕΠΙΛΟΓΗ ( %s )</string>
+    <string name="master_password_changed">
+Ο κωδικός πρόσβασης φαίνεται να είναι λανθασμένος. Ίσως έχετε αλλάξει τον κύριο κωδικό πρόσβασης.
+</string>
+    <string name="delete_alert_selected">Θέλετε να διαγράψετε όλα τα επιλεγμένα αρχεία;</string>
+    <string name="sort_by_title">Ταξινόμηση κατά</string>
+    <string name="delete">Διαγράφω</string>
+    <string name="sort">Είδος</string>
+    <string name="directory">Ευρετήριο</string>
+    <string name="moving_files">Μετακίνηση των αρχείων σας</string>
+    <string name="success_move">Τα αρχεία σας μετακινήθηκαν με επιτυχία</string>
+    <string name="dir_does_not_exists">Ο κατάλογος δεν υπάρχει</string>
+    <string name="move_files_delete_dir">Μετακίνηση αρχείων και διαγραφή του καταλόγου</string>
+    <string name="directory_deleted">Ο κατάλογος διαγράφηκε</string>
+    <string name="success_delete_directory">Ο κατάλογος διαγράφηκε με επιτυχία</string>
+    <string name="moved_files">Τα αρχεία μετακινήθηκαν με επιτυχία</string>
+    <string name="dialog_new_dir">Εισαγάγετε το νέο όνομα καταλόγου</string>
+    <string name="dialog_dir">Εισαγάγετε το όνομα του καταλόγου</string>
+    <string name="cancel">Ματαίωση</string>
+    <string name="ok">Εντάξει</string>
+    <string name="yes">Ναί</string>
+    <string name="select_all">Επιλογή όλων</string>
+    <string name="converting_file_message">Μετατροπή των αρχείων σας σε PDF.</string>
+    <string name="select_text_file">Επιλέξτε Αρχείο κειμένου</string>
+    <string name="install_file_manager">Εγκαταστήστε μια Διαχείριση αρχείων</string>
+    <string name="text_to_pdf">Κείμενο σε PDF</string>
+    <string name="text_file_selected">Επιλέχθηκε αρχείο κειμένου</string>
+    <string name="select_file">"Επιλέξτε ένα αρχείο για μεταφόρτωση"</string>
+    <string name="text_type" translatable="false">text/plain</string>
+    <string name="new_directory">Νέος Κατάλογος</string>
+    <string name="previous_image_content_desc">Προηγούμενη εικόνα</string>
+    <string name="text_file_name">"Αρχείο κειμένου : "</string>
+    <string name="extension_not_supported">
+Συγνώμη! Αυτός ο τύπος αρχείου δεν υποστηρίζεται αυτήν τη στιγμή.
+</string>
+    <string name="font_color">Χρώμα γραμματοσειράς</string>
+    <string name="edit_font_size">Μέγεθος γραμματοσειράς (Προεπιλογή : %d)</string>
+    <string name="enter_font_size">Εισαγάγετε μέγεθος γραμματοσειράς</string>
+    <string name="example_font">Παράδειγμα: 10</string>
+    <string name="font_size_changed">Μέγεθος γραμματοσειράς άλλαξε</string>
+    <string name="font_size">Μέγεθος γραμματοσειράς: %1$s</string>
+    <string name="about_us">Σχετικά με εμάς</string>
+    <string name="rate_us">Βαθμολογήστε μας</string>
+    <string name="app_description">
+Μια εύκολη στη χρήση εφαρμογή Android για τη μετατροπή των αρχείων σας σε PDF.
+</string>
+    <string name="version">Εκδοχή :</string>
+    <string name="developer">Κατασκευαστής: Swati Garg</string>
+    <string name="github_repo">Αποθετήριο Github</string>
+    <string name="view_contributors">Δείτε Συντελεστές</string>
+    <string name="privacy_policy">Πολιτική Απορρήτου</string>
+    <string name="mail">Στείλτε ένα Mail</string>
+    <string name="join_slack">Ελάτε μαζί μας στο Slack</string>
+    <string name="website">Επισκεφτείτε την ιστοσελίδα μας</string>
+    <string name="license">Αδεια</string>
+    <string name="playstore">Αξιολογήστε μας στο Playstore</string>
+    <string name="swipe_to_view_next">
+Σύρετε προς τα αριστερά για να δείτε την επόμενη εικόνα
+</string>
+    <string name="showing_image">Εμφάνιση %1$d από %2$d εικόνα(ες)</string>
+    <string name="filter_brush">Βούρτσα</string>
+    <string name="filter_none">Κανένας</string>
+    <string name="filter_autofix">Αυτόματη επιδιόρθωση</string>
+    <string name="filter_grayscale">Κλίμακα του Γκρι</string>
+    <string name="filter_brightness">Λάμψη</string>
+    <string name="filter_contrast">Αντίθεση</string>
+    <string name="filter_cross">Διαδικασία διασταύρωσης</string>
+    <string name="filter_documentary">Ντοκυμαντέρ</string>
+    <string name="filter_duetone">Λόγω τόνου</string>
+    <string name="filter_filllight">Γεμίστε το φως</string>
+    <string name="filter_filpver">Αναστροφή κάθετη</string>
+    <string name="filter_fliphor">Αναποδογυρίστε οριζόντια</string>
+    <string name="filter_grain">Σιτηρά</string>
+    <string name="filter_lomish">Lomish</string>
+    <string name="filter_negative">Αρνητικός</string>
+    <string name="filter_poster">Posterize</string>
+    <string name="filter_rotate">Γυρίζω</string>
+    <string name="filter_saturate">Διαβρέχω</string>
+    <string name="filter_sepia">Καστανόχρους</string>
+    <string name="filter_sharpen">Ακονίζω</string>
+    <string name="filter_temp">Θερμοκρασία</string>
+    <string name="filter_tint">Απόχρωση</string>
+    <string name="filter_vig">Βινιέτα</string>
+    <string name="filter_saved">Η εικόνα αποθηκεύτηκε</string>
+    <string name="created">Δημιουργήθηκε</string>
+    <string name="printed">Εντυπος</string>
+    <string name="renamed">Μετονομάστηκε</string>
+    <string name="deleted">Διαγράφηκε</string>
+    <string name="rotated">Περιστράφηκε</string>
+    <string name="encrypted">Κρυπτογραφημένο</string>
+    <string name="decrypted">Αποκρυπτογραφημένο</string>
+    <string name="history">Ιστορία</string>
+    <string name="no_history_message">Δεν υπάρχει ιστορικό για εμφάνιση</string>
+    <string name="view_history_here_message">
+Δείτε όλο το ιστορικό των αρχείων που έχετε μετατρέψει εδώ!
+</string>
+    <string name="delete_history_message">
+Είστε βέβαιοι ότι θέλετε να διαγράψετε το ιστορικό;
+</string>
+    <string name="extract_images">Εξαγωγή εικόνων</string>
+    <string name="extract_images_failed">
+Δεν μπορέσαμε να βρούμε καμία εικόνα στο επιλεγμένο PDF.
+</string>
+    <string name="extract_images_success">
+Βρήκαμε %1$d εικόνα(ες) στο επιλεγμένο PDF. Έχουν αποθηκευτεί στο φάκελο Αρχεία PDF στον ριζικό κατάλογο.
+</string>
+    <string name="extract_text">Εξαγωγή κειμένου</string>
+    <string name="pdf_selected">Επιλεγμένο αρχείο PDF:</string>
+    <string name="file_info">
+\nΌνομα αρχείου : %1$s \n\nΔιαδρομή : %2$s \n\nΜέγεθος : %3$s \n\nΗμερομηνία τροποποίησης %4$s
+</string>
+    <string name="default_font_family_text">Οικογένεια γραμματοσειρών (Προεπιλογή : %s)</string>
+    <string name="font_family_text">"Οικογένεια γραμματοσειρών:"</string>
+    <string name="courier" translatable="false">COURIER</string>
+    <string name="helvetica" translatable="false">HELVETICA</string>
+    <string name="times_roman" translatable="false">TIMES_ROMAN</string>
+    <string name="symbol" translatable="false">SYMBOL</string>
+    <string name="zapfdingbats" translatable="false">ZAPFDINGBATS</string>
+    <string name="undefined">ΑΠΡΟΣΔΙΟΡΙΣΤΟΣ</string>
+    <string name="selected_image">Επιλεγμένη εικόνα</string>
+    <string name="reset">Επαναφορά</string>
+    <string name="rotate">Γυρίζω</string>
+    <string name="done">Εγινε</string>
+    <string name="image_successfully_cropped">Η εικόνα περικόπηκε με επιτυχία</string>
+    <string name="confirm_exit_message">Πατήστε ξανά πίσω για έξοδο</string>
+    <string name="filter_not_saved">Δεν ήταν δυνατή η αποθήκευση της εικόνας</string>
+    <string name="remove_image_message">
+Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτήν την εικόνα;
+</string>
+    <string name="dont_show_again">Να μην εμφανιστεί ξανά</string>
+    <string name="remove_page_message">
+Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτήν τη σελίδα;
+</string>
+    <string name="encrypted_file_text">κρυπτογραφημένο αρχείο</string>
+    <string name="split_pdf">Διαχωρισμός PDF</string>
+    <string name="split_success">
+Το επιλεγμένο PDF χωρίστηκε με επιτυχία. Χωρίστηκε σε %1$d PDF(s)
+</string>
+    <string name="split_info">
+Το PDF θα χωριστεί σε πολλά PDF. Παράδειγμα μορφής: 1–5,6–7,8,9
+</string>
+    <string name="error_page_number">Μη έγκυρος αριθμός σελίδας</string>
+    <string name="error_page_range">Μη έγκυρη είσοδος εύρους</string>
+    <string name="error_invalid_input">Μη έγκυρη εισαγωγή</string>
+    <string name="split_one_page_pdf_alert">
+Το επιλεγμένο PDF δεν μπορεί να διαχωριστεί επειδή έχει μόνο 1 σελίδα!
+</string>
+    <string name="remove_pages">Κατάργηση Σελίδων</string>
+    <string name="remove_pages_error">Η τιμή εισόδου δεν είναι έγκυρη</string>
+    <string name="encrypted_pdf">Το PDF προστατεύεται με κωδικό πρόσβασης</string>
+    <string name="file_access_error">
+Δεν ήταν δυνατή η πρόσβαση σε PDF. Τα αρχεία μπορεί να είναι κρυπτογραφημένα ή σε εξωτερικό χώρο αποθήκευσης.
+</string>
+    <string name="file_order">Δεν έγιναν αλλαγές στο αρχείο</string>
+    <string name="compress_pdf">Συμπίεση PDF</string>
+    <string name="compress_pdf_prompt">Εισαγάγετε % συμπίεση του PDF:</string>
+    <string name="compress_info">
+Συγχαρητήρια! Το PDF σας είναι συμπιεσμένο: \nΑρχικό Μέγεθος PDF : %s \nΣυμπιεσμένο Μέγεθος PDF: %s
+</string>
+    <string name="pdf_to_images">PDF σε εικόνες</string>
+    <string name="create_images">Δημιουργία εικόνων</string>
+    <string name="select_pdf_file">Επιλέξτε Αρχείο PDF</string>
+    <string name="share_images">Κοινή χρήση εικόνων</string>
+    <string name="view_images">Προβολή εικόνων</string>
+    <string name="view_in_gallery">Προβολή εικόνων στη συλλογή</string>
+    <string name="remove_duplicate_pages">Κατάργηση διπλότυπων σελίδων</string>
+    <string name="remove_duplicate_info">Οι διπλότυπες σελίδες στο PDF θα αφαιρεθούν.</string>
+    <string name="remove_duplicate">Κατάργηση διπλότυπων σελίδων.</string>
+    <string name="invert_pdf">Invert Pdf</string>
+    <string name="invert_pdf_info">Όλα τα χρώματα στο pdf θα αντιστραφούν</string>
+    <string name="invert_pdf_title">Αντιστροφή PDF</string>
+    <string name="rate_positive">Βαθμολογήστε Τώρα</string>
+    <string name="rate_negative">Οχι ευχαριστώ</string>
+    <string name="rate_title">Βαθμολογήστε μας!</string>
+    <string name="rate_dialog_text">
+Εάν σας αρέσει αυτή η εφαρμογή, αφιερώστε λίγο χρόνο για να αξιολογήσετε αυτήν την εφαρμογή. Δεν θα διαρκέσει περισσότερο από ένα λεπτό. Σας ευχαριστούμε για την υποστήριξή σας! :)
+</string>
+    <string name="rate_us_never">Ποτέ</string>
+    <string name="error_occurred">Προέκυψε σφάλμα</string>
+    <string name="rotate_pages">Περιστροφή σελίδων</string>
+    <string name="enter_rotation_angle">Εισαγάγετε τη γωνία περιστροφής</string>
+    <string name="rotated_file_name" translatable="false">%s_rotated_%s%s</string>
+    <string name="degree_90" translatable="false">90 °</string>
+    <string name="degree_180" translatable="false">180 °</string>
+    <string name="degree_270" translatable="false">270 °</string>
+    <string name="share_files">Κοινή χρήση αρχείων</string>
+    <string name="pdf_removed_from_list">Το PDF έχει αφαιρεθεί από τη λίστα.</string>
+    <string name="pdf_added_to_list">Το PDF έχει προστεθεί στη λίστα.</string>
+    <string name="select_files">Επιλέξτε Αρχεία</string>
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="compression_image_edit">Αλλαγή τιμής συμπίεσης εικόνας</string>
+    <string name="font_family_edit">Αλλαγή προεπιλεγμένης οικογένειας γραμματοσειρών</string>
+    <string name="font_size_edit">Αλλαγή προεπιλεγμένου μεγέθους γραμματοσειράς</string>
+    <string name="theme_edit">Αλλαγή προεπιλεγμένου θέματος</string>
+    <string name="image_compression_value_default">Προεπιλεγμένη τιμή συμπίεσης εικόνας : %d %%</string>
+    <string name="theme_value_def">Προεπιλεγμένη τιμή θέματος : %s</string>
+    <string name="page_size_value_def">Προεπιλεγμένη τιμή μεγέθους σελίδας : %s</string>
+    <string name="font_size_value_def">Προεπιλεγμένη τιμή μεγέθους γραμματοσειράς : %d</string>
+    <string name="font_family_value_def">Προεπιλεγμένη τιμή οικογένειας γραμματοσειρών : %s</string>
+    <string name="settings_info">
+Μπορείτε να τροποποιήσετε την προεπιλεγμένη τιμή για διάφορες ρυθμίσεις εδώ.
+</string>
+    <string name="storage_location_modified">Η τοποθεσία αποθήκευσης άλλαξε</string>
+    <string name="storage_location_info">Τοποθεσία αποθήκευσης (μη αλλαγή)</string>
+    <string name="theme_white">λευκό</string>
+    <string name="theme_dark">Σκοτάδι</string>
+    <string name="theme_black">Μαύρος</string>
+    <string name="theme_system" tools:ignore="MissingTranslation">Σύστημα</string>
+    <string name="change_master_pwd">Αλλάξτε τον κύριο κωδικό πρόσβασης</string>
+    <string name="current_master_pwd">
+Ο τρέχων κύριος κωδικός πρόσβασης είναι \"%1$s\" για κάθε κρυπτογραφημένο PDF. Μπορείτε να το αλλάξετε εδώ:
+</string>
+    <string name="home_page">Σπίτι</string>
+    <string name="create_new_pdfs">Δημιουργία νέου PDF</string>
+    <string name="view_pdfs">Προβολή αρχείων PDF</string>
+    <string name="view_pdf">Προβολή PDF</string>
+    <string name="modify_existing_pdfs">Τροποποιήστε τα υπάρχοντα PDF</string>
+    <string name="more_options">Περισσότερες επιλογές</string>
+    <string name="add_password">Προσθήκη κωδικού πρόσβασης</string>
+    <string name="add_text">Προσθέστε κείμενο</string>
+    <string name="reorder_pages">Αναδιάταξη σελίδων</string>
+    <string name="remove_password">Αφαίρεση κωδικού πρόσβασης</string>
+    <string name="enhance_created_pdfs">Βελτιώστε τα αρχεία PDF που έχουν δημιουργηθεί</string>
+    <string name="viewfiles_rotatepages">
+1. Επιλέξτε το PDF που θέλετε να περιστρέψετε. \n2. Επιλέξτε Περιστροφή σελίδων. \n3. Επιλέξτε γωνία περιστροφής. Επιλέξτε ΟΚ. \n4. Θα δημιουργηθεί νέο περιστρεφόμενο PDF.
+</string>
+    <string name="viewfiles_addpassword">
+1. Επιλέξτε το PDF στο οποίο θέλετε να προσθέσετε κωδικό πρόσβασης. \n2. Επιλέξτε Προσθήκη κωδικού πρόσβασης. \n3. Πληκτρολογήστε νέο κωδικό πρόσβασης. Επιλέξτε ΟΚ. \n4. Δημιουργείται νέο PDF με κωδικό πρόσβασης.
+</string>
+    <string name="viewfiles_removepassword">
+1. Επιλέξτε το PDF από το οποίο θέλετε να αφαιρέσετε τον κωδικό πρόσβασης. \n2. Επιλέξτε Κατάργηση κωδικού πρόσβασης. \n3. Πληκτρολογήστε τον κωδικό πρόσβασης PDF. Επιλέξτε ΟΚ. \n4. Θα δημιουργηθεί νέο PDF χωρίς PDF.
+</string>
+    <string name="grayscale_images">Δημιουργία PDF σε κλίμακα του γκρι</string>
+    <string name="welcome_create_pdf_message">Δημιουργία αρχείου PDF</string>
+    <string name="welcome_create_pdf_info">
+Δείτε τα αρχεία PDF που έχετε δημιουργήσει προηγουμένως ή δημιουργήστε ένα νέο!
+</string>
+    <string name="welcome_themes_title">Διαφορετικά θέματα</string>
+    <string name="welcome_themes_message">
+Μεταβείτε στις Ρυθμίσεις και μπορείτε να επιλέξετε από τρεις τύπους θεμάτων: Μαύρο, Σκούρο, Λευκό
+</string>
+    <string name="welcome_merge_title">Συγχώνευση αρχείου PDF</string>
+    <string name="welcome_text_to_pdf">Κείμενο σε PDF</string>
+    <string name="welcome_text_to_pdf_message">
+Μετατρέψτε εύκολα τα αρχεία κειμένου σας στα πιο επιθυμητά PDF
+</string>
+    <string name="welcome_qrcode_to_pdf">Κωδικός QR σε PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">
+Μετατρέψτε τους QR Codes και Barcodes σε PDF με απλοϊκό τρόπο
+</string>
+    <string name="welcome_remove_pages">Κατάργηση Σελίδων</string>
+    <string name="welcome_remove_pages_message">
+Αφαιρέστε τις ανεπιθύμητες σελίδες που δεν χρειάζεστε πλέον
+</string>
+    <string name="welcome_reorder_pages">Αναδιάταξη σελίδων</string>
+    <string name="welcome_reorder_pages_message">
+Αναδιάταξη και αναδιάταξη των σελίδων με τον τρόπο που επιθυμείτε
+</string>
+    <string name="welcome_extract_images">Εξαγωγή εικόνων από PDF</string>
+    <string name="welcome_extract_images_message">
+Εξάγετε όλες τις πιθανές εικόνες από τα PDF σας αμέσως
+</string>
+    <string name="welcome_merge_message">
+Συγχωνεύστε διαφορετικά υπάρχοντα PDF στο τηλέφωνό σας σε ένα αρχείο
+</string>
+    <string name="welcome_viewfiles_title">Προβολή των αρχείων PDF</string>
+    <string name="welcome_viewfiles_message">
+Προβολή, διαγραφή, μετονομασία, κοινή χρήση και προσθήκη κωδικού πρόσβασης στο αρχείο PDF σας
+</string>
+    <string name="welcome_excel_message">
+Μετατρέψτε εύκολα τα αρχεία excel στα πιο επιθυμητά PDF
+</string>
+    <string name="skip_text">Παραλείπω</string>
+    <string name="get_started_title">Ξεκίνα!</string>
+    <string name="whatsnew_continue">Να συνεχίσει</string>
+    <string name="whatsnew_title">Τι νέα</string>
+    <string name="watermark_added">Προστέθηκε υδατογράφημα</string>
+    <string name="watermarked">Υδατογράφημα</string>
+    <string name="watermarked_file">_υδατογράφημα.pdf</string>
+    <string name="watermark_remove">Το υδατογράφημα καταργήθηκε</string>
+    <string name="snackbar_watermark_cannot_be_blank">Το κείμενο δεν μπορεί να είναι κενό</string>
+    <string name="cannot_add_watermark">
+Δεν ήταν δυνατή η προσθήκη υδατογραφήματος στο PDF. Ελέγξτε ξανά το PDF.
+</string>
+    <string name="add_watermark">Προσθέστε υδατογράφημα</string>
+    <string name="enter_watermark_text">Εισαγάγετε κείμενο</string>
+    <string name="enter_watermark_angle">Εισαγάγετε γωνία</string>
+    <string name="watermark_angle">Γωνία</string>
+    <string name="choose_watermark_color">Επιλέξτε χρώμα</string>
+    <string name="enter_watermark_font_size">Εισαγάγετε μέγεθος γραμματοσειράς</string>
+    <string name="choose_watermark_font_family">Επιλέξτε οικογένεια γραμματοσειρών</string>
+    <string name="watermark_font_size">Μέγεθος γραμματοσειράς</string>
+    <string name="choose_watermark_style">Επιλέξτε στυλ</string>
+    <string name="viewfiles_addwatermark">
+1. Επιλέξτε το PDF στο οποίο θέλετε να προσθέσετε υδατογράφημα. \n2. Επιλέξτε Προσθήκη υδατογραφήματος. \n3. Συμπληρώστε τις απαιτούμενες πληροφορίες. Επιλέξτε ΟΚ. \n4. Θα δημιουργηθεί νέο PDF με υδατογράφημα.
+</string>
+    <string name="add_images">Προσθήκη εικόνων</string>
+    <string name="selected_images_text">
+Οι εικόνες που θα επιλέξετε θα προστεθούν στο τέλος του επιλεγμένου PDF.
+</string>
+    <string name="no_images_selected">Δεν επιλέχθηκαν εικόνες</string>
+    <string name="title_filter_history_dialog">Φιλτράρισμα ανά τύπο λειτουργίας</string>
+    <string name="zip_to_pdf">ZIP σε PDF</string>
+    <string name="convert_to_pdf">μετατροπή σε PDF</string>
+    <string name="error_no_image_in_zip">Το αρχείο ZIP δεν περιέχει εικόνα</string>
+    <string name="error_open_file">
+Παρουσιάστηκε σφάλμα κατά το άνοιγμα του αρχείου. Δοκιμάστε να ανοίξετε ξανά
+</string>
+    <string name="error_pdf_not_created">
+Λυπούμαστε, το PDF δεν δημιουργήθηκε. ΠΑΡΑΚΑΛΩ προσπαθησε ξανα
+</string>
+    <string name="favourites">Αγαπημένα</string>
+    <string name="add_to_favourite">Προσθήκη στα Αγαπημένα</string>
+    <string name="favourites_text">
+Επιλέξτε το εικονίδιο για να προσθέσετε τα αγαπημένα σας χαρακτηριστικά!
+</string>
+    <string name="no_excel_file">Δεν έχει επιλεγεί αρχείο excel</string>
+    <string name="split_range_alert">
+Η εισαγωγή του διαχωρισμένου εύρους θα δημιουργήσει ξανά το Επιλεγμένο PDF!
+</string>
+    <string name="pdf_suffix" translatable="false">_pdf</string>
+    <string name="reordering_pages_dialog">Αναδιάταξη των σελίδων σας...</string>
+    <string name="delete_alert_singular">Θέλετε να διαγράψετε το επιλεγμένο αρχείο;</string>
+    <string name="snackbar_files_deleted">Τα αρχεία διαγράφηκαν</string>
+    <string name="lbl_recently_used">Πρόσφατα χρησιμοποιημένα χαρακτηριστικά</string>
+    <string name="faqSearch">Αναζήτηση Συνήθεις Ερωτήσεις</string>
+    <string-array name="faq_question_answers">
+        <item>Ποιες μορφές αρχείων εικόνας υποστηρίζονται;</item>
+        <item>
+Μπορώ να δημιουργήσω ένα νέο αρχείο κειμένου χρησιμοποιώντας την εφαρμογή;
+<strong> Εξαγωγή κειμένου</strong>
+επιλογή στην αρχική σελίδα. \n2) Επιλέξτε το PDF χρησιμοποιώντας
+<strong> ΕΠΙΛΟΓΗ ΑΡΧΕΙΟΥ PDF</strong>
+κουμπί. \n3) Στη συνέχεια, κάντε κλικ
+<strong> ΑΠΟΣΠΑΣΜΑ ΚΕΙΜΕΝΟΥ</strong>
+. \n4) Μόλις ολοκληρωθεί, θα δημιουργηθεί ένα αρχείο κειμένου με τα κείμενα από το αρχείο PDF.
+</item>
+        <item>
+Υπάρχει όριο στον αριθμό των εικόνων που μπορώ να προσθέσω ταυτόχρονα για να δημιουργήσω ένα PDF;
+</item>
+        <item>
+Υπάρχει όριο στο μέγεθος της εικόνας που μπορώ να προσθέσω;
+<strong> λιγότερο από 10 MB</strong>
+. Η μετατροπή πολλών μεγάλων αρχείων εικόνας διαρκεί πάνω από 10 δευτερόλεπτα.
+</item>
+        <item>
+Μπορώ να εισάγω λεζάντες στην εικόνα μετά την προσθήκη;
+</item>
+        <item>
+Μπορώ να διαβάσω αρχεία PDF χρησιμοποιώντας την εφαρμογή;
+</item>
+        <item>
+Πού αποθηκεύονται τα αρχεία PDF που δημιούργησα χρησιμοποιώντας την εφαρμογή;
+<strong> Ρυθμίσεις</strong>
+Ενότητα.
+</item>
+        <item>
+Πώς να αλλάξετε την προεπιλεγμένη θέση storgae;
+<strong> Εικονίδιο χάμπουργκερ</strong>
+(τρεις οριζόντιες γραμμές) στην επάνω αριστερή γωνία. \n2) Κάντε κύλιση προς τα κάτω και κάντε κλικ
+<strong> Ρυθμίσεις</strong>
+. \n3) Στη σελίδα ρυθμίσεων, κάντε κλικ στο πεδίο ακριβώς κάτω από το κείμενο
+<strong> Αλλαγή τοποθεσίας αποθήκευσης</strong>
+. \n4) Ανοίξτε την προτιμώμενη τοποθεσία αποθήκευσης και κάντε κλικ στο
+<strong> Επιλέξτε εικονίδιο</strong>
+στην κορυφή. \nΜόλις αλλάξει, τα αρχεία που δημιουργήθηκαν χρησιμοποιώντας την εφαρμογή θα αποθηκευτούν στη νέα τοποθεσία.
+</item>
+        <item>
+Πώς μπορώ να μοιραστώ τα αρχεία PDF που επεξεργάζονται/δημιουργούνται χρησιμοποιώντας την εφαρμογή;
+<strong> Προβολή αρχείων</strong>
+επιλογή στην αρχική σελίδα. \n2) Επιλέξτε τα αρχεία που θέλετε να μοιραστείτε χρησιμοποιώντας το πλαίσιο ελέγχου. \n3) Στη συνέχεια, κάντε κλικ στο
+<strong> Περισσότερη επιλογή</strong>
+(τρεις κάθετες κουκκίδες) επάνω δεξιά και κάντε κλικ
+<strong> Μερίδιο</strong>
+. \n4) Επιλέξτε την επιθυμητή μέθοδο για κοινή χρήση των αρχείων.
+</item>
+        <item>
+Μπορώ να ανακτήσω τον ξεχασμένο κωδικό πρόσβασης ενός αρχείου PDF χρησιμοποιώντας την εφαρμογή;
+</item>
+        <item>
+Μπορώ να αλλάξω τον κωδικό πρόσβασης ενός αρχείου PDF;
+<strong> Άλλαξε κωδικό</strong>
+επιλογή στην αρχική σελίδα για να αλλάξετε τον κωδικό πρόσβασης.
+</item>
+        <item>
+Μπορώ να συμπιέσω τις εικόνες πριν δημιουργήσω ένα PDF;
+<strong> Εικόνες σε PDF</strong>
+επιλογή στην αρχική σελίδα. \n2) Επιλέξτε τις εικόνες χρησιμοποιώντας το
+<strong> ΕΠΙΛΟΓΗ ΕΙΚΟΝΩΝ</strong>
+κουμπί. \n3) Στη συνέχεια, επιλέξτε το
+<strong> Συμπίεση εικόνας</strong>
+επιλογή συμπίεσης των εικόνων.
+</item>
+        <item>
+Ποια είναι η μορφή των εικόνων που εξάγονται από ένα PDF;
+<strong> .png</strong>
+μορφή.
+</item>
+        <item>
+Μπορώ να προσθέσω αρχεία από cloud/διαδικτυακό χώρο αποθήκευσης;
+</item>
+        <item>
+Πώς να ελέγξετε το ιστορικό των αρχείων που δημιουργήθηκαν/τροποποιήθηκαν;
+<strong> Ιστορία</strong>
+επιλογή στην αρχική σελίδα.
+</item>
+        <item>
+Πώς να συγχωνεύσετε πολλά αρχεία PDF;
+<strong> Συγχώνευση PDF</strong>
+επιλογή στην αρχική σελίδα. \n2) Επιλέξτε τα αρχεία PDF χρησιμοποιώντας το
+<strong> ΕΠΙΛΟΓΗ ΑΡΧΕΙΩΝ</strong>
+κουμπί. \n3) Αφού επιλέξετε, κάντε κλικ
+<strong> ΣΥΓΧΩΝΕΥΣΗ ΑΡΧΕΙΩΝ</strong>
+κουμπί.
+</item>
+        <item>
+Μπορώ να επεξεργαστώ εικόνες κατά τη δημιουργία ενός PDF;
+<strong> Εικόνες σε PDF</strong>
+επιλογή στην αρχική σελίδα. \n2) Επιλέξτε τις εικόνες χρησιμοποιώντας
+<strong> ΕΠΙΛΟΓΗ ΕΙΚΟΝΩΝ</strong>
+κουμπί. \n3) Αφού επιλέξετε, κάντε κλικ στο
+<strong> Επεξεργασία εικόνων</strong>
+ή
+<strong> Φιλτράρισμα εικόνων</strong>
+επιλογή με βάση τις απαιτήσεις σας. \n4) Ολοκληρώστε την επεξεργασία ή την εφαρμογή του φίλτρου. \n5) Τώρα, επιλέξτε τις επεξεργασμένες εικόνες χρησιμοποιώντας το
+<strong> ΕΠΙΛΟΓΗ ΕΙΚΟΝΩΝ</strong>
+κουμπί και κάντε κλικ
+<strong> ΔΗΜΙΟΥΡΓΙΑ PDF</strong>
+για να δημιουργήσετε το PDF.
+</item>
+        <item>
+Πώς να προσθέσετε υδατογράφημα στο PDF;
+<strong> Βελτιώστε τα αρχεία PDF που έχουν δημιουργηθεί</strong>
+στην αρχική σελίδα ή στο μενού επιλογών σύροντας από αριστερά προς τα δεξιά και κάντε κλικ
+<strong> Προσθέστε υδατογράφημα</strong>
+.
+</item>
+        <item>
+Μπορώ να αναδιατάξω τις σελίδες σε PDF;
+<strong> Αναδιάταξη σελίδων</strong>
+επιλογή στην αρχική σελίδα. \n2) Επιλέξτε το αρχείο PDF χρησιμοποιώντας
+<strong> ΕΠΙΛΟΓΗ ΑΡΧΕΙΟΥ</strong>
+κουμπί. \n3) Κάντε κλικ
+<strong> ΔΗΜΙΟΥΡΓΙΑ PDF</strong>
+. \n4) Χρησιμοποιήστε το επάνω και το κάτω βέλος για να αναδιατάξετε τις σελίδες. \n5) Μετά την αναδιάταξη, κάντε κλικ
+<strong> Πίσω βέλος</strong>
+επάνω αριστερά για να δημιουργήσετε το νέο ενημερωμένο αρχείο PDF.
+</item>
+        <item>Πώς να εξαγάγετε εικόνες από ένα PDF;</item>
+        <item>
+Μπορώ να μετατρέψω αρχεία PDF σε μορφές PPT, PPTX, ODT, DOC, DOCX;
+</item>
+        <item>
+Πού μπορώ να κατεβάσω την εφαρμογή PDF CONVERTER: Files to PDF;
+</item>
+        <item>
+Μπορώ να συνεισφέρω σε αυτήν την εφαρμογή;
+<strong> Swati4star/Εικόνες σε PDF</strong>
+. \nΜοιραστείτε ελεύθερα τις ιδέες σας (αιτήματα για δυνατότητες), υποβάλετε ένα σφάλμα ή αίτημα έλξης για οτιδήποτε πιστεύετε ότι πρέπει να προστεθεί. \nΑυτό το έργο έχει πολλούς συντελεστές που προσθέτουν μόλις μια αλλαγή γραμμής. Διαβάστε το έργο
+<strong> Οδηγός συντελεστών</strong>
+για να ξεκινήσετε.
+</item>
+        <item>
+Έχω κάποιες ερωτήσεις που δεν περιλαμβάνονται σε αυτό το έγγραφο Συχνών Ερωτήσεων. Πώς μπορώ να επικοινωνήσω με τον προγραμματιστή;
+<strong> swati4star@gmail.com</strong>
+</item>
+    </string-array>
+</resources>
