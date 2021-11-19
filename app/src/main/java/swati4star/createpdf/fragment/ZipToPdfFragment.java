@@ -1,17 +1,13 @@
 package swati4star.createpdf.fragment;
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +30,6 @@ import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
 public class ZipToPdfFragment extends Fragment {
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 145;
     private String mPath;
     private Activity mActivity;
     private boolean mPermissionGranted = false;
@@ -58,7 +53,7 @@ public class ZipToPdfFragment extends Fragment {
 
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
-        if (isStoragePermissionGranted()) {
+        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
             chooseFile();
         } else {
             getRuntimePermissions();
@@ -106,24 +101,15 @@ public class ZipToPdfFragment extends Fragment {
         convertButton.unblockTouch();
     }
 
-    private boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
-    }
     private void getRuntimePermissions() {
-        if (Build.VERSION.SDK_INT < 29) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
-        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                requestCode, PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT, this::chooseFile);
+                requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::chooseFile);
     }
 }

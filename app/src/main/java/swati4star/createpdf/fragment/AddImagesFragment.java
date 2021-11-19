@@ -1,16 +1,12 @@
 package swati4star.createpdf.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -156,19 +152,10 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         }
     }
 
-    private boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
-    }
     private void getRuntimePermissions() {
-        if (Build.VERSION.SDK_INT < 29) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
-        }
     }
 
     @Override
@@ -240,7 +227,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (isStoragePermissionGranted())
+        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS))
             selectImages();
         else {
             getRuntimePermissions();

@@ -130,7 +130,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             case R.id.scan_qrcode:
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (isCameraPermissionGranted()) {
-                        if (isStoragePermissionGranted()) {
+                        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
                             openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
                         } else {
                             getRuntimePermissions();
@@ -143,7 +143,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             case R.id.scan_barcode:
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (isCameraPermissionGranted()) {
-                        if (isStoragePermissionGranted()) {
+                        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
                             openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
                         } else {
                             getRuntimePermissions();
@@ -256,13 +256,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private boolean isCameraPermissionGranted() {
         return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
-    private boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
-    }
 
     private void requestCameraPermissionForQrCodeScan() {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_FOR_QR_CODE);
@@ -271,11 +264,9 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_FOR_BARCODE);
     }
     private void getRuntimePermissions() {
-        if (Build.VERSION.SDK_INT < 29) {
-            PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
-        }
     }
 
 
@@ -286,13 +277,13 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         if ((requestCode == REQUEST_CODE_FOR_QR_CODE || requestCode == REQUEST_CODE_FOR_BARCODE || requestCode == REQUEST_CODE_FOR_WRITE_PERMISSION) && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (requestCode == REQUEST_CODE_FOR_QR_CODE) {
-                    if (isStoragePermissionGranted()) {
+                    if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
                         openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
                     } else {
                         getRuntimePermissions();
                     }
                 } else if (requestCode == REQUEST_CODE_FOR_BARCODE) {
-                    if (isStoragePermissionGranted()) {
+                    if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
                         openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
                     } else {
                         getRuntimePermissions();
