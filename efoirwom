@@ -1,0 +1,4086 @@
+[33mcommit 4ae98fcc3242f0a912cabd12123d3785ad8148eb[m[33m ([m[1;36mHEAD -> [m[1;32mhyeyeonlee[m[33m, [m[1;31morigin/hyeyeonlee[m[33m)[m
+Author: hyeyeon919 <hyeyeon1311@naver.com>
+Date:   Sun Nov 28 21:53:35 2021 +0900
+
+    Included Korean version
+
+[33mcommit 1c54d7608268f4a7ab0baab9cbd1f49dc8f27e62[m
+Author: hyeyeon919 <hyeyeon1311@naver.com>
+Date:   Sun Nov 28 21:51:11 2021 +0900
+
+    Included Korean version
+
+[33mcommit 12597f673e7216bd187a5cdc520cc39980f5dcb2[m[33m ([m[1;32mmaster[m[33m)[m
+Author: hyeyeon919 <hyeyeon1311@naver.com>
+Date:   Sun Nov 28 21:46:28 2021 +0900
+
+    Included Korean version
+
+[33mcommit 2db67725466ab3729e72e49afcfbefe123f30259[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Diego <5572928+sguinetti@users.noreply.github.com>
+Date:   Sat Sep 4 11:53:28 2021 -0500
+
+    Update spanish translation (#1012)
+
+[33mcommit 7dc07c2e38deceb07bd71786df17d70ce5e0b1f3[m
+Author: Niranjan Girhe <54117859+niranjangirhe@users.noreply.github.com>
+Date:   Mon Aug 23 10:10:13 2021 +0530
+
+    Added Hindi locale (#1015)
+
+[33mcommit 15c057c6351533895475d169904cf8dc99f31c61[m
+Author: Yuhui Su <807587186@qq.com>
+Date:   Mon Aug 23 12:37:17 2021 +0800
+
+    #1019 - Fixed the blocked texts and swiper on the 'view files' page (#1020)
+
+[33mcommit 7dcbedda04592edba870ca2ca57165838d35beca[m
+Author: mezysinc <81477718+mezysinc@users.noreply.github.com>
+Date:   Mon Jun 21 12:28:57 2021 -0300
+
+    ptbr translation  (#1011)
+
+[33mcommit 0014d81fdde11e56ba8ba087da3e67437bef644d[m
+Author: ericluoliu <54130092+ericluoliu@users.noreply.github.com>
+Date:   Thu Jun 3 08:52:42 2021 -0700
+
+    Add Italian translation (#1008)
+
+[33mcommit c1481c2170f1ea4f62d36f058cf5d20feb8f32ff[m
+Author: Gaurav Saini <codegsaini@gmail.com>
+Date:   Sun May 16 01:22:08 2021 +0530
+
+    Automatic change app theme according to system theme. (#1005)
+
+[33mcommit ac9a7993bc0dc178758a9db6d481f6c4e455ae65[m
+Author: Soham Banerjee <63705023+soham4abc@users.noreply.github.com>
+Date:   Wed May 12 20:46:03 2021 +0530
+
+    updated readme (#1004)
+
+[33mcommit 8f6e855e0a339889ec0d6f4f8fab3633cd93bd12[m
+Author: Gaurav Saini <codegsaini@gmail.com>
+Date:   Sun May 2 19:40:10 2021 +0530
+
+    Updated targetSdkVersion and compileSdkVersion to 30 and Migrated from Support Library to AndroidX. (#994)
+
+[33mcommit 616d86a4c127a30929ecec1694da2a42c305bdfd[m
+Author: Gaurav Saini <codegsaini@gmail.com>
+Date:   Thu Mar 25 11:25:52 2021 +0530
+
+    App's UI updated (#993)
+
+[33mcommit 545364fc8c8f5f8b9b1b469f8a55dbd8c269ab72[m
+Author: Gaurav Saini <codegsaini@gmail.com>
+Date:   Tue Mar 23 12:15:03 2021 +0530
+
+    Updated build.gradle, gradle.properties,gradle-wrapper.properties And Updated UI of Toolbar and Navigation Drawer (#991)
+
+[33mcommit b5085c7d45012e190b06a36d62cd029b87449089[m
+Author: TeknoCepni <TeknoCepni@users.noreply.github.com>
+Date:   Mon Feb 22 17:18:49 2021 +0300
+
+    Turkish Language Translation (#981)
+
+[33mcommit 545f25fab13fcf21bf278fc18c101226ff3bf364[m
+Author: Avinash Parasurampuram <avinash.parasurampuram@gmail.com>
+Date:   Tue Jan 5 12:44:07 2021 -0500
+
+    #908 - Fix crash of context leakage (#979)
+
+[33mcommit 6940cd36268268f3c93d6abf556c9863024c342b[m
+Author: Anurag Sharma <53372213+Anurag-0-1-A@users.noreply.github.com>
+Date:   Fri Oct 23 12:55:17 2020 +0530
+
+    Updating all Single line comments to doc comments (#971)
+
+[33mcommit 1ed34ae67940cb4835b1c7174322a1e1819286b8[m
+Author: Abhijeet Kadam <ajayaish5@gmail.com>
+Date:   Thu Oct 22 20:50:25 2020 +0530
+
+    #957 - Requesting permissions is not done everywhere  (#969)
+
+[33mcommit c5e978718865bfb67efd8b7cc117e8b78d924c26[m
+Author: Law Tin-Lok <js.wildcards@gmail.com>
+Date:   Thu Oct 22 00:04:21 2020 +0800
+
+    #931 - Add Simplified Chinese Translation (#968)
+
+[33mcommit 066d65079d393df9640f69f5bf30b6684ff48898[m
+Author: Haripriya B <haripriya.baskaran@thoughtworks.com>
+Date:   Tue Oct 20 23:42:06 2020 +0530
+
+    #829 - Added unit test for StringUtils (#967)
+
+[33mcommit 09f122025e5ed838f9b749aa59591e0e60f485bf[m
+Author: Raj <rajdattasunny@gmail.com>
+Date:   Tue Oct 13 10:34:43 2020 +0530
+
+    #881 - Fixed Merge PDF bug (#962)
+
+[33mcommit 757e94b88cc52279c3063a8faf4b979f41cf8efa[m
+Author: Haripriya B <b6haripriya@gmail.com>
+Date:   Sun Oct 11 16:31:51 2020 +0530
+
+    #955 - Different locations of files is now supported in Add Text under Enhance Pdf section (#961)
+
+[33mcommit d0a7643e2fd618efaa0c4787758396dd734b4c00[m
+Author: McModknower <teetoll@t-online.de>
+Date:   Sat Oct 10 08:48:16 2020 +0200
+
+    #898 : [Code Refactor]Improve code climate of ImageToPdfFragment (#953)
+
+[33mcommit a6e190acd68792ea6332b463c64b4680d028e4a7[m
+Author: McModknower <teetoll@t-online.de>
+Date:   Sat Oct 10 08:34:43 2020 +0200
+
+    Remove unused files (#959)
+
+[33mcommit c69c8a0363f944e56281c1dad5b140e3ce76b9ad[m
+Author: Gabriel Cunha <cunha.gabriel919@gmail.com>
+Date:   Fri Oct 9 15:49:56 2020 -0300
+
+    #932 - Code climate for Commoncode utils (#960)
+
+[33mcommit 86a908dbedf59b56ad7c34fc746dca6eeb4c5b04[m
+Author: McModknower <teetoll@t-online.de>
+Date:   Fri Oct 9 16:58:37 2020 +0200
+
+    #898 - Unify permission response (#956)
+
+[33mcommit 368f274ca65229a6d18413150f7d1b7bcf985f3c[m
+Author: Gabriel Cunha <cunha.gabriel919@gmail.com>
+Date:   Thu Oct 8 16:28:55 2020 -0300
+
+    Refactoring code for ExceltoPdfFragment (#950)
+
+[33mcommit 1cf3a4f49054345412cc71e85e9a65f64ed11c8f[m
+Author: McModknower <teetoll@t-online.de>
+Date:   Wed Oct 7 17:37:25 2020 +0200
+
+    Improved German Translation (#952)
+
+[33mcommit 349ef0dea14507a2e2749bc945a4660a61970e6d[m
+Author: Hajrudin <hajroahmetasevic92@gmail.com>
+Date:   Tue Oct 6 06:09:31 2020 +0200
+
+    Fix strings folder name (#949)
+
+[33mcommit 007110dd6aa67b279d0254b0ccab4deebf106364[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Mon Oct 5 20:14:39 2020 +0530
+
+    Update README.md
+
+[33mcommit 1e855603f60631dc505f378cd6ba077eeb7dffda[m
+Author: PapailleEnQueue <65540726+PapailleEnQueue@users.noreply.github.com>
+Date:   Mon Oct 5 16:41:34 2020 +0200
+
+    #864 - Refractor FileUtils (#945)
+
+[33mcommit c34e0434964bc5db38442c9d6207aaf25f4f6b7c[m
+Author: Hajrudin <hajroahemtasevic92@gmail.com>
+Date:   Mon Oct 5 16:40:25 2020 +0200
+
+    #943 - Translated to Bosnian language (#946)
+
+[33mcommit b775ca90cf672dac319d7116106f25db5ee2365d[m
+Author: Raghav Maheshwari <34077214+raghavddps2@users.noreply.github.com>
+Date:   Mon Oct 5 17:05:29 2020 +0530
+
+    #930 - Added Search Feature in FAQs (#938)
+
+[33mcommit e436a6da562d84baf5eb03cac7721b45350eb473[m
+Author: Gaurav Deshpande <gaurav9822@gmail.com>
+Date:   Mon Oct 5 17:03:27 2020 +0530
+
+    #939 - 'android.useAndroidX' property is not enabled error while importing the project in android studio (#942)
+
+[33mcommit c59dfedc1b0967951dbc38435c44b750f3f276ee[m
+Author: Gaurav Deshpande <gaurav9822@gmail.com>
+Date:   Sun Oct 4 21:38:21 2020 +0530
+
+    #934 - Add unit test for BrushUtils class (#940)
+
+[33mcommit 9ab10c15951b9000bd689c73276a5f7dc9c38799[m
+Author: HenriDellal <anridellal@yandex.ru>
+Date:   Sun Oct 4 08:14:10 2020 +0300
+
+    Improve Russian translation (#936)
+
+[33mcommit 485a18b9457c8ee355b2d6ca5473a7b4c0216ad2[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Oct 4 00:06:36 2020 +0530
+
+    Update README.md (#933)
+    
+    added hit count badge
+
+[33mcommit dd380c244fe2b52cb30aaeb0c228b1a8dbfd9881[m
+Author: Amuthan Mannar <amuthan.m@thoughtworks.com>
+Date:   Sat Oct 3 23:51:01 2020 +0530
+
+    Optimize getRound bitmap (#929)
+    
+    Optimizing by removing duplicate code in imageUtills
+
+[33mcommit f5db6c788b69fd8d649d4989d775f7f8bbeb3759[m
+Author: Amuthan Mannar <amuthanmannar4@gmail.com>
+Date:   Fri Oct 2 20:40:53 2020 +0530
+
+    Added tests for getRoundBitmap() and toGrayscale() and moved ImageUtilsTest to androidTest (#928)
+
+[33mcommit bd91a1106c5b7d4ec6b69a21e6d87130f1d6494a[m
+Author: Priyansh Nama <54625644+priyanshnama@users.noreply.github.com>
+Date:   Thu Oct 1 21:01:39 2020 +0530
+
+    Cognitive Complexity of checkIfBitmapIsWhite in FileUtils.java reduced to solve Swati4star#864 (#925)
+
+[33mcommit f5ee61881ebcc85bbdf901f5fbca3b7180d2fdd3[m
+Author: Young Ha <67358133+yyyoungha@users.noreply.github.com>
+Date:   Thu Oct 1 13:13:48 2020 +0900
+
+    Update README.md (#919)
+    
+    remove saythanks link
+
+[33mcommit 265d3c70d336aa05fd81035a2f381dc58824d758[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Jul 11 21:04:06 2020 +0530
+
+    Update README.md
+    
+    updated BMC link
+
+[33mcommit 86e052a1e6e92391e90cf4f2947327ee0d7b1502[m
+Author: George Coghlan <33916015+georgeCog@users.noreply.github.com>
+Date:   Wed Jun 24 08:07:51 2020 +0100
+
+    [865] -Refactored PDFUtils (#912)
+
+[33mcommit ad99081704df6add48c3a1ca6b06baba8f4af2dd[m
+Author: Krzysztof Suruło <krzysztof.surulo@gmail.com>
+Date:   Wed Jun 24 09:04:55 2020 +0200
+
+    [865] -  Improve code climate of TextToPDFUtils (#909)
+
+[33mcommit 55d08100d32d39224b77cec991136aeec120e92f[m
+Author: Rishi RAJ <42871956+maharishi1@users.noreply.github.com>
+Date:   Mon Jun 8 19:22:20 2020 +0530
+
+    #856 - Separate string of same feature together (#902)
+
+[33mcommit 7e2e39317e94c1eddd80db54896b0c83965eb31f[m
+Author: gcoliveira <33904684+guicoliv@users.noreply.github.com>
+Date:   Mon Jun 8 14:44:53 2020 +0100
+
+    #899 - Fix "No PDFs to Show" not disappearing (#901)
+
+[33mcommit d5052718f6209ea617890a8be09c70a237721e8f[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri May 8 11:25:01 2020 +0530
+
+    updated slack invite link
+
+[33mcommit 84d85168f34a345f9543a5f05be870ffed505d22[m
+Author: ButterflyOfFire <42316180+BoFFire@users.noreply.github.com>
+Date:   Fri May 8 06:38:33 2020 +0100
+
+    Updating french translation (#900)
+    
+    Translation 100% made with Weblate - https://rosette.eu.org/projects/pdf-converter/pdf-converter/
+
+[33mcommit 5130de823aaaa1d4d69a9028b8c7b487e1e8c83f[m
+Author: Anindya Dutta <anindya.dutta22@gmail.com>
+Date:   Sat Apr 25 10:09:20 2020 -0700
+
+    #865: Add builder instead of maintaining state in enhancer (#897)
+
+[33mcommit 300920b00801c99528d4a08747531a6b47e782ad[m
+Author: sebastianjooo <bastipreis@me.com>
+Date:   Thu Apr 23 20:01:16 2020 +0200
+
+    #830 -  Singleton design pattern for util classes (#890)
+
+[33mcommit d706b5e210913dc01ef78b7607741a034d79ed00[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Apr 22 13:37:21 2020 +0530
+
+    Fixed issue with opening of PDF file (#895)
+
+[33mcommit b1288965e4c1f3692aa595fe36d849572339bbde[m
+Author: Anindya Dutta <anindya.dutta22@gmail.com>
+Date:   Mon Apr 20 21:54:14 2020 -0700
+
+    #865 - Extract Shared prefs to its own file (#893)
+
+[33mcommit de8ffd483b112984d0a1ede76bf131ee72fb2196[m
+Author: Jay Vishaal J <41964652+jayvishaalj@users.noreply.github.com>
+Date:   Tue Apr 21 00:30:05 2020 +0530
+
+    #833 - Improve error messages  (#891)
+
+[33mcommit aa304e9b54a624b4e132847e8838155fd0d67509[m
+Author: Anindya Dutta <anindya.dutta22@gmail.com>
+Date:   Sun Apr 19 04:47:28 2020 -0700
+
+    Modularize the Text-to-PDF feature (#888)
+
+[33mcommit 7f678a0f891b07eb5912cd333e75369a0e82c65a[m
+Author: Sunny Jain <sunnyjain.sj8@gmail.com>
+Date:   Mon Feb 10 13:52:40 2020 +0530
+
+    #788 - Recently Used Feature Enhancement (#885)
+
+[33mcommit c4dad6300c3e5c82cf09cd555c6538646192a565[m
+Author: Prithvi Tharun <ptrithu8@gmail.com>
+Date:   Thu Jan 9 22:53:22 2020 +0530
+
+     FAQs Updated (#880)
+
+[33mcommit c6eb3e1d5f8063f4246cfe0f1f7e138772b40d15[m
+Author: Anmol Gupta <44764339+6point022@users.noreply.github.com>
+Date:   Sun Jan 5 20:53:14 2020 +0530
+
+    #866 - Add drawables according to density (#882)
+
+[33mcommit 7aea13da75f839f293cae2a14462d7648b1a7c10[m
+Author: Amitoz singh <52659877+amitozs999@users.noreply.github.com>
+Date:   Thu Dec 5 17:36:46 2019 +0530
+
+    #7Added a Rate us button in navigation drawer (#878)
+
+[33mcommit 42e10832f876c74c97c8ec08b8eb20a0a4ee130b[m
+Author: Yashwant Sandey <45488341+xxrain-makerxx@users.noreply.github.com>
+Date:   Thu Dec 5 17:34:14 2019 +0530
+
+    #874 -  Confirmation dialog before deleting files (#876)
+
+[33mcommit 5cd56b968f37b8635399d23610ad83516d861d34[m
+Author: Philipe Alexandre <philipe40@hotmail.com>
+Date:   Wed Dec 4 06:56:13 2019 -0300
+
+    FileUtils - Some code refactoring to optimize codeclimate (#875)
+
+[33mcommit 56a10efd62a114f728f7f7066434320f5750d1b7[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Nov 24 18:09:21 2019 +0530
+
+    changes in checkstyle; crash fixed
+
+[33mcommit 306e065447a0d13f474453169334a37a3c433f8b[m[33m ([m[1;33mtag: 8.8.1[m[33m)[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Nov 3 16:48:20 2019 +0530
+
+    bumped app version
+
+[33mcommit 9fd7a2d599f1a821aeb2f189f8af3fb3478e0258[m
+Author: Aasutosh Jha <aasutossh@gmail.com>
+Date:   Sun Nov 3 13:10:51 2019 +0545
+
+    #855 - added updated gif for the application (#857)
+
+[33mcommit 9413ed90b3ba8c4bcbf509093e78e4a252c19234[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Nov 2 10:52:14 2019 +0530
+
+    code cleanup (#867)
+
+[33mcommit 37cc5d1e0725f82682fb56037b5ebcc1800882bc[m
+Author: Akhil Ghatiki <akhil.ghatiki@gmail.com>
+Date:   Thu Oct 31 22:41:11 2019 +0530
+
+    Make the constructors private for few util classes (#863)
+
+[33mcommit 78646846bbf31e9616c579ddeb33569305b9d99d[m
+Author: Akhil Ghatiki <akhil.ghatiki@gmail.com>
+Date:   Thu Oct 31 22:33:01 2019 +0530
+
+    Singleton design ptn for ResultUtils & StringUtils (#862)
+
+[33mcommit 978ad0f164aa5565bba5498ae52089b6b20be01f[m
+Author: Tanmay Majumdar <40636737+tanmay23235616@users.noreply.github.com>
+Date:   Thu Oct 31 12:10:15 2019 +0530
+
+    #850 -  Async rorder pages (#853)
+
+[33mcommit 5d7a61db76365130b3282636b209eed04400d15e[m
+Author: adrian <30812031+Ashiroq@users.noreply.github.com>
+Date:   Thu Oct 31 05:21:38 2019 +0100
+
+    Unit Tests for FileSortUtils and DirectoryUtils (#854)
+
+[33mcommit 500fdd2327c9ea0acf1eb05d618e753d68181251[m
+Author: Kacper <kkoza11@gmail.com>
+Date:   Wed Oct 30 09:11:55 2019 +0100
+
+    #829 - Tests for image utils and color utils (#837)
+
+[33mcommit 3b17e9bccf370b3631243bfe6cdca9a4f7e83e37[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Mon Oct 28 12:17:11 2019 +0530
+
+    refactored code; fixed string translations; fixes #784
+
+[33mcommit 782bacf253d19fe709b446f4beff1ccc6b2aad13[m
+Author: Akhil Ghatiki <akhil.ghatiki@gmail.com>
+Date:   Mon Oct 28 10:51:06 2019 +0530
+
+    Implement Bill Pugh singleton pattern for FileUriUtils & FIleUtils(#849)
+
+[33mcommit 83f539132f6cc0d4781bd99afa6070d21f48e5bf[m
+Author: Harshal <37841724+harshalkh@users.noreply.github.com>
+Date:   Sat Oct 26 18:47:03 2019 +0530
+
+    #846 - Add key value pairs for ques-answer (#847)
+
+[33mcommit fe5de32bcfed217432643e2717c016207159e195[m
+Author: rutujaac <36963955+rutujaac@users.noreply.github.com>
+Date:   Sat Oct 26 15:40:05 2019 +0530
+
+    #840 -  add more faqs (#845)
+
+[33mcommit cb6e8e4df6dbbe8f428e61cd97c0ce72e2af74d5[m
+Author: William Seemann <wseemann@gmail.com>
+Date:   Thu Oct 24 08:05:28 2019 -0700
+
+     #825 - [Excel to PDF] Show a list of excel files in botto… (#835)
+
+[33mcommit b99719a474d2519e60c763dd7dba478a8892bd4c[m
+Author: Gaurav Kondhare <kondharegaurav@gmail.com>
+Date:   Thu Oct 24 11:09:14 2019 +0530
+
+    #811 - Add FAQ Section (#836)
+
+[33mcommit 778b8c43543b12957e56b60cf0b9c0b3cb8191d2[m
+Author: Ardlan Khalili <ardlankhalili@gmail.com>
+Date:   Tue Oct 22 03:36:20 2019 -0500
+
+    Singleton For DialogUtils and RealPathUtil (#834)
+
+[33mcommit 4e9e470f0cc93348de5069029918c1abc095c49d[m
+Author: Akhil Ghatiki <akhil.ghatiki@gmail.com>
+Date:   Tue Oct 22 11:13:26 2019 +0530
+
+    Implement Bill Pugh Singleton implementation few util classes (#831)
+
+[33mcommit 1021be5f3295da191040f6a65c9a4e3344e52e77[m
+Author: Gaurav Kondhare <kondharegaurav@gmail.com>
+Date:   Tue Oct 22 10:56:16 2019 +0530
+
+    #832 - Added initialization of mFragmentSelectedMap (#833)
+
+[33mcommit d8cfcd894848ab4c5a8ae4519906dfbeb8cc54dc[m
+Author: Edu Victor <kedvic@gmail.com>
+Date:   Fri Oct 18 11:22:55 2019 +0200
+
+    #823 - Add view PDF in Excel to PDF (#826)
+
+[33mcommit 6f3837c8cc47826ebf78fc7af5a9fe1beb26cc88[m
+Author: Nikolaos Karampinas <nkarampi@csd.auth.gr>
+Date:   Thu Oct 17 11:42:45 2019 +0300
+
+    #809 - Refactored Mainactivity.java (#821)
+
+[33mcommit 237424d5ce75056163baf914b6e0c7cff12061b9[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Wed Oct 16 12:01:29 2019 +0530
+
+    update version 102; optimized resources; fixed path issue
+
+[33mcommit 21fa0a968bb1446e541fe4401206aad2e6bfa65a[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Wed Oct 16 11:17:19 2019 +0530
+
+    Revert "#806 - Added com.aspose:aspose-cells:18.4 to Gradle file (#807)"
+    
+    This reverts commit 803e4134521de83549f665393e30cd79b9ce2a44.
+
+[33mcommit 7b04d1b482a3a9534d6f3cc91209bb743a662d8a[m
+Author: Hector <hectordorito5@gmail.com>
+Date:   Mon Oct 14 10:28:36 2019 +0200
+
+    Now it is possible to pick a file in Downloads folder (#799)
+
+[33mcommit c0da3ab825c8cc321441917174d54b71d71f1bb4[m
+Author: sudesh <34063388+sudeshim3@users.noreply.github.com>
+Date:   Mon Oct 14 13:57:25 2019 +0530
+
+    #779 - text to pdf autofill (#820)
+
+[33mcommit 647da615965b09ca3bbf4e2f38b0490cd040e899[m
+Author: Vignesh S <vignesh.vic727@gmail.com>
+Date:   Sun Oct 13 20:06:27 2019 +0530
+
+    #808 - Showing a snack bar message if the chosen PDF has no text (#817)
+
+[33mcommit 2a80b16243805a65500737b6ce55ae288df88050[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Oct 13 17:54:59 2019 +0530
+
+    #814 - added german translations (#818)
+
+[33mcommit 579129efc76e8cc7f6c14d90673ba6b5671f274d[m
+Author: sudesh <34063388+sudeshim3@users.noreply.github.com>
+Date:   Sun Oct 13 16:17:51 2019 +0530
+
+    startup crash fix: added missing multidex dependency (#815)
+
+[33mcommit e5b591b0f8e4c582ffaf8fb3375b5ff0498b5e3f[m
+Author: swagarg <swagarg@adobe.com>
+Date:   Sat Oct 12 15:25:50 2019 +0530
+
+    bumped app version 101; removed unused imports & dependencies
+
+[33mcommit cf51420144e5c5b5a9886cda3b8e6116dd681d20[m[33m ([m[1;33mtag: 8.7.3[m[33m)[m
+Author: swagarg <swagarg@adobe.com>
+Date:   Sat Oct 12 14:30:33 2019 +0530
+
+    update version code 100
+
+[33mcommit 803e4134521de83549f665393e30cd79b9ce2a44[m
+Author: Kasper Aaquist Johansen <kasperaaquist@gmail.com>
+Date:   Fri Oct 11 09:58:56 2019 +0200
+
+    #806 - Added com.aspose:aspose-cells:18.4 to Gradle file (#807)
+
+[33mcommit 7524176857df7ae16cde901ac10791f012fc2293[m
+Author: Tomer Ben-Rachel <tomerpacific@gmail.com>
+Date:   Tue Oct 8 09:24:57 2019 +0300
+
+    #784 - The context received in the onAttach method is not always an Activity context so a check was added to make sure that the correct context is being passed (#804)
+
+[33mcommit d14e439411d6d1c5138716e81198f3f458f2c9f5[m
+Author: Laura <laura.noelle.meckley@gmail.com>
+Date:   Mon Oct 7 11:35:47 2019 -0600
+
+    #780 - Switched A/B pg sizes to show mm instead of px (#802)
+
+[33mcommit 980b720a53359081ca2e3a5e951665376758e964[m
+Author: shldhll <mail.sahildhull@gmail.com>
+Date:   Mon Oct 7 17:27:43 2019 +0000
+
+    #777 - Fixed text file error and added file name (#801)
+
+[33mcommit 734093e81c705a1f1e1fe5560a46cd6c3ed57031[m
+Author: sudesh <34063388+sudeshim3@users.noreply.github.com>
+Date:   Sun Oct 6 11:07:13 2019 +0530
+
+    Image-to-pdf: Filename InputField is autofilled with the filename (#796)
+
+[33mcommit cd47f25aec4fbbd4ae172772c1286ff0b7a04f3c[m[33m ([m[1;33mtag: 8.7.2[m[33m)[m
+Author: swagarg <swagarg@adobe.com>
+Date:   Sat Oct 5 17:48:50 2019 +0530
+
+    updated version
+
+[33mcommit a621ba26ef38c1a4ed9a2b764bfd9de77c7c35c4[m
+Author: Amin Khodabande <42344852+Blue888amin@users.noreply.github.com>
+Date:   Sat Oct 5 15:18:53 2019 +0330
+
+    some minor typos fixed in variable names (#795)
+
+[33mcommit e9a3ef2391b394a8378510e84088b545e18a8e1e[m
+Author: sudesh <34063388+sudeshim3@users.noreply.github.com>
+Date:   Sat Oct 5 17:15:32 2019 +0530
+
+    $794 - Blocked morphed button touch when pdf is created successfully and restore on selecting new file. (#798)
+
+[33mcommit 66d2abb66ac7c9f50997fd5af83986af8dc235b8[m
+Author: swagarg <swagarg@adobe.com>
+Date:   Sun Sep 29 16:05:30 2019 +0530
+
+    fixed few playstore reported bugs
+
+[33mcommit 05e35605c826eaa6a3b09733f1fccbbba3e3a0c8[m
+Author: Katie Adams <koalaos127@gmail.com>
+Date:   Wed Oct 2 01:56:22 2019 -0700
+
+    #778 - Fixed Split PDF bug with some exploreres (#793)
+    
+    WIth some file explorers it changed the last / with : which caused erors.
+    I added in a regex to replace those chars with / to fix the issue
+
+[33mcommit b7a07fdca136a7aa4d77b861ce817adecb7c109b[m
+Author: swagarg <swagarg@adobe.com>
+Date:   Thu Sep 12 21:57:09 2019 +0530
+
+    fixing bar code & qr code scanner
+
+[33mcommit a5b2f968bd828b4879163be01257cd68174ec615[m
+Author: ButterflyOfFire <42316180+BoFFire@users.noreply.github.com>
+Date:   Sun Aug 18 09:45:50 2019 +0100
+
+    Fixing french translation (#786)
+
+[33mcommit 2b1422aec24415f49e064a2b918d133b775fa003[m
+Author: ButterflyOfFire <42316180+BoFFire@users.noreply.github.com>
+Date:   Mon Aug 12 17:52:31 2019 +0100
+
+    Correcting link to F-Droid artwork (#787)
+    
+    Correcting link to F-Droid artwork on README.md
+
+[33mcommit daca8520c47440a2c478c7cd7d4a91514bda3af2[m[33m ([m[1;33mtag: 8.6.7[m[33m)[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Aug 6 21:26:30 2019 +0530
+
+    update 94
+
+[33mcommit 677aa538ff880fb404dcf9550220deb05639ab4b[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sat Jun 1 20:44:50 2019 +0530
+
+    #774, #775 - Font size and family enchancement option added in add text (#776)
+
+[33mcommit b9936a2ac17c1e05c4e0a5d68b6d513baf91d365[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Wed May 29 07:52:27 2019 +0530
+
+    #771 - Add text click bug solved (#773)
+
+[33mcommit 4d090935265b0b681c3e433df7a5a437a88899c4[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Wed May 29 07:45:09 2019 +0530
+
+    #769 - [View Files] merge file bug fixed (#772)
+
+[33mcommit 543e7bdc3536e2df465f15df2bee757487837ff1[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Tue May 28 08:55:36 2019 +0530
+
+    #746 - Implemented Add Text Feature (#748)
+
+[33mcommit d17882a811b4204878c084d35eb8b864e534373b[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Mon May 27 23:37:57 2019 +0530
+
+    #767 - Split pdf files hidden by bottom sheet fixed (#770)
+
+[33mcommit 0f77aee8b717b4e44d6dac1050a4c0ee66320514[m
+Author: Sunny Jain <sunnyjain.sj8@gmail.com>
+Date:   Sat May 25 22:47:25 2019 +0530
+
+    #766 - Added interface method to get filesPopulated callback and Reset Variables. (#768)
+
+[33mcommit 8e1da9e84efb3fa5a86e3a6ab652b28581e51071[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat May 25 11:25:00 2019 +0530
+
+    code cleanup
+
+[33mcommit 3c7e8daf6225a133b333cb0d17e6514755983a58[m
+Author: Sunny Jain <sunnyjain.sj8@gmail.com>
+Date:   Wed May 22 00:24:28 2019 +0530
+
+    #747 , #763 - [View files] Select All Menu and Actionbar Title Fix (#761)
+
+[33mcommit 631ba1a9e65f193882b45050cc9131c8d8d7e8bf[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Tue May 21 17:09:30 2019 +0530
+
+    #762 - added alpha (transparency) chooser in Watermark (#764)
+
+[33mcommit 8a50f98e223d9c912ee2440fdd2c14d3f67da96d[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun May 19 13:52:38 2019 +0530
+
+    code cleanup
+
+[33mcommit efbcc80cacac6517db2b5ae6b98f7a83ca4547a0[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Fri May 17 15:49:41 2019 +0530
+
+    #757 - [Split PDF] History entry bug fixed (#760)
+
+[33mcommit 2f6dc7a0655f34cfc7490a1bab397850d86c128e[m
+Author: Rohan Jaiswal <36110236+gateway2rohan@users.noreply.github.com>
+Date:   Tue May 14 00:08:45 2019 +0530
+
+    #751 - Solved Bug in Split PDF (#758)
+
+[33mcommit 509aa9c8adc64ac224142780ce294afc6fd4385a[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sun May 12 13:15:05 2019 +0530
+
+    #755 - Reset Page and Font colour after PDF creation (#756)
+
+[33mcommit 7a853b49e05f1f876f8a8e1b9dd2910cfdbc1223[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sat May 11 10:39:00 2019 +0530
+
+    #750 - Split PDF bug fixed (#753)
+
+[33mcommit d4c9dbd680ee8bab3f525357f8cc7e1404602bea[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Wed May 8 18:38:09 2019 +0530
+
+    #744 - [Add Images] Create PDF button bug fixed (#752)
+
+[33mcommit b21a14c5938c1f0db06a7f3c9ce2d001497137bb[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Wed May 8 18:18:32 2019 +0530
+
+    #721 - [Favourites] back button fix (#749)
+
+[33mcommit 98e1e4a9021b0ac3da84dd75e6d2af23d632bb78[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Wed May 1 21:19:33 2019 +0530
+
+    #727 - Fixed App error in PDF to images for password protected files (#739)
+
+[33mcommit 5cc745f9e8ede894424dc41a736c40563d1f30f7[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Wed May 1 10:41:07 2019 +0530
+
+    #743 - ZipToPdf icon fix in navbar (#745)
+
+[33mcommit f09b4db42e11a600c79ce3c678bef522b5b2da49[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Mon Apr 29 20:21:43 2019 +0530
+
+    #741 - Password reset bug fixed in merge pdf (#742)
+
+[33mcommit 435e04de82fec9042e55f740a9ecbce40e42cfec[m
+Author: py93 <47155755+py93@users.noreply.github.com>
+Date:   Sun Apr 28 20:03:14 2019 +0530
+
+    #716 - returnValue added for single return statement. (#717)
+
+[33mcommit 401e81cc39289310eab064868b2ada36f29b2a89[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sun Apr 28 20:01:45 2019 +0530
+
+    #736 - Fixed view files bug "Count of selected files is not shown every time." (#740)
+
+[33mcommit ee524b969d7210ce88587746601ff40b6767201b[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Sun Apr 28 19:55:48 2019 +0530
+
+    #734 - zip to pdf in fav (#735)
+
+[33mcommit e65fb2d8d5d8d93e6b81467ada5be047723fa578[m
+Author: Vladislav <nvlad1@ukr.net>
+Date:   Sat Apr 27 15:17:09 2019 +0300
+
+    #732 - Actionbar Title is not changing when 'Get Started' click (#738)
+
+[33mcommit c2b0328a181c225bd465be93958c65fc472f6760[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sat Apr 27 09:46:12 2019 +0530
+
+    #720 - Added set password enhancement option in ExcelToPDF (#737)
+
+[33mcommit b8c3b7639f2ff90c4548ab85058aa97fc076c2ab[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Thu Apr 25 10:31:16 2019 +0530
+
+    added page number option (#733)
+
+[33mcommit 4780a772c121aa5998ae494e34d4d2199f70fe76[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Tue Apr 23 22:07:56 2019 +0530
+
+    #669 - permission bug fix (#730)
+
+[33mcommit 5d508595816e34750f39cb9097d60e66aca1b71a[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Mon Apr 22 21:04:00 2019 +0530
+
+    #719 - Fixed Freeze of UI on TextToPDf (#726)
+
+[33mcommit e803753bd94b00c00f75f6c1cc907d0dcfcdaef8[m
+Author: Archita Mittal <archita810@gmail.com>
+Date:   Mon Apr 22 20:40:05 2019 +0530
+
+    #713 - Added excel to PDF entry to history (#728)
+
+[33mcommit aa524b9233669d6e7d723d40ceff9a74dac8c3d1[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sun Apr 21 21:46:33 2019 +0530
+
+    #709 - Handled the twice button click of Create Excel to Pdf (#723)
+
+[33mcommit 76989f972e1af95cddd5f37019e6b0702a2293c1[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sun Apr 21 15:10:59 2019 +0530
+
+    #714 - snackbar fixed in remove pages (#718)
+
+[33mcommit 9401dce82f6313b2fdb905d9b6af962dab9a2719[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Apr 21 11:38:40 2019 +0530
+
+    improve code climate
+
+[33mcommit 9a613a3784f2e9b7a8940ef52b78afb4d6f670cc[m
+Author: wangxin <wangx@informatique.univ-paris-diderot.fr>
+Date:   Tue Apr 16 19:12:00 2019 +0200
+
+    fix #702 - set default page numbers
+
+[33mcommit 70de1862606a4fb91b435adaf15a70a54bf71e40[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sat Apr 20 18:54:35 2019 +0530
+
+    #707- Fixed the Freeze of UI while ExceltoPDF converts (#708)
+
+[33mcommit c028cfe3ef9cb8bd29fb3ccc3741a8c049693390[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Fri Apr 19 21:03:50 2019 +0530
+
+    #710 - [Remove pages] Solved Cancel button bug (#712)
+
+[33mcommit 8d30ede54b2f827a776bb8c0804b25335f914b10[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Thu Apr 18 22:54:35 2019 +0530
+
+    #590 - Solved Error while creating grayscale pdf (#681)
+
+[33mcommit 7cc0137f7dcd5f8fc88e368dd53b5494202cde4d[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Apr 18 20:04:04 2019 +0530
+
+    fixed crash
+
+[33mcommit 2891565f2949985409fbbbf4550806f8ba748f42[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Apr 17 22:11:41 2019 +0530
+
+    fixed crash in split PDF, getbitmap method & others
+
+[33mcommit d70837a72368f074e5b02eadecc9fe2dffa8aa99[m
+Author: shalishi <44402036+shalishi@users.noreply.github.com>
+Date:   Wed Apr 17 05:19:35 2019 +0200
+
+    #684 - Checked for similar font and page colour (#705)
+    
+    Warn User when similar Font and Page Color is used.
+
+[33mcommit 21844919a92aae82d902a2e2b1f694a78a9ba473[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Apr 16 21:50:21 2019 +0530
+
+    fixed a major crash; code cleanup; build number upgrade
+
+[33mcommit 8e5286139bb934fa8d7c9f88d04c4325a2e2383f[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Tue Apr 16 20:45:20 2019 +0530
+
+    #445 - Added Extract Text Feature (#701)
+
+[33mcommit dada670cc7da221bd85e2d14c604a7e810ea6be2[m[33m ([m[1;33mtag: 8.6.3[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Apr 15 20:45:43 2019 +0530
+
+    update 90; few UI improvements in whatsnew dialog
+
+[33mcommit 7c19b571812e44c44dfe1542e15824a41f5d0e60[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sun Apr 14 17:02:38 2019 +0530
+
+    #679 - Improved realpath util method (#697)
+
+[33mcommit 4b5f6217a757a76451ea0367b9e17ac0c271a38e[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sat Apr 13 15:52:49 2019 +0530
+
+    #698 - Message added in Favourites fragment (#700)
+
+[33mcommit bc3e121ae2351ff06ca92c8a73e5fb2510ce167c[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Thu Apr 11 21:54:31 2019 +0530
+
+    #694 - ActionBar title set for ExcelToPDF (#699)
+
+[33mcommit a9fccdbcef58b277c442cb96e565b060312ba0f8[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Apr 11 15:32:39 2019 +0530
+
+    updated build version & few Ui changes on home page
+
+[33mcommit 18e3dd8b4a827c5f1126fea38d8907e4a68d4683[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Thu Apr 11 15:25:21 2019 +0530
+
+    #692 - Updated Welcome Activity (#695)
+
+[33mcommit 3aa599fd201adbd88ced599997c4f476e91cb067[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Thu Apr 11 08:02:34 2019 +0530
+
+    #693 - Added ExcelToPDF in favourites (#696)
+
+[33mcommit af59ac34c8b7f274436901342eac731a18206c46[m
+Author: Bismeet singh <bismeetsingh352@gmail.com>
+Date:   Wed Apr 10 23:38:52 2019 +0530
+
+    #682 - [Remove Pages Fragment] Added Condition to check pdf file name length (#691)
+
+[33mcommit 6e0cc74e212ae222e85bffa3cff5094231f20d0f[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Mon Apr 8 00:29:22 2019 +0530
+
+    #678 - Fixed Single Page Split PDF Issue (#689)
+
+[33mcommit f03f13ef9f1842a30ecddf81d54040a0ba81b0de[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Sun Apr 7 02:28:46 2019 +0530
+
+    #683 - Remove and Reorder pages bug solved (#686)
+
+[33mcommit 7c85fc328fc622e9f7f20d29b22ae0f3c7474013[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Apr 6 14:49:50 2019 +0530
+
+    Revert "#678 - Fixed Single Page Split PDF Issue (#685)" (#688)
+    
+    This reverts commit 7216bd1262d3876ddde60ffe18338374ea2e182c.
+
+[33mcommit 7216bd1262d3876ddde60ffe18338374ea2e182c[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Sat Apr 6 14:31:32 2019 +0530
+
+    #678 - Fixed Single Page Split PDF Issue (#685)
+
+[33mcommit a7f540641adc02011299ef30fa76fbcd574e5369[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Wed Apr 3 21:29:52 2019 +0530
+
+    #675 - Added rotate pages to Navigation Drawer (#677)
+
+[33mcommit c9eaad9a59e2c1f05edd739f8c4b446b51285e1e[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Tue Apr 2 20:13:41 2019 +0530
+
+    #186 - Added Excel to PDF Conversion Feature (#668)
+
+[33mcommit 20e042c3f8b6f88e0b3b5ee457d03d873aaaec49[m
+Author: Bharat Makwana <bharatmk257@gmail.com>
+Date:   Tue Apr 2 19:18:45 2019 +0530
+
+    #630 - Added Name of current fragment in Actionbar (#633)
+
+[33mcommit 3a8d27a6c481f76fffa45717af053f31b25b7a8c[m
+Author: Robin Singh <rs729028@gmail.com>
+Date:   Tue Apr 2 02:12:40 2019 +0530
+
+    #672 - Fixed Add watermark bug (#676)
+
+[33mcommit be98c2ee673703d3540e3d2a3b499a9a29745811[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Mon Apr 1 18:59:14 2019 +0530
+
+    #670 - [Add Watermark] Added action to snackbar (#674)
+
+[33mcommit 8d03678039123c23e82e011a6c4bcf62a5216b7a[m
+Author: DJ <qualitymanifest@gmail.com>
+Date:   Sun Mar 31 11:23:09 2019 -0400
+
+    #671 - Remove stale 'view pdf' button from InvertPdfFragment (#673)
+
+[33mcommit 91eaf1c70c947b234767c5edfb8a05cf13c36793[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Fri Mar 29 22:22:07 2019 +0530
+
+    #662 - [TextToPDF] Create PDF button click bug fixed (#665)
+
+[33mcommit 2ec8b834bd88f12773becbc418317d771fe7eb5c[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Wed Mar 27 21:12:50 2019 +0530
+
+    #664 - Navbar highlighting fixed (#667)
+
+[33mcommit b647405658eca637970319069605e2289a101014[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Wed Mar 27 16:50:20 2019 +0530
+
+    #652 - Added PermissionUtils class (#656)
+
+[33mcommit 4c26e083046e43ae736265914c6f4c4c9c9445d6[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Tue Mar 26 10:51:17 2019 +0530
+
+    #654 - Added page color enhancement option (#657)
+
+[33mcommit 3266f198362eff60418607f776c9bcdbc04d739b[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Tue Mar 26 10:43:20 2019 +0530
+
+    #659 - Show Lottie Animation when there are no Favourite Items (#661)
+
+[33mcommit 0ea1a5ebac1cee400dfbd8e2d118d91ccd172bf7[m
+Author: Supreeth Baliga <42595858+SupreethBaliga@users.noreply.github.com>
+Date:   Mon Mar 25 22:11:49 2019 +0530
+
+    #605 - Count of images updated when images removed using Rearrange Images (#658)
+
+[33mcommit 50a4e40056d818a36f2c7e0f1c2e2184cd7baa82[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Sun Mar 24 20:54:35 2019 +0530
+
+    #653 - UI Change in CropImageActivity (#655)
+
+[33mcommit 40979a6e6aa3b60a9a57284b9f24067cd963d405[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Sat Mar 23 23:17:55 2019 +0530
+
+    #649 - Fixed version textviews alignment (#650)
+
+[33mcommit 1c25508e06866554f850a3ddf01381919b013434[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Sat Mar 23 22:34:46 2019 +0530
+
+    #647 - Fixed bug in Prev Button [Edit Images] (#651)
+
+[33mcommit 66f405b1a14bbca65edd6cf23b09d92fb4645933[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sat Mar 23 09:48:43 2019 +0530
+
+    #565 - Added What's new option navigation drawer (#645)
+
+[33mcommit 62d8f13b7b1bf9f7130a6496da3c123a207ae2f3[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Sat Mar 23 09:25:49 2019 +0530
+
+    #644 - Fixed bug in rate us dialog functionality (#646)
+
+[33mcommit 854826dc1855fdb58b00ee7104fb03515ed4109d[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Fri Mar 22 20:21:19 2019 +0530
+
+    #629 - Added font color enhancement option in TextToPDF (#643)
+
+[33mcommit 7ef993aa2dac8628d5162fcd10f8c58d75d0ccac[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Fri Mar 22 10:06:59 2019 +0530
+
+    #159 - added zip to pdf feature (#632)
+
+[33mcommit e5ade775305cfc26618c355c8233efe5c0fca93c[m
+Author: pankajpoply45 <40588795+pankajpoply45@users.noreply.github.com>
+Date:   Thu Mar 21 20:04:54 2019 +0530
+
+    #606, #635 - solved bug in add images fragment (#641)
+
+[33mcommit 38519f84b19d8ba35dc2dc8aa3df060aa9f422b6[m
+Author: Abhishek Avi <abhishekavi4602@gmail.com>
+Date:   Thu Mar 21 16:39:02 2019 +0530
+
+    #622-Redesign of favourite menu (#627)
+
+[33mcommit a176fac15ef3ddeb81467550557de605d937a48f[m
+Author: Abhishek Avi <abhishekavi4602@gmail.com>
+Date:   Thu Mar 21 16:25:32 2019 +0530
+
+    #638 - fixed layout of qrbarcodescan fragment (#639)
+
+[33mcommit 421e1802283010ed335662a8f9a6e9996266b45a[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Wed Mar 20 10:47:33 2019 +0530
+
+    #530 - Allow selection of text files (for text to pdf) in location other than "Downloads" (#636)
+
+[33mcommit 6f41f92e1799f06da8203883e74e0905bfdea566[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Mar 20 10:45:47 2019 +0530
+
+    #346 - Disable the scroll on image when Doodle effect is selected (#637)
+
+[33mcommit b19719a3d8c8a7e27e6977f7dedb6a02de51b6d9[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Tue Mar 19 07:56:50 2019 +0530
+
+    #631 - [View Files] Checkboxes get unchecked when scrolled (#634)
+
+[33mcommit 22f7dd122b9363179e80d668ee4151c7cd1a5f40[m
+Author: Tirth Patel <pateltirth454@gmail.com>
+Date:   Sun Mar 17 11:23:53 2019 +0530
+
+    #626 - 'Get-Started Opens ImagesToPdfFragment\' (#628)
+
+[33mcommit d244065d80a78c58c53841ca47cadd3810cb630b[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sat Mar 16 13:08:26 2019 +0530
+
+    #471 - Morewelcome screens added (#625)
+
+[33mcommit 3c254a78e67b0868ff864e32f5a85215f104ef11[m
+Author: Abhishek Avi <abhishekavi4602@gmail.com>
+Date:   Sat Mar 16 13:08:01 2019 +0530
+
+    #602 - Back button leads to Home Fragment when orange file selector is still open (#621)
+
+[33mcommit 14efa8d519ddc613c91b944f5be6d6f772255752[m
+Author: Abhishek Avi <abhishekavi4602@gmail.com>
+Date:   Sat Mar 16 13:06:59 2019 +0530
+
+    #619 - [Favourites Menu] Actionbar gets removed (#624)
+
+[33mcommit 559c421e5e51852255a1a2623c8a01317cb1b9ec[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Fri Mar 15 21:05:42 2019 +0530
+
+    #618 - nav selected item highlighting (#623)
+
+[33mcommit e272e26fe2530157aee8b20305843bbf43924b2d[m
+Author: Mohammaduvez <mohammaduvez1995@gmail.com>
+Date:   Thu Mar 14 22:38:53 2019 +0530
+
+    #454 - Fixes ANR in Viewed Files, Checking PDF encryption status on background thread (#617)
+
+[33mcommit ee957d7e3732992c3073f346d09105d70b965297[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Thu Mar 14 22:22:56 2019 +0530
+
+    #598 - Added unit test for calculate fit size (#620)
+
+[33mcommit f14f2f07872c4d0ae2cd3ae16cf8d954160e0365[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Mon Mar 11 14:50:54 2019 +0530
+
+    #594 - added tests in split input function (#609)
+
+[33mcommit 64b1cfeaccacc8a46f663b2db2b667a4dd2832f4[m
+Author: Abhishek Avi <abhishekavi4602@gmail.com>
+Date:   Sun Mar 10 19:43:17 2019 +0530
+
+    #615 - View beneath textview should not be clickable (#616)
+
+[33mcommit ba592d5302fc0c39e2c1ad4da59bdfb150d99ca6[m
+Author: Abhishek Avi <abhishekavi4602@gmail.com>
+Date:   Sun Mar 10 17:56:58 2019 +0530
+
+    #613 - Wrong display of snackbar showing rearrange image (#614)
+
+[33mcommit 1f8c465dda13ae2d7361eb0fcd1e748851b3c1dd[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sun Mar 10 17:49:05 2019 +0530
+
+    #567 - Added Favourites section (#607)
+
+[33mcommit bac2f15e4095a9422f9cf8bd93bc829b119dcd30[m
+Author: AfolabiDonko <47370031+AfolabiDonko@users.noreply.github.com>
+Date:   Sun Mar 10 07:07:18 2019 +0100
+
+    #581 - ThemeApply-on-HelpActivity (#610)
+
+[33mcommit 37e7ed0941054e94061bcbc3192c18feae279214[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Sun Mar 10 11:36:46 2019 +0530
+
+    added more validation to user input (#611)
+
+[33mcommit f5b65de3bc185cd57e60a7fb1f9f66ea55d9798c[m
+Author: Supreeth Baliga <42595858+SupreethBaliga@users.noreply.github.com>
+Date:   Fri Mar 8 23:18:17 2019 +0530
+
+    #561 - The icon for 'Remove Duplicate Pages' has been changed in the home screen and navigation menu. Also, the icon for 'Invert PDF' in the navigation menu was incorrect initially which is now rectified. (#608)
+
+[33mcommit c67b73b88555403d37c7477b204909c1cf94234c[m
+Author: Rohan Jaiswal <36110236+gateway2rohan@users.noreply.github.com>
+Date:   Thu Mar 7 21:35:02 2019 +0530
+
+    #587 - Rearrange Images issue fixed (#600)
+
+[33mcommit 003a4e40194cb778bbdabe4fabaf5997ba24c477[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Thu Mar 7 21:29:41 2019 +0530
+
+    #603 - Changed isInputValid method (#604)
+
+[33mcommit c398b3f801e38f2ed45d73d5220a8f5d2087e7f9[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Thu Mar 7 14:53:36 2019 +0530
+
+    #599 - action added in snackbar (#601)
+
+[33mcommit 249a5c370124161c1a21c5b8d9d2ba39d0b3fe81[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Wed Mar 6 23:19:36 2019 +0530
+
+    #588 - add filter in history (#596)
+
+[33mcommit f7afc9a9a60c8b9ef60a537dfbf4805ec06ac84e[m
+Author: Shivamdhuria <shivam.dhuria07@gmail.com>
+Date:   Wed Mar 6 22:09:38 2019 +0530
+
+    #579 -  fix file selector (#595)
+
+[33mcommit a2e2c664f8428863842dbc8aaeed3eeb2e3af154[m
+Author: aqeelparpia <46496726+aqeelparpia@users.noreply.github.com>
+Date:   Wed Mar 6 11:37:13 2019 -0500
+
+    #577 - Add Watermark option on Navigation (#597)
+
+[33mcommit fba1484ef35834c2465560481b45a5f0960f45be[m
+Author: Mahima <mahima.6.ms@gmail.com>
+Date:   Tue Mar 5 20:59:26 2019 +0530
+
+    #537 -  fix bug with check/uncheck files in ViewFiles fragment (#593)
+
+[33mcommit 0f5a4d99a3a738b3b546787c5244ffde218a8430[m
+Author: Nitin Verma <canvas.nv@gmail.com>
+Date:   Tue Mar 5 19:59:29 2019 +0530
+
+    #569 - app crash on invalid input in split fragment (#580)
+
+[33mcommit 1a082b70bd08854d3124c932139ccae580c44f5a[m
+Author: Sandro Seryani <32912671+sseryani@users.noreply.github.com>
+Date:   Tue Mar 5 09:19:31 2019 -0500
+
+    #586 - Fixed icon issue, both invert pdt options have the same icon now (#592)
+
+[33mcommit 2409f11e92d3afdc1b66529c3c8169c8a0bd06fd[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Tue Mar 5 14:57:02 2019 +0530
+
+    #585 - Fixed app crash (#591)
+
+[33mcommit 7b18571394d541d3b2c4fdcef96666870aa4ca8d[m
+Author: GaganDeep Singh <sgagan789@gmail.com>
+Date:   Mon Mar 4 14:11:06 2019 +0530
+
+    #570 - Fixed History Entry for Invert PDF (#589)
+
+[33mcommit dc5c10bde46c9602ec865d331bb5eb7d12f7d0bf[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Mon Mar 4 09:42:26 2019 +0530
+
+    #564 - Added gallery viewing (#584)
+
+[33mcommit d63fa42b365a18c29b2b9552acf60b0f414dd1bc[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Mar 3 19:31:43 2019 +0530
+
+    Create issue_template.md
+
+[33mcommit 145ce1f17a8f3f8dd0f42324679f4fae5117ccb8[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sun Mar 3 12:31:33 2019 +0530
+
+    #574 - Fixed Next button is not visible in Filter Images (#583)
+
+[33mcommit 26dc7ba60656a38f43e92643f9e6a364edd63e7a[m
+Author: AfolabiDonko <47370031+AfolabiDonko@users.noreply.github.com>
+Date:   Sun Mar 3 06:44:34 2019 +0100
+
+    #562 - added sections in Navigation drawer (#582)
+
+[33mcommit 970d427c50a442d6cc5d84a2d2daf7cb116ce1dd[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Sun Mar 3 11:13:40 2019 +0530
+
+    #578 - Added color pallete in filter images (#578)
+
+[33mcommit 7e63a1f6a4076de1bc0d5708dec11bbdbbe1d7bb[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Fri Mar 1 17:05:07 2019 +0530
+
+    Fixed titlebarcount problem (#576)
+
+[33mcommit bb7b9b9ddafd68ec291b720e0defcb5f6dac1e2e[m
+Author: Jaideep Prasad <jddeep003@gmail.com>
+Date:   Fri Mar 1 16:57:40 2019 +0530
+
+    #568 - Fixed build.gradle error (#575)
+
+[33mcommit de81f171246ed638e6b3bb7fcf320e5feddae890[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Feb 23 10:41:30 2019 +0530
+
+    update 84
+
+[33mcommit e81f8075d2616e24489ae64233f90a07409c2ddb[m[33m ([m[1;33mtag: 8.5.7[m[33m)[m
+Author: Shivamdhuria <shivam.dhuria07@gmail.com>
+Date:   Fri Feb 22 21:59:22 2019 +0530
+
+    #420-add splitting options (#567)
+
+[33mcommit 8019145f9c7ace63618f7a0a84ff999ed1628fed[m
+Author: Mohammaduvez <mohammaduvez1995@gmail.com>
+Date:   Mon Feb 18 14:01:37 2019 +0530
+
+    #494 - Fixed search files animation looks in different themes (#566)
+
+[33mcommit db7fb3069a95dc5d2fd373a2baec9b9d205680c1[m
+Author: Shivamdhuria <shivam.dhuria07@gmail.com>
+Date:   Sun Feb 17 20:05:09 2019 +0530
+
+    #512 - add invert pdf feature (#560)
+
+[33mcommit 4673d9ff2717049ba63e9041c70284e3259e85e6[m
+Author: ikigai <yedhin1998@gmail.com>
+Date:   Sat Feb 16 11:35:17 2019 +0530
+
+    #557 - remove overlapping of date and type textviews (#558)
+
+[33mcommit 5ff2e8360406a978dfcdb85270b7697fe075d255[m
+Author: Aidan Wilson <zatch.bell@hotmail.com>
+Date:   Mon Jan 21 04:43:43 2019 -0500
+
+    #534 - Fixed issue with password added without OK click (#556)
+
+[33mcommit b6acc829fc18f569ede9daa7eb7cede601a7ddc3[m[33m ([m[1;33mtag: 8.5.6[m[33m)[m
+Author: obpacheco <austinwim@gmail.com>
+Date:   Mon Jan 7 21:23:27 2019 -0800
+
+    fixes #551 -  issue with pdf to image
+
+[33mcommit a1e06344e81bd49a39cf5bd2ad0a8c826e505b61[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Jan 4 14:14:17 2019 +0530
+
+    update version, code cleanup and fixed error in convert pdf pages to image
+
+[33mcommit 53e01340768ca9f4030b3521698c8552a701eec3[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Jan 2 21:32:36 2019 +0530
+
+    fixed few bugs; new screenshots; some changes in home screen (#550)
+
+[33mcommit 014aaafdbb5ee5f47f118b6b31a3dc59221001af[m
+Author: Shivamdhuria <shivam.dhuria07@gmail.com>
+Date:   Wed Dec 26 22:30:46 2018 +0530
+
+    #514 - add remove duplicate feature (#547)
+
+[33mcommit d76a53471cde2435b0d7b2428f9618e8b7b9928a[m[33m ([m[1;33mtag: 8.5.3[m[33m)[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Dec 19 21:07:28 2018 +0530
+
+    #538 - Update to Spanish (ES) translation to strings.xml (#546)
+
+[33mcommit f6c0095541b97f268c77428cd90b3578d348ad3f[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Dec 18 20:06:08 2018 +0530
+
+    bug fixes in remove pages fragment
+
+[33mcommit 50ce94ca9a20251b4fb814a8faab0d204ce92d05[m[33m ([m[1;33mtag: 8.5.2[m[33m)[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Dec 18 19:45:44 2018 +0530
+
+    #533 - changes in cropimage activity (#544)
+
+[33mcommit f3a2848f9401a9180b8b1e409d3db1cf089adef5[m[33m ([m[1;33mtag: 8.5.0[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Dec 17 20:51:50 2018 +0530
+
+    fixes #529 - sharing images using third party apps; removed unused resources
+
+[33mcommit 9b14906c0774236726861bdbf8f78104e45d3812[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Dec 17 15:55:07 2018 +0530
+
+    fixes #540 - Font size does not work unless set to default
+
+[33mcommit 95a0d6b255b5791e8eddeed389c26572a5c27ad5[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Dec 17 15:42:43 2018 +0530
+
+    fixes #541 - rotate pages show watermark dialog also
+
+[33mcommit 7a1cad3cc2db7dd39021900686a67ead1fa3d87e[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Thu Nov 29 14:05:13 2018 +0530
+
+    fix #413 - add images to existing PDF (#532)
+
+[33mcommit 74ee689a73099d9d81e2e4a2e70a896099d95d2c[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri Nov 23 22:13:31 2018 +0530
+
+    few playstore reported bugs & #527 (#531)
+
+[33mcommit cdcd0e071a193aaf36e1f46931227593350c420f[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Nov 20 21:08:42 2018 +0530
+
+    #526 - Few fixes in spanish translation (#528)
+
+[33mcommit 377fb3407b882f1528a5dc5a4aa87acf3c890d58[m
+Author: Ondrej Tarasovič <ondro2208@azet.sk>
+Date:   Tue Nov 13 11:16:33 2018 +0100
+
+    #523 - Add sorting option under Rearrange images (#525)
+
+[33mcommit 4675dfd23c074507c3d1496f05d4b5f51293b6b2[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Nov 13 15:45:55 2018 +0530
+
+    fixed few playstore reported crashes
+
+[33mcommit e0420d5bbc92cea8568b27f86e5c14cdfcdb499e[m[33m ([m[1;33mtag: 8.4.7[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Nov 11 23:29:58 2018 +0530
+
+    update 74
+
+[33mcommit f243cf73e9827838aefe43d431d3620008bb69ba[m
+Author: sc450ew <43934872+sc450ew@users.noreply.github.com>
+Date:   Sat Nov 10 07:28:26 2018 +0100
+
+    #431 - chceckbox added before each file in merge files fragment (#521)
+
+[33mcommit a66ec979a5182e135f825c6424b04a99bd555d51[m
+Author: Giuseppe250 <44147060+Giuseppe250@users.noreply.github.com>
+Date:   Sat Nov 10 07:27:07 2018 +0100
+
+    #248 - add possibility to create pdf file also from .doc and .docx files (#522)
+
+[33mcommit 9a3a15fd4edd711c262a6bf3ddef170d50f718d7[m[33m ([m[1;33mtag: 8.4.5[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Nov 4 18:28:06 2018 +0530
+
+    increased build num; updated whatsnew
+
+[33mcommit 9862da31b9e4061f6c6d0b2081317a99045f183e[m
+Author: scanyboss <jan.halama@student.tuke.sk>
+Date:   Fri Nov 2 06:25:15 2018 +0100
+
+    #392 - added watermark class and add_watermark_dialog.xml, added Add watermark option to the home page and ImagesToPdf page, added mentioned option to View files page (#520)
+
+[33mcommit d9649b1f597950c9221235c78c2b35b93db00d48[m
+Author: SaMumcu <33746502+SaMumcu@users.noreply.github.com>
+Date:   Tue Oct 30 18:32:05 2018 +0300
+
+    #516 - whatsnewfragment-feature (#518)
+
+[33mcommit 6db9fc727de5113106128fc14525bf6126a26205[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Oct 28 16:29:19 2018 +0530
+
+    fixes #441 - moved add & remove password to new fragment:
+
+[33mcommit cc8e22df951424b87e18590740a87873471fd108[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Oct 28 15:56:23 2018 +0530
+
+    #513 - change master pwd, remove directory operations in view files, decrypt pdf by master pwd (#517)
+
+[33mcommit ef7c2719b37363d9d43ab3753e8e665c6d830f5b[m[33m ([m[1;33mtag: 8.4.2[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Oct 26 22:21:47 2018 +0530
+
+    fixed few playstore crashes
+
+[33mcommit cdc9e153808811dd0948b6ca2fe04737ad54f95c[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Oct 26 19:50:26 2018 +0530
+
+    fixes #515 - create grayscale PDF, page num issues, ui fixes
+
+[33mcommit 59271469cb10c5bd0d1144a9d521f742207baea7[m
+Author: Vaibhav <vaibhav.j@coppermobile.com>
+Date:   Fri Oct 19 12:50:09 2018 +0530
+
+    [PDF enhancement options] Add page number of PDF #446
+
+[33mcommit 0b6d3fd5f92606bee248497f194e22d09698cfed[m
+Author: Kartik Arora <chipset95@yahoo.co.in>
+Date:   Sat Oct 20 21:38:54 2018 +1100
+
+    PDF from camera image, closes #510
+
+[33mcommit 399b67765abfe2c943239ea263ee3479435ea432[m
+Author: vbvjain <33592316+vbvjain@users.noreply.github.com>
+Date:   Fri Oct 19 11:10:51 2018 +0530
+
+    #507 - Add a previous button in image cropper activity (#508)
+
+[33mcommit 293f435232536dd4a21b1b08fa058a709c5230f0[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Thu Oct 18 22:49:49 2018 +0530
+
+    #502 - Added image cropper in own custom activity (#506)
+
+[33mcommit f3183572d8dfdd745db2929dbd3ce60a4cca3d4c[m
+Author: Mahima <mahima.6.ms@gmail.com>
+Date:   Wed Oct 17 12:41:58 2018 +0530
+
+    #499 - Add new feature - Converting PDF pages to images (#505)
+
+[33mcommit 4eaa416bb07b732c3c06f11de9db41dbc2694fbf[m
+Author: Alexandra <sandraprog@mail.ru>
+Date:   Wed Oct 17 08:45:46 2018 +0300
+
+    Add translation to Russian language (#504)
+
+[33mcommit a62a957fa6ca71a0dde5319554302f4ea8c05830[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Oct 14 11:57:20 2018 +0530
+
+    incorporate theme colors in imageeditor activity
+
+[33mcommit 7504e40e630a1a277caadfe175df02e6361a6194[m
+Author: Harry <40593824+HarryHeights@users.noreply.github.com>
+Date:   Sat Oct 13 17:03:01 2018 +0100
+
+    #495 - added FAQs.md (#497)
+
+[33mcommit 7a0f5a9708f77b1d2b55825d0ff367c8cf698b0f[m
+Author: Vanethos <solid.goncalo@gmail.com>
+Date:   Sat Oct 13 17:49:01 2018 +0200
+
+    #441 - Add `Remove password` and `Add password` option in navigation drawer (#498)
+
+[33mcommit 95223a5ae28ddc0ce7b36acfddbbb8ecf354bcf7[m
+Author: Alexandra <sandraprog@mail.ru>
+Date:   Thu Oct 11 20:39:05 2018 +0300
+
+    #440 - Add Merge PDF option (#493)
+
+[33mcommit 0ccba4a084751b9a70cc4179f38ca1ef46a58698[m
+Author: Alexandra <sandraprog@mail.ru>
+Date:   Thu Oct 11 19:57:48 2018 +0300
+
+    #489 - Lock icon color in view files (#492)
+
+[33mcommit 6ce6a20b604dd6328540c653d18d1df05e224973[m
+Author: Palak Jain <21954525+till-tomorrow@users.noreply.github.com>
+Date:   Thu Oct 11 15:47:55 2018 +0530
+
+    Update README.md (#491)
+
+[33mcommit 8d106072c1241d5f67ef9a8953c644a7c0cc194a[m[33m ([m[1;33mtag: 8.3.8[m[33m)[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Oct 10 21:57:31 2018 +0530
+
+    fixes #485 - add an  option to maintain aspect ratio/stretch image (#488)
+
+[33mcommit 3882de95bf054effeb5d743361cdea4c531ee670[m
+Author: DJCrashdummy <DJCrashdummy@users.noreply.github.com>
+Date:   Wed Oct 10 18:03:56 2018 +0200
+
+    #442 - added fdroid-badge (#486)
+
+[33mcommit f4f1a61c3c7e099d9f8f0028f3e2ca87ea34bc49[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Oct 9 22:47:51 2018 +0530
+
+    version update; fixed crash in remove pages; fixed background task issue in bottomsheet
+
+[33mcommit 2dd299b9799379335bddf30d7e5226f8390c7bb2[m
+Author: Diksha Manchanda <dikshamanchanda20@gmail.com>
+Date:   Tue Oct 9 20:36:15 2018 +0530
+
+    #482 - added view pdf button (#484)
+
+[33mcommit bc6bb3d08c59ad74baa4d99e7e98fadfbe9d3ced[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Oct 9 15:56:36 2018 +0530
+
+    fixed crashes; remove unused resources (#483)
+
+[33mcommit 5b2cdc17df88495956e4e8215526f92b8a55c7ec[m
+Author: sandraprog <sandraprog@mail.ru>
+Date:   Mon Oct 8 20:51:44 2018 +0300
+
+     #479 - Fixing checkbox state in View Files fragment (#481)
+
+[33mcommit b4e7fe15e83c702f4634d96e16c4a3f476389044[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Oct 8 20:25:03 2018 +0530
+
+    update v61
+    fixed an issue with bottomsheet
+
+[33mcommit 800250e7afd1174688a1781ddb14bf4de440e5eb[m
+Author: Ilya Fomenko <adonixis@gmail.com>
+Date:   Mon Oct 8 19:46:30 2018 +0500
+
+    #470 - Add Get Started button on last fragment in WelcomeActivity (#478)
+
+[33mcommit 2459344e4bd710e28f95ed280fcb09902de0afbd[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Oct 8 19:49:59 2018 +0530
+
+    removed unused maven repo
+    fixing android.view.ViewRootImpl exception
+    remove unused variables
+
+[33mcommit 8bb498cb1dc700d8dfee7cf9d7f5b8555bad0185[m
+Author: Willy Aguirre <marti1125@gmail.com>
+Date:   Mon Oct 8 00:24:30 2018 -0500
+
+    #472 - add scaleToFit; fixes margins issue (#476)
+
+[33mcommit a0c858fda1d37ee84b7eeddbbe4cd3f4ee507aca[m[33m ([m[1;33mtag: 8.3.1[m[33m)[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Mon Oct 8 10:49:58 2018 +0530
+
+    few playstore reported crash fixes (#475)
+
+[33mcommit 2d56144d20ede736073cca64774c79779c62f82e[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Oct 8 00:37:37 2018 +0530
+
+    few chnages in qr code scanning
+
+[33mcommit 6e4dc6ca27b289794558a55fae1e810327ca7dd4[m
+Author: Duarte Manuel Ribeiro Pinto <duartemr.pinto@gmail.com>
+Date:   Sun Oct 7 18:38:18 2018 +0100
+
+    #473 - smooth scrolling (#474)
+
+[33mcommit 8f740e72c56cd1c04117e4c8264ae48aa53df112[m
+Author: Duarte Manuel Ribeiro Pinto <duartemr.pinto@gmail.com>
+Date:   Sat Oct 6 19:25:34 2018 +0100
+
+    #444 - Remove pages issue with external storage (#469)
+
+[33mcommit 7f58350825a854757717a1d04b7e39a48ddf935f[m
+Author: Nitin Anand <Nitinnatural@gmail.com>
+Date:   Sat Oct 6 22:58:06 2018 +0530
+
+    #456 - replaced fetching text with lottie progress (#463)
+
+[33mcommit f8965578ff10ee4948d57ab318c8feb48919da06[m
+Author: Mahima <mahima.6.ms@gmail.com>
+Date:   Sat Oct 6 22:55:34 2018 +0530
+
+    #460 - add animation to upArrow when sliding/hiding bottom sheet in fragments (#466)
+
+[33mcommit 2db302232f4f2242ad01e2a94a9ec284af307392[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Oct 6 22:51:39 2018 +0530
+
+    Made few changes in Welcome activity; removed constant strings; add help section in app
+
+[33mcommit 2276663056f3a2ec57b5945a5aa752d118b507a9[m
+Author: Mursyidah Zainal Fitri <mursyidahzfz@gmail.com>
+Date:   Sun Oct 7 00:32:27 2018 +0800
+
+    #108 - Add a basic tutorial to explain the functioning of app (#465)
+
+[33mcommit d86bb0799a2836dc9a2d4ce270e7bd9ee775bcb5[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Oct 6 14:21:29 2018 +0530
+
+    #458 - Merge PDF button remains white after File selection (#462)
+
+[33mcommit d7cfd10036bb18d90459d510800b1487daa4ad29[m
+Author: jwojciec <mail@jwojciechowski.pl>
+Date:   Sat Oct 6 10:44:23 2018 +0200
+
+    132 - Unit tests for file utils class(#464)
+
+[33mcommit 06eb770ad35772d2c8389564aa5c15de39b79e97[m
+Author: yuval105 <yuvy1072@gmail.com>
+Date:   Sat Oct 6 11:42:23 2018 +0300
+
+    #443 - Add margins (#461)
+
+[33mcommit 29c91454e9ef9fc817ff4bb8c2b456f13559e4a6[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Oct 5 23:54:49 2018 +0530
+
+    #396 - Added an option to encrypt PDF - Merge PDF (#459)
+
+[33mcommit e91ae65cf7aaa6e9b5f3b5dc38d651a2233239b8[m
+Author: konstzv <konstzv@gmail.com>
+Date:   Thu Oct 4 18:04:44 2018 +0300
+
+    #453 - highlighting correct fragment (#457)
+
+[33mcommit a860e28a5d7681d72847c56bd0119f0b575b55f4[m
+Author: konstzv <konstzv@gmail.com>
+Date:   Thu Oct 4 12:33:00 2018 +0300
+
+    #452 -  Few issues in Bottom sheet (#455)
+
+[33mcommit 5e4262631e24767ff6c81b978980efbd28eea763[m[33m ([m[1;33mtag: 8.1.0[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Oct 3 20:59:21 2018 +0530
+
+    fixed few issues in reorder PDF
+
+[33mcommit c553aaf1b56785f368156bba2b7b9672df8c4508[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Oct 3 16:00:46 2018 +0530
+
+    Update README.md (#451)
+
+[33mcommit b92a2d7ea736955ca7103a57e79286b33061c001[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Oct 2 23:05:07 2018 +0530
+
+    #447 - add preview of pdf page in reorder/remove pdf pages (#450)
+
+[33mcommit f4c29fd8e0141dbbd811b9cc3d7799c350a99406[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Oct 2 10:47:01 2018 +0530
+
+    Update README.md (#449)
+
+[33mcommit f3c5b9085831b1ddbdd266a3fcb6c0a8be791cb5[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Oct 2 10:31:13 2018 +0530
+
+    Add different themes to readme (#448)
+
+[33mcommit 0b3a4a5fc5783ef1d2ba8f0738e3a367291d805a[m[33m ([m[1;33mtag: 8.0.0[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Oct 1 12:54:21 2018 +0530
+
+    updating version
+
+[33mcommit 8f1e5824dd82274ae0957da2a2fab95250e24a72[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Sep 29 22:49:27 2018 +0530
+
+    removed unused icons
+
+[33mcommit b7f4ddd51aae6cf85b66cd7441a716cfbcd9a550[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Sep 29 22:40:03 2018 +0530
+
+    removed unused icons
+
+[33mcommit e6c0d8c83624e55b330e15a4c74aa30627576a66[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Sep 28 23:07:08 2018 +0530
+
+    made few changes in theme; removed unused imports
+
+[33mcommit 76c25bc81644e82320531b1e0e199a187f56c1a9[m
+Author: Santosh <santoshhiremani@gmail.com>
+Date:   Fri Sep 28 22:11:07 2018 +0530
+
+     #427 - [New Feature] Allow users to scan QR code (#439)
+
+[33mcommit d18644bfe0ee0af36f594840e9135db3849a6254[m[33m ([m[1;33mtag: v7.0[m[33m)[m
+Author: Alexey Homa <32689674+sasfmlzr@users.noreply.github.com>
+Date:   Fri Sep 28 19:39:26 2018 +0300
+
+    Divider color fixed, bottom sheet fixed, unnecessary themes and colors deleted. (#437)
+
+[33mcommit 28dea04f80eb3321d7bd98b8eee4835a29807099[m
+Author: Alexey Homa <32689674+sasfmlzr@users.noreply.github.com>
+Date:   Fri Sep 28 06:48:05 2018 +0300
+
+    History icon & toolbar icon fixed in different themes (#436)
+
+[33mcommit 4ddcad91a5f07fce036cb74c722395ed62cd568b[m
+Author: Alexey Homa <32689674+sasfmlzr@users.noreply.github.com>
+Date:   Thu Sep 27 21:32:33 2018 +0300
+
+    #145 - Add themes to the app (#434)
+
+[33mcommit 97f23b62868bf32f58565300cdedab789dfb00ae[m
+Author: Santosh <santoshhiremani@gmail.com>
+Date:   Thu Sep 27 21:53:27 2018 +0530
+
+    #432 - Allow users to reorder the sequence of PDFs in merged PDF  (#435)
+
+[33mcommit 04688bfa4321e3f074fd52e83d3f75c9eb9bbe19[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Sep 27 21:31:36 2018 +0530
+
+    hiding the file select count when view files fragment is closed
+
+[33mcommit c23f655a0e8d1b7b2e6afe5969ec300be1071503[m
+Author: Alexey Homa <32689674+sasfmlzr@users.noreply.github.com>
+Date:   Wed Sep 26 14:06:19 2018 +0300
+
+    #138 - Add option to create grayscale pdf (#429)
+
+[33mcommit 87ef7b56b3e8dfe648bdda765354777629ae5321[m
+Author: Alexey Homa <32689674+sasfmlzr@users.noreply.github.com>
+Date:   Wed Sep 26 14:04:43 2018 +0300
+
+    Fix bug, when selected null file(crash, when selected all pressed) (#430)
+
+[33mcommit d947f1b80653e4c8b1575471ee21e04c459b57b8[m
+Author: Alexey Homa <32689674+sasfmlzr@users.noreply.github.com>
+Date:   Mon Sep 24 08:32:35 2018 +0300
+
+    #361 -  Add custom toolbar when PDFs are selected (#428)
+
+[33mcommit 40a6143370306ea4fa2ab53c7d30c2427686deba[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Sep 16 17:53:44 2018 +0530
+
+    added android arsenal link to readme
+
+[33mcommit 818d30e7f79d4472f9c634e69d019cfa92dfd1cd[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Sep 16 13:31:25 2018 +0530
+
+    fixes #390 - changes image names in extract images
+
+[33mcommit 2c330bca3d16206638e3832adba83e99d95a6abd[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Sep 15 22:14:09 2018 +0530
+
+    fixes #425 - add option to view extracted images
+
+[33mcommit 2498cd624d9510b6779ea86c89f647a27581a8df[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Sep 15 14:18:21 2018 +0530
+
+    #393 - create a Home Page (#426)
+
+[33mcommit a93a3fe5a4ef7bcdfe2aaefd7933be7136d460ce[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Sep 15 12:43:52 2018 +0530
+
+    files were getting displayed twice in the list
+
+[33mcommit a068cf049e0d11e9745dcb97f883054596b92d45[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Sep 14 12:13:28 2018 +0530
+
+    Moved population of bottomsheet to async task
+
+[33mcommit b9a80449f2ca9a05ec86048ce5e1d77ac712a9cd[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Sep 13 15:44:07 2018 +0530
+
+    fixed crash
+
+[33mcommit 39fac3330a0de34137cf9a463836d7ed34eb9726[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Sep 11 19:16:45 2018 +0530
+
+    moved common code to utils
+
+[33mcommit 4612369ee66607d2982b3e1a4c85436a14024af3[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Sep 11 17:09:43 2018 +0530
+
+    showing all pdf files in bottom sheet; moved common code to bottomsheetutils
+
+[33mcommit 2dd3e5ae57327b236d1f8e4f0fc76253f7a97507[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Sep 9 21:30:39 2018 +0530
+
+    fixed a few crashes
+
+[33mcommit f04f94412b8b82d6caee0dcedfcd01f84d2812c9[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Sep 7 19:56:34 2018 +0530
+
+    fixed file path issue
+
+[33mcommit 52b88a4c0accf2a011e2cfe89b356803863335e9[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Sep 3 19:35:48 2018 +0530
+
+    code cleanup
+    removed redundant code
+
+[33mcommit d95147d740ee57d6836761434c1a81700e81deba[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Mon Sep 3 14:24:10 2018 +0530
+
+    #147 - Added app shortcuts for Android 7.0 and up (#424)
+
+[33mcommit 18b1a5f4248950ff09dc341609cde1e354d7898c[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Sep 2 11:26:22 2018 +0530
+
+    fixes #368 - show no permissions view in view files
+
+[33mcommit 84e279ac0d1e7a5e5b6ec9ebb4dfa75785b4f663[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Sep 2 00:14:02 2018 +0530
+
+    fixes #326 - allow users to customize storage location
+
+[33mcommit 0229905b16f0b50ea6c266c85020e9461756ab7f[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Sep 1 19:33:54 2018 +0530
+
+    fixed few static leaks; fixed string errors
+
+[33mcommit 813c64f9aac7f551ab3c7334354af709de37948e[m
+Author: Umang Parmar <umangjparmar@gmail.com>
+Date:   Fri Aug 31 21:42:38 2018 +0530
+
+    Fix overlap between text and button in empty history view (#423)
+
+[33mcommit 6dfb7312ed2047d6d6414f5f65a0bc9934905ca8[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Aug 29 23:52:30 2018 +0530
+
+    removed extra code
+
+[33mcommit 00ebc54ca25aa4decb280e1958836666d2a1760a[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Aug 29 13:55:20 2018 +0530
+
+    using matisse activity; instead of tedpicker; reason: tedpicker doesn't allow selection of folders (#422)
+
+[33mcommit 96c139acbc6911e217b94a1962f98b8c35d1bc46[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 28 21:47:33 2018 +0530
+
+    #367 - Fixed permission error in [Text to PDF] Fragment (#421)
+
+[33mcommit 691416a08f334faa421392e2d1c5a9157e845db9[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Aug 28 20:03:47 2018 +0530
+
+    removed extra code from settings fragment
+
+[33mcommit ac5097eca43a739a666e910b44d3ae1d00f86c05[m
+Author: Anirudh <anirudh.sohil@gmail.com>
+Date:   Tue Aug 28 15:06:10 2018 +0530
+
+    Add settings page (#419)
+
+[33mcommit 181a1471e9882be0a3c666f48090e1a636d8e732[m
+Author: Anirudh <anirudh.sohil@gmail.com>
+Date:   Mon Aug 27 16:20:38 2018 +0530
+
+    #412 - Bug fixed of home scrolling down (#414)
+
+[33mcommit 55db7d204911400d41f3cc954b7ebacab8d4a151[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Aug 23 12:36:19 2018 +0530
+
+    fixed issue with pdf encryption
+    added specific angles for rotation
+
+[33mcommit c94f3f2f870a7942c07b253e45e8ed4e0d1d62a8[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Aug 22 21:01:25 2018 +0530
+
+    showing how much pdf is compressed; changed button color to blue, instead of grey
+    removed code duplicacy
+
+[33mcommit 5edc297afb2fb8026f09ddd87ef47edc0e60e95e[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Aug 22 17:36:49 2018 +0530
+
+    #404 - Added an option to add multiple files in Merge PDF Fragment.(#411)
+
+[33mcommit 7d9db35f3f993c9089e4bda4051f29f03ba43b18[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Aug 21 22:38:52 2018 +0530
+
+    fixes #379 - add option to compress PDF; added option to rearragne images in home screen
+
+[33mcommit ce0ed362c68ca9b0c4ef35469a1b2c2c18243bb9[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Aug 21 20:50:43 2018 +0530
+
+    fixes #410 - show thumbnail of extracted image; fixes #407 - update view when delete undo is clicked
+
+[33mcommit c56b97992368e482236b6103091e31d64f84e0e2[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Aug 19 13:18:38 2018 +0530
+
+    #395 - Added an option to share extracted images (#408)
+
+[33mcommit 8489ff8430cca2393dee0615127c2526b108b5bf[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Aug 19 10:26:16 2018 +0530
+
+    Removing completely white images from extract images
+
+[33mcommit 087681b7a5324f786f4bd4a0ee9880caa11d5f03[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Aug 19 09:40:17 2018 +0530
+
+    #389 - Shown animation while extracting images - Extract Image Fragment. (#406)
+
+[33mcommit 4e27500e1b383f39ee47df9c5f0bce92d0384965[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 18 23:23:27 2018 +0530
+
+    fixes #381 - [Image Border] Add  option
+
+[33mcommit 9d3eadbc95c22b4661b9b2434a71dffe4e08edbb[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 18 11:10:55 2018 +0530
+
+    fixes #405 - sorting order messes up
+
+[33mcommit 34ed577b85011bbbcaa8974fa843399941c50f4b[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Aug 17 20:24:23 2018 +0530
+
+    fixes #403 - added more operations to history database
+    fixes #399 - allow users to reorder PDF
+    fixing few cashes reported
+
+[33mcommit 7b7ea95286fc9478b0843cbfe889f21f11a4390b[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Aug 17 15:27:18 2018 +0530
+
+    #400 - Added option to rotate pages in existing PDFs(#402)
+
+[33mcommit 312b0f654636bf56c1b656e7e989ea92b3d870ec[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Aug 17 10:51:44 2018 +0530
+
+    #371 - Fixed 'Files get overwritten if existing name is given' Merge Files Fragment(#401)
+
+[33mcommit a9021b5254e46019bbc46c4cd42b0f02143470b5[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Aug 16 20:07:43 2018 +0530
+
+    Added rate us dialog; Added icons in history section; fixes #383 - show extracted images
+    added option to remove pages from pdf
+
+[33mcommit 8fe13de35ecb4ec472523797b34e3a976f5b46d2[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Aug 15 22:11:17 2018 +0530
+
+    #91 - add option to split PDF
+
+[33mcommit 3421312676a87809e397ca9b28bee263a8f1b77b[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Aug 15 16:49:11 2018 +0530
+
+    #372 - Show lock icon if PDF is encrypted [Merge PDF - View Files] (#398)
+
+[33mcommit 738278afd68a6bd487ea47006ce7ea8ea23fec2d[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Aug 15 14:11:02 2018 +0530
+
+    Refactore fileuriutils
+
+[33mcommit b8e4a74e9e1ea292ed228d4e57431072c296b2ca[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Aug 15 13:17:15 2018 +0530
+
+    #365 - Removed Random file selection behaviour in view files fragment (#394)
+
+[33mcommit 59082fd6a39ef3019e378a8c614243b69a9cb435[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Aug 15 11:47:48 2018 +0530
+
+    fixes #148 - add adaptive icon support
+
+[33mcommit cd8327e8e6552f921e2fc1b82ab0f1c38ba5c524[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Aug 14 23:53:04 2018 +0530
+
+    fixes #388 - Disable extract images button when no PDF is selected
+    Removed duplicate code
+    added a placeholder for watermark options
+
+[33mcommit 7a02c68064b3938c70bc032a9d6c0279ba412fa4[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 14 23:31:02 2018 +0530
+
+    #380 - Added an option to remove image in rearrange screen. (#391)
+
+[33mcommit e504d86fa8de5140efc96f09a961854a116a2634[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Aug 14 21:10:20 2018 +0530
+
+    Fixed crash; changed few code pieces
+
+[33mcommit 0e3b0f3fe9a2ec7852441f68264838d996e0c20a[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 14 19:10:13 2018 +0530
+
+    #344 - added warning dialog if filter is not saved on finish click(#386)
+    
+    filter screen
+
+[33mcommit 8831930d1fcdd23874732faf1f10c15beeeffa51[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 14 19:08:57 2018 +0530
+
+    #374 - removed alert if no filters are applied on home click (#387)
+    
+    filter screen
+
+[33mcommit d4c56effe7a6a8e827aa540a36b08564149d8b10[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 14 10:39:32 2018 +0530
+
+    #384 - fixed bug in filter images screen (#385)
+
+[33mcommit a026b8be079c30774df431c016e6e4f04a3f4b9b[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Aug 13 22:30:38 2018 +0530
+
+    fixing output filename bug
+
+[33mcommit 268b8ea49187f008e8e901dada684f2f057e4728[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Mon Aug 13 20:27:07 2018 +0530
+
+    #214 - Added 'set as default' option in Page Size dialog (#382)
+
+[33mcommit 5fba7a6a9dd25791f5ded8cb5ef4a16c3aecc19d[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Aug 13 20:15:39 2018 +0530
+
+    fixed flickering issue in merge files fragment; back pressed issue
+
+[33mcommit b8a5ef536204230a3d1a2d90be212ce7bb773d5f[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Mon Aug 13 19:52:13 2018 +0530
+
+    updated buy me a coffee link
+
+[33mcommit e1bc745e210ee39f0137f57d71a514b217c3fe4b[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Aug 13 00:23:37 2018 +0530
+
+    fixes #90 - New feature : Add option to extract images from PDF
+
+[33mcommit e70d7e15e0ba8f11059d3df2e6e7290391faf2b9[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Aug 12 14:32:41 2018 +0530
+
+    Improve code climate
+
+[33mcommit a2d1c0e08a3fa75f8231355ea0cc2a65237b3ac7[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Aug 12 12:01:02 2018 +0530
+
+    updated readme with new features (#378)
+
+[33mcommit 9a54796975465495e864cc13799f99e375e07c57[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Aug 12 11:58:14 2018 +0530
+
+    #364 - Fixed text & size of `create PDF` button on home page (#377)
+
+[33mcommit 5a42904e0b6b6c1cf747d6c7fd4a1724e7ff2ffe[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Aug 12 10:41:29 2018 +0530
+
+    Compression issue
+
+[33mcommit 72d7dd8a1fac2b03cfe97e0216aade4fa1dd6a46[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Aug 12 10:00:27 2018 +0530
+
+    #373 - Hide arrow icon when there is just one image (#376)
+
+[33mcommit be2c276c877d64144d40a7e9dce85e5753afe97f[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Aug 12 00:12:28 2018 +0530
+
+    Removed redundant code
+
+[33mcommit 32b76ca0ec263f10e12c1e0cad187ad9ac402df5[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Aug 12 00:06:54 2018 +0530
+
+    #345 ,#369 - Bugs in edit images & filter images (#375)
+
+[33mcommit 660537431ee39e0a846ece83632b282299f1a068[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 23:46:21 2018 +0530
+
+    Remove unused resources
+
+[33mcommit 1635655357476f8b1561f40c0eeb870cfa3556f1[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 22:09:59 2018 +0530
+
+    Fixed compression issue (images were not getting compressed); added more color to brushes
+
+[33mcommit 50dce4727accdf2c09901069008c3defe386afc0[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 21:28:34 2018 +0530
+
+    Fixed crash when share app is selected; Hiding empty view by default in history fragment
+    fixes #370 -  text is not visible when images are selected
+
+[33mcommit c950f30a41187b989afe455f32ccc2e01af779ae[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 19:11:03 2018 +0530
+
+    Moved brushes to an adapter
+
+[33mcommit be6c1ec7c938382c00bac5ee6619cca6b583f531[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 18:21:30 2018 +0530
+
+    fixes #33 - Add option to add border around images
+
+[33mcommit be18b6b2893924dde88a90b8299be0f841248881[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 13:53:21 2018 +0530
+
+    Fixed reset button issue
+
+[33mcommit 9134b035901017896c7388a5bd745e2f9c69233a[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 13:37:54 2018 +0530
+
+    Changes in doodle effect ui fixes #335, fixes #347
+
+[33mcommit 5b27b1f07db2d4244748c824ab2a860e1df7e4f6[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Aug 11 12:02:22 2018 +0530
+
+    Refactored merge fragmnent module. Also, Fixed #334: Doodle button color change issue
+
+[33mcommit 662bf7e4d4e13d9c2ca3ee8a900bb59b59371c2a[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Aug 10 20:43:49 2018 +0530
+
+    Fixed crash in Merge Files & view files (in case permissions are not given)
+
+[33mcommit da58eb2ccc719cc82b552bfdf8da3034e3ba51e2[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Aug 10 19:09:12 2018 +0530
+
+    #353 - Fixed Set Page Size value is not retaining (#366)
+
+[33mcommit 0fe03f74fccf13a75e3fd20cda5ce52a8182de78[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Aug 9 17:29:38 2018 +0530
+
+    #354 - Added Password Protection option in Text to PDF (#363)
+
+[33mcommit b35220387318a27e386d28ad8836a6f2d43db210[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Aug 9 11:36:43 2018 +0530
+
+    #348 - Changed "Save Current Images First" toast showing logic (#362)
+
+[33mcommit b7c101092767b6e5be44dad193d0c452407d8c2f[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Aug 7 22:47:09 2018 +0530
+
+    #282, #360 - Fix invalid file error in case PDFs cant merge
+
+[33mcommit ae17fd85d771e5572956546dd907fd57ad8e2602[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Aug 7 19:35:38 2018 +0530
+
+    few minor changes
+
+[33mcommit 909957e8dc7527d93c9a6775ec59e92283e7490c[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 7 13:58:32 2018 +0530
+
+    #356 - Implemented Persistent Bottom Sheet in View Files Merge pdf Fragment (#359)
+
+[33mcommit 93b57c8434cb8ceb7d3b906742d224266a4d8c03[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 7 10:36:11 2018 +0530
+
+    #352 - reset to initial stage after pdf creation in Text to pdf (#358)
+
+[33mcommit eaf79c4f49491e357b43bc94ff9882ab085dd236[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Aug 7 10:35:31 2018 +0530
+
+    #351 - reset everything to initial stage after pdf creation (#357)
+
+[33mcommit 7af88ec4dccbc14b098c97b9ca0fbfadea4d4e33[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Mon Aug 6 22:35:37 2018 +0530
+
+    #350 -  Fixed issue 'Files are getting Overwritten while renaming the file'.(#355)
+
+[33mcommit beed200bd4bb09ede59cdef2a33b9e4ad2c9aebe[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon Aug 6 19:06:18 2018 +0530
+
+    Fixing fragment stacking issue
+
+[33mcommit 954339db1a750d72a5b6219d78de10ca883888bb[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Aug 5 21:54:44 2018 +0530
+
+    Remove Circle CI
+
+[33mcommit 514ab4047032a57221d8f9a85fb7e3cf30b93f33[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Aug 5 20:39:23 2018 +0530
+
+    #343 - Changed rename record database entry, from oldname to new name(#349)
+
+[33mcommit 3d19bc4fb93d0fb850070f936fb8926e54a9c8c4[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Aug 5 19:52:33 2018 +0530
+
+    #280 - Disabled the Merge Files button and Enabled it after file selections. (#342)
+
+[33mcommit bb2cfb4c0bab49731b62736ba9c42bbc9f0b0a5a[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Aug 4 21:29:40 2018 +0530
+
+    #331 - Disabled the Create Pdf button and Enabled it after file selection (#340)
+
+[33mcommit fada89b74f065dd5a7f8fadb645790c250c7a86c[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Aug 4 21:27:10 2018 +0530
+
+    #330 - Hide the `View Files` option in Merge PDF, when there are no files. (#339)
+
+[33mcommit 0ad8f63f296548e0882269cdf16a7cb66c1106ab[m
+Author: vishalkalra9 <vishalkalra9@gmail.com>
+Date:   Sat Aug 4 21:26:04 2018 +0530
+
+    #321 - Back button on any navigation bar activity closes the app (#341)
+
+[33mcommit 0cc49219308b46ed87554cfab53ceafce74dc86b[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Aug 4 08:30:10 2018 +0530
+
+    #333 - Change button color in `Merge PDF` (#336)
+
+[33mcommit 9801ec3bebf7be3429fcb57ac4da530074616c5a[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Aug 4 08:27:40 2018 +0530
+
+    #332 - Shown 'View' action in Snackbar in Merge PDF (#337)
+
+[33mcommit 2441c2057cef783249f743e21874ac9b7dfcd496[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Aug 4 08:24:32 2018 +0530
+
+    #329 - UI Changes 'View Files' in Merge Pdf Fragment. (#338)
+
+[33mcommit 7ef60fca0d5fac60477addc2957128e671a09424[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Aug 3 19:31:05 2018 +0530
+
+    minor changes
+
+[33mcommit be2a7994725ac84d1568a17aff4a84d58f1a9561[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Fri Aug 3 13:56:07 2018 +0530
+
+    #165 - Added doodle option to images (#328)
+
+[33mcommit b064469e66a70aa4326bc102f66bf0a6017397ba[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Aug 3 10:51:08 2018 +0530
+
+    #277 - View Files in Merge pdf section. (#327)
+
+[33mcommit e81290c74ac5bb9f92b8a4cc583f1222bf93ab12[m
+Author: vishalkalra9 <vishalkalra9@gmail.com>
+Date:   Thu Aug 2 19:27:22 2018 +0530
+
+    #298 - fixing the Fragment is not getting highlighted in few cases(#325)
+
+[33mcommit 930a19b5ec7c5f52754ce7f192dee563ff8cc524[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Aug 2 17:17:24 2018 +0530
+
+    #281 - Show animation in merge PDF (#324)
+
+[33mcommit 7a07a84d18229f88637fb594530e57b2109ad91b[m
+Author: vishalkalra9 <vishalkalra9@gmail.com>
+Date:   Thu Aug 2 17:16:19 2018 +0530
+
+    #320 - Show Lock image icon for encrypted pdfs (#323)
+
+[33mcommit 54243fce4440ad0337d0fe4f918672a4c27dd35e[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Aug 2 14:31:58 2018 +0530
+
+    #257 - added "Sort" option in Preview Images. (#322)
+
+[33mcommit c69145017db162804d4db2f05ffd336e8383afac[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Thu Aug 2 00:34:04 2018 +0530
+
+    Update README.md
+
+[33mcommit 3711047e5afcf0be62a184562eb6a8e23e11c12e[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Thu Aug 2 00:07:18 2018 +0530
+
+    Update README.md
+
+[33mcommit 4af2eecaa66e54b89b4b4b64d0024319612549cb[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Aug 1 16:00:57 2018 +0530
+
+    #302 - added "Set Page Size" option in Text to Pdf (#319)
+
+[33mcommit 0a2cd46751f6f4d4fb1cfdee793b8084c799a7c0[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Aug 1 13:40:05 2018 +0530
+
+    Few layout changes
+
+[33mcommit adb1eab1b1481dc01c66268f1a304219322e340f[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Jul 31 23:54:13 2018 +0530
+
+    #308 - Added reset button in the filter screen to undo saved changes. (#318)
+
+[33mcommit 1cc4bdff51805c3903c4b1ea8a9eda011c57ba90[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Jul 31 21:05:42 2018 +0530
+
+    show error message when no pdf selected in merge PDF
+
+[33mcommit 3f0cb59ca3ce297dd8040d402d84a3971a755030[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue Jul 31 20:42:03 2018 +0530
+
+    Fixing crash in history section for old files
+
+[33mcommit 694dfdcad339a332ec96669100fc715e480f8ea5[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Jul 31 19:33:24 2018 +0530
+
+    #300 - Fixed the filtered image name always contains sepia (#317)
+
+[33mcommit e9adcba52348cb689e1b1e419526dc9f12cbe879[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Jul 31 17:54:12 2018 +0530
+
+     #313 - Few issues in filter screen (#316)
+
+[33mcommit 0ca4ecc2ca4c57385fc5183b1bd40c7a1b00c3e6[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Jul 31 11:14:46 2018 +0530
+
+    #306 - Edit Images doesn't work after selecting filter images. (#315)
+
+[33mcommit 67fde62161019ef72fd4926d697f137a029266b3[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Mon Jul 30 21:50:09 2018 +0530
+
+    Update README.md
+
+[33mcommit b11be48109c3df96a76dafa46f6d58d49650a197[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Mon Jul 30 21:33:46 2018 +0530
+
+    Update README.md
+
+[33mcommit bb44106cf910fd67cc739ea8c035d5dc3b74ca14[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Mon Jul 30 00:05:47 2018 +0530
+
+    #268 - Fragment Transitions (#312)
+
+[33mcommit 418c5029b055d9c50c653118d0f80ee461bcd4c7[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sun Jul 29 22:51:28 2018 +0530
+
+     #309 - Fixed History date format (#310)
+
+[33mcommit 8233ef2e2ad17d3f23524d282d7f454b5b508221[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Jul 29 17:21:10 2018 +0530
+
+    minor changes
+
+[33mcommit c84dd1ea7eb13f013cb486b229b355e4cd9dba29[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Jul 29 13:57:58 2018 +0530
+
+    #293 - Fixed Empty view is still there after undoing delete (#307)
+
+[33mcommit 31b656413a504fbc4d6fe74709d6ab404b6717e3[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Jul 29 12:03:38 2018 +0530
+
+    Update README.md
+
+[33mcommit e88ee440e60976e04faae34d12bdb92bfdeed71c[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Jul 29 10:55:02 2018 +0530
+
+    #301 - Show image name at the bottom in preview images (#305)
+
+[33mcommit e405911eac227a8cfb8807d632f094b0478db028[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Jul 29 09:36:34 2018 +0530
+
+    #299 - Reversed the files order in history section. (#304)
+
+[33mcommit 1e022da7f4091cdb4b70edfe082df87bf2f7c942[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Jul 28 23:18:41 2018 +0530
+
+    #294 - UI changes in image rearrange screen (#303)
+
+[33mcommit baeee8ad067eeee4eca517af8e07416db156c2e4[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 28 22:22:38 2018 +0530
+
+    Changed slack invite link
+
+[33mcommit 9489c391281a60d2fbc243d05efcf6556166df4c[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Jul 28 22:18:29 2018 +0530
+
+    Update README.md
+
+[33mcommit 56569d106201bef2ce2bd6079df208123bf5de99[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sat Jul 28 20:05:53 2018 +0530
+
+    #284 -  Double click fix on select images (#297)
+
+[33mcommit 58ee05c5e0a23378d02e7fb3dcd22e4cbab56235[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 28 18:40:34 2018 +0530
+
+    playstore update v18:6.0.0
+
+[33mcommit dd2b030b724c601a8b27059f3c8c5f994bcfa5dd[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sat Jul 28 18:21:25 2018 +0530
+
+    #275 - Search fix (#296)
+
+[33mcommit 0ce4a16fb65d22c0dcc04394e2190fbf125462f8[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Jul 28 14:31:50 2018 +0530
+
+    #290 - UI changes in preview screen (#295)
+
+[33mcommit 7635e4ad3853dd496df64a866c87da6266810684[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Jul 28 13:15:24 2018 +0530
+
+    #289 - updating images in preview screen(#292)
+
+[33mcommit 4cea83c75ce1a512b1774c20db2272a58a435008[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 28 13:09:54 2018 +0530
+
+    Removing extra views
+
+[33mcommit 03b841190e6048dfbbc27f0616ddebfb5fc51f1f[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 28 12:03:54 2018 +0530
+
+    fixes #291 - provide support for java 8 features
+
+[33mcommit 722d65e31086c55a05af3100eabcf5241c22ff9b[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 28 10:44:38 2018 +0530
+
+    Cleaning up Image to pdf fragment
+
+[33mcommit 197f2874154fc1e1ab343128f9730a642ab14c94[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Fri Jul 27 17:59:03 2018 +0530
+
+    #276 - Added undo option in delete snackbar(#287)
+
+[33mcommit 09d2144cec3c0e8f815edd0f8b5195a76d4d5e45[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Jul 27 16:06:51 2018 +0530
+
+    #283 - Open PDF files when it is selected in history section (#286)
+
+[33mcommit cf48612bf57431353c43e5aeeb86dd20e452d4df[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 26 22:06:21 2018 +0530
+
+    #89 - option to rearrange the images selected in preview screen (#278)
+
+[33mcommit b086618855175a340776bbc150eb21011508a833[m
+Author: Abel Joseph John <eddy.gta17@gmail.com>
+Date:   Thu Jul 26 20:55:43 2018 +0530
+
+    #218 - Adding back button & cancel option filter screen (#279)
+
+[33mcommit d9a5645aa0ffc51385d5a2b489833e3627d9822e[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Jul 26 11:08:45 2018 +0530
+
+    creating new utils files, as there was a lot in fileutils.java
+
+[33mcommit 295a6a4134917c77d27eae2793e5b50bc0d7a86b[m
+Author: Abel Joseph John <eddy.gta17@gmail.com>
+Date:   Wed Jul 25 10:42:25 2018 +0530
+
+    #262 - Changes in preview screen (#274)
+
+[33mcommit c93bd1d9cefd2ba1561bb9b4bafab2579ccf4eef[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Mon Jul 23 23:57:48 2018 +0530
+
+    #263 -  select font family in text to PDF (#272)
+
+[33mcommit a5932f991470ebc4ebf72bd78a2a1924b59f8f5f[m
+Author: Abel Joseph John <eddy.gta17@gmail.com>
+Date:   Mon Jul 23 22:16:00 2018 +0530
+
+    #259 - Fixing the view styles screen in case of empty list (#271)
+
+[33mcommit 1192ab2940743fd38e076b08fa5cc84773aaae2c[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Jul 22 23:42:30 2018 +0530
+
+    improving code climate
+
+[33mcommit ab9ac4aa0d6e2052522443be289780e2351e2f55[m
+Author: Abel Joseph John <eddy.gta17@gmail.com>
+Date:   Sun Jul 22 23:41:58 2018 +0530
+
+    #153 - Removed extra TextView in MergeFiles (#270)
+
+[33mcommit 44cf81fe80e5f7270673d738884f269680761f53[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun Jul 22 21:15:39 2018 +0530
+
+    reducing code complexity
+
+[33mcommit 3d93044ab078d9cdd0981afc60fb9f7589dcf594[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Jul 22 13:10:46 2018 +0530
+
+    Improving performance; Removed unused resources (#267)
+
+[33mcommit 0a57c8bee9d3d5e4916113ec91f9c115e5aa2506[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Jul 22 11:09:15 2018 +0530
+
+    #137 - Added conversion history module (#266)
+
+[33mcommit a0b696d9faf7392360ee729fc92eb5c5abaf1821[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sat Jul 21 14:48:06 2018 +0530
+
+     #260 - View Files UI Fix (#264)
+
+[33mcommit 29f5690be09f38d92b9bb26e93183c9c59b938e6[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 21 12:17:58 2018 +0530
+
+    fixes #247 - incorrect text file name was getting displayed
+
+[33mcommit 0ddb6c2cd2f1c6f46b88f346882d0fe7b71efea2[m
+Author: eddygta17 <eddy.gta17@gmail.com>
+Date:   Sat Jul 21 11:49:43 2018 +0530
+
+    #256 - Fixed Default size updated (#261)
+
+[33mcommit 65c8ea0a2a1f6253130b32b1923b027295014f6d[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 21 11:16:18 2018 +0530
+
+    playstore update [5.0.0 ; v17]
+
+[33mcommit 32331c36a32a6ff97864a0420e52b918d4b0e245[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 21 11:02:04 2018 +0530
+
+    remove circular image library; added our own utility function for circular image; code refactoring in image filters; removed border from image by default (fixes 251
+
+[33mcommit 6e0934653f47d210ba755dbc0401dbe59357e1a0[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sat Jul 21 10:11:17 2018 +0530
+
+     #234 - Added more filters (#258)
+
+[33mcommit e49d3692b7f21dd0ae423095ef751dbcf7c6e46e[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Fri Jul 20 22:02:16 2018 +0530
+
+    code cleanup
+
+[33mcommit 5746d3b291c4b6fcf624c929474c486f839a5ffc[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri Jul 20 21:16:23 2018 +0530
+
+    #88 - option to preview images (#255)
+
+[33mcommit 78c595411797eb2072de57d460a6eb34b108a01d[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Fri Jul 20 20:48:24 2018 +0530
+
+     #162 - Added About us Screen (#254)
+
+[33mcommit d7640838d92ca6fc79c06a10a7fa8702f78f1c35[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Jul 20 16:28:18 2018 +0530
+
+    #243 - added "set default font size" feature. (#253)
+
+[33mcommit 591c7057d276bd02610ed858a7405f25698f6c7a[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Thu Jul 19 23:00:24 2018 +0530
+
+    updated Gif in readme (#252)
+
+[33mcommit cbb87031309227babd04c8237ebf8ed35e8b4820[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 19 18:05:41 2018 +0530
+
+     #196 - Code cleanup, created PDFOptions class (#249)
+
+[33mcommit ec9c9b087758e2f55323ec106db2858f1db331e3[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 19 16:16:05 2018 +0530
+
+    #242 - Few UI changes (#246)
+
+[33mcommit e983e5b39dc21329d13032f8a805f13ea953da25[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 19 16:15:22 2018 +0530
+
+    #241 - Snackbar is shown even if we don't select any file (#245)
+
+[33mcommit be4f09164a27ef4e9a4368b4eca64740b68e366d[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 19 16:14:31 2018 +0530
+
+    #240 - App crashes if we don't provide font size (#244)
+
+[33mcommit 1cca248aff4ff045bd64ac62f9f9f2247d36d2c4[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Jul 19 12:06:38 2018 +0530
+
+    code refactoring
+
+[33mcommit 98adc909827e5dff333c546b0a8980a5f0030ce0[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 19 11:44:00 2018 +0530
+
+    #238 - Fixed file name overwritten in text to PDF (#239)
+
+[33mcommit d29ee458d779951c029ed505f1ff37b8bbf670bd[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Tue Jul 17 22:37:32 2018 +0530
+
+    #212 - change icons for view files & compress image (#237)
+
+[33mcommit 41ad0d300fe8bd6e1e4394b9eca0f91928373a48[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Tue Jul 17 19:37:18 2018 +0530
+
+    #223 - Enhancement options in text to pdf (#236)
+
+[33mcommit c02c7428230582e6df1f2fe6df3d4400ad7feace[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Mon Jul 16 19:33:14 2018 +0530
+
+    #216 - Show previous image button also in filter image screen (#233)
+
+[33mcommit 8ac471f0bcf4376e5e8d5b7e4b0b8598aa893c87[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Mon Jul 16 16:10:22 2018 +0530
+
+    #221 - Added textview to show selected text file name (#232)
+
+[33mcommit 11ab3d47fdb720c97eb7a399cb1dd569c0e4a6ea[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Mon Jul 16 14:13:52 2018 +0530
+
+    #229 - disable create PDF when no image is selected (#231)
+
+[33mcommit 4c19b474d9f9e5e1edfd60212bfaabd323f33871[m
+Author: eddygta17 <eddy.gta17@gmail.com>
+Date:   Mon Jul 16 11:47:10 2018 +0530
+
+    #157 - Button instead of textview in ViewFiles (#230)
+
+[33mcommit 710d8ec14df4c3d13114b7b60f82020b6f382d6c[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sun Jul 15 22:26:15 2018 +0530
+
+    #213 - Create PDF button is disabled even when an image is selected (#228)
+
+[33mcommit 7bd83af56cee34c6ff9b49a278c9e8bddcdf9aab[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sun Jul 15 17:05:13 2018 +0530
+
+    #224 - action to text-pdf Snackbar (#226)
+
+[33mcommit b242d57dabb5ebaa5305ebc014541f4be9b7c07c[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sun Jul 15 16:22:02 2018 +0530
+
+    #215 - UI changes in View Files fragment (#225)
+
+[33mcommit 0a7db07774c4bbf53cfc33e16c2545baecba4624[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sun Jul 15 00:33:23 2018 +0530
+
+    #177 - Text To PDF feature (#219)
+
+[33mcommit f68499f56191d376c00cfedece50e479e2dcf0f5[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jul 14 15:45:43 2018 +0530
+
+    Code refactoring; added new model for filter item
+
+[33mcommit b9bcda53b46b9a16e0674842cebfc50124668f21[m
+Author: Sabiha Shaik <sabihaabc1@gmail.com>
+Date:   Sat Jul 14 12:58:23 2018 +0400
+
+    #185 - UI changes in `Filter images` screen (#211)
+
+[33mcommit 26d5f8c5f96c1082d0ca23cc7d67797aaaa2f23e[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sat Jul 14 13:38:37 2018 +0530
+
+    #208 - option to select all PDFs (#210)
+
+[33mcommit 81071323698a1756e15766db211c016993a675f2[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Jul 14 12:53:53 2018 +0530
+
+    #187 - Lottie animation when PDF is created (#209)
+
+[33mcommit c4f5b1bd88cd4b0b9a1e6c27646c97d7678f6537[m
+Author: Arko Chatterjee <31413484+ac491@users.noreply.github.com>
+Date:   Fri Jul 13 20:51:58 2018 +0530
+
+    #136 - Add directory structure in view files (#207)
+
+[33mcommit e3d0ed1fbde40bbc8a6248c08fcf8ff911233fb3[m
+Author: Shrreya Behll <shrreya.behll@hotmail.com>
+Date:   Fri Jul 13 20:42:01 2018 +0530
+
+    #142 - Disable "Create PDF" Button when no image is selected. (#203)
+
+[33mcommit 053245621818b8e1ef268a7b378c9efc6288f185[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Jul 13 14:20:38 2018 +0530
+
+    #202 - Added break after method calls in Switch of OnItemClick Method (#206)
+
+[33mcommit 955fe46a3d92312f49969b0642b4375e2ec2d694[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Jul 13 14:15:47 2018 +0530
+
+    #197 - Retain the order selected by user in View files(#204)
+
+[33mcommit a661795201b8acbcc95aa934d1c6742aaaa704a8[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Fri Jul 13 10:52:59 2018 +0530
+
+    #194 - hide noOfImages textView when pdf is Created (#201)
+
+[33mcommit e37f5d6ef9f27e43606a6c48b9560d8e6006432f[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 12 23:34:35 2018 +0530
+
+    #94 - Allow users to set page size (#195)
+
+[33mcommit 5d29543a3e2c16725c3716d8435c72bb3643dafa[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 12 12:43:45 2018 +0530
+
+    #114 - show alert if files with the same name exists(#193)
+
+[33mcommit 6f9032e383455b54ea49c4fe5061da369baa42d8[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Jul 11 21:10:45 2018 +0530
+
+    #149 - Use same font throughout the whole app (#192)
+
+[33mcommit b4253498a52665ba7295f70e58f45dd9f1a935c0[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Jul 11 16:17:58 2018 +0530
+
+    #183 - display number of images selected (#191)
+
+[33mcommit f00c0f6a0d724db26b4db4cfc42db172594f1c12[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Wed Jul 11 11:33:41 2018 +0530
+
+    #154 - Show error message if we add password to already password protected PDF (#190)
+
+[33mcommit 9d4fa482811f09be2ec484b0bf7493d39fc5bfdc[m
+Author: Sabiha Shaik <sabihaabc1@gmail.com>
+Date:   Mon Jul 9 09:51:30 2018 +0400
+
+    #42 - Added Image Filters Feature (#179)
+
+[33mcommit dc8eb9d28bf1bc2c6fba13e63b8af0028cb19bf8[m
+Author: Michael Kearns <mobiuscog@users.noreply.github.com>
+Date:   Sun Jul 8 17:59:27 2018 +0100
+
+    #93 - Maintain Aspect Ratio of images (#184)
+
+[33mcommit 337e43f5917d36074cb14c8e63d0a1f90c136881[m
+Author: Arko Chatterjee <31413484+ac491@users.noreply.github.com>
+Date:   Sat Jul 7 22:11:03 2018 +0530
+
+    #131 -  catch files shared by other apps (#180)
+
+[33mcommit f724326e0d9b141847ac5744fb29788789c8f227[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sat Jul 7 22:04:49 2018 +0530
+
+    #158 - prevent Overwriting when encrypting files (#181)
+
+[33mcommit 53b0074153488361cc1c66903f0e74ae67ea216b[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Sat Jul 7 18:43:07 2018 +0530
+
+    #152 - option to Remove Password (#178)
+
+[33mcommit 1c6fb436bd5955eef0dbba5c7d465ba0d2afefde[m
+Author: eddygta17 <eddy.gta17@gmail.com>
+Date:   Sat Jul 7 13:56:04 2018 +0530
+
+    #143 - Removing toast when no images are selected (#175)
+
+[33mcommit ffef9c577190e3bab02a555fa1bf673af1f39c02[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Sat Jul 7 13:51:29 2018 +0530
+
+    #166 - Added an option to change default value of image compression  (#174)
+
+[33mcommit 1d6817e9baced6b15270bb355a5c44c09776586d[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Jul 5 17:04:35 2018 +0530
+
+    Integrated what's new
+    
+    Intgrated what's new in the application
+    
+    updated readme
+
+[33mcommit 97dc1742d3bca7d4a09bdd41c650794defe26c4c[m
+Author: Vyankatesh Berde <vyankateshberde24@gmail.com>
+Date:   Thu Jul 5 16:03:43 2018 +0530
+
+    #155 - Make refresher appear in front of all the widgets in View Files layout (#168)
+
+[33mcommit ee949163bf3ea62af5e4df340e7c60730e1a0902[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Jul 4 21:21:07 2018 +0530
+
+    Code Refactoring. Also fixes #58 and #85
+
+[33mcommit 41b1c3d43748e5ba27304a0814727b4da032a7e1[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Jul 4 17:52:05 2018 +0530
+
+    #98 - Code cleanup; added new class for pdfutils &  other util files
+
+[33mcommit 449010052fa0a2226d9826dc1620c6099f02a734[m
+Author: Shivansh Tiwari <38163725+shiv07tiwari@users.noreply.github.com>
+Date:   Wed Jul 4 13:56:23 2018 +0530
+
+    fix #49 - added Image Compresson option (#161)
+
+[33mcommit 76cbf159a402cf46126d509cfb3901dbc1b07eec[m
+Author: Kirti Gupta <gupta.kirti0808@gmail.com>
+Date:   Wed Jul 4 11:08:10 2018 +0530
+
+    #115 - Changed 'Choice Image' to 'Select Images' (#163)
+
+[33mcommit 72868fa27a247ed1fcc09a0f4a97a22ecb37acc9[m
+Author: Shrreya Behll <shrreya.behll@hotmail.com>
+Date:   Mon Jul 2 13:57:54 2018 +0530
+
+    #110 -View File changes (#141)
+    
+    * #110 -View File changes
+
+[33mcommit 5794a344d0ac8ba5e66dddff9802068ba9202489[m
+Author: Sabiha Shaik <sabihaabc1@gmail.com>
+Date:   Mon Jul 2 12:24:52 2018 +0400
+
+    Merge two PDFs Feature (#140)
+    
+    * Merge two PDFs
+
+[33mcommit 28777d6db6bfa8be52b3f75c855e7af4df38c70f[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Sat Jun 30 21:38:39 2018 +0530
+
+    #130 - Share multiple files in one go
+
+[33mcommit 7238c7c8499915dbc7bcdbcc9bb4bd83f88d25bb[m
+Author: arko chatterjee <ac491@snu.edu.in>
+Date:   Sat Jun 30 16:53:01 2018 +0530
+
+    Fix: #129 add option to search PDF
+
+[33mcommit d0333a40c3fce5cd9f52337964c68326cc519272[m
+Author: shiv07tiwari <shivansh16tiwari@gmail.com>
+Date:   Sat Jun 30 14:33:49 2018 +0530
+
+    Added password encryption after PDF Creation
+
+[33mcommit bec2c40fc2d405fcac851a71ee7b26ede3e70cc2[m
+Author: arko chatterjee <ac491@snu.edu.in>
+Date:   Fri Jun 29 12:13:50 2018 +0530
+
+    FIX: #86 add show Details
+
+[33mcommit 00dd8d094dd6b1f1d2395ae946df0169bae9dd3a[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Thu Jun 28 20:32:14 2018 +0530
+
+    Moved utility functions to FileUtils; removed unused resources
+    
+    Moved utility functions to FileUtils; removed unused resources
+    
+    Fixing build failure
+
+[33mcommit a77c1aceb508cc7cf17fabde8d85b918d8b81bf9[m
+Author: shiv07tiwari <shivansh16tiwari@gmail.com>
+Date:   Thu Jun 28 18:23:06 2018 +0530
+
+    Added size and date modified in listview
+
+[33mcommit 11447fda61ed13fa692d4653cf0dcbf0fc730355[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Jun 27 22:38:37 2018 +0530
+
+    Create pull_request_template.md
+
+[33mcommit 2adb17768ea8ca88b38bc93a101b123293a7f9ab[m
+Author: shiv07tiwari <shivansh16tiwari@gmail.com>
+Date:   Tue Jun 26 22:42:30 2018 +0530
+
+    Added password hide option
+
+[33mcommit 65a58595dae9dbff6a787b7f74d25c2d1c91f867[m
+Author: sabihashaik <sabihaabc1@gmail.com>
+Date:   Mon Jun 25 21:36:19 2018 +0400
+
+    UI Enhancement screens
+
+[33mcommit 2e62480d71b9db96868f1b403097c5211407805f[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Jun 24 20:09:25 2018 +0530
+
+    Update CONTRIBUTING.md
+
+[33mcommit 06e5bb6f99fda5122a4ce05578bce9f1217477e0[m
+Author: arko chatterjee <ac491@snu.edu.in>
+Date:   Sat Jun 23 18:05:38 2018 +0530
+
+    added new class FileUtils
+    
+    added new class FileUtils
+    
+    added new class FileUtils
+    
+    added new class FileUtils
+
+[33mcommit 08aac002232167b37ccc03f4a18d6ae622d557d7[m
+Author: Pritom14 <pritommazumdar1995@gmail.com>
+Date:   Sat Jun 23 19:58:03 2018 +0530
+
+    Add image in navigation drawer
+
+[33mcommit 79d4ee0142cca67040de3b7369d4e16cf76f286d[m
+Author: Vishal Sholkay <sholkayvishal@gmail.com>
+Date:   Fri Jun 22 21:54:41 2018 +0530
+
+    Updated populateListView
+
+[33mcommit 6288924405e54ca0ed7e4d3790e24f9fedd012d5[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Mon Jun 18 22:13:05 2018 +0530
+
+    #61 - option to create password protected PDFs
+
+[33mcommit 069b821e3cac0ac76eaaa6a84b08cf5c0e1dbcb4[m
+Author: sholkay <sholkayvishal@gmail.com>
+Date:   Thu Jun 14 18:13:57 2018 +0530
+
+    Updated Feedback method
+
+[33mcommit 9a5a541d021397121e7d8fe05f04b4b59f327cfe[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Mon Jun 11 23:44:43 2018 +0530
+
+    Fix #51 : Removing fdroid link
+
+[33mcommit f6a19c5aff70a4bde6adfc404db2abf512b6db84[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Mon Jun 11 01:05:30 2018 +0530
+
+    #87 - Fix for blurry icons
+
+[33mcommit aeb0e8336ea90cc833ebadc5ab590ab267e9c4fa[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Sun Jun 10 21:23:38 2018 +0530
+
+    #84 - Change in the existing UI
+
+[33mcommit e5ec9ddbf335cffb226f4d82fac4f48b6c756667[m[33m ([m[1;33mtag: 2.5.1[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Jun 6 14:35:43 2018 +0530
+
+    build.gradle : change http to https url
+
+[33mcommit 4ebc2faaedb286b364a0cad1853de6aa73e00a0d[m[33m ([m[1;33mtag: 2.5[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed Jun 6 12:31:23 2018 +0530
+
+    Removed few lint warnings; [Release]increased version code;
+
+[33mcommit 22b7cbe427dd50c1864fcfd7c1c36d8a40b1f073[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Wed Jun 6 00:35:56 2018 +0530
+
+    #80 - Removed Android Lint:Performance warning
+
+[33mcommit d10df8916a3f07455d9b75becb94bff3bc70ce94[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Wed Jun 6 00:02:03 2018 +0530
+
+    #79 - Change delete icon in 'View Files' section
+
+[33mcommit 9e47711626c2e660e66866a1c4ededfea6fa4b1b[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Tue Jun 5 23:19:44 2018 +0530
+
+    #75 - Sort Images by Size
+
+[33mcommit 31bc2e9a05ef02feafd6dd073486763624b219ad[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Tue Jun 5 19:33:36 2018 +0530
+
+    fixes #65
+
+[33mcommit 611b937b9fb95518ba0b4550f901165531b6868d[m
+Author: anandkumarkparmar <anandkumar.k.parmar@gmail.com>
+Date:   Sun Jun 3 21:41:40 2018 +0530
+
+    bux fixes #68
+
+[33mcommit 5c71ec0464c08f80d2a88d3ce086e70ecc26b58e[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat Jun 2 17:09:42 2018 +0530
+
+    Fix for #67 : camera opens up after getting permissions; Removed checkstyle.gradle warnings for 'ConfigurableReport.setDestination(Object) method has been deprecated' :
+
+[33mcommit c2b22c141ebed01e99eddd24a20ab49275ed332e[m
+Author: Alexandru Anghel <aanghel@starlab.md>
+Date:   Tue May 29 14:12:30 2018 +0300
+
+    Don't show delete all alert when no image is selected
+
+[33mcommit 1c16f0d1059874b3873598ba976c6606bcf2ddd9[m
+Author: Alexandru Anghel <aanghel@starlab.md>
+Date:   Tue May 29 12:47:15 2018 +0300
+
+    Fixes #59
+
+[33mcommit fb2fee1967e1cc788b9b7a2ab8a17af985f96013[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon May 28 21:01:22 2018 +0530
+
+    Fixed a few crashes & checkstyle issue
+
+[33mcommit 8a22ca07795ff509f55feb18861ed98444c69a13[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sun May 27 17:36:56 2018 +0530
+
+    Integrated butterknife
+
+[33mcommit 22585d60e3ac177d0b2b94f0dde244438eadbc3c[m[33m ([m[1;33mtag: v2.3[m[33m)[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Sat May 26 13:13:58 2018 +0530
+
+    Added Rate Us, feedback, share app option; fixed crash in deleteAll files; optimized layout
+
+[33mcommit 0129223f4ff195245a2a6830e372fed171b2547a[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri May 25 11:55:03 2018 +0530
+
+    Updated Readme for github page
+    
+    Update README.md
+    
+    Update README.md
+    
+    Update README.md
+    
+    Update README.md
+    
+    Update README.md
+
+[33mcommit 27e01e85d3fc2caeff5a3ec7ab33cb998a8ccf3b[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Thu May 24 23:08:39 2018 +0530
+
+    Fix for #66;Demo apk is continuously getting crash
+
+[33mcommit 0505259866f882bfd46560f0d3217a406eae86db[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed May 23 23:34:20 2018 +0530
+
+    Update Circle.yml : Build version updated
+
+[33mcommit 5631d6bc2239033f906175225666c9ebbe0f7219[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed May 23 23:26:33 2018 +0530
+
+    Fixed checkstyle errors
+
+[33mcommit 3aa2c943db8c1a0ff6b9b4d9e19fde5449c8f105[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Wed May 23 22:47:36 2018 +0530
+
+    Code refactor; remove unused resources; upgraded build version; formatted code; removed constant strings
+
+[33mcommit ef76bccce011761e6082f452fe368cba42916f99[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed May 23 12:46:06 2018 +0530
+
+    Added waffle.io badge
+
+[33mcommit 2a235bfa8ba6ec97648a392485f4efa4c3a9c44b[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed May 23 12:09:14 2018 +0530
+
+    Set theme jekyll-theme-architect
+
+[33mcommit 36c89cc65882b6f17a76c15636b01d45a6b179ae[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed May 23 12:07:14 2018 +0530
+
+    Set theme jekyll-theme-architect
+
+[33mcommit 32b82cde4b61b54f912ed2d6b919b734a9c9a79c[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue May 22 21:07:55 2018 +0530
+
+    Code climate badge added
+
+[33mcommit 59a3400452bea5769b1f6bc171337ea8151f9b5f[m
+Author: Swati4star <swati4star@gmail.com>
+Date:   Tue May 22 15:01:05 2018 +0530
+
+    app icon modified
+
+[33mcommit 9e14aacb19aebd1f9224feba46d05ec246eb8b2e[m
+Merge: 5a8be0e 2647914
+Author: Swati4star <swati4star@gmail.com>
+Date:   Mon May 21 21:33:10 2018 +0530
+
+    Merge branch 'read-me-change'
+
+[33mcommit 2647914d6b37246013b7b2a4faeef16498ddd447[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Mon May 21 21:08:56 2018 +0530
+
+    screenshots modified
+    
+    Update README.md
+    
+    Update README.md
+
+[33mcommit 5a8be0ee8a75c867c603fec33af7c803489f61db[m
+Merge: 74004c9 81de8fe
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Mon May 21 11:11:23 2018 +0530
+
+    Merge pull request #63 from sbhandare3/master : Fixes #60
+    
+    fixed second time create pdf button visibility
+
+[33mcommit 81de8feb2c80581b3bbf194429e38a8ca5812666[m
+Author: Shreyas Bhandare <ssb146@scarletmail.rutgers.edu>
+Date:   Sun May 20 11:29:12 2018 -0400
+
+    fixed second time create pdf button visibility
+
+[33mcommit 74004c910335591ade5913c89e9d2fb5a07932ad[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat May 19 11:27:38 2018 +0530
+
+    Updating slack link
+
+[33mcommit 1d63efe4a545de52ed9977daf2a80fdf25451c4e[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Thu May 17 22:07:18 2018 +0530
+
+    Fixed gravis failure
+
+[33mcommit cb7f290c34e9617e6148012f6d21e69226e136f0[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Thu May 17 21:57:08 2018 +0530
+
+    Add feedback option
+
+[33mcommit 3d9c3b0f0e90eeeca5e3d303910fb5ab02f10f0f[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Thu May 17 21:21:03 2018 +0530
+
+    Delete Selected feature : #47
+
+[33mcommit 978068f2b038f5832cbad5f034e687b117f9e0dd[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Thu May 17 20:09:47 2018 +0530
+
+    Fixed error in opening files
+
+[33mcommit 387c1f3156577c1dfa392ca5391032edc021da7e[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Mon May 14 20:29:38 2018 +0530
+
+    Fixed crash android.os.FileUriExposedException
+
+[33mcommit cc71561964049936ee354b674b523cd26f4aa2de[m[33m ([m[1;33mtag: v2.0[m[33m)[m
+Merge: 617b375 7315e2b
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri Apr 27 15:06:07 2018 +0530
+
+    Merge pull request #55 from kmark1625/master
+    
+    Improve PDF conversion performance
+
+[33mcommit 7315e2b186ee90e1cdecbc0965d63534ac476cd5[m
+Author: Kevin Mark <mrmarkk@amazon.com>
+Date:   Tue Apr 10 22:44:48 2018 -0700
+
+    Improve PDF conversion performance by using a different image compression library.
+
+[33mcommit 617b375f999f91ac8e255681b16c8a93dabfdbaa[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Mar 10 19:47:19 2018 +0530
+
+    Update CONTRIBUTING.md
+
+[33mcommit cebcc698f02382d55bd713ad19b1207e1aeb08cf[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Mar 10 19:45:37 2018 +0530
+
+    Create CONTRIBUTING.md
+
+[33mcommit 4b6251b23d164e5e98a4edf0d18a4c156b66f28d[m
+Merge: d38e12b b4491a2
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Mar 6 21:49:11 2018 +0530
+
+    Merge pull request #48 from Pl4gue/recyclerView
+    
+    Code restructuring;
+    delete all;
+    adding recycler view;
+    code cleanup;
+
+[33mcommit b4491a2621e5d3c72df46887fe540efaecc087ba[m
+Author: David Wu <david10608@gmail.com>
+Date:   Sun Oct 29 11:46:00 2017 +0530
+
+    Couple of enhancements and cleaning or structering changes
+    -Replace ViewFiles TextView with much more flexible RecyclerView
+    -Replace items with CardViews
+    -Add ScreenUtils for converting DIP to pixels depending on screen size
+    -Add ViewFilesDividerItemDecoration for decorating RecyclerView items
+    -Change FilesAdapter to extend RecyclerView.Adapter<RecyclerView.ViewHolder>
+    -Change ViewHolder to ViewFilesHolder for RecyclerView Adapter, declaring elements via Butterknife
+    -Structured and Cleaned Classes and Code
+    - Replace ViewFiles TextView with RecyclerView
+    - Structure changes
+    - Code cleaning
+    - Change DividerItemDecoration design
+    
+    - Replace ViewFiles TextView with RecyclerView
+    - Structure changes
+    - Code cleaning
+    
+    Filelist items styling
+    
+    Readme : added google play link
+    
+    Bug fixes
+
+[33mcommit d38e12b6dea9b12792230ba3358a04dea9ec9cd0[m
+Merge: 09a186d d3ec3c7
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Nov 1 10:41:22 2017 +0530
+
+    Merge pull request #50 from Swati4star/revert-22-master
+    
+    Revert "#21 - Added support to landscape view"
+
+[33mcommit d3ec3c7b968f36b394b31ead6d5e9effc5442bb3[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Nov 1 10:40:51 2017 +0530
+
+    Revert "#21 - Added support to landscape view"
+
+[33mcommit 09a186d5bc6c4ccc3cc5f616124de558a6c2efb6[m
+Merge: 8637054 356a29e
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Nov 1 10:29:42 2017 +0530
+
+    Merge pull request #22 from Azooz2014/master
+    
+    #21 - Added support to landscape view
+
+[33mcommit 8637054c8580fac05b08314298cf9819b429ed6a[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Oct 29 21:02:19 2017 +0530
+
+    Readme : added google play link
+
+[33mcommit 3ac7d4a632195f47e2fd24ed057bc339a24535c3[m
+Author: David Wu <david10608@gmail.com>
+Date:   Sun Oct 29 00:18:00 2017 +0530
+
+    Fix #36 : Added Image Cropping Feature
+
+[33mcommit 429ca4195076cc9648d11d02f6b5b942e8e67bab[m
+Merge: e67deb4 09b4981
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Oct 24 23:33:38 2017 +0530
+
+    Merge pull request #40 from rafaelph/master
+    
+    Add setting of view order. Fixes #38
+
+[33mcommit 09b4981ab6e7079e1bd5d1225fd5c13fcc3ccedd[m
+Merge: e117e4f bf7f2cf
+Author: Rafael Delos Santos <rkdelossantos@gmail.com>
+Date:   Fri Oct 20 19:34:50 2017 +0530
+
+    Add sort feature in view files
+
+[33mcommit e67deb46df73816f6ed922683ef6773223575be2[m
+Merge: e117e4f bf7f2cf
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri Oct 20 19:34:50 2017 +0530
+
+    No PDFs TextView bug fixed
+    
+    No PDFs TextView bug fixed
+
+[33mcommit bf7f2cfabd5c1a4a96b78286f8b3de4f9d97305d[m
+Merge: 0074628 e117e4f
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri Oct 20 19:33:56 2017 +0530
+
+    Merge branch 'master' into master
+
+[33mcommit 0074628e3c88be86fd4e807ff55fe50f673a1046[m
+Author: ishaandhamija <ishaan.dhamija@gmail.com>
+Date:   Fri Oct 20 19:30:45 2017 +0530
+
+    bug fixed
+
+[33mcommit e117e4f0532f06f75701a1901c997e409eea16b1[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Fri Oct 20 16:18:11 2017 +0530
+
+    fixed creatingPDF definition not found error
+
+[33mcommit 87f2b3dd9db20c59f54bfe08f916b0c8a6b08461[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Fri Oct 20 01:08:05 2017 +0530
+
+    add checkstyle #35
+
+[33mcommit 94ae438a04796efbd692e29c229742e3f2f56be7[m
+Author: ishaandhamija <ishaan.dhamija@gmail.com>
+Date:   Fri Oct 20 01:17:12 2017 +0530
+
+    No PDFs textview added when list is empty
+
+[33mcommit 05605293a0d37652a245f88e928530458c16f922[m
+Author: ishaandhamija <ishaan.dhamija@gmail.com>
+Date:   Fri Oct 20 01:17:12 2017 +0530
+
+    squash
+
+[33mcommit 356a29e75bd2a5e7422d8326e248801f06a6d969[m
+Merge: 65be0cb bba9d04
+Author: Azooz2014 <f-azouz2010@hotmail.com>
+Date:   Thu Oct 19 18:27:55 2017 +0300
+
+    Bug fixes
+
+[33mcommit bba9d04147546804bbc9c83174efbedd1df31ed0[m
+Author: Azooz2014 <f-azouz2010@hotmail.com>
+Date:   Thu Oct 19 16:06:04 2017 +0300
+
+    Bug fixes
+
+[33mcommit 65be0cb1423ce4b62ad0fc8c2eb0b5cf6997b88c[m
+Author: Azooz2014 <f-azouz2010@hotmail.com>
+Date:   Tue Oct 10 15:09:12 2017 +0300
+
+    Added support to landscape view
+    
+    Removed constraint layout
+
+[33mcommit a995331108020afbd75500248c5c876cc9fe3676[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Wed Oct 18 15:45:35 2017 +0530
+
+    modified screenshots as per new features
+
+[33mcommit 02aa623f8165c08a8dbefa0166419011ea3aa42c[m
+Author: Azooz2014 <f-azouz2010@hotmail.com>
+Date:   Wed Oct 11 17:28:44 2017 +0300
+
+    Removed constraint layout
+
+[33mcommit 8cbb247c1893439c537174d0aa553ed95053f254[m
+Author: Azooz2014 <f-azouz2010@hotmail.com>
+Date:   Tue Oct 10 15:09:12 2017 +0300
+
+    Added support to landscape view
+
+[33mcommit db6099dfc0c1f266d4d2854fc54b24f78672a3d5[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Sun Oct 1 23:57:39 2017 +0530
+
+    refresh view on delete & rename file
+
+[33mcommit c755b2ab4af4065f6ff1d3831932541f048165fd[m
+Merge: 2e18ebb e9ea458
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Oct 1 00:25:02 2017 +0530
+
+    Merge branch 'master' into marionaDSRfixes
+
+[33mcommit e9ea4588222e414c9a2a57f058d0ea29b6a99c7c[m
+Merge: adc5624 3fc2f37
+Author: Swati4star <swagarg@adobe.com>
+Date:   Sun Oct 1 00:22:30 2017 +0530
+
+    Merge branch 'email'
+
+[33mcommit adc562437e71a091798f35dc5939411101f95704[m
+Merge: 36a3343 b823d03
+Author: Swati4star <swagarg@adobe.com>
+Date:   Sun Oct 1 00:17:39 2017 +0530
+
+    resolves conflicts
+
+[33mcommit 36a33439559c39406054cbbe9dc242db63284de6[m
+Merge: 38f6ff5 1aec146
+Author: Swati4star <swagarg@adobe.com>
+Date:   Sun Oct 1 00:11:19 2017 +0530
+
+    resolved conflicts
+
+[33mcommit 38f6ff5c7d1be3818e79bb9a65689aeefa205212[m
+Author: Swati4star <swagarg@adobe.com>
+Date:   Sat Sep 30 23:36:58 2017 +0530
+
+    removed extra files
+
+[33mcommit b823d038d19b7721166db719539e6d5ce1c7b911[m
+Author: Nikhil Nayak <iamnikhilnayak@outlook.com>
+Date:   Sat Aug 12 22:10:04 2017 +0530
+
+    Added a Snackbar with 'View' button
+    
+    Snackbar notifies users of successful PDF creation and lets them view the PDF by pressing the 'View' button.
+    
+    Solves Issue #12 too
+
+[33mcommit 3fc2f37c36e93315ec1daf7d77893ec703fa7465[m
+Author: RakiRoad <quintor2@tcnj.edu>
+Date:   Sat Aug 5 19:13:04 2017 -0400
+
+    Added option to e-mail generated PDF
+    
+    New functionality to let user email the desired PDF using the
+    application of the user's choice
+
+[33mcommit 2e18ebb517b1f72d28b55abc215b233d13a9ccd9[m
+Author: Mariona DSR <mariona.nadal@dsrroma.es>
+Date:   Wed Jul 26 20:31:49 2017 +0200
+
+    Internationalisation: cleaning unused resources, added resources, added Spanish and French translations. Minor corrections.
+
+[33mcommit e898250a5e8c4561344ab2049daf37d297e3c449[m
+Author: Mihai Boisteanu <mihai.boisteanu@gmail.com>
+Date:   Mon Jun 5 15:20:53 2017 +0300
+
+    Updated build versions; remove unused imports; edit strings.xml
+    
+    Removed unused imports
+    
+    Updated travis sdk version
+    
+    Changed loading string
+
+[33mcommit 51753f2d196091572b00e9a258c20fafd01465f7[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Apr 25 15:46:45 2017 +0530
+
+    Update README.md
+    
+    added space between hash and text to make them bold
+
+[33mcommit ee2203be56153ff44e774cf13d89c24a4c07fc4b[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Tue Apr 18 19:52:41 2017 +0530
+
+    removed circle.yaml : removing CircleCI support; useless #9
+    
+    Updated build tools and graddle
+    
+    Created AsyncTask for populating the list of pdfs
+    
+    Revert graddle to 2.3.0
+    
+    Updated graddle and libraries
+    
+    Added line so travis-ci works
+    
+    Updated build tools in travis file
+    
+    Added strings to the ja string file as well
+    
+    conflicts resolved
+    
+    travis fix
+    
+    update build version
+
+[33mcommit 5f2d8ba35b66bd8fed775d3b4ebaab9a2ab6574b[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Mar 17 00:02:03 2017 +0530
+
+    fixed #7: butterknife error
+
+[33mcommit 6563bc835160104dc472d6ae38962412fc2d9dc3[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Feb 5 20:50:19 2017 +0530
+
+    travis fix; update buld version
+    
+    travis fix; update buld version
+    
+    update build version
+
+[33mcommit 84a6cb6ea4aaccc97e79237f6d247b95af3e9688[m
+Author: shakeeb-xseed <shakeeb.ayaz@xseededucation.com>
+Date:   Fri Feb 3 16:46:29 2017 +0530
+
+    refactor: replace relative layout with framelayout
+    
+    If a layout is just to add a fragment then its better to add framelayout instead of other layout
+
+[33mcommit 773040c571e2c4c317a7c8ddf95213372cd9f9a3[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Dec 18 15:08:16 2016 +0530
+
+    added butterknife
+
+[33mcommit ec07baf7c1917a67495724740d1736839f70ec47[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Tue Dec 13 11:37:12 2016 +0530
+
+    compressed gif
+
+[33mcommit 2a0648bca08a7b1c13053b80b104cba99bde957e[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Oct 28 20:19:46 2016 +0530
+
+    updated strings, travis.yml, circle.yml
+    
+    Update .travis.yml
+
+[33mcommit 1aec1462ec4867e2cb2530f26f9e9911eff710fd[m
+Author: shakeeb-xseed <shakeeb.ayaz@xseededucation.com>
+Date:   Fri Feb 3 16:46:29 2017 +0530
+
+    refactor: replace relative layout with framelayout
+    
+    If a layout is just to add a fragment then its better to add framelayout instead of other layout
+
+[33mcommit e6ad2fb81b64dd68e234b1bfea10f7e1220a626e[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Dec 18 15:08:16 2016 +0530
+
+    using butterknife
+
+[33mcommit e3100bc4c6e24dc4a84c50427931d61caeadc080[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Tue Dec 13 11:37:12 2016 +0530
+
+    compressed gif
+
+[33mcommit ce827a7a02c3ef77f2e03e181b19b9843d9d30d6[m
+Merge: b09feed 68dbd8a
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Oct 28 20:20:40 2016 +0530
+
+    Merge branch 'master' of github.com:Swati4star/Images-to-PDF
+
+[33mcommit b09feed123b3bbec5f5b7579234d1066d94d36c3[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Oct 28 20:19:46 2016 +0530
+
+    updated strings
+
+[33mcommit 68dbd8a86e98e205a949b447a9bdaa7c4abe8409[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri Oct 28 19:52:00 2016 +0530
+
+    Update .travis.yml
+
+[33mcommit 492eac82b3637df5ae44d15b1506c9b4a23d51b4[m
+Merge: b7bbb87 da788df
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Oct 28 19:07:43 2016 +0530
+
+    Merge branch 'master' of github.com:Swati4star/Images-to-PDF
+
+[33mcommit b7bbb878abd5a49bde6ea3abf71892f2a2cf8a80[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Oct 28 19:07:12 2016 +0530
+
+    code cleanup
+
+[33mcommit da788dfa655f0b1b11d31dd4c43b6fdc1b8df85f[m
+Merge: 2c3494c fabf319
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Sep 13 19:29:58 2016 +0530
+
+    Merge pull request #2 from naofum/master
+    
+    Added Japanese translation
+
+[33mcommit 2c3494c67e413f3c75f50c2586e343a23314cb37[m
+Merge: 773eb6f c1efc37
+Author: swati4star <swati4star@gmail.com>
+Date:   Tue Sep 13 19:28:54 2016 +0530
+
+    Merge branch 'japanese_translation'
+
+[33mcommit c1efc377f014052ca2e30081768754d854c679f0[m
+Author: naofum <naofum@gmail.com>
+Date:   Tue Sep 13 21:35:03 2016 +0900
+
+    Merged into string.xml
+
+[33mcommit 759818dfacb1a659e388651c2118d7e4617e2eb7[m
+Author: naofum <naofum@gmail.com>
+Date:   Mon Sep 12 23:37:36 2016 +0900
+
+    Fixed error
+
+[33mcommit 4960c3761fd3c82ddd5c9d7672cfa7dff89a6bcf[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Sep 11 19:01:59 2016 +0530
+
+    Fix for #1
+
+[33mcommit fabf319db0d3d83e1e7d9989d9a014fb56a7a191[m
+Author: naofum <naofum@gmail.com>
+Date:   Tue Sep 13 21:35:03 2016 +0900
+
+    Merged into string.xml
+
+[33mcommit 861b97cea31a6825f3d21ffe71fe6919c8e99a81[m
+Author: naofum <naofum@gmail.com>
+Date:   Mon Sep 12 23:37:36 2016 +0900
+
+    Fixed error
+
+[33mcommit e0cfd5ec0bd1fc8aef8b8d922f83278a9d995324[m
+Merge: d559850 773eb6f
+Author: naofum <naofum@gmail.com>
+Date:   Mon Sep 12 23:36:32 2016 +0900
+
+    Merge remote-tracking branch 'upstream/master'
+
+[33mcommit 773eb6fd416c4a00dd4f11a4bcf3927165ee224b[m[33m ([m[1;33mtag: 1.1[m[33m)[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Sep 11 19:01:59 2016 +0530
+
+    Fix for #1
+
+[33mcommit d5598508c3cf7b70bff66ae211d918117e434648[m
+Author: naofum <naofum@gmail.com>
+Date:   Sat Sep 10 18:10:52 2016 +0900
+
+    Added Japanese translation
+
+[33mcommit 43018c5b792294c819e6c0a22bc10199db18cff8[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Sep 10 00:43:20 2016 +0530
+
+    Update README.md
+
+[33mcommit 93a8b584894c157d59e665d0d326dadf412d69b7[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Tue Sep 6 12:58:34 2016 +0530
+
+    Print functionality added
+
+[33mcommit 640e989ef7cd6c7e9104ea68ecc572f60ae6ff31[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Mon Sep 5 17:40:00 2016 +0530
+
+    Jar file removed
+
+[33mcommit 7d7b5375a764527f27b311ce7c9ed88f1035d6ec[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Sep 4 17:57:21 2016 +0530
+
+    Update README.md
+
+[33mcommit cd5198a92ec3f00102801d3cf8a636d8fcd38377[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Sep 4 17:23:25 2016 +0530
+
+    gradle modified
+
+[33mcommit 309c7e0594fe9a415cb0ba6c15142a95d3d77524[m
+Merge: e2786aa 48bd1ac
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Sep 4 17:18:24 2016 +0530
+
+    Merge branch 'master' of github.com:Swati4star/Images-to-PDF
+
+[33mcommit e2786aaf499fdbb26f0bee6c090cda9e13a49708[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Sep 4 17:17:45 2016 +0530
+
+    gradle modified
+
+[33mcommit 48bd1ace4bc974bd084c205d12ac0a9f5b306515[m[33m ([m[1;33mtag: v1.0[m[33m)[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Sep 4 12:31:38 2016 +0530
+
+    add license
+
+[33mcommit bb76c2992a249f3375f5b290595060040cafc25b[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Sep 4 12:22:28 2016 +0530
+
+    Added missing Runtime Permission for API >=23
+    
+    Update README.md
+
+[33mcommit 460aa2bfddce0482e392e8eb0f6af9514fa4f72f[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sat Aug 27 16:11:22 2016 +0530
+
+    circle.yml added
+
+[33mcommit c787e5e5688c2550521eb56dee91a718f2073dd5[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sat Aug 27 16:07:46 2016 +0530
+
+    Buggy library removed
+
+[33mcommit b70b3964eb3a9c100ac464389e399d6cc8ddfdd7[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Thu Aug 18 14:22:25 2016 +0530
+
+    Update README.md
+
+[33mcommit 2b2a920907d54493857817e9c30247e2e973c96f[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri May 27 23:18:39 2016 +0530
+
+    Update README.md
+
+[33mcommit 90b84f98a01d3371e232fd39769783b019461631[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun May 8 16:04:17 2016 +0530
+
+    Update README.md
+
+[33mcommit 7f4888e1b152515c2cbb516ab906c7aacdf57af0[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun May 8 15:51:14 2016 +0530
+
+    GIF added
+
+[33mcommit 7bc94c55e49bb4081ded13efe2598b7e97d4c01b[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun May 8 15:29:32 2016 +0530
+
+    All PDF options working properly
+
+[33mcommit e7083812a248e666a2b42341803c3208d27cb25e[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun May 8 15:04:58 2016 +0530
+
+    Out of memory error fixed
+
+[33mcommit 8f116dac2b6c39eaaa219d52a42e8e53e585f5bd[m
+Merge: 8cad143 b1fa66b
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun May 8 15:03:14 2016 +0530
+
+    Merge branch 'master' of github.com:Swati4star/Images-to-PDF
+
+[33mcommit 8cad143f7cce1557c10c1cb8ccc61ab13b4b671a[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun May 8 15:02:09 2016 +0530
+
+    Out of memory error fixed
+
+[33mcommit b1fa66b74e4d2e9f1759f35bf919d05d75609f31[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Apr 30 17:47:54 2016 +0530
+
+    Update README.md
+
+[33mcommit cea8fb82a4a35bdbe65e41d9f9419f968e0090fa[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sat Apr 30 17:39:59 2016 +0530
+
+    Travis File Modified
+
+[33mcommit 7193efb63397498c41821921df9332d7db1fa919[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Apr 26 09:45:13 2016 +0530
+
+    Update README.md
+
+[33mcommit 643b50b1b275786c4c04e294a1f0c735f6a15f07[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Tue Apr 26 09:41:12 2016 +0530
+
+    Update .travis.yml
+
+[33mcommit e2f5b8191c9f4c457a22cfcb03de2ee2515d8ce2[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Tue Apr 26 09:33:24 2016 +0530
+
+    Screenshots modified
+
+[33mcommit 11cfa95d42f4426ee8a59aafbb54f6b6436adae4[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sun Apr 24 20:01:32 2016 +0530
+
+    Tavis File added
+
+[33mcommit 27a8d9261e5cfa2d01fdbc0bb39b9354e93d6403[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Apr 23 12:56:35 2016 +0530
+
+    Update README.md
+
+[33mcommit da27c7e14276a9dda3d837b8954b6c4096e6c11b[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sat Apr 23 08:11:40 2016 +0530
+
+    Extra files deleted
+
+[33mcommit 930e61116183300647d2918d4da09bb250e49c96[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Sat Apr 23 08:10:20 2016 +0530
+
+    Updated gitignore
+
+[33mcommit c8c1b4bb5e7f3d99985d4dc08c7ec71abb9ccc05[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sat Apr 23 07:51:21 2016 +0530
+
+    Update README.md
+
+[33mcommit d34323eaa69683105987b79deea92d4983c27bf6[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Fri Apr 22 15:37:13 2016 +0530
+
+    Update README.md
+
+[33mcommit 9c260eb7245a08e2fb277543b13c5ec2e004240f[m
+Merge: c425e5d 82fea8d
+Author: swati4star <swati4star@gmail.com>
+Date:   Wed Apr 20 11:14:58 2016 +0530
+
+    Merge branch 'master' of github.com:Swati4star/Images-to-PDF
+
+[33mcommit c425e5dc496ed0de218c9343bcf86fac44311155[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Wed Apr 20 11:13:49 2016 +0530
+
+    Gitignore modified
+
+[33mcommit 82fea8d8b6483a0897b2ab15182d56082b7a28ba[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Apr 17 11:07:16 2016 +0530
+
+    Update README.md
+
+[33mcommit 73a8f20ebbb98c4c81540b84364c8c8649b3f8a9[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Apr 17 11:04:02 2016 +0530
+
+    Update README.md
+
+[33mcommit b5f66e754f92fabaa7d050dd76806750442825e1[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Sun Apr 17 11:02:48 2016 +0530
+
+    Update README.md
+
+[33mcommit 306d21d59a940351c080c808d94fcb96731740fd[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Mar 30 19:45:24 2016 +0530
+
+    Update README.md
+
+[33mcommit b19311e77087d3d4586850207a8869b2df9a6c8e[m
+Author: Swati Garg <swati4star@gmail.com>
+Date:   Wed Mar 30 19:43:40 2016 +0530
+
+    Create README.md
+
+[33mcommit 042d6fc5353ce64be4748d490d35d7fbff0c6779[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Wed Mar 30 19:39:30 2016 +0530
+
+    Screenshots added
+
+[33mcommit 74b5b974f1baef0975d3435d5ae815bc724ed11a[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Wed Mar 30 19:37:27 2016 +0530
+
+    Screenshots added
+
+[33mcommit 3f4c0ce9fbac689971946f20d6c1faf73eb38b8f[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Mar 25 19:51:08 2016 +0530
+
+    Screenshots added
+
+[33mcommit 3300d80fb3ef6ff1cc4fccf359c361411aea3493[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Mar 25 19:33:08 2016 +0530
+
+    Extra files deleted
+
+[33mcommit f8347de6a6585dbec6b73d00e02f1479ae36b521[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Mar 25 19:30:13 2016 +0530
+
+    Gitignore modified
+
+[33mcommit 23570112919afb25267c6819582b814dae5d20a9[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Mar 25 18:30:40 2016 +0530
+
+    Minor changes
+
+[33mcommit 602a1506b2fb6d4633ae1a84b539b1057f132d21[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Fri Mar 25 18:30:20 2016 +0530
+
+    Minor changes
+
+[33mcommit 60f9546edc668c67a510923718a222c48ee4f8f7[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Wed Feb 24 10:12:52 2016 +0530
+
+    Context Menu added
+
+[33mcommit ea8696e23bc9da4942aaaee51c14949ba5b73f2c[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Tue Feb 23 19:54:38 2016 +0530
+
+    Improved UI and extra options added
+
+[33mcommit d00393b63bf0e0605706498314526c483d44328e[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Mon Feb 22 18:05:28 2016 +0530
+
+    Status button added
+
+[33mcommit 83cfcee8e991d39806550d8b4f3d522a8a80f29b[m
+Author: swati4star <swati4star@gmail.com>
+Date:   Mon Feb 22 15:37:42 2016 +0530
+
+    Initial Commit
