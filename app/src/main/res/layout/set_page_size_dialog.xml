@@ -23,6 +23,13 @@
                 android:textSize="16sp" />
 
             <RadioButton
+                android:id="@+id/page_size_fit_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fit_size"
+                android:textSize="16sp" />
+
+            <RadioButton
                 android:id="@+id/page_size_letter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

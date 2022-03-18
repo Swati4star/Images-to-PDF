@@ -34,6 +34,7 @@ public class PageSizeUtils {
         mPageSize = mPreferences.getPageSize();
         mPageSizeToString = new HashMap<>();
         mPageSizeToString.put(R.id.page_size_default, R.string.a4);
+        mPageSizeToString.put(R.id.page_size_fit_size, R.string.fit_size);
         mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
         mPageSizeToString.put(R.id.page_size_executive, R.string.executive);
         mPageSizeToString.put(R.id.page_size_ledger, R.string.ledger);
