@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
@@ -67,6 +68,21 @@ public class ImageUtils {
         float newHeight = originalHeight - (originalHeight * changeFactor);
 
         return new Rectangle(Math.abs((int) newWidth), Math.abs((int) newHeight));
+    }
+
+    /**
+     * Returns size of given image.
+     *
+     * @param imageUri - input image URI as String.
+     * @return input image size as Rectangle.
+     * @see com.itextpdf.text.Rectangle
+     */
+    public static Rectangle getImageSize(String imageUri) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        File imageFile = new File(Uri.parse(imageUri).getPath());
+        BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+        return new Rectangle(options.outWidth, options.outHeight);
     }
 
     /**

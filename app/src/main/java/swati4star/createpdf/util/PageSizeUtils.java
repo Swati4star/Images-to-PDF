@@ -9,13 +9,17 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.itextpdf.text.Rectangle;
 
 import java.util.HashMap;
+import java.util.List;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.preferences.TextToPdfPreferences;
 
 public class PageSizeUtils {
+
+    public static final String PAGE_SIZE_FIT_SIZE = "FIT_SIZE";
 
     private final Context mActivity;
     public static String mPageSize;
@@ -59,6 +63,9 @@ public class PageSizeUtils {
                 stringPageSize = spinnerBValue;
                 mPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
                 break;
+            case R.id.page_size_fit_size:
+                mPageSize = PAGE_SIZE_FIT_SIZE;
+                break;
             default:
                 mPageSize = mActivity.getString(mPageSizeToString.get(selectionId));
 
@@ -99,6 +106,26 @@ public class PageSizeUtils {
         }
         materialDialog.show();
         return materialDialog;
+    }
+
+    /**
+     * Calculates common page size for given images to fit all of them.
+     * - If images have different sizes than max width, max height is used to fit all of them.
+     * - If images have same size, than output returns exact size of image.
+     *
+     * @param imagesUri - input images URIs as Strings.
+     * @return common size of input images as Rectangle.
+     * @see com.itextpdf.text.Rectangle
+     */
+    public static Rectangle calculateCommonPageSize(List<String> imagesUri) {
+        float maxWidth = 0; float maxHeight = 0;
+        for (String imageUri : imagesUri) {
+            Rectangle imageSize = ImageUtils.getImageSize(imageUri);
+            float imageWidth = imageSize.getWidth(); float imageHeight = imageSize.getHeight();
+            if (imageWidth > maxWidth) maxWidth = imageWidth;
+            if (imageHeight > maxHeight) maxHeight = imageHeight;
+        }
+        return new Rectangle(maxWidth, maxHeight);
     }
 
     /**
