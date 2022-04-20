@@ -9,6 +9,7 @@ import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
+import android.util.Pair;
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 import android.widget.TextView;
@@ -174,25 +175,20 @@ public class PDFUtils {
          */
         private void compressStream(PRStream stream) throws IOException {
             PdfObject pdfSubType = stream.get(PdfName.SUBTYPE);
-            System.out.println(stream.type());
             if (pdfSubType != null && pdfSubType.toString().equals(PdfName.IMAGE.toString())) {
                 PdfImageObject image = new PdfImageObject(stream);
-                byte[] imageBytes = image.getImageAsBytes();
-                Bitmap bmp;
-                bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                if (bmp == null) return;
 
-                int width = bmp.getWidth();
-                int height = bmp.getHeight();
+                Pair<byte[], Pair<Integer, Integer>> result = compressBitmap(image.getImageAsBytes());
+                if (result == null) return;
+                int beforeLength = PdfReader.getStreamBytesRaw(stream).length;
+                byte[] imgBytes = result.first;
+                int afterLength = imgBytes.length;
+                if (beforeLength < afterLength) return; // if after compression size is larger, abandon it
+                int width = result.second.first;
+                int height = result.second.second;
 
-                Bitmap outBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                Canvas outCanvas = new Canvas(outBitmap);
-                outCanvas.drawBitmap(bmp, 0f, 0f, null);
-
-                ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
-                outBitmap.compress(Bitmap.CompressFormat.JPEG, quality, imgBytes);
                 stream.clear();
-                stream.setData(imgBytes.toByteArray(), false, PRStream.BEST_COMPRESSION);
+                stream.setData(imgBytes, false, PRStream.DEFAULT_COMPRESSION);
                 stream.put(PdfName.TYPE, PdfName.XOBJECT);
                 stream.put(PdfName.SUBTYPE, PdfName.IMAGE);
                 stream.put(PdfName.FILTER, PdfName.DCTDECODE);
@@ -202,6 +198,41 @@ public class PDFUtils {
                 stream.put(PdfName.COLORSPACE, PdfName.DEVICERGB);
             }
         }
+
+        /**
+         * only used for compressStream. compress bytes in each picture stream
+         * @param imageBytes original image bytes
+         * @return pair: (compressed bytes, (picture width, picture height))
+         */
+        private Pair<byte[], Pair<Integer, Integer>> compressBitmap(byte[] imageBytes) {
+            // scale down if size is too big. It helps speed up compression process when picture is way too big
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length, options);
+            int zoomRatio = Math.min(options.outHeight, options.outWidth) / 2000;
+            options.inSampleSize = Math.max(zoomRatio, 1);
+            options.inJustDecodeBounds = false;
+            Bitmap bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length, options);
+            if (bmp == null) return null;
+            int height = options.outHeight;
+            int width = options.outWidth;
+
+            // recalculate quality. This is helpful when original picture is well compressed already
+            int middleLength = bmp.getByteCount();
+            double qualityFactor = (0.0 + middleLength) / imageBytes.length / 100;
+            qualityFactor = 1 - Math.min(0.5, qualityFactor);
+            int newQuality = Math.max((int) (quality * qualityFactor), 1);
+
+            Bitmap outBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas outCanvas = new Canvas(outBitmap);
+            outCanvas.drawBitmap(bmp, 0f, 0f, null);
+
+            ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
+            outBitmap.compress(Bitmap.CompressFormat.JPEG, newQuality, imgBytes);
+
+            return new Pair<>(imgBytes.toByteArray(), new Pair<>(width, height));
+        }
+
 
         /**
          * Save changes to given reader's data to the output path
