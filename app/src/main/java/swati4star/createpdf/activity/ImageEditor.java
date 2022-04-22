@@ -38,6 +38,7 @@ import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.model.FilterItem;
 import swati4star.createpdf.util.BrushUtils;
 import swati4star.createpdf.util.ImageFilterUtils;
+import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
@@ -153,7 +154,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
         mCurrentImage = count % mDisplaySize;
         photoEditorView.getSource()
-                .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
+                .setImageBitmap(ImageUtils.getInstance().decodeSampledBitmapFromFile(mImagePaths.get(mCurrentImage), 780, 1200));
         imageCount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
     }
 

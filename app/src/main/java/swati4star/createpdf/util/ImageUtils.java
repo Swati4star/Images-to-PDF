@@ -278,5 +278,55 @@ public class ImageUtils {
         return bitmap.sameAs(whiteBitmap);
     }
 
+    /**
+     * try to calculate the correct size
+     *
+     * @param path      the file path
+     * @param reqWidth  max width
+     * @param reqHeight max height
+     * @return the image after scaling down
+     */
+    public Bitmap decodeSampledBitmapFromFile(String path,
+                                              int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(path, options);
+    }
+
+    /**
+     * calculate the multiple of scale down from a BitmapFactory.Options.
+     *
+     * @param options   an parameter from
+     * @param reqWidth  the max width of displaying the image
+     * @param reqHeight the max height of displaying the image
+     * @return the rate of scaling down
+     */
+    public int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
 
 }

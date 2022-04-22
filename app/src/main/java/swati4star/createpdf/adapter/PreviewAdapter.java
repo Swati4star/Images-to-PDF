@@ -35,7 +35,8 @@ public class PreviewAdapter extends PagerAdapter {
         final ImageView imageView = layout.findViewById(R.id.image);
         String path = mPreviewItems.get(position);
         File fileLocation = new File(path);
-        Picasso.with(mContext).load(fileLocation).into(imageView);
+        Picasso.with(mContext).load(fileLocation).resize(780, 1200)
+                .onlyScaleDown().into(imageView);
         TextView fileName = layout.findViewById(R.id.tvFileName);
         String fileNameString = fileLocation.getName();
         fileName.setText(fileNameString);
