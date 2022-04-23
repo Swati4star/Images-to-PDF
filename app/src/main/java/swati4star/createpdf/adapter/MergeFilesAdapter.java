@@ -59,6 +59,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     // check whether the file is a real pdf file or not
     public static boolean isPdfFile(String filePath) {
         String value = getFileHeader(filePath);
+        // check pdf header
         return value.startsWith("255044462D312E");
     }
 
@@ -92,7 +93,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
         }
         String hv;
         for (byte b : src) {
-            //以十六进制(基数 16)无符号整数形式返回一个整数参数的字符串表示形式，并转换为大写
+            //Returns a string representation of an integer parameter in hexadecimal (Radix 16) unsigned integer form and converts it to uppercase
             hv = Integer.toHexString(b & 0xFF).toUpperCase();
             if (hv.length() < 2) {
                 builder.append(0);
