@@ -50,8 +50,8 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
-        boolean isInPdfEncodingFormat = isPdfFile(mFilePaths.get(position));
-        if (isInPdfEncodingFormat) {
+        boolean isPdfFile = isPdfFile(mFilePaths.get(position));
+        if (isPdfFile) {
             boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
             holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
             holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
@@ -59,7 +59,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     }
 
     /**
-     * check whether the file is a real pdf file or not (whether the file has the header(%PDF) and the end(%%EOF))
+     * check whether the file is a real pdf file or not (whether the file has the header of pdf file)
      */
     public static boolean isPdfFile(String filePath) {
         String header = getFileHeader(filePath);
@@ -121,16 +121,24 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
             long fileLastPointer = randomAccessFile.length() - 1;
             // Read file from back to front
             for (long filePointer = fileLastPointer; filePointer != -1; filePointer--) {
-                // Move pointer
+                // Move pointer to
                 randomAccessFile.seek(filePointer);
                 int readByte = randomAccessFile.readByte();
-                if (0xA == readByte && filePointer == fileLastPointer) {
-                    //  LF='\n'=0x0A change line， If it is the last line feed, filter it out
-                    continue;
+                if (0xA == readByte) {
+                    //  LF='\n'=0x0A change line
+                    if (filePointer == fileLastPointer) {
+                        // If it is the last line feed, filter it out
+                        continue;
+                    }
+                    break;
                 }
-                if (0xD == readByte && filePointer == fileLastPointer - 1) {
-                    //  CR ='\r'=0x0D enter， If it is the last carriage return, it is also filtered out
-                    continue;
+                if (0xD == readByte) {
+                    //  CR ='\r'=0x0D enter
+                    if (filePointer == fileLastPointer - 1) {
+                        // If it is the last carriage return, it is also filtered out
+                        continue;
+                    }
+                    break;
                 }
                 builder.append((char) readByte);
             }
