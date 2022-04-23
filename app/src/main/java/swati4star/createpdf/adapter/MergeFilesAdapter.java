@@ -124,21 +124,13 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
                 // Move pointer
                 randomAccessFile.seek(filePointer);
                 int readByte = randomAccessFile.readByte();
-                if (0xA == readByte) {
-                    //  LF='\n'=0x0A change line
-                    if (filePointer == fileLastPointer) {
-                        // If it is the last line feed, filter it out
-                        continue;
-                    }
-                    break;
+                if (0xA == readByte && filePointer == fileLastPointer) {
+                    //  LF='\n'=0x0A change line， If it is the last line feed, filter it out
+                    continue;
                 }
-                if (0xD == readByte) {
-                    //  CR ='\r'=0x0D enter
-                    if (filePointer == fileLastPointer - 1) {
-                        // If it is the last carriage return, it is also filtered out
-                        continue;
-                    }
-                    break;
+                if (0xD == readByte && filePointer == fileLastPointer - 1) {
+                    //  CR ='\r'=0x0D enter， If it is the last carriage return, it is also filtered out
+                    continue;
                 }
                 builder.append((char) readByte);
             }
