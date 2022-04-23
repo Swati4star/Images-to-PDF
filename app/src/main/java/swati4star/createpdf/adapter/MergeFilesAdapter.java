@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -46,11 +48,60 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
-        boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
-        holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
-        holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
-
+        boolean isPdfFile = isPdfFile(mFilePaths.get(position));
+        if (isPdfFile) {
+            boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
+            holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
+            holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
+        }
     }
+
+    // check whether the file is a real pdf file or not
+    public static boolean isPdfFile(String filePath) {
+        String value = getFileHeader(filePath);
+        return value.startsWith("255044462D312E");
+    }
+
+    public static String getFileHeader(String filePath) {
+        FileInputStream is = null;
+
+        String value = "";
+        try {
+            is = new FileInputStream(filePath);
+            byte[] b = new byte[20];
+            is.read(b, 0, b.length);
+            value = bytesToHexString(b);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (null != is) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return value;
+    }
+
+    private static String bytesToHexString(byte[] src) {
+        StringBuilder builder = new StringBuilder();
+        if (src == null || src.length <= 0) {
+            return null;
+        }
+        String hv;
+        for (byte b : src) {
+            //以十六进制(基数 16)无符号整数形式返回一个整数参数的字符串表示形式，并转换为大写
+            hv = Integer.toHexString(b & 0xFF).toUpperCase();
+            if (hv.length() < 2) {
+                builder.append(0);
+            }
+            builder.append(hv);
+        }
+        return builder.toString();
+    }
+
 
     @Override
     public int getItemCount() {
