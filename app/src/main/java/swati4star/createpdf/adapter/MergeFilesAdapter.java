@@ -50,8 +50,8 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewMergeFilesHolder holder, int position) {
-        boolean isPdfFile = isPdfFile(mFilePaths.get(position));
-        if (isPdfFile) {
+        boolean isInPdfEncodingFormat = isPdfFile(mFilePaths.get(position));
+        if (isInPdfEncodingFormat) {
             boolean isEncrypted = mPDFUtils.isPDFEncrypted(mFilePaths.get(position));
             holder.mFileName.setText(FileUtils.getFileName(mFilePaths.get(position)));
             holder.mEncryptionImage.setVisibility(isEncrypted ? View.VISIBLE : View.INVISIBLE);
@@ -59,7 +59,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     }
 
     /**
-     * check whether the file is a real pdf file or not (whether the file has the header of pdf file)
+     * check whether the file is a real pdf file or not (whether the file has the header(%PDF) and the end(%%EOF))
      */
     public static boolean isPdfFile(String filePath) {
         String header = getFileHeader(filePath);
@@ -121,7 +121,7 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
             long fileLastPointer = randomAccessFile.length() - 1;
             // Read file from back to front
             for (long filePointer = fileLastPointer; filePointer != -1; filePointer--) {
-                // Move pointer to
+                // Move pointer
                 randomAccessFile.seek(filePointer);
                 int readByte = randomAccessFile.readByte();
                 if (0xA == readByte) {
