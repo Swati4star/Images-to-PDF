@@ -133,7 +133,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
         }
-
     }
 
 

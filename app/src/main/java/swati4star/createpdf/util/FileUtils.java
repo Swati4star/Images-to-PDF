@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -109,7 +110,6 @@ public class FileUtils {
      * opens a file in appropriate application
      *
      * @param path - path of the file to be opened
-     *
      */
     public void openFile(String path, FileType fileType) {
         if (path == null) {
@@ -232,7 +232,6 @@ public class FileUtils {
         int index = path.lastIndexOf(PATH_SEPERATOR);
         return index < path.length() ? path.substring(index + 1) : null;
     }
-
 
     /**
      * Extracts file name from the URI
@@ -364,9 +363,10 @@ public class FileUtils {
      * Opens a Dialog to select a filename.
      * If the file under that name already exists, an overwrite dialog gets opened.
      * If the overwrite is cancelled, this first dialog gets opened again.
+     *
      * @param preFillName a prefill Name for the file
-     * @param ext the file extension
-     * @param saveMethod the method that should be called when a filename is chosen
+     * @param ext         the file extension
+     * @param saveMethod  the method that should be called when a filename is chosen
      */
     public void openSaveDialog(String preFillName, String ext, Consumer<String> saveMethod) {
 
@@ -389,31 +389,38 @@ public class FileUtils {
         }).show();
     }
 
+    /***
+     * this method is used to convert URI starts with "file://" to URI starts with "content://"
+     * @param uri: source URI starts with "file://"
+     * @return generated URI starts with "content://"
+     */
     public Uri file2Content(Uri uri) {
-        if (uri.getScheme().equals("file")) {
-            String path = uri.getEncodedPath();
-            if (path != null) {
-                path = Uri.decode(path);
-                ContentResolver resolver = this.mContext.getContentResolver();
-                StringBuffer buff = new StringBuffer();
-                buff.append("(")
-                        .append(MediaStore.Images.ImageColumns.DATA)
-                        .append("='" + path + "')");
-                Cursor cur = resolver.query(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        new String[]{MediaStore.Images.ImageColumns._ID},
-                        buff.toString(), null, null);
-                int index = 0;
-                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
-                    index = cur.getInt(cur.getColumnIndex(MediaStore.Images.ImageColumns._ID));
-                }
-                if (index != 0) {
-                    Uri uriTemp = Uri.parse("content://media/external/images/media/" + index);
-                    if (uriTemp != null) {
-                        uri = uriTemp;
-                    }
-                }
-            }
+        if (!uri.getScheme().equals("file")) {
+            return uri;
+        }
+        String path = uri.getEncodedPath();
+        if (path == null) {
+            return uri;
+        }
+        ContentResolver resolver = this.mContext.getContentResolver();
+        StringBuffer buff = new StringBuffer();
+        buff.append("(")
+                .append(MediaStore.Images.ImageColumns.DATA)
+                .append("='" + Uri.decode(path) + "')");
+        Cursor cur = resolver.query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.ImageColumns._ID},
+                buff.toString(), null, null);
+        int index = 0;
+        for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+            index = cur.getInt(cur.getColumnIndex(MediaStore.Images.ImageColumns._ID));
+        }
+        if (index == 0) {
+            return uri;
+        }
+        Uri uriTemp = Uri.parse("content://media/external/images/media/" + index);
+        if (uriTemp != null) {
+            uri = uriTemp;
         }
         return uri;
     }
