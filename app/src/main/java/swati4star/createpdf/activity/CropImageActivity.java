@@ -6,9 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,12 +19,10 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
@@ -149,7 +145,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     public void nextImageClicked() {
-        if (mImages.size() == 0)
+        if ( mImages.size() == 0)
             return;
 
         if (!mCurrentImageEdited) {
@@ -161,7 +157,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     public void prevImgBtnClicked() {
-        if (mImages.size() == 0)
+        if ( mImages.size() == 0)
             return;
 
         if (!mCurrentImageEdited) {
@@ -217,7 +213,6 @@ public class CropImageActivity extends AppCompatActivity {
 
     /**
      * Set image in crop image view & increment counters
-     *
      * @param index - image index
      */
     private void setImage(int index) {
