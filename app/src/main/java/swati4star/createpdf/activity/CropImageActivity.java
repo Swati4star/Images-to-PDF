@@ -133,6 +133,7 @@ public class CropImageActivity extends AppCompatActivity {
         Bitmap crop = ivCrop.crop();
         mCropImageView.setImageBitmap(crop);
         setContentView(mMainView);
+        cropButtonClicked();
     }
 
     public void cropCancelButtonClicked() {
