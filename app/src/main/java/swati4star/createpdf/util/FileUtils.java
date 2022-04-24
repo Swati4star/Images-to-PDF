@@ -2,6 +2,7 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -386,5 +387,34 @@ public class FileUtils {
                 }
             }
         }).show();
+    }
+
+    public Uri file2Content(Uri uri) {
+        if (uri.getScheme().equals("file")) {
+            String path = uri.getEncodedPath();
+            if (path != null) {
+                path = Uri.decode(path);
+                ContentResolver resolver = this.mContext.getContentResolver();
+                StringBuffer buff = new StringBuffer();
+                buff.append("(")
+                        .append(MediaStore.Images.ImageColumns.DATA)
+                        .append("='" + path + "')");
+                Cursor cur = resolver.query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        new String[]{MediaStore.Images.ImageColumns._ID},
+                        buff.toString(), null, null);
+                int index = 0;
+                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+                    index = cur.getInt(cur.getColumnIndex(MediaStore.Images.ImageColumns._ID));
+                }
+                if (index != 0) {
+                    Uri uriTemp = Uri.parse("content://media/external/images/media/" + index);
+                    if (uriTemp != null) {
+                        uri = uriTemp;
+                    }
+                }
+            }
+        }
+        return uri;
     }
 }
