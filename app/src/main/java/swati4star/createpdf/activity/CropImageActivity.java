@@ -75,6 +75,10 @@ public class CropImageActivity extends AppCompatActivity {
 
         setImage(0);
 
+        setButtonListener();
+    }
+
+    public void setButtonListener() {
         Button cropImageButton = findViewById(R.id.cropButton);
         cropImageButton.setOnClickListener(view -> cropButtonClicked());
 
@@ -83,8 +87,6 @@ public class CropImageActivity extends AppCompatActivity {
 
         Button modeButton = findViewById(R.id.cropModeButton);
         modeButton.setOnClickListener(view -> cropModeButtonClicked());
-
-
 
         ImageView nextImageButton = findViewById(R.id.nextimageButton);
         nextImageButton.setOnClickListener(view -> nextImageClicked());
