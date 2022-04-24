@@ -44,12 +44,12 @@
 
             <Button
                 android:id="@+id/cropButton"
-                android:layout_width="wrap_content"
-                android:minWidth="40dp"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/cornered_edges"
+                android:minWidth="40dp"
                 android:text="@string/save_current"
                 android:textAllCaps="false"
                 android:textColor="?attr/bottomSheetTextColor" />
@@ -57,14 +57,28 @@
             <Button
                 android:id="@+id/rotateButton"
                 android:layout_width="wrap_content"
-                android:minWidth="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/cornered_edges"
+                android:minWidth="0dp"
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
                 android:text="@string/rotate"
+                android:textAllCaps="false"
+                android:textColor="?attr/bottomSheetTextColor" />
+
+            <Button
+                android:id="@+id/cropModeButton"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/cornered_edges"
+                android:minWidth="0dp"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:text="Crop"
                 android:textAllCaps="false"
                 android:textColor="?attr/bottomSheetTextColor" />
 
@@ -72,19 +86,19 @@
                 android:id="@+id/previousImageButton"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_weight="3"
                 android:contentDescription="@string/previous_image_content_desc"
                 android:gravity="center"
-                android:layout_gravity="center"
-                app:tint="?attr/bottomSheetColor"
                 app:srcCompat="@drawable/ic_navigate_before_white_24dp"
+                app:tint="?attr/bottomSheetColor"
                 tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/imagecount"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="85dp"
+                android:layout_height="49dp"
                 android:layout_weight="8"
                 android:gravity="center"
                 android:text="@string/showing_image" />

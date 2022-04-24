@@ -2,13 +2,18 @@ package swati4star.createpdf.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,10 +21,12 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
@@ -36,11 +43,17 @@ public class CropImageActivity extends AppCompatActivity {
     private boolean mCurrentImageEdited = false;
     private boolean mFinishedClicked = false;
     private CropImageView mCropImageView;
+    private View mMainView;
+    private View mCropView;
+    private Uri mUriStored;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crop_image_activity);
+        LayoutInflater inflater = this.getLayoutInflater();
+        mMainView = inflater.inflate(R.layout.activity_crop_image_activity, null);
+        mCropView = inflater.inflate(R.layout.activity_crop_by_quadrilater, null);
+        setContentView(mMainView);
         ButterKnife.bind(this);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
@@ -61,11 +74,17 @@ public class CropImageActivity extends AppCompatActivity {
             finish();
 
         setImage(0);
+
         Button cropImageButton = findViewById(R.id.cropButton);
         cropImageButton.setOnClickListener(view -> cropButtonClicked());
 
         Button rotateButton = findViewById(R.id.rotateButton);
         rotateButton.setOnClickListener(view -> rotateButtonClicked());
+
+        Button modeButton = findViewById(R.id.cropModeButton);
+        modeButton.setOnClickListener(view -> cropModeButtonClicked());
+
+
 
         ImageView nextImageButton = findViewById(R.id.nextimageButton);
         nextImageButton.setOnClickListener(view -> nextImageClicked());
@@ -78,7 +97,10 @@ public class CropImageActivity extends AppCompatActivity {
         String root = Environment.getExternalStorageDirectory().toString();
         File folder = new File(root + pdfDirectory);
         Uri uri = mCropImageView.getImageUri();
-
+        if (uri == null) {
+            uri = mUriStored;
+            mUriStored = null;
+        }
         if (uri == null) {
             StringUtils.getInstance().showSnackbar(this, R.string.error_uri_not_found);
             return;
@@ -94,13 +116,38 @@ public class CropImageActivity extends AppCompatActivity {
         mCropImageView.saveCroppedImageAsync(Uri.fromFile(file));
     }
 
+
+    public void cropModeButtonClicked() {
+        mUriStored = mCropImageView.getImageUri();
+        Bitmap image = mCropImageView.getCroppedImage();
+        setContentView(mCropView);
+        Button okButton = findViewById(R.id.CropOKButton);
+        okButton.setOnClickListener(view -> cropOKButtonClicked());
+        Button cancelButton = findViewById(R.id.CropCancelButton);
+        cancelButton.setOnClickListener(view -> cropCancelButtonClicked());
+        me.pqpo.smartcropperlib.view.CropImageView ivCrop = findViewById(R.id.iv_crop);
+        ivCrop.setImageToCrop(image);
+
+    }
+
+    public void cropOKButtonClicked() {
+        me.pqpo.smartcropperlib.view.CropImageView ivCrop = findViewById(R.id.iv_crop);
+        Bitmap crop = ivCrop.crop();
+        mCropImageView.setImageBitmap(crop);
+        setContentView(mMainView);
+    }
+
+    public void cropCancelButtonClicked() {
+        setContentView(mMainView);
+    }
+
     public void rotateButtonClicked() {
         mCurrentImageEdited = true;
         mCropImageView.rotateImage(90);
     }
 
     public void nextImageClicked() {
-        if ( mImages.size() == 0)
+        if (mImages.size() == 0)
             return;
 
         if (!mCurrentImageEdited) {
@@ -112,7 +159,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     public void prevImgBtnClicked() {
-        if ( mImages.size() == 0)
+        if (mImages.size() == 0)
             return;
 
         if (!mCurrentImageEdited) {
@@ -168,6 +215,7 @@ public class CropImageActivity extends AppCompatActivity {
 
     /**
      * Set image in crop image view & increment counters
+     *
      * @param index - image index
      */
     private void setImage(int index) {
