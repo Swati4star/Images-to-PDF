@@ -135,8 +135,11 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
                 break;
             case 7:
                 setShowPageNumber();
+
         }
     }
+
+
 
     /**
      * To modify master password of PDFs

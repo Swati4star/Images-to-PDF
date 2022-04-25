@@ -23,6 +23,7 @@ import static swati4star.createpdf.R.drawable.ic_add_black_24dp;
 import static swati4star.createpdf.R.drawable.ic_branding_watermark_black_24dp;
 import static swati4star.createpdf.R.drawable.ic_broken_image_black_24dp;
 import static swati4star.createpdf.R.drawable.ic_call_split_black_24dp;
+import static swati4star.createpdf.R.drawable.ic_change_language;
 import static swati4star.createpdf.R.drawable.ic_compress_image;
 import static swati4star.createpdf.R.drawable.ic_excel;
 import static swati4star.createpdf.R.drawable.ic_history_black_24dp;
@@ -231,6 +232,10 @@ public class CommonCodeUtils {
                 nav_zip_to_pdf, ic_zip_to_pdf, R.string.zip_to_pdf);
         addFragmentPosition(homePageItems, R.id.add_text, add_text_fav,
                 nav_add_text, ic_text_format_black_24dp, R.string.add_text);
+
+
+        addFragmentPosition(homePageItems, R.id.change_language, add_text_fav,
+                nav_add_text, ic_change_language, R.string.change_language);
         return mFragmentPositionMap;
     }
 

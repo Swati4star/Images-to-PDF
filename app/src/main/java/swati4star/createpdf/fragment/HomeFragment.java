@@ -2,6 +2,7 @@ package swati4star.createpdf.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
@@ -9,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +90,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView invertPdf;
     @BindView(R.id.zip_to_pdf)
     MyCardView zipToPdf;
+    @BindView(R.id.change_language)
+    MyCardView changelanguage;
     @BindView(R.id.excel_to_pdf)
     MyCardView excelToPdf;
     @BindView(R.id.extract_text)
@@ -102,6 +107,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.recent_list_lay)
     ViewGroup recentLayout;
+
+
+
 
     private Map<Integer, HomePageItem> mFragmentPositionMap;
     private RecentListAdapter mAdapter;
@@ -133,6 +141,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         removeDuplicatePages.setOnClickListener(this);
         invertPdf.setOnClickListener(this);
         zipToPdf.setOnClickListener(this);
+        changelanguage.setOnClickListener(this);
         excelToPdf.setOnClickListener(this);
         extractText.setOnClickListener(this);
         addText.setOnClickListener(this);
@@ -283,6 +292,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.add_text:
                 fragment = new AddTextFragment();
+                break;
+            case R.id.change_language:
+                //fragment = new ChangeLanguageFragment();
+
+                Intent in = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                startActivity(in);
                 break;
         }
 

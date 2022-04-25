@@ -464,6 +464,7 @@
     <string name="more_options">更多选项</string>
     <string name="add_password">加入密码</string>
     <string name="add_text">加入文字</string>
+    <string name="change_language">改变语言</string>
     <string name="reorder_pages">重新排列页面</string>
     <string name="remove_password">移除密码</string>
     <string name="enhance_created_pdfs">改进已创建PDF</string>

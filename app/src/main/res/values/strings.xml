@@ -486,6 +486,7 @@
     <string name="more_options">More Options</string>
     <string name="add_password">Add password</string>
     <string name="add_text">Add Text</string>
+    <string name="change_language">change language</string>
     <string name="reorder_pages">Reorder Pages</string>
     <string name="remove_password">Remove password</string>
     <string name="enhance_created_pdfs">Enhance Created PDFs</string>

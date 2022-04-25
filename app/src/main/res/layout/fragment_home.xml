@@ -357,6 +357,29 @@
                 app:option_icon="@drawable/ic_zip_to_pdf"
                 app:option_text="@string/zip_to_pdf" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/change_language"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                app:option_icon="@drawable/ic_change_language"
+                app:option_text="@string/change_language" />
+
+            <swati4star.createpdf.customviews.MyCardView
+                android:id="@+id/nothing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>
