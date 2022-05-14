@@ -135,7 +135,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 if (StringUtils.getInstance().isNotEmpty(mQualityString)) {
                     quality = Integer.parseInt(mQualityString);
                 }
-                Image image = Image.getInstance(mImagesUri.get(i));
+                Image image = Image.getInstance(ImageUtils.stringPathToByteArray(mImagesUri.get(i)));
                 // compressionLevel is a value between 0 (best speed) and 9 (best compression)
                 double qualityMod = quality * 0.09;
                 image.setCompressionLevel((int) qualityMod);

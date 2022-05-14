@@ -28,6 +28,7 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -214,6 +215,30 @@ public class ImageUtils {
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
     }
+
+
+    /**
+     * Convert string path to ByteArray and compress image in the procedure
+     *
+     * @param path    - name of the file
+     */
+    public static byte[] stringPathToByteArray(String path) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        int reqHeight = 3840;
+        int reqWidth = 2180;
+        options.inSampleSize = Math.max(options.outHeight / reqHeight, options.outWidth / reqWidth);
+        options.inSampleSize = Math.max(options.inSampleSize, 1);
+
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteStream);
+        return byteStream.toByteArray();
+    }
+
 
     /**
      * Saves bitmap to external storage
