@@ -78,7 +78,7 @@
                 android:minWidth="0dp"
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
-                android:text="Crop"
+                android:text="@string/crop"
                 android:textAllCaps="false"
                 android:textColor="?attr/bottomSheetTextColor" />
 
