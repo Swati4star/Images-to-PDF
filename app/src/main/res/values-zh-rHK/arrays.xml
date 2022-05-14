@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>名稱</item>
+        <item>日期</item>
+        <item>大小  ▲</item>
+        <item>大小  ▼</item>
+    </string-array>
+
+    <string-array name="sort_options_images">
+        <item>名稱 ▲</item>
+        <item>名稱 ▼</item>
+        <item>日期 ▲</item>
+        <item>日期 ▼</item>
+    </string-array>
+
+    <string-array name="filter_options_history">
+        <item>已創建</item>
+        <item>已刪除</item>
+        <item>已重命名</item>
+        <item>已旋轉</item>
+        <item>已列印</item>
+        <item>已解密</item>
+        <item>已加密</item>
+        <item>已反轉</item>
+    </string-array>
+</resources>
