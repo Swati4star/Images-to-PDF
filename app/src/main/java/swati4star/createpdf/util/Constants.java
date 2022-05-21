@@ -3,6 +3,9 @@ package swati4star.createpdf.util;
 import android.Manifest;
 import android.graphics.Color;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
 
     public static final String DEFAULT_COMPRESSION = "DefaultCompression";
@@ -110,6 +113,7 @@ public class Constants {
 
     public static final int REQUEST_CODE_FOR_WRITE_PERMISSION = 4;
     public static final int REQUEST_CODE_FOR_READ_PERMISSION = 5;
+    public static final int REQUEST_CODE_FOR_CHOOSE_IMAGE_PERMISSION = 6;
 
 
     public static final String[] WRITE_PERMISSIONS = {
@@ -118,6 +122,16 @@ public class Constants {
     public static final String[] READ_PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
+    public static final String[] FOR_CHOOSE_IMAGE_PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+    public static final Map<Integer, String[]> PERMISSION_MAP = new HashMap<>();
+    static {
+        PERMISSION_MAP.put(REQUEST_CODE_FOR_WRITE_PERMISSION, WRITE_PERMISSIONS);
+        PERMISSION_MAP.put(REQUEST_CODE_FOR_READ_PERMISSION, READ_PERMISSIONS);
+        PERMISSION_MAP.put(REQUEST_CODE_FOR_CHOOSE_IMAGE_PERMISSION, FOR_CHOOSE_IMAGE_PERMISSIONS);
+    }
 
 
     public static final int MODIFY_STORAGE_LOCATION_CODE = 1;

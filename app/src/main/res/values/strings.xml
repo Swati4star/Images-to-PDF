@@ -571,8 +571,8 @@
     <!--  FAQs  -->
     <string name="faqSearch">Search FAQ</string>
     <string name="permission_denied_text">Permission Denied</string>
-    <string name="storage_need_rationale_description">Storage permission is needed for proper functioning of app.</string>
-    <string name="storage_need_rationale_for_not_ask_again_flag">\"You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app. \"</string>
+    <string name="general_rationale_description">The following permissions are needed for proper functioning of app:</string>
+    <string name="general_rationale_for_not_ask_again_flag">You have chosen to never ask the permission again, but the following permissions are needed for proper functioning of app: </string>
     <string name="enable_from_settings_text">Enable from settings</string>
     <string name="cancel_text">Cancel</string>
     <string name="ask_again_text">Ask Again</string>
@@ -606,5 +606,9 @@
         <item>Can I contribute to this app?#####Yes, you can. Find us on GitHub using the project name <strong>Swati4star/Images-to-PDF</strong>. \nFeel free to share your ideas(feature requests), submit a bug or pull request for anything you feel should be added. \nThis project has multiple contributors that add as little as a single line change. Read the project <strong>Contributor\'s guide</strong> to get started.</item>
         <item>I have some questions which are not in this FAQs document. How can I contact the developer?#####For further inquiries, email the developer at <strong>swati4star@gmail.com</strong></item>
     </string-array>
+
+    <!-- permission names -->
+    <string name="storage_permission">Storage</string>
+    <string name="camera_permission">Camera</string>
 
 </resources>

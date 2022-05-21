@@ -15,9 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static swati4star.createpdf.util.Constants.READ_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.PERMISSION_MAP;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_CHOOSE_IMAGE_PERMISSION;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_READ_PERMISSION;
 import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
 import swati4star.createpdf.R;
 
@@ -101,9 +102,12 @@ public class PermissionsUtils {
      */
     public void handleRequestPermissionsResult(Activity context, @NonNull int[] grantResults,
                                                int requestCode, int expectedRequest, @NonNull Runnable whenSuccessful) {
-
         if (requestCode == expectedRequest && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            boolean granted = true;
+            for (int g : grantResults) {
+                granted = (granted && g == PackageManager.PERMISSION_GRANTED);
+            }
+            if (granted) {
                 whenSuccessful.run();
             } else {
                 showPermissionDenyDialog(context, requestCode);
@@ -112,16 +116,17 @@ public class PermissionsUtils {
     }
 
     private void showPermissionDenyDialog(Activity activity, int requestCode) {
-        String[] permission;
-        if (requestCode == REQUEST_CODE_FOR_WRITE_PERMISSION) {
-            permission = WRITE_PERMISSIONS;
-        } else {
-            permission = READ_PERMISSIONS;
+        String[] permission = PERMISSION_MAP.get(requestCode);
+        boolean shouldShowAgain = true;
+        if (permission == null) return;
+        String permissionString = generatePermissionString(activity, requestCode);
+        for (String p : permission) {
+            shouldShowAgain = shouldShowAgain && ActivityCompat.shouldShowRequestPermissionRationale(activity, p);
         }
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission[0])) {
+        if (shouldShowAgain) {
             new AlertDialog.Builder(activity)
                     .setTitle(R.string.permission_denied_text)
-                    .setMessage(R.string.storage_need_rationale_description)
+                    .setMessage(activity.getString(R.string.general_rationale_description) + permissionString)
                     .setPositiveButton(R.string.ask_again_text, (dialog, which) -> {
                         requestRuntimePermissions(activity, permission, REQUEST_CODE_FOR_WRITE_PERMISSION);
                         dialog.dismiss();
@@ -129,10 +134,10 @@ public class PermissionsUtils {
                     .setNegativeButton(R.string.cancel_text, (dialog, which) -> {
                         dialog.dismiss();
                     }).show();
-        } else if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission[0])) {
+        } else {
             new AlertDialog.Builder(activity)
                     .setTitle(R.string.permission_denied_text)
-                    .setMessage(R.string.storage_need_rationale_for_not_ask_again_flag)
+                    .setMessage(activity.getString(R.string.general_rationale_for_not_ask_again_flag) + permissionString)
                     .setPositiveButton(R.string.enable_from_settings_text, (dialog, which) -> {
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
@@ -147,5 +152,31 @@ public class PermissionsUtils {
                         dialog.dismiss();
                     }).show();
         }
+    }
+
+    private String generatePermissionString(Activity activity, int requestCode) {
+        int[] requests = new int[]{};
+        switch (requestCode) {
+            case  REQUEST_CODE_FOR_WRITE_PERMISSION:
+            case  REQUEST_CODE_FOR_READ_PERMISSION: {
+                requests = new int[] {
+                        R.string.storage_permission
+                };
+                break;
+            }
+            case REQUEST_CODE_FOR_CHOOSE_IMAGE_PERMISSION: {
+                requests = new int[] {
+                        R.string.camera_permission,
+                        R.string.storage_permission
+                };
+                break;
+            }
+        }
+
+        StringBuilder output = new StringBuilder();
+        for (int r : requests) {
+            output.append("\n - ").append(activity.getString(r));
+        }
+        return output.toString();
     }
 }
