@@ -13,7 +13,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -36,7 +35,6 @@ import swati4star.createpdf.R;
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
-import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 public class ImageUtils {
 
@@ -226,8 +224,8 @@ public class ImageUtils {
         if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
             return null;
 
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + pdfDirectory);
+        String root = StringUtils.getInstance().getStorageLocation();
+        File myDir = new File(root);
         String fileName = filename + ".png";
 
         File file = new File(myDir, fileName);

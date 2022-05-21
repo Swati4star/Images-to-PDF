@@ -7,6 +7,9 @@ import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.content.SharedPreferences;
+import android.content.Context;
+import android.preference.PreferenceManager;
 
 import java.io.File;
 import java.util.Objects;
@@ -14,6 +17,7 @@ import java.util.Objects;
 //import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
 import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 //import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 /**
@@ -22,15 +26,18 @@ import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 public class StringUtils {
 
+    Context mContext;
     private StringUtils() {
     }
 
-    private static class SingletonHolder {
-        static final StringUtils INSTANCE = new StringUtils();
-    }
+    private static StringUtils stringUtils  = new StringUtils();
 
     public static StringUtils getInstance() {
-        return StringUtils.SingletonHolder.INSTANCE;
+        return stringUtils;
+    }
+
+    public void setContext(Context context) {
+        this.mContext = context;
     }
 
     public boolean isEmpty(CharSequence s) {
@@ -98,5 +105,17 @@ public class StringUtils {
             return def;
         else
             return Integer.parseInt(text.toString());
+    }
+
+    public String getStorageLocation() {
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.mContext);
+        String storageLocation = mSharedPreferences.getString(STORAGE_LOCATION,
+                StringUtils.getInstance().getDefaultStorageLocation());
+        System.out.println(storageLocation);
+        File file = new File(storageLocation);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return storageLocation;
     }
 }
