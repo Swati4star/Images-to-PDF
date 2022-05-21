@@ -41,6 +41,7 @@ import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
+import swati4star.createpdf.util.StringUtils;
 
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
+        StringUtils.getInstance().setContext(this);
+        StringUtils.getInstance().getStorageLocation();
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);

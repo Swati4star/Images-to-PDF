@@ -27,8 +27,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-//import butterknife.OnClick;
-//import lib.folderpicker.FolderPicker;
+import butterknife.OnClick;
+import lib.folderpicker.FolderPicker;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListener;
@@ -74,17 +74,16 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, root);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
-                StringUtils.getInstance().getDefaultStorageLocation()));
+        storageLocation.setText(StringUtils.getInstance().getStorageLocation());
         showSettingsOptions();
         return root;
     }
 
-//    @OnClick(R.id.storagelocation)
-//    void modifyStorageLocation() {
-////        Intent intent = new Intent(mActivity, FolderPicker.class);
-////        startActivityForResult(intent, MODIFY_STORAGE_LOCATION_CODE);
-//    }
+    @OnClick(R.id.storagelocation)
+    void modifyStorageLocation() {
+        Intent intent = new Intent(mActivity, FolderPicker.class);
+        startActivityForResult(intent, MODIFY_STORAGE_LOCATION_CODE);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
