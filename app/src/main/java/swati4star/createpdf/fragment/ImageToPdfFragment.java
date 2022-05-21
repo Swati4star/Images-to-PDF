@@ -82,13 +82,13 @@ import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
 import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
 import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
+import static swati4star.createpdf.util.Constants.FOR_CHOOSE_IMAGE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
 import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_CHOOSE_IMAGE_PERMISSION;
 import static swati4star.createpdf.util.Constants.RESULT;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.WatermarkUtils.getStyleNameFromFont;
 import static swati4star.createpdf.util.WatermarkUtils.getStyleValueFromName;
@@ -219,7 +219,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     @OnClick(R.id.addImages)
     void startAddingImages() {
         if (!mIsButtonAlreadyClicked) {
-            if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
+            if (PermissionsUtils.getInstance().checkRuntimePermissions(this, FOR_CHOOSE_IMAGE_PERMISSIONS)) {
                 selectImages();
                 mIsButtonAlreadyClicked = true;
             } else {
@@ -282,7 +282,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
-                requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::selectImages);
+                requestCode, REQUEST_CODE_FOR_CHOOSE_IMAGE_PERMISSION, this::selectImages);
     }
 
     /**
@@ -711,8 +711,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                    FOR_CHOOSE_IMAGE_PERMISSIONS,
+                    REQUEST_CODE_FOR_CHOOSE_IMAGE_PERMISSION);
     }
 
     /**

@@ -297,8 +297,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionsUtils.getInstance().handleRequestPermissionsResult(this, grantResults,
-                requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::askStorageManagerPermission);
+        if (requestCode == REQUEST_CODE_FOR_WRITE_PERMISSION) {
+            PermissionsUtils.getInstance().handleRequestPermissionsResult(this, grantResults,
+                    requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::askStorageManagerPermission);
+        } else {
+            // pass callback to other fragments
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private void askStorageManagerPermission() {
