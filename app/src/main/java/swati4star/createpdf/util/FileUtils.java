@@ -338,6 +338,21 @@ public class FileUtils {
         return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
     }
 
+    /**
+     * Returns file chooser intent that can select multiple files
+     *
+     * @return - intent
+     */
+    public Intent getMultipleFileChooser() {
+        String folderPath = Environment.getExternalStorageDirectory() + "/";
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Uri myUri = Uri.parse(folderPath);
+        intent.setDataAndType(myUri, mContext.getString(R.string.pdf_type));
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
+    }
+
     String getUniqueFileName(String fileName) {
         String outputFileName = fileName;
         File file = new File(outputFileName);
