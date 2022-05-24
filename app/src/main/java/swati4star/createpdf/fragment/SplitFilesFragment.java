@@ -235,7 +235,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
      * check runtime permissions for storage and camera
      ***/
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(requireActivity(),
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
     }

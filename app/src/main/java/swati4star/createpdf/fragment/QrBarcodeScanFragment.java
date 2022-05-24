@@ -264,7 +264,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_FOR_BARCODE);
     }
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(requireActivity(),
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
     }

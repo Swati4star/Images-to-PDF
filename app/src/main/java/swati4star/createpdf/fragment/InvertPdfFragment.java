@@ -201,7 +201,7 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
      * check runtime permissions for storage and camera
      ***/
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(requireActivity(),
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
     }

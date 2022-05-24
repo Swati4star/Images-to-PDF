@@ -710,7 +710,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(requireActivity(),
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
     }

@@ -67,14 +67,8 @@ public class PermissionsUtils {
      * @param permissions string array of permissions
      * @param requestCode permission request code
      */
-    public void requestRuntimePermissions(Object context, String[] permissions,
-                                                 int requestCode) {
-        if (context instanceof Activity) {
-            ActivityCompat.requestPermissions((AppCompatActivity) context,
-                    permissions, requestCode);
-        } else if (context instanceof Fragment) {
-            ((Fragment) context).requestPermissions(permissions, requestCode);
-        }
+    public void requestRuntimePermissions(Activity activity, String[] permissions, int requestCode) {
+        ActivityCompat.requestPermissions(activity, permissions, requestCode);
     }
 
     /**

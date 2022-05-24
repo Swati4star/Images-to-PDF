@@ -153,7 +153,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+        PermissionsUtils.getInstance().requestRuntimePermissions(requireActivity(),
                     WRITE_PERMISSIONS,
                     REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
