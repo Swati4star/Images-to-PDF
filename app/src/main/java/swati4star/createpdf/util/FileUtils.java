@@ -2,10 +2,10 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
@@ -13,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.MediaStore;
-
 import androidx.core.content.FileProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -108,7 +107,6 @@ public class FileUtils {
 
     /**
      * opens a file in appropriate application
-     *
      * @param path - path of the file to be opened
      */
     public void openFile(String path, FileType fileType) {
@@ -232,6 +230,7 @@ public class FileUtils {
         int index = path.lastIndexOf(PATH_SEPERATOR);
         return index < path.length() ? path.substring(index + 1) : null;
     }
+
 
     /**
      * Extracts file name from the URI
@@ -363,10 +362,9 @@ public class FileUtils {
      * Opens a Dialog to select a filename.
      * If the file under that name already exists, an overwrite dialog gets opened.
      * If the overwrite is cancelled, this first dialog gets opened again.
-     *
      * @param preFillName a prefill Name for the file
-     * @param ext         the file extension
-     * @param saveMethod  the method that should be called when a filename is chosen
+     * @param ext the file extension
+     * @param saveMethod the method that should be called when a filename is chosen
      */
     public void openSaveDialog(String preFillName, String ext, Consumer<String> saveMethod) {
 
