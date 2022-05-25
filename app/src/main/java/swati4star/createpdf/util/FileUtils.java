@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
@@ -106,9 +107,7 @@ public class FileUtils {
 
     /**
      * opens a file in appropriate application
-     *
      * @param path - path of the file to be opened
-     *
      */
     public void openFile(String path, FileType fileType) {
         if (path == null) {
@@ -386,5 +385,41 @@ public class FileUtils {
                 }
             }
         }).show();
+    }
+
+    /***
+     * this method is used to convert URI starts with "file://" to URI starts with "content://"
+     * @param uri: source URI starts with "file://"
+     * @return generated URI starts with "content://"
+     */
+    public Uri file2Content(Uri uri) {
+        if (!uri.getScheme().equals("file")) {
+            return uri;
+        }
+        String path = uri.getEncodedPath();
+        if (path == null) {
+            return uri;
+        }
+        ContentResolver resolver = this.mContext.getContentResolver();
+        StringBuffer buff = new StringBuffer();
+        buff.append("(")
+                .append(MediaStore.Images.ImageColumns.DATA)
+                .append("='" + Uri.decode(path) + "')");
+        Cursor cur = resolver.query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.ImageColumns._ID},
+                buff.toString(), null, null);
+        int index = 0;
+        for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+            index = cur.getInt(cur.getColumnIndex(MediaStore.Images.ImageColumns._ID));
+        }
+        if (index == 0) {
+            return uri;
+        }
+        Uri uriTemp = Uri.parse("content://media/external/images/media/" + index);
+        if (uriTemp != null) {
+            uri = uriTemp;
+        }
+        return uri;
     }
 }

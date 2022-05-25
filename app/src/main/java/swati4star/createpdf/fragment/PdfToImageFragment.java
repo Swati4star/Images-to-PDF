@@ -48,6 +48,7 @@ import swati4star.createpdf.util.PdfToImages;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
+import swati4star.createpdf.util.ImageUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
@@ -64,6 +65,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     private Uri mUri;
     private MorphButtonUtility mMorphButtonUtility;
     private FileUtils mFileUtils;
+    private ImageUtils mImageUtils;
     private BottomSheetBehavior mSheetBehavior;
     private BottomSheetUtils mBottomSheetUtils;
     private ArrayList<String> mOutputFilePaths;
@@ -117,15 +119,21 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         return rootView;
     }
 
+
     @OnClick(R.id.viewImagesInGallery)
     void onImagesInGalleryClick() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
-        Uri imagesUri = Uri.parse("content:///storage/emulated/0/PDFfiles/");
-        intent.setDataAndType(imagesUri, "image/*");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(intent);
+        for (int i = 0; i < mOutputFilePaths.size(); i++) {
+            Uri imagesUri = Uri.fromFile(new File(mOutputFilePaths.get(i)));
+            Uri imagesRealUri = mFileUtils.file2Content(imagesUri);
+            mImageUtils.saveImgToGallery(mOutputFilePaths.get(i), mContext);
+            intent.setDataAndType(imagesRealUri, "image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+        }
     }
+
 
     /**
      * called when user chooses to share generated images
@@ -229,6 +237,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
         mFileUtils = new FileUtils(mActivity);
+        mImageUtils = ImageUtils.getInstance();
         mBottomSheetUtils = new BottomSheetUtils(mActivity);
         mContext = context;
         mPDFUtils = new PDFUtils(mActivity);
@@ -336,7 +345,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }
