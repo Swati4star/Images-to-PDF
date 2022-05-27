@@ -70,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    app:option_icon="@drawable/ic_baseline_image_24"
+                    app:option_icon="@drawable/ic_picture_as_pdf_24"
                     app:option_text="@string/images_to_pdf" />
 
                 <swati4star.createpdf.customviews.MyCardView
@@ -128,7 +128,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                app:option_icon="@drawable/ic_baseline_picture_as_pdf_24"
+                app:option_icon="@drawable/ic_search_file_24"
                 app:option_text="@string/viewFiles" />
 
             <swati4star.createpdf.customviews.MyCardView
