@@ -97,7 +97,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
      * @param imageUris   - Uris of images that will be converted to PDF
      *
      */
-    private void deleteTempImages(ArrayList<String> imageUris) {
+    public void deleteTempImages(ArrayList<String> imageUris) {
         for (int i = 0; i < imageUris.size(); i++) {
             String imagePath = imageUris.get(i);
             if (!imagePath.contains("temp")) {
