@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+
 import androidx.annotation.NonNull;
+
 import android.util.Log;
 
 import com.itextpdf.text.BaseColor;
@@ -89,6 +91,25 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         if (!folder.exists())
             folder.mkdir();
         mPath = mPath + mFileName + pdfExtension;
+    }
+
+    /***
+     * This method is used to delete temporary image files generated during 'Zip to PDF'
+     *
+     * @param imageUris   - Uris of images that will be converted to PDF
+     *
+     */
+    private void deleteTempImages(ArrayList<String> imageUris) {
+        for (int i = 0; i < imageUris.size(); i++) {
+            String imagePath = imageUris.get(i);
+            if (!imagePath.contains("temp")) {
+                continue;
+            }
+            File f = new File(imagePath);
+            if (f.exists()) {
+                f.delete();
+            }
+        }
     }
 
     @Override
@@ -178,6 +199,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         } catch (Exception e) {
             e.printStackTrace();
             mSuccess = false;
+        } finally {
+            deleteTempImages(mImagesUri);
         }
 
         return null;

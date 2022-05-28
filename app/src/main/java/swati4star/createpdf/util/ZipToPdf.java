@@ -42,7 +42,7 @@ public class ZipToPdf {
         BufferedOutputStream bufferedOutputStream;
         ArrayList<Uri> imageUris = new ArrayList<>();
         DirectoryUtils.makeAndClearTemp();
-        String dest = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() +
+        String dest = Environment.getExternalStorageDirectory().toString() +
                 pdfDirectory + tempDirectory;
 
         try {
