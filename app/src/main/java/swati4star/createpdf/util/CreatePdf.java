@@ -98,12 +98,11 @@ public class CreatePdf extends AsyncTask<String, String, String> {
      *
      */
     public void deleteTempImages(ArrayList<String> imageUris) {
-        for (int i = 0; i < imageUris.size(); i++) {
-            String imagePath = imageUris.get(i);
-            if (!imagePath.contains("temp")) {
+        for (String imageUri : imageUris) {
+            if (!imageUri.contains("temp")) {
                 continue;
             }
-            File f = new File(imagePath);
+            File f = new File(imageUri);
             if (f.exists()) {
                 f.delete();
             }
