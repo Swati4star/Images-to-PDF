@@ -4,9 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
-
 import androidx.annotation.NonNull;
-
 import android.util.Log;
 
 import com.itextpdf.text.BaseColor;
