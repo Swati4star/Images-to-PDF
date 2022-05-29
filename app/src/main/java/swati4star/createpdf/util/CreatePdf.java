@@ -53,6 +53,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final String mPageNumStyle;
     private final String mMasterPwd;
     private final int mPageColor;
+    private final int mRotate;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -74,6 +75,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mPageNumStyle = mImageToPDFOptions.getPageNumStyle();
         this.mMasterPwd = mImageToPDFOptions.getMasterPwd();
         this.mPageColor = mImageToPDFOptions.getPageColor();
+        //issue 781
+        this.mRotate = mImageToPDFOptions.getMrotate();
         mPath = parentPath;
     }
 
@@ -100,8 +103,12 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Rectangle pageSize = new Rectangle(PageSize.getRectangle(mPageSize));
         pageSize.setBackgroundColor(getBaseColor(mPageColor));
-        Document document = new Document(pageSize,
+        Document document = new Document(pageSize, mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
+        //rotate pdf temporary function,issue 781
+        if ( mRotate == 1) {
+            document = new Document(pageSize.rotate(),
                 mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
+        }
         Log.v("stage 2", "Document Created");
         document.setMargins(mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
         Rectangle documentRect = document.getPageSize();

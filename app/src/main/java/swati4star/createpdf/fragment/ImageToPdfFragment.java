@@ -132,7 +132,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private int mMarginRight = 38;
     private String mPageNumStyle;
     private int mChoseId;
-
+    private int mRotate = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -236,6 +236,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         createPdf(false);
     }
 
+
+
     /**
      * Opens the dialog to select a save name
      */
@@ -258,6 +260,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         mPdfOptions.setMasterPwd(mSharedPreferences.getString(MASTER_PWD_STRING, appName));
         mPdfOptions.setPageColor(mPageColor);
         mPdfOptions.setOutFileName(filename);
+
         if (isGrayScale)
             saveImagesInGrayScale();
         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
@@ -481,6 +484,11 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
                         editor.putInt(Constants.DEFAULT_IMAGE_BORDER_TEXT, value);
                         editor.apply();
+                    }
+                    //rotate pdf temporary function,issue 781
+                    final CheckBox ifRotate = view.findViewById(R.id.ifRotate);
+                    if (ifRotate.isChecked()) {
+                        mPdfOptions.setMrotate(1);
                     }
                 }).build().show();
     }
@@ -736,6 +744,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 DEFAULT_PAGE_SIZE));
         mPdfOptions.setPasswordProtected(false);
         mPdfOptions.setWatermarkAdded(false);
+        mPdfOptions.setMrotate(0);
         mImagesUri.clear();
         showEnhancementOptions();
         mNoOfImages.setVisibility(View.GONE);
