@@ -83,7 +83,32 @@ Black | Dark | White |
 ### History
 <img src="./screenshots/9_history.png" width="190px">
 
+
+### Building and Running Project
+
+#### Using Command Line
+##### The following commands can be run in the base directory of the project to build a debug apk and install it to a virtual or physical device:
+
+```sh
+gradlew assembleDebug
+```
+
+```sh
+gradlew installDebug
+```
+
+#### Using Android Studio
+##### The project can also be [imported](https://developer.android.com/studio/projects/create-project.html#ImportAProject) into Android Studio.
+
+##### Build: 
+###### Build > Run Project
+
+##### Run:
+###### Run > Run 'app'
+
+
 ### Contributing
+#### See [contribution guidelines.](CONTRIBUTING.md)
 
 #### Dependencies
 + [Butterknife](https://jakewharton.github.io/butterknife/)
