@@ -15,8 +15,6 @@ Here is an easy to use Android app to convert images to PDF file!
 <img src="./screenshots/image_to_pdf2.gif"  width="300px">
 
 
-### Support Us
-<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 
 ### Features 
@@ -84,6 +82,7 @@ Black | Dark | White |
 <img src="./screenshots/9_history.png" width="190px">
 
 ### Contributing
+Please refer to our [contribution guidelines for this project](CONTRIBUTING.md)
 
 #### Dependencies
 + [Butterknife](https://jakewharton.github.io/butterknife/)
@@ -111,3 +110,5 @@ If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) ab
 ### Project Maintainers
 This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For any sort of queries feel free to mail at swati4star@gmail.com.
 
+### Support Us
+<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
