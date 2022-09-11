@@ -3,11 +3,12 @@
 Please include a summary of the change and which issue is fixed. List any dependencies that are required for this change.
 If there are any UI change, please include the screenshots also.
 
-Fixes #(issue)
+If an issue has been fixed, please indicate with issue number using the following format:
+Fixes #ISSUE NUMBER
 
 ## Type of change
 Just put an x in the [] which are valid.
-- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] Bug fix (non-breaking change which fixes an issue, with included issue number in description)
 - [ ] New feature (non-breaking change which adds functionality)
 
 # How Has This Been Tested?
