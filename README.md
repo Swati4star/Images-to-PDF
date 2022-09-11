@@ -40,7 +40,11 @@ Here is a home page to get quick access to all the features "PDF Converter" prov
 
 
 ### Contributing
-Please refer to our [contribution guidelines for this project](CONTRIBUTING.md)
+If you are a developer and you wish to contribute to the app please fork the project, create a branch, 
+and submit a pull request. Please refer to and adhere to our [contribution guidelines for this project](CONTRIBUTING.md). Here is our [To Do](TODO.md) list with to do, in progress, and completed issues.
+
+Follow [Github Flow](https://help.github.com/articles/github-flow/) for collaboration!
+If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you want.
 
 #### Dependencies
 + [Butterknife](https://jakewharton.github.io/butterknife/)
@@ -58,12 +62,6 @@ Please refer to our [contribution guidelines for this project](CONTRIBUTING.md)
 + [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
 + [zxing](https://github.com/zxing/zxing)
 
-#### Code & Issues
-If you are a developer and you wish to contribute to the app please fork the project
-and submit a pull request.
-Follow [Github Flow](https://help.github.com/articles/github-flow/) for collaboration!
-If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you want.
-[Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 
 ### Project Maintainers
 This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For any sort of queries feel free to mail at swati4star@gmail.com.

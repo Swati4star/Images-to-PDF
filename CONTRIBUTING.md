@@ -8,8 +8,8 @@ of this repository before making a change.
 
 ### 1. Explore
 
-Here is our [To Do](TODO.md) list with completed and in progress issues. If there is some issue or bug you are interested in, and no one else is working 
-on the issue, you may take it up (just leave a comment on the issue).
+Here is our [To Do](TODO.md) list with to do, in progress, and completed issues. If there is some issue or bug you are interested in, and no one else is working 
+on the issue, you may take it up (just leave a comment on the issue page and update the to do list when you submit your pull request).
 
 ### 2. Fork & create a branch
 
