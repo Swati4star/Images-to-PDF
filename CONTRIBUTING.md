@@ -8,7 +8,7 @@ of this repository before making a change.
 
 ### 1. Explore
 
-If there is some issue or bug you are interested in, and no one else is working 
+Here is our [To Do](TODO.md) list with completed and in progress issues. If there is some issue or bug you are interested in, and no one else is working 
 on the issue, you may take it up (just leave a comment on the issue).
 
 ### 2. Fork & create a branch
