@@ -1,15 +1,15 @@
 # Contributing
 
 When contributing to this repository, please first discuss the change you wish to 
-make via issue, email (swati4star@gmail.com) , or any other method with the owners 
+make via issue, email (swati4star@gmail.com), or any other method with the owners 
 of this repository before making a change. 
 
 ## Pull Request Process
 
 ### 1. Explore
 
-If there is some issue or bug, you are interested in and no one else is working 
-on the issue, you may take it up ( just leave a comment on the issue).
+If there is some issue or bug you are interested in, and no one else is working 
+on the issue, you may take it up (just leave a comment on the issue).
 
 ### 2. Fork & create a branch
 
@@ -25,7 +25,7 @@ git checkout -b 13-add-xyz-feature
 ### 3. Build & run the project locally
 
 [Import the project](https://developer.android.com/studio/projects/create-project.html#ImportAProject) in Android Studio. 
-Build it & run the project on emulator / real device.
+Build it & run the project on emulator / real device. If you're new to Android Studio, we recommend checking out their [Projects Overview](https://developer.android.com/studio/projects), as it gives a great overview of what you need to know about modules, and file view and project structure.
 
 
 ### 4. Implement your fix or feature
@@ -64,7 +64,7 @@ git rebase master
 git push --set-upstream origin 13-add-xyz-feature
 ```
 
-Finally, go to GitHub and [make a Pull Request][] :D
+Finally, go to GitHub and [make a Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests):D. Be sure to follow the pull request template provided. [Here's] (https://docs.github.com/en/get-started/writing-on-github) a guide to writing and formatting on GitHub, if you'd like extra tips or want to be fancy.
 
 Travis CI and Circle CI will run our test suite. We care about quality, so 
 your PR won't be merged until all tests pass. 
