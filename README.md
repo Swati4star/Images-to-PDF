@@ -18,6 +18,15 @@ Here is an easy to use Android app to convert images to PDF file!
 ### Support Us
 <a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
+### Installation
+-	To contribute to this project it is recommended that you use Android Studio, if you do not have it installed here is a link to download it:      https://developer.android.com/studio.
+-	Once you have Android Studio installed, make your own branch of the GitHub repository using the Fork button.
+-	Select the Code drop down menu and click Download Zip.
+-	Move the compressed zip file into the directory AndroidStudoProjects and unzip the file.
+-	Open Android Studio and select Import Project, then select the unzipped version of the project files.
+-	Click Finish once you have looked through the settings for the project.
+
+
 
 ### Features 
 - Create PDF from multiple images from camera or gallery
