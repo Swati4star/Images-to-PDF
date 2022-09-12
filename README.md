@@ -109,17 +109,13 @@ Presenter: Obtains data from the backend layer when view layer changes based on 
 
 Folder descriptions:
 
-activity
-This folder holds all of the activities of the app. Programs that most software developers are familiar with contain the main() entry point; this is where the program begins its lifecycle every time it is launched. However, within Android apps, the interaction of the user and the app doesn't always start the same way. For this reason, apps contain what are known as activities. Each activity hosts a window, a sreen to write UI in. This window is like a platform that the developer can stack modular code on top of, also known as fragments. WelcomeActivity is an activity that hosts fragments which allow the user to choose how they want to proceed with using the app.
+- activity: This folder holds all of the activities of the app. Programs that most software developers are familiar with contain the main() entry point; this is where the program begins its lifecycle every time it is launched. However, within Android apps, the interaction of the user and the app doesn't always start the same way. For this reason, apps contain what are known as activities. Each activity hosts a window, a sreen to write UI in. This window is like a platform that the developer can stack modular code on top of, also known as fragments. WelcomeActivity is an activity that hosts fragments which allow the user to choose how they want to proceed with using the app.
 
-fragments
-Fragments are modular pieces of code whose lifecycle isn't dependant on the activity which hosts it. However, each each fragment requires a host activity. What this means is that the screen, or window hosting the fragments, can stay the same, and some fragments can be added or removed, enter or exit the screen as their lifecycle begins and ends, all while the host activity remains live. WelcomeActivity hosts fragments such as the AddTextFragment, which appear as clickable icons on the main window. 
+- fragment: Fragments are modular pieces of code whose lifecycle isn't dependant on the activity which hosts it. However, each each fragment requires a host activity. What this means is that the screen, or window hosting the fragments, can stay the same, and some fragments can be added or removed, enter or exit the screen as their lifecycle begins and ends, all while the host activity remains live. WelcomeActivity hosts fragments such as the AddTextFragment, which appear as clickable icons on the main window. 
 
-adapter
-If two classes need to work together, but they extend interfaces that cannot directly work in unison, then we are postentially in need of an adapter depending on the design structure of a given project. In app design as a whole and in this project, the adapter pattern converts the interface a class extends so that it can be compatible with the interface that is expected.
+- adapter: If two classes need to work together, but they extend interfaces that cannot directly work in unison, then we are postentially in need of an adapter depending on the design structure of a given project. In app design as a whole and in this project, the adapter pattern converts the interface a class extends so that it can be compatible with the interface that is expected.
 
-database
-This folder contains code that is responsible for generating history of the user's interation with the app. Each user action is committed to a record with the file path, the date, and the operation type. The operation type varies based off of the service that the user chooses (create pdf from images, split existing pdfs, compress existing pdfs, etc.)
+- database: This folder contains code that is responsible for generating history of the user's interation with the app. Each user action is committed to a record with the file path, the date, and the operation type. The operation type varies based off of the service that the user chooses (create pdf from images, split existing pdfs, compress existing pdfs, etc.)
 
 #### Dependencies
 + [Butterknife](https://jakewharton.github.io/butterknife/)
