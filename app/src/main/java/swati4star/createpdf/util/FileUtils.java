@@ -1,7 +1,9 @@
 package swati4star.createpdf.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -232,7 +235,6 @@ public class FileUtils {
         return index < path.length() ? path.substring(index + 1) : null;
     }
 
-
     /**
      * Extracts file name from the URI
      *
@@ -363,9 +365,10 @@ public class FileUtils {
      * Opens a Dialog to select a filename.
      * If the file under that name already exists, an overwrite dialog gets opened.
      * If the overwrite is cancelled, this first dialog gets opened again.
+     *
      * @param preFillName a prefill Name for the file
-     * @param ext the file extension
-     * @param saveMethod the method that should be called when a filename is chosen
+     * @param ext         the file extension
+     * @param saveMethod  the method that should be called when a filename is chosen
      */
     public void openSaveDialog(String preFillName, String ext, Consumer<String> saveMethod) {
 
@@ -386,5 +389,35 @@ public class FileUtils {
                 }
             }
         }).show();
+    }
+
+    /***
+     * Converts URI to actual decoded URI storing new image content
+     *
+     * @param uri: source URI starts with "file://"
+     * @return generated URI starts with "content://"
+     */
+    public Uri getContent(Uri uri) {
+        if (!uri.getScheme().equals("file")) {
+            return uri;
+        }
+        if (uri.getEncodedPath() == null) {
+            return uri;
+        }
+        ContentResolver resolver = this.mContext.getContentResolver();
+        String buffer = "(" + MediaStore.Images.ImageColumns.DATA + "='" + Uri.decode(uri.getEncodedPath()) + "')";
+        @SuppressLint("Recycle") Cursor cursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[]{MediaStore.Images.ImageColumns._ID}, buffer, null, null);
+        int index = 0;
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            index = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID));
+        }
+        if (index == 0) {
+            return uri;
+        }
+        Uri newUri = Uri.parse("content://media/external/images/media/" + index);
+        if (newUri != null) {
+            uri = newUri;
+        }
+        return uri;
     }
 }
