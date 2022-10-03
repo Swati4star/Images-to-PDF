@@ -1,7 +1,10 @@
 package swati4star.createpdf.util;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,9 +16,12 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
+
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -276,6 +282,33 @@ public class ImageUtils {
         Canvas canvas = new Canvas(whiteBitmap);
         canvas.drawColor(Color.WHITE);
         return bitmap.sameAs(whiteBitmap);
+    }
+
+    public ContentValues getImageContentValues(File paramFile, long paramLong) {
+        ContentValues localContentValues = new ContentValues();
+        localContentValues.put("title", paramFile.getName());
+        localContentValues.put("_display_name", paramFile.getName());
+        localContentValues.put("mime_type", "image/jpeg");
+        localContentValues.put("datetaken", paramLong);
+        localContentValues.put("date_modified", paramLong);
+        localContentValues.put("date_added", paramLong);
+        localContentValues.put("orientation", 0);
+        localContentValues.put("_data", paramFile.getAbsolutePath());
+        localContentValues.put("_size", paramFile.length());
+        return localContentValues;
+    }
+
+    public void saveImgToGallery(String imageFile, Context context) {
+        try {
+            ContentResolver resolver = context.getContentResolver();
+            ContentValues contentValues = getImageContentValues(new File(imageFile), System.currentTimeMillis());
+            resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            Intent intent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+            intent.setData(Uri.fromFile(new File(imageFile)));
+            context.sendBroadcast(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
