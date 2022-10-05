@@ -86,3 +86,10 @@ reject comments, commits, code, wiki edits, issues, and other contributions
 that are not aligned to this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
 threatening, offensive, or harmful.
+
+
+this github repositry is not harmful not offesnive  the developer  has done the great work the code was easy to understand 
+
+
+
+thank you !!
