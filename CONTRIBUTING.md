@@ -1,7 +1,7 @@
 # Contributing
 
 When contributing to this repository, please first discuss the change you wish to 
-make via issue, email (swati4star@gmail.com) , or any other method with the owners 
+make via issue, email (swati4star@gmail.com), or any other method with the owners 
 of this repository before making a change. 
 
 ## Pull Request Process
@@ -24,8 +24,8 @@ git checkout -b 13-add-xyz-feature
 
 ### 3. Build & run the project locally
 
-[Import the project](https://developer.android.com/studio/projects/create-project.html#ImportAProject) in Android Studio. 
-Build it & run the project on emulator / real device.
+[Import [the project](https://developer.android.com/studio/projects/create-project.html#ImportAProject) into Android Studio. 
+Build it & run the project on an emulator / real device.
 
 
 ### 4. Implement your fix or feature
@@ -56,7 +56,7 @@ git checkout master
 git pull upstream master
 ```
 
-Then update your feature branch from your local copy of master, and push it!
+Then update your feature branch from your local copy of the master, and push it!
 
 ```sh
 git checkout 13-add-xyz-feature
@@ -69,10 +69,10 @@ Finally, go to GitHub and [make a Pull Request][] :D
 Travis CI and Circle CI will run our test suite. We care about quality, so 
 your PR won't be merged until all tests pass. 
 
-### 8. Squash the changes after review is done
+### 8. Squash the changes after the review is done
 
 We want one commit to represent one feature fix. So, the commits need to
-be squashed before getting merge to master. You can check how to squash [here](https://github.com/todotxt/todo.txt-android/wiki/Squash-All-Commits-Related-to-a-Single-Issue-into-a-Single-Commit)
+be squashed before getting merged to the master. You can check how to squash [here](https://github.com/todotxt/todo.txt-android/wiki/Squash-All-Commits-Related-to-a-Single-Issue-into-a-Single-Commit)
 
 
 ### Our Responsibilities
@@ -83,6 +83,6 @@ response to any instances of unacceptable behavior.
 
 Project maintainers have the right and responsibility to remove, edit, or
 reject comments, commits, code, wiki edits, issues, and other contributions
-that are not aligned to this Code of Conduct, or to ban temporarily or
+that are not aligned with this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
 threatening, offensive, or harmful.
