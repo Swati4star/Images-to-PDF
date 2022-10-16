@@ -76,7 +76,7 @@ public class Constants {
 
     public static final String LAUNCH_COUNT = "launch_count";
 
-    public static final String pdfDirectory = "/PDF Converter/";
+    public static final String pdfDirectory = "/Download/";
     public static final String pdfExtension = ".pdf";
     public static final String appName = "PDF Converter";
     public static final String PATH_SEPERATOR = "/";
