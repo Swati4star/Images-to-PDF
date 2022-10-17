@@ -79,7 +79,7 @@ public class Constants {
     public static final String pdfDirectory = "/Download/";
     public static final String pdfExtension = ".pdf";
     public static final String appName = "PDF Converter";
-    public static final String PATH_SEPERATOR = "/";
+    public static final String PATH_SEPARATOR = "/";
     public static final String textExtension = ".txt";
     public static final String excelExtension = ".xls";
     public static final String excelWorkbookExtension = ".xlsx";
