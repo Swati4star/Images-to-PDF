@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.Objects;
 
 //import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
-import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
+import static swati4star.createpdf.util.Constants.PATH_SEPARATOR;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
 //import static swati4star.createpdf.util.Constants.pdfDirectory;
 
@@ -82,7 +82,7 @@ public class StringUtils {
                 Log.e("Error", "Directory could not be created");
             }
         }
-        return dir.getAbsolutePath() + PATH_SEPERATOR;
+        return dir.getAbsolutePath() + PATH_SEPARATOR;
     }
 
     /**

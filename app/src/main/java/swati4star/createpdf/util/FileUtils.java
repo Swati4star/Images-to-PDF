@@ -26,7 +26,7 @@ import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.util.lambda.Consumer;
 
 import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
-import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
+import static swati4star.createpdf.util.Constants.PATH_SEPARATOR;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
@@ -228,7 +228,7 @@ public class FileUtils {
         if (path == null)
             return null;
 
-        int index = path.lastIndexOf(PATH_SEPERATOR);
+        int index = path.lastIndexOf(PATH_SEPARATOR);
         return index < path.length() ? path.substring(index + 1) : null;
     }
 
@@ -240,10 +240,10 @@ public class FileUtils {
      * @return - extracted filename without extension
      */
     public static String getFileNameWithoutExtension(String path) {
-        if (path == null || path.lastIndexOf(PATH_SEPERATOR) == -1)
+        if (path == null || path.lastIndexOf(PATH_SEPARATOR) == -1)
             return path;
 
-        String filename = path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
+        String filename = path.substring(path.lastIndexOf(PATH_SEPARATOR) + 1);
         filename = filename.replace(pdfExtension, "");
 
         return filename;
@@ -256,7 +256,7 @@ public class FileUtils {
      * @return absolute path of file directory
      */
     public static String getFileDirectoryPath(String path) {
-        return path.substring(0, path.lastIndexOf(PATH_SEPERATOR) + 1);
+        return path.substring(0, path.lastIndexOf(PATH_SEPARATOR) + 1);
     }
 
     /**
