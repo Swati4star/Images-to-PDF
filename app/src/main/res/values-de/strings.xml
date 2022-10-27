@@ -520,5 +520,8 @@
 
     <string name="lbl_recently_used">Kürzlich verwendete Funktionen</string>
 
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 
 </resources>

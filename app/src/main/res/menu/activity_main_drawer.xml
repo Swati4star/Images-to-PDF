@@ -160,6 +160,10 @@
                         android:id="@+id/nav_about"
                         android:icon="@drawable/ic_about_us_24dp"
                         android:title="@string/about_us" />
+                    <item
+                        android:id="@+id/nav_changeLanguage"
+                        android:icon="@drawable/ic_change_language_24"
+                        android:title="@string/change_language" />
 
                 </group>
             </menu>

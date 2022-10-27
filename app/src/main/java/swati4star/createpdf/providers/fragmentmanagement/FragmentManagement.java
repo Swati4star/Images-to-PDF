@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.provider.Settings;
 import android.widget.Toast;
 
 import java.util.Objects;
@@ -255,6 +257,10 @@ public class FragmentManagement implements IFragmentManagement {
                 break;
             case R.id.nav_faq:
                 fragment = new FAQFragment();
+                break;
+            case R.id.nav_changeLanguage:
+                Intent intent2 = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                mContext.startActivity(intent2);
                 break;
         }
 

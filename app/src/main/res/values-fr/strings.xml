@@ -410,4 +410,8 @@
     <string name="lbl_recently_used">Fonction récemment utilisée</string>
     <!--text to pdf-->
     <string name="error_pdf_not_created">Désolé, le pdf n\'a pas été créé. Veuillez réessayer.</string>
+
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>

@@ -573,4 +573,7 @@
         <item>Imam neka pitanja koja se ne nalaze u FAQs dokumentu. Kako mogu kontaktirati programera?#####Za buduća pitanja, kontaktirajte programera na mail <strong>swati4star@gmail.com</strong></item>
     </string-array>
 
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>

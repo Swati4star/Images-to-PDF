@@ -596,4 +596,7 @@
         <item>FAQ에 없는 질문이 궁금할 때 개발자에게 연락할 수 있는 방법이 있습니까?#####<strong>swati4star@gmail.com</strong>로 이메일 부탁합니다.</item>
     </string-array>
 
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>
