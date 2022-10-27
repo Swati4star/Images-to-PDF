@@ -420,4 +420,8 @@
     <string name="delete_alert_singular">¿Desea eliminar el archivo seleccionado?</string>
     <string name="snackbar_files_deleted">Archivos eliminados</string>
     <string name="lbl_recently_used">Característica recientemente utilizada</string>
+
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>

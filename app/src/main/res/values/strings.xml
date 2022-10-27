@@ -607,4 +607,7 @@
         <item>I have some questions which are not in this FAQs document. How can I contact the developer?#####For further inquiries, email the developer at <strong>swati4star@gmail.com</strong></item>
     </string-array>
 
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>

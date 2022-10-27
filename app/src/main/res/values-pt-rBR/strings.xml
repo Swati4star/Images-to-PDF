@@ -529,4 +529,7 @@
         <item>Tenho algumas perguntas que não estão neste FAQ. Como posso entrar em contato com o desenvolvedor?#####Para mais informações, envie um e-mail para o desenvolvedor <strong>swati4star@gmail.com</strong></item>
     </string-array>
 
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>

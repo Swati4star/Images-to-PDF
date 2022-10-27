@@ -573,4 +573,7 @@
         <item>我有一些在常见问答找不到的问题，我可以如何联络开发者？#####如有其他资讯，请发送电邮到开发者 <strong>swati4star@gmail.com</strong></item>
     </string-array>
 
+    <!-- Change Language -->
+    <string name="change_language">更改语言</string>
+
 </resources>

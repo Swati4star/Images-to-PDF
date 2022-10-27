@@ -528,4 +528,8 @@
         <item> Bu uygulamaya katkıda bulunabilir miyim? ##### Evet, yapabilirsiniz. <strong> Swati4star / Images-to-PDF </strong> proje adını kullanarak bizi GitHub\'da bulun. \nFikirlerinizi (özellik istekleri) paylaşmaktan, bir hata göndermekten veya eklenmesi gerektiğini düşündüğünüz herhangi bir şey için talepte bulunmaktan çekinmeyin. \nBu projede, tek bir satır değişikliği kadar az ekleyen birden fazla katılımcı var. Başlamak için <strong> Katkıda Bulunanlar kılavuzunu </strong> okuyun. </item>
         <item> Bu SSS belgesinde olmayan bazı sorularım var. Geliştiriciyle nasıl iletişim kurabilirim? ##### Daha fazla soru için, <strong>swati4star@gmail.com</strong> </item> adresinden geliştiriciye e-posta gönderin.
     </string-array>
+
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>

@@ -589,4 +589,7 @@
         <item> Ho alcune domande che non sono in questo documento delle FAQ. Come posso contattare lo sviluppatore? ##### Per ulteriori domande, invia un\'e-mail allo sviluppatore all\'indirizzo <strong>swati4star@gmail.com</strong></item>
     </string-array>
 
+    <!-- Change Language -->
+    <string name="change_language">Change Language</string>
+
 </resources>
