@@ -98,7 +98,7 @@ dependencies {
     implementation group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
 
     // Itext pdf library
-    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.3'
     implementation 'com.madgag.spongycastle:core:1.58.0.0'
 
     // Picasso, image editor, image cropper
