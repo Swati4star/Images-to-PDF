@@ -22,8 +22,8 @@ Here is an easy to use Android app to convert images to PDF file!
 ### Features 
 - Create PDF from multiple images from camera or gallery
 - View your converted PDFs
-  - Open, Rename, Delete, print, share files
-  - Sort the files order based on a number of options
+  - Open, Rename, Delete, Print, and Share files
+  - Sort the files in order based on a number of options
   - View File details
   - Encrypt PDF
   - Decrypt PDF
@@ -74,7 +74,7 @@ Black | Dark | White |
 --- | --- | --- |
 <img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> |  <img src="./screenshots/home_theme_white.png" width="190px"> |
 
-### Merge PDF
+### Merge PDFs
 <img src="./screenshots/7_merge_pdf.png" width="190px">
 
 ### Text to PDF
