@@ -5,15 +5,26 @@
 [![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PDF%20Converter-blue.svg?style=true)](https://android-arsenal.com/details/3/7132)
 
+# Table of Contents
+1. [Features](#Features)
+2. [Contributing](#Contributing)
+3. [Installing & Contributing](#Installing--Contributing)
+4. [Code & Issues](#Code--Issues)
+5. [Project Maintainers](#Project-Maintainers)
+
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/swati4star.createpdf)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
+### About 
 Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
-Here is an easy to use Android app to convert images to PDF file!
+Here is an easy to use Android app to convert images to PDF file! This 
+gives people an easy, reliable way to present and exchange documents - 
+regardless of the software, hardware, or operating systems being used by anyone who views the document. 
+This apps allows users to do just that along with an abundance of other features.
 
 <img src="./screenshots/image_to_pdf2.gif"  width="300px">
-
 
 ### Support Us
 <a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
@@ -68,7 +79,7 @@ Hurray! PDF files of selected images are created.
 <img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
 
 ### Different themes
-Go to Settings, and you can have three type of themes : Black, Dark and White
+Go to Settings, and you can have three type of themes : Black, Dark and White, [Code Example](Code--Example)
 
 Black | Dark | White |
 --- | --- | --- |
@@ -83,8 +94,78 @@ Black | Dark | White |
 ### History
 <img src="./screenshots/9_history.png" width="190px">
 
-### Contributing
+### Installing & Contributing
+1. Create a fork and git clone a copy of the repository.
+2. Navigate through the repository and search for any issues or places that can be improved.
+3. You can also work on any known issues if you have not found any others already.
+4. Work off your own fork
+5. Recommended to work off Android Studio in order avoid any compiling errors.
+6. JUnit can be used to test your code/functionality
+7. Submit a pull request
 
+#### Note: Make sure submitted issues, commits, and branches are descriptive.
+
+### Code Example
+- Here is an example of a function setting the theme for the app.
+
+```
+  public void setThemeApp(Context context) {
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
+                Constants.DEFAULT_THEME);
+        if (themeName == null)
+            return;
+        switch (themeName) {
+            case THEME_WHITE:
+                context.setTheme(R.style.AppThemeWhite);
+                break;
+            case THEME_BLACK:
+                context.setTheme(R.style.AppThemeBlack);
+                break;
+            case THEME_DARK:
+                context.setTheme(R.style.ActivityThemeDark);
+                break;
+            case THEME_SYSTEM:
+            default:
+                if ((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
+                    context.setTheme(R.style.ActivityThemeDark);
+                } else {
+                    context.setTheme(R.style.AppThemeWhite);
+                }
+        }
+    }
+```
+
+
+
+### Testing
+Here is an example of a proper test case for a functionality:
+- Android Studio allows for testing app functionality through a virtual emulator or physical android device.
+
+```
+
+    public void shouldSortPathsByFileNamesAscending() {
+        // given
+        int ascendingSortOption = 0;
+        List<String> paths = getFilePaths();
+
+        // when
+        ImageSortUtils.getInstance().performSortOperation(ascendingSortOption, paths);
+
+        // then
+        Assert.assertEquals(
+                asList(
+                        "src/A-oldest",
+                        "src/B-middle",
+                        "src/C-latest"
+                ),
+                paths
+        );
+    }
+    
+``` 
+ 
+  
 #### Dependencies
 + [Butterknife](https://jakewharton.github.io/butterknife/)
 + [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
