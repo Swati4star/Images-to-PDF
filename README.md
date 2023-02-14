@@ -1,5 +1,7 @@
 # Images To PDF
 
+[google docs link](https://docs.google.com/document/d/1ATn52wGKfP9WK6UnFX670RMKDjirGzvb-0VRBk1IZOs/edit?usp=sharing)
+
 ### Badges
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF)
 [![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF) 
