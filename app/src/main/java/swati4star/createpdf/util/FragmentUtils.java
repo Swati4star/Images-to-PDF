@@ -37,35 +37,65 @@ public class FragmentUtils {
 
     public String getFragmentName(Fragment fragment) {
         String name = mContext.getString(R.string.app_name);
+
+        // FragmentUtils-getFragmentName-1
         if (fragment instanceof ImageToPdfFragment) {
             name = mContext.getString(R.string.images_to_pdf);
+
+        // FragmentUtils-getFragmentName-2
         } else if (fragment instanceof TextToPdfFragment) {
             name = mContext.getString(R.string.text_to_pdf);
+
+        // FragmentUtils-getFragmentName-3
         } else if (fragment instanceof QrBarcodeScanFragment) {
             name = mContext.getString(R.string.qr_barcode_pdf);
+
+        // FragmentUtils-getFragmentName-4
         } else if (fragment instanceof ExceltoPdfFragment) {
             name = mContext.getString(R.string.excel_to_pdf);
+
+        // FragmentUtils-getFragmentName-5
         } else if (fragment instanceof ViewFilesFragment) {
             name = checkViewFilesFragmentCode(fragment.getArguments());
+
+        // FragmentUtils-getFragmentName-6
         } else if (fragment instanceof HistoryFragment) {
             name = mContext.getString(R.string.history);
+
+        // FragmentUtils-getFragmentName-7
         } else if (fragment instanceof ExtractTextFragment) {
             name = mContext.getString(R.string.extract_text);
+
+        // FragmentUtils-getFragmentName-8
         } else if (fragment instanceof AddImagesFragment) {
             name = mContext.getString(R.string.add_images);
+
+        // FragmentUtils-getFragmentName-9
         } else if (fragment instanceof MergeFilesFragment) {
             name = mContext.getString(R.string.merge_pdf);
+
+        // FragmentUtils-getFragmentName-10
         } else if (fragment instanceof SplitFilesFragment) {
             name = mContext.getString(R.string.split_pdf);
+
+        // FragmentUtils-getFragmentName-11
         } else if (fragment instanceof InvertPdfFragment) {
             name = mContext.getString(R.string.invert_pdf);
+
+        // FragmentUtils-getFragmentName-12
         } else if (fragment instanceof RemoveDuplicatePagesFragment) {
             name = mContext.getString(R.string.remove_duplicate);
+
+        // FragmentUtils-getFragmentName-13
         } else if (fragment instanceof RemovePagesFragment) {
             name = fragment.getArguments() != null ?
                     fragment.getArguments().getString(BUNDLE_DATA) : null;
+
+        // FragmentUtils-getFragmentName-14
         } else if (fragment instanceof PdfToImageFragment) {
             name = mContext.getString(R.string.pdf_to_images);
+
+        // FragmentUtils-getFragmentName-15
         } else if (fragment instanceof ZipToPdfFragment) {
             name = mContext.getString(R.string.zip_to_pdf);
         }

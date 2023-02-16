@@ -190,105 +190,155 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         try {
             RecentUtil.getInstance().addFeatureInRecentList(PreferenceManager
                     .getDefaultSharedPreferences(mActivity), v.getId(), feature);
+
+        // HomeFragment-onClick-1
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         switch (v.getId()) {
+            // HomeFragment-onClick-2
             case R.id.images_to_pdf:
                 fragment = new ImageToPdfFragment();
                 break;
+
+            // HomeFragment-onClick-3
             case R.id.qr_barcode_to_pdf:
                 fragment = new QrBarcodeScanFragment();
                 break;
+
+            // HomeFragment-onClick-4
             case R.id.text_to_pdf:
                 fragment = new TextToPdfFragment();
                 break;
+
+            // HomeFragment-onClick-5
             case R.id.view_files:
                 fragment = new ViewFilesFragment();
                 break;
+
+            // HomeFragment-onClick-6
             case R.id.view_history:
                 fragment = new HistoryFragment();
                 break;
+
+            // HomeFragment-onClick-7
             case R.id.merge_pdf:
                 fragment = new MergeFilesFragment();
                 break;
+
+            // HomeFragment-onClick-8
             case R.id.split_pdf:
                 fragment = new SplitFilesFragment();
                 break;
+
+            // HomeFragment-onClick-9
             case R.id.compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-10
             case R.id.extract_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-11
             case R.id.pdf_to_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-12
             case R.id.remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-13
             case R.id.rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-14
             case R.id.add_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-15
             case R.id.remove_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-16
             case R.id.rotate_pages:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-17
             case R.id.add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-18
             case R.id.add_images:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // HomeFragment-onClick-19
             case R.id.remove_duplicates_pages_pdf:
                 fragment = new RemoveDuplicatePagesFragment();
                 break;
+
+            // HomeFragment-onClick-20
             case R.id.invert_pdf:
                 fragment = new InvertPdfFragment();
                 break;
+
+            // HomeFragment-onClick-21
             case R.id.zip_to_pdf:
                 fragment = new ZipToPdfFragment();
                 break;
+
+            // HomeFragment-onClick-22
             case R.id.excel_to_pdf:
                 fragment = new ExceltoPdfFragment();
                 break;
+
+            // HomeFragment-onClick-23
             case R.id.extract_text:
                 fragment = new ExtractTextFragment();
                 break;
+
+            // HomeFragment-onClick-24
             case R.id.add_text:
                 fragment = new AddTextFragment();
                 break;
         }
 
         try {
+            // HomeFragment-onClick-25
             if (fragment != null && fragmentManager != null)
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
+        // HomeFragment-onClick-26
         } catch (Exception e) {
             e.printStackTrace();
         }

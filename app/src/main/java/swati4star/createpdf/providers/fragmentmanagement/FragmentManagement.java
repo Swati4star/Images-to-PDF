@@ -141,126 +141,190 @@ public class FragmentManagement implements IFragmentManagement {
         Bundle bundle = new Bundle();
 
         switch (itemId) {
+            // FragmentManagement-handleNavigationItemSelected-1
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-2
             case R.id.nav_camera:
                 fragment = new ImageToPdfFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-3
             case R.id.nav_qrcode:
                 fragment = new QrBarcodeScanFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-4
             case R.id.nav_gallery:
                 fragment = new ViewFilesFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-5
             case R.id.nav_merge:
                 fragment = new MergeFilesFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-6
             case R.id.nav_split:
                 fragment = new SplitFilesFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-7
             case R.id.nav_text_to_pdf:
                 fragment = new TextToPdfFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-8
             case R.id.nav_history:
                 fragment = new HistoryFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-9
             case R.id.nav_add_text:
                 fragment = new AddTextFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-10
             case R.id.nav_add_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-11
             case R.id.nav_remove_password:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-12
             case R.id.nav_share:
                 mFeedbackUtils.shareApplication();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-13
             case R.id.nav_about:
                 fragment = new AboutUsFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-14
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-15
             case R.id.nav_extract_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-16
             case R.id.nav_pdf_to_images:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-17
             case R.id.nav_excel_to_pdf:
                 fragment = new ExceltoPdfFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-18
             case R.id.nav_remove_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-19
             case R.id.nav_rearrange_pages:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-20
             case R.id.nav_compress_pdf:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-21
             case R.id.nav_add_images:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-22
             case R.id.nav_help:
                 Intent intent = new Intent(mContext, WelcomeActivity.class);
                 intent.putExtra(SHOW_WELCOME_ACT, true);
                 mContext.startActivity(intent);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-23
             case R.id.nav_remove_duplicate_pages:
                 fragment = new RemoveDuplicatePagesFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-24
             case R.id.nav_invert_pdf:
                 fragment = new InvertPdfFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-25
             case R.id.nav_add_watermark:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-26
             case R.id.nav_zip_to_pdf:
                 fragment = new ZipToPdfFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-27
             case R.id.nav_whatsNew:
                 WhatsNewUtils.getInstance().displayDialog(mContext);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-28
             case R.id.nav_rateus:
                 mFeedbackUtils.openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-29
             case R.id.nav_rotate_pages:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-30
             case R.id.nav_text_extract:
                 fragment = new ExtractTextFragment();
                 break;
+
+            // FragmentManagement-handleNavigationItemSelected-31
             case R.id.nav_faq:
                 fragment = new FAQFragment();
                 break;
         }
 
         try {
+            // FragmentManagement-handleNavigationItemSelected-32
             if (fragment != null)
                 fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
+        // FragmentManagement-handleNavigationItemSelected-33
         } catch (Exception e) {
             e.printStackTrace();
         }

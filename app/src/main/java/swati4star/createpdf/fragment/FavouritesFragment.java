@@ -266,97 +266,143 @@ public class FavouritesFragment extends Fragment
         setTitleFragment(mFragmentPositionMap.get(v.getId()).getTitleString());
 
         switch (v.getId()) {
+            // FavouritesFragment-onClick-1
             case R.id.images_to_pdf_fav:
                 fragment = new ImageToPdfFragment();
                 break;
+
+            // FavouritesFragment-onClick-2
             case R.id.qr_barcode_to_pdf_fav:
                 fragment = new QrBarcodeScanFragment();
                 break;
+
+            // FavouritesFragment-onClick-3
             case R.id.text_to_pdf_fav:
                 fragment = new TextToPdfFragment();
                 break;
+
+            // FavouritesFragment-onClick-4
             case R.id.view_files_fav:
                 fragment = new ViewFilesFragment();
                 break;
+
+            // FavouritesFragment-onClick-5
             case R.id.view_history_fav:
                 fragment = new HistoryFragment();
                 break;
+
+            // FavouritesFragment-onClick-6
             case R.id.add_text_fav:
                 fragment = new AddTextFragment();
                 break;
+
+            // FavouritesFragment-onClick-7
             case R.id.merge_pdf_fav:
                 fragment = new MergeFilesFragment();
                 break;
+
+            // FavouritesFragment-onClick-8
             case R.id.split_pdf_fav:
                 fragment = new SplitFilesFragment();
                 break;
+
+            // FavouritesFragment-onClick-9
             case R.id.compress_pdf_fav:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, COMPRESS_PDF);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-10
             case R.id.extract_images_fav:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, EXTRACT_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-11
             case R.id.pdf_to_images_fav:
                 fragment = new PdfToImageFragment();
                 bundle.putString(BUNDLE_DATA, PDF_TO_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-12
             case R.id.remove_pages_fav:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-13
             case R.id.rearrange_pages_fav:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REORDER_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-14
             case R.id.add_password_fav:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_PWD);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-15
             case R.id.remove_password_fav:
                 fragment = new RemovePagesFragment();
                 bundle.putString(BUNDLE_DATA, REMOVE_PWd);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-16
             case R.id.rotate_pages_fav:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ROTATE_PAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-17
             case R.id.add_watermark_fav:
                 fragment = new ViewFilesFragment();
                 bundle.putInt(BUNDLE_DATA, ADD_WATERMARK);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-18
             case R.id.add_images_fav:
                 fragment = new AddImagesFragment();
                 bundle.putString(BUNDLE_DATA, ADD_IMAGES);
                 fragment.setArguments(bundle);
                 break;
+
+            // FavouritesFragment-onClick-19
             case R.id.remove_duplicates_pages_pdf_fav:
                 fragment = new RemoveDuplicatePagesFragment();
                 break;
+
+            // FavouritesFragment-onClick-20
             case R.id.invert_pdf_fav:
                 fragment = new InvertPdfFragment();
                 break;
+
+            // FavouritesFragment-onClick-21
             case R.id.extract_text_fav:
                 fragment = new ExtractTextFragment();
                 break;
+
+            // FavouritesFragment-onClick-22
             case R.id.excel_to_pdf_fav:
                 fragment = new ExceltoPdfFragment();
                 break;
+
+            // FavouritesFragment-onClick-23
             case R.id.zip_to_pdf_fav:
                 fragment = new ZipToPdfFragment();
                 break;
         }
         try {
+            // FavouritesFragment-onClick-24
             if (fragment != null && fragmentManager != null) {
                 ((MainActivity) mActivity).setNavigationViewSelection(mFragmentPositionMap.get(
                         v.getId()).getNavigationItemId());
@@ -365,6 +411,8 @@ public class FavouritesFragment extends Fragment
                         .addToBackStack(getString(R.string.favourites))
                         .commit();
             }
+
+        // FavouritesFragment-onClick-25
         } catch (Exception e) {
             e.printStackTrace();
         }

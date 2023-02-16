@@ -296,15 +296,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mIsButtonAlreadyClicked = false;
+        //ImageToPdfFragment-onActivityResult-1 
         if (resultCode != Activity.RESULT_OK || data == null)
             return;
 
         switch (requestCode) {
+            //ImageToPdfFragment-onActivityResult-2 
             case INTENT_REQUEST_GET_IMAGES:
                 mImagesUri.clear();
                 mUnarrangedImagesUri.clear();
                 mImagesUri.addAll(Matisse.obtainPathResult(data));
                 mUnarrangedImagesUri.addAll(mImagesUri);
+                //ImageToPdfFragment-onActivityResult-3
                 if (mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
@@ -316,12 +319,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
                 mOpenPdf.setVisibility(View.GONE);
                 break;
-
+            // ImageToPdfFragment-onActivityResult-4
             case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                 HashMap<Integer, Uri> croppedImageUris =
                         (HashMap) data.getSerializableExtra(CropImage.CROP_IMAGE_EXTRA_RESULT);
 
                 for (int i = 0; i < mImagesUri.size(); i++) {
+                    //ImageToPdfFragment-onActivityResult-5
                     if (croppedImageUris.get(i) != null) {
                         mImagesUri.set(i, croppedImageUris.get(i).getPath());
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_imagecropped);
@@ -329,6 +333,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 }
                 break;
 
+            //ImageToPdfFragment-onActivityResult-6 
             case INTENT_REQUEST_APPLY_FILTER:
                 mImagesUri.clear();
                 ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
@@ -337,8 +342,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                     mImagesUri.add(mFilterUris.get(k));
                 break;
 
+            //ImageToPdfFragment-onActivityResult-7 
             case INTENT_REQUEST_PREVIEW_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
+                //ImageToPdfFragment-onActivityResult-8 
                 if (mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
@@ -349,8 +356,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 }
                 break;
 
+            //ImageToPdfFragment-onActivityResult-9
             case INTENT_REQUEST_REARRANGE_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
+                //ImageToPdfFragment-onActivityResult-10 
                 if (!mUnarrangedImagesUri.equals(mImagesUri) && mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
@@ -358,6 +367,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                     mUnarrangedImagesUri.clear();
                     mUnarrangedImagesUri.addAll(mImagesUri);
                 }
+                //ImageToPdfFragment-onActivityResult-11
                 if (mImagesUri.size() == 0) {
                     mNoOfImages.setVisibility(View.GONE);
                     mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
