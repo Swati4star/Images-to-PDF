@@ -1,9 +1,8 @@
 package swati4star.createpdf.activity;
 
-import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -52,6 +51,7 @@ import swati4star.createpdf.util.WhatsNewUtils;
 
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.THEME_BLACK;
 import static swati4star.createpdf.util.Constants.THEME_DARK;
 import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
 
+    private boolean mSettingsActivityOpenedForManageStoragePermission = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity
         mNavigationView = findViewById(R.id.nav_view);
 
         setThemeOnActivityExclusiveComponents();
+
+        checkAndAskForStoragePermission();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if (Build.VERSION.SDK_INT >= 30) {
             if (Environment.isExternalStorageManager()) {
                 DirectoryUtils.makeAndClearTemp();
@@ -277,6 +282,7 @@ public class MainActivity extends AppCompatActivity
     public void setNavigationViewSelection(int id) {
         mNavigationView.setCheckedItem(id);
     }
+
 
     @Override
     protected void onStart() {

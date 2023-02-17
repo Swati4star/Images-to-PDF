@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>이름</item>
+        <item>날짜</item>
+        <item>크기  ▲</item>
+        <item>크기  ▼</item>
+    </string-array>
+
+    <string-array name="sort_options_images">
+        <item>이름 ▲</item>
+        <item>이름 ▼</item>
+        <item>날짜 ▲</item>
+        <item>날짜 ▼</item>
+    </string-array>
+
+    <string-array name="filter_options_history">
+        <item>생성된 항목</item>
+        <item>삭제된 항목</item>
+        <item>변경된 항목</item>
+        <item>교체한 항목</item>
+        <item>출력된 항목</item>
+        <item>해독된 항목</item>
+        <item>암호화된 항목</item>
+        <item>반전된 항목</item>
+    </string-array>
+</resources>

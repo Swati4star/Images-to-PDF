@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import swati4star.createpdf.R;
+
 /**
  * !! IMPORTANT !!
  * permission arrays are defined in Constants.java file. we have two types of permissions:
