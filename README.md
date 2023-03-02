@@ -1,6 +1,6 @@
 # Images To PDF
 
-### Badges
+### Badges!
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF)
 [![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PDF%20Converter-blue.svg?style=true)](https://android-arsenal.com/details/3/7132)
@@ -9,15 +9,11 @@
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
-Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
-Here is an easy to use Android app to convert images to PDF file!
+### Introduction
+  This page describes converting images to pdf using the pdf converter app. This document does not include information about the installation of the [pdf converter app](https://play.google.com/store/apps/details?id=swati4star.createpdf&hl=en&gl=US&pli=1)
+
 
 <img src="./screenshots/image_to_pdf2.gif"  width="300px">
-
-
-### Support Us
-<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-
 
 ### Features 
 - Create PDF from multiple images from camera or gallery
@@ -44,28 +40,63 @@ Here is a home page to get quick access to all the features "PDF Converter" prov
 
 ### Creating a PDF file
 
-##### Step 1 : User can view the PDF files previously created or create a new one! 
-<img src="./screenshots/1_home.png" width="190px">
+###   <img src="![WhatsApp Image 2023-03-02 at 12 56 12 AM](https://user-images.githubusercontent.com/95302653/222297393-4d80e0d3-f534-43d0-b132-3c00bd15acb9.jpeg)" width="190px">
+
+Allow pdf converter to access photos, media, and files on your device
+Click on the image to pdf icon 
+Click on select images
+Select the image(s) to be converted 
+Click Apply
+Click create pdf
+Enter file name 
+Click ok
+
+<!-- these are the folllowing steps  -->
+
+##### Step 1 : Allow pdf converter to access photos, media, and files on your device
+<!-- <img src="./screenshots/1_home.png" width="190px"> -->
 
 
-##### Step 2 : Select the images
-<img src="./screenshots/2_1_camera.png" width="190px"> <img src="./screenshots/2_gallery.png" width="190px">
+##### Step 2 : Click on the image to pdf icon 
+<!-- <img src="./screenshots/2_1_camera.png" width="190px"> <img src="./screenshots/2_gallery.png" width="190px"> -->
 
 
-##### Step 3 : Name the PDF file
-<img src="./screenshots/3_rename.png" width="190px">
+##### Step 3 :Click on select images icon
+<!-- <img src="./screenshots/3_rename.png" width="190px"> -->
 
 
-##### Step 4 : Creating PDF
-<img src="./screenshots/4_converting.png" width="190px">
+##### Step 4 : Select the image(s) to be converted 
+<!-- <img src="./screenshots/4_converting.png" width="190px"> -->
+
+
+##### Step 5 : Click Apply 
+<!-- <img src="./screenshots/4_converting.png" width="190px"> -->
+
+
+##### Step 6 : Click create pdf
+<!-- <img src="./screenshots/4_converting.png" width="190px"> -->
+
+
+##### Step 7 : Enter file name 
+<!-- <img src="./screenshots/4_converting.png" width="190px"> -->
+
+
+##### Step 8 :Click ok
+<!-- <img src="./screenshots/4_converting.png" width="190px"> -->
 
 
 Hurray! PDF files of selected images are created.
 
 
 ### Viewing the PDF files
+These are the steps to achieve this:
+##### step 1 : Click on view file icon
+##### step 2 : Select the file to be viewed 
+##### step 3 : Click on the open file
+
 
 <img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
+
 
 ### Different themes
 Go to Settings, and you can have three type of themes : Black, Dark and White
@@ -110,4 +141,8 @@ If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) ab
 
 ### Project Maintainers
 This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For any sort of queries feel free to mail at swati4star@gmail.com.
+
+
+### Support Us
+<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
