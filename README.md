@@ -22,7 +22,7 @@ Here is an easy to use Android app to convert images to PDF file!
 ### Features 
 - Create PDF from multiple images from camera or gallery
 - View your converted PDFs
-  - Open, Rename, Delete, print, share files
+  - Open, Rename, Delete, print, share those files
   - Sort the files order based on a number of options
   - View File details
   - Encrypt PDF
@@ -34,7 +34,7 @@ Here is an easy to use Android app to convert images to PDF file!
 - Convert text file to PDFs
 - Compress existing PDF
 - Remove pages from a PDF
-- Rearrange pages of a PDF
+- Re-arrange pages of a PDF
 - Extract images from PDF
 - History : View all the PDF related conversions
 
@@ -44,23 +44,23 @@ Here is a home page to get quick access to all the features "PDF Converter" prov
 
 ### Creating a PDF file
 
-##### Step 1 : User can view the PDF files previously created or create a new one! 
+#### Step 1 : User can view the PDF files previously created or create a new one! 
 <img src="./screenshots/1_home.png" width="190px">
 
 
-##### Step 2 : Select the images
+#### Step 2 : Select the images
 <img src="./screenshots/2_1_camera.png" width="190px"> <img src="./screenshots/2_gallery.png" width="190px">
 
 
-##### Step 3 : Name the PDF file
+#### Step 3 : Name the PDF file
 <img src="./screenshots/3_rename.png" width="190px">
 
 
-##### Step 4 : Creating PDF
+#### Step 4 : Creating PDF
 <img src="./screenshots/4_converting.png" width="190px">
 
 
-Hurray! PDF files of selected images are created.
+Hurray! PDF files of selected images has been created.
 
 
 ### Viewing the PDF files
@@ -74,10 +74,10 @@ Black | Dark | White |
 --- | --- | --- |
 <img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> |  <img src="./screenshots/home_theme_white.png" width="190px"> |
 
-### Merge PDF
+### Merge PDF file
 <img src="./screenshots/7_merge_pdf.png" width="190px">
 
-### Text to PDF
+### Text to PDF 
 <img src="./screenshots/8_text_to_pdf.png" width="190px">
 
 ### History
@@ -109,5 +109,6 @@ If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) ab
 [Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 
 ### Project Maintainers
-This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For any sort of queries feel free to mail at swati4star@gmail.com.
+This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/).
+For any sort of queries feel free to mail at swati4star@gmail.com.
 
