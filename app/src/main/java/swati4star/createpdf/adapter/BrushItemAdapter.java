@@ -50,6 +50,7 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
     @Override
     public int getItemCount() {
         return mBrushItems.size();
+        return 1;
     }
 
     public class BrushItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
