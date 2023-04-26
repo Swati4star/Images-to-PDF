@@ -580,29 +580,34 @@
     <string name="storage_manager_permission_rationale">In Android 11, you need to allow a special storage permission</string>
     <string name="close_app_text">Close App</string>
     <string name="allow_text">Allow</string>
+    <string-array name="faq_categories">
+        <item>Category 1</item>
+        <item>Category 2</item>
+        <item>Category 3</item>
+    </string-array>
     <string-array name="faq_question_answers">
-        <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
+        <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.#####Category 1</item>
         <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTRACT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
-        <item>Is there a limit on number of images I can add at once to create a PDF?#####No, there are no restrictions.</item>
+        <item>Is there a limit on number of images I can add at once to create a PDF?#####No, there are no restrictions.#####Category 1</item>
         <item>Is there a limit to the image size I can add?#####No, there are no limits. However, we advise to restrict the size to <strong>less than 10MB</strong>. The conversion of multiple large image files take upwards of 10 seconds.</item>
         <item>Can I insert captions in the image after adding?#####No, captions cannot be inserted on images except otherwise edited on the image itself.</item>
-        <item>Can I read PDF files using the app?#####No, you cannot as of now. This app does not work as a PDF viewer.</item>
-        <item>Where are the PDF files saved I created using the app?#####The PDF files files created with the app are automatically saved in the folder named PDFfiles on your device storage. \nYou can also change the default location in <strong>Setings</strong> section.</item>
+        <item>Can I read PDF files using the app?#####No, you cannot as of now. This app does not work as a PDF viewer.#####Category 1</item>
+        <item>Where are the PDF files saved I created using the app?#####The PDF files files created with the app are automatically saved in the folder named PDFfiles on your device storage. \nYou can also change the default location in <strong>Setings</strong> section.#####Category 2</item>
         <item>How to change the default storgae location?#####To change the default storage location, \n1) Click the <strong>Hamburger icon</strong> (three horizontal line) at the top-left corner. \n2) Scroll down and click <strong>Settings</strong>. \n3) In the settings page, click the field just beneath the text <strong>Change storage location</strong>. \n4) Open the preferred save location and click the <strong>Select icon</strong> at the top. \nOnce changed, the files created using the app will be stored in the new location.</item>
         <item>How can I share the PDF files that are edited/created using the app?#####You can access and share the PDF files which you have edited/created directly from the app. To share the PDF files, \n1) Click <strong>View Files</strong> option on the homepage. \n2) Select the file(s) you want to share using the checkbox. \n3) Next, click the <strong>More option</strong> (three vertical dots) at the top-right and click <strong>Share</strong>. \n4) Select the desired method to share the files.</item>
-        <item>Can I recover the forgotten password of a PDF file using the app?#####No, a lost password cannot be recovered.</item>
+        <item>Can I recover the forgotten password of a PDF file using the app?#####No, a lost password cannot be recovered.#####Category 2</item>
         <item>Can I change the password of a PDF file?#####Yes, but only if you remove the existing password. Once the password is removed, use the <strong>Change Password</strong> option in the homepage to change the password.</item>
         <item>Can I compress the images before creating a PDF?#####Yes, you can. To compress the images, \n1) Click the <strong>Images to PDF</strong> option on the homepage. \n2) Select the images using the <strong>SELECT IMAGES</strong> button. \n3) Next, select the <strong>Image compression</strong> option to compress the images.</item>
         <item>What is the format of the images extracted from a PDF?#####The images extracted from a PDF will be in <strong>.png</strong> format.</item>
         <item>Can I add files from cloud/online storage?#####As of now, you cannot. But it is on the development roadmap and will be available soon.</item>
         <item>How to check history of files created/modified?#####To see all the files you have created/modified in the app. \nTo do this, click the <strong>History</strong> option on the homepage.</item>
-        <item>How to merge multiple PDF files?#####To merge multiple PDFs, \n1) Click the <strong>Merge PDF</strong> option on the homepage. \n2) Select the PDF files using the <strong>SELECT FILES</strong> button. \n3) Once selected, click <strong>MERGE FILES</strong> button.</item>
+        <item>How to merge multiple PDF files?#####To merge multiple PDFs, \n1) Click the <strong>Merge PDF</strong> option on the homepage. \n2) Select the PDF files using the <strong>SELECT FILES</strong> button. \n3) Once selected, click <strong>MERGE FILES</strong> button.#####Category 3</item>
         <item>Can I edit images while creating a PDF?#####Yes, you can. To do so, \n1) Click the <strong>Images to PDF</strong> option on the homepage. \n2) Select the images using <strong>SELECT IMAGES</strong> button. \n3) Once selected, click the <strong>Edit Images</strong> or <strong>Filter Images</strong> option based on your requirement. \n4) Finish editing or applying the filter. \n5) Now, select the edited images using the <strong>SELECT IMAGES</strong> button and click <strong>CREATE PDF</strong> to create the PDF.</item>
         <item>How to add watermark to the PDF?#####To add watermark scroll down to <strong>Enhance Created PDFs</strong> on the homepage or in the options menu by swiping left to right and click <strong>Add Watermark</strong>.</item>
         <item>Can I reorder the pages in a PDF?#####Yes, you can. To reorder the page, \n1)Click the <strong>Reorder Pages</strong> option on the homepage. \n2) Select the PDF file using <strong>SELECT A FILE</strong> button. \n3) Click <strong>CREATE PDF</strong>. \n4) Use the up and down arrow to reorder the pages. \n5) Once reordered, click <strong>Back arrow</strong> at the top-left to create the new updated PDF file.</item>
-        <item>How to extract images from a PDF?#####To extract images, \n1) Click the Extract Images option on the homepage. \n2) Select the PDF file using SELECT A FILE button. \n3) Once selected, click CREATE IMAGES button.</item>
+        <item>How to extract images from a PDF?#####To extract images, \n1) Click the Extract Images option on the homepage. \n2) Select the PDF file using SELECT A FILE button. \n3) Once selected, click CREATE IMAGES button.#####Category 3</item>
         <item>Can I convert PDFs into PPT, PPTX, ODT, DOC, DOCX formats?#####No, the PDFs can only be converted to text format at the moment.</item>
-        <item>Where can I download PDF CONVERTER: Files to PDF app?#####The app is available on Google PlayStore and F-Droid</item>
+        <item>Where can I download PDF CONVERTER: Files to PDF app?#####The app is available on Google PlayStore and F-Droid#####Category 2</item>
         <item>Can I contribute to this app?#####Yes, you can. Find us on GitHub using the project name <strong>Swati4star/Images-to-PDF</strong>. \nFeel free to share your ideas(feature requests), submit a bug or pull request for anything you feel should be added. \nThis project has multiple contributors that add as little as a single line change. Read the project <strong>Contributor\'s guide</strong> to get started.</item>
         <item>I have some questions which are not in this FAQs document. How can I contact the developer?#####For further inquiries, email the developer at <strong>swati4star@gmail.com</strong></item>
     </string-array>

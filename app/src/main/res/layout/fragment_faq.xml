@@ -24,6 +24,24 @@
             android:layout_marginBottom="10dp">
         </SearchView>
 
+      <com.google.android.material.tabs.TabLayout
+          android:id="@+id/faq_category_tab_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" >
+
+      </com.google.android.material.tabs.TabLayout>
+
+
+
+        <TextView
+            android:id="@+id/faq_category_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12px"
+            android:textSize="80px"
+            android:textAlignment="center"
+            android:text="Category" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_faq"
             android:layout_width="match_parent"

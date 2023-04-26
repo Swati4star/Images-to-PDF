@@ -9,6 +9,9 @@ import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +31,14 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
     private List<FAQItem> mFaqsCopy;
     private Context mContext;
     private SearchView mSearchView;
+    private String mCategory;
 
     @BindView(R.id.recycler_view_faq)
     RecyclerView mFAQRecyclerView;
 
-    public FAQFragment() {
+    public FAQFragment(String category) {
         // Required empty public constructor
+        this.mCategory = category;
     }
 
     @Override
@@ -41,6 +46,41 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_faq, container, false);
+
+        mContext = view.getContext();
+
+        TextView categoryView = view.findViewById(R.id.faq_category_header);
+        categoryView.setText(mCategory);
+
+        String[] categories = mContext.getResources().getStringArray(R.array.faq_categories);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.faq_category_tab_layout);
+
+        // For FAQ items without a category
+        tabLayout.addTab(tabLayout.newTab().setText("All"));
+
+        for (String category : categories) tabLayout.addTab(tabLayout.newTab().setText(category));
+
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mCategory = tab.getText().toString();
+                categoryView.setText(mCategory);
+                initFAQs();
+                initFAQRecyclerView();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
         mSearchView =  view.findViewById(R.id.searchView);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -58,7 +98,6 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         });
 
         ButterKnife.bind(this, view);
-        mContext = view.getContext();
 
         initFAQs();
         initFAQRecyclerView();
@@ -97,8 +136,14 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         FAQItem faqItem;
         for (String questionAnswer : questionAnswers) {
             String[] questionAnswerSplit = questionAnswer.split("#####");
-            faqItem = new FAQItem(questionAnswerSplit[0], questionAnswerSplit[1]);
-            mFaqs.add(faqItem);
+
+            // Only add the FAQ item if we have All selected or
+            // if the current category matches the selected category.
+            if (mCategory.equals("All") || (questionAnswerSplit.length >= 3 && questionAnswerSplit[2].equals(mCategory))) {
+                faqItem = new FAQItem(questionAnswerSplit[0], questionAnswerSplit[1]);
+                mFaqs.add(faqItem);
+            }
+
         }
         mFaqsCopy.addAll(mFaqs);
     }

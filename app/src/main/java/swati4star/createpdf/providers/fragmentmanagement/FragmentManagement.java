@@ -254,7 +254,7 @@ public class FragmentManagement implements IFragmentManagement {
                 fragment = new ExtractTextFragment();
                 break;
             case R.id.nav_faq:
-                fragment = new FAQFragment();
+                fragment = new FAQFragment("All");
                 break;
         }
 
