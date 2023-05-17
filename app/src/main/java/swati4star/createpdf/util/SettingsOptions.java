@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -10,8 +12,6 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
-
-import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 
 public class SettingsOptions {
 

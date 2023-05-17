@@ -2,10 +2,11 @@ package swati4star.createpdf.util;
 
 import android.app.Dialog;
 import android.content.Context;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,10 +22,6 @@ import swati4star.createpdf.adapter.WhatsNewAdapter;
 import swati4star.createpdf.model.WhatsNew;
 
 public class WhatsNewUtils {
-
-    private static class SingletonHolder {
-        static final WhatsNewUtils INSTANCE = new WhatsNewUtils();
-    }
 
     public static WhatsNewUtils getInstance() {
         return WhatsNewUtils.SingletonHolder.INSTANCE;
@@ -80,9 +77,9 @@ public class WhatsNewUtils {
         return json;
     }
 
-
     /**
      * Extract what's new items by parsing json
+     *
      * @param object - json object to be parsed
      * @return list of whatsnew items
      * @throws JSONException - invalid JSON
@@ -102,6 +99,10 @@ public class WhatsNewUtils {
             whatsNewList.add(whatsNew);
         }
 
-        return  whatsNewList;
+        return whatsNewList;
+    }
+
+    private static class SingletonHolder {
+        static final WhatsNewUtils INSTANCE = new WhatsNewUtils();
     }
 }

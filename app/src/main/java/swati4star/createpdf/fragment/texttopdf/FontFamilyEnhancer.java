@@ -1,11 +1,12 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
@@ -22,10 +23,10 @@ import swati4star.createpdf.preferences.TextToPdfPreferences;
 public class FontFamilyEnhancer implements Enhancer {
 
     private final Activity mActivity;
-    private EnhancementOptionsEntity mEnhancementOptionsEntity;
-    private TextToPdfContract.View mView;
     private final TextToPdfPreferences mPreferences;
     private final TextToPDFOptions.Builder mBuilder;
+    private EnhancementOptionsEntity mEnhancementOptionsEntity;
+    private TextToPdfContract.View mView;
 
     FontFamilyEnhancer(@NonNull final Activity activity,
                        @NonNull final TextToPdfContract.View view,
@@ -39,6 +40,7 @@ public class FontFamilyEnhancer implements Enhancer {
                         mBuilder.getFontFamily().name()));
         mView = view;
     }
+
     /**
      * Shows dialog to change font size
      */

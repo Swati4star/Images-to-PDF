@@ -1,13 +1,14 @@
 package swati4star.createpdf.adapter;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.util.HashMap;
@@ -57,7 +58,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         String date;
         if (formatDate.length >= 3) {
             String time = formatDate[3];
-            String[] formatTime =  time.split(":");
+            String[] formatTime = time.split(":");
             date = formatTime[0] + ":" + formatTime[1];
             date = formatDate[0] + ", " + formatDate[1] + " " + formatDate[2] + " at " + date;
         } else {
@@ -86,6 +87,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         return mHistoryList == null ? 0 : mHistoryList.size();
     }
 
+    public interface OnClickListener {
+        void onItemClick(String path);
+    }
+
     public class ViewHistoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.fileName)
@@ -107,9 +112,5 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         public void onClick(View view) {
             mOnClickListener.onItemClick(mHistoryList.get(getAdapterPosition()).getFilePath());
         }
-    }
-
-    public interface OnClickListener {
-        void onItemClick(String path);
     }
 }

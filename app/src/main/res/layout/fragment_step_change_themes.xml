@@ -34,17 +34,17 @@
 
     <com.dd.morphingbutton.MorphingButton
         android:id="@+id/getStarted"
+        style="@style/MorphingButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
-        android:layout_marginTop="24dp"
         android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
         android:layout_marginRight="24dp"
+        android:layout_marginBottom="45dp"
         android:maxWidth="30dp"
         android:padding="3dip"
-        style="@style/MorphingButton"
         android:text="@string/get_started_title" />
 
 </RelativeLayout>

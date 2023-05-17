@@ -17,10 +17,19 @@ import java.util.Collection;
 @Config(sdk = Build.VERSION_CODES.O_MR1)
 public class ColorUtilsTest {
 
+    private final int mColor1;
+    private final int mColor2;
+    private final boolean mIsColorSimilar;
+    public ColorUtilsTest(int mColor1, int mColor2, boolean mIsColorSimilar) {
+        this.mColor1 = mColor1;
+        this.mColor2 = mColor2;
+        this.mIsColorSimilar = mIsColorSimilar;
+    }
+
     @Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(
-                new Object[][] {
+                new Object[][]{
                         {Color.rgb(100, 69, 100), Color.rgb(100, 100, 100), false},
                         {Color.rgb(100, 71, 100), Color.rgb(100, 100, 100), true},
                         {Color.rgb(100, 100, 100), Color.rgb(100, 100, 100), true},
@@ -30,16 +39,6 @@ public class ColorUtilsTest {
                         {Color.rgb(120, 120, 115), Color.rgb(100, 100, 100), false},
                         {Color.rgb(100, 120, 120), Color.rgb(100, 100, 100), true}
                 });
-    }
-
-    private final int mColor1;
-    private final int mColor2;
-    private final boolean mIsColorSimilar;
-
-    public ColorUtilsTest(int mColor1, int mColor2, boolean mIsColorSimilar) {
-        this.mColor1 = mColor1;
-        this.mColor2 = mColor2;
-        this.mIsColorSimilar = mIsColorSimilar;
     }
 
     @Test

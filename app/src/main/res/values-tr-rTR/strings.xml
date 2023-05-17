@@ -16,7 +16,7 @@
     <string name="prompt_input">Buraya girin</string>
 
     <!--   Items  -->
-    <array name = "items">
+    <array name="items">
         <item>Dosya Aç</item>
         <item>Dosyayı Sil</item>
         <item>Dosyayı Yeniden Adlandır</item>
@@ -29,7 +29,7 @@
         <item>Filigran Ekle</item>
     </array>
 
-    <array name = "itemIds" translatable = "false">
+    <array name="itemIds" translatable="false">
         <item>açık</item>
         <item>sil</item>
         <item>yeniden adlandır</item>
@@ -159,7 +159,7 @@
     <string name="snackbar_no_share_app">Paylaşacak uygulama yok.</string>
 
     <!-- Select Images string -->
-    <string name="images_selected">" %1$d resim seçildi."</string>
+    <string name="images_selected">%1$d resim seçildi.</string>
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">PDF Converter için Öneriler</string>
@@ -526,6 +526,7 @@
         <item> PDF\'leri PPT, PPTX, ODT, DOC, DOCX biçimlerine dönüştürebilir miyim? ##### Hayır, PDF\'ler şu anda yalnızca metin biçimine dönüştürülebilir. </item>
         <item> PDF DÖNÜŞTÜRÜCÜ: Dosyadan PDF uygulamasına nereden indirebilirim? ##### Uygulama Google PlayStore ve F-Droid\'de mevcuttur </item>
         <item> Bu uygulamaya katkıda bulunabilir miyim? ##### Evet, yapabilirsiniz. <strong> Swati4star / Images-to-PDF </strong> proje adını kullanarak bizi GitHub\'da bulun. \nFikirlerinizi (özellik istekleri) paylaşmaktan, bir hata göndermekten veya eklenmesi gerektiğini düşündüğünüz herhangi bir şey için talepte bulunmaktan çekinmeyin. \nBu projede, tek bir satır değişikliği kadar az ekleyen birden fazla katılımcı var. Başlamak için <strong> Katkıda Bulunanlar kılavuzunu </strong> okuyun. </item>
-        <item> Bu SSS belgesinde olmayan bazı sorularım var. Geliştiriciyle nasıl iletişim kurabilirim? ##### Daha fazla soru için, <strong>swati4star@gmail.com</strong> </item> adresinden geliştiriciye e-posta gönderin.
+        <item> Bu SSS belgesinde olmayan bazı sorularım var. Geliştiriciyle nasıl iletişim kurabilirim? ##### Daha fazla soru için, <strong>swati4star@gmail.com</strong> </item>
+        adresinden geliştiriciye e-posta gönderin.
     </string-array>
 </resources>

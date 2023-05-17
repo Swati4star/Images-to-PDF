@@ -21,9 +21,9 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/remove_duplicate_info"
+            android:textColor="@color/grey"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="@color/grey"/>
+            android:textStyle="bold" />
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFile"

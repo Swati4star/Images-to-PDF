@@ -1,17 +1,18 @@
 package swati4star.createpdf.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.appName;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +23,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,33 +66,10 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.appName;
-
 public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener, MergeFilesListener,
         MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListener,
         BottomSheetPopulate, OnBackPressedInterface {
-    private Activity mActivity;
-    private String mCheckbtClickTag = "";
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    private MorphButtonUtility mMorphButtonUtility;
-    private ArrayList<String> mFilePaths;
-    private FileUtils mFileUtils;
-    private BottomSheetUtils mBottomSheetUtils;
-    private MergeSelectedFilesAdapter mMergeSelectedFilesAdapter;
-    private MaterialDialog mMaterialDialog;
-    private String mHomePath;
-    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList;
-    private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
-    private boolean mPasswordProtected = false;
-    private String mPassword;
-    private SharedPreferences mSharedPrefs;
-    private BottomSheetBehavior mSheetBehavior;
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.mergebtn)
@@ -105,6 +90,21 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     RecyclerView mSelectedFiles;
     @BindView(R.id.enhancement_options_recycle_view)
     RecyclerView mEnhancementOptionsRecycleView;
+    private Activity mActivity;
+    private String mCheckbtClickTag = "";
+    private MorphButtonUtility mMorphButtonUtility;
+    private ArrayList<String> mFilePaths;
+    private FileUtils mFileUtils;
+    private BottomSheetUtils mBottomSheetUtils;
+    private MergeSelectedFilesAdapter mMergeSelectedFilesAdapter;
+    private MaterialDialog mMaterialDialog;
+    private String mHomePath;
+    private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList;
+    private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
+    private boolean mPasswordProtected = false;
+    private String mPassword;
+    private SharedPreferences mSharedPrefs;
+    private BottomSheetBehavior mSheetBehavior;
 
     public MergeFilesFragment() {
     }
@@ -239,8 +239,8 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                         } else {
                             MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
-                                    mHomePath, mPasswordProtected, mPassword,
-                                    this, masterpwd).execute(pdfpaths))
+                                            mHomePath, mPasswordProtected, mPassword,
+                                            this, masterpwd).execute(pdfpaths))
                                     .onNegative((dialog1, which) -> mergeFiles(view)).show();
                         }
                     }
@@ -387,7 +387,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
      ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }

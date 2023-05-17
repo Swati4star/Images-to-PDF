@@ -190,7 +190,6 @@
     <string name="select_excel_file">Odaberite Excel datoteku</string>
 
 
-
     <!-- Share strings -->
     <string name="share_chooser">Odaberite aplikaciju za slanje poruke…</string>
 
@@ -199,7 +198,7 @@
     <string name="snackbar_no_share_app">Nema aplikacije za dijeljenje.</string>
 
     <!-- Select Images string -->
-    <string name="images_selected"> %1$d fotografija(e) odabrane.</string>
+    <string name="images_selected">%1$d fotografija(e) odabrane.</string>
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">Prijedlozi za Pretvarač Fotografija u PDF</string>
@@ -291,7 +290,7 @@
     <string name="font_size_changed">Veličina Slova Promijenjena</string>
     <string name="font_size">Veličina Slova : %1$s</string>
 
-<!--  About US & App Description & Contact US  -->
+    <!--  About US & App Description & Contact US  -->
     <string name="about_us">O nama</string>
     <string name="rate_us">Ocijeni nas</string>
     <string name="app_description">Android aplikacija uz pomoć koje lagano možete pretvoriti datoteke u PDF.</string>
@@ -546,7 +545,7 @@
     <string name="lbl_recently_used">Nedavno Korištene Funkcije</string>
 
     <!--  FAQs  -->
-  <string-array name="faq_question_answers">
+    <string-array name="faq_question_answers">
         <item>Koji formati fotografija su podržani?#####Aplikacija podržava jpeg, jpg, tiff, gif, psd, bmp, eps, png, itd.</item>
         <item>Mogu li izraditi novu tekstualnu datoteku u aplikaciji?#####Možete izraditi novu tekstualnu datoteku samo tako što ćete izdvojiti tekst iz postojećeg PDF-a. Da izradite tekstualnu datoteku, \n1) Stisnite na <strong>Izdvoji Tekst</strong> opciju na početnoj stranici. \n2) Odaberite PDF koristeći <strong>ODABERI PDF DATOTEKU</strong> tipku. \n3) Zatim, stisnite <strong>IZDVOJI TEKST</strong>. \n4) Kada završite, tekstualna datoteka sa tekstualnim sadržajem iz PDF-a će biti izrađena.</item>
         <item>Postoji li ograničenje na broj fotografija koje mogu dodati odjednom za izradu PDF-a?#####Ne, nema ograničenja.</item>

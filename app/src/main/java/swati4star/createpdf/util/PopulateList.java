@@ -3,10 +3,11 @@ package swati4star.createpdf.util;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
-import android.text.TextUtils;
 
 import java.io.File;
 import java.util.ArrayList;

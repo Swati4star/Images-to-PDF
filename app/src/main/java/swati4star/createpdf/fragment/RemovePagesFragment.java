@@ -1,15 +1,23 @@
 package swati4star.createpdf.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.FileInfoUtils.getFormattedSize;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +28,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,33 +64,11 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.ADD_PWD;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
-import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PWd;
-import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.FileInfoUtils.getFormattedSize;
-
 public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         OnPDFCompressedInterface, BottomSheetPopulate, OnBackPressedInterface, OnPdfReorderedInterface {
 
-    private Activity mActivity;
-    private String mPath;
-    private MorphButtonUtility mMorphButtonUtility;
-    private FileUtils mFileUtils;
-    private BottomSheetUtils mBottomSheetUtils;
-    private PDFUtils mPDFUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private static final int INTENT_REQUEST_REARRANGE_PDF = 11;
-    private String mOperation;
-    private MaterialDialog mMaterialDialog;
-    private BottomSheetBehavior mSheetBehavior;
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
@@ -102,6 +93,15 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     TextView mCompressionInfoText;
     @BindView(R.id.view_pdf)
     Button mViewPdf;
+    private Activity mActivity;
+    private String mPath;
+    private MorphButtonUtility mMorphButtonUtility;
+    private FileUtils mFileUtils;
+    private BottomSheetUtils mBottomSheetUtils;
+    private PDFUtils mPDFUtils;
+    private String mOperation;
+    private MaterialDialog mMaterialDialog;
+    private BottomSheetBehavior mSheetBehavior;
     private Uri mUri;
 
     @Override
@@ -169,6 +169,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     /**
      * This method returns new  pdf name.
+     *
      * @param pages The pages String that contains page numbers
      * @return Returns the new pdf name
      */
@@ -356,7 +357,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
      ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }

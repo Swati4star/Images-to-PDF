@@ -2,13 +2,14 @@ package swati4star.createpdf.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,10 @@ public class PreviewImageOptionsAdapter extends RecyclerView.Adapter<PreviewImag
         return mOptions.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ImageView imageView;
         final TextView textView;
@@ -63,9 +68,5 @@ public class PreviewImageOptionsAdapter extends RecyclerView.Adapter<PreviewImag
         public void onClick(View view) {
             mOnItemClickListener.onItemClick(getAdapterPosition());
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
     }
 }

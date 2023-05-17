@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -8,8 +10,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import swati4star.createpdf.R;
-
-import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
 
 public class FeedbackUtils {
 
@@ -74,6 +74,7 @@ public class FeedbackUtils {
 
     /**
      * Opens given web page in browser
+     *
      * @param url - web page to open up
      */
     public void openWebPage(String url) {

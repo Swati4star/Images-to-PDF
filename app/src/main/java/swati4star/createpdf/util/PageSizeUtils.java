@@ -17,14 +17,15 @@ import swati4star.createpdf.preferences.TextToPdfPreferences;
 
 public class PageSizeUtils {
 
-    private final Context mActivity;
     public static String mPageSize;
+    private final Context mActivity;
     private final String mDefaultPageSize;
     private final HashMap<Integer, Integer> mPageSizeToString;
     private final TextToPdfPreferences mPreferences;
 
     /**
      * Utils object to modify the page size
+     *
      * @param mActivity - current context
      */
     public PageSizeUtils(Context mActivity) {
@@ -67,6 +68,7 @@ public class PageSizeUtils {
 
     /**
      * Show a dialog to modify the page size
+     *
      * @param saveValue - save the value in shared preferences
      * @return - dialog object
      */
@@ -102,6 +104,7 @@ public class PageSizeUtils {
 
     /**
      * Private show page size utils dialog
+     *
      * @param saveValue - save the value in shared prefs
      * @return - dialog object
      */
@@ -118,7 +121,7 @@ public class PageSizeUtils {
                     mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
                             spinnerB.getSelectedItem().toString());
                     CheckBox mSetAsDefault = view.findViewById(R.id.set_as_default);
-                    if (saveValue || mSetAsDefault.isChecked() ) {
+                    if (saveValue || mSetAsDefault.isChecked()) {
                         mPreferences.setPageSize(mPageSize);
                     }
                 }).build();
@@ -126,7 +129,8 @@ public class PageSizeUtils {
 
     /**
      * Get key from the value
-     * @param map - hash map
+     *
+     * @param map   - hash map
      * @param value - the value for which we want the key
      * @return - key value
      */

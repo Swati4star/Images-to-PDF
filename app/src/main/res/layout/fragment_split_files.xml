@@ -9,9 +9,9 @@
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical"
         android:stretchColumns="*"
-        android:layout_marginBottom="40dp"
         tools:context=".fragment.AddImagesFragment">
 
         <com.dd.morphingbutton.MorphingButton
@@ -31,10 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:ems="10"
-            android:labelFor="@id/split_info"
-            android:inputType="number"
             android:digits="0123456789-,"
+            android:ems="10"
+            android:inputType="number"
+            android:labelFor="@id/split_info"
             android:visibility="gone" />
 
         <TextView
@@ -64,14 +64,14 @@
             app:layout_constraintTop_toBottomOf="@id/textView" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/splitfiles_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/split_success"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/splitted_files"

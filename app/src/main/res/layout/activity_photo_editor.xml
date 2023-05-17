@@ -46,8 +46,8 @@
             android:contentDescription="@string/previous_image_content_desc"
             android:gravity="center"
             app:srcCompat="@drawable/ic_navigate_before_white_24dp"
-            tools:targetApi="lollipop"
-            app:tint="?attr/bottomSheetColor" />
+            app:tint="?attr/bottomSheetColor"
+            tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/imagecount"
@@ -63,8 +63,8 @@
             android:contentDescription="@string/nextimage_contentdesc"
             android:gravity="center"
             app:srcCompat="@drawable/ic_navigate_next_black_24dp"
-            tools:targetApi="lollipop"
-            app:tint="?attr/bottomSheetColor" />
+            app:tint="?attr/bottomSheetColor"
+            tools:targetApi="lollipop" />
 
     </LinearLayout>
 
@@ -75,8 +75,7 @@
         android:layout_above="@id/filters"
         android:layout_below="@id/controls"
         android:layout_marginTop="10dp"
-        android:visibility="visible">
-    </ja.burhanrashid52.photoeditor.PhotoEditorView>
+        android:visibility="visible"></ja.burhanrashid52.photoeditor.PhotoEditorView>
 
     <LinearLayout
         android:id="@+id/filters"

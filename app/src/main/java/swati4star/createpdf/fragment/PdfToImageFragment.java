@@ -1,15 +1,17 @@
 package swati4star.createpdf.fragment;
 
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,30 +56,10 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 public class PdfToImageFragment extends Fragment implements BottomSheetPopulate, MergeFilesAdapter.OnClickListener,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    private Activity mActivity;
-    private String mPath;
-    private Uri mUri;
-    private MorphButtonUtility mMorphButtonUtility;
-    private FileUtils mFileUtils;
-    private BottomSheetBehavior mSheetBehavior;
-    private BottomSheetUtils mBottomSheetUtils;
-    private ArrayList<String> mOutputFilePaths;
-    private MaterialDialog mMaterialDialog;
-    private String mOperation;
-    private Context mContext;
-    private PDFUtils mPDFUtils;
-    private String[] mInputPassword;
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.bottom_sheet)
@@ -93,6 +80,19 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     RelativeLayout mLayout;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
+    private Activity mActivity;
+    private String mPath;
+    private Uri mUri;
+    private MorphButtonUtility mMorphButtonUtility;
+    private FileUtils mFileUtils;
+    private BottomSheetBehavior mSheetBehavior;
+    private BottomSheetUtils mBottomSheetUtils;
+    private ArrayList<String> mOutputFilePaths;
+    private MaterialDialog mMaterialDialog;
+    private String mOperation;
+    private Context mContext;
+    private PDFUtils mPDFUtils;
+    private String[] mInputPassword;
 
     /**
      * inflates the layout for the fragment
@@ -336,7 +336,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }

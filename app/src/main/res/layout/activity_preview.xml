@@ -52,9 +52,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
+        android:background="@color/colorAccent"
         android:gravity="center"
         android:text="@string/swipe_to_view_next"
-        android:background="@color/colorAccent"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
 
 </RelativeLayout>

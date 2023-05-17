@@ -1,5 +1,10 @@
 package swati4star.createpdf.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +12,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +21,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
@@ -52,23 +62,9 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         OnPDFCreatedInterface, OnItemClickListener, BottomSheetPopulate {
-    private Activity mActivity;
-    private FileUtils mFileUtils;
-    private Uri mExcelFileUri;
-    private String mRealPath;
-    private String mPath;
-    private BottomSheetBehavior mSheetBehavior;
-
+    private final int mFileSelectCode = 0;
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.tv_excel_file_name_bottom)
@@ -87,13 +83,17 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     RelativeLayout mLayout;
     @BindView(R.id.recyclerViewFiles)
     RecyclerView mRecyclerViewFiles;
-
+    private Activity mActivity;
+    private FileUtils mFileUtils;
+    private Uri mExcelFileUri;
+    private String mRealPath;
+    private String mPath;
+    private BottomSheetBehavior mSheetBehavior;
     private StringUtils mStringUtils;
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
     private BottomSheetUtils mBottomSheetUtils;
     private boolean mButtonClicked = false;
-    private final int mFileSelectCode = 0;
     private MaterialDialog mMaterialDialog;
     private ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
@@ -210,8 +210,8 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 
     @Override

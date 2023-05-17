@@ -11,17 +11,18 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 
 public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
-    private boolean mSuccess;
     private final String mPath;
     private final boolean mIsPasswordProtected;
     private final String mDestPath;
     private final String mPassword;
+    private boolean mSuccess;
 
     /**
      * This public constructor is responsible for initializing the path of actual file,
      * the destination path and the onPDFCreatedInterface instance.
-     * @param parentPath is the path of the actual excel file to be converted.
-     * @param destPath is the path of the destination pdf file.
+     *
+     * @param parentPath   is the path of the actual excel file to be converted.
+     * @param destPath     is the path of the destination pdf file.
      * @param onPDFCreated is the onPDFCreatedInterface instance.
      */
     public ExcelToPDFAsync(String parentPath, String destPath,

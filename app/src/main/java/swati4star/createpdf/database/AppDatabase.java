@@ -1,9 +1,10 @@
 package swati4star.createpdf.database;
 
+import android.content.Context;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import android.content.Context;
 
 import swati4star.createpdf.util.Constants;
 
@@ -17,7 +18,7 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, Constants.DATABASE_NAME)
+                                    AppDatabase.class, Constants.DATABASE_NAME)
                             .build();
                 }
             }

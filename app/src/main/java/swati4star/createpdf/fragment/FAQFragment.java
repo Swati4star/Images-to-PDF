@@ -3,12 +3,13 @@ package swati4star.createpdf.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +24,13 @@ import swati4star.createpdf.model.FAQItem;
 
 public class FAQFragment extends Fragment implements OnItemClickListener {
 
+    @BindView(R.id.recycler_view_faq)
+    RecyclerView mFAQRecyclerView;
     private FAQAdapter mFaqAdapter;
     private List<FAQItem> mFaqs;
     private List<FAQItem> mFaqsCopy;
     private Context mContext;
     private SearchView mSearchView;
-
-    @BindView(R.id.recycler_view_faq)
-    RecyclerView mFAQRecyclerView;
 
     public FAQFragment() {
         // Required empty public constructor
@@ -42,7 +42,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
 
         View view = inflater.inflate(R.layout.fragment_faq, container, false);
 
-        mSearchView =  view.findViewById(R.id.searchView);
+        mSearchView = view.findViewById(R.id.searchView);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -68,7 +68,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
 
     /**
      * @param text - This is the search text entered in the search box.
-     * Simply filtering out the questions that contains the given search query.
+     *             Simply filtering out the questions that contains the given search query.
      */
     public void filterFaq(String text) {
         mFaqs.clear();
@@ -116,6 +116,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
     /**
      * This method defines the behavior of the FAQItem when clicked.
      * It makes the FAQItem view expanded or contracted.
+     *
      * @param position - view position
      */
     @Override

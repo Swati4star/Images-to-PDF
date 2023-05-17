@@ -15,12 +15,12 @@
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFile"
+            style="@style/MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
             android:maxWidth="30dp"
             android:padding="3dip"
-            style="@style/MorphingButton"
             android:text="@string/merge_file_select"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,8 +29,8 @@
             android:id="@+id/selectedImagesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:gravity="center_horizontal"
+            android:padding="10dp"
             android:text="@string/selected_images_text" />
 
         <com.dd.morphingbutton.MorphingButton
@@ -46,12 +46,12 @@
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/addImages"
+            style="@style/MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
             android:maxWidth="30dp"
             android:padding="3dip"
-            style="@style/MorphingButton"
             android:text="@string/add_images"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -13,55 +13,55 @@
         android:layout_margin="10dp"
         android:gravity="center"
         android:text="@string/storage_location_info"
+        android:textColor="@color/grey"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/grey"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/storagelocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="20dp"
         android:drawablePadding="15dp"
         android:padding="8dp"
-        tools:targetApi="m"
-        android:layout_marginHorizontal="20dp"
         app:drawableStartCompat="@drawable/ic_folder_black_24dp"
-        app:drawableTint="?attr/historyIconColor" />
+        app:drawableTint="?attr/historyIconColor"
+        tools:targetApi="m" />
 
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        tools:targetApi="lollipop">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="2.5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="10dp"
+            android:gravity="center"
+            android:text="@string/settings_info"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:gravity="center"
-            android:orientation="vertical"
-            tools:targetApi="lollipop"
-            android:paddingHorizontal="10dp">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="50dp"
-                android:layout_height="5dp"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="2.5dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginVertical="10dp"
-                android:text="@string/settings_info"
-                android:textAllCaps="false"
-                android:gravity="center"
-                android:textSize="18sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/settings_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginVertical="15dp"
-                android:isScrollContainer="false"
-                android:nestedScrollingEnabled="false" />
-        </LinearLayout>
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="15dp"
+            android:isScrollContainer="false"
+            android:nestedScrollingEnabled="false" />
+    </LinearLayout>
 </LinearLayout>

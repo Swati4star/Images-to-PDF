@@ -31,36 +31,36 @@ public class PDFOptions {
         return mOutFileName;
     }
 
+    public void setOutFileName(String mOutFileName) {
+        this.mOutFileName = mOutFileName;
+    }
+
     public String getPageSize() {
         return mPageSize;
+    }
+
+    public void setPageSize(String mPageSize) {
+        this.mPageSize = mPageSize;
     }
 
     public boolean isPasswordProtected() {
         return mPasswordProtected;
     }
 
-    public String getPassword() {
-        return mPassword;
-    }
-
-    public int getBorderWidth() {
-        return mBorderWidth;
-    }
-
-    public void setOutFileName(String mOutFileName) {
-        this.mOutFileName = mOutFileName;
-    }
-
     public void setPasswordProtected(boolean mPasswordProtected) {
         this.mPasswordProtected = mPasswordProtected;
+    }
+
+    public String getPassword() {
+        return mPassword;
     }
 
     public void setPassword(String mPassword) {
         this.mPassword = mPassword;
     }
 
-    public void setPageSize(String mPageSize) {
-        this.mPageSize = mPageSize;
+    public int getBorderWidth() {
+        return mBorderWidth;
     }
 
     public void setBorderWidth(int mBorderWidth) {

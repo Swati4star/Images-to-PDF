@@ -32,12 +32,46 @@ import swati4star.createpdf.model.Watermark;
 public class WatermarkUtils {
 
     private final Activity mContext;
-    private Watermark mWatermark;
     private final FileUtils mFileUtils;
+    private Watermark mWatermark;
 
     public WatermarkUtils(Activity context) {
         mContext = context;
         mFileUtils = new FileUtils(context);
+    }
+
+    public static int getStyleValueFromName(String name) {
+        switch (name) {
+            case "BOLD":
+                return Font.BOLD;
+            case "ITALIC":
+                return Font.ITALIC;
+            case "UNDERLINE":
+                return Font.UNDERLINE;
+            case "STRIKETHRU":
+                return Font.STRIKETHRU;
+            case "BOLDITALIC":
+                return Font.BOLDITALIC;
+            default:
+                return Font.NORMAL;
+        }
+    }
+
+    public static String getStyleNameFromFont(int font) {
+        switch (font) {
+            case Font.BOLD:
+                return "BOLD";
+            case Font.ITALIC:
+                return "ITALIC";
+            case Font.UNDERLINE:
+                return "UNDERLINE";
+            case Font.STRIKETHRU:
+                return "STRIKETHRU";
+            case Font.BOLDITALIC:
+                return "BOLDITALIC";
+            default:
+                return "NORMAL";
+        }
     }
 
     public void setWatermark(String path, final DataSetChanged dataSetChanged) {
@@ -142,40 +176,6 @@ public class WatermarkUtils {
         reader.close();
         new DatabaseHelper(mContext).insertRecord(finalOutputFile, mContext.getString(R.string.watermarked));
         return finalOutputFile;
-    }
-
-    public static int getStyleValueFromName(String name) {
-        switch (name) {
-            case "BOLD":
-                return Font.BOLD;
-            case "ITALIC":
-                return Font.ITALIC;
-            case "UNDERLINE":
-                return Font.UNDERLINE;
-            case "STRIKETHRU":
-                return Font.STRIKETHRU;
-            case "BOLDITALIC":
-                return Font.BOLDITALIC;
-            default:
-                return Font.NORMAL;
-        }
-    }
-
-    public static String getStyleNameFromFont(int font) {
-        switch (font) {
-            case Font.BOLD:
-                return "BOLD";
-            case Font.ITALIC:
-                return "ITALIC";
-            case Font.UNDERLINE:
-                return "UNDERLINE";
-            case Font.STRIKETHRU:
-                return "STRIKETHRU";
-            case Font.BOLDITALIC:
-                return "BOLDITALIC";
-            default:
-                return "NORMAL";
-        }
     }
 
 }
