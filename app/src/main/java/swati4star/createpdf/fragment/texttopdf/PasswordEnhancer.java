@@ -1,9 +1,10 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,8 +24,8 @@ public class PasswordEnhancer implements Enhancer {
 
     private final Activity mActivity;
     private final EnhancementOptionsEntity mEnhancementOptionsEntity;
-    private TextToPdfContract.View mView;
     private final TextToPDFOptions.Builder mBuilder;
+    private TextToPdfContract.View mView;
 
     PasswordEnhancer(@NonNull final Activity activity,
                      @NonNull final TextToPdfContract.View view,

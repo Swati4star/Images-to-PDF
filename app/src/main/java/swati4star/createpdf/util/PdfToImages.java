@@ -1,5 +1,9 @@
 package swati4star.createpdf.util;
 
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
+import static swati4star.createpdf.util.ImageUtils.saveImage;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,20 +20,16 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
-import static swati4star.createpdf.util.ImageUtils.saveImage;
-
 public class PdfToImages extends AsyncTask<Void, Void, Void> {
 
     private final String mPath;
     private final Uri mUri;
     private final ExtractImagesListener mExtractImagesListener;
+    private final String[] mPassword;
+    private final Context mContext;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
-    private final String[] mPassword;
     private PDFEncryptionUtility mPDFEncryptionUtility;
-    private final Context mContext;
     private String mDecryptedPath;
 
     public PdfToImages(Context context, String[] password, String mPath, Uri mUri,
@@ -65,7 +65,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
             else {
                 if (mUri != null && mContext != null) {
                     // resolve pdf file path based on uri
-                    fileDescriptor =  mContext.getContentResolver().openFileDescriptor(mUri, "r");
+                    fileDescriptor = mContext.getContentResolver().openFileDescriptor(mUri, "r");
                 } else if (mPath != null) {
                     // resolve pdf file path based on relative path
                     fileDescriptor = ParcelFileDescriptor.open(new File(mPath), MODE_READ_ONLY);

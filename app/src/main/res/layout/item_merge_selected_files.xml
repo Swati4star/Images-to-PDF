@@ -22,11 +22,11 @@
     <ImageView
         android:id="@+id/up_file"
         android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:contentDescription="@string/snackbar_viewAction"
-        android:tint="?attr/bottomSheetColor"
-        app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
+        app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
+        app:tint="?attr/bottomSheetColor" />
 
     <ImageView
         android:id="@+id/down_file"
@@ -34,8 +34,8 @@
         android:layout_height="25dp"
         android:layout_margin="4dp"
         android:contentDescription="@string/snackbar_viewAction"
-        android:tint="?attr/bottomSheetColor"
-        app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
+        app:srcCompat="@drawable/ic_arrow_downward_black_24dp"
+        app:tint="?attr/bottomSheetColor" />
 
     <ImageView
         android:id="@+id/view_file"
@@ -43,8 +43,8 @@
         android:layout_height="25dp"
         android:layout_margin="4dp"
         android:contentDescription="@string/snackbar_viewAction"
-        android:tint="?attr/bottomSheetColor"
-        app:srcCompat="@drawable/view_24dp" />
+        app:srcCompat="@drawable/view_24dp"
+        app:tint="?attr/bottomSheetColor" />
 
     <ImageView
         android:id="@+id/remove"
@@ -52,7 +52,7 @@
         android:layout_height="25dp"
         android:layout_margin="4dp"
         android:contentDescription="@string/delete"
-        android:tint="?attr/bottomSheetColor"
-        app:srcCompat="@drawable/ic_close_black_24dp" />
+        app:srcCompat="@drawable/ic_close_black_24dp"
+        app:tint="?attr/bottomSheetColor" />
 
 </LinearLayout>

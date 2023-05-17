@@ -1,5 +1,9 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.appName;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,20 +16,16 @@ import swati4star.createpdf.adapter.ViewFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
-import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.appName;
-
 public class MergeHelper implements MergeFilesListener {
-    private MaterialDialog mMaterialDialog;
     private final Activity mActivity;
     private final FileUtils mFileUtils;
     private final boolean mPasswordProtected = false;
-    private String mPassword;
     private final String mHomePath;
     private final Context mContext;
     private final ViewFilesAdapter mViewFilesAdapter;
     private final SharedPreferences mSharedPrefs;
+    private MaterialDialog mMaterialDialog;
+    private String mPassword;
 
     public MergeHelper(Activity activity, ViewFilesAdapter viewFilesAdapter) {
         mActivity = activity;
@@ -54,14 +54,15 @@ public class MergeHelper implements MergeFilesListener {
                         } else {
                             MaterialDialog.Builder builder = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                             builder.onPositive((dialog12, which) -> new MergePdf(input.toString(),
-                                    mHomePath, mPasswordProtected, mPassword,
-                                    this, masterpwd).execute(pdfpaths))
+                                            mHomePath, mPasswordProtected, mPassword,
+                                            this, masterpwd).execute(pdfpaths))
                                     .onNegative((dialog1, which) -> mergeFiles()).show();
                         }
                     }
                 })
                 .show();
     }
+
     @Override
     public void resetValues(boolean isPDFMerged, String path) {
         mMaterialDialog.dismiss();

@@ -1,7 +1,14 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
+
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 
 import swati4star.createpdf.R;
@@ -20,12 +27,6 @@ import swati4star.createpdf.fragment.SplitFilesFragment;
 import swati4star.createpdf.fragment.ViewFilesFragment;
 import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
-
-import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
-import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
-import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 
 public class FragmentUtils {
 
@@ -102,6 +103,7 @@ public class FragmentUtils {
     /**
      * Checks the arguments of the ViewFilesFragment
      * to determine the name of the fragment.
+     *
      * @param arguments A Bundle containing the args of the fragment.
      * @return The name of the fragment.
      */

@@ -16,10 +16,7 @@ public class FileUriUtils {
     private final String mISMEDIADOC = "com.android.providers.media.documents";
     private final String mISGOOGLEPHOTODOC = "com.google.android.apps.photos.content";
 
-    private FileUriUtils(){}
-
-    private static class SingletonHolder {
-        static final FileUriUtils INSTANCE = new FileUriUtils();
+    private FileUriUtils() {
     }
 
     public static FileUriUtils getInstance() {
@@ -56,7 +53,6 @@ public class FileUriUtils {
         }
         return ret;
     }
-
 
     private String getURIForMediaDoc(ContentResolver mContentResolver, Uri uri) {
         String documentId = DocumentsContract.getDocumentId(uri);
@@ -185,6 +181,7 @@ public class FileUriUtils {
 
     /**
      * Returns absolute path from uri
+     *
      * @param uri - input uri
      * @return - path
      */
@@ -192,7 +189,11 @@ public class FileUriUtils {
         String path = uri.getPath();
         if (path == null)
             return null;
-        path =  path.replace("/document/raw:", "");
+        path = path.replace("/document/raw:", "");
         return path;
+    }
+
+    private static class SingletonHolder {
+        static final FileUriUtils INSTANCE = new FileUriUtils();
     }
 }

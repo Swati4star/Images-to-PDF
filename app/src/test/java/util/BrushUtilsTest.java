@@ -1,5 +1,8 @@
 package util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -7,9 +10,6 @@ import java.util.ArrayList;
 import swati4star.createpdf.R;
 import swati4star.createpdf.model.BrushItem;
 import swati4star.createpdf.util.BrushUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class BrushUtilsTest {
 

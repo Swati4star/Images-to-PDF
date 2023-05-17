@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.pdfExtension;
+
 import android.os.AsyncTask;
 
 import com.itextpdf.text.Document;
@@ -11,26 +13,24 @@ import java.io.FileOutputStream;
 
 import swati4star.createpdf.interfaces.MergeFilesListener;
 
-import static swati4star.createpdf.util.Constants.pdfExtension;
-
 public class MergePdf extends AsyncTask<String, Void, Void> {
 
-    private String mFinPath;
-    private Boolean mIsPDFMerged;
-    private String mFilename;
     private final boolean mIsPasswordProtected;
     private final String mPassword;
     private final String mMasterPwd;
     private final MergeFilesListener mMergeFilesListener;
+    private String mFinPath;
+    private Boolean mIsPDFMerged;
+    private String mFilename;
 
     /**
      * Constructor of MergePDf background task
      *
-     * @param fileName - output file name
+     * @param fileName            - output file name
      * @param isPasswordProtected - true if pdf is password protected
-     * @param password - password entered by user
-     * @param mergeFilesListener - listener object
-     * @param masterpwd - current master password
+     * @param password            - password entered by user
+     * @param mergeFilesListener  - listener object
+     * @param masterpwd           - current master password
      */
     public MergePdf(String fileName, String homePath, boolean isPasswordProtected,
                     String password, MergeFilesListener mergeFilesListener, String masterpwd) {

@@ -1,16 +1,16 @@
 package swati4star.createpdf.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,23 +51,10 @@ import swati4star.createpdf.util.SplitPDFUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
-import static android.app.Activity.RESULT_OK;
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnBackPressedInterface {
 
-    private Activity mActivity;
-    private String mPath;
-    private MorphButtonUtility mMorphButtonUtility;
-    private FileUtils mFileUtils;
-    private SplitPDFUtils mSplitPDFUtils;
-    private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
-    private BottomSheetBehavior mSheetBehavior;
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
@@ -84,6 +77,13 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     TextView splitFilesSuccessText;
     @BindView(R.id.split_config)
     EditText mSplitConfitEditText;
+    private Activity mActivity;
+    private String mPath;
+    private MorphButtonUtility mMorphButtonUtility;
+    private FileUtils mFileUtils;
+    private SplitPDFUtils mSplitPDFUtils;
+    private BottomSheetUtils mBottomSheetUtils;
+    private BottomSheetBehavior mSheetBehavior;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -236,7 +236,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
      ***/
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }

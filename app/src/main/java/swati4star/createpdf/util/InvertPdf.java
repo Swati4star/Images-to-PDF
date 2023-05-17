@@ -1,5 +1,8 @@
 package swati4star.createpdf.util;
 
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+import static swati4star.createpdf.util.Constants.pdfExtension;
+
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 
@@ -17,17 +20,15 @@ import java.io.OutputStream;
 
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-import static swati4star.createpdf.util.Constants.pdfExtension;
-
 public class InvertPdf extends AsyncTask<Void, Void, Void> {
-    private String mPath;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
+    private String mPath;
     private Boolean mIsNewPDFCreated;
 
     /**
      * Invert PDF constructor
-     * @param path - path of input file
+     *
+     * @param path                  - path of input file
      * @param onPDFCreatedInterface - interface implementation to handle pre & post
      */
     public InvertPdf(String path, OnPDFCreatedInterface onPDFCreatedInterface) {
@@ -67,7 +68,7 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
     /**
      * invokes invert method passing stamper as parameter
      *
-     * @param mPath original file path
+     * @param mPath      original file path
      * @param outputPath output file path
      */
     private boolean createPDF(String mPath, String outputPath) {
@@ -89,6 +90,7 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
 
     /**
      * Inverts PDF page by page
+     *
      * @param stamper - PDF stamper
      */
     private void invert(PdfStamper stamper) {
@@ -103,7 +105,7 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
      * under the page for compatibility for all acrobat versions.
      *
      * @param stamper - PDF stamper
-     * @param page - PDF page index
+     * @param page    - PDF page index
      */
     private void invertPage(PdfStamper stamper, int page) {
         Rectangle rect = stamper.getReader().getPageSize(page);

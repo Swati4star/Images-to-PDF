@@ -1,5 +1,10 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
+import static swati4star.createpdf.util.Constants.pdfDirectory;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,11 +20,12 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Rectangle;
@@ -33,18 +39,9 @@ import java.io.FileOutputStream;
 
 import swati4star.createpdf.R;
 
-import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
-import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
-import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
-import static swati4star.createpdf.util.Constants.pdfDirectory;
-
 public class ImageUtils {
 
     public String mImageScaleType;
-
-    private static class SingletonHolder {
-        static final ImageUtils INSTANCE = new ImageUtils();
-    }
 
     public static ImageUtils getInstance() {
         return ImageUtils.SingletonHolder.INSTANCE;
@@ -67,6 +64,70 @@ public class ImageUtils {
         float newHeight = originalHeight - (originalHeight * changeFactor);
 
         return new Rectangle(Math.abs((int) newWidth), Math.abs((int) newHeight));
+    }
+
+    /**
+     * Saves bitmap to external storage
+     *
+     * @param filename    - name of the file
+     * @param finalBitmap - bitmap to save
+     */
+    public static String saveImage(String filename, Bitmap finalBitmap) {
+
+        if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
+            return null;
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + pdfDirectory);
+        String fileName = filename + ".png";
+
+        File file = new File(myDir, fileName);
+        if (file.exists())
+            file.delete();
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            Log.v("saving", fileName);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return myDir + "/" + fileName;
+    }
+
+    /**
+     * Open a dialog to select some Images
+     *
+     * @param frag        the fragment that should receive the Images
+     * @param requestCode the internal request code the fragment uses for image selection
+     */
+    public static void selectImages(Fragment frag, int requestCode) {
+        Matisse.from(frag)
+                .choose(MimeType.ofImage(), false)
+                .countable(true)
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, AUTHORITY_APP))
+                .maxSelectable(1000)
+                .imageEngine(new PicassoEngine())
+                .forResult(requestCode);
+    }
+
+    /**
+     * Checks of the bitmap is just all white pixels
+     *
+     * @param bitmap - input bitmap
+     * @return - true, if bitmap is all white
+     */
+    private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
+        if (bitmap == null)
+            return true;
+        Bitmap whiteBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+        Canvas canvas = new Canvas(whiteBitmap);
+        canvas.drawColor(Color.WHITE);
+        return bitmap.sameAs(whiteBitmap);
     }
 
     /**
@@ -132,7 +193,6 @@ public class ImageUtils {
         return ImageUtils.getInstance().getRoundBitmap(smallBitmap);
     }
 
-
     /**
      * Calculate the inSampleSize value for given bitmap options & image dimensions
      *
@@ -161,7 +221,6 @@ public class ImageUtils {
 
         return inSampleSize;
     }
-
 
     public void showImageScaleTypeDialog(Context context, Boolean saveValue) {
 
@@ -215,67 +274,8 @@ public class ImageUtils {
         return bmpGrayscale;
     }
 
-    /**
-     * Saves bitmap to external storage
-     *
-     * @param filename    - name of the file
-     * @param finalBitmap - bitmap to save
-     */
-    public static String saveImage(String filename, Bitmap finalBitmap) {
-
-        if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
-            return null;
-
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + pdfDirectory);
-        String fileName = filename + ".png";
-
-        File file = new File(myDir, fileName);
-        if (file.exists())
-            file.delete();
-
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            Log.v("saving", fileName);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return myDir + "/" + fileName;
-    }
-
-    /**
-     * Open a dialog to select some Images
-     * @param frag the fragment that should receive the Images
-     * @param requestCode the internal request code the fragment uses for image selection
-     */
-    public static void selectImages(Fragment frag, int requestCode) {
-        Matisse.from(frag)
-                .choose(MimeType.ofImage(), false)
-                .countable(true)
-                .capture(true)
-                .captureStrategy(new CaptureStrategy(true, AUTHORITY_APP))
-                .maxSelectable(1000)
-                .imageEngine(new PicassoEngine())
-                .forResult(requestCode);
-    }
-
-    /**
-     * Checks of the bitmap is just all white pixels
-     *
-     * @param bitmap - input bitmap
-     * @return - true, if bitmap is all white
-     */
-    private static boolean checkIfBitmapIsWhite(Bitmap bitmap) {
-        if (bitmap == null)
-            return true;
-        Bitmap whiteBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-        Canvas canvas = new Canvas(whiteBitmap);
-        canvas.drawColor(Color.WHITE);
-        return bitmap.sameAs(whiteBitmap);
+    private static class SingletonHolder {
+        static final ImageUtils INSTANCE = new ImageUtils();
     }
 
 

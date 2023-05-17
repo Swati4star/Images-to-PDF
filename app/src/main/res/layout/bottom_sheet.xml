@@ -51,17 +51,16 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="220dp"
-        >
+        android:minHeight="220dp">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_progress"
             android:layout_width="96dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            android:layout_gravity="center"
             app:lottie_rawRes="?attr/searchFileRaw"
 
             />

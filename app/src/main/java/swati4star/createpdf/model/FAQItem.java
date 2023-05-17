@@ -8,8 +8,9 @@ public class FAQItem {
 
     /**
      * FAQ Item constructor
+     *
      * @param question - question text
-     * @param answer - answer text
+     * @param answer   - answer text
      */
     public FAQItem(String question, String answer) {
         this.mQuestion = question;

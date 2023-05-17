@@ -1,5 +1,9 @@
 package swati4star.createpdf.activity;
 
+import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
+import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.Constants.SAME_FILE;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +11,15 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -29,21 +34,20 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
-import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
-import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.Constants.SAME_FILE;
-
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
 
+    public static ArrayList<Bitmap> mImages;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.sort)
     Button sortButton;
-
-    public static ArrayList<Bitmap> mImages;
     private RearrangePdfAdapter mRearrangeImagesAdapter;
     private SharedPreferences mSharedPreferences;
     private ArrayList<Integer> mSequence, mInitialSequence;
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, RearrangePdfPages.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +78,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
         mRearrangeImagesAdapter = new RearrangePdfAdapter(this, images, this);
         recyclerView.setAdapter(mRearrangeImagesAdapter);
         mSequence = new ArrayList<>();
-        for ( int i = 0; i < images.size(); i++) {
+        for (int i = 0; i < images.size(); i++) {
             mSequence.add(i + 1);
         }
         mInitialSequence.addAll(mSequence);
@@ -82,6 +86,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
 
     /**
      * Swaps values at given positions
+     *
      * @param pos1 - first value
      * @param pos2 - second value
      */
@@ -134,7 +139,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     private void passUris() {
         Intent returnIntent = new Intent();
         StringBuilder result = new StringBuilder();
-        for ( int x : mSequence)
+        for (int x : mSequence)
             result.append(x).append(",");
         returnIntent.putExtra(RESULT, result.toString());
         boolean sameFile = mInitialSequence.equals(mSequence);
@@ -156,10 +161,6 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static Intent getStartIntent(Context context) {
-        return new Intent(context, RearrangePdfPages.class);
     }
 }
 

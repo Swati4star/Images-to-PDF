@@ -1,23 +1,5 @@
 package swati4star.createpdf.util;
 
-import android.app.Activity;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import com.airbnb.lottie.LottieAnimationView;
-import swati4star.createpdf.R;
-import swati4star.createpdf.adapter.ExtractImagesAdapter;
-import swati4star.createpdf.adapter.MergeFilesAdapter;
-import swati4star.createpdf.model.HomePageItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import static swati4star.createpdf.R.drawable.baseline_crop_rotate_24;
 import static swati4star.createpdf.R.drawable.ic_add_black_24dp;
 import static swati4star.createpdf.R.drawable.ic_branding_watermark_black_24dp;
@@ -104,10 +86,35 @@ import static swati4star.createpdf.R.id.view_history_fav;
 import static swati4star.createpdf.R.id.zip_to_pdf_fav;
 import static swati4star.createpdf.R.string.qr_barcode_pdf;
 
+import android.app.Activity;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.ExtractImagesAdapter;
+import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.model.HomePageItem;
+
 
 public class CommonCodeUtils {
 
     Map<Integer, HomePageItem> mFragmentPositionMap;
+
+    public static CommonCodeUtils getInstance() {
+        return CommonCodeUtils.SingletonHolder.INSTANCE;
+    }
 
     /**
      * updates the output recycler view if paths.size > 0
@@ -132,7 +139,6 @@ public class CommonCodeUtils {
         }
         animationView.setVisibility(View.GONE);
     }
-
 
     /**
      * sets the appropriate text to success Text View & display images in adapter
@@ -236,9 +242,5 @@ public class CommonCodeUtils {
 
     private static class SingletonHolder {
         static final CommonCodeUtils INSTANCE = new CommonCodeUtils();
-    }
-
-    public static CommonCodeUtils getInstance() {
-        return CommonCodeUtils.SingletonHolder.INSTANCE;
     }
 }

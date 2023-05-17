@@ -52,8 +52,8 @@
                 android:layout_gravity="bottom"
                 android:gravity="bottom|center"
                 android:orientation="vertical"
-                tools:targetApi="lollipop"
-                android:paddingHorizontal="10dp">
+                android:paddingHorizontal="10dp"
+                tools:targetApi="lollipop">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="50dp"

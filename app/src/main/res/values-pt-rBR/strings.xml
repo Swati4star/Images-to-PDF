@@ -25,8 +25,8 @@
         <item>Remover senha</item>
         <item>Girar páginas</item>
         <item>Adicione marca d\'água</item>
-    </array>    
- 
+    </array>
+
     <string name="please_wait">Aguarde</string>
     <string name="bundleKey">ImagemUri</string>
     <string name="whatsappToast">Desculpe! As imagens não puderam ser adicionadas. Por favor, selecione as imagens via opção **Selecionar imagens**.</string>
@@ -65,7 +65,7 @@
 
     <!--    Image compression-->
     <string name="compress_image">Compressão de imagem : %s %%</string>
-    <string name="quality_image">Digite % de compressão de imagem :</string>
+    <string name="quality_image">Digite %% de compressão de imagem :</string>
     <string name="invalid_entry">Valor inválido</string>
     <string name="compress_dialog_enter_prompt">Digite aqui</string>
     <string name="compress_dialog_percentage">%</string>
@@ -351,7 +351,7 @@
 
     <!-- Compress PDF -->
     <string name="compress_pdf">Compactar PDF</string>
-    <string name="compress_pdf_prompt">Digite % compressão de PDF : </string>
+    <string name="compress_pdf_prompt">Digite %% compressão de PDF : </string>
     <string name="compress_info">Parabéns! Seu PDF foi compactado: \n Tamanho original do PDF : %1$s \n Tamanho do PDF compactado: %2$s</string>
 
     <!-- PDF to Images string resources-->

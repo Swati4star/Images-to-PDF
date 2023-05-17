@@ -42,9 +42,9 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyle"
             android:visibility="invisible" />
 
     </LinearLayout>

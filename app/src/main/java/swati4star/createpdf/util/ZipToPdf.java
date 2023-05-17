@@ -1,5 +1,8 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.pdfDirectory;
+import static swati4star.createpdf.util.Constants.tempDirectory;
+
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Environment;
@@ -17,16 +20,9 @@ import java.util.zip.ZipInputStream;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 
-import static swati4star.createpdf.util.Constants.pdfDirectory;
-import static swati4star.createpdf.util.Constants.tempDirectory;
-
 public class ZipToPdf {
 
     private static final int BUFFER_SIZE = 4096;
-
-    private static class SingletonHolder {
-        static final ZipToPdf INSTANCE = new ZipToPdf();
-    }
 
     public static ZipToPdf getInstance() {
         return ZipToPdf.SingletonHolder.INSTANCE;
@@ -34,7 +30,8 @@ public class ZipToPdf {
 
     /**
      * Converts zip file to PDF
-     * @param path - path of zip file
+     *
+     * @param path    - path of zip file
      * @param context - current context
      */
     public void convertZipToPDF(String path, Activity context) {
@@ -100,6 +97,10 @@ public class ZipToPdf {
             e.printStackTrace();
             StringUtils.getInstance().showSnackbar(context, R.string.error_open_file);
         }
+    }
+
+    private static class SingletonHolder {
+        static final ZipToPdf INSTANCE = new ZipToPdf();
     }
 
 }

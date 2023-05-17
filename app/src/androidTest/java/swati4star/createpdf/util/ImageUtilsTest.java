@@ -1,8 +1,13 @@
 package swati4star.createpdf.util;
 
 
+import static junit.framework.TestCase.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.itextpdf.text.Rectangle;
@@ -10,10 +15,6 @@ import com.itextpdf.text.Rectangle;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 public class ImageUtilsTest {

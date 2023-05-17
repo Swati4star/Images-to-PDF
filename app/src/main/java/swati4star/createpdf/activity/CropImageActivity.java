@@ -1,11 +1,12 @@
 package swati4star.createpdf.activity;
 
+import static swati4star.createpdf.util.Constants.pdfDirectory;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,26 +14,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.StringUtils;
 
-import static swati4star.createpdf.util.Constants.pdfDirectory;
-
 public class CropImageActivity extends AppCompatActivity {
 
+    private final HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
     private int mCurrentImageIndex = 0;
     private ArrayList<String> mImages;
-    private final HashMap<Integer, Uri> mCroppedImageUris = new HashMap<>();
     private boolean mCurrentImageEdited = false;
     private boolean mFinishedClicked = false;
     private CropImageView mCropImageView;
@@ -100,7 +103,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     public void nextImageClicked() {
-        if ( mImages.size() == 0)
+        if (mImages.size() == 0)
             return;
 
         if (!mCurrentImageEdited) {
@@ -112,7 +115,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     public void prevImgBtnClicked() {
-        if ( mImages.size() == 0)
+        if (mImages.size() == 0)
             return;
 
         if (!mCurrentImageEdited) {
@@ -168,6 +171,7 @@ public class CropImageActivity extends AppCompatActivity {
 
     /**
      * Set image in crop image view & increment counters
+     *
      * @param index - image index
      */
     private void setImage(int index) {

@@ -1,14 +1,17 @@
 package swati4star.createpdf.adapter;
 
+import static swati4star.createpdf.util.FileUtils.getFileName;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -16,8 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.util.ImageUtils;
-
-import static swati4star.createpdf.util.FileUtils.getFileName;
 
 public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdapter.ViewMergeFilesHolder> {
 
@@ -53,6 +54,10 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
         return mFilePaths == null ? 0 : mFilePaths.size();
     }
 
+    public interface OnFileItemClickedListener {
+        void onFileItemClick(String path);
+    }
+
     public class ViewMergeFilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.fileName)
         TextView mFileName;
@@ -70,9 +75,5 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
             if (getAdapterPosition() < mFilePaths.size())
                 mOnClickListener.onFileItemClick(mFilePaths.get(getAdapterPosition()));
         }
-    }
-
-    public interface OnFileItemClickedListener {
-        void onFileItemClick(String path);
     }
 }

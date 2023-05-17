@@ -24,8 +24,8 @@
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:contentDescription="@string/default_content_description"
-                android:tint="?attr/historyIconColor"
-                app:srcCompat="@drawable/ic_compress_image" />
+                app:srcCompat="@drawable/ic_compress_image"
+                app:tint="?attr/historyIconColor" />
 
             <TextView
                 android:id="@+id/fileName"
@@ -49,8 +49,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="8dp"
+                android:paddingRight="8dp"
                 android:textSize="12sp" />
 
             <TextView

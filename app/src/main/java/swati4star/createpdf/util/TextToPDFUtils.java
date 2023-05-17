@@ -1,5 +1,9 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.appName;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -20,10 +24,6 @@ import java.io.IOException;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.model.TextToPDFOptions;
-
-import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.appName;
 
 public class TextToPDFUtils {
 

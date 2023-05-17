@@ -15,7 +15,7 @@ class PopulateBottomSheetList extends AsyncTask<Void, Void, ArrayList<String>> {
     private final DirectoryUtils mDirectoryUtils;
 
     PopulateBottomSheetList(BottomSheetPopulate listener,
-                                   DirectoryUtils directoryUtils) {
+                            DirectoryUtils directoryUtils) {
         mOnLoadListener = listener;
         mDirectoryUtils = directoryUtils;
     }
