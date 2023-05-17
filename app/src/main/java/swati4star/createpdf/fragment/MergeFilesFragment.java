@@ -218,7 +218,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     @OnClick(R.id.selectFiles)
     void startAddingPDF(View v) {
-        startActivityForResult(mFileUtils.getFileChooser(),
+        startActivityForResult(mFileUtils.getMultipleFileChooser(),
                 INTENT_REQUEST_PICK_FILE_CODE);
     }
 
@@ -248,17 +248,34 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 .show();
     }
 
+    /**
+     * get data intent after selecting single or multiple files
+     * get uri from data of intent and convert it to absolute path
+     * add absolute path to mFilePaths list
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null || resultCode != RESULT_OK || data.getData() == null)
+        if (data == null || resultCode != RESULT_OK || ( data.getData() == null && data.getClipData() == null ) )
             return;
         if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
             //Getting Absolute Path
-            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
-            mFilePaths.add(path);
-            mMergeSelectedFilesAdapter.notifyDataSetChanged();
-            StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
-            if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
-                setMorphingButtonState(true);
+            if (null != data.getClipData()) {
+                for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                    String path = RealPathUtil.getInstance().getRealPath(getContext(),
+                            data.getClipData().getItemAt(i).getUri());
+                    mFilePaths.add(path);
+                    mMergeSelectedFilesAdapter.notifyDataSetChanged();
+                    StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
+                    if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
+                        setMorphingButtonState(true);
+                }
+            } else {
+                String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
+                mFilePaths.add(path);
+                mMergeSelectedFilesAdapter.notifyDataSetChanged();
+                StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
+                if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
+                    setMorphingButtonState(true);
+            }
         }
     }
 
