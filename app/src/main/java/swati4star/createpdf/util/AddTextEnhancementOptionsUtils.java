@@ -15,6 +15,10 @@ public class AddTextEnhancementOptionsUtils {
 
     }
 
+    public static AddTextEnhancementOptionsUtils getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
     public ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
                                                                      String fontTitle,
                                                                      Font.FontFamily fontFamily) {
@@ -31,10 +35,6 @@ public class AddTextEnhancementOptionsUtils {
 
     private static class SingletonHolder {
         static final AddTextEnhancementOptionsUtils INSTANCE = new AddTextEnhancementOptionsUtils();
-    }
-
-    public static AddTextEnhancementOptionsUtils getInstance() {
-        return SingletonHolder.INSTANCE;
     }
 
 }

@@ -19,6 +19,7 @@ interface IFragmentManagement {
      * Handles all back button actions.
      * It returns a boolean that flags if the app should exit or not.
      * If user clicked twice then it returns true. Otherwise it returns false.
+     *
      * @return A should exit flag.
      */
     boolean handleBackPressed();
@@ -26,6 +27,7 @@ interface IFragmentManagement {
     /**
      * Handles the fragment transaction for the selected
      * navigation item.
+     *
      * @param itemId The selected item id.
      * @return true when handled
      */

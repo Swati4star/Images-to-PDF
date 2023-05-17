@@ -1,5 +1,16 @@
 package swati4star.createpdf.fragment;
 
+import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -10,16 +21,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -49,25 +60,14 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.TextToPDFUtils;
 
-import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
-import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
-import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
-
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
-import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
-
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
-    private final String mTempFileName = "scan_result_temp.txt";
-
     private static final int REQUEST_CODE_FOR_QR_CODE = 1;
     private static final int REQUEST_CODE_FOR_BARCODE = 2;
-
+    private final String mTempFileName = "scan_result_temp.txt";
+    @BindView(R.id.scan_qrcode)
+    MyCardView scanQrcode;
+    @BindView(R.id.scan_barcode)
+    MyCardView scanBarcode;
     private SharedPreferences mSharedPreferences;
     private Activity mActivity;
     private MaterialDialog mMaterialDialog;
@@ -75,11 +75,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private FileUtils mFileUtils;
     private Font.FontFamily mFontFamily;
     private int mFontColor;
-
-    @BindView(R.id.scan_qrcode)
-    MyCardView scanQrcode;
-    @BindView(R.id.scan_barcode)
-    MyCardView scanBarcode;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -195,7 +190,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
             int fontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
             fileUtil.createPdfFromTextFile(new TextToPDFOptions(mFilename, PageSizeUtils.mPageSize, false,
-                    "", uri, fontSize, mFontFamily, mFontColor, DEFAULT_PAGE_COLOR),
+                            "", uri, fontSize, mFontFamily, mFontColor, DEFAULT_PAGE_COLOR),
                     Constants.textExtension);
             final String finalMPath = mPath;
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
@@ -260,13 +255,15 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private void requestCameraPermissionForQrCodeScan() {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_FOR_QR_CODE);
     }
+
     private void requestCameraPermissionForBarCodeScan() {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_FOR_BARCODE);
     }
+
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 
 
@@ -294,6 +291,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             }
         }
     }
+
     private void showPermissionDenyDialog(int requestCode) {
         String scanType, permissionType;
         if (requestCode == REQUEST_CODE_FOR_QR_CODE) {

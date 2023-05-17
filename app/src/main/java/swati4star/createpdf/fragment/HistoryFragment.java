@@ -1,11 +1,22 @@
 package swati4star.createpdf.fragment;
 
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.appName;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,12 +24,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -37,14 +42,9 @@ import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
-
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
-
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.appName;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickListener {
 
@@ -158,6 +158,15 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         }
     }
 
+    /***
+     * check runtime permissions for storage and camera
+     ***/
+    private void getRuntimePermissions() {
+        PermissionsUtils.getInstance().requestRuntimePermissions(this,
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
+    }
+
     @SuppressLint("StaticFieldLeak")
     private class LoadHistory extends AsyncTask<String[], Void, Void> {
         private final Context mContext;
@@ -211,14 +220,5 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
             }
             mEmptyStatusLayout.setVisibility(View.VISIBLE);
         }
-    }
-
-    /***
-     * check runtime permissions for storage and camera
-     ***/
-    private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }

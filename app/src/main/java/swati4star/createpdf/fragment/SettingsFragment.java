@@ -1,15 +1,18 @@
 package swati4star.createpdf.fragment;
 
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.appName;
+import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,11 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
 
@@ -27,8 +35,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-//import butterknife.OnClick;
-//import lib.folderpicker.FolderPicker;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.interfaces.OnItemClickListener;
@@ -40,13 +46,6 @@ import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.SharedPreferencesUtil;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
-
-import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
-import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
 
 public class SettingsFragment extends Fragment implements OnItemClickListener {
 

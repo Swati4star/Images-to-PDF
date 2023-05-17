@@ -4,10 +4,7 @@ import android.content.SharedPreferences;
 
 public class SharedPreferencesUtil {
 
-    private SharedPreferencesUtil() { }
-
-    private static class SingletonHolder {
-        static final SharedPreferencesUtil INSTANCE = new SharedPreferencesUtil();
+    private SharedPreferencesUtil() {
     }
 
     public static SharedPreferencesUtil getInstance() {
@@ -16,9 +13,10 @@ public class SharedPreferencesUtil {
 
     /**
      * Set the default Page numbering style
-     * @param editor the {@link SharedPreferences.Editor} to use for editing
+     *
+     * @param editor       the {@link SharedPreferences.Editor} to use for editing
      * @param pageNumStyle the page numbering style as defined in {@link Constants}
-     * @param id the id of the style
+     * @param id           the id of the style
      */
     public void setDefaultPageNumStyle(SharedPreferences.Editor editor, String pageNumStyle, int id) {
         editor.putString(Constants.PREF_PAGE_STYLE, pageNumStyle);
@@ -28,10 +26,15 @@ public class SharedPreferencesUtil {
 
     /**
      * Clear the default Page numbering style
+     *
      * @param editor the {@link SharedPreferences.Editor} to use for editing
      */
     public void clearDefaultPageNumStyle(SharedPreferences.Editor editor) {
         setDefaultPageNumStyle(editor, null, -1);
+    }
+
+    private static class SingletonHolder {
+        static final SharedPreferencesUtil INSTANCE = new SharedPreferencesUtil();
     }
 
 }

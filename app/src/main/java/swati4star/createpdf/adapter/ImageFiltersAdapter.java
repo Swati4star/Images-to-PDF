@@ -3,13 +3,14 @@ package swati4star.createpdf.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
 
     private final ArrayList<FilterItem> mFilterItem;
     private final OnFilterItemClickedListener mOnFilterItemClickedListener;
-    private final Context  mContext;
+    private final Context mContext;
 
     public ImageFiltersAdapter(ArrayList<FilterItem> filterItems, Context context,
                                OnFilterItemClickedListener listener) {
