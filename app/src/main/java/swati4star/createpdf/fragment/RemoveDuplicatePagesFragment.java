@@ -105,16 +105,27 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         startActivityForResult(mFileUtils.getFileChooser(),
                 INTENT_REQUEST_PICKFILE_CODE);
     }
+                
+// Refactor onActivityResult() method to handle possible NullPointerExceptions
+// when accessing data.getData(). Added try-catch blocks to handle exceptions
+// in a better way(imo) to prevent app crashes.
+@Override
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (resultCode != RESULT_OK || data == null || data.getData() == null) {
+        return;
+    }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (data == null || resultCode != RESULT_OK || data.getData() == null)
-            return;
-        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-            //Getting Absolute Path
+    if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+        try {
+            // Attempt to get the real path of the selected file and update the UI
             String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             setTextAndActivateButtons(path);
+        } catch (NullPointerException e) {
+            // If a NullPointerException occurs, log it to the console and continue
+            e.printStackTrace();
         }
     }
+}
 
     //On click remove duplicate button
     @OnClick(R.id.remove)
