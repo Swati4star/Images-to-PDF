@@ -29,7 +29,6 @@ import static swati4star.createpdf.R.id.add_watermark;
 import static swati4star.createpdf.R.id.add_watermark_fav;
 import static swati4star.createpdf.R.id.compress_pdf;
 import static swati4star.createpdf.R.id.compress_pdf_fav;
-import static swati4star.createpdf.R.id.excel_to_pdf;
 import static swati4star.createpdf.R.id.excel_to_pdf_fav;
 import static swati4star.createpdf.R.id.extract_images;
 import static swati4star.createpdf.R.id.extract_images_fav;
@@ -84,7 +83,6 @@ import static swati4star.createpdf.R.id.view_files_fav;
 import static swati4star.createpdf.R.id.view_history;
 import static swati4star.createpdf.R.id.view_history_fav;
 import static swati4star.createpdf.R.id.zip_to_pdf_fav;
-import static swati4star.createpdf.R.string.qr_barcode_pdf;
 
 import android.app.Activity;
 import android.view.View;
@@ -193,9 +191,9 @@ public class CommonCodeUtils {
         addFragmentPosition(homePageItems, R.id.images_to_pdf,
                 images_to_pdf_fav, nav_camera, ic_menu_camera, R.string.images_to_pdf);
         addFragmentPosition(homePageItems, qr_barcode_to_pdf,
-                qr_barcode_to_pdf_fav, nav_qrcode, ic_qrcode_24dp, qr_barcode_pdf);
+                qr_barcode_to_pdf_fav, nav_qrcode, ic_qrcode_24dp, R.string.qr_barcode_pdf);
         addFragmentPosition(homePageItems, R.id.excel_to_pdf,
-                excel_to_pdf_fav, nav_excel_to_pdf, ic_excel, excel_to_pdf);
+                excel_to_pdf_fav, nav_excel_to_pdf, ic_excel, R.string.excel_to_pdf);
         addFragmentPosition(homePageItems, view_files, view_files_fav,
                 nav_gallery, ic_menu_gallery, R.string.viewFiles);
         addFragmentPosition(homePageItems, rotate_pages, rotate_pages_fav,

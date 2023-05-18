@@ -10,8 +10,8 @@ android {
         minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 33
-        versionCode 108
-        versionName "8.8.1"
+        versionCode 109
+        versionName "9.0.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {

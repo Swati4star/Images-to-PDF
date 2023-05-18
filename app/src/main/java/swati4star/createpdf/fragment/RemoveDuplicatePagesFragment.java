@@ -48,8 +48,9 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.StringUtils;
 
-public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
+public class RemoveDuplicatePagesFragment extends Fragment
+        implements MergeFilesAdapter.OnClickListener, FilesListAdapter.OnFileItemClickedListener,
+        BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     BottomSheetBehavior mSheetBehavior;
@@ -79,8 +80,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     private MaterialDialog mMaterialDialog;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_remove_duplicate_pages, container, false);
         ButterKnife.bind(this, rootview);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -102,30 +102,29 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
      */
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
-        startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
-    }
-                
-// Refactor onActivityResult() method to handle possible NullPointerExceptions
-// when accessing data.getData(). Added try-catch blocks to handle exceptions
-// in a better way(imo) to prevent app crashes.
-@Override
-public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (resultCode != RESULT_OK || data == null || data.getData() == null) {
-        return;
+        startActivityForResult(mFileUtils.getFileChooser(), INTENT_REQUEST_PICKFILE_CODE);
     }
 
-    if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-        try {
-            // Attempt to get the real path of the selected file and update the UI
-            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
-            setTextAndActivateButtons(path);
-        } catch (NullPointerException e) {
-            // If a NullPointerException occurs, log it to the console and continue
-            e.printStackTrace();
+    // Refactor onActivityResult() method to handle possible NullPointerExceptions
+// when accessing data.getData(). Added try-catch blocks to handle exceptions
+// in a better way(imo) to prevent app crashes.
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK || data == null || data.getData() == null) {
+            return;
+        }
+
+        if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
+            try {
+                // Attempt to get the real path of the selected file and update the UI
+                String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
+                setTextAndActivateButtons(path);
+            } catch (NullPointerException e) {
+                // If a NullPointerException occurs, log it to the console and continue
+                e.printStackTrace();
+            }
         }
     }
-}
 
     //On click remove duplicate button
     @OnClick(R.id.remove)
@@ -140,14 +139,12 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
-        mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, removeDuplicateButton);
+        mMorphButtonUtility.setTextAndActivateButtons(path, selectFileButton, removeDuplicateButton);
     }
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
@@ -191,9 +188,9 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
             return;
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
-        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_duplicate_removed)
-                .setAction(R.string.snackbar_viewAction,
-                        v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
+        StringUtils.getInstance().getSnackbarwithAction(mActivity,
+                        R.string.snackbar_duplicate_removed)
+                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
         viewPdfButton(path);
         resetValues();
     }
@@ -212,8 +209,6 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
      * check runtime permissions for storage and camera
      ***/
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                WRITE_PERMISSIONS,
-                REQUEST_CODE_FOR_WRITE_PERMISSION);
+        PermissionsUtils.getInstance().requestRuntimePermissions(this, WRITE_PERMISSIONS, REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }
