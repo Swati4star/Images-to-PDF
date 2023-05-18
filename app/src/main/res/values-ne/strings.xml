@@ -40,12 +40,12 @@
     <string name="snackbar_undoAction">पूर्ववत गर्नुहोस्</string>
     <string name="pdf_does_not_exist_message">पीडीएफ अवस्थित छैन।</string>
     <string name="image_rearranging_options">छवि पुन: व्यवस्थित गर्ने विकल्पहरू</string>
-    <string name="filter_file_name">%s_%s.जेपग</string>
-    <string name="compress_image">छवि सङ्कुचन: %s %%</string>
-    <string name="quality_image">छविको %% सङ्कुचन प्रविष्ट गर्नुहोस्:</string>
+    <string name="filter_file_name">%स_%स.जेपग</string>
+    <string name="compress_image">छवि सङ्कुचन: %स %%</string>
+    <string name="quality_image">छविको % सङ्कुचन प्रविष्ट गर्नुहोस्:</string>
     <string name="invalid_entry">अवैध प्रविष्टि</string>
     <string name="compress_dialog_enter_prompt">यहाँ प्रविष्ट गर्नुहोस्</string>
-    <string name="compress_dialog_percentage">%%</string>
+    <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">पूर्वनिर्धारित रूपमा सेट गर्नुहोस्</string>
     <string name="add_margins">मार्जिन थप्नुहोस्</string>
     <string name="top">शीर्ष</string>

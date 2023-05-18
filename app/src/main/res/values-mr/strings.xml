@@ -244,7 +244,7 @@
     <string name="delete_history_message">तुम्हाला नक्की इतिहास हटवायचा आहे का?</string>
     <string name="extract_images">प्रतिमा काढा</string>
     <string name="extract_images_failed">आम्हाला निवडलेल्या पीडीएफ मध्ये कोणतीही प्रतिमा सापडली नाही</string>
-    <string name="extract_images_success">आम्हाला निवडलेल्या पीडीएफ मध्ये %1$d प्रतिमा सापडल्या आहेत. ते रूट डिरेक्टरीमध्ये पीडीएफ फाइल फोल्डरमध्ये सेव्ह केले जातात</string>
+    <string name="extract_images_success">आम्हाला निवडलेल्या पीडीएफ मध्ये %1 $ d प्रतिमा सापडल्या आहेत. ते रूट डिरेक्टरीमध्ये पीडीएफ फाइल फोल्डरमध्ये सेव्ह केले जातात</string>
     <string name="extract_text">मजकूर काढा</string>
     <string name="pdf_selected">पीडीएफ फाइल चयनित</string>
     <string name="file_info">\n फाईलचे नाव : %1$s \n\n मार्ग: %2$s \n\n आकार : %3$s \n\n तारीख सुधारित %4$s</string>
