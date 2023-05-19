@@ -2,18 +2,16 @@ package swati4star.createpdf.activity;
 
 import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
 import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
 import static swati4star.createpdf.util.Constants.THEME_BLACK;
 import static swati4star.createpdf.util.Constants.THEME_DARK;
 import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
 import static swati4star.createpdf.util.Constants.THEME_WHITE;
-import static swati4star.createpdf.util.Constants.VERSION_NAME;
 import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -21,30 +19,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.provider.Settings;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -54,33 +43,26 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-import swati4star.createpdf.BuildConfig;
 import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.interfaces.DialogCallbacks;
 import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
-import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.DirectoryUtils;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
-import swati4star.createpdf.util.WhatsNewUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String WRITE_STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
     private FeedbackUtils mFeedbackUtils;
     private NavigationView mNavigationView;
     private SharedPreferences mSharedPreferences;
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
-
-    private boolean mSettingsActivityOpenedForManageStoragePermission = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,13 +74,10 @@ public class MainActivity extends AppCompatActivity
 
         setThemeOnActivityExclusiveComponents();
 
-        checkAndAskForStoragePermission();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
 
-        // Set navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.app_name, R.string.app_name);
 
@@ -106,19 +85,15 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // initialize values
         initializeValues();
 
         setXMLParsers();
-        // Check for app shortcuts & select default fragment
         Fragment fragment = mFragmentManagement.checkForAppShortcutClicked();
 
-        // Check if  images are received
         handleReceivedImagesIntent(fragment);
 
-        displayFeedBackAndWhatsNew();
+        displayFeedback();
 
-        //check for welcome activity
         openWelcomeActivity();
     }
 
@@ -135,9 +110,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * A method for the feedback and whats new dialogs.
+     * A method for the feedback dialogs.
      */
-    private void displayFeedBackAndWhatsNew() {
+    private void displayFeedback() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int count = mSharedPreferences.getInt(LAUNCH_COUNT, 0);
         if (count > 0 && count % 15 == 0) {
@@ -145,12 +120,6 @@ public class MainActivity extends AppCompatActivity
         }
         if (count != -1) {
             mSharedPreferences.edit().putInt(LAUNCH_COUNT, count + 1).apply();
-        }
-
-        String versionName = mSharedPreferences.getString(VERSION_NAME, "");
-        if (versionName != null && !versionName.equals(BuildConfig.VERSION_NAME)) {
-            WhatsNewUtils.getInstance().displayDialog(this);
-            mSharedPreferences.edit().putString(VERSION_NAME, BuildConfig.VERSION_NAME).apply();
         }
     }
 
@@ -292,19 +261,16 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setCheckedItem(id);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
 
         if (Build.VERSION.SDK_INT >= 30) { // Above Android 11
-
             if (!Environment.isExternalStorageManager())
                 requestStoragePermission_API30AndAbove(false);
-
-        } else // Below Android 11
+        } else { // Below Android 11
             checkStoragePermission_BelowAPI30();
-
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -320,6 +286,7 @@ public class MainActivity extends AppCompatActivity
                         )
         );
     }
+
     private void openOSSettingsForPermissionRequest_BelowAPI30() {
         mPermissionFromSettingLauncher.launch(
                 new Intent()
@@ -327,6 +294,7 @@ public class MainActivity extends AppCompatActivity
                         .setData(Uri.fromParts("package", MainActivity.this.getPackageName(), null))
         );
     }
+
     private void requestStoragePermission_API30AndAbove(boolean giveExplanation) {
         DialogUtils.showChoiceDialog(
                 this,
@@ -351,6 +319,7 @@ public class MainActivity extends AppCompatActivity
                         // On Re-try button clicked
                         openOSSettingsForPermissionRequest_API30AndAbove();
                     }
+
                     @RequiresApi(api = Build.VERSION_CODES.R)
                     @Override
                     public void onNegativeButtonClick() {
@@ -359,10 +328,13 @@ public class MainActivity extends AppCompatActivity
                             // On Deny button clicked
                         else requestStoragePermission_API30AndAbove(true);
                     }
+
                     @Override
-                    public void onNeutralButtonClick() { }
+                    public void onNeutralButtonClick() {
+                    }
                 });
     }
+
     private void explainPermissionRequestAfterDenial_BelowAPI30() {
         boolean neverAskAgainChecked = !shouldShowRequestPermissionRationale(WRITE_STORAGE_PERMISSION);
         DialogUtils.showChoiceDialog(
@@ -382,21 +354,26 @@ public class MainActivity extends AppCompatActivity
                             // On Re-try button clicked
                         else mPermissionLauncher.launch(WRITE_STORAGE_PERMISSION);
                     }
+
                     @Override
                     public void onNegativeButtonClick() {
                         // On I'm sure button clicked
                         finish();
                     }
+
                     @Override
-                    public void onNeutralButtonClick() { }
+                    public void onNeutralButtonClick() {
+                    }
                 });
 
     }
 
     private void checkStoragePermission_BelowAPI30() {
         if (ContextCompat.checkSelfPermission(MainActivity.this, WRITE_STORAGE_PERMISSION) ==
-                PackageManager.PERMISSION_DENIED) mPermissionLauncher.launch(WRITE_STORAGE_PERMISSION);
+                PackageManager.PERMISSION_DENIED)
+            mPermissionLauncher.launch(WRITE_STORAGE_PERMISSION);
     }
+
     private final ActivityResultLauncher<String> mPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(),
                     isGranted -> {
@@ -404,7 +381,8 @@ public class MainActivity extends AppCompatActivity
                     });
 
     private final ActivityResultLauncher<Intent> mPermissionFromSettingLauncher =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> { });
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            });
 
 
     /**

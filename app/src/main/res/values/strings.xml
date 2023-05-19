@@ -207,7 +207,7 @@
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
     <string name="feedback_text">Kindly write your precious feedback, or just drop a Hi! :)</string>
     <string name="snackbar_no_email_clients">There are no email clients installed.</string>
-    <string name="feedback_chooser">"Send mail…"</string>
+    <string name="feedback_chooser">Send mail…</string>
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
     <string name="view_files_text">View all your converted files here!</string>
@@ -288,7 +288,7 @@
     <!-- Text to PDF   -->
     <string name="text_to_pdf">Text To PDF</string>
     <string name="text_file_selected">Text File Selected</string>
-    <string name="select_file">"Select a File to Upload"</string>
+    <string name="select_file">Select a File to Upload</string>
     <string name="text_type" translatable="false">text/plain</string>
     <string name="new_directory">New Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
