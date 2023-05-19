@@ -56,7 +56,6 @@ import swati4star.createpdf.fragment.ZipToPdfFragment;
 import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
 import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FragmentUtils;
-import swati4star.createpdf.util.WhatsNewUtils;
 
 /**
  * This is a fragment service that manages the fragments
@@ -241,9 +240,6 @@ public class FragmentManagement implements IFragmentManagement {
             case R.id.nav_zip_to_pdf:
                 fragment = new ZipToPdfFragment();
                 break;
-            case R.id.nav_whatsNew:
-                WhatsNewUtils.getInstance().displayDialog(mContext);
-                break;
             case R.id.nav_rateus:
                 mFeedbackUtils.openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
                 break;
@@ -266,10 +262,9 @@ public class FragmentManagement implements IFragmentManagement {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // if help or share or what's new is clicked then return false, as we don't want
+        // if help or share is clicked then return false, as we don't want
         // them to be selected
-        return itemId != R.id.nav_share && itemId != R.id.nav_help
-                && itemId != R.id.nav_whatsNew;
+        return itemId != R.id.nav_share && itemId != R.id.nav_help;
     }
 
     /**

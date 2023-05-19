@@ -1,24 +1,15 @@
 package swati4star.createpdf.util;
 
-import static swati4star.createpdf.util.Constants.READ_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
-
-import swati4star.createpdf.R;
+import androidx.fragment.app.Fragment;
 
 /**
  * !! IMPORTANT !!

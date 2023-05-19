@@ -69,7 +69,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private boolean mClicked = true;
     private boolean mClickedFilter = false;
     private boolean mDoodleSelected = false;
-
     private PhotoEditor mPhotoEditor;
 
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
@@ -81,7 +80,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // Set selected theme
         ThemeUtils.getInstance().setThemeApp(this);
 
         super.onCreate(savedInstanceState);
@@ -95,7 +93,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     private void initValues() {
-
         // Extract images
         mFilterUris = getIntent().getStringArrayListExtra(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
@@ -113,20 +110,16 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 .setPinchTextScalable(true)
                 .build();
         doodleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mPhotoEditor.setBrushSize(progress);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
         mPhotoEditor.setBrushSize(30);
         mPhotoEditor.setBrushDrawingMode(false);
     }
