@@ -15,7 +15,7 @@ class PopulateBottomSheetListWithExcelFiles extends AsyncTask<Void, Void, ArrayL
     private final DirectoryUtils mDirectoryUtils;
 
     PopulateBottomSheetListWithExcelFiles(BottomSheetPopulate listener,
-                            DirectoryUtils directoryUtils) {
+                                          DirectoryUtils directoryUtils) {
         mOnLoadListener = listener;
         mDirectoryUtils = directoryUtils;
     }

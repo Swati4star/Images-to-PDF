@@ -1,13 +1,33 @@
 package swati4star.createpdf.providers.fragmentmanagement;
 
+import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
+import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
+import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
+import static swati4star.createpdf.util.Constants.ADD_IMAGES;
+import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
+import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
+import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
+
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.navigation.NavigationView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
@@ -38,24 +58,6 @@ import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.FragmentUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
 
-import static swati4star.createpdf.util.Constants.ACTION_MERGE_PDF;
-import static swati4star.createpdf.util.Constants.ACTION_SELECT_IMAGES;
-import static swati4star.createpdf.util.Constants.ACTION_TEXT_TO_PDF;
-import static swati4star.createpdf.util.Constants.ACTION_VIEW_FILES;
-import static swati4star.createpdf.util.Constants.ADD_IMAGES;
-import static swati4star.createpdf.util.Constants.ADD_PWD;
-import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
-import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
-import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
-import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PWd;
-import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
-import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
-
 /**
  * This is a fragment service that manages the fragments
  * mainly for the MainActivity.
@@ -63,9 +65,9 @@ import static swati4star.createpdf.util.Constants.SHOW_WELCOME_ACT;
 public class FragmentManagement implements IFragmentManagement {
     private final FragmentActivity mContext;
     private final NavigationView mNavigationView;
-    private boolean mDoubleBackToExitPressedOnce = false;
     private final FeedbackUtils mFeedbackUtils;
     private final FragmentUtils mFragmentUtils;
+    private boolean mDoubleBackToExitPressedOnce = false;
 
     public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
         mContext = context;
@@ -283,8 +285,8 @@ public class FragmentManagement implements IFragmentManagement {
     }
 
     /**
-     *  Back stack count will be 1 when we open a item from favourite menu
-     *  on clicking back, return back to fav menu and change title
+     * Back stack count will be 1 when we open a item from favourite menu
+     * on clicking back, return back to fav menu and change title
      */
     private void handleBackStackEntry() {
         int count = mContext.getSupportFragmentManager().getBackStackEntryCount();

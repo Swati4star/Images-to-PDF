@@ -1,5 +1,16 @@
 package swati4star.createpdf.activity;
 
+import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
+import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.THEME_BLACK;
+import static swati4star.createpdf.util.Constants.THEME_DARK;
+import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
+import static swati4star.createpdf.util.Constants.THEME_WHITE;
+import static swati4star.createpdf.util.Constants.VERSION_NAME;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,24 +21,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.provider.Settings;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -36,21 +46,11 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
 import swati4star.createpdf.util.Constants;
-import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.DirectoryUtils;
+import swati4star.createpdf.util.FeedbackUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.ThemeUtils;
 import swati4star.createpdf.util.WhatsNewUtils;
-
-import static swati4star.createpdf.util.Constants.IS_WELCOME_ACTIVITY_SHOWN;
-import static swati4star.createpdf.util.Constants.LAUNCH_COUNT;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.THEME_BLACK;
-import static swati4star.createpdf.util.Constants.THEME_DARK;
-import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
-import static swati4star.createpdf.util.Constants.THEME_WHITE;
-import static swati4star.createpdf.util.Constants.VERSION_NAME;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Set suitable xml parsers for reading .docx files.
      */
-    private  void setXMLParsers() {
+    private void setXMLParsers() {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory",
                 "com.fasterxml.aalto.stax.InputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory",
@@ -291,11 +291,12 @@ public class MainActivity extends AppCompatActivity
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 
     @Override
+    @SuppressLint("MissingSuperCall")
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(this, grantResults,
                 requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::askStorageManagerPermission);
@@ -368,6 +369,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Sets fragment title
+     *
      * @param title - string resource id
      */
     private void setTitleFragment(int title) {

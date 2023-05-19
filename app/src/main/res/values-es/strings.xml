@@ -109,7 +109,7 @@
     <string name="filter_images_Text">Filtrar Imágenes</string>
     <string name="nextimage_contentdesc">Siguiente Imagen</string>
     <string name="compress_image">Compresión de Imagen : %s %%</string>
-    <string name="quality_image">Ingrese % de compresión de imagen :</string>
+    <string name="quality_image">Ingrese %% de compresión de imagen :</string>
     <string name="invalid_entry">Entrada inválida</string>
     <string name="compress_dialog_enter_prompt">Ingrese aquí</string>
     <string name="compress_dialog_percentage">%</string>

@@ -17,22 +17,22 @@
 
         <RadioButton
             android:id="@+id/deg90"
-            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/degree_90"/>
+            android:checked="true"
+            android:text="@string/degree_90" />
 
         <RadioButton
             android:id="@+id/deg180"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/degree_180"/>
+            android:text="@string/degree_180" />
 
         <RadioButton
             android:id="@+id/deg270"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/degree_270"/>
+            android:text="@string/degree_270" />
     </RadioGroup>
 
 </LinearLayout>

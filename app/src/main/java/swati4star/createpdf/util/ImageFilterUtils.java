@@ -13,10 +13,6 @@ public class ImageFilterUtils {
     public ImageFilterUtils() {
     }
 
-    private static class SingletonHolder {
-        static final ImageFilterUtils INSTANCE = new ImageFilterUtils();
-    }
-
     public static ImageFilterUtils getInstance() {
         return ImageFilterUtils.SingletonHolder.INSTANCE;
     }
@@ -73,5 +69,9 @@ public class ImageFilterUtils {
                 context.getString(R.string.filter_vig), PhotoFilter.VIGNETTE));
 
         return items;
+    }
+
+    private static class SingletonHolder {
+        static final ImageFilterUtils INSTANCE = new ImageFilterUtils();
     }
 }

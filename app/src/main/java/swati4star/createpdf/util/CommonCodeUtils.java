@@ -1,23 +1,5 @@
 package swati4star.createpdf.util;
 
-import android.app.Activity;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import com.airbnb.lottie.LottieAnimationView;
-import swati4star.createpdf.R;
-import swati4star.createpdf.adapter.ExtractImagesAdapter;
-import swati4star.createpdf.adapter.MergeFilesAdapter;
-import swati4star.createpdf.model.HomePageItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import static swati4star.createpdf.R.drawable.baseline_crop_rotate_24;
 import static swati4star.createpdf.R.drawable.ic_add_black_24dp;
 import static swati4star.createpdf.R.drawable.ic_branding_watermark_black_24dp;
@@ -47,7 +29,6 @@ import static swati4star.createpdf.R.id.add_watermark;
 import static swati4star.createpdf.R.id.add_watermark_fav;
 import static swati4star.createpdf.R.id.compress_pdf;
 import static swati4star.createpdf.R.id.compress_pdf_fav;
-import static swati4star.createpdf.R.id.excel_to_pdf;
 import static swati4star.createpdf.R.id.excel_to_pdf_fav;
 import static swati4star.createpdf.R.id.extract_images;
 import static swati4star.createpdf.R.id.extract_images_fav;
@@ -102,12 +83,36 @@ import static swati4star.createpdf.R.id.view_files_fav;
 import static swati4star.createpdf.R.id.view_history;
 import static swati4star.createpdf.R.id.view_history_fav;
 import static swati4star.createpdf.R.id.zip_to_pdf_fav;
-import static swati4star.createpdf.R.string.qr_barcode_pdf;
+
+import android.app.Activity;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import swati4star.createpdf.R;
+import swati4star.createpdf.adapter.ExtractImagesAdapter;
+import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.model.HomePageItem;
 
 
 public class CommonCodeUtils {
 
     Map<Integer, HomePageItem> mFragmentPositionMap;
+
+    public static CommonCodeUtils getInstance() {
+        return CommonCodeUtils.SingletonHolder.INSTANCE;
+    }
 
     /**
      * updates the output recycler view if paths.size > 0
@@ -132,7 +137,6 @@ public class CommonCodeUtils {
         }
         animationView.setVisibility(View.GONE);
     }
-
 
     /**
      * sets the appropriate text to success Text View & display images in adapter
@@ -187,9 +191,9 @@ public class CommonCodeUtils {
         addFragmentPosition(homePageItems, R.id.images_to_pdf,
                 images_to_pdf_fav, nav_camera, ic_menu_camera, R.string.images_to_pdf);
         addFragmentPosition(homePageItems, qr_barcode_to_pdf,
-                qr_barcode_to_pdf_fav, nav_qrcode, ic_qrcode_24dp, qr_barcode_pdf);
+                qr_barcode_to_pdf_fav, nav_qrcode, ic_qrcode_24dp, R.string.qr_barcode_pdf);
         addFragmentPosition(homePageItems, R.id.excel_to_pdf,
-                excel_to_pdf_fav, nav_excel_to_pdf, ic_excel, excel_to_pdf);
+                excel_to_pdf_fav, nav_excel_to_pdf, ic_excel, R.string.excel_to_pdf);
         addFragmentPosition(homePageItems, view_files, view_files_fav,
                 nav_gallery, ic_menu_gallery, R.string.viewFiles);
         addFragmentPosition(homePageItems, rotate_pages, rotate_pages_fav,
@@ -236,9 +240,5 @@ public class CommonCodeUtils {
 
     private static class SingletonHolder {
         static final CommonCodeUtils INSTANCE = new CommonCodeUtils();
-    }
-
-    public static CommonCodeUtils getInstance() {
-        return CommonCodeUtils.SingletonHolder.INSTANCE;
     }
 }

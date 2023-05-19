@@ -1,9 +1,10 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -20,10 +21,10 @@ import swati4star.createpdf.util.StringUtils;
 public class FontSizeEnhancer implements Enhancer {
 
     private final Activity mActivity;
-    private EnhancementOptionsEntity mEnhancementOptionsEntity;
     private final TextToPdfContract.View mView;
     private final TextToPdfPreferences mPreferences;
     private final TextToPDFOptions.Builder mBuilder;
+    private EnhancementOptionsEntity mEnhancementOptionsEntity;
 
     FontSizeEnhancer(@NonNull final Activity activity,
                      @NonNull final TextToPdfContract.View view,

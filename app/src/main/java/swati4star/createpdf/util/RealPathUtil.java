@@ -12,10 +12,6 @@ import android.util.Log;
 
 public class RealPathUtil {
 
-    private static class SingletonHolder {
-        static final RealPathUtil INSTANCE = new RealPathUtil();
-    }
-
     public static RealPathUtil getInstance() {
         return RealPathUtil.SingletonHolder.INSTANCE;
     }
@@ -170,7 +166,7 @@ public class RealPathUtil {
      * @return The value of the _data column, which is typically a file path.
      */
     private String getDataColumn(Context context, Uri uri, String selection,
-                                        String[] selectionArgs) {
+                                 String[] selectionArgs) {
 
         final String column = "_data";
         final String[] projection = {
@@ -188,7 +184,6 @@ public class RealPathUtil {
         }
         return path;
     }
-
 
     /**
      * @param uri The Uri to check.
@@ -225,5 +220,9 @@ public class RealPathUtil {
     private boolean isRawDownloadsDocument(Uri uri) {
         String uriToString = String.valueOf(uri);
         return uriToString.contains("com.android.providers.downloads.documents/document/raw");
+    }
+
+    private static class SingletonHolder {
+        static final RealPathUtil INSTANCE = new RealPathUtil();
     }
 }

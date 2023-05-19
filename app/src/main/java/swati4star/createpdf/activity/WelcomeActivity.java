@@ -2,10 +2,6 @@ package swati4star.createpdf.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +31,24 @@ public class WelcomeActivity extends AppCompatActivity {
     public Button mBtnSkip;
 
     private int[] mLayouts;
+    /**
+     * viewpager change listener
+     */
+    private final ViewPager.OnPageChangeListener mViewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        @Override
+        public void onPageSelected(int position) {
+            addBottomDots(position);
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +92,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     /**
      * Add bottom dots & highlight the given one
+     *
      * @param currentPage - current page to highlight
      */
     private void addBottomDots(int currentPage) {
@@ -93,26 +113,6 @@ public class WelcomeActivity extends AppCompatActivity {
         if (mDots.length > 0)
             mDots[currentPage].setTextColor(colorsActive[currentPage]);
     }
-
-    /**
-     * viewpager change listener
-     */
-    private final ViewPager.OnPageChangeListener mViewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-            addBottomDots(position);
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-        }
-    };
-
 
     /**
      * View pager adapter

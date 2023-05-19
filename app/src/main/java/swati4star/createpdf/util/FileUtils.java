@@ -1,5 +1,10 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
+import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.pdfExtension;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -12,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -25,11 +31,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.util.lambda.Consumer;
 
-import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
-import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.pdfExtension;
-
 public class FileUtils {
 
     private final Activity mContext;
@@ -40,9 +41,44 @@ public class FileUtils {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public enum FileType {
-        e_PDF,
-        e_TXT
+    /**
+     * Extracts file name from the path
+     *
+     * @param path - file path
+     * @return - extracted filename
+     */
+    public static String getFileName(String path) {
+        if (path == null)
+            return null;
+
+        int index = path.lastIndexOf(PATH_SEPERATOR);
+        return index < path.length() ? path.substring(index + 1) : null;
+    }
+
+    /**
+     * Extracts file name from the URI
+     *
+     * @param path - file path
+     * @return - extracted filename without extension
+     */
+    public static String getFileNameWithoutExtension(String path) {
+        if (path == null || path.lastIndexOf(PATH_SEPERATOR) == -1)
+            return path;
+
+        String filename = path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
+        filename = filename.replace(pdfExtension, "");
+
+        return filename;
+    }
+
+    /**
+     * Extracts directory path from full file path
+     *
+     * @param path absolute path of the file
+     * @return absolute path of file directory
+     */
+    public static String getFileDirectoryPath(String path) {
+        return path.substring(0, path.lastIndexOf(PATH_SEPERATOR) + 1);
     }
 
     /**
@@ -108,7 +144,6 @@ public class FileUtils {
      * opens a file in appropriate application
      *
      * @param path - path of the file to be opened
-     *
      */
     public void openFile(String path, FileType fileType) {
         if (path == null) {
@@ -219,47 +254,6 @@ public class FileUtils {
     }
 
     /**
-     * Extracts file name from the path
-     *
-     * @param path - file path
-     * @return - extracted filename
-     */
-    public static String getFileName(String path) {
-        if (path == null)
-            return null;
-
-        int index = path.lastIndexOf(PATH_SEPERATOR);
-        return index < path.length() ? path.substring(index + 1) : null;
-    }
-
-
-    /**
-     * Extracts file name from the URI
-     *
-     * @param path - file path
-     * @return - extracted filename without extension
-     */
-    public static String getFileNameWithoutExtension(String path) {
-        if (path == null || path.lastIndexOf(PATH_SEPERATOR) == -1)
-            return path;
-
-        String filename = path.substring(path.lastIndexOf(PATH_SEPERATOR) + 1);
-        filename = filename.replace(pdfExtension, "");
-
-        return filename;
-    }
-
-    /**
-     * Extracts directory path from full file path
-     *
-     * @param path absolute path of the file
-     * @return absolute path of file directory
-     */
-    public static String getFileDirectoryPath(String path) {
-        return path.substring(0, path.lastIndexOf(PATH_SEPERATOR) + 1);
-    }
-
-    /**
      * Returns name of the last file with "_pdf" suffix.
      *
      * @param filesPath - ArrayList of image paths
@@ -338,6 +332,21 @@ public class FileUtils {
         return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
     }
 
+    /**
+     * Returns file chooser intent that can select multiple files
+     *
+     * @return - intent
+     */
+    public Intent getMultipleFileChooser() {
+        String folderPath = Environment.getExternalStorageDirectory() + "/";
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Uri myUri = Uri.parse(folderPath);
+        intent.setDataAndType(myUri, mContext.getString(R.string.pdf_type));
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        return Intent.createChooser(intent, mContext.getString(R.string.merge_file_select));
+    }
+
     String getUniqueFileName(String fileName) {
         String outputFileName = fileName;
         File file = new File(outputFileName);
@@ -363,9 +372,10 @@ public class FileUtils {
      * Opens a Dialog to select a filename.
      * If the file under that name already exists, an overwrite dialog gets opened.
      * If the overwrite is cancelled, this first dialog gets opened again.
+     *
      * @param preFillName a prefill Name for the file
-     * @param ext the file extension
-     * @param saveMethod the method that should be called when a filename is chosen
+     * @param ext         the file extension
+     * @param saveMethod  the method that should be called when a filename is chosen
      */
     public void openSaveDialog(String preFillName, String ext, Consumer<String> saveMethod) {
 
@@ -386,5 +396,10 @@ public class FileUtils {
                 }
             }
         }).show();
+    }
+
+    public enum FileType {
+        e_PDF,
+        e_TXT
     }
 }

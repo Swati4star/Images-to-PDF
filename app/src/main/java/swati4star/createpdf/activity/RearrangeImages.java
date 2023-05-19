@@ -1,17 +1,21 @@
 package swati4star.createpdf.activity;
 
+import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
+import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -28,9 +32,6 @@ import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ImageSortUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
-import static swati4star.createpdf.util.Constants.CHOICE_REMOVE_IMAGE;
-import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
-
 public class RearrangeImages extends AppCompatActivity implements RearrangeImagesAdapter.OnClickListener {
 
     @BindView(R.id.recyclerView)
@@ -39,6 +40,12 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
     private ArrayList<String> mImages;
     private RearrangeImagesAdapter mRearrangeImagesAdapter;
     private SharedPreferences mSharedPreferences;
+
+    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+        Intent intent = new Intent(context, RearrangeImages.class);
+        intent.putExtra(PREVIEW_IMAGES, uris);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,12 +128,6 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
-        Intent intent = new Intent(context, RearrangeImages.class);
-        intent.putExtra(PREVIEW_IMAGES, uris);
-        return intent;
     }
 
     private void sortImages() {

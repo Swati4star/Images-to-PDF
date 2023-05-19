@@ -1,35 +1,5 @@
 package swati4star.createpdf.fragment;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.preference.PreferenceManager;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.airbnb.lottie.LottieAnimationView;
-
-import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import swati4star.createpdf.R;
-import swati4star.createpdf.activity.FavouritesActivity;
-import swati4star.createpdf.activity.MainActivity;
-import swati4star.createpdf.customviews.MyCardView;
-import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
-import swati4star.createpdf.model.HomePageItem;
-import swati4star.createpdf.util.CommonCodeUtils;
-
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
@@ -65,14 +35,40 @@ import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
 import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
+
+import com.airbnb.lottie.LottieAnimationView;
+
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import swati4star.createpdf.R;
+import swati4star.createpdf.activity.FavouritesActivity;
+import swati4star.createpdf.activity.MainActivity;
+import swati4star.createpdf.customviews.MyCardView;
+import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
+import swati4star.createpdf.model.HomePageItem;
+import swati4star.createpdf.util.CommonCodeUtils;
+
 public class FavouritesFragment extends Fragment
         implements SharedPreferences.OnSharedPreferenceChangeListener,
         View.OnClickListener {
-    private SharedPreferences mSharedpreferences;
-    private boolean mDoesFavouritesExist;
-    private Activity mActivity;
-    private Map<Integer, HomePageItem> mFragmentPositionMap;
-
     @BindView(R.id.images_to_pdf_fav)
     MyCardView pref_img_to_pdf;
     @BindView(R.id.text_to_pdf_fav)
@@ -123,6 +119,10 @@ public class FavouritesFragment extends Fragment
     TextView favouritesText;
     @BindView(R.id.zip_to_pdf_fav)
     MyCardView pref_zip_to_pdf;
+    private SharedPreferences mSharedpreferences;
+    private boolean mDoesFavouritesExist;
+    private Activity mActivity;
+    private Map<Integer, HomePageItem> mFragmentPositionMap;
 
     @Nullable
     @Override
@@ -238,7 +238,7 @@ public class FavouritesFragment extends Fragment
      * This method toggles the visibility of the passed view.
      *
      * @param view - the view, whose visibility is to be modified
-     * @param id - get the preference value using id
+     * @param id   - get the preference value using id
      */
     private void viewVisibility(View view, String id) {
         if (mSharedpreferences.getBoolean(id, false)) {
@@ -372,6 +372,7 @@ public class FavouritesFragment extends Fragment
 
     /**
      * sets the title on action bar
+     *
      * @param title - the string id to be set
      */
     private void setTitleFragment(int title) {

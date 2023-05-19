@@ -1,12 +1,13 @@
 package swati4star.createpdf.adapter;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
      * Inflates the layout view and returns it
      *
      * @param viewGroup - holds view
-     * @param position - view position
+     * @param position  - view position
      * @return FAQViewHolder View
      */
 
@@ -44,8 +45,9 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
     /**
      * Binds the FAQItem with the proper data that it fetches from List
+     *
      * @param viewHolder - holds view
-     * @param position - view position
+     * @param position   - view position
      */
     @Override
     public void onBindViewHolder(@NonNull FAQViewHolder viewHolder, int position) {
@@ -72,6 +74,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
         /**
          * Initializes and binds the view and sets the onClickListener
+         *
          * @param itemView - holds view
          */
         FAQViewHolder(@NonNull View itemView) {
@@ -83,6 +86,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
         /**
          * Defines the onItemClickListener handler
+         *
          * @param view - view
          */
         @Override

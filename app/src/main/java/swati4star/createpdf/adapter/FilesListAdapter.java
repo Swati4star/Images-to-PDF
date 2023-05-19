@@ -1,13 +1,14 @@
 package swati4star.createpdf.adapter;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,10 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
         return mFilePaths == null ? 0 : mFilePaths.size();
     }
 
+    public interface OnFileItemClickedListener {
+        void onFileItemClick(String path);
+    }
+
     public class ViewMergeFilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.fileName)
         TextView mFileName;
@@ -64,9 +69,5 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
         public void onClick(View view) {
             mOnClickListener.onFileItemClick(mFilePaths.get(getAdapterPosition()));
         }
-    }
-
-    public interface OnFileItemClickedListener {
-        void onFileItemClick(String path);
     }
 }

@@ -36,12 +36,12 @@ public class ImageToPDFOptions extends PDFOptions {
         return mQualityString;
     }
 
-    public ArrayList<String> getImagesUri() {
-        return mImagesUri;
-    }
-
     public void setQualityString(String mQualityString) {
         this.mQualityString = mQualityString;
+    }
+
+    public ArrayList<String> getImagesUri() {
+        return mImagesUri;
     }
 
     public void setImagesUri(ArrayList<String> mImagesUri) {
@@ -53,10 +53,6 @@ public class ImageToPDFOptions extends PDFOptions {
         mMarginBottom = bottom;
         mMarginRight = right;
         mMarginLeft = left;
-    }
-
-    public void setMasterPwd(String pwd) {
-        this.mMasterPwd = pwd;
     }
 
     public int getMarginTop() {
@@ -82,6 +78,7 @@ public class ImageToPDFOptions extends PDFOptions {
     public void setImageScaleType(String mImageScaleType) {
         this.mImageScaleType = mImageScaleType;
     }
+
     public String getPageNumStyle() {
         return mPageNumStyle;
     }
@@ -92,5 +89,9 @@ public class ImageToPDFOptions extends PDFOptions {
 
     public String getMasterPwd() {
         return mMasterPwd;
+    }
+
+    public void setMasterPwd(String pwd) {
+        this.mMasterPwd = pwd;
     }
 }

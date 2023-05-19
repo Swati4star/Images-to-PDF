@@ -1,9 +1,10 @@
 package swati4star.createpdf.fragment.texttopdf;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
+
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
@@ -31,7 +32,7 @@ public class FontColorEnhancer implements Enhancer {
         mActivity = activity;
         mPreferences = new TextToPdfPreferences(activity);
         mBuilder = builder;
-        mEnhancementOptionsEntity =  new EnhancementOptionsEntity(
+        mEnhancementOptionsEntity = new EnhancementOptionsEntity(
                 mActivity, R.drawable.ic_color, R.string.font_color);
     }
 

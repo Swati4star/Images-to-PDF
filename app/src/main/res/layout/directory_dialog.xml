@@ -8,10 +8,10 @@
         android:id="@+id/directory_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -19,13 +19,13 @@
         android:id="@+id/directory_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/dialog_dir"
+        android:inputType="text"
         android:labelFor="@id/directory_textView"
         android:padding="10dp"
-        android:hint="@string/dialog_dir"
-        android:textSize="20sp"
-        android:inputType="text" />
+        android:textSize="20sp" />
 
 </LinearLayout>

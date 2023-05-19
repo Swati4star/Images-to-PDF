@@ -1,5 +1,11 @@
 package swati4star.createpdf.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.pdfExtension;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +13,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +24,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
@@ -66,28 +72,12 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.pdfExtension;
-
 public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         BottomSheetPopulate, OnBackPressedInterface, OnItemClickListener {
-    private Activity mActivity;
-    private static String mPdfpath;
-    private String mFontTitle;
-    private static String mTextPath;
-    private FileUtils mFileUtils;
-    private MorphButtonUtility mMorphButtonUtility;
-    private BottomSheetUtils mBottomSheetUtils;
-    private SharedPreferences mSharedPreferences;
-    private boolean mPermissionGranted;
-    private int mFontSize = 0;
     private static final int INTENT_REQUEST_PICK_PDF_FILE_CODE = 10;
     private static final int INTENT_REQUEST_PICK_TEXT_FILE_CODE = 0;
-    private BottomSheetBehavior mSheetBehavior;
-
+    private static String mPdfpath;
+    private static String mTextPath;
     @BindView(R.id.select_pdf_file)
     MorphingButton mSelectPDF;
     @BindView(R.id.select_text_file)
@@ -108,7 +98,15 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     LottieAnimationView mLottieProgress;
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
-
+    private Activity mActivity;
+    private String mFontTitle;
+    private FileUtils mFileUtils;
+    private MorphButtonUtility mMorphButtonUtility;
+    private BottomSheetUtils mBottomSheetUtils;
+    private SharedPreferences mSharedPreferences;
+    private boolean mPermissionGranted;
+    private int mFontSize = 0;
+    private BottomSheetBehavior mSheetBehavior;
     private ArrayList<EnhancementOptionsEntity> mTextEnhancementOptionsEntityArrayList;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private Font.FontFamily mFontFamily;
@@ -315,8 +313,8 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 
     @Override

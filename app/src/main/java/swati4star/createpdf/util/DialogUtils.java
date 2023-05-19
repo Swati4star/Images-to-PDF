@@ -1,5 +1,10 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.ADD_PASSWORD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
+import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +14,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import swati4star.createpdf.R;
 
-import static swati4star.createpdf.util.Constants.ADD_PASSWORD;
-import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
-import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD;
-import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
-
 public class DialogUtils {
 
     private DialogUtils() {
-    }
-
-    private static class SingletonHolder {
-        static final DialogUtils INSTANCE = new DialogUtils();
     }
 
     public static DialogUtils getInstance() {
@@ -29,12 +25,13 @@ public class DialogUtils {
 
     /**
      * Creates a material dialog with `Warning` title
+     *
      * @param activity - activity instance
-     * @param content - content resource id
+     * @param content  - content resource id
      * @return - material dialog builder
      */
     public MaterialDialog.Builder createWarningDialog(Activity activity,
-                                                             int content) {
+                                                      int content) {
         return new MaterialDialog.Builder(activity)
                 .title(R.string.warning)
                 .content(content)
@@ -44,6 +41,7 @@ public class DialogUtils {
 
     /**
      * Creates a material dialog with `warning title` and overwrite message as content
+     *
      * @param activity - activity instance
      * @return - material dialog builder
      */
@@ -57,13 +55,14 @@ public class DialogUtils {
 
     /**
      * Creates a material dialog with given title & content
+     *
      * @param activity - activity instance
-     * @param title - dialog title resource id
-     * @param content - content resource id
+     * @param title    - dialog title resource id
+     * @param content  - content resource id
      * @return - material dialog builder
      */
     public MaterialDialog.Builder createCustomDialog(Activity activity,
-                                                            int title, int content) {
+                                                     int title, int content) {
         return new MaterialDialog.Builder(activity)
                 .title(title)
                 .content(content)
@@ -73,12 +72,13 @@ public class DialogUtils {
 
     /**
      * Creates a material dialog with given title
+     *
      * @param activity - activity instance
-     * @param title - dialog title resource id
+     * @param title    - dialog title resource id
      * @return - material dialog builder
      */
     public MaterialDialog.Builder createCustomDialogWithoutContent(Activity activity,
-                                                            int title) {
+                                                                   int title) {
         return new MaterialDialog.Builder(activity)
                 .title(title)
                 .positiveText(android.R.string.ok)
@@ -87,6 +87,7 @@ public class DialogUtils {
 
     /**
      * Creates dialog with animation
+     *
      * @param activity - activity instance
      * @return - material dialog
      */
@@ -98,8 +99,9 @@ public class DialogUtils {
 
     /**
      * Creates dialog with animation
+     *
      * @param activity - activity instance
-     * @param title - dialog message
+     * @param title    - dialog message
      * @return - material dialog
      */
     public MaterialDialog createCustomAnimationDialog(Activity activity, String title) {
@@ -136,6 +138,10 @@ public class DialogUtils {
                 .positiveText(android.R.string.ok)
                 .build()
                 .show();
+    }
+
+    private static class SingletonHolder {
+        static final DialogUtils INSTANCE = new DialogUtils();
     }
 
 }

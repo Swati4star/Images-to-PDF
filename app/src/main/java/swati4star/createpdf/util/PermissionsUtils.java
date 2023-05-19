@@ -1,5 +1,9 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.READ_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,28 +14,20 @@ import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
-
-import static swati4star.createpdf.util.Constants.READ_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import swati4star.createpdf.R;
 
 /**
  * !! IMPORTANT !!
  * permission arrays are defined in Constants.java file. we have two types of permissions:
- * READ_WRITE_PERMISSIONS and READ_WRITE_CAMERA_PERMISSIONS 
+ * READ_WRITE_PERMISSIONS and READ_WRITE_CAMERA_PERMISSIONS
  * use these constants in project whenever required.
  */
 public class PermissionsUtils {
-
-    private static class SingletonHolder {
-        static final PermissionsUtils INSTANCE = new PermissionsUtils();
-    }
 
     public static PermissionsUtils getInstance() {
         return PermissionsUtils.SingletonHolder.INSTANCE;
@@ -68,7 +64,7 @@ public class PermissionsUtils {
      * @param requestCode permission request code
      */
     public void requestRuntimePermissions(Object context, String[] permissions,
-                                                 int requestCode) {
+                                          int requestCode) {
         if (context instanceof Activity) {
             ActivityCompat.requestPermissions((AppCompatActivity) context,
                     permissions, requestCode);
@@ -81,7 +77,7 @@ public class PermissionsUtils {
      * retrieves context of passed in non-null object, context can be of type
      * AppCompatActivity or Fragment
      *
-     * @param context     can be of type AppCompatActivity or Fragment
+     * @param context can be of type AppCompatActivity or Fragment
      */
     private Context retrieveContext(@NonNull Object context) {
         if (context instanceof AppCompatActivity) {
@@ -94,10 +90,11 @@ public class PermissionsUtils {
     /**
      * Handle a RequestPermissionResult by checking if the first permission is granted
      * and executing a Runnable when permission is granted
-     * @param grantResults the GrantResults Array
+     *
+     * @param grantResults    the GrantResults Array
      * @param requestCode
      * @param expectedRequest
-     * @param whenSuccessful the Runnable to call when permission is granted
+     * @param whenSuccessful  the Runnable to call when permission is granted
      */
     public void handleRequestPermissionsResult(Activity context, @NonNull int[] grantResults,
                                                int requestCode, int expectedRequest, @NonNull Runnable whenSuccessful) {
@@ -147,5 +144,9 @@ public class PermissionsUtils {
                         dialog.dismiss();
                     }).show();
         }
+    }
+
+    private static class SingletonHolder {
+        static final PermissionsUtils INSTANCE = new PermissionsUtils();
     }
 }

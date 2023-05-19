@@ -12,7 +12,14 @@ public class FileSortUtils {
     public final int SIZE_INCREASING_ORDER_INDEX = 2;
     public final int SIZE_DECREASING_ORDER_INDEX = 3;
 
-    private FileSortUtils(){}
+    private FileSortUtils() {
+    }
+
+    public static FileSortUtils getInstance() {
+        return FileSortUtils.SingletonHolder.INSTANCE;
+    }
+
+    // SORTING FUNCTIONS
 
     public void performSortOperation(int option, List<File> pdf) {
         switch (option) {
@@ -30,8 +37,6 @@ public class FileSortUtils {
                 break;
         }
     }
-
-    // SORTING FUNCTIONS
 
     /**
      * Sorts the given file list in increasing alphabetical  order
@@ -71,9 +76,5 @@ public class FileSortUtils {
 
     private static class SingletonHolder {
         static final FileSortUtils INSTANCE = new FileSortUtils();
-    }
-
-    public static FileSortUtils getInstance() {
-        return FileSortUtils.SingletonHolder.INSTANCE;
     }
 }

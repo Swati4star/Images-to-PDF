@@ -15,13 +15,6 @@ public class ImageEnhancementOptionsUtils {
     public ImageEnhancementOptionsUtils() {
     }
 
-    /**
-     * Singleton Implementation
-     */
-    private static class SingletonHolder {
-        private static final ImageEnhancementOptionsUtils INSTANCE = new ImageEnhancementOptionsUtils();
-    }
-
     public static ImageEnhancementOptionsUtils getInstance() {
         return SingletonHolder.INSTANCE;
     }
@@ -84,5 +77,12 @@ public class ImageEnhancementOptionsUtils {
                 context, R.drawable.ic_page_color, R.string.page_color));
 
         return options;
+    }
+
+    /**
+     * Singleton Implementation
+     */
+    private static class SingletonHolder {
+        private static final ImageEnhancementOptionsUtils INSTANCE = new ImageEnhancementOptionsUtils();
     }
 }

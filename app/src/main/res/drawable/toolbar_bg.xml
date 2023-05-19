@@ -2,10 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <gradient android:type="linear"
-                android:startColor="@color/colorPrimary"
+            <gradient
+                android:angle="270"
                 android:endColor="@color/colorPrimaryDark"
-                android:angle="270"/>
+                android:startColor="@color/colorPrimary"
+                android:type="linear" />
         </shape>
     </item>
 </layer-list>

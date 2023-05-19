@@ -88,7 +88,7 @@
     <string name="extras">Extras</string>
     <string name="share">Share</string>
     <string name="help">Help</string>
-    <string name="faqs">FAQ</string>
+    <string name="faqs" translatable="false">FAQ</string>
 
     <!-- images to PDF -->
     <string name="images_to_pdf">Images to PDF</string>
@@ -115,7 +115,7 @@
 
     <!--    Image compression-->
     <string name="compress_image">Image compression : %s %%</string>
-    <string name="quality_image">Enter % compression of image :</string>
+    <string name="quality_image">Enter %% compression of image :</string>
     <string name="invalid_entry">Invalid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
     <string name="compress_dialog_percentage">%</string>
@@ -367,7 +367,7 @@
     <!--  Extract Text-->
     <string name="extract_text">Extract Text</string>
     <string name="pdf_selected">PDF file selected: </string>
-    <string name="file_info">\n  File Name : %1$s \n\n  Path : %2$s \n\n  Size : %3$s \n\n  Date Modified %4$s</string>
+    <string name="file_info" translatable="false">\n  File Name : %1$s \n\n  Path : %2$s \n\n  Size : %3$s \n\n  Date Modified %4$s</string>
 
 
     <!-- Text To PDF   FontFamily-->
@@ -397,7 +397,7 @@
     <!-- Split PDF -->
     <string name="split_pdf">Split PDF</string>
     <string name="split_success">The selected PDF was split successfully. It was split into %1$d PDF(s)</string>
-    <string name="split_info">The PDF will be split into multiple PDFs.Format example: 1&#8211;5,6&#8211;7,8,9</string>
+    <string name="split_info">The PDF will be split into multiple PDFs.\nFormat example: 1&#8211;5, 6&#8211;7, 8, 9</string>
     <string name="error_page_number">Invalid page number</string>
     <string name="error_page_range">Invalid range input</string>
     <string name="error_invalid_input">Invalid input</string>
@@ -415,7 +415,7 @@
 
     <!-- Compress PDF -->
     <string name="compress_pdf">Compress PDF</string>
-    <string name="compress_pdf_prompt">Enter % compression of PDF : </string>
+    <string name="compress_pdf_prompt">Enter %% compression of PDF : </string>
     <string name="compress_info">Congratulations! Your PDF is compressed: \n Original PDF Size : %s \n Compressed PDF Size: %s</string>
 
     <!-- PDF to Images string resources-->
@@ -514,7 +514,7 @@
     <string name="welcome_merge_message">Merge different existing PDF in your phone in one file</string>
     <string name="welcome_viewfiles_title">Viewing the PDF files</string>
     <string name="welcome_viewfiles_message">View, delete, rename, share and add password to your PDF file</string>
-    <string name="welcome_excel_message">Convert your excel files into your most desired PDFs at ease</string>
+    <string name="welcome_excel_message" translatable="false">Convert your excel files into your most desired PDFs at ease</string>
     <string name="skip_text">Skip</string>
     <string name="get_started_title">Get Started!</string>
 
@@ -570,17 +570,17 @@
     <string name="lbl_recently_used">Recently Used Features</string>
 
     <!--  FAQs  -->
-    <string name="faqSearch">Search FAQ</string>
-    <string name="permission_denied_text">Permission Denied</string>
-    <string name="storage_need_rationale_description">Storage permission is needed for proper functioning of app.</string>
-    <string name="storage_need_rationale_for_not_ask_again_flag">\"You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app. \"</string>
-    <string name="enable_from_settings_text">Enable from settings</string>
-    <string name="cancel_text">Cancel</string>
-    <string name="ask_again_text">Ask Again</string>
-    <string name="one_more_thing_text">One more thing!</string>
-    <string name="storage_manager_permission_rationale">In Android 11, you need to allow a special storage permission</string>
-    <string name="close_app_text">Close App</string>
-    <string name="allow_text">Allow</string>
+    <string name="faqSearch" translatable="false">Search FAQ</string>
+    <string name="permission_denied_text" translatable="false">Permission Denied</string>
+    <string name="storage_need_rationale_description" translatable="false">Storage permission is needed for proper functioning of app.</string>
+    <string name="storage_need_rationale_for_not_ask_again_flag" translatable="false">\"You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app. \"</string>
+    <string name="enable_from_settings_text" translatable="false">Enable from settings</string>
+    <string name="cancel_text" translatable="false">Cancel</string>
+    <string name="ask_again_text" translatable="false">Ask Again</string>
+    <string name="one_more_thing_text" translatable="false">One more thing!</string>
+    <string name="storage_manager_permission_rationale" translatable="false">In Android 11, you need to allow a special storage permission</string>
+    <string name="close_app_text" translatable="false">Close App</string>
+    <string name="allow_text" translatable="false">Allow</string>
     <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTRACT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
@@ -588,7 +588,7 @@
         <item>Is there a limit to the image size I can add?#####No, there are no limits. However, we advise to restrict the size to <strong>less than 10MB</strong>. The conversion of multiple large image files take upwards of 10 seconds.</item>
         <item>Can I insert captions in the image after adding?#####No, captions cannot be inserted on images except otherwise edited on the image itself.</item>
         <item>Can I read PDF files using the app?#####No, you cannot as of now. This app does not work as a PDF viewer.</item>
-        <item>Where are the PDF files saved I created using the app?#####The PDF files files created with the app are automatically saved in the folder named PDFfiles on your device storage. \nYou can also change the default location in <strong>Setings</strong> section.</item>
+        <item>Where are the PDF files saved I created using the app?#####The PDF files created with the app are automatically saved in the folder named PDFfiles on your device storage. \nYou can also change the default location in <strong>Setings</strong> section.</item>
         <item>How to change the default storgae location?#####To change the default storage location, \n1) Click the <strong>Hamburger icon</strong> (three horizontal line) at the top-left corner. \n2) Scroll down and click <strong>Settings</strong>. \n3) In the settings page, click the field just beneath the text <strong>Change storage location</strong>. \n4) Open the preferred save location and click the <strong>Select icon</strong> at the top. \nOnce changed, the files created using the app will be stored in the new location.</item>
         <item>How can I share the PDF files that are edited/created using the app?#####You can access and share the PDF files which you have edited/created directly from the app. To share the PDF files, \n1) Click <strong>View Files</strong> option on the homepage. \n2) Select the file(s) you want to share using the checkbox. \n3) Next, click the <strong>More option</strong> (three vertical dots) at the top-right and click <strong>Share</strong>. \n4) Select the desired method to share the files.</item>
         <item>Can I recover the forgotten password of a PDF file using the app?#####No, a lost password cannot be recovered.</item>

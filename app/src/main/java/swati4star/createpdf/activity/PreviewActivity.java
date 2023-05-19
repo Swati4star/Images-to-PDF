@@ -1,13 +1,16 @@
 package swati4star.createpdf.activity;
 
+import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.eftimoff.viewpagertransformers.DepthPageTransformer;
@@ -24,17 +27,20 @@ import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.ImageSortUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
-import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
-
 public class PreviewActivity extends AppCompatActivity implements PreviewImageOptionsAdapter.OnItemClickListener {
 
+    private static final int INTENT_REQUEST_REARRANGE_IMAGE = 1;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-
     private ArrayList<String> mImagesArrayList;
-    private static final int INTENT_REQUEST_REARRANGE_IMAGE = 1;
     private PreviewAdapter mPreviewAdapter;
     private ViewPager mViewPager;
+
+    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+        Intent intent = new Intent(context, PreviewActivity.class);
+        intent.putExtra(PREVIEW_IMAGES, uris);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,11 +148,5 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     @Override
     public void onBackPressed() {
         passUris();
-    }
-
-    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
-        Intent intent = new Intent(context, PreviewActivity.class);
-        intent.putExtra(PREVIEW_IMAGES, uris);
-        return intent;
     }
 }

@@ -1,19 +1,18 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
+import static swati4star.createpdf.util.Constants.pdfDirectory;
+
 import android.app.Activity;
 import android.os.Environment;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.File;
 import java.util.Objects;
-
-//import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
-import static swati4star.createpdf.util.Constants.PATH_SEPERATOR;
-import static swati4star.createpdf.util.Constants.pdfDirectory;
 //import static swati4star.createpdf.util.Constants.pdfDirectory;
 
 /**
@@ -23,10 +22,6 @@ import static swati4star.createpdf.util.Constants.pdfDirectory;
 public class StringUtils {
 
     private StringUtils() {
-    }
-
-    private static class SingletonHolder {
-        static final StringUtils INSTANCE = new StringUtils();
     }
 
     public static StringUtils getInstance() {
@@ -88,8 +83,9 @@ public class StringUtils {
     /**
      * if text is empty according to {@link StringUtils#isEmpty(CharSequence)} returns the default,
      * if text is not empty, parses the text according to {@link Integer#parseInt(String)}
+     *
      * @param text the input text
-     * @param def the default value
+     * @param def  the default value
      * @return the text parsed to an int or the default value
      * @throws NumberFormatException if the text is not empty and not formatted as an int
      */
@@ -98,5 +94,9 @@ public class StringUtils {
             return def;
         else
             return Integer.parseInt(text.toString());
+    }
+
+    private static class SingletonHolder {
+        static final StringUtils INSTANCE = new StringUtils();
     }
 }

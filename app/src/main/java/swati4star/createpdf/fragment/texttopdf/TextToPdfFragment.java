@@ -1,5 +1,9 @@
 package swati4star.createpdf.fragment.texttopdf;
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +11,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dd.morphingbutton.MorphingButton;
@@ -42,31 +47,24 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.TextToPDFUtils;
 import swati4star.createpdf.util.TextToPdfAsync;
 
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         OnTextToPdfInterface, TextToPdfContract.View {
 
-    private Activity mActivity;
-    private FileUtils mFileUtils;
-    private DirectoryUtils mDirectoryUtils;
-
     private final int mFileSelectCode = 0;
-    private Uri mTextFileUri = null;
-    private String mFileExtension;
-    private int mButtonClicked = 0;
-    private MaterialDialog mMaterialDialog;
-    private String mFileNameWithType = null;
-
     @BindView(R.id.enhancement_options_recycle_view_text)
     RecyclerView mTextEnhancementOptionsRecycleView;
     @BindView(R.id.selectFile)
     MorphingButton mSelectFile;
     @BindView(R.id.createtextpdf)
     MorphingButton mCreateTextPdf;
-
+    private Activity mActivity;
+    private FileUtils mFileUtils;
+    private DirectoryUtils mDirectoryUtils;
+    private Uri mTextFileUri = null;
+    private String mFileExtension;
+    private int mButtonClicked = 0;
+    private MaterialDialog mMaterialDialog;
+    private String mFileNameWithType = null;
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private MorphButtonUtility mMorphButtonUtility;
     private String mPath;
@@ -91,7 +89,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
 
     private void addEnhancements() {
         mEnhancerList = new ArrayList<>();
-        for (final Enhancers enhancer: Enhancers.values()) {
+        for (final Enhancers enhancer : Enhancers.values()) {
             mEnhancerList.add(enhancer.getEnhancer(mActivity, this, mBuilder));
         }
     }
@@ -103,7 +101,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         List<EnhancementOptionsEntity> optionsEntityist = new ArrayList<>();
-        for (Enhancer enhancer: mEnhancerList) {
+        for (Enhancer enhancer : mEnhancerList) {
             optionsEntityist.add(enhancer.getEnhancementOptionsEntity());
         }
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, optionsEntityist);

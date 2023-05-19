@@ -1,5 +1,9 @@
 package swati4star.createpdf.util;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static java.util.Arrays.asList;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,14 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class FileSortUtilsTest {
-    private ArrayList<File> mFiles;
     private final FileSortUtils mInstance = FileSortUtils.getInstance();
+    private ArrayList<File> mFiles;
 
     @Before
     public void setup() throws IOException {

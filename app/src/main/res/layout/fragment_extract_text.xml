@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.ExtractTextFragment">
+
     <LinearLayout
         android:id="@+id/buttonLayoutExtract"
         android:layout_width="match_parent"
@@ -30,17 +31,18 @@
             android:text="@string/extract_text" />
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/tv_extract_text_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="40dp"
         android:gravity="center_horizontal"
         android:padding="8dp"
-        android:layout_marginBottom="40dp"
         android:text="@string/excel_tv_view_text"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <include layout="@layout/bottom_sheet" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,10 +1,13 @@
 package swati4star.createpdf.activity;
 
+import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.eftimoff.viewpagertransformers.DepthPageTransformer;
 
@@ -15,9 +18,20 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.PreviewAdapter;
 import swati4star.createpdf.util.ThemeUtils;
 
-import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
-
 public class ImagesPreviewActivity extends AppCompatActivity {
+
+    /**
+     * get start intent for this activity
+     *
+     * @param context - context to start activity from
+     * @param uris    - extra images uri
+     * @return - start intent
+     */
+    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+        Intent intent = new Intent(context, ImagesPreviewActivity.class);
+        intent.putExtra(PREVIEW_IMAGES, uris);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +51,5 @@ public class ImagesPreviewActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-    }
-
-    /**
-     * get start intent for this activity
-     * @param context - context to start activity from
-     * @param uris - extra images uri
-     * @return - start intent
-     */
-    public static Intent getStartIntent(Context context, ArrayList<String>  uris) {
-        Intent intent = new Intent(context, ImagesPreviewActivity.class);
-        intent.putExtra(PREVIEW_IMAGES, uris);
-        return intent;
     }
 }
