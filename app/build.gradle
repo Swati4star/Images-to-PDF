@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "swati4star.createpdf"
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion 21
+        minSdkVersion 23
         multiDexEnabled true
         targetSdkVersion 33
         versionCode 109

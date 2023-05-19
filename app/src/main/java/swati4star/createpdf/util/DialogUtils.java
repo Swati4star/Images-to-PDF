@@ -6,6 +6,7 @@ import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD;
 import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -13,8 +14,19 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.interfaces.DialogCallbacks;
+
+import static swati4star.createpdf.util.Constants.ADD_PASSWORD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
+import static swati4star.createpdf.util.Constants.REMOVE_PASSWORD;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
+
+import androidx.appcompat.app.AlertDialog;
+
 
 public class DialogUtils {
+
+    public static final int EMPTY_STRING = -1;
 
     private DialogUtils() {
     }
@@ -140,6 +152,28 @@ public class DialogUtils {
                 .show();
     }
 
+    public static void showChoiceDialog(
+            Context context,
+            int title,
+            int message,
+            int positiveButtonLabel,
+            int negativeButtonLabel,
+            boolean cancelable,
+            final DialogCallbacks callbacks
+    ) {
+        new AlertDialog.Builder(context)
+            .setTitle(title == EMPTY_STRING ? "" : context.getString(title))
+            .setMessage(message == EMPTY_STRING ? "" : context.getString(message))
+            .setCancelable(cancelable)
+            .setPositiveButton(positiveButtonLabel, (dialog, which) -> {
+                callbacks.onPositiveButtonClick();
+                dialog.dismiss();
+            })
+            .setNegativeButton(negativeButtonLabel, ((dialog, which) -> {
+                callbacks.onNegativeButtonClick();
+                dialog.dismiss();
+            }))
+            .show();
     private static class SingletonHolder {
         static final DialogUtils INSTANCE = new DialogUtils();
     }
