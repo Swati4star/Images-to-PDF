@@ -15,12 +15,12 @@
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/selectFile"
+            style="@style/MorphingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
             android:maxWidth="30dp"
             android:padding="3dip"
-            style="@style/MorphingButton"
             android:text="@string/merge_file_select"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,27 +29,27 @@
             android:id="@+id/infoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
             android:padding="10dp"
-            android:text="@string/compress_pdf_prompt"
-            android:layout_marginHorizontal="24dp"/>
+            android:text="@string/compress_pdf_prompt" />
 
         <EditText
-            android:labelFor="@id/infoText"
             android:id="@+id/pages"
-            android:hint="@string/prompt_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:layout_marginHorizontal="24dp"
+            android:hint="@string/prompt_input"
             android:inputType="number"
-            android:layout_marginHorizontal="24dp"/>
+            android:labelFor="@id/infoText"
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/compressionInfoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:visibility="gone"
-            android:text="@string/compress_info" />
+            android:text="@string/compress_info"
+            android:visibility="gone" />
 
         <com.dd.morphingbutton.MorphingButton
             android:id="@+id/pdfCreate"
@@ -70,10 +70,10 @@
             android:id="@+id/view_pdf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/view_pdf"
             android:layout_margin="16dp"
-            android:visibility="gone"
-            android:background="@color/mb_green"/>
+            android:background="@color/mb_green"
+            android:text="@string/view_pdf"
+            android:visibility="gone" />
 
     </LinearLayout>
 

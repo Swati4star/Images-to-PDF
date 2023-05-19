@@ -1,5 +1,8 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.appName;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -24,16 +27,13 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.DataSetChanged;
 
-import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.appName;
-
 public class PDFEncryptionUtility {
 
     private final Activity mContext;
     private final FileUtils mFileUtils;
     private final MaterialDialog mDialog;
-    private String mPassword;
     private final SharedPreferences mSharedPrefs;
+    private String mPassword;
 
     public PDFEncryptionUtility(Activity context) {
         this.mContext = context;
@@ -185,7 +185,8 @@ public class PDFEncryptionUtility {
 
     /**
      * This function removes the password for encrypted files.
-     * @param file - the path of the actual encrypted file.
+     *
+     * @param file          - the path of the actual encrypted file.
      * @param inputPassword - the password of the encrypted file.
      * @return - output file path
      */

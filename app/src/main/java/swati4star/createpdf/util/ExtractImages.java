@@ -1,5 +1,8 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
+import static swati4star.createpdf.util.ImageUtils.saveImage;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,9 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.ExtractImagesListener;
-
-import static swati4star.createpdf.util.FileUtils.getFileNameWithoutExtension;
-import static swati4star.createpdf.util.ImageUtils.saveImage;
 
 public class ExtractImages extends AsyncTask<Void, Void, Void> {
     private final String mPath;

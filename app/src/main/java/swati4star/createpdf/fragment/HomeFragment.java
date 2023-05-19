@@ -1,17 +1,30 @@
 package swati4star.createpdf.fragment;
 
+import static swati4star.createpdf.util.Constants.ADD_IMAGES;
+import static swati4star.createpdf.util.Constants.ADD_PWD;
+import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
+import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
+import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
+import static swati4star.createpdf.util.Constants.REMOVE_PWd;
+import static swati4star.createpdf.util.Constants.REORDER_PAGES;
+import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.json.JSONException;
 
@@ -32,21 +45,8 @@ import swati4star.createpdf.model.HomePageItem;
 import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.RecentUtil;
 
-import static swati4star.createpdf.util.Constants.ADD_IMAGES;
-import static swati4star.createpdf.util.Constants.ADD_PWD;
-import static swati4star.createpdf.util.Constants.ADD_WATERMARK;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.COMPRESS_PDF;
-import static swati4star.createpdf.util.Constants.EXTRACT_IMAGES;
-import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PAGES;
-import static swati4star.createpdf.util.Constants.REMOVE_PWd;
-import static swati4star.createpdf.util.Constants.REORDER_PAGES;
-import static swati4star.createpdf.util.Constants.ROTATE_PAGES;
-
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private Activity mActivity;
     @BindView(R.id.images_to_pdf)
     MyCardView imagesToPdf;
     @BindView(R.id.qr_barcode_to_pdf)
@@ -93,16 +93,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     MyCardView extractText;
     @BindView(R.id.add_text)
     MyCardView addText;
-
     @BindView(R.id.recent_list)
     RecyclerView recentList;
-
     @BindView(R.id.recent_lbl)
     View recentLabel;
-
     @BindView(R.id.recent_list_lay)
     ViewGroup recentLayout;
-
+    private Activity mActivity;
     private Map<Integer, HomePageItem> mFragmentPositionMap;
     private RecentListAdapter mAdapter;
 
@@ -137,13 +134,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         extractText.setOnClickListener(this);
         addText.setOnClickListener(this);
 
-        mAdapter =  new RecentListAdapter(this);
+        mAdapter = new RecentListAdapter(this);
         recentList.setAdapter(mAdapter);
         return rootview;
     }
 
-    @Override public void onViewCreated(
-        @NonNull final View view, @Nullable final Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(
+            @NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         try {
@@ -297,6 +295,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     /**
      * Highligh navigation drawer item
+     *
      * @param id - item id to be hjighlighted
      */
     private void highlightNavigationDrawerItem(int id) {
@@ -306,6 +305,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     /**
      * Sets the title on action bar
+     *
      * @param title - title of string to be shown
      */
     private void setTitleFragment(int title) {

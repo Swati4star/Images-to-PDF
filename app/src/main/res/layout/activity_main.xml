@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,21 +19,21 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appBarLayout"
-                android:background="@color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                app:elevation="0dp"
-                android:paddingVertical="7.5dp">
+                android:layout_alignParentEnd="true"
+                android:background="@color/transparent"
+                android:paddingVertical="7.5dp"
+                app:elevation="0dp">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleTextAppearance="@style/ToolbarTheme"
                     app:navigationIcon="@drawable/ic_menu"
+                    app:titleTextAppearance="@style/ToolbarTheme"
                     app:titleTextColor="?attr/titleToolbarTextColor" />
             </com.google.android.material.appbar.AppBarLayout>
         </RelativeLayout>
@@ -44,11 +43,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="-55dp"
-            app:cardCornerRadius="30dp"
-            android:paddingTop="20dp"
-            app:cardElevation="0dp"
             android:layout_marginBottom="-30dp"
-            app:contentPaddingBottom="30dp"/>
+            android:paddingTop="20dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="0dp"
+            app:contentPaddingBottom="30dp" />
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -58,10 +57,10 @@
         android:layout_gravity="start"
         android:background="@color/white"
         android:fitsSystemWindows="false"
-        app:itemIconPadding="20dp"
-        app:itemHorizontalPadding="30dp"
         app:headerLayout="@layout/nav_header_main"
         app:itemBackground="@drawable/navigation_item_selected_bg_selector"
+        app:itemHorizontalPadding="30dp"
+        app:itemIconPadding="20dp"
         app:itemIconTint="@drawable/navigation_drawer_icon_tint_selector"
         app:itemTextColor="@drawable/navigation_drawer_text_color_selector"
         app:menu="@menu/activity_main_drawer" />

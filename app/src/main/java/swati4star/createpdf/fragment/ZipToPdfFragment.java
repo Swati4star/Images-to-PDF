@@ -1,18 +1,22 @@
 package swati4star.createpdf.fragment;
 
 
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.dd.morphingbutton.MorphingButton;
 
@@ -25,21 +29,17 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.ResultUtils;
 import swati4star.createpdf.util.ZipToPdf;
 
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 public class ZipToPdfFragment extends Fragment {
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    private String mPath;
-    private Activity mActivity;
-    private boolean mPermissionGranted = false;
-
     @BindView(R.id.selectFile)
     MorphingButton selectFileButton;
     @BindView(R.id.zip_to_pdf)
     MorphingButton convertButton;
     @BindView(R.id.progressBar)
     ProgressBar extractionProgress;
+    private String mPath;
+    private Activity mActivity;
+    private boolean mPermissionGranted = false;
 
     @Nullable
     @Override
@@ -103,9 +103,10 @@ public class ZipToPdfFragment extends Fragment {
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {

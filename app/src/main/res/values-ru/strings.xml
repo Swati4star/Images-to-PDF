@@ -53,7 +53,8 @@
     <!--QR & Barcode Scan-->
     <string name="scan_qrcode">Сканировать QR код</string>
     <string name="scan_barcode">Сканировать штрихкод</string>
-    <string name="qrbarcodes_to_pdf">Создать PDF файл из QR &amp; штрихкода</string>ещё раз<string name="scan_cancelled">Сканирование отменено пользователем</string>
+    <string name="qrbarcodes_to_pdf">Создать PDF файл из QR &amp; штрихкода</string>ещё раз
+    <string name="scan_cancelled">Сканирование отменено пользователем</string>
 
     <!--Snackbar strings -->
     <string name="snackbar_no_duplicate_pdf">Дубликаты страниц не найдены. Новый PDF не создан.</string>
@@ -132,7 +133,7 @@
     <string name="filter_images_Text">Фильтр изображений \n</string>
     <string name="nextimage_contentdesc">Следующее изображение</string>
     <string name="compress_image">Сжатие : %s%%</string>
-    <string name="quality_image">Введите % сжатия изображения :</string>
+    <string name="quality_image">Введите %% сжатия изображения :</string>
     <string name="invalid_entry">Ввод некорректен</string>
     <string name="compress_dialog_enter_prompt">Введите</string>
     <string name="compress_dialog_percentage">%</string>
@@ -461,5 +462,5 @@
     <string name="reordering_pages_dialog">Изменение порядка страниц...</string>
     <string name="delete_alert_singular">Вы хотите удалить выбранный файл?</string>
     <string name="snackbar_files_deleted">Файлы удалены</string>
-  <string name="lbl_recently_used">Недавно использованная особенность</string>
+    <string name="lbl_recently_used">Недавно использованная особенность</string>
 </resources>

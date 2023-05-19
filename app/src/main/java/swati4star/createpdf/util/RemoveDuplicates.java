@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
@@ -16,13 +18,11 @@ import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
-
 public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
-    private String mPath;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
     private final ArrayList<Bitmap> mBitmaps;
     private final StringBuilder mSequence;
+    private String mPath;
     private Boolean mIsNewPDFCreated;
 
     public RemoveDuplicates(String mPath, OnPDFCreatedInterface onPDFCreatedInterface) {
@@ -107,7 +107,7 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void  avoid) {
+    protected void onPostExecute(Void avoid) {
         // execution of result of Long time consuming operation
         super.onPostExecute(avoid);
         mOnPDFCreatedInterface.onPDFCreated(mIsNewPDFCreated, mPath);

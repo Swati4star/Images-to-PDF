@@ -58,6 +58,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="48dp"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal" />
 
 </RelativeLayout>

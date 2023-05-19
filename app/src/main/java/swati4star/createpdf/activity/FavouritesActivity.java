@@ -1,18 +1,5 @@
 package swati4star.createpdf.activity;
 
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-import androidx.appcompat.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import java.util.Objects;
-
-import swati4star.createpdf.R;
-
 import static swati4star.createpdf.util.Constants.ADD_IMAGES_KEY;
 import static swati4star.createpdf.util.Constants.ADD_PASSWORD_KEY;
 import static swati4star.createpdf.util.Constants.ADD_WATERMARK_KEY;
@@ -35,10 +22,24 @@ import static swati4star.createpdf.util.Constants.TEXT_TO_PDF_KEY;
 import static swati4star.createpdf.util.Constants.VIEW_FILES_KEY;
 import static swati4star.createpdf.util.Constants.ZIP_TO_PDF_KEY;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
+
+import java.util.Objects;
+
+import swati4star.createpdf.R;
+
 public class FavouritesActivity extends AppCompatActivity {
 
-    private SharedPreferences mSharedPreferences;
     private final boolean[] mKeyState = new boolean[21];
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

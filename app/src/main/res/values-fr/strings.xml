@@ -84,7 +84,7 @@
     <string name="filter_images_Text">Filtrer les images \n</string>
     <string name="nextimage_contentdesc">Image suivante</string>
     <string name="compress_image">Compression d\'Image : %s%%</string>
-    <string name="quality_image">Entrez % de compression de l\'image :</string>
+    <string name="quality_image">Entrez %% de compression de l\'image :</string>
     <string name="invalid_entry">Entrée non valide</string>
     <string name="error_path_not_found">Désolé, nous ne pouvons pas accéder au fichier à cet endroit</string>
     <!-- Select Images string -->
@@ -199,7 +199,7 @@
     <string name="reorder_pages">Réorganisation de pages</string>
     <string name="share_files">Partager des fichiers</string>
     <string name="compress_pdf">Compresser un PDF</string>
-    <string name="compress_pdf_prompt">Entrez % de compression des fichiers PDF :</string>
+    <string name="compress_pdf_prompt">Entrez %% de compression des fichiers PDF :</string>
     <string name="pdf_removed_from_list">Le PDF a été retiré de la liste.</string>
     <string name="pdf_added_to_list">Le PDF a été ajouté à la liste.</string>
     <string name="select_files">Sélectionnez des fichiers</string>

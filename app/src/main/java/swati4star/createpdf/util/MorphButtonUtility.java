@@ -1,22 +1,22 @@
 package swati4star.createpdf.util;
 
-import android.app.Activity;
-import androidx.annotation.ColorRes;
-import androidx.annotation.DimenRes;
+import static swati4star.createpdf.util.Constants.THEME_BLACK;
+import static swati4star.createpdf.util.Constants.THEME_DARK;
+import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
+import static swati4star.createpdf.util.Constants.THEME_WHITE;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.widget.FrameLayout;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
+
 import com.dd.morphingbutton.MorphingButton;
 
 import swati4star.createpdf.R;
-
-import static swati4star.createpdf.util.Constants.THEME_BLACK;
-import static swati4star.createpdf.util.Constants.THEME_DARK;
-import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
-import static swati4star.createpdf.util.Constants.THEME_WHITE;
 
 public class MorphButtonUtility {
 
@@ -27,6 +27,7 @@ public class MorphButtonUtility {
         mActivity = activity;
         checkDarkMode();
     }
+
     public int integer() {
         return mActivity.getResources().getInteger(R.integer.mb_animation);
     }
@@ -56,6 +57,7 @@ public class MorphButtonUtility {
                 mDarkModeEnabled = (mActivity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
         }
     }
+
     /**
      * Converts morph button ot square shape
      *
@@ -111,6 +113,7 @@ public class MorphButtonUtility {
 
     /**
      * Return morphing button params with default values
+     *
      * @param duration - duration of transition
      * @return - params object
      */
@@ -140,8 +143,9 @@ public class MorphButtonUtility {
         morphToGrey(buttonToDisable, integer());
         buttonToDisable.setEnabled(false);
     }
+
     public void initializeButtonForAddText(MorphingButton pdfButton, MorphingButton textButton,
-                                 MorphingButton buttonToDisable) {
+                                           MorphingButton buttonToDisable) {
         pdfButton.setText(R.string.select_pdf_file);
         textButton.setText(R.string.select_text_file);
         if (mDarkModeEnabled) {

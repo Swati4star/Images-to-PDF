@@ -114,7 +114,7 @@
 
     <!--    Image compression-->
     <string name="compress_image">이미지 압축 : %s %%</string>
-    <string name="quality_image">입력해주세요 % 압축된 이미지 :</string>
+    <string name="quality_image">입력해주세요 %% 압축된 이미지 :</string>
     <string name="invalid_entry">불가능한 입력입니다.</string>
     <string name="compress_dialog_enter_prompt">이 곳에 입력해주세요.</string>
     <string name="compress_dialog_percentage">%</string>

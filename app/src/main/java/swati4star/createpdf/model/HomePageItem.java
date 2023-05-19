@@ -8,8 +8,9 @@ public class HomePageItem {
 
     /**
      * Constructor for home page item
-     * @param iconId - icon drawable id
-     * @param drawableId - drawable id of the Home Page Item
+     *
+     * @param iconId      - icon drawable id
+     * @param drawableId  - drawable id of the Home Page Item
      * @param titleString - title string resource id of home page item
      */
     public HomePageItem(int iconId, int drawableId, int titleString) {

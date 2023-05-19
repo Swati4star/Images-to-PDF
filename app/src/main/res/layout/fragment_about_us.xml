@@ -3,14 +3,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".utilities.AboutUsFragment"
-        android:paddingTop="25dp">
+        android:paddingTop="25dp"
+        tools:context=".utilities.AboutUsFragment">
 
         <ImageView
             android:layout_width="80dp"
@@ -56,7 +57,7 @@
                     android:layout_gravity="center_vertical"
                     android:drawableStart="@drawable/ic_version_white_24dp"
                     android:drawablePadding="15dp"
-                    android:drawableTint="?attr/historyIconColor"
+                    app:drawableTint="?attr/historyIconColor"
                     android:padding="8dp"
                     android:text="@string/version"
                     tools:targetApi="m" />
@@ -76,7 +77,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_person_white_24dp"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/developer"
                 tools:targetApi="m" />
@@ -95,7 +96,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_email_24dp"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/mail"
                 tools:targetApi="m" />
@@ -114,7 +115,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_github"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/github_repo"
                 tools:targetApi="m" />
@@ -133,7 +134,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_people_black_24dp"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/view_contributors"
                 tools:targetApi="m" />
@@ -152,7 +153,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_playstore"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/playstore"
                 tools:targetApi="m" />
@@ -171,7 +172,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_web"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/website"
                 tools:targetApi="m" />
@@ -190,7 +191,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_slack"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/join_slack"
                 tools:targetApi="m" />
@@ -209,7 +210,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/privacy_policy"
                 tools:targetApi="m" />
@@ -228,7 +229,7 @@
                 android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_license"
                 android:drawablePadding="15dp"
-                android:drawableTint="?attr/historyIconColor"
+                app:drawableTint="?attr/historyIconColor"
                 android:padding="8dp"
                 android:text="@string/license"
                 tools:targetApi="m" />

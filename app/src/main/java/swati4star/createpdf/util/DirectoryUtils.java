@@ -1,5 +1,10 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.excelExtension;
+import static swati4star.createpdf.util.Constants.excelWorkbookExtension;
+import static swati4star.createpdf.util.Constants.pdfExtension;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -15,11 +20,6 @@ import java.util.Set;
 
 import swati4star.createpdf.R;
 
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.excelExtension;
-import static swati4star.createpdf.util.Constants.excelWorkbookExtension;
-import static swati4star.createpdf.util.Constants.pdfExtension;
-
 public class DirectoryUtils {
 
     private final Context mContext;
@@ -32,7 +32,26 @@ public class DirectoryUtils {
     }
 
     /**
+     * creates new folder for temp files
+     */
+    public static void makeAndClearTemp() {
+        String dest = Environment.getExternalStorageDirectory().toString() +
+                Constants.pdfDirectory + Constants.tempDirectory;
+        File folder = new File(dest);
+        boolean result = folder.mkdir();
+
+        // clear all the files in it, if any
+        if (result && folder.isDirectory()) {
+            String[] children = folder.list();
+            for (String child : children) {
+                new File(folder, child).delete();
+            }
+        }
+    }
+
+    /**
      * Used to search for PDF matching the search query
+     *
      * @param query - Query from search bar
      * @return ArrayList containing all the pdf files matching the search query
      */
@@ -43,39 +62,40 @@ public class DirectoryUtils {
         for (File pdf : pdfs) {
             String path = pdf.getPath();
             String[] fileName = path.split("/");
-            String pdfName = fileName[fileName.length - 1].replace("pdf" , "");
-            if (checkChar(query , pdfName) == 1) {
+            String pdfName = fileName[fileName.length - 1].replace("pdf", "");
+            if (checkChar(query, pdfName) == 1) {
                 searchResult.add(pdf);
             }
         }
         return searchResult;
     }
 
+    // RETURNING LIST OF FILES OR DIRECTORIES
+
     /**
      * Used in searchPDF to give the closest result to search query
-     * @param query - Query from search bar
+     *
+     * @param query    - Query from search bar
      * @param fileName - name of PDF file
      * @return 1 if the search query and filename has same characters , otherwise 0
      */
-    private int checkChar(String query , String fileName) {
+    private int checkChar(String query, String fileName) {
         query = query.toLowerCase();
         fileName = fileName.toLowerCase();
         Set<Character> q = new HashSet<>();
         Set<Character> f = new HashSet<>();
-        for ( char c : query.toCharArray() ) {
+        for (char c : query.toCharArray()) {
             q.add(c);
         }
-        for ( char c : fileName.toCharArray() ) {
+        for (char c : fileName.toCharArray()) {
             f.add(c);
         }
 
-        if ( q.containsAll(f) || f.containsAll(q) )
+        if (q.containsAll(f) || f.containsAll(q))
             return 1;
 
         return 0;
     }
-
-    // RETURNING LIST OF FILES OR DIRECTORIES
 
     /**
      * Returns pdf files from folder
@@ -110,6 +130,7 @@ public class DirectoryUtils {
 
     /**
      * Checks if a given file is PDF
+     *
      * @param file - input file
      * @return tru - if condition satisfies, else false
      */
@@ -131,6 +152,7 @@ public class DirectoryUtils {
 
     /**
      * get the PDF files stored in directories other than home directory
+     *
      * @return ArrayList of PDF files
      */
     public ArrayList<File> getPdfFromOtherDirectories() {
@@ -142,9 +164,9 @@ public class DirectoryUtils {
         return files;
     }
 
-
     /**
      * gets a list of all the pdf files on the user device
+     *
      * @return - list of file absolute paths
      */
     ArrayList<String> getAllPDFsOnDevice() {
@@ -155,6 +177,7 @@ public class DirectoryUtils {
 
     /**
      * Walks through given dir & sub directory, and append file path to mFilePaths
+     *
      * @param dir - root directory
      */
     private void walkDir(File dir) {
@@ -163,7 +186,8 @@ public class DirectoryUtils {
 
     /**
      * Walks through given dir & sub direc, and append file path to mFilePaths
-     * @param dir - root directory
+     *
+     * @param dir        - root directory
      * @param extensions - a list of file extensions to search for
      */
     private void walkDir(File dir, List<String> extensions) {
@@ -174,7 +198,7 @@ public class DirectoryUtils {
                 if (aListFile.isDirectory()) {
                     walkDir(aListFile, extensions);
                 } else {
-                    for (String extension: extensions) {
+                    for (String extension : extensions) {
                         if (aListFile.getName().endsWith(extension)) {
                             //Do what ever u want
                             mFilePaths.add(aListFile.getAbsolutePath());
@@ -187,29 +211,12 @@ public class DirectoryUtils {
 
     /**
      * gets a list of all the excel files on the user device
+     *
      * @return - list of file absolute paths
      */
     ArrayList<String> getAllExcelDocumentsOnDevice() {
         mFilePaths = new ArrayList<>();
         walkDir(Environment.getExternalStorageDirectory(), Arrays.asList(excelExtension, excelWorkbookExtension));
         return mFilePaths;
-    }
-
-    /**
-     * creates new folder for temp files
-     */
-    public static void makeAndClearTemp() {
-        String dest = Environment.getExternalStorageDirectory().toString() +
-                Constants.pdfDirectory + Constants.tempDirectory;
-        File folder = new File(dest);
-        boolean result = folder.mkdir();
-
-        // clear all the files in it, if any
-        if (result && folder.isDirectory()) {
-            String[] children = folder.list();
-            for (String child : children) {
-                new File(folder, child).delete();
-            }
-        }
     }
 }
