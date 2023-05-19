@@ -33,20 +33,19 @@ android {
         javaMaxHeapSize "4g"
     }
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/LICENSE.txt'
-    }
-    lintOptions {
-        checkReleaseBuilds false
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/NOTICE', 'META-INF/LICENSE', 'META-INF/NOTICE.txt', 'META-INF/LICENSE.txt']
+        }
     }
     testOptions {
         unitTests {
             includeAndroidResources = true
             returnDefaultValues = true
         }
+    }
+    namespace 'swati4star.createpdf'
+    lint {
+        checkReleaseBuilds false
     }
 }
 configurations {
