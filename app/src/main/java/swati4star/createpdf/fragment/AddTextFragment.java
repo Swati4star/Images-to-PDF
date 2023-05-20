@@ -155,34 +155,30 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
 
     @OnClick(R.id.select_pdf_file)
     public void showPdfFileChooser() {
-        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), () -> {
-            try {
-                startActivityForResult(mFileUtils.getFileChooser(),
-                        INTENT_REQUEST_PICK_PDF_FILE_CODE);
-            } catch (android.content.ActivityNotFoundException ex) {
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
-            }
-        });
+        try {
+            startActivityForResult(mFileUtils.getFileChooser(),
+                    INTENT_REQUEST_PICK_PDF_FILE_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
+        }
     }
 
     @OnClick(R.id.select_text_file)
     public void showTextFileChooser() {
-        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), () -> {
-            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setDataAndType(uri, "*/*");
-            String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                    "application/msword", getString(R.string.text_type)};
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            try {
-                startActivityForResult(
-                        Intent.createChooser(intent, String.valueOf(R.string.select_file)),
-                        INTENT_REQUEST_PICK_TEXT_FILE_CODE);
-            } catch (android.content.ActivityNotFoundException ex) {
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
-            }
-        });
+        Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setDataAndType(uri, "*/*");
+        String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/msword", getString(R.string.text_type)};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                    INTENT_REQUEST_PICK_TEXT_FILE_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
+        }
     }
 
     @OnClick(R.id.create_pdf_added_text)

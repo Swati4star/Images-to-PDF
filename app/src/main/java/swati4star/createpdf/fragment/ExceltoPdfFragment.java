@@ -140,20 +140,18 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @OnClick(R.id.select_excel_file)
     public void selectExcelFile() {
         if (!mButtonClicked) {
-            PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), () -> {
-                Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setDataAndType(uri, "*/*");
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    startActivityForResult(
-                            Intent.createChooser(intent, String.valueOf(R.string.select_file)),
-                            mFileSelectCode);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    mStringUtils.showSnackbar(mActivity, R.string.install_file_manager);
-                }
-                mButtonClicked = true;
-            });
+            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setDataAndType(uri, "*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            try {
+                startActivityForResult(
+                        Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                        mFileSelectCode);
+            } catch (android.content.ActivityNotFoundException ex) {
+                mStringUtils.showSnackbar(mActivity, R.string.install_file_manager);
+            }
+            mButtonClicked = true;
         }
     }
 
@@ -163,7 +161,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
      */
     @OnClick(R.id.create_excel_to_pdf)
     public void openExcelToPdf() {
-        openExcelToPdf_();
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::openExcelToPdf_);
     }
 
     private void openExcelToPdf_() {
