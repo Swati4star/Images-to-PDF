@@ -176,11 +176,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      */
     @OnClick(R.id.extract_text)
     public void openExtractText() {
-        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-            openText();
-        } else {
-            getRuntimePermissions();
-        }
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::openText);
     }
 
     private void openText() {

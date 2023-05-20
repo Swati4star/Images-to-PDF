@@ -53,11 +53,7 @@ public class ZipToPdfFragment extends Fragment {
 
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
-        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-            chooseFile();
-        } else {
-            getRuntimePermissions();
-        }
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::chooseFile);
     }
 
     private void chooseFile() {
