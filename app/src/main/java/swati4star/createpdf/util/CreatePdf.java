@@ -99,7 +99,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Rectangle pageSize = new Rectangle(PageSize.getRectangle(mPageSize));
+        Rectangle pageSize = calculatePageSize();
         pageSize.setBackgroundColor(getBaseColor(mPageColor));
         Document document = new Document(pageSize,
                 mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
@@ -228,6 +228,13 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 Color.green(color),
                 Color.blue(color)
         );
+    }
+
+    private Rectangle calculatePageSize() {
+        if (PageSizeUtils.PAGE_SIZE_FIT_SIZE.equals(mPageSize)) {
+            return PageSizeUtils.calculateCommonPageSize(mImagesUri);
+        }
+        return new Rectangle(PageSize.getRectangle(mPageSize));
     }
 }
 

@@ -256,6 +256,7 @@
     <string name="letter" translatable="false">LETTER</string>
     <string name="legal" translatable="false">LEGAL</string>
     <string name="a4" translatable="false">A4</string>
+    <string name="fit_size" translatable="false">Fit size</string>
     <string name="default_page_size">DEFAULT ( %s )</string>
     <string name="master_password_changed">The password seems to be incorrect. May be, you have changed the master password.</string>
 
