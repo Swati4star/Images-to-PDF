@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -116,14 +117,14 @@ public class PermissionsUtils {
             if (Environment.isExternalStorageManager()) {
                 callback.proceed();
             } else {
-                Log.d("SSSTTT", "checkStoragePermissionAndProceed: No permission");
+                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
             }
         } else {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                     PackageManager.PERMISSION_GRANTED) {
                 callback.proceed();
             } else {
-                Log.d("SSSTTT", "checkStoragePermissionAndProceed: No permission");
+                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -100,7 +100,6 @@ import swati4star.createpdf.util.StringUtils;
  */
 public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         OnPDFCreatedInterface {
-    private static final String TAG = "SSSTTT";
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
@@ -218,7 +217,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        Log.d(TAG, "startAddingImages: Here");
         if (!mIsButtonAlreadyClicked) {
             PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), () -> {
                 selectImages();
