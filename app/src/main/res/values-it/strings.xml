@@ -107,10 +107,9 @@
     <string name="snackbar_undoAction"> ripristina </string>
     <string name="pdf_does_not_exist_message"> Il PDF non esiste. </string>
     <string name="image_rearranging_options"> opzioni di riorganizzazione dell\'immagine </string>
-    <string name="filter_file_name">%s_%s.jpg </string>
 
     <!--    Image compression-->
-    <string name="compress_image"> Compressione immagine:%s %% </string>
+    <string name="compress_image">" Compressione immagine: %1$s %% "</string>
     <string name="quality_image"> percentuale di compressione dell\'immagine in ingresso: </string>
     <string name="invalid_entry"> input non valido </string>
     <string name="compress_dialog_enter_prompt"> inserisci qui </string>
@@ -224,7 +223,6 @@
     <string name="file_size_text"> Dimensione file </string>
     <string name="encrypted_file"> _ encrypted.pdf </string>
     <string name="i_have_attached_pdfs_to_this_message"> Ho allegato / i file a questo messaggio </string>
-    <string name="btn_sav_text" translatable="false"> savText </string>
 
     <string name="nextimage_contentdesc"> Immagine successiva </string>
     <string name="decrypted_file"> _ unencrypted.pdf </string>
@@ -246,7 +244,6 @@
     <string name="set_page_size_text"> Imposta dimensioni pagina </string>
     <string name="b0_to_b10"> Da B0 a B10 </string>
     <string name="a0_to_a10"> Da A0 a A10 </string>
-    <string name="legal" translatable="false"> LEGALE </string>
     <string name="default_page_size"> DEFAULT (%s) </string>
     <string name="master_password_changed"> La password sembra non essere corretta. Forse hai cambiato la password principale. </string>
 
@@ -280,7 +277,6 @@
     <string name="text_to_pdf"> Testo in PDF </string>
     <string name="text_file_selected"> File di testo selezionato </string>
     <string name="select_file"> "Seleziona un file da caricare" </string>
-    <string name="text_type" translatable="false"> text / plain </string>
     <string name="new_directory"> Nuova directory </string>
     <string name="previous_image_content_desc"> Immagine precedente </string>
     <string name="text_file_name"> "File di testo:" </string>
@@ -357,17 +353,11 @@
     <!--  Extract Text-->
     <string name="extract_text"> Estrai testo </string>
     <string name="pdf_selected"> File PDF selezionato: </string>
-    <string name="file_info"> \n Nome file:%1$s \n \n Percorso:%2$s \n \n Dimensione:%3$s \n \n Data modifica %4$s </string>
 
 
     <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text"> Famiglia di caratteri (predefinito:%s) </string>
     <string name="font_family_text"> "Famiglia di caratteri:" </string>
-    <string name="courier" translatable="false"> CORRIERE </string>
-    <string name="helvetica" translatable="false"> HELVETICA </string>
-    <string name="times_roman" translatable="false"> TIMES_ROMAN </string>
-    <string name="symbol" translatable="false"> SIMBOLO </string>
-    <string name="zapfdingbats" translatable="false"> ZAPFDINGBATS </string>
     <string name="undefined"> UNDEFINED </string>
     <string name="selected_image"> Immagine selezionata </string>
     <string name="reset"> Reimposta </string>
@@ -438,10 +428,6 @@
     <!--Rotate Pages    -->
     <string name="rotate_pages"> Ruota pagine </string>
     <string name="enter_rotation_angle"> Immettere l\'angolo di rotazione </string>
-    <string name="rotated_file_name" translatable="false">%s_rotated_%s%s </string>
-    <string name="degree_90" translatable="false"> 90 &#xb0; </string>
-    <string name="degree_180" translatable="false"> 180 &#xb0; </string>
-    <string name="degree_270" translatable="false"> 270 &#xb0; </string>
     <string name="share_files"> Condividi file </string>
     <string name="pdf_removed_from_list"> Il PDF è stato rimosso dall\'elenco. </string>
     <string name="pdf_added_to_list"> PDF è stato aggiunto all\'elenco. </string>
@@ -504,7 +490,6 @@
     <string name="welcome_merge_message"> Unisci diversi PDF esistenti nel telefono in un unico file </string>
     <string name="welcome_viewfiles_title"> Visualizzazione dei file PDF </string>
     <string name="welcome_viewfiles_message"> Visualizza, elimina, rinomina, condividi e aggiungi password al tuo file PDF </string>
-    <string name="welcome_excel_message"> Converti facilmente i tuoi file Excel nei tuoi PDF preferiti </string>
     <string name="skip_text"> Salta </string>
     <string name="get_started_title"> Inizia! </string>
 
@@ -553,7 +538,6 @@
     <string name="split_range_alert"> L\'intervallo diviso inserito creerà nuovamente il PDF selezionato! </string>
 
     <!--file name suffix-->
-    <string name="pdf_suffix" translatable="false"> _ pdf </string>
     <string name="reordering_pages_dialog"> Riordino delle tue pagine … </string>
     <string name="delete_alert_singular"> Vuoi eliminare il file selezionato? </string>
     <string name="snackbar_files_deleted"> File eliminati </string>

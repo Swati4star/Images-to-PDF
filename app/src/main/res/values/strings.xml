@@ -111,10 +111,10 @@
     <string name="snackbar_undoAction">Undo</string>
     <string name="pdf_does_not_exist_message">The PDF doesn\'t exist.</string>
     <string name="image_rearranging_options">Image Rearranging Options</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
+    <string name="filter_file_name" translatable="false">%1$s_%2$s.jpg</string>
 
     <!--    Image compression-->
-    <string name="compress_image">Image compression : %s %%</string>
+    <string name="compress_image">Image compression : %1$s %%</string>
     <string name="quality_image">Enter %% compression of image :</string>
     <string name="invalid_entry">Invalid Entry</string>
     <string name="compress_dialog_enter_prompt">Enter here</string>
@@ -571,14 +571,14 @@
 
     <!--  FAQs  -->
     <string name="faqSearch">Search FAQ</string>
-    <string name="manage_storage_permission_alert_dialog_title">Allow app to access files on your device</string>
-    <string name="manage_storage_permission_alert_dialog_positive_button_label">Allow</string>
-    <string name="manage_storage_permission_alert_dialog_negative_button_label">Deny</string>
-    <string name="manage_storage_permission_denied_alert_dialog_title">Permission denied</string>
-    <string name="manage_storage_permission_denied_alert_dialog_message">Without storage permission the app is unable to read files from your device. Are you sure you want to deny this permission?</string>
-    <string name="manage_storage_permission_denied_alert_dialog_positive_button_label">Re-try</string>
-    <string name="manage_storage_permission_denied_alert_dialog_negative_button_label">I\'m sure</string>
-    <string name="manage_storage_permission_denied_with_never_ask_alert_dialog_positive_button_label">Allow from settings</string>
+    <string name="manage_storage_permission_alert_dialog_title" translatable="false">Allow app to access files on your device</string>
+    <string name="manage_storage_permission_alert_dialog_positive_button_label" translatable="false">Allow</string>
+    <string name="manage_storage_permission_alert_dialog_negative_button_label" translatable="false">Deny</string>
+    <string name="manage_storage_permission_denied_alert_dialog_title" translatable="false">Permission denied</string>
+    <string name="manage_storage_permission_denied_alert_dialog_message" translatable="false">Without storage permission the app is unable to read files from your device. Are you sure you want to deny this permission?</string>
+    <string name="manage_storage_permission_denied_alert_dialog_positive_button_label" translatable="false">Re-try</string>
+    <string name="manage_storage_permission_denied_alert_dialog_negative_button_label" translatable="false">I\'m sure</string>
+    <string name="manage_storage_permission_denied_with_never_ask_alert_dialog_positive_button_label" translatable="false">Allow from settings</string>
   
     <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>

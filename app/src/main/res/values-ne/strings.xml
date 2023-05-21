@@ -40,8 +40,6 @@
     <string name="snackbar_undoAction">पूर्ववत गर्नुहोस्</string>
     <string name="pdf_does_not_exist_message">पीडीएफ अवस्थित छैन।</string>
     <string name="image_rearranging_options">छवि पुन: व्यवस्थित गर्ने विकल्पहरू</string>
-    <string name="filter_file_name">%स_%स.जेपग</string>
-    <string name="compress_image">छवि सङ्कुचन: %स %%</string>
     <string name="quality_image">छविको % सङ्कुचन प्रविष्ट गर्नुहोस्:</string>
     <string name="invalid_entry">अवैध प्रविष्टि</string>
     <string name="compress_dialog_enter_prompt">यहाँ प्रविष्ट गर्नुहोस्</string>
@@ -237,7 +235,6 @@
     <string name="extract_images_success">हामीले चयन गरिएको पीडीएफ मा %1$d छवि(हरू) भेट्टायौं। तिनीहरू मूल डाइरेक्टरीमा पीडीएफ फाइल फोल्डरमा बचत गरिएका छन्।</string>
     <string name="extract_text">पाठ निकाल्नुहोस्</string>
     <string name="pdf_selected">पीडीएफ फाइल चयन गरियो:</string>
-    <string name="file_info">\n फाइलको नाम : %1$s \n\n मार्ग : %2$s \n\n साइज : %3$s \n\n परिमार्जन गरिएको मिति %4$s</string>
     <string name="default_font_family_text">फन्ट परिवार (पूर्वनिर्धारित: %s)</string>
     <string name="font_family_text">"फन्ट परिवार:"</string>
     <string name="undefined">अपरिभाषित</string>
@@ -267,6 +264,7 @@
     <string name="compress_pdf">पीडीएफ कम्प्रेस गर्नुहोस्</string>
     <string name="compress_pdf_prompt">पीडीएफ को % कम्प्रेसन प्रविष्ट गर्नुहोस्:</string>
     <string name="compress_info">बधाई छ! तपाईंको पीडीएफ कम्प्रेस गरिएको छ: \n मूल पीडीएफ साइज : %s \n कम्प्रेस गरिएको पीडीएफ साइज: %s</string>
+    <string name="compress_image">Image compression : %1$s %%</string>
     <string name="pdf_to_images">छविहरूमा पीडीएफ</string>
     <string name="create_images">छविहरू सिर्जना गर्नुहोस्</string>
     <string name="select_pdf_file">पीडीएफ फाइल चयन गर्नुहोस्</string>
@@ -340,7 +338,6 @@
     <string name="welcome_merge_message">एक फाइलमा आफ्नो फोनमा अवस्थित विभिन्न पीडीएफ मर्ज गर्नुहोस्</string>
     <string name="welcome_viewfiles_title">पीडीएफ फाइलहरू हेर्दै</string>
     <string name="welcome_viewfiles_message">हेर्नुहोस्, मेटाउनुहोस्, पुन: नामकरण गर्नुहोस्, साझेदारी गर्नुहोस् र तपाईंको पीडीएफ फाइलमा पासवर्ड थप्नुहोस्ं</string>
-    <string name="welcome_excel_message">तपाईको एक्सेल फाईलहरूलाई तपाईको सबैभन्दा मनपर्ने पीडीएफ मा सहजै रूपान्तरण गर्नुहोस्</string>
     <string name="skip_text">छोड्नुहोस्</string>
     <string name="get_started_title">सुरु गर!</string>
     <string name="whatsnew_continue">जारी राख्नुहोस्</string>

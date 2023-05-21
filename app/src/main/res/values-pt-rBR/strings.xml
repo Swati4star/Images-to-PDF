@@ -61,10 +61,9 @@
     <string name="snackbar_undoAction">Desfazer</string>
     <string name="pdf_does_not_exist_message">O PDF não existe.</string>
     <string name="image_rearranging_options">Opções para reordenar imagens</string>
-    <string name="filter_file_name">%1$s_%2$s.jpg</string>
 
     <!--    Image compression-->
-    <string name="compress_image">Compressão de imagem : %s %%</string>
+    <string name="compress_image">Compressão de imagem : %1$s %%</string>
     <string name="quality_image">Digite %% de compressão de imagem :</string>
     <string name="invalid_entry">Valor inválido</string>
     <string name="compress_dialog_enter_prompt">Digite aqui</string>
@@ -308,7 +307,6 @@
     <!--  Extract Text-->
     <string name="extract_text">Extrair texto</string>
     <string name="pdf_selected">Arquivo PDF selecionado: </string>
-    <string name="file_info">\n  Nome do arquivo : %1$s \n\n  Local : %2$s \n\n  Tamanho : %3$s \n\n  Data de modificação %4$s</string>
 
 
     <!-- Text To PDF   FontFamily-->
@@ -446,7 +444,6 @@
     <string name="welcome_merge_message">Agregar diferentes PDFs em seu telefone ao único arquivo</string>
     <string name="welcome_viewfiles_title">Ver os arquivos de PDF</string>
     <string name="welcome_viewfiles_message">Ver, excluir, renomear, compartilhar e adicionar senha ao seu arquivo de PDF</string>
-    <string name="welcome_excel_message">Converta seus arquivos de Excel para PDFs à vontade e com facilidade</string>
     <string name="skip_text">Pular</string>
     <string name="get_started_title">Comece agora!</string>
 

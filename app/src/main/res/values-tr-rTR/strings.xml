@@ -72,10 +72,9 @@
     <string name="snackbar_undoAction">Geri al</string>
     <string name="pdf_does_not_exist_message">PDF mevcut değil.</string>
     <string name="image_rearranging_options">Resim Yeniden Düzenleme Seçenekleri</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
 
     <!--    Image compression-->
-    <string name="compress_image">Resim sıkıştırma : %s %%</string>
+    <string name="compress_image">Resim sıkıştırma : %1$s %%</string>
     <string name="quality_image">Resmin sıkıştırma yüzedesini gir :</string>
     <string name="invalid_entry">Geçersiz Girdi</string>
     <string name="compress_dialog_enter_prompt">Buraya girin</string>
@@ -314,7 +313,6 @@
     <!--  Extract Text-->
     <string name="extract_text">Metin Çıkar</string>
     <string name="pdf_selected">PDF dosyası seçildi:</string>
-    <string name="file_info">\n   Dosya İsmi : %1$s \n\n  Dosya Yolu : %2$s \n\n  Boyut : %3$s \n\n  Tarih Değiştirildi  %4$s"</string>
 
     <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">Yazı Tipi Ailesi (Varsayılan : %s)</string>
@@ -407,6 +405,7 @@
     <string name="theme_white">Aydınlık</string>
     <string name="theme_dark">Karanlık</string>
     <string name="theme_black">Koyu</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">Ana parolayı değiştir</string>
     <string name="current_master_pwd">Her PDF\'yi şifrelemek için şu anki ana parola \"%1$s\". Buradan değiştirebilirsiniz:</string>
 
@@ -446,7 +445,6 @@
     <string name="welcome_extract_images_message">Bir harekette PDF\'lerinizden olası tüm görüntüleri çıkarın</string>
     <string name="welcome_themes_title">Farklı temalar</string>
     <string name="welcome_themes_message">Ayarlar\'a gidin ve üç tür tema arasından seçim yapabilirsiniz: Siyah, Koyu, Beyaz</string>
-    <string name="welcome_excel_message">Excel dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
     <string name="skip_text">Geç</string>
     <string name="get_started_title">Haydi başlayalım!</string>
 
