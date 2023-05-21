@@ -161,11 +161,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
      */
     @OnClick(R.id.selectFile)
     public void selectTextFile() {
-        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-            selectFile();
-        } else {
-            getRuntimePermissions();
-        }
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectFile);
     }
 
     private void selectFile() {

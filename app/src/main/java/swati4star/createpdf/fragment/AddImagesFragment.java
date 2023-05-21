@@ -226,11 +226,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS))
-            selectImages();
-        else {
-            getRuntimePermissions();
-        }
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectImages);
     }
 
     /**

@@ -6,18 +6,15 @@ import static swati4star.createpdf.util.Constants.THEME_BLACK;
 import static swati4star.createpdf.util.Constants.THEME_DARK;
 import static swati4star.createpdf.util.Constants.THEME_SYSTEM;
 import static swati4star.createpdf.util.Constants.THEME_WHITE;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.SparseIntArray;
@@ -33,7 +30,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -127,14 +123,8 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
-        if (Build.VERSION.SDK_INT >= 30) {
-            if (Environment.isExternalStorageManager()) {
-                DirectoryUtils.makeAndClearTemp();
-            }
-        } else {
-            if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-                DirectoryUtils.makeAndClearTemp();
-            }
+        if (PermissionsUtils.getInstance().isStoragePermissionGranted(this)) {
+            DirectoryUtils.makeAndClearTemp();
         }
     }
 
@@ -264,12 +254,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-
-        if (Build.VERSION.SDK_INT >= 30) { // Above Android 11
-            if (!Environment.isExternalStorageManager())
+        if (!PermissionsUtils.getInstance().isStoragePermissionGranted(this)) {
+            if (Build.VERSION.SDK_INT >= 30) { // Above Android 11
                 requestStoragePermission_API30AndAbove(false);
-        } else { // Below Android 11
-            checkStoragePermission_BelowAPI30();
+            } else { // Below Android 11
+                mPermissionLauncher.launch(WRITE_STORAGE_PERMISSION);
+            }
         }
     }
 
@@ -366,12 +356,6 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-    }
-
-    private void checkStoragePermission_BelowAPI30() {
-        if (ContextCompat.checkSelfPermission(MainActivity.this, WRITE_STORAGE_PERMISSION) ==
-                PackageManager.PERMISSION_DENIED)
-            mPermissionLauncher.launch(WRITE_STORAGE_PERMISSION);
     }
 
     private final ActivityResultLauncher<String> mPermissionLauncher =

@@ -1,15 +1,20 @@
 package swati4star.createpdf.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import swati4star.createpdf.interfaces.GenericCallback;
 
 /**
  * !! IMPORTANT !!
@@ -98,5 +103,37 @@ public class PermissionsUtils {
 
     private static class SingletonHolder {
         static final PermissionsUtils INSTANCE = new PermissionsUtils();
+    }
+
+    /**
+     * To check if the app have storage access
+     * Read and write permission or api below 30
+     * Manage storage permission for api above 30
+     */
+
+    public void checkStoragePermissionAndProceed(Context context, final GenericCallback callback) {
+        if (Build.VERSION.SDK_INT >= 30) {
+            if (Environment.isExternalStorageManager()) {
+                callback.proceed();
+            } else {
+                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                callback.proceed();
+            } else {
+                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public boolean isStoragePermissionGranted(Context context) {
+        if (Build.VERSION.SDK_INT >= 30) {
+            return Environment.isExternalStorageManager();
+        } else {
+            return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_GRANTED;
+        }
     }
 }

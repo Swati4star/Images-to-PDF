@@ -161,11 +161,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
      */
     @OnClick(R.id.create_excel_to_pdf)
     public void openExcelToPdf() {
-        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-            openExcelToPdf_();
-        } else {
-            getRuntimePermissions();
-        }
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::openExcelToPdf_);
     }
 
     private void openExcelToPdf_() {

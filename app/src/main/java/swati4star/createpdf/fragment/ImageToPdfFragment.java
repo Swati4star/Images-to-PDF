@@ -99,7 +99,6 @@ import swati4star.createpdf.util.StringUtils;
  */
 public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         OnPDFCreatedInterface {
-
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
@@ -218,12 +217,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     @OnClick(R.id.addImages)
     void startAddingImages() {
         if (!mIsButtonAlreadyClicked) {
-            if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
+            PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), () -> {
                 selectImages();
                 mIsButtonAlreadyClicked = true;
-            } else {
-                getRuntimePermissions();
-            }
+            });
         }
     }
 
