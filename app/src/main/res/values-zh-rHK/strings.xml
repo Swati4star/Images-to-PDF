@@ -85,7 +85,6 @@
     <string name="extras">其他</string>
     <string name="share">分享</string>
     <string name="help">幫助</string>
-    <string name="faqs">常問問題</string>
 
 
     <!-- images to PDF -->
@@ -109,10 +108,9 @@
     <string name="snackbar_undoAction">復原</string>
     <string name="pdf_does_not_exist_message">PDF並不存在。</string>
     <string name="image_rearranging_options">圖像重新排列選項</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
 
     <!--    Image compression-->
-    <string name="compress_image">圖像壓縮： %s %%</string>
+    <string name="compress_image">圖像壓縮： %1$s %%</string>
     <string name="quality_image">輸入圖像壓縮百分比:</string>
     <string name="invalid_entry">無效輸入</string>
     <string name="compress_dialog_enter_prompt">在此處輸入</string>
@@ -453,6 +451,7 @@
     <string name="theme_white">白</string>
     <string name="theme_dark">暗</string>
     <string name="theme_black">黑</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">變更主密碼</string>
     <string name="current_master_pwd">現加密PDF的主密碼為 \"%1$s\" ， 你可以在此變更：</string>
 

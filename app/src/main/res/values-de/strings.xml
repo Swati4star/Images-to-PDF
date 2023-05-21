@@ -198,7 +198,7 @@
     <string name="i_have_attached_pdfs_to_this_message">Ich habe eine oder mehrere Dateien an diese Nachricht angehängt</string>
     <string name="filter_images_Text">Filter auf Bilder anwenden \n</string>
     <string name="nextimage_contentdesc">Nächstes Bild</string>
-    <string name="compress_image">Bildkomprimierung: %s %%</string>
+    <string name="compress_image">Bildkomprimierung: %1$s %%</string>
     <string name="quality_image">Gebe die prozentuale Komprimierung des Bildes ein:</string>
     <string name="invalid_entry">Ungültiger Eintrag</string>
     <string name="compress_dialog_enter_prompt">Hier eingeben</string>
@@ -331,7 +331,6 @@
     <string name="snackbar_undoAction">Rückgängig machen</string>
     <string name="pdf_does_not_exist_message">Das PDF existiert nicht.</string>
     <string name="image_rearranging_options">Optionen für die Neuanordnung von Bildern</string>
-    <string name="filter_file_name">%1$s_%2$s.jpg</string>
     <string name="reset">Zurücksetzen</string>
     <string name="rotate">Drehen</string>
     <string name="done">Fertig</string>
@@ -424,6 +423,7 @@
     <string name="theme_white">Weiß</string>
     <string name="theme_dark">Dunkel</string>
     <string name="theme_black">Schwarz</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">Ändere das Master-Passwort</string>
     <string name="current_master_pwd">Das aktuelle Hauptkennwort ist "%1$s" für jede verschlüsselte PDF-Datei. Du kannst es hier ändern:</string>
 

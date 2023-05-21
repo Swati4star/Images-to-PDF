@@ -45,8 +45,7 @@
     <string name="snackbar_undoAction">पूर्ववत करा</string>
     <string name="pdf_does_not_exist_message">पीडीएफ अस्तित्वात नाही.</string>
     <string name="image_rearranging_options">प्रतिमा पुनर्रचना पर्याय</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
-    <string name="compress_image">प्रतिमा संक्षेप : %s %%</string>
+    <string name="compress_image">प्रतिमा संक्षेप : %1$s %%</string>
     <string name="quality_image">प्रतिमेचे % कम्प्रेशन एंटर करा:</string>
     <string name="invalid_entry">चुकीची नोंद</string>
     <string name="compress_dialog_enter_prompt">येथे प्रविष्ट करा</string>
@@ -244,10 +243,9 @@
     <string name="delete_history_message">तुम्हाला नक्की इतिहास हटवायचा आहे का?</string>
     <string name="extract_images">प्रतिमा काढा</string>
     <string name="extract_images_failed">आम्हाला निवडलेल्या पीडीएफ मध्ये कोणतीही प्रतिमा सापडली नाही</string>
-    <string name="extract_images_success">आम्हाला निवडलेल्या पीडीएफ मध्ये %1 $ d प्रतिमा सापडल्या आहेत. ते रूट डिरेक्टरीमध्ये पीडीएफ फाइल फोल्डरमध्ये सेव्ह केले जातात</string>
+    <string name="extract_images_success">आम्हाला निवडलेल्या पीडीएफ मध्ये %1$d प्रतिमा सापडल्या आहेत. ते रूट डिरेक्टरीमध्ये पीडीएफ फाइल फोल्डरमध्ये सेव्ह केले जातात</string>
     <string name="extract_text">मजकूर काढा</string>
     <string name="pdf_selected">पीडीएफ फाइल चयनित</string>
-    <string name="file_info">\n फाईलचे नाव : %1$s \n\n मार्ग: %2$s \n\n आकार : %3$s \n\n तारीख सुधारित %4$s</string>
     <string name="default_font_family_text">फॉन्ट कुटुंब (डीफॉल्ट: %s)</string>
     <string name="font_family_text">फॉन्ट कुटुंब :</string>
     <string name="undefined">अपरिभाषित</string>
@@ -350,7 +348,6 @@
     <string name="welcome_merge_message">आपल्या फोनमधील विविध विद्यमान पीडीएफ एका फाईलमध्ये विलीन करा</string>
     <string name="welcome_viewfiles_title">पीडीएफ फाइल्स पाहणे</string>
     <string name="welcome_viewfiles_message">आपल्या पीडीएफ फाईलमध्ये पासवर्ड पहा, हटवा, नाव बदला, शेअर करा आणि पासवर्ड जोडा</string>
-    <string name="welcome_excel_message">आपल्या एक्सेल फायली सहजपणे आपल्या मोस्ट वॉन्टेड पीडीएफ मध्ये रूपांतरित करा</string>
     <string name="skip_text">सोडा</string>
     <string name="get_started_title">सुरु करूया!</string>
     <string name="whatsnew_continue">सुरू</string>

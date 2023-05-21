@@ -73,9 +73,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="pdf_ext" translatable="false">.pdf</string>
-    <string name="pdf_type" translatable="false">application/pdf</string>
-    <string name="txt_type" translatable="false">text/*</string>
     <string name="please_wait">잠시 기다려주세요</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">죄송합니다. 이미지 생성에 실패했습니다. **이미지 선택**에서 이미지를 선택해주세요.</string>
@@ -110,10 +107,9 @@
     <string name="snackbar_undoAction">작업 취소</string>
     <string name="pdf_does_not_exist_message">존재하지 않는 PDF입니다.</string>
     <string name="image_rearranging_options">이미지 재배열 선택</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
 
     <!--    Image compression-->
-    <string name="compress_image">이미지 압축 : %s %%</string>
+    <string name="compress_image">이미지 압축 : %1$s %%</string>
     <string name="quality_image">입력해주세요 %% 압축된 이미지 :</string>
     <string name="invalid_entry">불가능한 입력입니다.</string>
     <string name="compress_dialog_enter_prompt">이 곳에 입력해주세요.</string>
@@ -227,7 +223,6 @@
     <string name="file_size_text">파일 크기</string>
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="i_have_attached_pdfs_to_this_message">이 메세지에 파일을 첨부했습니다.</string>
-    <string name="btn_sav_text" translatable="false">텍스트  저장</string>
 
     <string name="nextimage_contentdesc">다음 이미지</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
@@ -249,12 +244,6 @@
     <string name="set_page_size_text">페이지 크기 설정</string>
     <string name="b0_to_b10">B0 to B10</string>
     <string name="a0_to_a10">A0 to A10</string>
-    <string name="tabloid" translatable="false">TABLOID</string>
-    <string name="executive" translatable="false">EXECUTIVE</string>
-    <string name="ledger" translatable="false">LEDGER</string>
-    <string name="letter" translatable="false">LETTER</string>
-    <string name="legal" translatable="false">LEGAL</string>
-    <string name="a4" translatable="false">A4</string>
     <string name="default_page_size">기본값 ( %s )</string>
     <string name="master_password_changed">암호가 잘못되었습니다. master 암호가 변경된 것 같습니다.</string>
 
@@ -288,7 +277,6 @@
     <string name="text_to_pdf">텍스트를 PDF로 변환</string>
     <string name="text_file_selected">텍스트 파일이 선택되었습니다.</string>
     <string name="select_file">"업로드할 파일을 선택해주세요."</string>
-    <string name="text_type" translatable="false">text/plain</string>
     <string name="new_directory">새로운 디렉토리</string>
     <string name="previous_image_content_desc">이전 이미지</string>
     <string name="text_file_name">"텍스트 파일 : "</string>
@@ -365,17 +353,11 @@
     <!--  Extract Text-->
     <string name="extract_text">텍스트 추출</string>
     <string name="pdf_selected">선택된 PDF 파일 : </string>
-    <string name="file_info">\n  파일명 : %1$s \n\n  경로 : %2$s \n\n  크기 : %3$s \n\n  수정된 날짜 %4$s</string>
 
 
     <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">글꼴 집합 (기본값 : %s)</string>
     <string name="font_family_text">"글꼴 집합 : "</string>
-    <string name="courier" translatable="false">COURIER</string>
-    <string name="helvetica" translatable="false">HELVETICA</string>
-    <string name="times_roman" translatable="false">TIMES_ROMAN</string>
-    <string name="symbol" translatable="false">SYMBOL</string>
-    <string name="zapfdingbats" translatable="false">ZAPFDINGBATS</string>
     <string name="undefined">정의되지 않음</string>
     <string name="selected_image">선택된 이미지</string>
     <string name="reset">재설정</string>
@@ -446,10 +428,6 @@
     <!--Rotate Pages    -->
     <string name="rotate_pages">페이지 회전하기</string>
     <string name="enter_rotation_angle">회전 각도 입력</string>
-    <string name="rotated_file_name" translatable="false">%s_rotated_%s%s</string>
-    <string name="degree_90" translatable="false">90 &#xb0;</string>
-    <string name="degree_180" translatable="false">180 &#xb0;</string>
-    <string name="degree_270" translatable="false">270 &#xb0;</string>
     <string name="share_files">파일 공유</string>
     <string name="pdf_removed_from_list">목록에서 PDF 파일을 제거했습니다.</string>
     <string name="pdf_added_to_list">목록에 PDF 파일을 추가했습니다.</string>
@@ -512,7 +490,6 @@
     <string name="welcome_merge_message">기존의 여러 PDF 파일을 하나의 파일로 병합하세요.</string>
     <string name="welcome_viewfiles_title">PDF 파일을 열람합니다.</string>
     <string name="welcome_viewfiles_message">보기, 삭제, 이름 바꾸기, 공유 및 PDF 파일에 암호 추가가 가능합니다.</string>
-    <string name="welcome_excel_message">Excel 파일을 원하는 PDF로 쉽게 변환하세요.</string>
     <string name="skip_text">넘기기</string>
     <string name="get_started_title">시작하기!</string>
 
@@ -561,7 +538,6 @@
     <string name="split_range_alert">분할 범위를 입력하면 선택된 PDF 파일이 다시 생성됩니다!</string>
 
     <!--file name suffix-->
-    <string name="pdf_suffix" translatable="false">_pdf</string>
     <string name="reordering_pages_dialog">페이지 재배열 중...</string>
     <string name="delete_alert_singular">선택한 파일을 삭제하시겠습니까?</string>
     <string name="snackbar_files_deleted">파일이 삭제되었습니다.</string>
