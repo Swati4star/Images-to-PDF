@@ -121,6 +121,8 @@ dependencies {
     // color picker
     implementation 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
 
+    implementation 'org.bouncycastle:bcpkix-jdk15to18:1.68'
+    implementation 'org.bouncycastle:bcprov-jdk15to18:1.68'
 
     testImplementation 'org.mockito:mockito-core:2.23.4'
     testImplementation 'org.robolectric:robolectric:4.3.1'
