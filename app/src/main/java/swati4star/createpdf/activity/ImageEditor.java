@@ -1,20 +1,24 @@
 package swati4star.createpdf.activity;
 
+import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
+import static swati4star.createpdf.util.Constants.RESULT;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -41,20 +45,9 @@ import swati4star.createpdf.util.ImageFilterUtils;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ThemeUtils;
 
-import static swati4star.createpdf.util.Constants.IMAGE_EDITOR_KEY;
-import static swati4star.createpdf.util.Constants.RESULT;
-
 public class ImageEditor extends AppCompatActivity implements OnFilterItemClickedListener, OnItemClickListener {
 
-    private ArrayList<String> mFilterUris = new ArrayList<>();
     private final ArrayList<String> mImagePaths = new ArrayList<>();
-    private ArrayList<FilterItem> mFilterItems;
-    private ArrayList<BrushItem> mBrushItems;
-
-    private int mDisplaySize;
-    private int mCurrentImage; // 0 by default
-    private String mFilterName;
-
     @BindView(R.id.nextimageButton)
     ImageView nextButton;
     @BindView(R.id.imagecount)
@@ -67,17 +60,26 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     PhotoEditorView photoEditorView;
     @BindView(R.id.doodle_colors)
     RecyclerView brushColorsView;
-
+    private ArrayList<String> mFilterUris = new ArrayList<>();
+    private ArrayList<FilterItem> mFilterItems;
+    private ArrayList<BrushItem> mBrushItems;
+    private int mDisplaySize;
+    private int mCurrentImage; // 0 by default
+    private String mFilterName;
     private boolean mClicked = true;
     private boolean mClickedFilter = false;
     private boolean mDoodleSelected = false;
-
     private PhotoEditor mPhotoEditor;
+
+    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+        Intent intent = new Intent(context, ImageEditor.class);
+        intent.putExtra(IMAGE_EDITOR_KEY, uris);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // Set selected theme
         ThemeUtils.getInstance().setThemeApp(this);
 
         super.onCreate(savedInstanceState);
@@ -91,7 +93,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     }
 
     private void initValues() {
-
         // Extract images
         mFilterUris = getIntent().getStringArrayListExtra(IMAGE_EDITOR_KEY);
         mDisplaySize = mFilterUris.size();
@@ -109,20 +110,16 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                 .setPinchTextScalable(true)
                 .build();
         doodleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mPhotoEditor.setBrushSize(progress);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
         mPhotoEditor.setBrushSize(30);
         mPhotoEditor.setBrushDrawingMode(false);
     }
@@ -179,7 +176,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mPhotoEditor.undo();
     }
 
-
     /**
      * Saves Current Image with applied filter
      */
@@ -214,7 +210,6 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             e.printStackTrace();
         }
     }
-
 
     /**
      * Initialize Recycler View
@@ -323,11 +318,5 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
             doodleSeekBar.setBackgroundColor(this.getResources().getColor(color));
             mPhotoEditor.setBrushColor(this.getResources().getColor(color));
         }
-    }
-
-    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
-        Intent intent = new Intent(context, ImageEditor.class);
-        intent.putExtra(IMAGE_EDITOR_KEY, uris);
-        return intent;
     }
 }

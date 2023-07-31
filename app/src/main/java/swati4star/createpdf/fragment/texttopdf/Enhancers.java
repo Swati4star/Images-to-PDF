@@ -54,8 +54,8 @@ public enum Enhancers {
 
     /**
      * @param activity The {@link Activity} context.
-     * @param view The {@link TextToPdfContract.View} that needs the enhancement.
-     * @param builder The builder for {@link TextToPDFOptions}.
+     * @param view     The {@link TextToPdfContract.View} that needs the enhancement.
+     * @param builder  The builder for {@link TextToPDFOptions}.
      * @return An instance of the {@link Enhancer}.
      */
     abstract Enhancer getEnhancer(Activity activity, TextToPdfContract.View view,

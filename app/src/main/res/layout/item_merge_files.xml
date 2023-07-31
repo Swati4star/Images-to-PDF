@@ -8,9 +8,9 @@
         android:id="@+id/itemMerge_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_centerVertical="true"
-        android:visibility="gone"/>
+        android:layout_marginStart="8dp"
+        android:visibility="gone" />
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"

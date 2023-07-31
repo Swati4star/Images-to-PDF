@@ -1,11 +1,15 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
+import static swati4star.createpdf.util.Constants.pdfExtension;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import androidx.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -25,9 +29,6 @@ import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.model.Watermark;
 
-import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
-import static swati4star.createpdf.util.Constants.pdfExtension;
-
 /**
  * An async task that converts selected images to Pdf
  */
@@ -39,8 +40,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final ArrayList<String> mImagesUri;
     private final int mBorderWidth;
     private final OnPDFCreatedInterface mOnPDFCreatedInterface;
-    private boolean mSuccess;
-    private String mPath;
     private final String mPageSize;
     private final boolean mPasswordProtected;
     private final Boolean mWatermarkAdded;
@@ -53,6 +52,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final String mPageNumStyle;
     private final String mMasterPwd;
     private final int mPageColor;
+    private boolean mSuccess;
+    private String mPath;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
                      OnPDFCreatedInterface onPDFCreated) {
@@ -98,7 +99,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Rectangle pageSize = new Rectangle(PageSize.getRectangle(mPageSize));
+        Rectangle pageSize = calculatePageSize();
         pageSize.setBackgroundColor(getBaseColor(mPageColor));
         Document document = new Document(pageSize,
                 mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
@@ -227,6 +228,13 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 Color.green(color),
                 Color.blue(color)
         );
+    }
+
+    private Rectangle calculatePageSize() {
+        if (PageSizeUtils.PAGE_SIZE_FIT_SIZE.equals(mPageSize)) {
+            return PageSizeUtils.calculateCommonPageSize(mImagesUri);
+        }
+        return new Rectangle(PageSize.getRectangle(mPageSize));
     }
 }
 

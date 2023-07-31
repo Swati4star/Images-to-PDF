@@ -12,11 +12,11 @@
         android:textSize="20sp" />
 
     <EditText
-        android:inputType="number"
         android:id="@+id/border_width"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/compress_dialog_enter_prompt"
+        android:inputType="number"
         android:textSize="20sp" />
 
     <CheckBox

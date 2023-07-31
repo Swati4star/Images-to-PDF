@@ -10,10 +10,6 @@ public class ImageSortUtils {
     private static final int DATE_ASC = 2;
     private static final int DATE_DESC = 3;
 
-    private static class SingletonHolder {
-        static final ImageSortUtils INSTANCE = new ImageSortUtils();
-    }
-
     public static ImageSortUtils getInstance() {
         return ImageSortUtils.SingletonHolder.INSTANCE;
     }
@@ -64,7 +60,6 @@ public class ImageSortUtils {
 
     }
 
-
     /**
      * Sorts the given list in ascending  date  order
      *
@@ -83,5 +78,9 @@ public class ImageSortUtils {
     private void sortByDateDesc(List<String> imagePaths) {
         Collections.sort(imagePaths, (path1, path2) -> Long.compare(new File(path1).lastModified(),
                 new File(path2).lastModified()));
+    }
+
+    private static class SingletonHolder {
+        static final ImageSortUtils INSTANCE = new ImageSortUtils();
     }
 }

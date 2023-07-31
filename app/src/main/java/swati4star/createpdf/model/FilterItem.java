@@ -12,7 +12,7 @@ public class FilterItem {
      * Filter item model
      *
      * @param imageId - id of image to be set
-     * @param name - filter mName
+     * @param name    - filter mName
      */
     public FilterItem(int imageId, String name, PhotoFilter filter) {
         this.mImageId = imageId;

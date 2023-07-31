@@ -1,5 +1,11 @@
 package swati4star.createpdf.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.textExtension;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +13,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +22,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
@@ -50,22 +56,10 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.StringUtils;
 
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.textExtension;
-
 public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         BottomSheetPopulate, OnBackPressedInterface {
 
-    private Activity mActivity;
-    private FileUtils mFileUtils;
-    private Uri mExcelFileUri;
-    private String mRealPath;
-    private BottomSheetUtils mBottomSheetUtils;
-    private BottomSheetBehavior mSheetBehavior;
-
+    private final int mFileSelectCode = 0;
     @BindView(R.id.tv_extract_text_bottom)
     TextView mTextView;
     @BindView(R.id.extract_text)
@@ -82,12 +76,16 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     RelativeLayout mLayout;
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
-
+    private Activity mActivity;
+    private FileUtils mFileUtils;
+    private Uri mExcelFileUri;
+    private String mRealPath;
+    private BottomSheetUtils mBottomSheetUtils;
+    private BottomSheetBehavior mSheetBehavior;
     private SharedPreferences mSharedPreferences;
     private MorphButtonUtility mMorphButtonUtility;
     private boolean mButtonClicked = false;
     private String mFileName;
-    private final int mFileSelectCode = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -161,8 +159,8 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 
     @Override
@@ -178,12 +176,9 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      */
     @OnClick(R.id.extract_text)
     public void openExtractText() {
-        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-            openText();
-        } else {
-            getRuntimePermissions();
-        }
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::openText);
     }
+
     private void openText() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_txt)

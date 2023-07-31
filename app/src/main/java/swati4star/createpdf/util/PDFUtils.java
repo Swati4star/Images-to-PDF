@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
@@ -9,9 +11,10 @@ import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-import android.widget.TextView;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -38,8 +41,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
 import swati4star.createpdf.interfaces.OnPdfReorderedInterface;
-
-import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 
 public class PDFUtils {
 
@@ -108,120 +109,6 @@ public class PDFUtils {
                 .execute();
     }
 
-    private static class CompressPdfAsync extends AsyncTask<String, String, String> {
-
-        final int quality;
-        final String inputPath;
-        final String outputPath;
-        boolean success;
-        final OnPDFCompressedInterface mPDFCompressedInterface;
-
-        CompressPdfAsync(String inputPath, String outputPath, int quality,
-                         OnPDFCompressedInterface onPDFCompressedInterface) {
-            this.inputPath = inputPath;
-            this.outputPath = outputPath;
-            this.quality = quality;
-            this.mPDFCompressedInterface = onPDFCompressedInterface;
-            success = false;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mPDFCompressedInterface.pdfCompressionStarted();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                PdfReader reader = new PdfReader(inputPath);
-                compressReader(reader);
-                saveReader(reader);
-                reader.close();
-                success = true;
-            } catch (IOException | DocumentException e) {
-                e.printStackTrace();
-                success = false;
-            }
-            return null;
-        }
-
-        /**
-         * Attempt to compress each object in a PdfReader
-         * @param reader - PdfReader to have objects compressed
-         * @throws IOException
-         */
-        private void compressReader(PdfReader reader) throws IOException {
-            int n = reader.getXrefSize();
-            PdfObject object;
-            PRStream stream;
-
-            for (int i = 0; i < n; i++) {
-                object = reader.getPdfObject(i);
-                if (object == null || !object.isStream())
-                    continue;
-                stream = (PRStream) object;
-                compressStream(stream);
-            }
-
-            reader.removeUnusedObjects();
-        }
-
-        /**
-         * If given stream is image compress it
-         * @param stream - Steam to be compressed
-         * @throws IOException
-         */
-        private void compressStream(PRStream stream) throws IOException {
-            PdfObject pdfSubType = stream.get(PdfName.SUBTYPE);
-            System.out.println(stream.type());
-            if (pdfSubType != null && pdfSubType.toString().equals(PdfName.IMAGE.toString())) {
-                PdfImageObject image = new PdfImageObject(stream);
-                byte[] imageBytes = image.getImageAsBytes();
-                Bitmap bmp;
-                bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                if (bmp == null) return;
-
-                int width = bmp.getWidth();
-                int height = bmp.getHeight();
-
-                Bitmap outBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                Canvas outCanvas = new Canvas(outBitmap);
-                outCanvas.drawBitmap(bmp, 0f, 0f, null);
-
-                ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
-                outBitmap.compress(Bitmap.CompressFormat.JPEG, quality, imgBytes);
-                stream.clear();
-                stream.setData(imgBytes.toByteArray(), false, PRStream.BEST_COMPRESSION);
-                stream.put(PdfName.TYPE, PdfName.XOBJECT);
-                stream.put(PdfName.SUBTYPE, PdfName.IMAGE);
-                stream.put(PdfName.FILTER, PdfName.DCTDECODE);
-                stream.put(PdfName.WIDTH, new PdfNumber(width));
-                stream.put(PdfName.HEIGHT, new PdfNumber(height));
-                stream.put(PdfName.BITSPERCOMPONENT, new PdfNumber(8));
-                stream.put(PdfName.COLORSPACE, PdfName.DEVICERGB);
-            }
-        }
-
-        /**
-         * Save changes to given reader's data to the output path
-         * @param reader - changed reader
-         * @throws DocumentException
-         * @throws IOException
-         */
-        private void saveReader(PdfReader reader) throws DocumentException, IOException {
-            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputPath));
-            stamper.setFullCompression();
-            stamper.close();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            mPDFCompressedInterface.pdfCompressionEnded(outputPath, success);
-        }
-    }
-
     /**
      * Main function to add images to PDF
      *
@@ -255,7 +142,8 @@ public class PDFUtils {
 
     /**
      * Initialise document with pages from reader to writer
-     * @param reader -
+     *
+     * @param reader   -
      * @param document
      * @param writer
      */
@@ -272,6 +160,7 @@ public class PDFUtils {
 
     /**
      * Add images at given URIs to end of given document
+     *
      * @param document
      * @param imagesUri
      * @throws DocumentException
@@ -320,12 +209,129 @@ public class PDFUtils {
     }
 
     /**
-     * @param uri Uri of the pdf
-     * @param path Absolute path of the pdf
+     * @param uri                     Uri of the pdf
+     * @param path                    Absolute path of the pdf
      * @param onPdfReorderedInterface interface to update  pdf reorder progress
-     * */
+     */
     public void reorderPdfPages(Uri uri, String path, @NonNull OnPdfReorderedInterface onPdfReorderedInterface) {
         new ReorderPdfPagesAsync(uri, path, mContext, onPdfReorderedInterface).execute();
+    }
+
+    private static class CompressPdfAsync extends AsyncTask<String, String, String> {
+
+        final int quality;
+        final String inputPath;
+        final String outputPath;
+        final OnPDFCompressedInterface mPDFCompressedInterface;
+        boolean success;
+
+        CompressPdfAsync(String inputPath, String outputPath, int quality,
+                         OnPDFCompressedInterface onPDFCompressedInterface) {
+            this.inputPath = inputPath;
+            this.outputPath = outputPath;
+            this.quality = quality;
+            this.mPDFCompressedInterface = onPDFCompressedInterface;
+            success = false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mPDFCompressedInterface.pdfCompressionStarted();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                PdfReader reader = new PdfReader(inputPath);
+                compressReader(reader);
+                saveReader(reader);
+                reader.close();
+                success = true;
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+                success = false;
+            }
+            return null;
+        }
+
+        /**
+         * Attempt to compress each object in a PdfReader
+         *
+         * @param reader - PdfReader to have objects compressed
+         * @throws IOException
+         */
+        private void compressReader(PdfReader reader) throws IOException {
+            int n = reader.getXrefSize();
+            PdfObject object;
+            PRStream stream;
+
+            for (int i = 0; i < n; i++) {
+                object = reader.getPdfObject(i);
+                if (object == null || !object.isStream())
+                    continue;
+                stream = (PRStream) object;
+                compressStream(stream);
+            }
+
+            reader.removeUnusedObjects();
+        }
+
+        /**
+         * If given stream is image compress it
+         *
+         * @param stream - Steam to be compressed
+         * @throws IOException
+         */
+        private void compressStream(PRStream stream) throws IOException {
+            PdfObject pdfSubType = stream.get(PdfName.SUBTYPE);
+            System.out.println(stream.type());
+            if (pdfSubType != null && pdfSubType.toString().equals(PdfName.IMAGE.toString())) {
+                PdfImageObject image = new PdfImageObject(stream);
+                byte[] imageBytes = image.getImageAsBytes();
+                Bitmap bmp;
+                bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                if (bmp == null) return;
+
+                int width = bmp.getWidth();
+                int height = bmp.getHeight();
+
+                Bitmap outBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas outCanvas = new Canvas(outBitmap);
+                outCanvas.drawBitmap(bmp, 0f, 0f, null);
+
+                ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
+                outBitmap.compress(Bitmap.CompressFormat.JPEG, quality, imgBytes);
+                stream.clear();
+                stream.setData(imgBytes.toByteArray(), false, PRStream.BEST_COMPRESSION);
+                stream.put(PdfName.TYPE, PdfName.XOBJECT);
+                stream.put(PdfName.SUBTYPE, PdfName.IMAGE);
+                stream.put(PdfName.FILTER, PdfName.DCTDECODE);
+                stream.put(PdfName.WIDTH, new PdfNumber(width));
+                stream.put(PdfName.HEIGHT, new PdfNumber(height));
+                stream.put(PdfName.BITSPERCOMPONENT, new PdfNumber(8));
+                stream.put(PdfName.COLORSPACE, PdfName.DEVICERGB);
+            }
+        }
+
+        /**
+         * Save changes to given reader's data to the output path
+         *
+         * @param reader - changed reader
+         * @throws DocumentException
+         * @throws IOException
+         */
+        private void saveReader(PdfReader reader) throws DocumentException, IOException {
+            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputPath));
+            stamper.setFullCompression();
+            stamper.close();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            mPDFCompressedInterface.pdfCompressionEnded(outputPath, success);
+        }
     }
 
     private class ReorderPdfPagesAsync extends AsyncTask<String, String, ArrayList<Bitmap>> {
@@ -336,11 +342,11 @@ public class PDFUtils {
         private final Activity mActivity;
 
         /**
-         * @param uri Uri of the pdf
-         * @param path Absolute path of the pdf
+         * @param uri                     Uri of the pdf
+         * @param path                    Absolute path of the pdf
          * @param onPdfReorderedInterface interface to update  pdf reorder progress
-         * @param activity Its needed to get the current context
-         * */
+         * @param activity                Its needed to get the current context
+         */
 
         ReorderPdfPagesAsync(Uri uri,
                              String path,
@@ -373,7 +379,8 @@ public class PDFUtils {
                     // close the renderer
                     renderer.close();
                 }
-            } catch (IOException | SecurityException | IllegalArgumentException | OutOfMemoryError e) {
+            } catch (IOException | SecurityException | IllegalArgumentException |
+                     OutOfMemoryError e) {
                 e.printStackTrace();
             }
             return bitmaps;
@@ -381,6 +388,7 @@ public class PDFUtils {
 
         /**
          * Get list of Bitmaps from PdfRenderer
+         *
          * @param renderer
          * @return
          */

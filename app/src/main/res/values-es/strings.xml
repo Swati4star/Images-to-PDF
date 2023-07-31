@@ -108,8 +108,8 @@
     <string name="i_have_attached_pdfs_to_this_message">He adjuntado PDF(s) a este mensaje</string>
     <string name="filter_images_Text">Filtrar Imágenes</string>
     <string name="nextimage_contentdesc">Siguiente Imagen</string>
-    <string name="compress_image">Compresión de Imagen : %s %%</string>
-    <string name="quality_image">Ingrese % de compresión de imagen :</string>
+    <string name="compress_image">Compresión de Imagen : %1$s %%</string>
+    <string name="quality_image">Ingrese %% de compresión de imagen :</string>
     <string name="invalid_entry">Entrada inválida</string>
     <string name="compress_dialog_enter_prompt">Ingrese aquí</string>
     <string name="compress_dialog_percentage">%</string>
@@ -218,7 +218,6 @@
     <string name="snackbar_undoAction">Deshacer</string>
     <string name="pdf_does_not_exist_message">El PDF no existe.</string>
     <string name="image_rearranging_options">Opciones de Reordenado de Imagen</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Reiniciar</string>
     <string name="excel_selected">Archivo Excel seleccionado</string>
     <string name="excel_to_pdf">Excel a PDF</string>
@@ -351,6 +350,7 @@
     <string name="x">X</string>
     <string name="master_password_changed">La contraseña parece ser incorrecta. Quizá ha cambiado la contraseña maestra.</string>
     <string name="current_master_pwd">La contraseña maestra actual es %1$s para cada PDF cifrado. La puedes cambiar aquí:</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">Cambiar la Contraseña Maestra</string>
     <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Continuar</string>

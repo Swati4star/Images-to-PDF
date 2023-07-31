@@ -107,10 +107,9 @@
     <string name="snackbar_undoAction">复原</string>
     <string name="pdf_does_not_exist_message">PDF并不存在。</string>
     <string name="image_rearranging_options">图像重新排列选项</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
 
     <!--    Image compression-->
-    <string name="compress_image">图像压缩： %s %%</string>
+    <string name="compress_image">图像压缩： %1$s %%</string>
     <string name="quality_image">输入图像压缩百分比:</string>
     <string name="invalid_entry">无效输入</string>
     <string name="compress_dialog_enter_prompt">在此处输入</string>
@@ -187,7 +186,6 @@
     <string name="excel_to_pdf">试算表转PDF</string>
     <string name="excel_tv_view_text">已选择试算表文件： </string>
     <string name="select_excel_file">选择试算表文件</string>
-
 
 
     <!-- Share strings -->
@@ -290,7 +288,7 @@
     <string name="font_size_changed">已变更文字大小</string>
     <string name="font_size">文字大小： %1$s</string>
 
-<!--  About US & App Description & Contact US  -->
+    <!--  About US & App Description & Contact US  -->
     <string name="about_us">关于我们</string>
     <string name="rate_us">为我们评分</string>
     <string name="app_description">易于使用的安卓应用程式以转换你的文件到PDF。</string>
@@ -452,6 +450,7 @@
     <string name="theme_white">白</string>
     <string name="theme_dark">暗</string>
     <string name="theme_black">黑</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">变更主密码</string>
     <string name="current_master_pwd">现时所有已加密PDF的主密码为 \"%1$s\" ， 你可以在此变更：</string>
 
@@ -546,7 +545,7 @@
 
     <!--  FAQs  -->
     <string name="faqSearch">搜索常见问答</string>
-  <string-array name="faq_question_answers">
+    <string-array name="faq_question_answers">
         <item>什么文件类型会被支持？#####此应用程式支持jpeg、jpg、tiff、gif、psd、bmp、eps、png等等。</item>
         <item>我可否用此应用程式创建新文字文档？#####你只能够利用摘取已存在PDF文档的文字来创建新文字文档。以创建文字文档， \n1) 在主页点击 <strong>摘取文字</strong> 选项. \n2) 用<strong>选择PDF文件</strong>按钮选择PDF。 \n3) 然后，点击<strong>摘取文字</strong>. \n4) 一旦完成，一份文字文档连带PDF所属文字将会被创建。</item>
         <item>我一次过创建PDF的图像有数量限制吗？#####没有任何限制。</item>

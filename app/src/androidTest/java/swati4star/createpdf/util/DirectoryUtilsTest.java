@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import static java.util.Arrays.asList;
+
 import androidx.test.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -13,8 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 @RunWith(AndroidJUnit4.class)
 public class DirectoryUtilsTest {

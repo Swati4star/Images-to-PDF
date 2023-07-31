@@ -1,5 +1,8 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.pdfExtension;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -18,9 +21,6 @@ import java.util.Arrays;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
 
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.pdfExtension;
-
 public class SplitPDFUtils {
 
     private static final int NO_ERROR = 0;
@@ -35,6 +35,68 @@ public class SplitPDFUtils {
         this.mContext = context;
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
+    }
+
+    /**
+     * checks if the user entered split ranges are valid or not
+     * the returnValue is initialized with NO_ERROR
+     * if no range is given, ERROR_INVALID_INPUT is returned
+     * for all the given ranges, if single page (starting page) is only given then we fetch the starting page
+     * if starting page is not a number then exception is caught and ERROR_INVALID_INPUT is returned
+     * if the starting page is greater than number of pages or is 0 then ERROR_PAGE_NUMBER is returned
+     * for hyphenated ranges, e.g 4-8, the start and end page are read
+     * if the start or end page are not valid numbers then ERROR_INVALID_INPUT is returned
+     * if the start and end page are out of range then ERROR_PAGE_NUMBER is returned
+     * if the start page is greater than end page then the range is invalid so ERROR_PAGE_RANGE is returned
+     *
+     * @param numOfPages total number of pages of pdf
+     * @param ranges     string array that contain page range,
+     *                   can be a single integer or range separated by dash like 2-5
+     * @return 0 if all ranges are valid
+     * ERROR_PAGE_NUMBER    if range greater than max number of pages
+     * ERROR_PAGE_RANGE     if range is invalid like 9-4
+     * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
+     */
+    public static int checkRangeValidity(int numOfPages, String[] ranges) {
+        int startPage, endPage;
+        int returnValue = NO_ERROR;
+
+        if (ranges.length == 0)
+            returnValue = ERROR_INVALID_INPUT;
+        else {
+            for (String range : ranges) {
+                if (!range.contains("-")) {
+                    try {
+                        startPage = Integer.parseInt(range);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        returnValue = ERROR_INVALID_INPUT;
+                        break;
+                    }
+                    if (startPage > numOfPages || startPage == 0) {
+                        returnValue = ERROR_PAGE_NUMBER;
+                        break;
+                    }
+                } else {
+                    try {
+                        startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
+                        endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
+                    } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                        returnValue = ERROR_INVALID_INPUT;
+                        break;
+                    }
+                    if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
+                        returnValue = ERROR_PAGE_NUMBER;
+                        break;
+                    } else if (startPage >= endPage) {
+                        returnValue = ERROR_PAGE_RANGE;
+                        break;
+                    }
+                }
+            }
+        }
+        return returnValue;
     }
 
     /**
@@ -149,68 +211,6 @@ public class SplitPDFUtils {
             e.printStackTrace();
         }
         return false;
-    }
-
-    /**
-     * checks if the user entered split ranges are valid or not
-     * the returnValue is initialized with NO_ERROR
-     * if no range is given, ERROR_INVALID_INPUT is returned
-     * for all the given ranges, if single page (starting page) is only given then we fetch the starting page
-     * if starting page is not a number then exception is caught and ERROR_INVALID_INPUT is returned
-     * if the starting page is greater than number of pages or is 0 then ERROR_PAGE_NUMBER is returned
-     * for hyphenated ranges, e.g 4-8, the start and end page are read
-     * if the start or end page are not valid numbers then ERROR_INVALID_INPUT is returned
-     * if the start and end page are out of range then ERROR_PAGE_NUMBER is returned
-     * if the start page is greater than end page then the range is invalid so ERROR_PAGE_RANGE is returned
-     *
-     * @param numOfPages total number of pages of pdf
-     * @param ranges     string array that contain page range,
-     *                   can be a single integer or range separated by dash like 2-5
-     * @return 0 if all ranges are valid
-     * ERROR_PAGE_NUMBER    if range greater than max number of pages
-     * ERROR_PAGE_RANGE     if range is invalid like 9-4
-     * ERROR_INVALID_INPUT  if input is invalid like -3 or 3--4 or 3,,4
-     */
-    public static int checkRangeValidity(int numOfPages, String[] ranges) {
-        int startPage, endPage;
-        int returnValue = NO_ERROR;
-
-        if (ranges.length == 0)
-            returnValue = ERROR_INVALID_INPUT;
-        else {
-            for (String range : ranges) {
-                if (!range.contains("-")) {
-                    try {
-                        startPage = Integer.parseInt(range);
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                        returnValue = ERROR_INVALID_INPUT;
-                        break;
-                    }
-                    if (startPage > numOfPages || startPage == 0) {
-                        returnValue = ERROR_PAGE_NUMBER;
-                        break;
-                    }
-                } else {
-                    try {
-                        startPage = Integer.parseInt(range.substring(0, range.indexOf("-")));
-                        endPage = Integer.parseInt(range.substring(range.indexOf("-") + 1));
-                    } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-                        e.printStackTrace();
-                        returnValue = ERROR_INVALID_INPUT;
-                        break;
-                    }
-                    if (startPage > numOfPages || endPage > numOfPages || startPage == 0 || endPage == 0) {
-                        returnValue = ERROR_PAGE_NUMBER;
-                        break;
-                    } else if (startPage >= endPage) {
-                        returnValue = ERROR_PAGE_RANGE;
-                        break;
-                    }
-                }
-            }
-        }
-        return returnValue;
     }
 }
 

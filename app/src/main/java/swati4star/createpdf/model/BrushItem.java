@@ -5,7 +5,7 @@ import java.util.Objects;
 public class BrushItem {
     private final int mColor;
 
-    public BrushItem (int color) {
+    public BrushItem(int color) {
         this.mColor = color;
     }
 

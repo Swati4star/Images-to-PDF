@@ -16,7 +16,7 @@
     <string name="prompt_input">Buraya girin</string>
 
     <!--   Items  -->
-    <array name = "items">
+    <array name="items">
         <item>Dosya Aç</item>
         <item>Dosyayı Sil</item>
         <item>Dosyayı Yeniden Adlandır</item>
@@ -29,7 +29,7 @@
         <item>Filigran Ekle</item>
     </array>
 
-    <array name = "itemIds" translatable = "false">
+    <array name="itemIds" translatable="false">
         <item>açık</item>
         <item>sil</item>
         <item>yeniden adlandır</item>
@@ -72,10 +72,9 @@
     <string name="snackbar_undoAction">Geri al</string>
     <string name="pdf_does_not_exist_message">PDF mevcut değil.</string>
     <string name="image_rearranging_options">Resim Yeniden Düzenleme Seçenekleri</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
 
     <!--    Image compression-->
-    <string name="compress_image">Resim sıkıştırma : %s %%</string>
+    <string name="compress_image">Resim sıkıştırma : %1$s %%</string>
     <string name="quality_image">Resmin sıkıştırma yüzedesini gir :</string>
     <string name="invalid_entry">Geçersiz Girdi</string>
     <string name="compress_dialog_enter_prompt">Buraya girin</string>
@@ -159,7 +158,7 @@
     <string name="snackbar_no_share_app">Paylaşacak uygulama yok.</string>
 
     <!-- Select Images string -->
-    <string name="images_selected">" %1$d resim seçildi."</string>
+    <string name="images_selected">%1$d resim seçildi.</string>
 
     <!-- Feedback Strings -->
     <string name="feedback_subject">PDF Converter için Öneriler</string>
@@ -314,7 +313,6 @@
     <!--  Extract Text-->
     <string name="extract_text">Metin Çıkar</string>
     <string name="pdf_selected">PDF dosyası seçildi:</string>
-    <string name="file_info">\n   Dosya İsmi : %1$s \n\n  Dosya Yolu : %2$s \n\n  Boyut : %3$s \n\n  Tarih Değiştirildi  %4$s"</string>
 
     <!-- Text To PDF   FontFamily-->
     <string name="default_font_family_text">Yazı Tipi Ailesi (Varsayılan : %s)</string>
@@ -407,6 +405,7 @@
     <string name="theme_white">Aydınlık</string>
     <string name="theme_dark">Karanlık</string>
     <string name="theme_black">Koyu</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">Ana parolayı değiştir</string>
     <string name="current_master_pwd">Her PDF\'yi şifrelemek için şu anki ana parola \"%1$s\". Buradan değiştirebilirsiniz:</string>
 
@@ -446,7 +445,6 @@
     <string name="welcome_extract_images_message">Bir harekette PDF\'lerinizden olası tüm görüntüleri çıkarın</string>
     <string name="welcome_themes_title">Farklı temalar</string>
     <string name="welcome_themes_message">Ayarlar\'a gidin ve üç tür tema arasından seçim yapabilirsiniz: Siyah, Koyu, Beyaz</string>
-    <string name="welcome_excel_message">Excel dosyalarınızı kolaylıkla en çok istediğiniz PDF\'lere dönüştürün</string>
     <string name="skip_text">Geç</string>
     <string name="get_started_title">Haydi başlayalım!</string>
 
@@ -526,6 +524,7 @@
         <item> PDF\'leri PPT, PPTX, ODT, DOC, DOCX biçimlerine dönüştürebilir miyim? ##### Hayır, PDF\'ler şu anda yalnızca metin biçimine dönüştürülebilir. </item>
         <item> PDF DÖNÜŞTÜRÜCÜ: Dosyadan PDF uygulamasına nereden indirebilirim? ##### Uygulama Google PlayStore ve F-Droid\'de mevcuttur </item>
         <item> Bu uygulamaya katkıda bulunabilir miyim? ##### Evet, yapabilirsiniz. <strong> Swati4star / Images-to-PDF </strong> proje adını kullanarak bizi GitHub\'da bulun. \nFikirlerinizi (özellik istekleri) paylaşmaktan, bir hata göndermekten veya eklenmesi gerektiğini düşündüğünüz herhangi bir şey için talepte bulunmaktan çekinmeyin. \nBu projede, tek bir satır değişikliği kadar az ekleyen birden fazla katılımcı var. Başlamak için <strong> Katkıda Bulunanlar kılavuzunu </strong> okuyun. </item>
-        <item> Bu SSS belgesinde olmayan bazı sorularım var. Geliştiriciyle nasıl iletişim kurabilirim? ##### Daha fazla soru için, <strong>swati4star@gmail.com</strong> </item> adresinden geliştiriciye e-posta gönderin.
+        <item> Bu SSS belgesinde olmayan bazı sorularım var. Geliştiriciyle nasıl iletişim kurabilirim? ##### Daha fazla soru için, <strong>swati4star@gmail.com</strong> </item>
+        adresinden geliştiriciye e-posta gönderin.
     </string-array>
 </resources>

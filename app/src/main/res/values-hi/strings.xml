@@ -40,9 +40,8 @@
     <string name="snackbar_undoAction">पूर्ववत</string>
     <string name="pdf_does_not_exist_message">पीडीएफ मौजूद नहीं है।</string>
     <string name="image_rearranging_options">छवि पुनर्व्यवस्था विकल्प</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
-    <string name="compress_image">छवि संपीड़न : %s %%</string>
-    <string name="quality_image">छवि का% संपीड़न दर्ज करें:</string>
+    <string name="compress_image">छवि संपीड़न : %1$s %%</string>
+    <string name="quality_image">छवि का %% संपीड़न दर्ज करें:</string>
     <string name="invalid_entry">अमान्य प्रविष्टि</string>
     <string name="compress_dialog_enter_prompt">यहां दर्ज करें</string>
     <string name="compress_dialog_percentage">%</string>
@@ -237,7 +236,6 @@
     <string name="extract_images_success">हमें चयनित पीडीएफ में %1$d चित्र मिले हैं। उन्हें रूट डायरेक्टरी में पीडीएफ फाइल फोल्डर में सेव किया गया है।</string>
     <string name="extract_text">पाठ निकालें</string>
     <string name="pdf_selected">पीडीएफ फाइल चयनित:</string>
-    <string name="file_info">\n फ़ाइल का नाम : %1$s \n\n पथ : %2$s \n\n आकार : %3$s \n\n दिनांक संशोधित %4$s</string>
     <string name="default_font_family_text">फ़ॉन्ट परिवार (डिफ़ॉल्ट: %s)</string>
     <string name="font_family_text">फ़ॉन्ट परिवार :</string>
     <string name="undefined">अपरिभाषित</string>
@@ -265,7 +263,7 @@
     <string name="file_access_error">हम पीडीएफ तक नहीं पहुंच पाए। फ़ाइलें एन्क्रिप्ट की जा सकती हैं या बाहरी संग्रहण में हो सकती हैं।</string>
     <string name="file_order">फ़ाइल में कोई बदलाव नहीं किया गया</string>
     <string name="compress_pdf">पीडीएफ संपीड़ित करें</string>
-    <string name="compress_pdf_prompt">पीडीएफ का% संपीड़न दर्ज करें:</string>
+    <string name="compress_pdf_prompt">पीडीएफ का %% संपीड़न दर्ज करें:</string>
     <string name="compress_info">बधाई हो! आपकी पीडीएफ संपीड़ित है: \n मूल पीडीएफ आकार: %s \n संपीड़ित पीडीएफ आकार: %s</string>
     <string name="pdf_to_images">छवियों के लिए पीडीएफ</string>
     <string name="create_images">छवियां बनाएं</string>
@@ -340,7 +338,6 @@
     <string name="welcome_merge_message">अपने फ़ोन में विभिन्न मौजूदा पीडीएफ को एक फ़ाइल में मर्ज करें</string>
     <string name="welcome_viewfiles_title">पीडीएफ फाइलों को देखना</string>
     <string name="welcome_viewfiles_message">अपनी पीडीएफ फाइल को देखें, हटाएं, नाम बदलें, साझा करें और पासवर्ड जोड़ें</string>
-    <string name="welcome_excel_message">अपनी एक्सेल फाइलों को आसानी से अपने सबसे वांछित पीडीएफ में बदलें</string>
     <string name="skip_text">छोड़ें</string>
     <string name="get_started_title">शुरू हो जाओ!</string>
     <string name="whatsnew_continue">जारी रखें</string>

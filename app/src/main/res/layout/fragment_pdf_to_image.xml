@@ -40,11 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/createImages"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:text="@string/extract_images_success"
-            android:textSize="18sp"
-            android:visibility="gone"
             android:textColor="@color/colorBlackAlt"
-            android:gravity="center"/>
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/created_images"
@@ -72,12 +72,12 @@
                 android:drawableStart="@drawable/ic_menu_gallery"
                 android:drawablePadding="5dp"
                 android:drawableTint="?attr/bottomSheetTextColor"
+                android:letterSpacing="0"
                 android:padding="15dp"
                 android:text="@string/view_in_gallery"
-                android:textColor="?attr/bottomSheetTextColor"
                 android:textAllCaps="false"
-                android:letterSpacing="0"
-                android:textSize="17sp"/>
+                android:textColor="?attr/bottomSheetTextColor"
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,12 +94,12 @@
                     android:drawableStart="@drawable/baseline_share_24"
                     android:drawablePadding="5dp"
                     android:drawableTint="?attr/bottomSheetTextColor"
+                    android:letterSpacing="0"
                     android:padding="15dp"
                     android:text="@string/share_images"
-                    android:textColor="?attr/bottomSheetTextColor"
                     android:textAllCaps="false"
-                    android:letterSpacing="0"
-                    android:textSize="17sp"/>
+                    android:textColor="?attr/bottomSheetTextColor"
+                    android:textSize="17sp" />
 
                 <Button
                     android:id="@+id/viewImages"
@@ -110,12 +110,12 @@
                     android:drawableStart="@drawable/ic_menu_gallery"
                     android:drawablePadding="5dp"
                     android:drawableTint="?attr/bottomSheetTextColor"
+                    android:letterSpacing="0"
                     android:padding="15dp"
                     android:text="@string/view_images"
-                    android:textColor="?attr/bottomSheetTextColor"
                     android:textAllCaps="false"
-                    android:letterSpacing="0"
-                    android:textSize="17sp"/>
+                    android:textColor="?attr/bottomSheetTextColor"
+                    android:textSize="17sp" />
 
             </LinearLayout>
         </LinearLayout>

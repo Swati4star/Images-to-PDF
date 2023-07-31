@@ -1,13 +1,13 @@
 package swati4star.createpdf.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +16,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 
@@ -43,22 +48,12 @@ import swati4star.createpdf.util.RealPathUtil;
 import swati4star.createpdf.util.RemoveDuplicates;
 import swati4star.createpdf.util.StringUtils;
 
-import static android.app.Activity.RESULT_OK;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+public class RemoveDuplicatePagesFragment extends Fragment
+        implements MergeFilesAdapter.OnClickListener, FilesListAdapter.OnFileItemClickedListener,
+        BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
 
-public class RemoveDuplicatePagesFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
-        FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
-
-    private Activity mActivity;
-    private String mPath;
-    private MorphButtonUtility mMorphButtonUtility;
-    private FileUtils mFileUtils;
-    private BottomSheetUtils mBottomSheetUtils;
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
-    private MaterialDialog mMaterialDialog;
     BottomSheetBehavior mSheetBehavior;
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
@@ -77,10 +72,15 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
     RecyclerView mRecyclerViewFiles;
     @BindView(R.id.view_pdf)
     Button mViewPdf;
+    private Activity mActivity;
+    private String mPath;
+    private MorphButtonUtility mMorphButtonUtility;
+    private FileUtils mFileUtils;
+    private BottomSheetUtils mBottomSheetUtils;
+    private MaterialDialog mMaterialDialog;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_remove_duplicate_pages, container, false);
         ButterKnife.bind(this, rootview);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -91,6 +91,7 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
         resetValues();
         return rootview;
     }
+
     @OnClick(R.id.viewFiles)
     void onViewFilesClick(View view) {
         mBottomSheetUtils.showHideSheet(mSheetBehavior);
@@ -101,16 +102,27 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
      */
     @OnClick(R.id.selectFile)
     public void showFileChooser() {
-        startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
+        startActivityForResult(mFileUtils.getFileChooser(), INTENT_REQUEST_PICKFILE_CODE);
     }
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
-        if (data == null || resultCode != RESULT_OK || data.getData() == null)
+
+    // Refactor onActivityResult() method to handle possible NullPointerExceptions
+// when accessing data.getData(). Added try-catch blocks to handle exceptions
+// in a better way(imo) to prevent app crashes.
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK || data == null || data.getData() == null) {
             return;
+        }
+
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
-            //Getting Absolute Path
-            String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
-            setTextAndActivateButtons(path);
+            try {
+                // Attempt to get the real path of the selected file and update the UI
+                String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
+                setTextAndActivateButtons(path);
+            } catch (NullPointerException e) {
+                // If a NullPointerException occurs, log it to the console and continue
+                e.printStackTrace();
+            }
         }
     }
 
@@ -127,14 +139,12 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
-        mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, removeDuplicateButton);
+        mMorphButtonUtility.setTextAndActivateButtons(path, selectFileButton, removeDuplicateButton);
     }
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
@@ -178,9 +188,9 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
             return;
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));
-        StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_duplicate_removed)
-                .setAction(R.string.snackbar_viewAction,
-                        v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
+        StringUtils.getInstance().getSnackbarwithAction(mActivity,
+                        R.string.snackbar_duplicate_removed)
+                .setAction(R.string.snackbar_viewAction, v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF)).show();
         viewPdfButton(path);
         resetValues();
     }
@@ -199,8 +209,6 @@ public class RemoveDuplicatePagesFragment extends Fragment implements MergeFiles
      * check runtime permissions for storage and camera
      ***/
     private void getRuntimePermissions() {
-        PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+        PermissionsUtils.getInstance().requestRuntimePermissions(this, WRITE_PERMISSIONS, REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 }

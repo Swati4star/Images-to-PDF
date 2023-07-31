@@ -6,6 +6,7 @@ import java.util.Date;
 public class FileInfoUtils {
 
     // GET PDF DETAILS
+
     /**
      * Gives a formatted last modified date for pdf ListView
      *

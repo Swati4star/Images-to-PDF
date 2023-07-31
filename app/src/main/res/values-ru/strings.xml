@@ -53,7 +53,8 @@
     <!--QR & Barcode Scan-->
     <string name="scan_qrcode">Сканировать QR код</string>
     <string name="scan_barcode">Сканировать штрихкод</string>
-    <string name="qrbarcodes_to_pdf">Создать PDF файл из QR &amp; штрихкода</string>ещё раз<string name="scan_cancelled">Сканирование отменено пользователем</string>
+    <string name="qrbarcodes_to_pdf">Создать PDF файл из QR &amp; штрихкода</string>ещё раз
+    <string name="scan_cancelled">Сканирование отменено пользователем</string>
 
     <!--Snackbar strings -->
     <string name="snackbar_no_duplicate_pdf">Дубликаты страниц не найдены. Новый PDF не создан.</string>
@@ -131,8 +132,8 @@
     <string name="i_have_attached_pdfs_to_this_message">Я прикрепил файлы к этому сообщению</string>
     <string name="filter_images_Text">Фильтр изображений \n</string>
     <string name="nextimage_contentdesc">Следующее изображение</string>
-    <string name="compress_image">Сжатие : %s%%</string>
-    <string name="quality_image">Введите % сжатия изображения :</string>
+    <string name="compress_image">Сжатие : %1$s %%</string>
+    <string name="quality_image">Введите %% сжатия изображения :</string>
     <string name="invalid_entry">Ввод некорректен</string>
     <string name="compress_dialog_enter_prompt">Введите</string>
     <string name="compress_dialog_percentage">%</string>
@@ -259,7 +260,6 @@
     <string name="snackbar_undoAction">Отменить</string>
     <string name="pdf_does_not_exist_message">Этот файл не существует</string>
     <string name="image_rearranging_options">Опции изменения порядка изображений</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Сброс</string>
 
     <string name="confirm_exit_message">Для выхода вновь нажмите Назад</string>
@@ -384,6 +384,7 @@
     <string name="image_successfully_cropped">Обрезка изображения выполнена успешно</string>
     <string name="master_password_changed">Неверный пароль. Возможно, вы изменили мастер-пароль.</string>
     <string name="current_master_pwd">Текущий мастер-пароль: %1$s для всех зашифрованных PDF. Вы можете сменить его здесь:</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">Сменить мастер-пароль</string>
     <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Продолжить</string>
@@ -461,5 +462,5 @@
     <string name="reordering_pages_dialog">Изменение порядка страниц...</string>
     <string name="delete_alert_singular">Вы хотите удалить выбранный файл?</string>
     <string name="snackbar_files_deleted">Файлы удалены</string>
-  <string name="lbl_recently_used">Недавно использованная особенность</string>
+    <string name="lbl_recently_used">Недавно использованная особенность</string>
 </resources>

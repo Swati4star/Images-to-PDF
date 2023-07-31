@@ -8,10 +8,6 @@ import swati4star.createpdf.R;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 public class MergePdfEnhancementOptionsUtils {
-    private static class SingletonHolder {
-        static final MergePdfEnhancementOptionsUtils INSTANCE = new MergePdfEnhancementOptionsUtils();
-    }
-
     public static MergePdfEnhancementOptionsUtils getInstance() {
         return MergePdfEnhancementOptionsUtils.SingletonHolder.INSTANCE;
     }
@@ -22,5 +18,9 @@ public class MergePdfEnhancementOptionsUtils {
         options.add(new EnhancementOptionsEntity(
                 context, R.drawable.baseline_enhanced_encryption_24, R.string.set_password));
         return options;
+    }
+
+    private static class SingletonHolder {
+        static final MergePdfEnhancementOptionsUtils INSTANCE = new MergePdfEnhancementOptionsUtils();
     }
 }

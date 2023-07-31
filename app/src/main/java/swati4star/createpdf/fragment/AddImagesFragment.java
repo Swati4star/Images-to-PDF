@@ -1,14 +1,14 @@
 package swati4star.createpdf.fragment;
 
+import static swati4star.createpdf.util.Constants.ADD_IMAGES;
+import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.zhihu.matisse.Matisse;
 
 import java.util.ArrayList;
@@ -43,26 +48,12 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
-import static swati4star.createpdf.util.Constants.ADD_IMAGES;
-import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-
 public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         MergeFilesAdapter.OnClickListener, OnBackPressedInterface {
 
-    private Activity mActivity;
-    private String mPath;
-    private MorphButtonUtility mMorphButtonUtility;
-    private FileUtils mFileUtils;
-    private BottomSheetUtils mBottomSheetUtils;
-    private PDFUtils mPDFUtils;
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
-    private String mOperation;
     private static final ArrayList<String> mImagesUri = new ArrayList<>();
-    private BottomSheetBehavior mSheetBehavior;
-
     @BindView(R.id.lottie_progress)
     LottieAnimationView mLottieProgress;
     @BindView(R.id.selectFile)
@@ -83,6 +74,14 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     RecyclerView mRecyclerViewFiles;
     @BindView(R.id.tvNoOfImages)
     TextView mNoOfImages;
+    private Activity mActivity;
+    private String mPath;
+    private MorphButtonUtility mMorphButtonUtility;
+    private FileUtils mFileUtils;
+    private BottomSheetUtils mBottomSheetUtils;
+    private PDFUtils mPDFUtils;
+    private String mOperation;
+    private BottomSheetBehavior mSheetBehavior;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -154,8 +153,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 
     @Override
@@ -227,11 +226,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      */
     @OnClick(R.id.addImages)
     void startAddingImages() {
-        if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS))
-            selectImages();
-        else {
-            getRuntimePermissions();
-        }
+        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectImages);
     }
 
     /**

@@ -1,5 +1,24 @@
 package swati4star.createpdf.fragment;
 
+import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
+import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
+import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
+import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
+import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
+import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
+import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
+import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.RESULT;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
+import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
+import static swati4star.createpdf.util.Constants.appName;
+import static swati4star.createpdf.util.WatermarkUtils.getStyleNameFromFont;
+import static swati4star.createpdf.util.WatermarkUtils.getStyleValueFromName;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +31,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +43,11 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -74,36 +94,17 @@ import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.SharedPreferencesUtil;
 import swati4star.createpdf.util.StringUtils;
 
-import static swati4star.createpdf.util.Constants.DEFAULT_BORDER_WIDTH;
-import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
-import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_BORDER_TEXT;
-import static swati4star.createpdf.util.Constants.DEFAULT_IMAGE_SCALE_TYPE_TEXT;
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE;
-import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_SIZE_TEXT;
-import static swati4star.createpdf.util.Constants.DEFAULT_QUALITY_VALUE;
-import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
-import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.OPEN_SELECT_IMAGES;
-import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
-import static swati4star.createpdf.util.Constants.RESULT;
-import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
-import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
-import static swati4star.createpdf.util.Constants.appName;
-import static swati4star.createpdf.util.WatermarkUtils.getStyleNameFromFont;
-import static swati4star.createpdf.util.WatermarkUtils.getStyleValueFromName;
-
 /**
  * ImageToPdfFragment fragment to start with creating PDF
  */
 public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         OnPDFCreatedInterface {
-
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
-
+    private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
+    public static ArrayList<String> mImagesUri = new ArrayList<>();
     @BindView(R.id.pdfCreate)
     MorphingButton mCreatePdf;
     @BindView(R.id.pdfOpen)
@@ -112,11 +113,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     RecyclerView mEnhancementOptionsRecycleView;
     @BindView(R.id.tvNoOfImages)
     TextView mNoOfImages;
-
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
-    public static ArrayList<String> mImagesUri = new ArrayList<>();
-    private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     private String mPath;
     private SharedPreferences mSharedPreferences;
     private FileUtils mFileUtils;
@@ -219,12 +217,10 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     @OnClick(R.id.addImages)
     void startAddingImages() {
         if (!mIsButtonAlreadyClicked) {
-            if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
+            PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), () -> {
                 selectImages();
                 mIsButtonAlreadyClicked = true;
-            } else {
-                getRuntimePermissions();
-            }
+            });
         }
     }
 
@@ -247,8 +243,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
     /**
      * Saves the PDF
+     *
      * @param isGrayScale if the images should be converted to grayscale before
-     * @param filename the filename to save to
+     * @param filename    the filename to save to
      */
     private void save(boolean isGrayScale, String filename) {
         mPdfOptions.setImagesUri(mImagesUri);
@@ -267,7 +264,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     void openPdf() {
         mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF);
     }
-
 
 
     /**
@@ -711,8 +707,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
-                    WRITE_PERMISSIONS,
-                    REQUEST_CODE_FOR_WRITE_PERMISSION);
+                WRITE_PERMISSIONS,
+                REQUEST_CODE_FOR_WRITE_PERMISSION);
     }
 
     /**
@@ -742,7 +738,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         ImageUtils.getInstance().mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALE_TYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
-        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
+        mPageNumStyle = mSharedPreferences.getString(Constants.PREF_PAGE_STYLE, null);
         mPageColor = mSharedPreferences.getInt(Constants.DEFAULT_PAGE_COLOR_ITP,
                 DEFAULT_PAGE_COLOR);
     }
@@ -774,22 +770,22 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private void addPageNumbers() {
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        mPageNumStyle = mSharedPreferences.getString (Constants.PREF_PAGE_STYLE, null);
-        mChoseId = mSharedPreferences.getInt (Constants.PREF_PAGE_STYLE_ID, -1);
+        mPageNumStyle = mSharedPreferences.getString(Constants.PREF_PAGE_STYLE, null);
+        mChoseId = mSharedPreferences.getInt(Constants.PREF_PAGE_STYLE_ID, -1);
 
-        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater ()
-                .inflate (R.layout.add_pgnum_dialog, null);
+        RelativeLayout dialogLayout = (RelativeLayout) getLayoutInflater()
+                .inflate(R.layout.add_pgnum_dialog, null);
 
         RadioButton rbOpt1 = dialogLayout.findViewById(R.id.page_num_opt1);
         RadioButton rbOpt2 = dialogLayout.findViewById(R.id.page_num_opt2);
         RadioButton rbOpt3 = dialogLayout.findViewById(R.id.page_num_opt3);
         RadioGroup rg = dialogLayout.findViewById(R.id.radioGroup);
-        CheckBox cbDefault = dialogLayout.findViewById (R.id.set_as_default);
+        CheckBox cbDefault = dialogLayout.findViewById(R.id.set_as_default);
 
         if (mChoseId > 0) {
-            cbDefault.setChecked (true);
-            rg.clearCheck ();
-            rg.check (mChoseId);
+            cbDefault.setChecked(true);
+            rg.clearCheck();
+            rg.check(mChoseId);
         }
 
         MaterialDialog materialDialog = new MaterialDialog.Builder(mActivity)
@@ -800,16 +796,16 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 .neutralText(R.string.remove_dialog)
                 .onPositive(((dialog, which) -> {
 
-                    int checkedRadioButtonId = rg.getCheckedRadioButtonId ();
+                    int checkedRadioButtonId = rg.getCheckedRadioButtonId();
                     mChoseId = checkedRadioButtonId;
-                    if (checkedRadioButtonId == rbOpt1.getId ()) {
+                    if (checkedRadioButtonId == rbOpt1.getId()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_PAGE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt2.getId ()) {
+                    } else if (checkedRadioButtonId == rbOpt2.getId()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X_OF_N;
-                    } else if (checkedRadioButtonId == rbOpt3.getId ()) {
+                    } else if (checkedRadioButtonId == rbOpt3.getId()) {
                         mPageNumStyle = Constants.PG_NUM_STYLE_X;
                     }
-                    if (cbDefault.isChecked ()) {
+                    if (cbDefault.isChecked()) {
                         SharedPreferencesUtil.getInstance().setDefaultPageNumStyle(editor, mPageNumStyle, mChoseId);
                     } else {
                         SharedPreferencesUtil.getInstance().clearDefaultPageNumStyle(editor);

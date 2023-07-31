@@ -3,14 +3,15 @@ package swati4star.createpdf.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -19,9 +20,9 @@ import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 
 public class RearrangePdfAdapter extends RecyclerView.Adapter<RearrangePdfAdapter.ViewHolder> {
-    private ArrayList<Bitmap> mBitmaps;
     private final Context mContext;
     private final OnClickListener mOnClickListener;
+    private ArrayList<Bitmap> mBitmaps;
 
     public RearrangePdfAdapter(OnClickListener onClickListener,
                                ArrayList<Bitmap> uris, Context context) {
@@ -60,6 +61,19 @@ public class RearrangePdfAdapter extends RecyclerView.Adapter<RearrangePdfAdapte
         return mBitmaps.size();
     }
 
+    public void positionChanged(ArrayList<Bitmap> images) {
+        mBitmaps = images;
+        notifyDataSetChanged();
+    }
+
+    public interface OnClickListener {
+        void onUpClick(int position);
+
+        void onDownClick(int position);
+
+        void onRemoveClick(int position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.image)
         ImageView imageView;
@@ -93,16 +107,5 @@ public class RearrangePdfAdapter extends RecyclerView.Adapter<RearrangePdfAdapte
                     mOnClickListener.onRemoveClick(getAdapterPosition());
             }
         }
-    }
-
-    public void positionChanged(ArrayList<Bitmap> images) {
-        mBitmaps = images;
-        notifyDataSetChanged();
-    }
-
-    public interface OnClickListener {
-        void onUpClick(int position);
-        void onDownClick(int position);
-        void onRemoveClick(int position);
     }
 }

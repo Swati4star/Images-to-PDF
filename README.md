@@ -1,8 +1,10 @@
 # Images To PDF
 
+
 ### Badges!
+
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF)
-[![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF) 
+[![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PDF%20Converter-blue.svg?style=true)](https://android-arsenal.com/details/3/7132)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/swati4star.createpdf)
@@ -12,18 +14,23 @@
 ### Introduction
   This page describes converting images to pdf using the pdf converter app. This document does not include information about the installation of the [pdf converter app](https://play.google.com/store/apps/details?id=swati4star.createpdf&hl=en&gl=US&pli=1)
 
-
 <img src="./screenshots/image_to_pdf2.gif"  width="300px">
 
-### Features 
+### Support Us
+
+<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
+### Features
+
+
 - Create PDF from multiple images from camera or gallery
 - View your converted PDFs
-  - Open, Rename, Delete, print, share files
-  - Sort the files order based on a number of options
-  - View File details
-  - Encrypt PDF
-  - Decrypt PDF
-  - Rotate Pages
+    - Open, Rename, Delete, print, share files
+    - Sort the files order based on a number of options
+    - View File details
+    - Encrypt PDF
+    - Decrypt PDF
+    - Rotate Pages
 - Different themes
 - Merge existing PDFs
 - Split existing PDFs
@@ -39,6 +46,7 @@ Here is a home page to get quick access to all the features "PDF Converter" prov
 <img src="./screenshots/0_1_home.png" width="190px"> <img src="./screenshots/0_2_home.png" width="190px">
 
 ### Creating a PDF file
+
 
 ###   <img src="![WhatsApp Image 2023-03-02 at 12 56 12 AM](https://user-images.githubusercontent.com/95302653/222297393-4d80e0d3-f534-43d0-b132-3c00bd15acb9.jpeg)" width="190px">
 
@@ -85,8 +93,8 @@ Click ok
 <!-- <img src="./screenshots/4_converting.png" width="190px"> -->
 
 
-Hurray! PDF files of selected images are created.
 
+Hurray! PDF files of selected images are created.
 
 ### Viewing the PDF files
 These are the steps to achieve this:
@@ -99,6 +107,7 @@ These are the steps to achieve this:
 
 
 ### Different themes
+
 Go to Settings, and you can have three type of themes : Black, Dark and White
 
 Black | Dark | White |
@@ -106,17 +115,21 @@ Black | Dark | White |
 <img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> |  <img src="./screenshots/home_theme_white.png" width="190px"> |
 
 ### Merge PDF
+
 <img src="./screenshots/7_merge_pdf.png" width="190px">
 
 ### Text to PDF
+
 <img src="./screenshots/8_text_to_pdf.png" width="190px">
 
 ### History
+
 <img src="./screenshots/9_history.png" width="190px">
 
 ### Contributing
 
 #### Dependencies
+
 + [Butterknife](https://jakewharton.github.io/butterknife/)
 + [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
 + [Image-cropper](https://github.com/ArthurHub/Android-Image-Cropper)
@@ -133,14 +146,18 @@ Black | Dark | White |
 + [zxing](https://github.com/zxing/zxing)
 
 #### Code & Issues
+
 If you are a developer and you wish to contribute to the app please fork the project
 and submit a pull request.
 Follow [Github Flow](https://help.github.com/articles/github-flow/) for collaboration!
-If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you want.
+If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you
+want.
 [Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 
 ### Project Maintainers
-This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For any sort of queries feel free to mail at swati4star@gmail.com.
+
+This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For
+any sort of queries feel free to mail at swati4star@gmail.com.
 
 
 ### Support Us

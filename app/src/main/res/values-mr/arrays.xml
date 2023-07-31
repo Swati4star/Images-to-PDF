@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>नाव </item>
+        <item>तारीख </item>
+        <item>आकार ▲</item>
+        <item>आकार ▼</item>
+    </string-array>
+
+    <string-array name="sort_options_images">
+        <item>नाव ▲</item>
+        <item>नाव ▼</item>
+        <item>तारीख ▲</item>
+        <item>तारीख ▼</item>
+    </string-array>
+
+    <string-array name="filter_options_history">
+        <item>तयार केले</item>
+        <item>काढले</item>
+        <item>नाव बदलले</item>
+        <item>फिरवले</item>
+        <item>मुद्रित</item>
+        <item>डिक्रिप्ट</item>
+        <item>एनक्रिप्टेड केले</item>
+        <item>उलटा</item>
+    </string-array>
+</resources>

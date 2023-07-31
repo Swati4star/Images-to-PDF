@@ -11,6 +11,10 @@ public class BrushUtils {
 
     }
 
+    public static BrushUtils getInstance() {
+        return BrushUtils.SingletonHolder.INSTANCE;
+    }
+
     public ArrayList<BrushItem> getBrushItems() {
         ArrayList<BrushItem> brushItems = new ArrayList<>();
         brushItems.add(new BrushItem(R.color.mb_white));
@@ -27,9 +31,5 @@ public class BrushUtils {
 
     private static class SingletonHolder {
         static final BrushUtils INSTANCE = new BrushUtils();
-    }
-
-    public static BrushUtils getInstance() {
-        return BrushUtils.SingletonHolder.INSTANCE;
     }
 }

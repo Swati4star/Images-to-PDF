@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import static swati4star.createpdf.util.Constants.RECENT_PREF;
+
 import android.content.SharedPreferences;
 
 import org.json.JSONException;
@@ -10,13 +12,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static swati4star.createpdf.util.Constants.RECENT_PREF;
-
 public class RecentUtil {
-
-    private static class SingletonHolder {
-        static final RecentUtil INSTANCE = new RecentUtil();
-    }
 
     public static RecentUtil getInstance() {
         return RecentUtil.SingletonHolder.INSTANCE;
@@ -24,12 +20,13 @@ public class RecentUtil {
 
     /**
      * Returns the LinkedHashMap of Recently used feature from the shared preference.
+     *
      * @param preferences - preferences object.
      * @return LinkedHashMap consisting of string as a key holding the feature view Id when it was
      * clicked and map of drawable Id and title string res Id.
-     * */
+     */
     public LinkedHashMap<String, Map<String, String>> getList(SharedPreferences preferences)
-        throws JSONException {
+            throws JSONException {
 
         //creating the empty list.
         LinkedHashMap<String, Map<String, String>> recentList = new LinkedHashMap<>();
@@ -59,12 +56,13 @@ public class RecentUtil {
 
     /**
      * Adds the feature that was clicked to the recent bucket and updates the shared preference.
+     *
      * @param preferences - shared preference object.
-     * @param resId - the view Id basically the feature that was clicked.
+     * @param resId       - the view Id basically the feature that was clicked.
      * @param itemClicked - Map of Drawable Id and title string resId received from HomePageItem.
-     * */
+     */
     public void addFeatureInRecentList(SharedPreferences preferences,
-            int resId, Map<String, String> itemClicked) throws JSONException {
+                                       int resId, Map<String, String> itemClicked) throws JSONException {
 
         LinkedHashMap<String, Map<String, String>> recentList = getList(preferences);
 
@@ -81,5 +79,9 @@ public class RecentUtil {
 
         //update the preferences.
         preferences.edit().putString(RECENT_PREF, new JSONObject(recentList).toString()).apply();
+    }
+
+    private static class SingletonHolder {
+        static final RecentUtil INSTANCE = new RecentUtil();
     }
 }

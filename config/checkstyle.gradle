@@ -21,5 +21,5 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
         }
     }
 
-    classpath = files( )
+    classpath = files()
 }

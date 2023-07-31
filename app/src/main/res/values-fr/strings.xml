@@ -8,9 +8,7 @@
     <string name="edit_images_text">Modifier des images</string>
     <string name="open_pdf_text">Ouvrir un PDF</string>
     <string name="create_pdf_text">Créer PDF</string>
-    <string name="details">
-        <b>Détails</b>
-    </string>
+    <string name="details"><b>Détails</b></string>
     <string name="search_hint">Nom de fichier</string>
     <string name="search">recherche</string>
     <string name="faqSearch">Rechercher dans la FAQ</string>
@@ -83,8 +81,8 @@
     <string name="encrypted_file">_encrypted.pdf</string>
     <string name="filter_images_Text">Filtrer les images \n</string>
     <string name="nextimage_contentdesc">Image suivante</string>
-    <string name="compress_image">Compression d\'Image : %s%%</string>
-    <string name="quality_image">Entrez % de compression de l\'image :</string>
+    <string name="compress_image">Compression d\'Image : %1$s %%</string>
+    <string name="quality_image">Entrez %% de compression de l\'image :</string>
     <string name="invalid_entry">Entrée non valide</string>
     <string name="error_path_not_found">Désolé, nous ne pouvons pas accéder au fichier à cet endroit</string>
     <!-- Select Images string -->
@@ -178,7 +176,6 @@
     <string name="snackbar_undoAction">Annuler</string>
     <string name="pdf_does_not_exist_message">Le PDF n\'existe pas.</string>
     <string name="image_rearranging_options">Option de réarrangement des images</string>
-    <string name="filter_file_name">%s_%s.jpg</string>
     <string name="reset">Réinitialiser</string>
     <string name="confirm_exit_message">Appuyez à nouveau pour quitter</string>
     <string name="border">Ajouter une bordure d\'image</string>
@@ -199,7 +196,7 @@
     <string name="reorder_pages">Réorganisation de pages</string>
     <string name="share_files">Partager des fichiers</string>
     <string name="compress_pdf">Compresser un PDF</string>
-    <string name="compress_pdf_prompt">Entrez % de compression des fichiers PDF :</string>
+    <string name="compress_pdf_prompt">Entrez %% de compression des fichiers PDF :</string>
     <string name="pdf_removed_from_list">Le PDF a été retiré de la liste.</string>
     <string name="pdf_added_to_list">Le PDF a été ajouté à la liste.</string>
     <string name="select_files">Sélectionnez des fichiers</string>
@@ -250,6 +247,7 @@
     <string name="page_x_of_n">Page X de N</string>
     <string name="page_x">X de N</string>
     <string name="x">X</string>
+    <string name="theme_system">System</string>
     <string name="change_master_pwd">Changer le mot de passe maître</string>
     <!-- Whats New Dialog -->
     <string name="whatsnew_continue">Continuer</string>

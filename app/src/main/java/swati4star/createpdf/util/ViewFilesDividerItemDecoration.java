@@ -3,16 +3,17 @@ package swati4star.createpdf.util;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 import swati4star.createpdf.R;
 
 /**
  * @author David Wu (david10608@gmail.com)
- *         Created on 29.10.17.
- *         Item decoration which draws a simple dividing line between elements
+ * Created on 29.10.17.
+ * Item decoration which draws a simple dividing line between elements
  */
 
 public class ViewFilesDividerItemDecoration extends RecyclerView.ItemDecoration {

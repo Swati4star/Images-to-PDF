@@ -9,22 +9,27 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.itextpdf.text.Rectangle;
 
 import java.util.HashMap;
+import java.util.List;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.preferences.TextToPdfPreferences;
 
 public class PageSizeUtils {
 
-    private final Context mActivity;
+    public static final String PAGE_SIZE_FIT_SIZE = "FIT_SIZE";
+
     public static String mPageSize;
+    private final Context mActivity;
     private final String mDefaultPageSize;
     private final HashMap<Integer, Integer> mPageSizeToString;
     private final TextToPdfPreferences mPreferences;
 
     /**
      * Utils object to modify the page size
+     *
      * @param mActivity - current context
      */
     public PageSizeUtils(Context mActivity) {
@@ -34,6 +39,7 @@ public class PageSizeUtils {
         mPageSize = mPreferences.getPageSize();
         mPageSizeToString = new HashMap<>();
         mPageSizeToString.put(R.id.page_size_default, R.string.a4);
+        mPageSizeToString.put(R.id.page_size_fit_size, R.string.fit_size);
         mPageSizeToString.put(R.id.page_size_legal, R.string.legal);
         mPageSizeToString.put(R.id.page_size_executive, R.string.executive);
         mPageSizeToString.put(R.id.page_size_ledger, R.string.ledger);
@@ -58,6 +64,9 @@ public class PageSizeUtils {
                 stringPageSize = spinnerBValue;
                 mPageSize = stringPageSize.substring(0, stringPageSize.indexOf(" "));
                 break;
+            case R.id.page_size_fit_size:
+                mPageSize = PAGE_SIZE_FIT_SIZE;
+                break;
             default:
                 mPageSize = mActivity.getString(mPageSizeToString.get(selectionId));
 
@@ -67,6 +76,7 @@ public class PageSizeUtils {
 
     /**
      * Show a dialog to modify the page size
+     *
      * @param saveValue - save the value in shared preferences
      * @return - dialog object
      */
@@ -101,7 +111,28 @@ public class PageSizeUtils {
     }
 
     /**
+     * Calculates common page size for given images to fit all of them.
+     * - If images have different sizes than max width, max height is used to fit all of them.
+     * - If images have same size, than output returns exact size of image.
+     *
+     * @param imagesUri - input images URIs as Strings.
+     * @return common size of input images as Rectangle.
+     * @see com.itextpdf.text.Rectangle
+     */
+    public static Rectangle calculateCommonPageSize(List<String> imagesUri) {
+        float maxWidth = 0; float maxHeight = 0;
+        for (String imageUri : imagesUri) {
+            Rectangle imageSize = ImageUtils.getImageSize(imageUri);
+            float imageWidth = imageSize.getWidth(); float imageHeight = imageSize.getHeight();
+            if (imageWidth > maxWidth) maxWidth = imageWidth;
+            if (imageHeight > maxHeight) maxHeight = imageHeight;
+        }
+        return new Rectangle(maxWidth, maxHeight);
+    }
+
+    /**
      * Private show page size utils dialog
+     *
      * @param saveValue - save the value in shared prefs
      * @return - dialog object
      */
@@ -118,7 +149,7 @@ public class PageSizeUtils {
                     mPageSize = getPageSize(selectedId, spinnerA.getSelectedItem().toString(),
                             spinnerB.getSelectedItem().toString());
                     CheckBox mSetAsDefault = view.findViewById(R.id.set_as_default);
-                    if (saveValue || mSetAsDefault.isChecked() ) {
+                    if (saveValue || mSetAsDefault.isChecked()) {
                         mPreferences.setPageSize(mPageSize);
                     }
                 }).build();
@@ -126,7 +157,8 @@ public class PageSizeUtils {
 
     /**
      * Get key from the value
-     * @param map - hash map
+     *
+     * @param map   - hash map
      * @param value - the value for which we want the key
      * @return - key value
      */
