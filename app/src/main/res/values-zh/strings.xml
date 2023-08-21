@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PDF Converter</string>
+    <string name="app_name">PDF 转换器</string>
     <string name="title">PDF操作</string>
 
     <string name="file_name_text">文件名称</string>
@@ -12,19 +12,19 @@
     <string name="search_hint">文件名称</string>
     <string name="search">搜索</string>
     <string name="default_content_description">没有描述</string>
-    <string name="prompt_input">在此处输入</string>
-    <!--   Items  -->
+    <string name="prompt_input">在此输入</string>
+    <!--   项目   -->
     <array name="items">
         <item>打开文件</item>
         <item>删除文件</item>
         <item>重命名文件</item>
-        <item>列印文件</item>
+        <item>打印文件</item>
         <item>分享文件</item>
         <item>显示详情</item>
-        <item>加入密码</item>
+        <item>添加密码</item>
         <item>移除密码</item>
         <item>旋转页面</item>
-        <item>加入水印</item>
+        <item>添加水印</item>
     </array>
 
     <array name="itemIds" translatable="false">
@@ -75,265 +75,262 @@
 
     <string name="please_wait">请稍等</string>
     <string name="bundleKey">图像URI</string>
-    <string name="whatsappToast">抱歉！图像加入失败，请从 **选择图像** 选项中选择图像。</string>
-    <string name="successToast">已成功加入图像</string>
+    <string name="whatsappToast">抱歉！无法添加图像。请从 **选择图像** 选项中选择图像。</string>
+    <string name="successToast">成功添加图像。</string>
 
-    <!-- Navigation drawer strings -->
-    <string name="create_pdf">创建 PDF</string>
-    <string name="qr_barcode_pdf">二维码及条码</string>
+    <!-- 导航抽屉字符串 -->
+    <string name="create_pdf">创建PDF</string>
+    <string name="qr_barcode_pdf">二维码和条形码</string>
     <string name="viewFiles">查看文件</string>
     <string name="extras">其他</string>
     <string name="share">分享</string>
     <string name="help">帮助</string>
 
-    <!-- images to PDF -->
+    <!-- 图像转PDF -->
     <string name="images_to_pdf">图像转PDF</string>
     <string name="page_color">页面颜色</string>
-    <string name="filter_images_Text">过滤图像 \n</string>
-    <!--    Image to PDF -Preview PDF-->
+    <string name="filter_images_Text">筛选图像 \n</string>
+    <!-- 图像转PDF - 预览PDF -->
     <string name="preview_image_to_pdf">预览PDF</string>
-    <!--    Image to PDF-show page number-->
-    <string name="choose_page_number_style">选择页码外形</string>
-    <string name="show_pg_num">选择页码</string>
+    <!-- 图像转PDF - 显示页码 -->
+    <string name="choose_page_number_style">选择页码样式</string>
+    <string name="show_pg_num">显示页码</string>
     <string name="page_x_of_n">页 X / N</string>
     <string name="page_x">X / N</string>
     <string name="x">X</string>
-    <!--    Image to PDF -Rearrange images-->
-    <string name="arrow_up">Arrow Up</string>
-    <string name="arrow_down">Arrow Down</string>
+    <!-- 图像转PDF - 重新排列图像 -->
+    <string name="arrow_up">向上箭头</string>
+    <string name="arrow_down">向下箭头</string>
     <string name="rearrange_images">重新排列图像</string>
     <string name="rearrange_text">重新排列</string>
     <string name="images_rearranged">图像已重新排列</string>
-    <string name="snackbar_undoAction">复原</string>
-    <string name="pdf_does_not_exist_message">PDF并不存在。</string>
+    <string name="snackbar_undoAction">撤销</string>
+    <string name="pdf_does_not_exist_message">PDF 不存在。</string>
     <string name="image_rearranging_options">图像重新排列选项</string>
 
-    <!--    Image compression-->
-    <string name="compress_image">图像压缩： %1$s %%</string>
-    <string name="quality_image">输入图像压缩百分比:</string>
+    <!-- 图像压缩 -->
+    <string name="compress_image">图像压缩：%1$s%%</string>
+    <string name="quality_image">输入图像的压缩百分比：</string>
     <string name="invalid_entry">无效输入</string>
-    <string name="compress_dialog_enter_prompt">在此处输入</string>
+    <string name="compress_dialog_enter_prompt">在此输入</string>
     <string name="compress_dialog_percentage">%</string>
-    <string name="set_as_default">设置为默认值</string>
-    <!--    Image to PDf -Add margins-->
-    <string name="add_margins">加入页边</string>
-    <string name="top">上</string>
-    <string name="bottom">下</string>
-    <string name="right">右</string>
-    <string name="left">左</string>
+    <string name="set_as_default">设为默认</string>
+    <!-- 图像转PDF - 添加边距 -->
+    <string name="add_margins">添加边距</string>
+    <string name="top">顶部</string>
+    <string name="bottom">底部</string>
+    <string name="right">右侧</string>
+    <string name="left">左侧</string>
+    <!-- 添加图像边框 -->
+    <string name="border">添加图像边框</string>
+    <string name="border_dialog_title">边框宽度：%d</string>
+    <string name="border_width_prompt">输入边框宽度单位</string>
 
-    <!--  Add Image Border  -->
-    <string name="border">加入图像边界</string>
-    <string name="border_dialog_title">边界宽度： %d</string>
-    <string name="border_width_prompt">输入边界宽度单位</string>
-
-    <!--  set Image Scale type  -->
+    <!-- 设置图像比例类型 -->
     <string name="image_scale_type">设置图像比例类型</string>
-    <string name="stretch_image">伸缩图像以配合页面</string>
-    <string name="maintain_aspect_ratio">维持图像长宽比</string>
+    <string name="stretch_image">拉伸图像以适应页面</string>
+    <string name="maintain_aspect_ratio">保持图像的宽高比</string>
 
-
-    <!--QR & Barcode Scan-->
+    <!-- QR码和条形码扫描 -->
     <string name="scan_qrcode">扫描二维码</string>
-    <string name="scan_barcode">扫描条码</string>
+    <string name="scan_barcode">扫描条形码</string>
     <string name="qrbarcodes_to_pdf">从二维码和条码创建PDF</string>
     <string name="scan_cancelled">用户已取消扫描</string>
 
-    <!--Snackbar strings -->
-    <string name="snackbar_no_images">无已选择图像</string>
-    <string name="snackbar_no_pdfs_selected">无已选择PDF</string>
-    <string name="snackbar_name_not_blank">名称无法为空白</string>
-    <string name="snackbar_permissions_given">已给予许可！</string>
-    <string name="snackbar_insufficient_permissions">许可不足！</string>
-    <string name="no_permissions">请提供储存许可以查看文件。</string>
-    <string name="prompt_give_permission">提供许可</string>
-    <string name="snackbar_images_added">已加入图像</string>
+    <!-- Snackbar 字符串 -->
+    <string name="snackbar_no_images">未选择图像</string>
+    <string name="snackbar_no_pdfs_selected">未选择PDF文件</string>
+    <string name="snackbar_name_not_blank">名称不能为空</string>
+    <string name="snackbar_permissions_given">已授予权限！</string>
+    <string name="snackbar_insufficient_permissions">权限不足！</string>
+    <string name="no_permissions">请提供存储权限以查看您的文件。</string>
+    <string name="prompt_give_permission">授予权限</string>
+    <string name="snackbar_images_added">已添加图像</string>
     <string name="snackbar_file_renamed">已重命名文件。</string>
     <string name="snackbar_file_not_renamed">文件无法被重命名。</string>
     <string name="snackbar_file_deleted">已删除文件。</string>
     <string name="snackbar_file_not_deleted">文件无法被删除。</string>
-    <string name="snackbar_folder_not_created">在创建应用文件夹时发生错误。</string>
+    <string name="snackbar_folder_not_created">创建应用文件夹时出错。</string>
     <string name="pdf_merged">已合并PDF</string>
     <string name="error_path_not_found">抱歉，该文件路径无法被访问</string>
-    <string name="creating_pdf">正在创建 PDF</string>
-    <string name="creating_txt">正在创建文本文档</string>
-    <string name="enter_file_name">输入文件名称</string>
-    <string name="example">例子： abc</string>
-    <string name="snackbar_no_pdf_app">没有可读取PDF文件的应用程式</string>
+    <string name="creating_pdf">正在创建PDF</string>
+    <string name="creating_txt">正在创建文本文件</string>
+    <string name="enter_file_name">输入文件名</string>
+    <string name="example">示例：abc</string>
+    <string name="snackbar_no_pdf_app">没有可以阅读PDF文件的应用</string>
     <string name="open_file">打开文件</string>
     <string name="set_password">设置密码</string>
     <string name="enter_password">输入密码</string>
-    <string name="snackbar_password_cannot_be_blank">密码无法为空</string>
-    <string name="cannot_add_password">密码无法被应用到PDF，请再次检查PDF。</string>
-    <string name="snackbar_imagecropped">已裁剪图像</string>
+    <string name="snackbar_password_cannot_be_blank">密码不能为空</string>
+    <string name="cannot_add_password">无法将密码应用于PDF文件。请重新检查PDF文件。</string>
+    <string name="snackbar_imagecropped">图像已裁剪</string>
     <string name="cropImage_activityTitle">裁剪图像</string>
     <string name="snackbar_pdfCreated">已创建PDF！</string>
-    <string name="error_uri_not_found">抱歉，已截取图像无法被访问，请再试一次。</string>
-    <string name="snack_bar_empty_txt_in_pdf">被选取PDF没有可摘取文字！</string>
-    <string name="snackbar_txtExtracted">已摘取文字！</string>
+    <string name="error_uri_not_found">抱歉，我们无法访问裁剪后的图像。请重试。</string>
+    <string name="snack_bar_empty_txt_in_pdf">所选PDF中没有可提取的文本！</string>
+    <string name="snackbar_txtExtracted">文本已提取！</string>
     <string name="snackbar_pdfselected">已选择PDF文件！</string>
     <string name="snackbar_viewAction">查看</string>
-    <string name="more_options_text">更多进阶选项</string>
-    <string name="snackbar_no_duplicate_pdf">找不到复本页面，没有新PDF被创建。</string>
-    <string name="snackbar_duplicate_removed">新PDF已被创建，复本页面已被移除。</string>
-    <string name="snackbar_invert_unsuccessful">无法反转PDF</string>
+    <string name="more_options_text">更多增强选项</string>
+    <string name="snackbar_no_duplicate_pdf">未找到重复的页面，未创建新的PDF。</string>
+    <string name="snackbar_duplicate_removed">删除重复页面后创建了新的PDF。</string>
+    <string name="snackbar_invert_unsuccessful">无法反转PDF文件</string>
     <string name="snackbar_invert_successfull">已反转</string>
-    <string name="snackbar_color_too_close">文字颜色与背景颜色太相似</string>
+    <string name="snackbar_color_too_close">字体颜色和背景颜色过于相似</string>
 
+    <!-- Excel转PDF -->
+    <string name="excel_selected">已选择Excel文件</string>
+    <string name="excel_to_pdf">Excel转PDF</string>
+    <string name="excel_tv_view_text">已选择Excel文件：</string>
+    <string name="select_excel_file">选择Excel文件</string>
 
-    <!-- Excel to PDF   -->
-    <string name="excel_selected">已选择试算表文件</string>
-    <string name="excel_to_pdf">试算表转PDF</string>
-    <string name="excel_tv_view_text">已选择试算表文件： </string>
-    <string name="select_excel_file">选择试算表文件</string>
+    <!-- 分享字符串 -->
+    <string name="share_chooser">选择发送消息的应用…</string>
 
+    <!-- 评价我们的字符串 -->
+    <string name="rate_us_text">嗨！我刚在应用商店试了这个应用。试试吧：https://play.google.com/store/apps/details?id=swati4star.createpdf 。它可以轻松将图像转换为PDF文件。 :)</string>
+    <string name="snackbar_no_share_app">没有可分享的应用。</string>
 
-    <!-- Share strings -->
-    <string name="share_chooser">选择应用程式以发送讯息……</string>
+    <!-- 选择图像字符串 -->
+    <string name="images_selected">已选择 %1$d 张图像。</string>
 
-    <!-- Rate us strings -->
-    <string name="rate_us_text">Hi！我刚在Play应用商店查看了此款应用程式。立即尝试：https://play.google.com/store/apps/details?id=swati4star.createpdf。它可以顺利地把图像转换成PDF。:)</string>
-    <string name="snackbar_no_share_app">没有用以分享的应用程式。</string>
+    <!-- 反馈字符串 -->
+    <string name="feedback_subject">关于Images To PDF Converter的建议</string>
+    <string name="feedback_text">请写下您宝贵的反馈，或者只是打个招呼！ :)</string>
+    <string name="snackbar_no_email_clients">未安装电子邮件客户端。</string>
+    <string name="feedback_chooser">发送邮件…</string>
+    <string name="no_pdf">没有可显示的PDF文件</string>
+    <string name="get_started">立即开始</string>
+    <string name="view_files_text">在此查看所有转换后的文件！</string>
+    <string name="empty_image_description">无PDF文件</string>
 
-    <!-- Select Images string -->
-    <string name="images_selected"> %1$d 张已选择图像。</string>
-
-    <!-- Feedback Strings -->
-    <string name="feedback_subject">图像到PDF转换器的建议</string>
-    <string name="feedback_text">请留下你宝贵的意见，或者也可以打一下招呼！ :)</string>
-    <string name="snackbar_no_email_clients">没有已安装的邮件客户端。</string>
-    <string name="feedback_chooser">"发送邮件……"</string>
-    <string name="no_pdf">没有可显示的PDF</string>
-    <string name="get_started">开始</string>
-    <string name="view_files_text">在此查看你所有已转换的文件！!</string>
-    <string name="empty_image_description">没有Pdf</string>
-
-    <!--  Add Password -->
+    <!-- 添加密码 -->
     <string name="enter_password_custom">输入密码</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">移除</string>
     <string name="password_remove">已移除密码</string>
 
-    <!-- Merge PDF  -->
+    <!-- 合并PDF -->
     <string name="merge_pdf">合并PDF</string>
     <string name="merge_file_select">选择文件</string>
-    <string name="File_hint_two" tools:keep="@string/File_hint_two">第二份PDF的文件路径</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">第二个PDF的文件路径</string>
     <string name="merge_files">合并文件</string>
     <string name="file_date_text">文件日期</string>
     <string name="file_size_text">文件大小</string>
     <string name="encrypted_file">_encrypted.pdf</string>
-    <string name="i_have_attached_pdfs_to_this_message">在此讯息我有附加文件</string>
+    <string name="i_have_attached_pdfs_to_this_message">我已将文件附加到此消息</string>
+    <string name="btn_sav_text" translatable="false">保存文本</string>
 
     <string name="nextimage_contentdesc">下一张图像</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
     <string name="decrypt_message">输入密码以继续</string>
 
-    <string name="snackbar_txtselected">已选择文字文档！</string>
-    <string name="decrypt_protected_file">已选择PDF有密码保护，输入密码以继续……</string>
-    <string name="not_encrypted">PDF没有被加密</string>
-    <string name="save_current">储存</string>
-    <string name="save">储存</string>
+    <string name="snackbar_txtselected">已选择文本文件！</string>
+    <string name="decrypt_protected_file">所选PDF文件受密码保护。请输入密码以继续…</string>
+    <string name="not_encrypted">PDF未加密</string>
+    <string name="save_current">保存</string>
+    <string name="save">保存</string>
     <string name="choose_color_text">选择颜色：</string>
-    <string name="save_first">首先储存当前图像</string>
-    <string name="Filter_name">过滤</string>
-    <string name="Filter_image_preview">过滤图像预览</string>
+    <string name="save_first">首先保存当前图像</string>
+    <string name="Filter_name">筛选器</string>
+    <string name="Filter_image_preview">筛选图像预览</string>
     <string name="warning">警告</string>
-    <string name="overwrite_message">已有同名文件名称存在，你想覆盖已有文件吗？</string>
+    <string name="overwrite_message">已存在同名文件。是否要覆盖？</string>
 
-    <!--  Text To PDF -Set Page Size-->
+    <!-- 文本转PDF - 设置页面大小 -->
     <string name="set_page_size_text">设置页面大小</string>
-    <string name="b0_to_b10">B0 to B10</string>
-    <string name="a0_to_a10">A0 to A10</string>
-    <string name="default_page_size">默认 ( %s )</string>
-    <string name="master_password_changed">此密码看来并不正确，或者你可能已更改主密码。</string>
+    <string name="b0_to_b10">B0 至 B10</string>
+    <string name="a0_to_a10">A0 至 A10</string>
+    <string name="fit_size" translatable="false">适应大小</string>
+    <string name="default_page_size">默认（%s）</string>
+    <string name="master_password_changed">密码似乎不正确。也许您已变更了主密码。</string>
 
-
-    <!--View File options    -->
-    <string name="delete_alert_selected">确定删除所选择文件？</string>
+    <!-- 查看文件选项 -->
+    <string name="delete_alert_selected">是否要删除所有选择的文件？</string>
     <string name="sort_by_title">排序方式</string>
     <string name="delete">删除</string>
     <string name="sort">排序</string>
 
-    <!-- Directory Strings -->
-    <string name="directory">文件夹</string>
-    <string name="moving_files">正在移动文件</string>
-    <string name="success_move">已成功移动文件</string>
-    <string name="dir_does_not_exists">文件夹不存在</string>
-    <string name="move_files_delete_dir">正在移动文件及删除文件夹</string>
-    <string name="directory_deleted">已删除文件夹</string>
-    <string name="success_delete_directory">已成功删除文件夹</string>
-    <string name="moved_files">已成功移动文件</string>
-    <string name="dialog_new_dir">输入新文件夹名称</string>
-    <string name="dialog_dir">输入文件夹名称</string>
+    <!-- 目录字符串 -->
+    <string name="directory">目录</string>
+    <string name="moving_files">正在移动您的文件</string>
+    <string name="success_move">已成功移动您的文件</string>
+    <string name="dir_does_not_exists">目录不存在</string>
+    <string name="move_files_delete_dir">移动文件并删除目录</string>
+    <string name="directory_deleted">目录已删除</string>
+    <string name="success_delete_directory">已成功删除目录</string>
+    <string name="moved_files">文件已成功移动</string>
+    <string name="dialog_new_dir">输入新目录名称</string>
+    <string name="dialog_dir">输入目录名称</string>
     <string name="cancel">取消</string>
-    <string name="ok">OK</string>
-    <string name="yes">好</string>
-    <string name="select_all">选择全部</string>
-    <string name="converting_file_message">正在转换你的文件到PDF。</string>
-    <string name="select_text_file">选择文字文档</string>
+    <string name="ok">确定</string>
+    <string name="yes">是</string>
+    <string name="select_all">全选</string>
+    <string name="converting_file_message">正在将您的文件转换为PDF</string>
+    <string name="select_text_file">选择文本文件</string>
     <string name="install_file_manager">请安装文件管理器</string>
 
-    <!-- Text to PDF   -->
-    <string name="text_to_pdf">文字转PDF</string>
-    <string name="text_file_selected">已选择文字</string>
-    <string name="select_file">"选择要上传的文件"</string>
-    <string name="new_directory">新文件夹</string>
+    <!-- 文本转PDF -->
+    <string name="text_to_pdf">文本转PDF</string>
+    <string name="text_file_selected">已选择文本文件</string>
+    <string name="select_file">选择要上传的文件</string>
+    <string name="new_directory">新目录</string>
     <string name="previous_image_content_desc">上一张图像</string>
-    <string name="text_file_name">"文字文档："</string>
-    <string name="extension_not_supported">抱歉！此刻并不支持此文件类型。</string>
-    <string name="font_color">文字颜色</string>
-    <string name="edit_font_size">文字大小 (默认 : %d)</string>
-    <string name="enter_font_size">输入文字大小</string>
-    <string name="example_font">例子：10</string>
-    <string name="font_size_changed">已变更文字大小</string>
-    <string name="font_size">文字大小： %1$s</string>
+    <string name="text_file_name">"文本文件：" </string>
+    <string name="extension_not_supported">抱歉！当前不支持此文件类型。</string>
+    <string name="font_color">字体颜色</string>
+    <string name="edit_font_size">字体大小（默认：%d）</string>
+    <string name="enter_font_size">输入字体大小</string>
+    <string name="example_font">示例：10</string>
+    <string name="font_size_changed">字体大小已变更</string>
+    <string name="font_size">字体大小：%1$s</string>
 
-    <!--  About US & App Description & Contact US  -->
+    <!-- 关于我们、应用描述和联系我们 -->
     <string name="about_us">关于我们</string>
     <string name="rate_us">为我们评分</string>
-    <string name="app_description">易于使用的安卓应用程式以转换你的文件到PDF。</string>
-    <string name="version">版本： </string>
-    <string name="developer">开发者： Swati Garg</string>
+    <string name="app_description">一个易于使用的Android应用，可将您的文件转换为PDF。</string>
+    <string name="version">版本：</string>
+    <string name="developer">开发者：Swati Garg</string>
     <string name="github_repo">Github 仓库</string>
-    <string name="view_contributors">查看贡献人员</string>
+    <string name="view_contributors">查看贡献者</string>
     <string name="privacy_policy">隐私政策</string>
     <string name="mail">发送邮件</string>
     <string name="join_slack">加入我们的Slack</string>
-    <string name="website">查看我们的网址</string>
-    <string name="license">许可条款</string>
-    <string name="playstore">在Playstore给我们评分</string>
+    <string name="website">访问我们的网站</string>
+    <string name="license">许可证</string>
+    <string name="playstore">在Play商店上给我们评分</string>
 
-    <!-- Preview strings -->
-    <string name="swipe_to_view_next">滑向左以查看下一张图像</string>
-    <string name="showing_image">正在显示第 %1$d 张，共 %2$d 张图像</string>
+    <!-- 预览字符串 -->
+    <string name="swipe_to_view_next">向左滑动以查看下一张图像</string>
+    <string name="showing_image">显示 %1$d / %2$d 张图像</string>
 
-    <!-- Filter strings -->
+    <!-- 滤镜字符串 -->
     <string name="filter_brush">画笔</string>
     <string name="filter_none">无</string>
     <string name="filter_autofix">自动修复</string>
     <string name="filter_grayscale">灰阶</string>
     <string name="filter_brightness">亮度</string>
     <string name="filter_contrast">对比度</string>
-    <string name="filter_cross">交叉进程</string>
-    <string name="filter_documentary">记录</string>
-    <string name="filter_duetone">Due Tone</string>
-    <string name="filter_filllight">补光</string>
-    <string name="filter_filpver">垂直反转</string>
-    <string name="filter_fliphor">水平反转</string>
+    <string name="filter_cross">交叉处理</string>
+    <string name="filter_documentary">纪录片</string>
+    <string name="filter_duetone">双色调</string>
+    <string name="filter_filllight">填充光</string>
+    <string name="filter_filpver">垂直翻转</string>
+    <string name="filter_fliphor">水平翻转</string>
     <string name="filter_grain">颗粒</string>
     <string name="filter_lomish">Lomish</string>
-    <string name="filter_negative">负向</string>
+    <string name="filter_negative">反转</string>
     <string name="filter_poster">海报化</string>
     <string name="filter_rotate">旋转</string>
     <string name="filter_saturate">饱和度</string>
-    <string name="filter_sepia">Sepia</string>
+    <string name="filter_sepia">深褐色</string>
     <string name="filter_sharpen">锐化</string>
     <string name="filter_temp">温度</string>
-    <string name="filter_tint">着色</string>
-    <string name="filter_vig">插图</string>
-    <string name="filter_saved">已储存图像</string>
+    <string name="filter_tint">色调</string>
+    <string name="filter_vig">暗角</string>
+    <string name="filter_saved">图像已保存</string>
     <string name="created">已创建</string>
-    <string name="printed">已列印</string>
+    <string name="printed">已打印</string>
     <string name="renamed">已重命名</string>
     <string name="deleted">已删除</string>
     <string name="rotated">已旋转</string>
@@ -344,88 +341,86 @@
     <string name="view_history_here_message">在此查看所有已转换文件历史！</string>
     <string name="delete_history_message">确定删除历史？</string>
 
-    <!-- Extract images -->
-    <string name="extract_images">截取图像</string>
-    <string name="extract_images_failed">已选择PDF没有任何图像。</string>
-    <string name="extract_images_success">已选择PDF有 %1$d 张图像，它们已被储存在PDF文件的根文件夹。</string>
+    <!-- 提取图像 -->
+    <string name="extract_images">提取图像</string>
+    <string name="extract_images_failed">我们无法在选定的PDF中找到任何图像。</string>
+    <string name="extract_images_success">我们在选定的PDF中找到了 %1$d 张图像。它们已保存在根目录中的 PDF 文件夹中。</string>
 
+    <!-- 提取文本 -->
+    <string name="extract_text">提取文本</string>
+    <string name="pdf_selected">选择的PDF文件： </string>
+    <string name="file_info" translatable="false">\n  文件名： %1$s \n\n  路径： %2$s \n\n  大小： %3$s \n\n  修改日期：%4$s</string>
 
-    <!--  Extract Text-->
-    <string name="extract_text">摘取文字</string>
-    <string name="pdf_selected">已选择PDF文件： </string>
-
-
-    <!-- Text To PDF   FontFamily-->
+    <!-- 文本转PDF  字体系列 -->
     <string name="default_font_family_text">字体系列 (默认： %s)</string>
     <string name="font_family_text">"字体系列： "</string>
-    <string name="undefined">UNDEFINED</string>
-    <string name="selected_image">选择图像</string>
-    <string name="reset">重设</string>
+    <string name="undefined">未定义</string>
+    <string name="selected_image">已选择图像</string>
+    <string name="reset">重置</string>
     <string name="rotate">旋转</string>
     <string name="done">完成</string>
-    <string name="image_successfully_cropped">已成功截取图像</string>
-    <string name="confirm_exit_message">再按一次后退以退出</string>
+    <string name="image_successfully_cropped">图像成功裁剪</string>
+    <string name="confirm_exit_message">再次按下返回键退出</string>
 
-    <string name="filter_not_saved">无法储存图像</string>
-    <string name="remove_image_message">确定移除此图像？</string>
-    <string name="dont_show_again">不要再次显示</string>
-    <string name="remove_page_message">确定移除此页？</string>
+    <string name="filter_not_saved">图像无法保存</string>
+    <string name="remove_image_message">是否确定要删除此图像？</string>
+    <string name="dont_show_again">不再显示</string>
+    <string name="remove_page_message">是否确定要删除此页？</string>
 
-    <!-- Watermark Strings -->
+    <!-- 水印字符串 -->
     <string name="encrypted_file_text">已加密文件</string>
 
-    <!-- Split PDF -->
+    <!-- 分割PDF -->
     <string name="split_pdf">拆分PDF</string>
-    <string name="split_success">已成功拆分所选PDF，它被分拆成  %1$d 份PDF</string>
-    <string name="split_info">PDF会被分拆成数份PDF，格式例子： 1&#8211;5,6&#8211;7,8,9</string>
-    <string name="error_page_number">错误页码</string>
-    <string name="error_page_range">错误范围输入</string>
-    <string name="error_invalid_input">错误输入</string>
-    <string name="split_one_page_pdf_alert">所选择PDF不能被分拆，因为它只有1页！</string>
+    <string name="split_success">所选PDF已成功拆分。已拆分为%1$d个PDF。</string>
+    <string name="split_info">PDF将被拆分为多个PDF。\n示例格式：1–5，6–7，8，9</string>
+    <string name="error_page_number">无效的页码</string>
+    <string name="error_page_range">无效的范围输入</string>
+    <string name="error_invalid_input">无效的输入</string>
+    <string name="split_one_page_pdf_alert">所选PDF不能拆分，因为它只有1页！</string>
 
-    <!-- Remove Pages -->
+    <!-- 删除页 -->
     <string name="remove_pages">移除页面</string>
-    <string name="remove_pages_error">输入数值并不正确</string>
+    <string name="remove_pages_error">输入值无效</string>
     <string name="encrypted_pdf">PDF已被密码保护</string>
     <string name="file_access_error">PDF不能被访问，文件可能已被加密或处于外置存储空间。</string>
     <string name="file_order">该文件没有变更</string>
 
-    <!-- Reorder Pages -->
+    <!-- 重新排序页 -->
 
 
-    <!-- Compress PDF -->
+    <!-- 压缩PDF -->
     <string name="compress_pdf">压缩PDF</string>
-    <string name="compress_pdf_prompt">输入PDF压缩百分比： </string>
+    <string name="compress_pdf_prompt">输入PDF的压缩率：%% </string>
     <string name="compress_info">恭喜! 你的 PDF 已被压缩： \n 原PDF大小 : %s \n 压缩后PDF大小: %s</string>
 
-    <!-- PDF to Images string resources-->
+    <!-- PDF到图像的字符串资源-->
     <string name="pdf_to_images">PDF转图像</string>
     <string name="create_images">创建图像</string>
     <string name="select_pdf_file">选择PDF文件</string>
     <string name="share_images">分享图像</string>
     <string name="view_images">查看图像</string>
-    <string name="view_in_gallery">在画廊查看图像</string>
+    <string name="view_in_gallery">在图库中查看图像</string>
 
-    <!-- Remove Duplicate Pages -->
-    <string name="remove_duplicate_pages">移除复本页面</string>
-    <string name="remove_duplicate_info">PDF里的复本页面已被移除。</string>
-    <string name="remove_duplicate">移除复本页面。</string>
+    <!-- 删除重复的页 -->
+    <string name="remove_duplicate_pages">删除重复的页</string>
+    <string name="remove_duplicate_info">PDF中的重复页将被删除。</string>
+    <string name="remove_duplicate">删除重复的页。</string>
 
-    <!-- Invert Pdf -->
-    <string name="invert_pdf">反转Pdf</string>
-    <string name="invert_pdf_info">所有PDF里的颜色会被反转</string>
+    <!-- 反转PDF -->
+    <string name="invert_pdf">反转PDF</string>
+    <string name="invert_pdf_info">PDF中的所有颜色将被反转</string>
     <string name="invert_pdf_title">反转PDF</string>
 
-    <!-- Rate us strings -->
+    <!-- 给我们评分字符串 -->
     <string name="rate_positive">现在评价</string>
     <string name="rate_negative">不用了，谢谢</string>
     <string name="rate_title">评价我们！</string>
-    <string name="rate_dialog_text">如果你喜欢这个应用程式，请花一点点时间来评价我们。这不会花费你多于一分钟，谢谢你的支持！ :)</string>
+    <string name="rate_dialog_text">如果您喜欢此应用，请花一点时间为此应用评分。不会超过一分钟。感谢您的支持！:)</string>
     <string name="rate_us_never">从不</string>
     <string name="error_occurred">发生错误</string>
 
-
-    <!--Rotate Pages    -->
+    <!-- 旋转页 -->
     <string name="rotate_pages">旋转页面</string>
     <string name="enter_rotation_angle">输入旋转角度</string>
     <string name="share_files">分享文件</string>
@@ -433,143 +428,152 @@
     <string name="pdf_added_to_list">PDF已加入到列表。</string>
     <string name="select_files">选择文件</string>
 
-    <!-- Settings page -->
+    <!-- 设置页面 -->
     <string name="settings">设置</string>
     <string name="compression_image_edit">变更图像压缩值</string>
     <string name="font_family_edit">变更默认字体系列</string>
-    <string name="font_size_edit">变更默认文字大小</string>
+    <string name="font_size_edit">变更默认字体大小</string>
     <string name="theme_edit">变更默认主题</string>
-    <string name="image_compression_value_default">图像压缩默认值： %d %%</string>
-    <string name="theme_value_def">主题默认值： %s </string>
-    <string name="page_size_value_def">页面大小默认值： %s </string>
-    <string name="font_size_value_def">文字大小默认值： %d </string>
-    <string name="font_family_value_def">字体系列默认值： %s </string>
-    <string name="settings_info">你可以在此更改数项设置的默认值。</string>
-    <string name="storage_location_modified">已变更存储位置</string>
-    <string name="storage_location_info">变更存储位置</string>
-    <string name="theme_white">白</string>
-    <string name="theme_dark">暗</string>
-    <string name="theme_black">黑</string>
-    <string name="theme_system">System</string>
+    <string name="image_compression_value_default">图像压缩默认值：%d %%</string>
+    <string name="theme_value_def">主题默认值：%s </string>
+    <string name="page_size_value_def">页面大小默认值：%s </string>
+    <string name="font_size_value_def">字体大小默认值：%d </string>
+    <string name="font_family_value_def">字体系列默认值：%s </string>
+    <string name="settings_info">您可以在此处修改各种设置的默认值。</string>
+    <string name="storage_location_modified">存储位置已变更</string>
+    <string name="storage_location_info">存储位置（不可变更）</string>
+    <string name="theme_white">白色</string>
+    <string name="theme_dark">深色</string>
+    <string name="theme_black">黑色</string>
+    <string name="theme_system" tools:ignore="MissingTranslation">系统</string>
     <string name="change_master_pwd">变更主密码</string>
-    <string name="current_master_pwd">现时所有已加密PDF的主密码为 \"%1$s\" ， 你可以在此变更：</string>
+    <string name="current_master_pwd">当前的主密码为“%1$s”，适用于每个加密的PDF文件。您可以在此处变更：</string>
 
-    <!-- Home page -->
+    <!-- 主页 -->
     <string name="home_page">主页</string>
     <string name="create_new_pdfs">创建新PDF</string>
     <string name="view_pdfs">查看PDF</string>
     <string name="view_pdf">查看PDF</string>
-    <string name="modify_existing_pdfs">改动现有PDF</string>
+    <string name="modify_existing_pdfs">修改现有PDF</string>
     <string name="more_options">更多选项</string>
-    <string name="add_password">加入密码</string>
-    <string name="add_text">加入文字</string>
+    <string name="add_password">添加密码</string>
+    <string name="add_text">添加文字</string>
     <string name="reorder_pages">重新排列页面</string>
     <string name="remove_password">移除密码</string>
-    <string name="enhance_created_pdfs">改进已创建PDF</string>
+    <string name="enhance_created_pdfs">增强已有PDF</string>
     <string name="viewfiles_rotatepages">1. 选择你想旋转的PDF。 \n2. 选择旋转页面。 \n3. 选择旋转角度，选择OK。 \n4. 新已旋转PDF会被创建。</string>
     <string name="viewfiles_addpassword">1. 选择你想加入密码的PDF。 \n2. 选择加入密码。 \n3. 输入新密码，选择OK。 \n4. 新已加入密码的PDF会被创建。</string>
     <string name="viewfiles_removepassword">1. 选择你想移除密码的PDF。 \n2. 选择移除密码。 \n3. 输入PDF密码，选择OK。 \n4. 新已移除密码PDF会被创建。</string>
     <string name="grayscale_images">创建灰阶PDF</string>
-
-    <!-- Welcome screens-->
+    <!-- 欢迎界面 -->
     <string name="welcome_create_pdf_message">创建PDF文件</string>
-    <string name="welcome_create_pdf_info">查看已创建PDF文件或创建一份新的！</string>
+    <string name="welcome_create_pdf_info">查看之前创建的PDF文件或创建新的！</string>
     <string name="welcome_themes_title">不同主题</string>
-    <string name="welcome_themes_message">去到设置页面，你可以选择三个类型的主题：黑，暗和白。</string>
+    <string name="welcome_themes_message">前往设置，您可以选择三种类型的主题：黑色、深色、白色</string>
     <string name="welcome_merge_title">合并PDF文件</string>
-    <string name="welcome_text_to_pdf">文字转PDF</string>
-    <string name="welcome_text_to_pdf_message">放心地转换你的文字文档到你想要的PDF</string>
+    <string name="welcome_text_to_pdf">文本转PDF</string>
+    <string name="welcome_text_to_pdf_message">轻松将您的文本文件转换为所需的PDF文件</string>
     <string name="welcome_qrcode_to_pdf">二维码转PDF</string>
-    <string name="welcome_qrcode_to_pdf_message">以简单的方式转换二维码和条码到PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">以简单的方式将二维码和条形码转换为PDF</string>
     <string name="welcome_remove_pages">移除页面</string>
-    <string name="welcome_remove_pages_message">移除你不想要的页面</string>
+    <string name="welcome_remove_pages_message">移除您不再需要的无用页面</string>
     <string name="welcome_reorder_pages">重新排序页面</string>
-    <string name="welcome_reorder_pages_message">按照你的想法重新排列与排序页面</string>
-    <string name="welcome_extract_images">从PDF截取图像</string>
-    <string name="welcome_extract_images_message">一次过从你的PDF截取所有可能的图像</string>
-    <string name="welcome_merge_message">合并在你手机上不同已存在的PDF为一份文件</string>
+    <string name="welcome_reorder_pages_message">按您的要求重新排列页面</string>
+    <string name="welcome_extract_images">从PDF提取图像</string>
+    <string name="welcome_extract_images_message">一次性从您的PDF中提取所有可能的图像</string>
+    <string name="welcome_merge_message">将您手机中的不同现有PDF合并为一个文件</string>
     <string name="welcome_viewfiles_title">查看PDF文件</string>
-    <string name="welcome_viewfiles_message">查看、删除、重命名、分享你的PDF文件及为它加入密码</string>
+    <string name="welcome_viewfiles_message">查看、删除、重命名、共享和为您的PDF文件添加密码</string>
+    <string name="welcome_excel_message" translatable="false">轻松将您的Excel文件转换为所需的PDF文件</string>
     <string name="skip_text">跳过</string>
-    <string name="get_started_title">开始!</string>
+    <string name="get_started_title">开始使用！</string>
 
-    <!-- Whats New Dialog -->
+    <!-- 新功能对话框 -->
     <string name="whatsnew_continue">继续</string>
-    <string name="whatsnew_title">最新消息</string>
+    <string name="whatsnew_title">新功能</string>
 
-    <!--watermark strings -->
-    <string name="watermark_added">已加入水印</string>
-    <string name="watermarked">已拥有水印</string>
-    <string name="watermarked_file">_watermarked.pdf</string>
+    <!-- 水印字符串 -->
+    <string name="watermark_added">已添加水印</string>
+    <string name="watermarked">已加水印</string>
+    <string name="watermarked_file">_已加水印.pdf</string>
     <string name="watermark_remove">已移除水印</string>
-    <string name="snackbar_watermark_cannot_be_blank">文字不能为空白</string>
-    <string name="cannot_add_watermark">不能为PDF加入水印，请再次检查你的PDF。</string>
-    <string name="add_watermark">加入水印</string>
-    <string name="enter_watermark_text">输入文字</string>
+    <string name="snackbar_watermark_cannot_be_blank">文本不能为空</string>
+    <string name="cannot_add_watermark">无法将水印添加到PDF。请再次检查PDF。</string>
+    <string name="add_watermark">添加水印</string>
+    <string name="enter_watermark_text">输入文本</string>
     <string name="enter_watermark_angle">输入角度</string>
     <string name="watermark_angle">角度</string>
     <string name="choose_watermark_color">选择颜色</string>
-    <string name="enter_watermark_font_size">选择文字大小</string>
-    <string name="choose_watermark_font_family">选择字体系列</string>
-    <string name="watermark_font_size">文字大小</string>
-    <string name="choose_watermark_style">选择风格</string>
-    <string name="viewfiles_addwatermark">1. 选择你想加入水印的PDF。 \n2. 选择加入水印。 \n3. 填入所需资料，选择OK。 \n4. 新已加入水印的PDF会被创建。</string>
+    <string name="enter_watermark_font_size">输入字体大小</string>
+    <string name="choose_watermark_font_family">选择字体</string>
+    <string name="watermark_font_size">字体大小</string>
+    <string name="choose_watermark_style">选择样式</string>
+    <string name="viewfiles_addwatermark">1. 选择要添加水印的PDF。 \n2. 选择添加水印。 \n3. 填写所需信息。选择确定。 \n4. 带有水印的新PDF将被创建。</string>
 
-    <!--<nav add images>-->
-    <string name="add_images">加入图像</string>
-    <string name="selected_images_text">你所选择的图像会被加入到所选PDF的最后。</string>
-    <string name="no_images_selected">没有已选择图像。</string>
-    <string name="title_filter_history_dialog">以操作类型过滤</string>
+    <!--<nav 添加图像>-->
+    <string name="add_images">添加图像</string>
+    <string name="selected_images_text">您选择的图像将添加到所选PDF的末尾。</string>
+    <string name="no_images_selected">未选择图像</string>
+    <string name="title_filter_history_dialog">按操作类型筛选</string>
 
-    <!--zip to pdf-->
+    <!-- 压缩为PDF -->
     <string name="zip_to_pdf">ZIP转PDF</string>
-    <string name="convert_to_pdf">转换到PDF</string>
-    <string name="error_no_image_in_zip">ZIP文件没有包含图像</string>
-    <string name="error_open_file">在打开文件时发生错误，请尝试重新打开。</string>
+    <string name="convert_to_pdf">转换为PDF</string>
+    <string name="error_no_image_in_zip">ZIP文件中不包含图像</string>
+    <string name="error_open_file">打开文件时出错。请尝试重新打开</string>
 
-    <!--text to pdf-->
-    <string name="error_pdf_not_created">抱歉，PDF没有被创建，请重新尝试。</string>
+    <!-- 文本转PDF -->
+    <string name="error_pdf_not_created">抱歉，未创建PDF。请重试</string>
 
-    <!--favourite fragment-->
-    <string name="favourites">最爱</string>
-    <string name="add_to_favourite">加至最爱</string>
-    <string name="favourites_text">选择 + 图标以加入你最爱的功能！</string>
-    <string name="no_excel_file">没有已选择的试算表文件</string>
-    <string name="split_range_alert">已输入的分拆范围会重新创建已选择的PDF！</string>
+    <!-- 收藏夹界面 -->
+    <string name="favourites">收藏夹</string>
+    <string name="add_to_favourite">添加到收藏夹</string>
+    <string name="favourites_text">选择+图标以添加您喜爱的功能！</string>
+    <string name="no_excel_file">未选择Excel文件</string>
+    <string name="split_range_alert">输入的分割范围将重新创建所选的PDF！</string>
 
-    <!--file name suffix-->
-    <string name="reordering_pages_dialog">正在重新排列你的页面……</string>
-    <string name="delete_alert_singular">确定删除所选文件？</string>
-    <string name="snackbar_files_deleted">已删除文件</string>
-    <string name="lbl_recently_used">最近已使用功能</string>
+    <!-- 文件名后缀 -->
+    <string name="pdf_suffix" translatable="false">_pdf</string>
+    <string name="reordering_pages_dialog">正在重新排序您的页面...</string>
+    <string name="delete_alert_singular">您是否要删除所选文件？</string>
+    <string name="snackbar_files_deleted">文件已删除</string>
+    <string name="lbl_recently_used">最近使用的功能</string>
 
-    <!--  FAQs  -->
-    <string name="faqSearch">搜索常见问答</string>
+    <!-- 常见问题 -->
+    <string name="faqSearch">搜索常见问题</string>
+    <string name="manage_storage_permission_alert_dialog_title" translatable="false">允许应用程序访问设备上的文件</string>
+    <string name="manage_storage_permission_alert_dialog_positive_button_label" translatable="false">允许</string>
+    <string name="manage_storage_permission_alert_dialog_negative_button_label" translatable="false">拒绝</string>
+    <string name="manage_storage_permission_denied_alert_dialog_title" translatable="false">权限被拒绝</string>
+    <string name="manage_storage_permission_denied_alert_dialog_message" translatable="false">未授予存储权限，应用程序无法从您的设备中读取文件。您确定要拒绝此权限吗？</string>
+    <string name="manage_storage_permission_denied_alert_dialog_positive_button_label" translatable="false">重试</string>
+    <string name="manage_storage_permission_denied_alert_dialog_negative_button_label" translatable="false">我确定</string>
+    <string name="manage_storage_permission_denied_with_never_ask_alert_dialog_positive_button_label" translatable="false">从设置中允许</string>
     <string-array name="faq_question_answers">
-        <item>什么文件类型会被支持？#####此应用程式支持jpeg、jpg、tiff、gif、psd、bmp、eps、png等等。</item>
-        <item>我可否用此应用程式创建新文字文档？#####你只能够利用摘取已存在PDF文档的文字来创建新文字文档。以创建文字文档， \n1) 在主页点击 <strong>摘取文字</strong> 选项. \n2) 用<strong>选择PDF文件</strong>按钮选择PDF。 \n3) 然后，点击<strong>摘取文字</strong>. \n4) 一旦完成，一份文字文档连带PDF所属文字将会被创建。</item>
-        <item>我一次过创建PDF的图像有数量限制吗？#####没有任何限制。</item>
-        <item>我所加入的图像有大小限制吗？#####没有限制。可是，我们建议你限制文件大小到<strong>小于10MB</strong>。一次过加入数张大型图像需要花费超过10秒。</item>
-        <item>我可以加入图像后插入图像说明吗？#####不可以，图像说明不能被插入，否则将会变成编辑图像本身。</item>
-        <item>我可以使用此应用程式阅读PDF文件吗？#####不可以，你现时不可以这样做。此款应用程式并不能提供类似PDF阅读器的功能。</item>
-        <item>我的PDF文件会被储存到哪里？#####已创建PDF文件会自动储存到你存储装置的一个名叫 PDFfiles 的文件夹。 \n你可以到<strong>设置</strong>版面更改默认路径。</item>
-        <item>如何更改默认存储路径？#####以更改默认存储路径， \n1) 点击位于左上角的 <strong>汉堡包图标</strong> （三条横线） \n2) 往下拉并点击 <strong>设置</strong>。 \n3) 在设置页面，点击位于文本 <strong>变更存储路径</strong> 下方的栏位. \n4) 打开你喜欢的存储路径并点击上方的 <strong>选择按钮</strong>。 \n一旦变更，以此应用程式创建的文件会被储存到新的路径。</item>
-        <item>我如何可以分享已编辑/创建的PDF文件？#####你可以直接透过应用程式存取并分享已编辑/创建的PDF文件。以分享PDF文件， \n1) 点击位于主页的 <strong>查看文件</strong> 选项。 \n2) 利用复选框选择你想要分享的文件。 \n3) 然后，点击位于右上角的 <strong>更多选项</strong> (三粒垂直小点) 并点击 <strong>分享</strong>. \n4) 选择你想要的方法分享文件。</item>
-        <item>我可以恢复已忘记的PDF密码吗？#####不可以，一个已失去的密码不能被恢复。</item>
-        <item>我可以更改PDF文件的密码吗？#####可以，但在此之前你需要移除已存在密码。一旦移除密码，利用位于主页的 <strong>移除密码</strong> 选项更改密码。</item>
-        <item>我可以在创建PDF之前压缩图像吗？#####可以。以压缩图像， \n1) 点击主页上的 <strong>图像转PDF</strong> 选项。 \n2) 利用 <strong>选择图像</strong> 按钮选择图像。 \n3) 然后，选择 <strong>图像压缩</strong> 选项压缩图像。</item>
-        <item>从PDF截取的图像是什么格式的？#####从PDF截取的图像会是 <strong>.png</strong> 格式。</item>
-        <item>我可以从云端/线上存储加入文件吗？#####目前为止，不能。但是正在开发中且很快就会将此功能上线。</item>
-        <item>如何检查文件被创建/编辑历史？#####以查看历史，点击主页上的 <strong>历史</strong> 选项。</item>
-        <item>如何合并数份PDF文件？#####以合并数份PDF文件, \n1) 点击主页上的 <strong>合并PDF</strong> 选项。 \n2) 利用 <strong>选择文件</strong> 按钮选择PDF文件。 \n3) 一旦选择完毕，点击 <strong>合并文件</strong> 按钮。</item>
-        <item>我可以在创建PDF时编辑图像吗？#####可以。以编辑图像， \n1) 点击主页上的 <strong>图像转PDF</strong> 选项。 \n2) 利用 <strong>选择图像</strong> 按钮选择图像。 \n3) 一旦选择完毕，根据你的需求点击 <strong>编辑图像</strong> 或 <strong>过滤图像</strong> 选项。 \n4) 完成编辑或应用过滤。 \n5) 现在，利用 <strong>选择图像</strong> 按钮选择已编辑图像并点击 <strong>创建PDF</strong>以创建PDF。</item>
-        <item>如何为PDF加入水印？#####以加入水印，在主页往下拉到 <strong>改进已创建PDF</strong> 或往右滑呼出选项目录并点击 <strong>加入水印</strong>。</item>
-        <item>我可以重新排序PDF的页面吗？#####可以。以重新排序页面， \n1) 点击主页上的 <strong>重新排序页面</strong> 选项。 \n2) 利用 <strong>选择文件</strong> 按钮选择PDF文件。 \n3) 点击 <strong>创建PDF</strong>. \n4) 利用上下箭头重新排序页面。 \n5) 一旦重新排序完成，点击左上角的 <strong>返回按钮</strong> 创建已更新的PDF文件。</item>
-        <item>如何从PDF截取图像？#####以截取图像， \n1) 点击主页上的截取图像选项。 \n2) 利用 选择文件 按钮选择PDF文件。 \n3) 一旦选择完成，点击 创建图像 按钮。</item>
-        <item>我可以转换PDF到PPT、PPTX、ODT、DOC、DOCX格式吗？#####不能，目前PDF只能转换到文字格式。</item>
-        <item>在哪里我可以下载PDF CONVERTER: Files to PDF应用程式？#####此应用程式已在Google PlayStore和F-Droid上架。</item>
-        <item>我可以为此款应用程式作出贡献吗？#####可以。在GitHub利用专案名称 <strong>Swati4star/Images-to-PDF</strong>寻找我们。 \n随意分享你的想法（功能请求），提交错误报告或提交拉取请求（Pull request）你认为有需要可以增加。 \n此专案已有数位贡献人员只是提交很小的、诸如只有一行的改变。阅读此专案的 <strong>Contributor\'s guide</strong> 以开始贡献。</item>
-        <item>我有一些在常见问答找不到的问题，我可以如何联络开发者？#####如有其他资讯，请发送电邮到开发者 <strong>swati4star@gmail.com</strong></item>
+      <item>支持哪些图像文件格式？#####该应用支持jpeg、jpg、tiff、gif、psd、bmp、eps、png等格式。</item>
+      <item>我能使用该应用创建新的文本文件吗？#####您只能通过从现有PDF文件中提取文本来创建新的文本文件。要创建文本文件， \n1）在主页上单击<strong>提取文本</strong>选项。 \n2）使用<strong>选择PDF文件</strong>按钮选择PDF文件。 \n3）然后，点击<strong>提取文本</strong>。 \n4）完成后，将创建一个包含来自PDF文件的文本的文本文件。</item>
+      <item>一次可以添加多少张图像来创建PDF？#####不，没有限制。</item>
+      <item>我可以添加的图像大小有限制吗？#####不，没有限制。但我们建议将大小限制在<strong>小于10MB</strong>以内。多个大图像文件的转换需要超过10秒的时间。</item>
+      <item>添加图像后是否可以插入标题？#####不，除非在图像本身上进行编辑，否则无法插入标题。</item>
+      <item>我可以使用该应用阅读PDF文件吗？#####不，目前还不能。该应用不适用作PDF阅读器。</item>
+      <item>使用该应用创建的PDF文件保存在哪里？#####使用该应用创建的PDF文件会自动保存在设备存储的名为PDFfiles的文件夹中。 \n您还可以在<strong>设置</strong>部分变更默认位置。</item>
+      <item>如何变更默认存储位置？#####要变更默认存储位置， \n1）点击页面左上角的<strong>三条横线</strong>图标（汉堡图标）。 \n2）向下滚动并点击<strong>设置</strong>。 \n3）在设置页面中，点击文本<strong>变更存储位置</strong>下方的字段。 \n4）打开首选的保存位置，然后在顶部点击<strong>选择图标</strong>。 \n一旦变更，使用该应用创建的文件将存储在新位置。</item>
+      <item>如何分享使用该应用编辑/创建的PDF文件？#####您可以直接从应用程序访问和分享您编辑/创建的PDF文件。要分享PDF文件， \n1）在主页上点击<strong>查看文件</strong>选项。 \n2）使用复选框选择要分享的文件。 \n3）然后，点击右上角的<strong>更多选项</strong>图标（三个垂直点）并点击<strong>分享</strong>。 \n4）选择所需的文件分享方法。</item>
+      <item>我可以使用该应用恢复PDF文件的遗忘密码吗？#####不，无法恢复丢失的密码。</item>
+      <item>我可以变更PDF文件的密码吗？#####是的，但只有在移除现有密码的情况下。一旦移除了密码，可以使用主页上的<strong>变更密码</strong>选项来变更密码。</item>
+      <item>我可以在创建PDF时压缩图像吗？#####是的，可以。要压缩图像， \n1）在主页上点击<strong>图像转PDF</strong>选项。 \n2）使用<strong>选择图像</strong>按钮选择图像。 \n3）接下来，选择<strong>图像压缩</strong>选项以压缩图像。</item>
+      <item>从PDF中提取的图像的格式是什么？#####从PDF中提取的图像将以<strong>.png</strong>格式。</item>
+      <item>我可以从云端/在线存储添加文件吗？#####目前不能。但这在开发路线图上，并且即将可用。</item>
+      <item>如何查看已创建/修改的文件历史记录？#####要查看您在应用程序中创建/修改的所有文件， \n请点击主页上的<strong>历史</strong>选项。</item>
+      <item>如何合并多个PDF文件？#####要合并多个PDF文件， \n1）在主页上点击<strong>合并PDF</strong>选项。 \n2）使用<strong>选择文件</strong>按钮选择PDF文件。 \n3）选择后，点击<strong>合并文件</strong>按钮。</item>
+      <item>我可以在创建PDF时编辑图像吗？#####是的，可以。要这样做， \n1）在主页上点击<strong>图像转PDF</strong>选项。 \n2）使用<strong>选择图像</strong>按钮选择图像。 \n3）选择后，点击<strong>编辑图像</strong>或<strong>过滤图像</strong>选项，根据您的需求选择。 \n4）完成编辑或应用滤镜。 \n5）现在，使用<strong>选择图像</strong>按钮选择已编辑的图像，然后点击<strong>创建PDF</strong>以创建PDF。</item>
+      <item>如何在PDF中添加水印？#####要添加水印，请在主页上向下滚动到<strong>增强已创建的PDF</strong>部分，或者通过从左向右滑动打开选项菜单，然后点击<strong>添加水印</strong>。</item>
+      <item>我可以重新排列PDF中的页面吗？#####是的，可以。要重新排列页面， \n1）在主页上点击<strong>重新排列页面</strong>选项。 \n2）使用<strong>选择文件</strong>按钮选择PDF文件。 \n3）点击<strong>创建PDF</strong>。 \n4）使用上下箭头重新排列页面。 \n5）重新排列后，点击左上角的<strong>返回箭头</strong>，以创建新的更新PDF文件。</item>
+      <item>如何从PDF中提取图像？#####要提取图像， \n1）在主页上点击<strong>提取图像</strong>选项。 \n2）使用<strong>选择文件</strong>按钮选择PDF文件。 \n3）选择后，点击<strong>创建图像</strong>按钮。</item>
+      <item>我可以将PDF转换为PPT、PPTX、ODT、DOC、DOCX等格式吗？#####不，目前PDF只能转换为文本格式。</item>
+      <item>我在哪里可以下载PDF CONVERTER：Files to PDF应用？#####该应用程序可在Google Play商店和F-Droid上下载。</item>
+      <item>我可以为该应用做出贡献吗？#####是的，可以。在GitHub上找到我们，使用项目名称<strong>Swati4star/Images-to-PDF</strong>。 \n随时分享您的想法（功能请求），提交错误或拉取请求，以添加任何您认为应该添加的内容。 \n该项目有多名贡献者，甚至可以只添加一行代码变更。阅读项目的<strong>贡献者指南</strong>以开始。</item>
+      <item>我有一些不在此常见问题文档中的问题。我如何联系开发人员？#####如需进一步咨询，请发送电子邮件至<strong>swati4star@gmail.com</strong></item>
     </string-array>
 
 </resources>
