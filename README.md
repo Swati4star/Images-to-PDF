@@ -21,23 +21,34 @@ Here is an easy to use Android app to convert images to PDF file!
 
 ### Features
 
-- Create PDF from multiple images from camera or gallery
-- View your converted PDFs
+- [Create PDF from multiple images from camera or gallery](#creating-a-PDF-file)
+	- [Convert text file to PDFs](#Text-to-PDF)
+- [View your PDFs](#viewing-the-pdf-files)
     - Open, Rename, Delete, print, share files
     - Sort the files order based on a number of options
     - View File details
-    - Encrypt PDF
-    - Decrypt PDF
-    - Rotate Pages
-- Different themes
-- Merge existing PDFs
-- Split existing PDFs
-- Convert text file to PDFs
-- Compress existing PDF
-- Remove pages from a PDF
-- Rearrange pages of a PDF
-- Extract images from PDF
-- History : View all the PDF related conversions
+- [Enhance your PDFs](#enhance-your-pdfs)
+    - [Encrypt PDF](#add-password)
+    - [Decrypt PDF](#remove-password)
+    - [Add Text](#add-text)
+    - [Rotate Pages](#rotate-pages)
+    - [Add Watermark](#add-watermark)
+    - Add Image
+- [Modify Existing PDFs](#modify-existing-pdfs)
+	- [Merge existing PDFs](#merge-pdf)
+	- Split existing PDFs
+	- Invert PDF
+	- Compress existing PDF
+	- Remove pages from a PDF
+- [Additional Features](#additional-features)
+	- Remove Pages from a PDF
+	- Rearrange pages of a PDF
+	- Extract images from PDF
+	- Convert a PDF to images
+	- Extract Text From a PDF
+	- Extract a Zip File to PDF
+- [History : View all the PDF related conversions](#history)
+- [Different themes](#different-themes)
 
 Here is a home page to get quick access to all the features "PDF Converter" provides:
 
@@ -61,12 +72,39 @@ Here is a home page to get quick access to all the features "PDF Converter" prov
 
 <img src="./screenshots/4_converting.png" width="190px">
 
+#### Text to PDF
+
+<img src="./screenshots/8_text_to_pdf.png" width="190px">
 
 Hurray! PDF files of selected images are created.
 
 ### Viewing the PDF files
 
 <img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
+
+### Enhance your PDFs
+
+You can easily add protection, text, copy right, and images to your PDF file by using some of the enhancing features of the app.
+To use any of these features, you will start by simply selecting the PDF file you want to modify. And then you can follow the prompt to edit your selected file correspondingly.
+
+<img src="./screenshots/10_1_rotate.png" width="190px"> <img src="./screenshots/10_2_split.png" width="190px">
+
+### Modify Existing PDFs
+
+#### Merge PDF
+
+<img src="./screenshots/7_merge_pdf.png" width="190px">
+
+### Additional Feature
+
+Similar to enhancing your PDFs, this app also provide you the additional options to remove pages and reorder pages in your PDF, extract images and text from your PDF, cover your PDF to images, and extract PDF from a ZIP file.
+To use any of these features, you will also start by simply selecting the PDF file you want to modify and follow the prompt to edit your selected file correspondingly.
+
+<img src="./screenshots/12_extract.png" width="190px"> <img src="./screenshots/12_remove.png" width="190px">
+
+### History
+
+<img src="./screenshots/9_history.png" width="190px">
 
 ### Different themes
 
@@ -76,17 +114,21 @@ Black | Dark | White |
 --- | --- | --- |
 <img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> |  <img src="./screenshots/home_theme_white.png" width="190px"> |
 
-### Merge PDF
+### Favourite
 
-<img src="./screenshots/7_merge_pdf.png" width="190px">
+You can add features to your "favourite" for easy access.
 
-### Text to PDF
+##### Step 1 : Click the heart icon on the upper right corner of your screen.
+<img src="./screenshots/11_4_favourite.png" width="190px">
 
-<img src="./screenshots/8_text_to_pdf.png" width="190px">
+##### Step 2 : Click the + icon on the bottom right corner of your screen.
+<img src="./screenshots/11_1_favourite.png" width="190px">
 
-### History
+##### Step 3 : Select the features you want to add, then click the check mark on the upper right corner of your screen.
+<img src="./screenshots/11_2_favourite.png" width="190px">
 
-<img src="./screenshots/9_history.png" width="190px">
+##### Step 4 : Now you have easy access to these features you just added!
+<img src="./screenshots/11_3_favourite.png" width="190px">
 
 ### Contributing
 
@@ -109,8 +151,7 @@ Black | Dark | White |
 
 #### Code & Issues
 
-If you are a developer and you wish to contribute to the app please fork the project
-and submit a pull request.
+If you are a developer and wish to contribute to the app please fork the project and submit a pull request using the [pull request template](.github/pull_request_template.md).
 Follow [Github Flow](https://help.github.com/articles/github-flow/) for collaboration!
 If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) about whatever you
 want.
