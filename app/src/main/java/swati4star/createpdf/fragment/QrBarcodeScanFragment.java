@@ -17,11 +17,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.itextpdf.text.DocumentException;
@@ -63,6 +73,8 @@ import swati4star.createpdf.util.TextToPDFUtils;
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
     private static final int REQUEST_CODE_FOR_QR_CODE = 1;
     private static final int REQUEST_CODE_FOR_BARCODE = 2;
+    private static final int REQUEST_CODE_PICK_IMAGE = 3;  // Random unique request code
+
     private final String mTempFileName = "scan_result_temp.txt";
     @BindView(R.id.scan_qrcode)
     MyCardView scanQrcode;
@@ -97,26 +109,35 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result == null || result.getContents() == null)
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
-        else {
-            Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
+        super.onActivityResult(requestCode, resultCode, data);
 
-            File mDir = mActivity.getCacheDir();
-            File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
-            PrintWriter mWriter;
-            try {
-                mWriter = new PrintWriter(mTempFile);
-                mWriter.print("");
-                mWriter.append(result.getContents());
-                mWriter.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            scanQRorBarcodeFromImage(selectedImageUri);
+            return;
+        } else {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result == null || result.getContents() == null)
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
+            else {
+                Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
+
+                File mDir = mActivity.getCacheDir();
+                File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
+                PrintWriter mWriter;
+                try {
+                    mWriter = new PrintWriter(mTempFile);
+                    mWriter.print("");
+                    mWriter.append(result.getContents());
+                    mWriter.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Uri uri = Uri.fromFile(mTempFile);
+                resultToTextPdf(uri);
             }
-            Uri uri = Uri.fromFile(mTempFile);
-            resultToTextPdf(uri);
         }
+
     }
 
     @Override
@@ -126,7 +147,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (isCameraPermissionGranted()) {
                         if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-                            openScanner(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
+                            showScanOptionDialog(IntentIntegrator.QR_CODE_TYPES, R.string.scan_qrcode);
                         } else {
                             getRuntimePermissions();
                         }
@@ -139,7 +160,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (isCameraPermissionGranted()) {
                         if (PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-                            openScanner(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
+                            showScanOptionDialog(IntentIntegrator.ONE_D_CODE_TYPES, R.string.scan_barcode);
                         } else {
                             getRuntimePermissions();
                         }
@@ -148,6 +169,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                     }
                 }
                 break;
+
         }
     }
 
@@ -343,4 +365,52 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                     }).show();
         }
     }
+
+    private void pickImageFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+    }
+
+    private void scanQRorBarcodeFromImage(Uri imageUri) {
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+            int[] intArray = new int[bitmap.getWidth() * bitmap.getHeight()];
+            bitmap.getPixels(intArray, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+            LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), intArray);
+            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            Reader reader = new MultiFormatReader();
+            Result result = reader.decode(binaryBitmap);
+
+            // Handle the decoded result
+            Toast.makeText(mActivity, " " + result.getText(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(mActivity, "Failed to decode QR/Barcode", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showScanOptionDialog(Collection<String> scannerType, int promptId) {
+        Context context = getActivity();
+        if (context != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Choose an option");
+            String[] options = {"Scan using Camera", "Scan from Saved Image"};
+            builder.setItems(options, (dialog, which) -> {
+                switch (which) {
+                    case 0: // Scan using Camera
+                        openScanner(scannerType, promptId);
+                        break;
+                    case 1: // Scan from Saved Image
+                        pickImageFromGallery();
+                        break;
+                }
+            });
+            builder.show();
+        } else {
+            // Handle the error or log it
+            Log.e("QrBarcodeScanFragment", "Activity is null");
+        }
+    }
+
 }
