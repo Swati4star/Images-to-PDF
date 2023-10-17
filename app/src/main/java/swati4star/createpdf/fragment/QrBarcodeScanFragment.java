@@ -119,6 +119,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         scanBarcode.setOnClickListener(this);
 
         //new code here ⬇️
+        //add listener
         imageScanQrcode.setOnClickListener(this);
         imageScanBarcode.setOnClickListener(this);
         //new code here ⬆️
@@ -135,6 +136,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //new code here ⬇️
+        // add new logic for reading code from image
         if (requestCode == REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE || requestCode == REQUEST_CODE_PICK_IMAGE_FOR_BARCODE) {
             if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
                 Uri selectedImageUri = data.getData();
@@ -188,6 +190,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
                 Reader reader = new MultiFormatReader();
                 Result result = null;
+
+                // reading different code when needs
                 if (requestCode == REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE) {
                     Map<DecodeHintType, Object> hints = new EnumMap<>(DecodeHintType.class);
                     hints.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.of(BarcodeFormat.QR_CODE));
@@ -254,6 +258,9 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                 }
                 break;
             //new code here ⬇️
+            // As permission is asked when user entre the app, I don't think it's nessacry to ask for permission,
+            // while I encounter some error with above feature, it keeps asking for permssion, while I have opened all permission for this app
+
             case R.id.image_scan_qrcode:
                 pickImageFromGallery(REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE);
                 break;

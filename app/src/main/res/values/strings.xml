@@ -143,9 +143,10 @@
     <string name="scan_barcode">Scan Barcode</string>
     <string name="qrbarcodes_to_pdf">Create PDF from QR &amp; Barcode</string>
     <string name="scan_cancelled">Cancelled Scan by user</string>
+    <!--new string goes here-->
     <string name="scan_qrcode_from_image">Scan QR code from Image</string>
     <string name="scan_barcode_from_image">Scan Barcode from Image</string>
-    <string name="no_code_detected">No Code Detected in this image</string>
+    <string name="no_code_detected">No CODE Detected in this image</string>
 
     <!--Snackbar strings -->
     <string name="snackbar_no_images">No Images selected</string>
