@@ -572,7 +572,8 @@
     <!--  FAQs  -->
     <string name="faqSearch">Search FAQ</string>
     <string name="manage_storage_permission_alert_dialog_title" translatable="false">Allow app to access files on your device</string>
-    <string name="manage_storage_permission_alert_dialog_positive_button_label" translatable="false">Allow</string>
+    <string name="manage_storage_permission_alert_dialog_positive_button_label" translatable="false">Allow All</string>
+    <string name="manage_storage_permission_alert_dialog_neutral_button_label" translatable="false">Allow Selected</string>
     <string name="manage_storage_permission_alert_dialog_negative_button_label" translatable="false">Deny</string>
     <string name="manage_storage_permission_denied_alert_dialog_title" translatable="false">Permission denied</string>
     <string name="manage_storage_permission_denied_alert_dialog_message" translatable="false">Without storage permission the app is unable to read files from your device. Are you sure you want to deny this permission?</string>

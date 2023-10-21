@@ -170,7 +170,34 @@ public class DialogUtils {
                 }))
                 .show();
     }
-
+    public static void showChoiceDialog(
+            Context context,
+            int title,
+            int message,
+            int positiveButtonLabel,
+            int negativeButtonLabel,
+            int neutralButtonLabel,
+            boolean cancelable,
+            final DialogCallbacks callbacks
+    ) {
+        new AlertDialog.Builder(context)
+                .setTitle(title == EMPTY_STRING ? "" : context.getString(title))
+                .setMessage(message == EMPTY_STRING ? "" : context.getString(message))
+                .setCancelable(cancelable)
+                .setPositiveButton(positiveButtonLabel, (dialog, which) -> {
+                    callbacks.onPositiveButtonClick();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(negativeButtonLabel, ((dialog, which) -> {
+                    callbacks.onNegativeButtonClick();
+                    dialog.dismiss();
+                }))
+                .setNeutralButton(neutralButtonLabel, ((dialog, which) -> {
+                    callbacks.onNeutralButtonClick();
+                    dialog.dismiss();
+                }))
+                .show();
+    }
     private static class SingletonHolder {
         static final DialogUtils INSTANCE = new DialogUtils();
     }
