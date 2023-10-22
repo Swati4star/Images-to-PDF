@@ -151,7 +151,12 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     }
 
 
-
+    /**
+     * Processes the result of the scanning operation
+     * @param requestCode - the instruction code
+     * @param resultCode - the code indication a valid scan or not
+     * @param data - Intent data
+     */
     private void processCode(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result == null || result.getContents() == null) {
@@ -162,6 +167,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         }
     }
 
+
     private void writeResultToFile(String resultContent) {
         File mDir = mActivity.getCacheDir();
         File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
@@ -169,11 +175,22 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
             mWriter.print("");
             mWriter.append(resultContent);
         } catch (FileNotFoundException e) {
-            e.printStackTrace(); // Consider adding a user-friendly error message
+            e.printStackTrace();
         }
         Uri uri = Uri.fromFile(mTempFile);
         resultToTextPdf(uri);
     }
+
+    /**
+     * Decodes the information from a given Bitmap image containing a barcode or QR code.
+     *
+     * @param bitmap - The bitmap image to be decoded
+     * @param requestCode - instruction code
+     * @return
+     * @throws NotFoundException
+     * @throws ChecksumException
+     * @throws FormatException
+     */
 
     private Result decodeBitmap(Bitmap bitmap, int requestCode) throws NotFoundException, ChecksumException, FormatException {
         // reading image
@@ -266,6 +283,11 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
 
     }
+
+    /**
+     * opens android dialog for selecting an image to retrieve code from.
+     * @param requestCode - instruction code
+     */
 
     private void selectImage(int requestCode) {
         Intent intent = new Intent();
