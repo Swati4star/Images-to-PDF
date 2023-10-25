@@ -80,26 +80,18 @@ import swati4star.createpdf.util.TextToPDFUtils;
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
     private static final int REQUEST_CODE_FOR_QR_CODE = 1;
     private static final int REQUEST_CODE_FOR_BARCODE = 2;
-
-    //new code here ⬇️
-    //to distinct from the original ones
     private static final int REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE = 101;
     private static final int REQUEST_CODE_PICK_IMAGE_FOR_BARCODE = 102;
-    //new code here ⬆️
 
     private final String mTempFileName = "scan_result_temp.txt";
     @BindView(R.id.scan_qrcode)
     MyCardView scanQrcode;
     @BindView(R.id.scan_barcode)
     MyCardView scanBarcode;
-
-    //new code here ⬇️
-    //I also draw two new xml for this feature
     @BindView(R.id.image_scan_qrcode)
     MyCardView imageScanQrcode;
     @BindView(R.id.image_scan_barcode)
     MyCardView imageScanBarcode;
-    //new code here ⬆️
 
     private SharedPreferences mSharedPreferences;
     private Activity mActivity;
@@ -119,10 +111,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         ButterKnife.bind(this, rootview);
         scanQrcode.setOnClickListener(this);
         scanBarcode.setOnClickListener(this);
-        //new code here ⬇️
         imageScanQrcode.setOnClickListener(this);
         imageScanBarcode.setOnClickListener(this);
-        //new code here ⬆️
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
@@ -134,7 +124,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //refactor here ⬇️
         if (!(resultCode == Activity.RESULT_OK && data != null && data.getData() != null)) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
             return;
@@ -145,10 +134,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         } else {
             processIntentIntegrator(requestCode, resultCode, data);
         }
-        //refactor here ⬆️
     }
 
-    //refactor here ⬇️
     /**
      * process user scan using camera
      *
@@ -183,10 +170,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         Uri uri = Uri.fromFile(mTempFile);
         resultToTextPdf(uri);
     }
-    //refactor here ⬆️
 
-
-    //new code here ⬇️
     /**
      * Function for reading codes in image
      *
@@ -241,9 +225,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         return reader.decode(binaryBitmap, hints);
     }
 
-    //new code here ⬆️
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -273,20 +254,15 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                     }
                 }
                 break;
-            //new code here ⬇️
-            // As permission is asked when user entre the app, I don't think it's nessacry to ask for permission,
-            // while I encounter some error with above feature, it keeps asking for permssion, while I have opened all permission for this app
             case R.id.image_scan_qrcode:
                 pickImageFromGallery(REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE);
                 break;
             case R.id.image_scan_barcode:
                 pickImageFromGallery(REQUEST_CODE_PICK_IMAGE_FOR_BARCODE);
                 break;
-            //new code here ⬆️
         }
     }
 
-    //new code here ⬇️
     /**
      * Open gallery
      *
@@ -298,7 +274,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCode);
     }
-    //new code here ⬆️
 
     /**
      * Open scanner
