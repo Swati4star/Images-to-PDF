@@ -65,6 +65,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -297,10 +298,21 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
         switch (requestCode) {
             case INTENT_REQUEST_GET_IMAGES:
-                mImagesUri.clear();
-                mUnarrangedImagesUri.clear();
-                mImagesUri.addAll(Matisse.obtainPathResult(data));
-                mUnarrangedImagesUri.addAll(mImagesUri);
+                // Handle image selection here
+                ArrayList<String> selectedImageUris = new ArrayList<>();
+                List<Uri> selectedUris = Matisse.obtainResult(data);
+                for (Uri uri : selectedUris) {
+                    String realPath = mFileUtils.getUriRealPath(uri);
+                    if (realPath != null) {
+                        String lowerCasePath = realPath.toLowerCase();
+                        if (lowerCasePath.endsWith(".jpg") || lowerCasePath.endsWith(".jpeg") || lowerCasePath.endsWith(".png")) {
+                            selectedImageUris.add(realPath);
+                        }
+                    }
+                }
+                // Add the selected images to mImagesUri
+                mImagesUri.addAll(selectedImageUris);
+
                 if (mImagesUri.size() > 0) {
                     mNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
