@@ -285,6 +285,9 @@
     <string name="converting_file_message">Converting your files to PDF.</string>
     <string name="select_text_file">Select Text File</string>
     <string name="install_file_manager">Please install a File Manager</string>
+    <string name="crop_images" translatable="false">Crop Images</string>
+    <string name="crop_images_content" translatable="false">Do you want to crop the images before processing?</string>
+    <string name="no" translatable="false">No</string>
 
     <!-- Text to PDF   -->
     <string name="text_to_pdf">Text To PDF</string>
