@@ -360,6 +360,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                     mCreatePdf.setEnabled(false);
                 }
                 break;
+
         }
     }
 
