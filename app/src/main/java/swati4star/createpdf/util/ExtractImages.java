@@ -51,11 +51,9 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                     if (type != null && type.toString().equals(PdfName.IMAGE.toString())) {
                         PdfImageObject pio = new PdfImageObject(stream);
                         byte[] image = pio.getImageAsBytes();
-                        Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,
-                                image.length);
-                        String filename = getFileNameWithoutExtension(mPath) +
-                                "_" + (mImagesCount + 1);
-                        String path = saveImage(filename, bmp);
+                        Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+                        String filename = getFileNameWithoutExtension(mPath) + "_" + (mImagesCount + 1);
+                        String path = saveImage(filename, bmp, ImageUtils.ImageFormat.JPEG);  // Specify JPEG format here
                         if (path != null) {
                             mOutputFilePaths.add(path);
                             mImagesCount++;
@@ -66,7 +64,6 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 

@@ -81,6 +81,9 @@ public class ImageUtils {
         BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
         return new Rectangle(options.outWidth, options.outHeight);
     }
+    public enum ImageFormat {
+        PNG, JPEG
+    }
 
     /**
      * Saves bitmap to external storage
@@ -88,14 +91,14 @@ public class ImageUtils {
      * @param filename    - name of the file
      * @param finalBitmap - bitmap to save
      */
-    public static String saveImage(String filename, Bitmap finalBitmap) {
-
+    public static String saveImage(String filename, Bitmap finalBitmap, ImageFormat format) {
         if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
             return null;
 
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
-        String fileName = filename + ".png";
+        String fileExtension = format == ImageFormat.PNG ? ".png" : ".jpg";
+        String fileName = filename + fileExtension;
 
         File file = new File(myDir, fileName);
         if (file.exists())
@@ -103,12 +106,15 @@ public class ImageUtils {
 
         try {
             FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            Bitmap.CompressFormat compressFormat = format == ImageFormat.PNG ?
+                    Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG;
+            finalBitmap.compress(compressFormat, 100, out);
             Log.v("saving", fileName);
             out.flush();
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
         return myDir + "/" + fileName;
