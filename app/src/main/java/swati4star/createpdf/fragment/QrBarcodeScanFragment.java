@@ -17,11 +17,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +35,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.qrcode.QRCodeReader;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 
@@ -63,11 +71,14 @@ import swati4star.createpdf.util.TextToPDFUtils;
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
     private static final int REQUEST_CODE_FOR_QR_CODE = 1;
     private static final int REQUEST_CODE_FOR_BARCODE = 2;
+    private static final int REQUEST_CODE_PICK_IMAGE = 3;
     private final String mTempFileName = "scan_result_temp.txt";
     @BindView(R.id.scan_qrcode)
     MyCardView scanQrcode;
     @BindView(R.id.scan_barcode)
     MyCardView scanBarcode;
+    @BindView(R.id.read_qrcode)
+    MyCardView readQrcode;
     private SharedPreferences mSharedPreferences;
     private Activity mActivity;
     private MaterialDialog mMaterialDialog;
@@ -86,6 +97,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         ButterKnife.bind(this, rootview);
         scanQrcode.setOnClickListener(this);
         scanBarcode.setOnClickListener(this);
+        readQrcode.setOnClickListener(this);
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
@@ -97,27 +109,83 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result == null || result.getContents() == null)
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
-        else {
-            Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            if (selectedImageUri != null) {
+                readQrCodeFromImage(selectedImageUri);
+            } else {
+                Toast.makeText(mActivity, "Failed to get the image.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == IntentIntegrator.REQUEST_CODE) {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result == null || result.getContents() == null)
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
+            else {
+                Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
+
+                File mDir = mActivity.getCacheDir();
+                File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
+                PrintWriter mWriter;
+                try {
+                    mWriter = new PrintWriter(mTempFile);
+                    mWriter.print("");
+                    mWriter.append(result.getContents());
+                    mWriter.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Uri uri = Uri.fromFile(mTempFile);
+                resultToTextPdf(uri);
+            }
+        }
+    }
+    /**
+     * Decodes a QR code from an image file selected from the system gallery and
+     * outputs the decoded text as a PDF file.
+     *
+     * @param imageUri The URI of the image file selected from the system gallery.
+     */
+    private void readQrCodeFromImage(Uri imageUri) {
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri);
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            int[] pixels = new int[width * height];
+            bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+
+            LuminanceSource source = new RGBLuminanceSource(width, height, pixels);
+            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+            QRCodeReader qrCodeReader = new QRCodeReader();
+            Result qrCodeResult = qrCodeReader.decode(binaryBitmap);
+            String qrCodeText = qrCodeResult.getText();
+            Toast.makeText(mActivity, "QR Code: " + qrCodeText, Toast.LENGTH_SHORT).show();
+
+            // Create a temporary file to save the QR code text
             File mDir = mActivity.getCacheDir();
-            File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
+            File mTempFile = new File(mDir.getPath() + "/qr_code_temp.txt");
             PrintWriter mWriter;
             try {
                 mWriter = new PrintWriter(mTempFile);
                 mWriter.print("");
-                mWriter.append(result.getContents());
+                mWriter.append(qrCodeText);
                 mWriter.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                return;  // If the file cannot be created, return
             }
+
+            // Pass the URI of the temporary file to the resultToTextPdf().
             Uri uri = Uri.fromFile(mTempFile);
             resultToTextPdf(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -147,6 +215,9 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                         requestCameraPermissionForBarCodeScan();
                     }
                 }
+                break;
+            case R.id.read_qrcode:
+                openGalleryForQrCode();
                 break;
         }
     }
@@ -342,5 +413,14 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                         dialog.dismiss();
                     }).show();
         }
+    }
+
+    /**
+     * Initiates an intent to open the system gallery for the user to select
+     * an image file containing a QR code.
+     */
+    private void openGalleryForQrCode() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
     }
 }

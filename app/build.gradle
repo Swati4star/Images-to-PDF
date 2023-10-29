@@ -74,6 +74,7 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference:1.2.0'
+    implementation 'com.google.zxing:core:3.4.1'
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.2.3'
