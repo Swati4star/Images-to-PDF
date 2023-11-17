@@ -17,10 +17,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,18 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.itextpdf.text.DocumentException;
@@ -43,6 +57,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,11 +80,19 @@ import swati4star.createpdf.util.TextToPDFUtils;
 public class QrBarcodeScanFragment extends Fragment implements View.OnClickListener, OnPDFCreatedInterface {
     private static final int REQUEST_CODE_FOR_QR_CODE = 1;
     private static final int REQUEST_CODE_FOR_BARCODE = 2;
+    private static final int REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE = 101;
+    private static final int REQUEST_CODE_PICK_IMAGE_FOR_BARCODE = 102;
+
     private final String mTempFileName = "scan_result_temp.txt";
     @BindView(R.id.scan_qrcode)
     MyCardView scanQrcode;
     @BindView(R.id.scan_barcode)
     MyCardView scanBarcode;
+    @BindView(R.id.image_scan_qrcode)
+    MyCardView imageScanQrcode;
+    @BindView(R.id.image_scan_barcode)
+    MyCardView imageScanBarcode;
+
     private SharedPreferences mSharedPreferences;
     private Activity mActivity;
     private MaterialDialog mMaterialDialog;
@@ -86,6 +111,8 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
         ButterKnife.bind(this, rootview);
         scanQrcode.setOnClickListener(this);
         scanBarcode.setOnClickListener(this);
+        imageScanQrcode.setOnClickListener(this);
+        imageScanBarcode.setOnClickListener(this);
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,
@@ -97,26 +124,105 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result == null || result.getContents() == null)
+        if (!(resultCode == Activity.RESULT_OK && data != null && data.getData() != null)) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
-        else {
-            Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
-
-            File mDir = mActivity.getCacheDir();
-            File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
-            PrintWriter mWriter;
-            try {
-                mWriter = new PrintWriter(mTempFile);
-                mWriter.print("");
-                mWriter.append(result.getContents());
-                mWriter.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            Uri uri = Uri.fromFile(mTempFile);
-            resultToTextPdf(uri);
+            return;
         }
+
+        if (requestCode == REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE || requestCode == REQUEST_CODE_PICK_IMAGE_FOR_BARCODE) {
+            readCodeFromImage(data.getData(), requestCode);
+        } else {
+            processIntentIntegrator(requestCode, resultCode, data);
+        }
+    }
+
+    /**
+     * process user scan using camera
+     *
+     * @param requestCode - request code to identify which request it is using
+     * @param resultCode - result code to identify what result is returned
+     * @param data - intent data
+     */
+    private void processIntentIntegrator(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result == null || result.getContents() == null) {
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
+        } else {
+            Toast.makeText(mActivity, " " + result.getContents(), Toast.LENGTH_SHORT).show();
+            writeResultToFile(result.getContents());
+        }
+    }
+
+    /**
+     * Write something read from result into PDF
+     *
+     * @param resultContent - A string read from image
+     */
+    private void writeResultToFile(String resultContent) {
+        File mDir = mActivity.getCacheDir();
+        File mTempFile = new File(mDir.getPath() + "/" + mTempFileName);
+        try (PrintWriter mWriter = new PrintWriter(mTempFile)) {
+            mWriter.print("");
+            mWriter.append(resultContent);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace(); // Consider adding a user-friendly error message
+        }
+        Uri uri = Uri.fromFile(mTempFile);
+        resultToTextPdf(uri);
+    }
+
+    /**
+     * Function for reading codes in image
+     *
+     * @param selectedImageUri - the image uri selected from gallery
+     * @param requestCode      - the request code to distinct different code type
+     */
+    private void readCodeFromImage(Uri selectedImageUri, int requestCode) {
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), selectedImageUri);
+            if (bitmap == null) return;
+
+            Result result = decodeBitmap(bitmap, requestCode);
+            if (result != null) {
+                writeResultToFile(result.getText());
+            } else {
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.no_code_detected);
+            }
+        } catch (Exception e) {
+            StringUtils.getInstance().showSnackbar(mActivity, R.string.no_code_detected);
+        }
+    }
+
+    /**
+     * Decodes a given bitmap based on the provided request code.
+     * Depending on the request code, the method attempts to decode QR codes or different types of barcodes.
+     *
+     * @param bitmap      - The image bitmap that needs to be decoded.
+     * @param requestCode - A request code indicating the type of code to be decoded.
+     * @return            - Decoded result from the image.
+     * @throws NotFoundException  - If no potential barcode is found.
+     * @throws ChecksumException  - If a potential barcode is found but fails checksum checks.
+     * @throws FormatException    - If a barcode was found but is in a format that this reader doesn't support.
+     */
+    private Result decodeBitmap(Bitmap bitmap, int requestCode) throws NotFoundException, ChecksumException, FormatException {
+        // reading image
+        int[] intArray = new int[bitmap.getWidth() * bitmap.getHeight()];
+        bitmap.getPixels(intArray, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), intArray);
+        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+        Reader reader = new MultiFormatReader();
+        Map<DecodeHintType, Object> hints = new EnumMap<>(DecodeHintType.class);
+
+        // handle diff request code to make sure the code is doing its own stuff
+        if (requestCode == REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE) {
+            hints.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.of(BarcodeFormat.QR_CODE));
+        } else if (requestCode == REQUEST_CODE_PICK_IMAGE_FOR_BARCODE) {
+            // double check with owner if she likes to modify it to support more stuff
+            hints.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.of(BarcodeFormat.EAN_13, BarcodeFormat.EAN_8, BarcodeFormat.UPC_A));
+        }
+
+        return reader.decode(binaryBitmap, hints);
     }
 
     @Override
@@ -148,7 +254,25 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
                     }
                 }
                 break;
+            case R.id.image_scan_qrcode:
+                pickImageFromGallery(REQUEST_CODE_PICK_IMAGE_FOR_QR_CODE);
+                break;
+            case R.id.image_scan_barcode:
+                pickImageFromGallery(REQUEST_CODE_PICK_IMAGE_FOR_BARCODE);
+                break;
         }
+    }
+
+    /**
+     * Open gallery
+     *
+     * @param requestCode  - passing the request code
+     */
+    private void pickImageFromGallery(int requestCode) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCode);
     }
 
     /**
@@ -263,9 +387,9 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private void getRuntimePermissions() {
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 WRITE_PERMISSIONS,
-                REQUEST_CODE_FOR_WRITE_PERMISSION);
+                REQUEST_CODE_FOR_WRITE_PERMISSION
+        );
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
