@@ -1,0 +1,596 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">পিডিএফ রূপান্তরকারী</string>
+    <string name="title">পিডিএফ কর্ম</string>
+
+    <string name="file_name_text">ফাইলের নাম</string>
+    <string name="select_images_text">ছবি নির্বাচন করুন</string>
+    <string name="password_protect_pdf_text">পাসওয়ার্ড সুরক্ষা পিডিএফ</string>
+    <string name="edit_images_text">ছবি সম্পাদনা করুন</string>
+    <string name="open_pdf_text">PDF খুলুন</string>
+    <string name="create_pdf_text">PDF তৈরি করুন</string>
+    <string name="details"><b>বিস্তারিত</b></string>
+    <string name="search_hint">ফাইলের নাম</string>
+    <string name="search">অনুসন্ধান</string>
+    <string name="default_content_description">বর্ণনা নাই</string>
+    <string name="prompt_input">এখানে লিখুন</string>
+    <!--   Items  -->
+    <array name="items">
+        <item>খোলা ফাইল</item>
+        <item>নথিপত্র মুছে দাও</item>
+        <item>ফাইলের নাম পরিবর্তন করুন</item>
+        <item>Print ফাইল</item>
+        <item>ফাইল শেয়ার করুন</item>
+        <item>বিস্তারিত দেখাও</item>
+        <item>পাসওয়ার্ড যোগ করুন</item>
+        <item>পাসওয়ার্ড সরান</item>
+        <item>পৃষ্ঠাগুলি ঘোরান</item>
+        <item>জলছাপ যোগ করুন</item>
+    </array>
+
+    <array name="itemIds" translatable="false">
+        <item>খোলা</item>
+        <item>মুছে ফেলা</item>
+        <item>নাম পরিবর্তন করুন</item>
+        <item>ছাপা</item>
+        <item>ই-মেইল</item>
+        <item>বিস্তারিত</item>
+    </array>
+
+    <string-array name="array_page_sizes_b0_b10" translatable="false">
+        <item>B0 (1000 x 1414 mm)</item>
+        <item>B1 (707 x 1000 mm)</item>
+        <item>B2 (500 x 707 mm)</item>
+        <item>B3 (353 x 500 mm)</item>
+        <item>B4 (250 x 353 mm)</item>
+        <item>B5 (176 x 250 mm)</item>
+        <item>B6 (125 x 176 mm)</item>
+        <item>B7 (88 x 125 mm)</item>
+        <item>B8 (62 x 88 mm)</item>
+        <item>B9 (44 x 62 mm)</item>
+        <item>B10 (31 x 44 mm)</item>
+    </string-array>
+
+    <string-array name="array_page_sizes_a0_b10" translatable="false">
+        <item>A0 (841 x 1189 mm)</item>
+        <item>A1 (594 x 841 mm)</item>
+        <item>A2 (420 x 594 mm)</item>
+        <item>A3 (297 x 420 mm)</item>
+        <item>A4 (210 x 297 mm)</item>
+        <item>A5 (148 x 210 mm)</item>
+        <item>A6 (105 x 148 mm)</item>
+        <item>A7 (74 x 105 mm)</item>
+        <item>A8 (52 x 74 mm)</item>
+        <item>A9 (37 x 52 mm)</item>
+        <item>A10 (26 x 37 mm)</item>
+    </string-array>
+
+    <string-array name="fontStyles" translatable="false">
+        <item>NORMAL</item>
+        <item>BOLD</item>
+        <item>ITALIC</item>
+        <item>UNDERLINE</item>
+        <item>STRIKETHRU</item>
+        <item>BOLDITALIC</item>
+    </string-array>
+
+    <string name="please_wait">অনুগ্রহপূর্বক অপেক্ষা করুন</string>
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">দুঃখিত! ছবি যোগ করা যায়নি. আমাদের **ছবি নির্বাচন করুন** বিকল্প থেকে ছবি নির্বাচন করুন.</string>
+    <string name="successToast">ছবি সফলভাবে যোগ করা হয়েছে.</string>
+
+    <!-- Navigation drawer strings -->
+    <string name="create_pdf">পিডিএফ তৈরি করুন</string>
+    <string name="qr_barcode_pdf">QR এবং বারকোড</string>
+    <string name="viewFiles">ফাইল দেখুন</string>
+    <string name="extras">অতিরিক্ত</string>
+    <string name="share">শেয়ার করুন</string>
+    <string name="help">সাহায্য</string>
+    <string name="faqs" translatable="false">FAQ</string>
+
+    <!-- images to PDF -->
+    <string name="images_to_pdf">পিডিএফে ছবি</string>
+    <string name="page_color">পৃষ্ঠার রঙ</string>
+    <string name="filter_images_Text">ফিল্টার ছবি \n</string>
+    <!--    Image to PDF -Preview PDF-->
+    <string name="preview_image_to_pdf">পিডিএফ প্রিভিউ করুন</string>
+    <!--    Image to PDF-show page number-->
+    <string name="choose_page_number_style">পৃষ্ঠা নম্বর শৈলী চয়ন করুন</string>
+    <string name="show_pg_num">পৃষ্ঠা নম্বর দেখান</string>
+    <string name="page_x_of_n">N এর X পৃষ্ঠা</string>
+    <string name="page_x">N এর X</string>
+    <string name="x">X</string>
+    <!--    Image to PDF -Rearrange images-->
+    <string name="arrow_up">তীর উপরে</string>
+    <string name="arrow_down">নিচে তীর</string>
+    <string name="rearrange_images">ছবি পুনর্বিন্যাস করুন</string>
+    <string name="rearrange_text">পুনর্বিন্যাস করুন</string>
+    <string name="images_rearranged">ছবি পুনর্বিন্যাস</string>
+    <string name="snackbar_undoAction">পূর্বাবস্থায় ফেরান</string>
+    <string name="pdf_does_not_exist_message">PDF বিদ্যমান নেই.</string>
+    <string name="image_rearranging_options">ছবি পুনর্বিন্যাস বিকল্প</string>
+
+
+    <!--    Image compression-->
+    <string name="compress_image">ইমেজ কম্প্রেশন : %1$s %%</string>
+    <string name="quality_image">ছবির %% কম্প্রেশন লিখুন :</string>
+    <string name="invalid_entry">অকার্যকর লিখন</string>
+    <string name="compress_dialog_enter_prompt">এখানে লিখুন</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">ডিফল্ট হিসেবে সেট করুন</string>
+    <!--    Image to PDf -Add margins-->
+    <string name="add_margins">মার্জিন যোগ করুন</string>
+    <string name="top">শীর্ষ</string>
+    <string name="bottom">নীচে</string>
+    <string name="right">ডান</string>
+    <string name="left">বাম</string>
+
+    <!-- Add Image Border -->
+    <string name="border">চিত্রে ইমেজ সীমা যোগ করুন</string>
+    <string name="border_dialog_title">সীমার প্রস্থ : %d</string>
+    <string name="border_width_prompt">সীমার প্রস্থ ইউনিট প্রদান করুন</string>
+
+    <!-- Set Image Scale type -->
+    <string name="image_scale_type">ইমেজ স্কেল প্রকার নির্ধারণ করুন</string>
+    <string name="stretch_image">পাতায় ছবি স্থাপন</string>
+    <string name="maintain_aspect_ratio">ছবির আকৃতি অনুরণ</string>
+
+
+    <!-- QR & Barcode Scan -->
+    <string name="scan_qrcode">QR কোড স্ক্যান করুন</string>
+    <string name="scan_barcode">বারকোড স্ক্যান করুন</string>
+    <string name="qrbarcodes_to_pdf">QR এবং বারকোড থেকে PDF তৈরি করুন</string>
+    <string name="scan_cancelled">ব্যবহারকারী দ্বারা বাতিল করা হয়েছে</string>
+
+    <!-- Snackbar strings -->
+    <string name="snackbar_no_images">কোনো ছবি নির্বাচিত হয়নি</string>
+    <string name="snackbar_no_pdfs_selected">কোনো PDF নির্বাচিত হয়নি</string>
+    <string name="snackbar_name_not_blank">নাম খালি রাখা যাবে না</string>
+    <string name="snackbar_permissions_given">অনুমতি প্রদান করা হয়েছে!</string>
+    <string name="snackbar_insufficient_permissions">পর্যাপ্ত অনুমতি নেই!</string>
+    <string name="no_permissions">আপনার ফাইল দেখতে স্টোরেজ অনুমতি প্রদান করুন।</string>
+    <string name="prompt_give_permission">অনুমতি দিন</string>
+    <string name="snackbar_images_added">ছবি যোগ করা হয়েছে</string>
+    <string name="snackbar_file_renamed">ফাইলের নাম পরিবর্তিত হয়েছে।</string>
+    <string name="snackbar_file_not_renamed">ফাইল পরিবর্তন করা যাবে না।</string>
+    <string name="snackbar_file_deleted">ফাইল মুছে ফেলা হয়েছে।</string>
+    <string name="snackbar_file_not_deleted">ফাইল মুছে ফেলা যাবে না।</string>
+    <string name="snackbar_folder_not_created">অ্যাপ্লিকেশন ফোল্ডার তৈরি করতে সমস্যা হয়েছে।</string>
+    <string name="pdf_merged">PDF মার্জ হয়েছে</string>
+    <string name="error_path_not_found">দুঃখিত, আমরা এই স্থানে ফাইলে প্রবেশ করতে সমর্থ নই</string>
+    <string name="creating_pdf">PDF তৈরি করা হচ্ছে</string>
+    <string name="creating_txt">টেক্সট ফাইল তৈরি করা হচ্ছে</string>
+    <string name="enter_file_name">ফাইলের নাম লিখুন</string>
+    <string name="example">উদাহরণ : এবিসি</string>
+    <string name="snackbar_no_pdf_app">PDF ফাইল পড়ার জন্য কোনো অ্যাপ নেই</string>
+    <string name="open_file">ফাইল খোলুন</string>
+    <string name="set_password">পাসওয়ার্ড সেট করুন</string>
+    <string name="enter_password">পাসওয়ার্ড লিখুন</string>
+    <string name="snackbar_password_cannot_be_blank">পাসওয়ার্ড খালি থাকতে পারবে না</string>
+    <string name="cannot_add_password">পাসওয়ার্ডটি PDF এ প্রযোগ করা যায়নি। দয়া করে আবার PDF চেক করুন।</string>
+    <string name="snackbar_imagecropped">ছবি ক্রপ হয়েছে</string>
+    <string name="cropImage_activityTitle">ছবি ক্রপ করুন</string>
+    <string name="snackbar_pdfCreated">PDF তৈরি হয়েছে!</string>
+    <string name="error_uri_not_found">দুঃখিত, আমরা ক্রপ করা ছবি অ্যাক্সেস করতে সমর্থ নই। দয়া করে আবার চেষ্টা করুন</string>
+    <string name="snack_bar_empty_txt_in_pdf">নির্বাচিত PDF-তে কোনো টেক্সট প্রাপ্ত নেই!</string>
+    <string name="snackbar_txtExtracted">টেক্সট প্রাপ্ত হয়েছে!</string>
+    <string name="snackbar_pdfselected">PDF ফাইল নির্বাচিত হয়েছে!</string>
+    <string name="snackbar_viewAction">দেখুন</string>
+    <string name="more_options_text">আরও উন্নতি বিকল্প</string>
+    <string name="snackbar_no_duplicate_pdf">প্রতিলিপি পৃষ্ঠা পাওয়া যায়নি। কোনো নতুন PDF তৈরি হয়নি।</string>
+    <string name="snackbar_duplicate_removed">প্রতিলিপি পৃষ্ঠা সরিয়ে নেওয়া হয়েছে এবং একটি নতুন PDF তৈরি হয়েছে।</string>
+    <string name="snackbar_invert_unsuccessful">PDF উলটানো সফল হয়নি</string>
+    <string name="snackbar_invert_successfull">উল্টানো হয়েছে</string>
+    <string name="snackbar_color_too_close">আপনার ফন্ট রং এবং পেশানোর রং খুব মিল আছে</string>
+    <!-- Excel to PDF -->
+    <string name="excel_selected">Excel ফাইল নির্বাচিত হয়েছে</string>
+    <string name="excel_to_pdf">Excel থেকে PDF</string>
+    <string name="excel_tv_view_text">Excel ফাইল নির্বাচিত হয়েছে: </string>
+    <string name="select_excel_file">Excel ফাইল নির্বাচন করুন</string>
+
+    <!-- Share strings -->
+    <string name="share_chooser">বার্তা প্রেরণের জন্য অ্যাপ নির্বাচন করুন...</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_us_text">হাই! আমি এই অ্যাপটি Play Store এ চেক করেছি। এটি বেশ সুস্থভাবে চিত্রগুলি কে PDF তে রূপান্তর করে। প্রয়াস করুন: https://play.google.com/store/apps/details?id=swati4star.createpdf . :)</string>
+    <string name="snackbar_no_share_app">শেয়ার করার জন্য কোনো অ্যাপ্লিকেশন নেই।</string>
+
+    <!-- Select Images string -->
+    <string name="images_selected">%1$d টি চিত্র নির্বাচিত হয়েছে।</string>
+
+    <!-- Feedback Strings -->
+    <string name="feedback_subject">Images To PDF Converter জন্য পরামর্শ</string>
+    <string name="feedback_text">দয়া করে আপনার মূল্যবান প্রতিক্রিয়া লিখুন, অথবা কেবল একটি হাই দিন! :)</string>
+    <string name="snackbar_no_email_clients">কোনো ইমেল ক্লায়েন্ট ইনস্টল করা হয়নি।</string>
+    <string name="feedback_chooser">মেইল পাঠান...</string>
+    <string name="no_pdf">দেখানোর জন্য কোনো PDF নেই</string>
+    <string name="get_started">এখন শুরু করুন</string>
+    <string name="view_files_text">আপনার সমস্ত রূপান্তরিত ফাইলগুলি এখানে দেখুন!</string>
+    <string name="empty_image_description">কোনো PDF নেই</string>
+
+    <!-- Add Password -->
+    <string name="enter_password_custom">পাসওয়ার্ড লিখুন</string>
+    <string name="example_pass_123">pass@123</string>
+    <string name="remove_dialog">সরান...</string>
+    <string name="password_remove">পাসওয়ার্ড সরিয়ে ফেলা হয়েছে</string>
+
+    <!-- Merge PDF -->
+    <string name="merge_pdf">PDF মার্জ করুন</string>
+    <string name="merge_file_select">একটি ফাইল নির্বাচন করুন</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">দ্বিতীয় PDF এর ফাইল পাথ</string>
+    <string name="merge_files">ফাইল মার্জ করুন</string>
+    <string name="file_date_text">ফাইলের তারিখ</string>
+    <string name="file_size_text">ফাইলের আকার</string>
+    <string name="encrypted_file">_এনক্রিপ্টেড.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">আমি এই বার্তায় ফাইল(গুলি) সংযুক্ত করেছি</string>
+    <string name="nextimage_contentdesc">পরবর্তী চিত্র</string>
+    <string name="decrypted_file">_অন-এনক্রিপ্টেড.pdf</string>
+    <string name="decrypt_message">চালনার জন্য পাসওয়ার্ড লিখুন</string>
+
+    <string name="snackbar_txtselected">টেক্সট ফাইল নির্বাচিত হয়েছে!</string>
+    <string name="decrypt_protected_file">নির্বাচিত PDF পাসওয়ার্ড সুরক্ষিত। চালনার জন্য পাসওয়ার্ড লিখুন...</string>
+    <string name="not_encrypted">PDF এনক্রিপ্ট না</string>
+    <string name="save_current">সংরক্ষণ করুন</string>
+    <string name="save">সংরক্ষণ করুন</string>
+    <string name="choose_color_text">রঙ চয়ন করুন :</string>
+    <string name="save_first">বর্তমান চিত্রটি প্রথমে সংরক্ষণ করুন</string>
+    <string name="Filter_name">ফিল্টার</string>
+    <string name="Filter_image_preview">ফিল্টার চিত্র পূর্বরূপ</string>
+    <string name="warning">সতর্কতা</string>
+    <string name="overwrite_message">একই নামে একটি ফাইল ইতিমধ্যে বিদ্যমান। আপনি ওভাররাইট করতে চান?</string>
+
+    <!-- Text To PDF - Set Page Size -->
+    <string name="set_page_size_text">পৃষ্ঠা আকার নির্ধারণ করুন</string>
+    <string name="b0_to_b10">B0 থেকে B10</string>
+    <string name="a0_to_a10">A0 থেকে A10</string>
+    <string name="tabloid" translatable="false">ট্যাবলোইড</string>
+    <string name="executive" translatable="false">এক্জিকিউটিভ</string>
+    <string name="ledger" translatable="false">লেজার</string>
+    <string name="letter" translatable="false">চিঠি</string>
+    <string name="legal" translatable="false">আইনি</string>
+    <string name="a4" translatable="false">A4</string>
+    <string name="fit_size" translatable="false">আকারে মিলান</string>
+    <string name="default_page_size">ডিফল্ট ( %s )</string>
+    <string name="master_password_changed">পাসওয়ার্ড অবশ্যই ভুল হয়েছে। সম্ভবত, আপনি মাস্টার পাসওয়ার্ড পরিবর্তন করেছেন।</string>
+
+    <!-- View File options -->
+    <string name="delete_alert_selected">আপনি কি সমস্ত নির্বাচিত ফাইল মুছতে চান?</string>
+    <string name="sort_by_title">দ্বারা বাছাই করুন</string>
+    <string name="delete">মুছে ফেলুন</string>
+    <string name="sort">ক্রমানুসার করুন</string>
+
+    <!-- Directory Strings -->
+    <string name="directory">ডিরেক্টরি</string>
+    <string name="moving_files">আপনার ফাইলগুলি সরণি করা হচ্ছে</string>
+    <string name="success_move">আপনার ফাইলগুলি সফলভাবে সরণি করা হয়েছে</string>
+    <string name="dir_does_not_exists">ডিরেক্টরি অস্তিত্বে নেই</string>
+    <string name="move_files_delete_dir">ফাইলগুলি সরণি করা এবং ডিরেক্টরি মোছা হচ্ছে</string>
+    <string name="directory_deleted">ডিরেক্টরি মোছা হয়েছে</string>
+    <string name="success_delete_directory">ডিরেক্টরি সফলভাবে মোছা হয়েছে</string>
+    <string name="moved_files">ফাইলগুলি সফলভাবে সরণি করা হয়েছে</string>
+    <string name="dialog_new_dir">নতুন ডিরেক্টরির নাম লিখুন</string>
+    <string name="dialog_dir">ডিরেক্টরির নাম লিখুন</string>
+    <string name="cancel">বাতিল করুন</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="yes">হ্যাঁ</string>
+    <string name="select_all">সব নির্বাচন করুন</string>
+    <string name="converting_file_message">আপনার ফাইলগুলি পিডিএফে রূপান্তরিত করা হচ্ছে।</string>
+    <string name="select_text_file">টেক্সট ফাইল নির্বাচন করুন</string>
+    <string name="install_file_manager">দয়া করে একটি ফাইল ম্যানেজার ইনস্টল করুন</string>
+
+    <!-- Text to PDF -->
+    <string name="text_to_pdf">টেক্সট থেকে পিডিএফ</string>
+    <string name="text_file_selected">টেক্সট ফাইল নির্বাচিত হয়েছে</string>
+    <string name="select_file">আপলোড করার জন্য একটি ফাইল নির্বাচন করুন</string>
+    <string name="text_type" translatable="false">text/plain</string>
+    <string name="new_directory">নতুন ডিরেক্টরি</string>
+    <string name="previous_image_content_desc">আগের চিত্র</string>
+    <string name="text_file_name">"টেক্সট ফাইল : "</string>
+    <string name="extension_not_supported">দু: এই ফাইল ধরণটি বর্তমানে সমর্থিত নয়।</string>
+    <string name="font_color">ফন্ট রং</string>
+    <string name="edit_font_size">ফন্ট আকার সম্পাদনা (ডিফল্ট : %d)</string>
+    <string name="enter_font_size">ফন্ট আকার লিখুন</string>
+    <string name="example_font">উদাহরণ : 10</string>
+    <string name="font_size_changed">ফন্ট আকার পরিবর্তিত হয়েছে</string>
+    <string name="font_size">ফন্ট আকার : %1$s</string>
+
+    <!-- About US & App Description & Contact US -->
+    <string name="about_us">আমাদের সম্পর্কে</string>
+    <string name="rate_us">আমাদের পর্যায়</string>
+    <string name="app_description">আপনার ফাইলগুলি পিডিএফে রূপান্তর করার জন্য ব্যবহারকারী-বন্ধুত্বপূর্ণ একটি Android অ্যাপ্লিকেশন।</string>
+    <string name="version">সংস্করণ : </string>
+    <string name="developer">ডেভেলপার : স্বাতি গার্গ</string>
+    <string name="github_repo">গিথাব ভাণ্ডার</string>
+    <string name="view_contributors">যোগাযোগকারীদের দেখুন</string>
+    <string name="privacy_policy">গোপনীয়তা নীতি</string>
+    <string name="mail">মেইল পাঠান</string>
+    <string name="join_slack">স্ল্যাকে যোগ দিন</string>
+    <string name="website">আমাদের ওয়েবসাইট দেখুন</string>
+    <string name="license">লাইসেন্স</string>
+    <string name="playstore">Playstore-এ আমাদের পর্যায়</string>
+
+    <!-- Preview strings -->
+    <string name="swipe_to_view_next">পরবর্তী চিত্র দেখতে বামে সুইপ করুন</string>
+    <string name="showing_image">%1$d টি চিত্র দেখাচ্ছে %2$d টি চিত্রের মধ্যে</string>
+
+    <!-- Filter strings -->
+    <string name="filter_brush">ব্রাশ</string>
+    <string name="filter_none">কিছু নই</string>
+    <string name="filter_autofix">অটো মেটান</string>
+    <string name="filter_grayscale">গ্রেস্কেল</string>
+    <string name="filter_brightness">আলোক</string>
+    <string name="filter_contrast">বেগ সম্পর্ক</string>
+    <string name="filter_cross">ক্রস প্রসেস</string>
+    <string name="filter_documentary">দস্যুটারি</string>
+    <string name="filter_duetone">দ্বিতোন</string>
+    <string name="filter_filllight">ফিল লাইট</string>
+    <string name="filter_filpver">লাটে উপর</string>
+    <string name="filter_fliphor">লাটে পাশে</string>
+    <string name="filter_grain">গ্রেন</string>
+    <string name="filter_lomish">লোমিস</string>
+    <string name="filter_negative">নেগেটিভ</string>
+    <string name="filter_poster">পোস্টারাইজ</string>
+    <string name="filter_rotate">ঘোরা হয়েছে</string>
+    <string name="filter_saturate">প্রোডাক্ট</string>
+    <string name="filter_sepia">বাদল কালো</string>
+    <string name="filter_sharpen">শার্পেন</string>
+    <string name="filter_temp">তাপমাত্রা</string>
+    <string name="filter_tint">টিন্ট</string>
+    <string name="filter_vig">একটি আশ্বস্য ঘাঁট</string>
+    <string name="filter_saved">চিত্র সংরক্ষণ করা হয়েছে</string>
+    <string name="created">তৈরি হয়েছে</string>
+    <string name="printed">ছাপা হয়েছে</string>
+    <string name="renamed">পূর্ন নাম পায়েছে</string>
+    <string name="deleted">মোছা হয়েছে</string>
+    <string name="rotated">ঘোরা হয়েছে</string>
+    <string name="encrypted">এনক্রিপ্ট করা হয</string>
+    <string name="decrypted">ডিক্রিপ্ট করা হয়েছে</string>
+    <string name="history">ইতিহাস</string>
+    <string name="no_history_message">দেখানোর জন্য কোনও ইতিহাস নেই</string>
+    <string name="view_history_here_message">আপনার সমস্ত রূপ</string>
+    <string name="delete_history_message">আপনি কি ইতিহাস মুছতে চান?</string>
+
+    <!-- Extract Images -->
+    <string name="extract_images">চিত্র বের করুন</string>
+    <string name="extract_images_failed">আমরা নির্বাচিত পিডিএফ ফাইলে কোনও চিত্র খুঁজে পেয়নি।</string>
+    <string name="extract_images_success">আমরা নির্বাচিত পিডিএফ ফাইলে %1$d টি চিত্র পেয়েছি। তাদেরকে মূল নির্দেশিকায় PDF ফাইল ফোল্ডারে সংরক্ষণ করা হয়েছে।</string>
+
+    <!-- Extract Text -->
+    <string name="extract_text">মাত্র টেক্সট বের করুন</string>
+    <string name="pdf_selected">নির্বাচিত পিডিএফ ফাইল: </string>
+    <string name="file_info" translatable="false">\n  ফাইল নাম : %1$s \n\n  পথ : %2$s \n\n  আকার : %3$s \n\n  সর্বশেষ পরিবর্তন %4$s</string>
+
+    <!-- Text To PDF FontFamily -->
+    <string name="default_font_family_text">ফন্ট পরিবার (ডিফল্ট : %s)</string>
+    <string name="font_family_text">"ফন্ট পরিবার : "</string>
+    <string name="courier" translatable="false">কুরিয়ার</string>
+    <string name="helvetica" translatable="false">হেলভেটিকা</string>
+    <string name="times_roman" translatable="false">টাইমস রোমান</string>
+    <string name="symbol" translatable="false">প্রতীক</string>
+    <string name="zapfdingbats" translatable="false">জাপফ ডিংব্যাটস</string>
+    <string name="undefined">অনির্ধারিত</string>
+    <string name="selected_image">নির্বাচিত চিত্র</string>
+    <string name="reset">রিসেট</string>
+    <string name="rotate">ঘোরান</string>
+    <string name="done">সম্পন্ন</string>
+    <string name="image_successfully_cropped">চিত্রটি সফলভাবে ক্রপ করা হয়েছে</string>
+    <string name="confirm_exit_message">পুনরায় প্রস্থান করতে পুনরায় ব্যাক চাপুন</string>
+
+    <string name="filter_not_saved">চিত্রটি সংরক্ষণ করা যায়নি</string>
+    <string name="remove_image_message">আপনি কি নিশ্চিত যে আপনি এই চিত্রটি সরাতে চান?</string>
+    <string name="dont_show_again">আর দেখানো না</string>
+    <string name="remove_page_message">আপনি কি নিশ্চিত যে আপনি এই পৃষ্ঠা সরাতে চান?</string>
+
+    <!-- Watermark Strings -->
+    <string name="encrypted_file_text">এনক্রিপ্টেড ফাইল</string>
+
+    <!-- Split PDF -->
+    <string name="split_pdf">পিডিএফ ভাঙ্গা</string>
+    <string name="split_success">নির্বাচিত পিডিএফ ফাইলটি সফলভাবে ভাঙ্গা হয়েছে। এটি %1$d টি পিডিএফে ভাঙ্গা হয়েছে</string>
+    <string name="split_info">পিডিএফটি একাধিক পিডিএফে ভাঙতে হবে। নমুনা: 1&#8211;5, 6&#8211;7, 8, 9</string>
+    <string name="error_page_number">অবৈধ পৃষ্ঠা সংখ্যা</string>
+    <string name="error_page_range">অবৈধ ব্যাপ্তি ইনপুট</string>
+    <string name="error_invalid_input">অবৈধ ইনপুট</string>
+    <string name="split_one_page_pdf_alert">নির্বাচিত পিডিএফটি ভাঙতে সম্ভব নয় কারণ এটি শুধুমাত্র 1 পৃষ্ঠা আছে!</string>
+
+    <!-- Remove Pages -->
+    <string name="remove_pages">পৃষ্ঠা সরান</string>
+    <string name="remove_pages_error">ইনপুট মানটি বৈধ নয়</string>
+    <string name="encrypted_pdf">পিডিএফ পাসওয়ার্ড সুরক্ষিত</string>
+    <string name="file_access_error">আমরা পিডিএফ অ্যাক্সেস করতে অসমর্থ ছিলি। ফাইলগুলি এনক্রিপ্ট হতে পারে বা বাইরের সংরক্ষণে থাকতে পারে।</string>
+    <string name="file_order">ফাইলে কোনও পরিবর্তন হয়নি</string>
+
+
+    <!-- Reorder Pages -->
+
+
+    <!-- Compress PDF -->
+    <!-- Compress PDF -->
+    <string name="compress_pdf">পিডিএফ সংকোচন</string>
+    <string name="compress_pdf_prompt">পিডিএফ এর % সংকোচন লিখুন: </string>
+    <string name="compress_info">অভিনন্দন! আপনার পিডিএফ সংকোচিত হয়েছে: \n মৌলিক পিডিএফ আকার : %s \n সংকোচিত পিডিএফ আকার: %s</string>
+
+    <!-- PDF to Images string resources-->
+    <string name="pdf_to_images">PDF থেকে চিত্র</string>
+    <string name="create_images">চিত্র তৈরি করুন</string>
+    <string name="select_pdf_file">পিডিএফ ফাইল নির্বাচন করুন</string>
+    <string name="share_images">চিত্র ভাগ করুন</string>
+    <string name="view_images">চিত্র দেখুন</string>
+    <string name="view_in_gallery">গ্যালারিতে চিত্র দেখুন</string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">সদৃশ পৃষ্ঠা সরান</string>
+    <string name="remove_duplicate_info">পিডিএফে সদৃশ পৃষ্ঠা সরানো হবে।</string>
+    <string name="remove_duplicate">সদৃশ পৃষ্ঠা সরান।</string>
+
+    <!-- Invert Pdf -->
+    <string name="invert_pdf">পিডিএফ উলটান</string>
+    <string name="invert_pdf_info">পিডিএফে সব রঙ উলটানো হবে</string>
+    <string name="invert_pdf_title">পিডিএফ উলটান</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_positive">এখন দর</string>
+    <string name="rate_negative">না, ধন্যবাদ</string>
+    <string name="rate_title">আমাদের দর দিন!</string>
+    <string name="rate_dialog_text">আপনি যদি এই অ্যাপটি উপভোগ করেন, তবে দয়া করে এই অ্যাপটি দর দেবার জন্য একটু সময় নিন। এটি 1 মিনিটের বেশি সময় নেবে না। আপনার সমর্থনের জন্য ধন্যবাদ! :)</string>
+    <string name="rate_us_never">কখনো না</string>
+    <string name="error_occurred">ত্রুটি ঘটেছে</string>
+
+    <!--Rotate Pages -->
+    <string name="rotate_pages">পৃষ্ঠা ঘুরান</string>
+    <string name="enter_rotation_angle">ঘুরানোর কোন কোণ লিখুন</string>
+    <string name="rotated_file_name" translatable="false">%s_ঘুরে_%s%s</string>
+    <string name="degree_90" translatable="false">90 &#xb0;</string>
+    <string name="degree_180" translatable="false">180 &#xb0;</string>
+    <string name="degree_270" translatable="false">270 &#xb0;</string>
+    <string name="share_files">ফাইল ভাগ করুন</string>
+    <string name="pdf_removed_from_list">পিডিএফটি তালিকা থেকে সরে যায়েছে।</string>
+    <string name="pdf_added_to_list">পিডিএফটি তালিকা এ যোগ করা হয়েছে।</string>
+    <string name="select_files">ফাইল নির্বাচন করুন</string>
+
+
+    <!-- Settings page -->
+    <string name="settings">সেটিংস</string>
+    <string name="compression_image_edit">চিত্র সংকোচনের মান পরিবর্তন করুন</string>
+    <string name="font_family_edit">ডিফল্ট ফন্ট পরিবর্তন করুন</string>
+    <string name="font_size_edit">ডিফল্ট ফন্ট আকার পরিবর্তন করুন</string>
+    <string name="theme_edit">ডিফল্ট থিম পরিবর্তন করুন</string>
+    <string name="image_compression_value_default">চিত্র সংকোচন ডিফল্ট মান: %d %%</string>
+    <string name="theme_value_def">থিম ডিফল্ট মান: %s </string>
+    <string name="page_size_value_def">পৃষ্ঠা আকার ডিফল্ট মান: %s </string>
+    <string name="font_size_value_def">ফন্ট আকার ডিফল্ট মান: %d </string>
+    <string name="font_family_value_def">ফন্ট পরিবর্তন ডিফল্ট মান: %s </string>
+    <string name="settings_info">আপনি এখানে বিভিন্ন সেটিংসের জন্য ডিফল্ট মান পরিবর্তন করতে পারেন।</string>
+    <string name="storage_location_modified">স্টোরেজ স্থান পরিবর্তন হয়েছে</string>
+    <string name="storage_location_info">স্টোরেজ স্থান (নবদলনীয় নয়)</string>
+    <string name="theme_white">সাদা</string>
+    <string name="theme_dark">ডার্ক</string>
+    <string name="theme_black">কালো</string>
+    <string name="theme_system" tools:ignore="MissingTranslation">সিস্টেম</string>
+    <string name="change_master_pwd">মাস্টার পাসওয়ার্ড পরিবর্তন করুন</string>
+    <string name="current_master_pwd">বর্তমান মাস্টার পাসওয়ার্ড \"%1$s\" সব এনক্রিপ্ট পিডিএফের জন্য রয়েছে। আপনি এটি এখানে পরিবর্তন করতে পারেন:</string>
+
+    <!-- Home page -->
+    <string name="home_page">হোম</string>
+    <string name="create_new_pdfs">নতুন পিডিএফ তৈরি করুন</string>
+    <string name="view_pdfs">পিডিএফ দেখুন</string>
+    <string name="view_pdf">পিডিএফ দেখুন</string>
+    <string name="modify_existing_pdfs">বিদ্যমান পিডিএফ পরিবর্তন করুন</string>
+    <string name="more_options">আরও বিকল্প</string>
+    <string name="add_password">পাসওয়ার্ড যোগ করুন</string>
+    <string name="add_text">টেক্সট যোগ করুন</string>
+    <string name="reorder_pages">পৃষ্ঠা পুনর্বিন্যাস করুন</string>
+    <string name="remove_password">পাসওয়ার্ড সরান</string>
+    <string name="enhance_created_pdfs">তৈরি পিডিএফ সুধরুন</string>
+    <string name="viewfiles_rotatepages">1. পৃষ্ঠা ঘুরাতে আপনি যে পিডিএফ দেখতে চান। \n2. পৃষ্ঠা ঘুরানো নির্বাচন করুন। \n3. ঘুরানোর কোণ নির্বাচন করুন। ঠিক আছে নির্বাচন করুন। \n4. নতুন ঘুরে পিডিএফ তৈরি হবে।</string>
+    <string name="viewfiles_addpassword">1. আপনি যে পিডিএফ এ পাসওয়ার্ড যোগ করতে চান তা নির্বাচন করুন। \n2. পাসওয়ার্ড যোগ করুন। ঠিক আছে নির্বাচন করুন। \n3. পাসওয়ার্ড সহ নতুন পিডিএফ তৈরি হবে।</string>
+    <string name="viewfiles_removepassword">1. আপনি যে পিডিএফ থেকে পাসওয়ার্ড সরাতে চান তা নির্বাচন করুন। \n2. পাসওয়ার্ড সরান। ঠিক আছে নির্বাচন করুন। \n3. পাসওয়ার্ড ছাড়া নতুন পিডিএফ তৈরি হবে।</string>
+    <string name="grayscale_images">গ্রেস্কেল পিডিএফ তৈরি করুন</string>
+
+    <!-- Welcome screens-->
+    <string name="welcome_create_pdf_message">একটি পিডিএফ ফাইল তৈরি করা</string>
+    <string name="welcome_create_pdf_info">আগে তৈরি পিডিএফ ফাইল দেখুন অথবা নতুন একটি তৈরি করুন!</string>
+    <string name="welcome_themes_title">বিভিন্ন থিম</string>
+    <string name="welcome_themes_message">সেটিংসে যান এবং আপনি তিনটি প্রকারের থিম থেকে চয়ন করতে পারেন: কালো, ডার্ক, সাদা</string>
+    <string name="welcome_merge_title">পিডিএফ ফাইল মার্জ করুন</string>
+    <string name="welcome_text_to_pdf">টেক্সট থেকে পিডিএফ</string>
+    <string name="welcome_text_to_pdf_message">আপনার টেক্সট ফাইলগুলি আপনার সবচেয়ে ইচ্ছিত পিডিএফ তে পরিণত করুন</string>
+    <string name="welcome_qrcode_to_pdf">কিউআর কোড থেকে পিডিএফ</string>
+    <string name="welcome_qrcode_to_pdf_message">সরলভাবে কিউআর কোড এবং বারকোড পিডিএফ তে পরিণত করুন</string>
+    <string name="welcome_remove_pages">পৃষ্ঠা সরান</string>
+    <string name="welcome_remove_pages_message">আরো প্রয়োজ্য নেই তা নির্মূলন করুন</string>
+    <string name="welcome_reorder_pages">পৃষ্ঠা পুনর্বিন্যাস করুন</string>
+    <string name="welcome_reorder_pages_message">আপনি চাইলে পৃষ্ঠাগুলি পুনর্বিন্যাস করতে এবং নয়নয় করতে পারেন</string>
+    <string name="welcome_extract_images">পিডিএফ থেকে চিত্র বের করুন</string>
+    <string name="welcome_extract_images_message">একবারে আপনার পিডিএফ থেকে সম্ভাব্য সব চিত্র বের করুন</string>
+    <string name="welcome_merge_message">আপনার ফোনে রয়েছে বিভিন্ন বিদ্যমান পিডিএফ কে একটি ফাইলে মার্জ করুন</string>
+    <string name="welcome_viewfiles_title">পিডিএফ ফাইলগুলি দেখা</string>
+    <string name="welcome_viewfiles_message">আপনি আপনার পিডিএফ ফাইলে দেখতে, মুছতে, নামায় দেখাতে, ভাগ করতে এবং পাসওয়ার্ড যোগ করতে পারেন</string>
+    <string name="welcome_excel_message" translatable="false">আপনি সহজে আপনার এক্সেল ফাইলগুলি আপনার সবচেয়ে ইচ্ছিত পিডিএফ তে পরিণত করুন</string>
+    <string name="skip_text">পার দিন</string>
+    <string name="get_started_title">শুরু করুন!</string>
+
+    <!-- Whats New Dialog -->
+    <string name="whatsnew_continue">চালিয়ে যান</string>
+    <string name="whatsnew_title">নতুন কি</string>
+
+    <!--watermark strings -->
+    <string name="watermark_added">ওয়াটারমার্ক যোগ করা হয়েছে</string>
+    <string name="watermarked">ওয়াটারমার্ক করা হয়েছে</string>
+    <string name="watermarked_file">_ওয়াটারমার্ক.pdf</string>
+    <string name="watermark_remove">ওয়াটারমার্ক সরানো হয়েছে</string>
+    <string name="snackbar_watermark_cannot_be_blank">টেক্সট খালি রাখা যাবে না</string>
+    <string name="cannot_add_watermark">ওয়াটারমার্ক পিডিএফে যোগ করা সম্ভব হয়নি। দয়া করে পিডিএফটি আবার চেক করুন।</string>
+    <string name="add_watermark">ওয়াটারমার্ক যোগ করুন</string>
+    <string name="enter_watermark_text">টেক্সট লিখুন</string>
+    <string name="enter_watermark_angle">কোণ লিখুন</string>
+    <string name="watermark_angle">কোণ</string>
+    <string name="choose_watermark_color">রঙ নির্বাচন করুন</string>
+    <string name="enter_watermark_font_size">ফন্ট সাইজ লিখুন</string>
+    <string name="choose_watermark_font_family">ফন্ট পরিবার নির্বাচন করুন</string>
+    <string name="watermark_font_size">ফন্ট সাইজ</string>
+    <string name="choose_watermark_style">শৈলী নির্বাচন করুন</string>
+    <string name="viewfiles_addwatermark">1. ওয়াটারমার্ক যোগ করতে চাইতে পিডিএফ নির্বাচন করুন। \n2. ওয়াটারমার্ক যোগ করুন। \n3. প্রয়োজনীয় তথ্য পূরণ করুন। OK নির্বাচন করুন। \n4. নতুন পিডিএফ ওয়াটারমার্ক সহ তৈরি হবে।</string>
+
+    <!--<nav add images>-->
+    <string name="add_images">ছবি যোগ করুন</string>
+    <string name="selected_images_text">আপনি যেসব চিত্রগুলি নির্বাচন করবেন, তা নির্বাচিত পিডিএফের শেষে যোগ করা হবে।</string>
+    <string name="no_images_selected">কোনও ছবি নির্বাচিত হয়নি</string>
+    <string name="title_filter_history_dialog">অপারেশন ধরনে ফিল্টার করুন</string>
+
+    <!--zip to pdf-->
+    <string name="zip_to_pdf">ZIP থেকে PDF</string>
+    <string name="convert_to_pdf">PDF এ রূপান্তরণ</string>
+    <string name="error_no_image_in_zip">ZIP ফাইলে কোনও চিত্র নেই</string>
+    <string name="error_open_file">ফাইল খোলার সময় একটি ত্রুটি ঘটেছে। দয়া করে ফাইলটি আবার খোলার চেষ্টা করুন</string>
+
+    <!--text to pdf-->
+    <string name="error_pdf_not_created">দু: খিত, পিডিএফ তৈরি হয়নি। দয়া করে আবার চেষ্টা করুন</string>
+
+    <!--favourite fragment-->
+    <string name="favourites">প্রিয়শ্রেণী</string>
+    <string name="add_to_favourite">প্রিয়শ্রেণীতে যোগ করুন</string>
+    <string name="favourites_text">আপনার প্রিয় বৈশিষ্ট্য যোগ করতে + আইকন নির্বাচন করুন!</string>
+    <string name="no_excel_file">কোনও এক্সেল ফাইল নির্বাচিত হয়নি</string>
+    <string name="split_range_alert">প্রবেশ ক্ষেত্র দ্বারা নির্ধারিত পিডিএফটি আবার তৈরি হবে!</string>
+
+    <!--file name suffix-->
+    <string name="pdf_suffix" translatable="false">_pdf</string>
+    <string name="reordering_pages_dialog">আপনার পৃষ্ঠা পুনর্বিন্যাস করা হচ্ছে...</string>
+    <string name="delete_alert_singular">আপনি নির্বাচিত ফাইলটি মুছতে চান?</string>
+    <string name="snackbar_files_deleted">ফাইলগুলি মুছে গেছে</string>
+    <string name="lbl_recently_used">সাম্প্রতিকভাবে ব্যবহৃত বৈশিষ্ট্যগুলি</string>
+
+    <!--  FAQs  -->
+    <string name="faqSearch">FAQ খোঁজা</string>
+
+    <string-array name="faq_question_answers">
+        <item>কোন ছবি ফাইল স্তরণ করা হচ্ছে?#####এই অ্যাপটি jpeg, jpg, tiff, gif, psd, bmp, eps, png, ইত্যাদি সমর্থন করে।</item>
+        <item>আমি কি অ্যাপ ব্যবহার করে নতুন টেক্সট ফাইল তৈরি করতে পারি?#####আপনি কেবল একটি বিদ্যমান PDF থেকে পাঠ্য বাচানোর মাধ্যমে একটি নতুন টেক্সট ফাইল তৈরি করতে পারেন। একটি টেক্সট ফাইল তৈরি করতে, \n1) মূলপাতার <strong>পাঠ্য বাচানো</strong> বিকল্পে ক্লিক করুন। \n2) <strong>পিডিএফ ফাইল নির্বাচন করুন</strong> বোতাম ব্যবহার করে পিডিএফ নির্বাচন করুন। \n3) তারপর, <strong>পাঠ্য বাচানো</strong> বোতাম দেওয়া হবে। \n4) একবার সম্পন্ন হলে, পিডিএফ ফাইল থেকে পাঠ্য থাকলে একটি টেক্সট ফাইল তৈরি হবে।</item>
+        <item>একই সাথে যতটুকু ছবি যোগ করতে পারি কি?#####না, কোনও সীমা নেই।</item>
+        <item>আমি কি সংমিলিত করতে পারি ছবির আকারের সীমা?#####না, কোনও সীমা নেই। তবে, আমরা <strong>10MB-এর কম</strong> আকারের সীমাবদ্ধকরণ সুপারিশ করি। একাধিক বৃহৎ ছবি ফাইলের রূপান্তর 10 সেকেন্ডের বেশি নেয়।</item>
+        <item>ছবিতে যোগ করার পর কি আমি শির্ষক ঢোকাতে পারি?#####না, শির্ষক ছবিতে যোগ করা যাবে না ছাড়া ছবিটি স্বয়ংসম্পাদিত না হলে।</item>
+        <item>আমি কি অ্যাপ ব্যবহার করে PDF ফাইল পড়তে পারি?#####না, আপনি এখনো পড়তে পারবেন না। এই অ্যাপটি একটি পিডিএফ দর্শক হিসেবে কাজ করে না।</item>
+        <item>আমি অ্যাপ ব্যবহার করে তৈরি করা পিডিএফ ফাইলগুলি সেভ কোথায় সেভ করতে হয়?#####অ্যাপ দিয়ে তৈরি করা পিডিএফ ফাইলগুলি আপনার ডিভাইসের স্টোরেজের PDFfiles নামের ফোল্ডারে স্বয়ংক্রিয়ভাবে সংরক্ষণ করা হয়। \nআপনি <strong>সেটিংস</strong> অধ্যায়ে ডিফল্ট স্থান পরিবর্তন করতে পারেন।</item>
+        <item>ডিফল্ট স্টোরেজ স্থান কীভাবে পরিবর্তন করতে পারি?#####ডিফল্ট স্টোরেজ স্থান পরিবর্তন করতে, \n1) সর্বোপরের বাম কোণে <strong>হ্যাম্বার আইকন</strong> (তিনটি আওতা লাইন) ক্লিক করুন। \n2) নামলে নামলে <strong>সেটিংস</strong> দিয়ে নিম্নলিখিত অধ্যায়ে ক্লিক করুন। \n3) সেটিংস পৃষ্ঠায়, পাঠ্য <strong>স্টোরেজ স্থান পরিবর্তন করুন</strong> লেখার নীচে থাকা ফিল্ডটি ক্লিক করুন। \n4) নতুন সংরক্ষণ স্থান খোলা এবং সর্বোচ্চে থাকা <strong>নির্বাচন আইকন</strong> প্রেস করুন। \nএকবার পরিবর্তন হলে, অ্যাপ ব্যবহার করে তৈরি করা ফাইলগুলি নতুন স্থানে সংরক্ষিত হবে।</item>
+        <item>অ্যাপ ব্যবহার করে সম্পাদিত/তৈরি করা পিডিএফ ফাইলগুলি কীভাবে ভাগ করতে পারি?#####আপনি অ্যাপ থেকে স্বয়ং সম্পাদিত/তৈরি করা পিডিএফ ফাইলগুলি অ্যাক্সেস এবং ভাগ করতে পারেন। পিডিএফ ফাইলগুলি ভাগ করতে, \n1) মূলপাতার <strong>ফাইল দেখুন</strong> বিকল্পে ক্লিক করুন। \n2) চেকবক্স ব্যবহার করে ভাগ করতে চান তা নির্বাচন করুন। \n3) তারপর, সর্বোচ্চে <strong>অধিক বিকল্প</strong> (তিনটি লম্বা ডট) বোতামটি উপরে-ডান দিয়ে ক্লিক করুন এবং <strong>শেয়ার</strong> ব্যবহার করুন। \n4) ফাইলগুলি ভাগ করতে চান সেই ফাইলগুলি শেয়ার করার উপযোগী পদ্ধতি নির্বাচন করুন।</item>
+        <item>আমি কি অ্যাপ ব্যবহার করে পিডিএফ ফাইলের ভুল পাসওয়ার্ড পুনরুদ্ধার করতে পারি?#####না, হারানো পাসওয়ার্ডটি পুনরুদ্ধার করা যায় না।</item>
+        <item>আমি কি একটি PDF ফাইলের পাসওয়ার্ড পরিবর্তন করতে পারি?#####হ্যাঁ, তবে আপনি শুধুমাত্র বর্তমান পাসওয়ার্ডটি সরাতে পারবেন। একবার পাসওয়ার্ডটি সরানো হলে, হোমপেজে <strong>পাসওয়ার্ড পরিবর্তন</strong> বিকল্পটি ব্যবহার করে পাসওয়ার্ড পরিবর্তন করুন।</item>
+        <item>কি আমি পিডিএফ তৈরি করার আগে চিত্রগুলি সংকোচন করতে পারি?#####হ্যাঁ, পারেন। চিত্রগুলি সংকোচন করতে, \n1) হোমপেজে <strong>চিত্র থেকে পিডিএফ</strong> বিকল্পে ক্লিক করুন। \n2) <strong>চিত্র নির্বাচন</strong> বাটন ব্যবহার করে চিত্রগুলি নির্বাচন করুন। \n3) পরবর্তী, চিত্রগুলি সংকোচনের <strong>চিত্র সংকোচন</strong> বিকল্পটি নির্বাচন করুন।</item>
+        <item>একটি পিডিএফ থেকে নির্মিত চিত্রের ফরম্যাট কী?#####একটি পিডিএফ থেকে নির্মিত চিত্রগুলি <strong>.png</strong> ফরম্যাটে থাকবে।</item>
+        <item>কি আমি মেঘগণনা / অনলাইন স্টোরেজ থেকে ফাইল যোগ করতে পারি?#####এখন পর্যন্ত আপনি পারবেন না। তবে এটি উন্নত প্রণালীর উপর রচনাকারের সড়কমালে আছে এবং শীঘ্রই উপলব্ধ হবে।</item>
+        <item>কীভাবে তৈরি / সংশোধন করা ফাইলগুলির ইতিহাস চেক করতে পারি?#####আপনি যে সমস্ত ফাইল আপনি এই অ্যাপে তৈরি / সংশোধন করেছেন তা দেখতে, হোমপেজে <strong>ইতিহাস</strong> বিকল্পটি ক্লিক করুন।</item>
+        <item>কীভাবে একাধিক পিডিএফ ফাইল মার্জ করতে পারি?#####একাধিক পিডিএফ মার্জ করতে, \n1) হোমপেজে <strong>পিডিএফ মার্জ</strong> বিকল্পটি ক্লিক করুন। \n2) <strong>ফাইল নির্বাচন</strong> বাটন ব্যবহার করে পিডিএফ ফাইলগুলি নির্বাচন করুন। \n3) একবার নির্বাচিত, <strong>ফাইল মার্জ করুন</strong> বাটন ক্লিক করুন।</item>
+        <item>কীভাবে পিডিএফ তৈরি করার সময় চিত্রগুলি সম্পাদনা করতে পারি?#####হ্যাঁ, পারেন। এটি করতে, \n1) হোমপেজে <strong>চিত্র থেকে পিডিএফ</strong> বিকল্পটি ক্লিক করুন। \n2) <strong>চিত্র নির্বাচন</strong> বাটন ব্যবহার করে চিত্রগুলি নির্বাচন করুন। \n3) একবার নির্বাচিত, আপনার প্রয়োজনীয়তা অনুসারে <strong>চিত্র সম্পাদন</strong> বা <strong>চিত্র ফিল্টার</strong> বিকল্পটি নির্বাচন করুন। \n4) সম্পাদনা সমাপ্ত করুন অথবা ফিল্টার প্রয়োগ করুন। \n5) এখন, সম্পাদিত চিত্রগুলি নির্বাচন করে <strong>চিত্র থেকে পিডিএফ তৈরি</strong> বাটন ক্লিক করুন।</item>
+        <item>কীভাবে পিডিএফ এ জলছাপ যোগ করতে পারি?#####জলছাপ যোগ করতে নীচে চলে যান <strong>তৈরি করা পিডিএফগুলি সংযোজন করুন</strong> এবং প্রোজেক্টের অপশন মেনুতে বাম থেকে ডানে স্যুইপ করে <strong>জলছাপ যোগ করুন</strong> ব্যবহার করে ক্লিক করুন।</item>
+        <item>কি আমি একটি পিডিএফ এর পৃষ্ঠা পুনর্বিন্যাস করতে পারি?#####হ্যাঁ, পারেন। পৃষ্ঠা পুনর্বিন্যাস করতে, \n1) হোমপেজে <strong>পৃষ্ঠা পুনর্বিন্যাস</strong> বিকল্পটি ক্লিক করুন। \n2) <strong>একটি ফাইল নির্বাচন করুন</strong> বাটন ব্যবহার করে পিডিএফ ফাইল নির্বাচন করুন। \n3) <strong>পিডিএফ তৈরি করুন</strong> বাটন ক্লিক করুন। \n4) পৃষ্ঠা পুনর্বিন্যাস করতে উপরে এবং নিচের তীরগুলি ব্যবহার করুন। \n5) একবার পুনর্বিন্যাস করা হলে, নতুন আপডেট পিডিএফ ফাইল তৈরি করার জন্য উপরে বাটন ব্যবহার করুন।</item>
+        <item>কীভাবে একটি পিডিএফ থেকে চিত্র বের করতে পারি?#####চিত্র বের করতে, \n1) হোমপেজে চিত্র নিক্ষেপ বিকল্পে ক্লিক করুন। \n2) সেলেক্ট আ ফাইল বাটন ব্যবহার করে পিডিএফ ফাইলটি নির্বাচন করুন। \n3) নির্বাচিত হলে, চিত্র তৈরি করার জন্য চিত্র তৈরি বাটন ক্লিক করুন।</item>
+
+
+        <item>আমি কি PDF ফরম্যাটে পরিবর্তন করতে পারি, PPT, PPTX, ODT, DOC, DOCX ফরম্যাটে?#####না, মোমেন্টে পিডিএফগুলি কেবল পাঠ ফরম্যাটে রূপান্তরিত করা যাচ্ছে।</item>
+        <item>PDF CONVERTER: ফাইলগুলি পিডিএফ অ্যাপটি কোথায় ডাউনলোড করতে পারি?#####অ্যাপটি Google PlayStore এবং F-Droid এ উপলব্ধ।</item>
+        <item>আমি কি এই অ্যাপটিতে অবদান রাখতে পারি?#####হ্যাঁ, আপনি পারেন। আমাদেরকে প্রকল্পের নাম <strong>Swati4star/Images-to-PDF</strong> ব্যবহার করে GitHub-এ খোঁজে পেতে পারেন।
+    আপনার ধারণা (বৈশিষ্ট্য অনুরোধ) ভাগ করার জন্য, আপনি এবং যে কোনও সম্সয়ের জন্য একটি বাগ বা পুল অনুরোধ জমা দেওয়া যায়। এই প্রকল্পে যেতে, সাধারণভাবে একটি সিংগল লাইন পরিবর্তন করে যে সব অবদানকারী আছে তা পড়ে নেওয়া হয়। প্রকল্পের <strong>অবদানকারীদের নির্দেশ</strong> পড়তে শুরু করতে।</item>
+        <item>আমার কিছু প্রশ্ন আছে, যা এই FAQs ডকুমেন্টে নেই। ডেভেলপারের সাথে আমি কীভাবে যোগাযোগ করতে পারি?#####আরও প্রশ্ন দেওয়ার জন্য, ডেভেলপারে ইমেইল করুন <strong>swati4star@gmail.com</strong></item>
+    </string-array>
+
+</resources>
