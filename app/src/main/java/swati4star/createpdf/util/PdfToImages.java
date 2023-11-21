@@ -91,9 +91,13 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
                     // generate numbered image file names
                     String filename = getFileNameWithoutExtension(mPath) +
                             "_" + (i + 1);
-                    String path = saveImage(filename, bitmap);
+                    //generate png and jpg
+                    String path = saveImage(filename, bitmap, ImageUtils.ImageFormat.JPEG);
+                    String path2 = saveImage(filename, bitmap, ImageUtils.ImageFormat.PNG);
+
                     if (path != null) {
                         mOutputFilePaths.add(path);
+                        mOutputFilePaths.add(path2);
                         mImagesCount++;
                     }
                 }

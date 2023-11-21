@@ -81,37 +81,86 @@ public class ImageUtils {
         BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
         return new Rectangle(options.outWidth, options.outHeight);
     }
+    public enum ImageFormat {
+        PNG, JPEG
+    }
 
     /**
-     * Saves bitmap to external storage
+     * Saves the given bitmap image to external storage in the specified format.
      *
-     * @param filename    - name of the file
-     * @param finalBitmap - bitmap to save
+     * @param filename   The name of the file to be saved.
+     * @param finalBitmap The bitmap image to be saved.
+     * @param format      The desired image format (e.g., PNG, JPEG).
+     * @return The full path to the saved file, or null if the image could not be saved.
      */
-    public static String saveImage(String filename, Bitmap finalBitmap) {
+    public static String saveImage(String filename, Bitmap finalBitmap, ImageFormat format) {
+        if (isInvalidBitmap(finalBitmap)) return null;
 
-        if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
+        String fullPath = prepareFilePath(filename, format);
+        if (fullPath == null) return null;
+
+        if (!writeImageToFile(finalBitmap, fullPath, format)) {
             return null;
+        }
 
+        return fullPath;
+    }
+
+    /**
+     * Checks if the provided bitmap is either null or white.
+     *
+     * @param bitmap The bitmap image to check.
+     * @return True if the bitmap is invalid, false otherwise.
+     */
+    private static boolean isInvalidBitmap(Bitmap bitmap) {
+        return bitmap == null || checkIfBitmapIsWhite(bitmap);
+    }
+
+    /**
+     * Prepares the file path for the image to be saved based on the filename and desired format.
+     *
+     * @param filename The name of the file to be saved.
+     * @param format   The desired image format (e.g., PNG, JPEG).
+     * @return The prepared file path string, or null if the path couldn't be prepared.
+     */
+    private static String prepareFilePath(String filename, ImageFormat format) {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + pdfDirectory);
-        String fileName = filename + ".png";
+
+        String fileExtension = format == ImageFormat.PNG ? ".png" : ".jpg";
+        String fileName = filename + fileExtension;
 
         File file = new File(myDir, fileName);
-        if (file.exists())
+        if (file.exists()) {
             file.delete();
-
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            Log.v("saving", fileName);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return myDir + "/" + fileName;
+    }
+
+    /**
+     * Writes the given bitmap image to the specified file path in the desired format.
+     *
+     * @param bitmap   The bitmap image to write.
+     * @param fullPath The full path where the image should be written.
+     * @param format   The desired image format (e.g., PNG, JPEG).
+     * @return True if the image was successfully written, false otherwise.
+     */
+    private static boolean writeImageToFile(Bitmap bitmap, String fullPath, ImageFormat format) {
+        try {
+            FileOutputStream out = new FileOutputStream(new File(fullPath));
+            Bitmap.CompressFormat compressFormat = format == ImageFormat.PNG ?
+                    Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG;
+
+            bitmap.compress(compressFormat, 100, out);
+            Log.v("saving", fullPath);
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
