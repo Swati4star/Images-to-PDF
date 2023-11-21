@@ -284,6 +284,22 @@ public class MainActivity extends AppCompatActivity
                         .setData(Uri.fromParts("package", MainActivity.this.getPackageName(), null))
         );
     }
+    private static final int REQUEST_CODE_OPEN_DIRECTORY = 42;
+
+    private void openDirectoryForPermission() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_OPEN_DIRECTORY && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            grantUriPermission(getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+    }
 
     private void requestStoragePermission_API30AndAbove(boolean giveExplanation) {
         DialogUtils.showChoiceDialog(
@@ -300,6 +316,9 @@ public class MainActivity extends AppCompatActivity
                 giveExplanation ?
                         R.string.manage_storage_permission_denied_alert_dialog_negative_button_label :
                         R.string.manage_storage_permission_alert_dialog_negative_button_label,
+                giveExplanation ?
+                        R.string.manage_storage_permission_alert_dialog_neutral_button_label :
+                        DialogUtils.EMPTY_STRING,
                 false,
                 new DialogCallbacks() {
                     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -321,6 +340,7 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onNeutralButtonClick() {
+                        openDirectoryForPermission();
                     }
                 });
     }
