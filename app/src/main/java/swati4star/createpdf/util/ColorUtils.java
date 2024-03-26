@@ -23,7 +23,7 @@ public class ColorUtils {
      * Distance between 2 points in 3D
      * </a>
      */
-    public boolean colorSimilarCheck(int color1, int color2) {
+    public boolean isColorSimilarCheck(int color1, int color2) {
         double colorDiff = Math.sqrt(
                 Math.pow(Color.red(color1) - Color.red(color2), 2) +
                         Math.pow(Color.green(color1) - Color.green(color2), 2) +

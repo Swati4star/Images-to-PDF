@@ -3,7 +3,7 @@
 buildscript {
     repositories {
         maven {
-            url "https://jcenter.bintray.com"
+            url 'https://jcenter.bintray.com'
         }
 
         google()

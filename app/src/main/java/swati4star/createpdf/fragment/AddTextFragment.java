@@ -44,7 +44,6 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.OutputStream;
@@ -244,7 +243,8 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
      * Resets view after successful conversion
      */
     private void resetView() {
-        mPdfpath = mTextPath = null;
+        mPdfpath = null;
+        mTextPath = null;
         mMorphButtonUtility.morphToGrey(mCreateTextPDF, mMorphButtonUtility.integer());
         mCreateTextPDF.setEnabled(false);
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
@@ -275,7 +275,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             }
             br.close();
 
-            OutputStream fos = new FileOutputStream(new File(mPath));
+            OutputStream fos = new FileOutputStream((mPath));
 
             PdfReader pdfReader = new PdfReader(mPdfpath);
 

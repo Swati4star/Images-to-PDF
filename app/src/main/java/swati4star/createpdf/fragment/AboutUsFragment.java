@@ -31,9 +31,11 @@ public class AboutUsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_about_us, container, false);
         ButterKnife.bind(this, rootView);
         try {
-            PackageInfo packageInfo = mActivity.getPackageManager().getPackageInfo(mActivity.getPackageName(), 0);
+            PackageInfo packageInfo = mActivity.getPackageManager()
+                    .getPackageInfo(mActivity.getPackageName(), 0);
             TextView versionText = rootView.findViewById(R.id.version_value);
-            String version = versionText.getText().toString() + " " + packageInfo.versionName;
+            String version = versionText.getText().toString() +
+                    " " + packageInfo.versionName;
             versionText.setText(version);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -47,8 +49,10 @@ public class AboutUsFragment extends Fragment {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"swati4star@gmail.com"});
-        intent.putExtra(Intent.EXTRA_SUBJECT, mActivity.getResources().getString(R.string.feedback_subject));
-        intent.putExtra(Intent.EXTRA_TEXT, mActivity.getResources().getString(R.string.feedback_text));
+        intent.putExtra(Intent.EXTRA_SUBJECT, mActivity.getResources()
+                .getString(R.string.feedback_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, mActivity.getResources()
+                .getString(R.string.feedback_text));
         mFeedbackUtils.openMailIntent(intent);
     }
 

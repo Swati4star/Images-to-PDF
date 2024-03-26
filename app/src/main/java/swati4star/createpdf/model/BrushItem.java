@@ -18,7 +18,7 @@ public class BrushItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BrushItem brushItem = (BrushItem) o;
-        return mColor == brushItem.mColor;
+        return mColor == brushItem.getColor();
     }
 
     @Override
