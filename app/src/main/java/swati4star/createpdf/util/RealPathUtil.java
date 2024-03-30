@@ -10,8 +10,11 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 public class RealPathUtil {
 
+    @NonNull
     public static RealPathUtil getInstance() {
         return RealPathUtil.SingletonHolder.INSTANCE;
     }
@@ -23,7 +26,8 @@ public class RealPathUtil {
      * @param fileUri - uri of file
      * @return - actual path
      */
-    public String getRealPath(Context context, Uri fileUri) {
+    @NonNull
+    public String getRealPath(@NonNull Context context, @NonNull Uri fileUri) {
         return getRealPathFromURI_API19(context, fileUri);
     }
 

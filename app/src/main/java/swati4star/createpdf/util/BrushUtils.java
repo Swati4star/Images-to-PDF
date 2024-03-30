@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
@@ -11,10 +13,12 @@ public class BrushUtils {
 
     }
 
+    @NonNull
     public static BrushUtils getInstance() {
         return BrushUtils.SingletonHolder.INSTANCE;
     }
 
+    @NonNull
     public ArrayList<BrushItem> getBrushItems() {
         ArrayList<BrushItem> brushItems = new ArrayList<>();
         brushItems.add(new BrushItem(R.color.mb_white));

@@ -55,8 +55,8 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private boolean mSuccess;
     private String mPath;
 
-    public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
-                     OnPDFCreatedInterface onPDFCreated) {
+    public CreatePdf(@NonNull ImageToPDFOptions mImageToPDFOptions, @NonNull String parentPath,
+                     @NonNull OnPDFCreatedInterface onPDFCreated) {
         this.mImagesUri = mImageToPDFOptions.getImagesUri();
         this.mFileName = mImageToPDFOptions.getOutFileName();
         this.mPassword = mImageToPDFOptions.getPassword();

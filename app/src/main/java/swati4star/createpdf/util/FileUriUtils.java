@@ -9,6 +9,8 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import androidx.annotation.NonNull;
+
 public class FileUriUtils {
 
     private final String mEXTERNALSTORAGEDOC = "com.android.externalstorage.documents";
@@ -19,6 +21,7 @@ public class FileUriUtils {
     private FileUriUtils() {
     }
 
+    @NonNull
     public static FileUriUtils getInstance() {
         return FileUriUtils.SingletonHolder.INSTANCE;
     }
@@ -185,7 +188,8 @@ public class FileUriUtils {
      * @param uri - input uri
      * @return - path
      */
-    public String getFilePath(Uri uri) {
+    @NonNull
+    public String getFilePath(@NonNull Uri uri) {
         String path = uri.getPath();
         if (path == null)
             return null;

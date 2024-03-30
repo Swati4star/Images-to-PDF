@@ -58,7 +58,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private boolean[] mFilterOptionState;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
@@ -85,12 +85,12 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_history_fragment, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionDeleteHistory:
                 deleteHistory();
@@ -148,7 +148,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         FileUtils fileUtils = new FileUtils(mActivity);
         File file = new File(path);
         if (file.exists()) {

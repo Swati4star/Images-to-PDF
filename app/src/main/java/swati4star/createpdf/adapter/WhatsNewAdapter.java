@@ -24,7 +24,7 @@ public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsN
     private final Context mContext;
     private final List<WhatsNew> mWhatsNewsList;
 
-    public WhatsNewAdapter(Context context, ArrayList<WhatsNew> mWhatsNewsList) {
+    public WhatsNewAdapter(@NonNull Context context, @NonNull ArrayList<WhatsNew> mWhatsNewsList) {
         this.mContext = context;
         this.mWhatsNewsList = mWhatsNewsList;
     }

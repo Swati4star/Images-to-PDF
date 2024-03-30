@@ -7,14 +7,12 @@
     android:padding="24dp">
 
     <TextView
-        android:id="@+id/enter_watermark_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enter_watermark_text"
         android:textSize="20sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/watermarkLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,7 +25,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/enter_watermark_angle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enter_watermark_angle"
@@ -42,7 +39,6 @@
         android:inputType="number" />
 
     <TextView
-        android:id="@+id/choose_watermark_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_watermark_color"
@@ -56,7 +52,6 @@
         picker:alphaChannelVisible="true" />
 
     <TextView
-        android:id="@+id/enter_watermark_font_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enter_watermark_font_size"
@@ -71,7 +66,6 @@
         android:inputType="number" />
 
     <TextView
-        android:id="@+id/choose_watermark_font_family"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_watermark_font_family"
@@ -85,7 +79,6 @@
         android:spinnerMode="dropdown" />
 
     <TextView
-        android:id="@+id/choose_watermark_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_watermark_style"

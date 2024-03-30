@@ -3,6 +3,8 @@ package swati4star.createpdf.util;
 import android.content.Context;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -15,13 +17,13 @@ import java.io.InputStream;
 
 public class DocFileReader extends FileReader {
 
-    public DocFileReader(Context context) {
+    public DocFileReader(@NonNull Context context) {
         super(context);
     }
 
     @Override
     protected void createDocumentFromStream(
-            Uri uri, Document document, Font myfont, InputStream inputStream) throws Exception {
+            @NonNull Uri uri, @NonNull Document document, @NonNull Font myfont, @NonNull InputStream inputStream) throws Exception {
         HWPFDocument doc = new HWPFDocument(inputStream);
         WordExtractor extractor = new WordExtractor(doc);
         String fileData = extractor.getText();

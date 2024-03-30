@@ -9,7 +9,8 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="@dimen/standard_margin"
         android:scaleType="centerInside"
-        android:src="@drawable/group" />
+        android:src="@drawable/group"
+        android:contentDescription="Image illustrating the process of changing themes" />
 
     <TextView
         android:id="@+id/tv_title"

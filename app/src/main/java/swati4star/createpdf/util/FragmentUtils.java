@@ -9,6 +9,7 @@ import static swati4star.createpdf.util.Constants.ROTATE_PAGES_KEY;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import swati4star.createpdf.R;
@@ -32,11 +33,12 @@ public class FragmentUtils {
 
     private final Context mContext;
 
-    public FragmentUtils(Context mContext) {
+    public FragmentUtils(@NonNull Context mContext) {
         this.mContext = mContext;
     }
 
-    public String getFragmentName(Fragment fragment) {
+    @NonNull
+    public String getFragmentName(@NonNull Fragment fragment) {
         String name = mContext.getString(R.string.app_name);
         if (fragment instanceof ImageToPdfFragment) {
             name = mContext.getString(R.string.images_to_pdf);
@@ -73,7 +75,7 @@ public class FragmentUtils {
         return name;
     }
 
-    public boolean handleFragmentBottomSheetBehavior(Fragment fragment) {
+    public boolean handleFragmentBottomSheetBehavior(@NonNull Fragment fragment) {
         boolean bottomSheetBehaviour = false;
         if (fragment instanceof InvertPdfFragment) {
             bottomSheetBehaviour = ((InvertPdfFragment) fragment).checkSheetBehaviour();

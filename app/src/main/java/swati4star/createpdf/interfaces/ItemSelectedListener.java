@@ -1,5 +1,7 @@
 package swati4star.createpdf.interfaces;
 
+import androidx.annotation.NonNull;
+
 public interface ItemSelectedListener {
-    void isSelected(Boolean isSelected, int countFiles);
+    void isSelected(@NonNull Boolean isSelected, int countFiles);
 }

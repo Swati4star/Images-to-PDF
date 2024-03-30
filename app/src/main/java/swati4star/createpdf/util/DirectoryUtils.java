@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +28,7 @@ public class DirectoryUtils {
     private final SharedPreferences mSharedPreferences;
     private ArrayList<String> mFilePaths;
 
-    public DirectoryUtils(Context context) {
+    public DirectoryUtils(@NonNull Context context) {
         mContext = context;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -142,6 +144,7 @@ public class DirectoryUtils {
     /**
      * create PDF directory if directory does not exists
      */
+    @NonNull
     public File getOrCreatePdfDirectory() {
         File folder = new File(mSharedPreferences.getString(STORAGE_LOCATION,
                 StringUtils.getInstance().getDefaultStorageLocation()));
@@ -155,6 +158,7 @@ public class DirectoryUtils {
      *
      * @return ArrayList of PDF files
      */
+    @NonNull
     public ArrayList<File> getPdfFromOtherDirectories() {
         mFilePaths = new ArrayList<>();
         walkDir(getOrCreatePdfDirectory());

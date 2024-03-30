@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ import swati4star.createpdf.model.WhatsNew;
 
 public class WhatsNewUtils {
 
+    @NonNull
     public static WhatsNewUtils getInstance() {
         return WhatsNewUtils.SingletonHolder.INSTANCE;
     }
@@ -32,7 +34,7 @@ public class WhatsNewUtils {
      *
      * @param context - current context
      */
-    public void displayDialog(Context context) {
+    public void displayDialog(@NonNull Context context) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.fragment_whats_new);
         RecyclerView rv = dialog.findViewById(R.id.whatsNewListView);

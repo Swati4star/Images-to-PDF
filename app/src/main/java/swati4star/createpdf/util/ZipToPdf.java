@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Environment;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -24,6 +26,7 @@ public class ZipToPdf {
 
     private static final int BUFFER_SIZE = 4096;
 
+    @NonNull
     public static ZipToPdf getInstance() {
         return ZipToPdf.SingletonHolder.INSTANCE;
     }
@@ -34,7 +37,7 @@ public class ZipToPdf {
      * @param path    - path of zip file
      * @param context - current context
      */
-    public void convertZipToPDF(String path, Activity context) {
+    public void convertZipToPDF(@NonNull String path, @NonNull Activity context) {
 
         BufferedOutputStream bufferedOutputStream;
         ArrayList<Uri> imageUris = new ArrayList<>();

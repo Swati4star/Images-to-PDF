@@ -68,7 +68,7 @@ public class ZipToPdfFragment extends Fragment {
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) throws NullPointerException {
         if (!ResultUtils.getInstance().checkResultValidity(resultCode, data))
             return;
 

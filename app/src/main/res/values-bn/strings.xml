@@ -73,7 +73,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="please_wait">অনুগ্রহপূর্বক অপেক্ষা করুন</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">দুঃখিত! ছবি যোগ করা যায়নি. আমাদের **ছবি নির্বাচন করুন** বিকল্প থেকে ছবি নির্বাচন করুন.</string>
     <string name="successToast">ছবি সফলভাবে যোগ করা হয়েছে.</string>
@@ -145,8 +144,6 @@
     <string name="snackbar_no_images">কোনো ছবি নির্বাচিত হয়নি</string>
     <string name="snackbar_no_pdfs_selected">কোনো PDF নির্বাচিত হয়নি</string>
     <string name="snackbar_name_not_blank">নাম খালি রাখা যাবে না</string>
-    <string name="snackbar_permissions_given">অনুমতি প্রদান করা হয়েছে!</string>
-    <string name="snackbar_insufficient_permissions">পর্যাপ্ত অনুমতি নেই!</string>
     <string name="no_permissions">আপনার ফাইল দেখতে স্টোরেজ অনুমতি প্রদান করুন।</string>
     <string name="prompt_give_permission">অনুমতি দিন</string>
     <string name="snackbar_images_added">ছবি যোগ করা হয়েছে</string>
@@ -167,7 +164,6 @@
     <string name="enter_password">পাসওয়ার্ড লিখুন</string>
     <string name="snackbar_password_cannot_be_blank">পাসওয়ার্ড খালি থাকতে পারবে না</string>
     <string name="cannot_add_password">পাসওয়ার্ডটি PDF এ প্রযোগ করা যায়নি। দয়া করে আবার PDF চেক করুন।</string>
-    <string name="snackbar_imagecropped">ছবি ক্রপ হয়েছে</string>
     <string name="cropImage_activityTitle">ছবি ক্রপ করুন</string>
     <string name="snackbar_pdfCreated">PDF তৈরি হয়েছে!</string>
     <string name="error_uri_not_found">দুঃখিত, আমরা ক্রপ করা ছবি অ্যাক্সেস করতে সমর্থ নই। দয়া করে আবার চেষ্টা করুন</string>
@@ -200,8 +196,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject">Images To PDF Converter জন্য পরামর্শ</string>
     <string name="feedback_text">দয়া করে আপনার মূল্যবান প্রতিক্রিয়া লিখুন, অথবা কেবল একটি হাই দিন! :)</string>
-    <string name="snackbar_no_email_clients">কোনো ইমেল ক্লায়েন্ট ইনস্টল করা হয়নি।</string>
-    <string name="feedback_chooser">মেইল পাঠান...</string>
     <string name="no_pdf">দেখানোর জন্য কোনো PDF নেই</string>
     <string name="get_started">এখন শুরু করুন</string>
     <string name="view_files_text">আপনার সমস্ত রূপান্তরিত ফাইলগুলি এখানে দেখুন!</string>
@@ -259,16 +253,6 @@
     <string name="sort">ক্রমানুসার করুন</string>
 
     <!-- Directory Strings -->
-    <string name="directory">ডিরেক্টরি</string>
-    <string name="moving_files">আপনার ফাইলগুলি সরণি করা হচ্ছে</string>
-    <string name="success_move">আপনার ফাইলগুলি সফলভাবে সরণি করা হয়েছে</string>
-    <string name="dir_does_not_exists">ডিরেক্টরি অস্তিত্বে নেই</string>
-    <string name="move_files_delete_dir">ফাইলগুলি সরণি করা এবং ডিরেক্টরি মোছা হচ্ছে</string>
-    <string name="directory_deleted">ডিরেক্টরি মোছা হয়েছে</string>
-    <string name="success_delete_directory">ডিরেক্টরি সফলভাবে মোছা হয়েছে</string>
-    <string name="moved_files">ফাইলগুলি সফলভাবে সরণি করা হয়েছে</string>
-    <string name="dialog_new_dir">নতুন ডিরেক্টরির নাম লিখুন</string>
-    <string name="dialog_dir">ডিরেক্টরির নাম লিখুন</string>
     <string name="cancel">বাতিল করুন</string>
     <string name="ok">ঠিক আছে</string>
     <string name="yes">হ্যাঁ</string>
@@ -282,7 +266,6 @@
     <string name="text_file_selected">টেক্সট ফাইল নির্বাচিত হয়েছে</string>
     <string name="select_file">আপলোড করার জন্য একটি ফাইল নির্বাচন করুন</string>
     <string name="text_type" translatable="false">text/plain</string>
-    <string name="new_directory">নতুন ডিরেক্টরি</string>
     <string name="previous_image_content_desc">আগের চিত্র</string>
     <string name="text_file_name">"টেক্সট ফাইল : "</string>
     <string name="extension_not_supported">দু: এই ফাইল ধরণটি বর্তমানে সমর্থিত নয়।</string>
@@ -372,7 +355,6 @@
     <string name="reset">রিসেট</string>
     <string name="rotate">ঘোরান</string>
     <string name="done">সম্পন্ন</string>
-    <string name="image_successfully_cropped">চিত্রটি সফলভাবে ক্রপ করা হয়েছে</string>
     <string name="confirm_exit_message">পুনরায় প্রস্থান করতে পুনরায় ব্যাক চাপুন</string>
 
     <string name="filter_not_saved">চিত্রটি সংরক্ষণ করা যায়নি</string>
@@ -433,7 +415,6 @@
     <string name="rate_title">আমাদের দর দিন!</string>
     <string name="rate_dialog_text">আপনি যদি এই অ্যাপটি উপভোগ করেন, তবে দয়া করে এই অ্যাপটি দর দেবার জন্য একটু সময় নিন। এটি 1 মিনিটের বেশি সময় নেবে না। আপনার সমর্থনের জন্য ধন্যবাদ! :)</string>
     <string name="rate_us_never">কখনো না</string>
-    <string name="error_occurred">ত্রুটি ঘটেছে</string>
 
     <!--Rotate Pages -->
     <string name="rotate_pages">পৃষ্ঠা ঘুরান</string>
@@ -442,7 +423,6 @@
     <string name="degree_90" translatable="false">90 &#xb0;</string>
     <string name="degree_180" translatable="false">180 &#xb0;</string>
     <string name="degree_270" translatable="false">270 &#xb0;</string>
-    <string name="share_files">ফাইল ভাগ করুন</string>
     <string name="pdf_removed_from_list">পিডিএফটি তালিকা থেকে সরে যায়েছে।</string>
     <string name="pdf_added_to_list">পিডিএফটি তালিকা এ যোগ করা হয়েছে।</string>
     <string name="select_files">ফাইল নির্বাচন করুন</string>

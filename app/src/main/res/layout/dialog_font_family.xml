@@ -11,37 +11,31 @@
         android:orientation="vertical">
 
         <RadioButton
-            android:id="@+id/ff_courier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/courier" />
 
         <RadioButton
-            android:id="@+id/ff_helvetica"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/helvetica" />
 
         <RadioButton
-            android:id="@+id/ff_times_roman"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/times_roman" />
 
         <RadioButton
-            android:id="@+id/ff_symbol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/symbol" />
 
         <RadioButton
-            android:id="@+id/ff_zapfdingbats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/zapfdingbats" />
 
         <RadioButton
-            android:id="@+id/ff_undefined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/undefined" />

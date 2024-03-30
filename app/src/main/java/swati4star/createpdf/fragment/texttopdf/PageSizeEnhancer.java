@@ -31,6 +31,7 @@ public class PageSizeEnhancer implements Enhancer {
         mPageSizeUtils.showPageSizeDialog(false);
     }
 
+    @NonNull
     @Override
     public EnhancementOptionsEntity getEnhancementOptionsEntity() {
         return mEnhancementOptionsEntity;

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -27,14 +28,15 @@ public class ImagesPreviewActivity extends AppCompatActivity {
      * @param uris    - extra images uri
      * @return - start intent
      */
-    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+    @NonNull
+    public static Intent getStartIntent(@NonNull Context context, @NonNull ArrayList<String> uris) {
         Intent intent = new Intent(context, ImagesPreviewActivity.class);
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_images);

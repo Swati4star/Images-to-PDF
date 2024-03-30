@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="40dp"
@@ -99,7 +98,8 @@
                     android:text="@string/share_images"
                     android:textAllCaps="false"
                     android:textColor="?attr/bottomSheetTextColor"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:id="@+id/viewImages"
@@ -115,7 +115,8 @@
                     android:text="@string/view_images"
                     android:textAllCaps="false"
                     android:textColor="?attr/bottomSheetTextColor"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    style="?android:attr/buttonBarButtonStyle" />
 
             </LinearLayout>
         </LinearLayout>

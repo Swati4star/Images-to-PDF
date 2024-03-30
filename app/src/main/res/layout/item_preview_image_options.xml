@@ -36,6 +36,7 @@
         android:padding="2dp"
         android:textAlignment="center"
         android:textSize="12sp"
-        tools:text="@string/rearrange_text" />
+        tools:text="@string/rearrange_text"
+        android:textIsSelectable="true" />
 
 </LinearLayout>

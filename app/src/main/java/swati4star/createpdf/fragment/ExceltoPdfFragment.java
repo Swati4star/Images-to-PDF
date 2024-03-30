@@ -100,8 +100,9 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private boolean mPasswordProtected = false;
     private String mPassword;
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_excelto_pdf, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -129,7 +130,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
@@ -192,7 +193,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         mButtonClicked = false;
         if (requestCode == mFileSelectCode) {
             if (resultCode == RESULT_OK) {
@@ -258,7 +259,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onPDFCreated(boolean success, String path) {
+    public void onPDFCreated(boolean success, @NonNull String path) {
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
         if (!success) {
@@ -347,7 +348,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mExcelFileUri = Uri.parse("file://" + path);
         mRealPath = path;
@@ -355,7 +356,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }

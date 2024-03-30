@@ -9,7 +9,8 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="48dp"
         android:scaleType="centerInside"
-        android:src="@drawable/excel_pdf" />
+        android:src="@drawable/excel_pdf"
+        android:contentDescription="Image illustrating the conversion process from Excel to PDF" />
 
     <TextView
         android:id="@+id/tv_title"

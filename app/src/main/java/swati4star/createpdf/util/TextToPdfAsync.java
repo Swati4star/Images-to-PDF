@@ -2,6 +2,8 @@ package swati4star.createpdf.util;
 
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import swati4star.createpdf.interfaces.OnTextToPdfInterface;
 import swati4star.createpdf.model.TextToPDFOptions;
 
@@ -22,8 +24,8 @@ public class TextToPdfAsync extends AsyncTask<Object, Object, Object> {
      * @param fileextension         is the file extension name string.
      * @param onPDFCreatedInterface is the OnTextToPdfInterface instance.
      */
-    public TextToPdfAsync(TextToPDFUtils textToPDFutil, TextToPDFOptions textToPDFOptions,
-                          String fileextension, OnTextToPdfInterface onPDFCreatedInterface) {
+    public TextToPdfAsync(@NonNull TextToPDFUtils textToPDFutil, @NonNull TextToPDFOptions textToPDFOptions,
+                          @NonNull String fileextension, @NonNull OnTextToPdfInterface onPDFCreatedInterface) {
         this.mTexttoPDFUtil = textToPDFutil;
         this.mTextToPdfOptions = textToPDFOptions;
         this.mFileExtension = fileextension;

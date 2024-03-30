@@ -1,5 +1,7 @@
 package swati4star.createpdf.model;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
 
@@ -11,11 +13,12 @@ public class Watermark {
     private Font.FontFamily mFontFamily;
     private int mFontStyle;
 
+    @NonNull
     public String getWatermarkText() {
         return mWatermarkText;
     }
 
-    public void setWatermarkText(String watermarkText) {
+    public void setWatermarkText(@NonNull String watermarkText) {
         this.mWatermarkText = watermarkText;
     }
 
@@ -27,11 +30,12 @@ public class Watermark {
         this.mRotationAngle = rotationAngle;
     }
 
+    @NonNull
     public BaseColor getTextColor() {
         return mTextColor;
     }
 
-    public void setTextColor(BaseColor textColor) {
+    public void setTextColor(@NonNull BaseColor textColor) {
         this.mTextColor = textColor;
     }
 
@@ -43,11 +47,12 @@ public class Watermark {
         this.mTextSize = textSize;
     }
 
+    @NonNull
     public Font.FontFamily getFontFamily() {
         return mFontFamily;
     }
 
-    public void setFontFamily(Font.FontFamily fontFamily) {
+    public void setFontFamily(@NonNull Font.FontFamily fontFamily) {
         this.mFontFamily = fontFamily;
     }
 

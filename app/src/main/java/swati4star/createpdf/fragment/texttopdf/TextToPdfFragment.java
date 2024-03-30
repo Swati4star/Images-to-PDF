@@ -71,9 +71,10 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     private List<Enhancer> mEnhancerList;
     private TextToPDFOptions.Builder mBuilder;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
 
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -185,7 +186,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         mButtonClicked = 0;
         if (requestCode == mFileSelectCode) {
             if (resultCode == RESULT_OK) {
@@ -214,7 +215,7 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof Activity) {
             mActivity = (Activity) context;

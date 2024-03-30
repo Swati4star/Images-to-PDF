@@ -9,7 +9,8 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="48dp"
         android:scaleType="centerInside"
-        android:src="@drawable/remove_reorder" />
+        android:src="@drawable/remove_reorder"
+        android:contentDescription="Image illustrating the process of removing pages from a PDF" />
 
     <TextView
         android:id="@+id/tv_title"

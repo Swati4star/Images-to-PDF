@@ -84,8 +84,6 @@
     </string-array>
 
 
-    <string name="please_wait">Bitte warten</string>
-
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Es tut uns leid! Bilder konnten nicht hinzugefügt werden. Bitte wähle die Bilder aus der Option ** Bilder auswählen **.</string>
     <string name="successToast">Bilder erfolgreich hinzugefügt.</string>
@@ -115,8 +113,6 @@
     <string name="snackbar_no_images">Keine Bilder ausgewählt</string>
     <string name="snackbar_no_pdfs_selected">Keine PDFs ausgewählt</string>
     <string name="snackbar_name_not_blank">Der Name darf nicht leer sein</string>
-    <string name="snackbar_permissions_given">Berechtigungen erteilt!</string>
-    <string name="snackbar_insufficient_permissions">Nicht ausreichende Berechtigungen!</string>
     <string name="no_permissions">Bitte gebe Speicherrechte, um deine Dateien anzuzeigen.</string>
     <string name="prompt_give_permission">Berechtigung bereitstellen</string>
     <string name="snackbar_images_added">Bilder hinzugefügt</string>
@@ -147,7 +143,6 @@
     <string name="snackbar_password_cannot_be_blank">Das Passwort darf nicht leer sein</string>
     <string name="cannot_add_password">Das Passwort konnte nicht auf das PDF angewendet werden. Bitte überprüfe das PDF erneut.</string>
 
-    <string name="snackbar_imagecropped">Bilder zugeschnitten</string>
     <string name="cropImage_activityTitle">Bild zuschneiden</string>
     <string name="snackbar_pdfCreated">PDF erstellt!</string>
     <string name="error_uri_not_found">Leider können wir nicht auf das zugeschnittene Bild zugreifen. Bitte versuche es erneut</string>
@@ -175,9 +170,7 @@
 
     <string name="feedback_subject">Vorschläge für Bilder in PDF Converter</string>
     <string name="feedback_text">Schreibe bitte dein kostbares Feedback, oder lasse einfach ein Hallo da! :)</string>
-    <string name="snackbar_no_email_clients">Es sind keine E-Mail-Clients installiert.</string>
     <string name="snack_bar_empty_txt_in_pdf">Das gewählte PDF hat keinen Text zum extrahieren!</string>
-    <string name="feedback_chooser">"Mail senden …"</string>
     <string name="no_pdf">Keine PDFs zum Anzeigen</string>
     <string name="get_started">Jetzt loslegen</string>
     <string name="view_files_text">Sieh hier alle von dir konvertierten Dateien!</string>
@@ -228,16 +221,6 @@
     <string name="sort_by_title">Sortieren nach</string>
 
 
-    <string name="directory">Verzeichnis</string>
-    <string name="moving_files">Verschiebe deine Dateien</string>
-    <string name="success_move">deine Dateien wurden erfolgreich verschoben</string>
-    <string name="dir_does_not_exists">Verzeichnis existiert nicht</string>
-    <string name="move_files_delete_dir">Verschieben von Dateien und Löschen des Verzeichnisses</string>
-    <string name="directory_deleted">Verzeichnis gelöscht</string>
-    <string name="success_delete_directory">Das Verzeichnis wurde erfolgreich gelöscht</string>
-    <string name="moved_files">Dateien wurden erfolgreich verschoben</string>
-    <string name="dialog_new_dir">Gebe einen neuen Verzeichnisnamen ein</string>
-    <string name="dialog_dir">Gebe den Verzeichnisnamen ein</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">Okay</string>
     <string name="yes">Ja</string>
@@ -249,7 +232,6 @@
     <string name="text_to_pdf">Text zu PDF</string>
     <string name="text_file_selected">Textdatei ausgewählt</string>
     <string name="select_file">"Datei zum Hochladen auswählen"</string>
-    <string name="new_directory">Neues Verzeichnis</string>
     <string name="previous_image_content_desc">Vorheriges Bild</string>
     <string name="text_file_name">"Textdatei: "</string>
     <string name="extension_not_supported">Es tut uns leid! Dieser Dateityp wird derzeit nicht unterstützt.</string>
@@ -334,7 +316,6 @@
     <string name="reset">Zurücksetzen</string>
     <string name="rotate">Drehen</string>
     <string name="done">Fertig</string>
-    <string name="image_successfully_cropped">Bild erfolgreich zugeschnitten</string>
 
     <string name="confirm_exit_message">Drücke erneut zurück, um die App zu beenden</string>
 
@@ -397,11 +378,9 @@
     <string name="rate_title">Bewerte uns!</string>
     <string name="rate_dialog_text">Wenn du diese App genießt, nimm dir bitte einen Moment Zeit, um diese App zu bewerten. Es dauert nicht mehr als eine Minute. Danke für deine Unterstützung! :)</string>
     <string name="rate_us_never">niemals</string>
-    <string name="error_occurred">Ein Fehler ist aufgetreten</string>
 
     <string name="rotate_pages">Seiten drehen</string>
     <string name="enter_rotation_angle">Drehwinkel eingeben</string>
-    <string name="share_files">Dateien teilen</string>
     <string name="pdf_removed_from_list">PDF wurde aus der Liste entfernt.</string>
     <string name="pdf_added_to_list">PDF wurde der Liste hinzugefügt.</string>
     <string name="select_files">Dateien auswählen</string>

@@ -13,9 +13,7 @@
     <color name="white">#FFFFFF</color>
     <color name="colorBlackAlt">#2B303B</color>
     <color name="colorBlackAltLight">#3E4553</color>
-    <color name="colorLightGrey">#EFEFEF</color>
     <color name="colorDarkGrey">#5F6267</color>
-    <color name="colorBluishGrey">#d2ddf3</color>
     <color name="colorBackground_black">#0A0808</color>
 
     <color name="windowBackground_light">#F4F4F6</color>

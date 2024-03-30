@@ -12,7 +12,6 @@
         android:paddingTop="25dp">
 
         <RelativeLayout
-            android:id="@+id/add_text_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"

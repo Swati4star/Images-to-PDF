@@ -75,6 +75,7 @@ public class FontSizeEnhancer implements Enhancer {
                 .show();
     }
 
+    @NonNull
     @Override
     public EnhancementOptionsEntity getEnhancementOptionsEntity() {
         return mEnhancementOptionsEntity;

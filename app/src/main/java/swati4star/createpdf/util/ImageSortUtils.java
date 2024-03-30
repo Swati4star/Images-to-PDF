@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +12,7 @@ public class ImageSortUtils {
     private static final int DATE_ASC = 2;
     private static final int DATE_DESC = 3;
 
+    @NonNull
     public static ImageSortUtils getInstance() {
         return ImageSortUtils.SingletonHolder.INSTANCE;
     }
@@ -20,7 +23,7 @@ public class ImageSortUtils {
      * @param option sorting operation
      * @param images list of image paths
      */
-    public void performSortOperation(int option, List<String> images) {
+    public void performSortOperation(int option, @NonNull List<String> images) {
         if (option < 0 || option > 3) throw new IllegalArgumentException("Invalid sort option. "
                 + "Sort option must be in [0; 3] range!");
         switch (option) {

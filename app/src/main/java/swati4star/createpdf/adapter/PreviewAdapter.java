@@ -23,7 +23,7 @@ public class PreviewAdapter extends PagerAdapter {
     private final ArrayList<String> mPreviewItems;
     private final LayoutInflater mInflater;
 
-    public PreviewAdapter(Context context, ArrayList<String> previewItems) {
+    public PreviewAdapter(@NonNull Context context, @NonNull ArrayList<String> previewItems) {
         mContext = context;
         mPreviewItems = previewItems;
         mInflater = LayoutInflater.from(context);
@@ -59,13 +59,14 @@ public class PreviewAdapter extends PagerAdapter {
         return view == object;
     }
 
+    @NonNull
     @Override
     public CharSequence getPageTitle(int position) {
         return String.format(mContext.getResources().getString(R.string.showing_image),
                 position + 1, mPreviewItems.size());
     }
 
-    public void setData(ArrayList<String> images) {
+    public void setData(@NonNull ArrayList<String> images) {
         mPreviewItems.clear();
         mPreviewItems.addAll(images);
     }

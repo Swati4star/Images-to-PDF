@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.DocumentException;
@@ -35,7 +37,7 @@ public class PDFEncryptionUtility {
     private final SharedPreferences mSharedPrefs;
     private String mPassword;
 
-    public PDFEncryptionUtility(Activity context) {
+    public PDFEncryptionUtility(@NonNull Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(context);
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -51,7 +53,7 @@ public class PDFEncryptionUtility {
      *
      * @param filePath Path of file to be encrypted
      */
-    public void setPassword(final String filePath, final DataSetChanged dataSetChanged) {
+    public void setPassword(final @NonNull String filePath, final @NonNull DataSetChanged dataSetChanged) {
 
         mDialog.setTitle(R.string.set_password);
         final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
@@ -142,8 +144,8 @@ public class PDFEncryptionUtility {
      *
      * @param file Path of pdf file to be decrypted
      */
-    public void removePassword(final String file,
-                               final DataSetChanged dataSetChanged) {
+    public void removePassword(final @NonNull String file,
+                               final @NonNull DataSetChanged dataSetChanged) {
 
         if (!isPDFEncrypted(file))
             return;
@@ -190,8 +192,9 @@ public class PDFEncryptionUtility {
      * @param inputPassword - the password of the encrypted file.
      * @return - output file path
      */
-    public String removeDefPasswordForImages(final String file,
-                                             final String[] inputPassword) {
+    @NonNull
+    public String removeDefPasswordForImages(final @NonNull String file,
+                                             final @NonNull String[] inputPassword) {
         String finalOutputFile;
         try {
             String masterPwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);

@@ -74,7 +74,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="please_wait">Molimo pričekajte</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Žao nam je! Fotografije nisu dodane. Molimo odaberite našu **Odaberi fotografije** opciju.</string>
     <string name="successToast">Fotografije uspješno dodane.</string>
@@ -144,8 +143,6 @@
     <string name="snackbar_no_images">Fotografije nisu odabrane</string>
     <string name="snackbar_no_pdfs_selected">PDF-ovi nisu odabrani</string>
     <string name="snackbar_name_not_blank">Naziv ne može biti prazan</string>
-    <string name="snackbar_permissions_given">Dozvole Postavljene!</string>
-    <string name="snackbar_insufficient_permissions">Nedovoljne dozvole!</string>
     <string name="no_permissions">Odobrite dozvole za pohranu da pogledate datoteke.</string>
     <string name="prompt_give_permission">Odobrite dozvole</string>
     <string name="snackbar_images_added">Fotografije dodane</string>
@@ -166,7 +163,6 @@
     <string name="enter_password">Unesi Lozinku</string>
     <string name="snackbar_password_cannot_be_blank">Lozinka ne može biti prazna</string>
     <string name="cannot_add_password">Lozinka nije dodana na PDF. Molimo provjerite PDF ponovo.</string>
-    <string name="snackbar_imagecropped">Fotografije izrezane</string>
     <string name="cropImage_activityTitle">Izreži Fotografiju</string>
     <string name="snackbar_pdfCreated">PDF izrađen!</string>
     <string name="error_uri_not_found">Nažalost, ne možemo pristupiti izrezanoj fotografiji. Pokušajte ponovo</string>
@@ -202,8 +198,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject">Prijedlozi za Pretvarač Fotografija u PDF</string>
     <string name="feedback_text">Napišite Vaše prijedloge, ili nas samo pozdravite! :)</string>
-    <string name="snackbar_no_email_clients">Nemate podešen email klijent.</string>
-    <string name="feedback_chooser">"Pošalji mail…"</string>
     <string name="no_pdf">Nema PDF-ova za prikaz</string>
     <string name="get_started">Započnite Odmah</string>
     <string name="view_files_text">Pogledaj sve prebačene datoteke ovdje!</string>
@@ -256,16 +250,6 @@
     <string name="sort">Poredaj</string>
 
     <!-- Directory Strings -->
-    <string name="directory">Mapa</string>
-    <string name="moving_files">Prebacujem datoteke</string>
-    <string name="success_move">Datoteke uspješno prebačene</string>
-    <string name="dir_does_not_exists">Mapa ne postoji</string>
-    <string name="move_files_delete_dir">Prebacujem datoteke i brišem mapu</string>
-    <string name="directory_deleted">Mapa izbrisana</string>
-    <string name="success_delete_directory">Mapa uspješno izbrisana</string>
-    <string name="moved_files">Datoteke uspješno premještene</string>
-    <string name="dialog_new_dir">Unesite novi naziv mape</string>
-    <string name="dialog_dir">Unesite naziv mape</string>
     <string name="cancel">Otkaži</string>
     <string name="ok">OK</string>
     <string name="yes">Da</string>
@@ -278,7 +262,6 @@
     <string name="text_to_pdf">Tekst u PDF</string>
     <string name="text_file_selected">Tekstualna datoteka odabrana</string>
     <string name="select_file">"Odaberite Datoteku za Slanje"</string>
-    <string name="new_directory">Nova Mapa</string>
     <string name="previous_image_content_desc">Prethodna Fotografija</string>
     <string name="text_file_name">"Tekstualna Datoteka : "</string>
     <string name="extension_not_supported">Žao nam je! Ova vrsta datoteke trenutno nije podržana.</string>
@@ -363,7 +346,6 @@
     <string name="reset">Poništi</string>
     <string name="rotate">Zarotiraj</string>
     <string name="done">Gotovo</string>
-    <string name="image_successfully_cropped">Fotografija uspješno isječena</string>
     <string name="confirm_exit_message">Pritisnite nazad ponovo za izlazak</string>
 
     <string name="filter_not_saved">Fotografija nije sačuvana</string>
@@ -422,13 +404,11 @@
     <string name="rate_title">Ocijeni nas!</string>
     <string name="rate_dialog_text">Ako vam se sviđa ova aplikacija, molimo Vas da izdvojite trenutak i ocijenite ju. Neće trajati duže od minut. Hvala Vam za podršku! :)</string>
     <string name="rate_us_never">Nikada</string>
-    <string name="error_occurred">Dogodila se Greška</string>
 
 
     <!--Rotate Pages    -->
     <string name="rotate_pages">Zakreni Stranice</string>
     <string name="enter_rotation_angle">Unesite Ugao Zakretanja</string>
-    <string name="share_files">Podijeli Datoteke</string>
     <string name="pdf_removed_from_list">PDF je izbrisan iz liste.</string>
     <string name="pdf_added_to_list">PDF je dodan na listu.</string>
     <string name="select_files">Odaberite Datoteke</string>

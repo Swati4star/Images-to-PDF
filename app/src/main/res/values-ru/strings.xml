@@ -31,8 +31,6 @@
         <item>Add Watermark</item>
     </array>
 
-    <string name="please_wait">Подождите</string>
-
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Извините, невозможно добавить изображения. Выберите их с помощью опции *Выбор изображений*</string>
     <string name="successToast">Изображения добавлены.</string>
@@ -62,8 +60,6 @@
     <string name="snackbar_no_images">Изображения не выбраны</string>
     <string name="snackbar_no_pdfs_selected">Файлы PDF не выбраны</string>
     <string name="snackbar_name_not_blank">Имя не может быть пустым</string>
-    <string name="snackbar_permissions_given">Разрешение предоставлено!</string>
-    <string name="snackbar_insufficient_permissions">Недостаточно разрешений!</string>
     <string name="no_permissions">Для просмотра файлов разрешите доступ к памяти устройства.</string>
     <string name="prompt_give_permission">Предоставить разрешение</string>
     <string name="snackbar_images_added">Изображения добавлены</string>
@@ -87,7 +83,6 @@
     <string name="snackbar_password_cannot_be_blank">Пароль не может быть пустым</string>
     <string name="cannot_add_password">Данный файл нельзя защитить паролем. Пожалуйста, выберите другой.</string>
 
-    <string name="snackbar_imagecropped">Изображения кадрированы</string>
     <string name="cropImage_activityTitle">Кадрирование изображения</string>
     <string name="snackbar_pdfCreated">PDF файл создан!</string>
     <string name="error_uri_not_found">К сожалению, мы не можем получить доступ к обрезанному изображению. Пожалуйста, попробуйте еще раз</string>
@@ -110,8 +105,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject">Предложения по улучшению программы Images To PDF Converter</string>
     <string name="feedback_text">Пожалуйста, напишите отзыв или просто Привет! :)</string>
-    <string name="snackbar_no_email_clients">Нет установленного почтового клиента.</string>
-    <string name="feedback_chooser">"Отправить почту…"</string>
     <string name="no_pdf">Нет PDF файлов</string>
     <string name="get_started">Начать работу</string>
     <string name="view_files_text">Просмотрите все конвертированные файлы здесь</string>
@@ -156,16 +149,6 @@
     <string name="sort_by_title">Сортировка</string>
 
     <!-- Directory Strings -->
-    <string name="directory">Директория</string>
-    <string name="moving_files">Перемещение ваших файлов</string>
-    <string name="success_move">Ваши файлы успешно перемещены</string>
-    <string name="dir_does_not_exists">Директория не существует</string>
-    <string name="move_files_delete_dir">Перемещение файлов и удаление директории</string>
-    <string name="directory_deleted">Директория удалена</string>
-    <string name="success_delete_directory">Директория успешно удалена</string>
-    <string name="moved_files">Файлы удалены</string>
-    <string name="dialog_new_dir">Введите новое имя директории</string>
-    <string name="dialog_dir">Введите имя директории</string>
     <string name="cancel">Отмена</string>
     <string name="ok">OK</string>
     <string name="yes">Да</string>
@@ -177,7 +160,6 @@
     <string name="text_to_pdf">Текст в PDF</string>
     <string name="text_file_selected">Текстовый файл выбран</string>
     <string name="select_file">"Выберите файл для загрузки"</string>
-    <string name="new_directory">Новая директория</string>
     <string name="previous_image_content_desc">Предыдущее изображение</string>
     <string name="text_file_name">"Текстовый файл : "</string>
     <string name="edit_font_size">Размер шрифта (по умолчанию : %d)</string>
@@ -301,11 +283,9 @@
     <string name="rate_title">Оцените нас!</string>
     <string name="rate_dialog_text">Если вам понравилось приложение, пожалуйста, поставьте оценку. Это займет не более минуты. Спасибо за вашу поддержку! :)</string>
     <string name="rate_us_never">Никогда</string>
-    <string name="error_occurred">Произошла ошибка</string>
 
     <string name="rotate_pages">Повернуть страницы</string>
     <string name="enter_rotation_angle">Введите угол поворота</string>
-    <string name="share_files">Поделиться файлами</string>
     <string name="pdf_removed_from_list">PDF удален из списка</string>
     <string name="pdf_added_to_list">PDF добавлен в список.</string>
     <string name="select_files">Выберите файлы</string>
@@ -381,7 +361,6 @@
     <string name="view_images">Просмотр изображений</string>
     <string name="rotate">Повернуть</string>
     <string name="done">Готово</string>
-    <string name="image_successfully_cropped">Обрезка изображения выполнена успешно</string>
     <string name="master_password_changed">Неверный пароль. Возможно, вы изменили мастер-пароль.</string>
     <string name="current_master_pwd">Текущий мастер-пароль: %1$s для всех зашифрованных PDF. Вы можете сменить его здесь:</string>
     <string name="theme_system">System</string>

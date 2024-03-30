@@ -1,5 +1,7 @@
 package swati4star.createpdf.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class ImageToPDFOptions extends PDFOptions {
@@ -21,10 +23,10 @@ public class ImageToPDFOptions extends PDFOptions {
         setBorderWidth(0);
     }
 
-    public ImageToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
-                             String mPassword, String mQualityString, int mBorderWidth,
-                             String masterPwd, ArrayList<String> mImagesUri,
-                             boolean mWatermarkAdded, Watermark mWatermark, int pageColor) {
+    public ImageToPDFOptions(@NonNull String mFileName, @NonNull String mPageSize, boolean mPasswordProtected,
+                             @NonNull String mPassword, @NonNull String mQualityString, int mBorderWidth,
+                             @NonNull String masterPwd, @NonNull ArrayList<String> mImagesUri,
+                             boolean mWatermarkAdded, @NonNull Watermark mWatermark, int pageColor) {
         super(mFileName, mPageSize, mPasswordProtected, mPassword, mBorderWidth, mWatermarkAdded, mWatermark,
                 pageColor);
         this.mQualityString = mQualityString;
@@ -32,19 +34,21 @@ public class ImageToPDFOptions extends PDFOptions {
         this.mMasterPwd = masterPwd;
     }
 
+    @NonNull
     public String getQualityString() {
         return mQualityString;
     }
 
-    public void setQualityString(String mQualityString) {
+    public void setQualityString(@NonNull String mQualityString) {
         this.mQualityString = mQualityString;
     }
 
+    @NonNull
     public ArrayList<String> getImagesUri() {
         return mImagesUri;
     }
 
-    public void setImagesUri(ArrayList<String> mImagesUri) {
+    public void setImagesUri(@NonNull ArrayList<String> mImagesUri) {
         this.mImagesUri = mImagesUri;
     }
 
@@ -71,27 +75,30 @@ public class ImageToPDFOptions extends PDFOptions {
         return mMarginLeft;
     }
 
+    @NonNull
     public String getImageScaleType() {
         return mImageScaleType;
     }
 
-    public void setImageScaleType(String mImageScaleType) {
+    public void setImageScaleType(@NonNull String mImageScaleType) {
         this.mImageScaleType = mImageScaleType;
     }
 
+    @NonNull
     public String getPageNumStyle() {
         return mPageNumStyle;
     }
 
-    public void setPageNumStyle(String mPageNumStyle) {
+    public void setPageNumStyle(@NonNull String mPageNumStyle) {
         this.mPageNumStyle = mPageNumStyle;
     }
 
+    @NonNull
     public String getMasterPwd() {
         return mMasterPwd;
     }
 
-    public void setMasterPwd(String pwd) {
+    public void setMasterPwd(@NonNull String pwd) {
         this.mMasterPwd = pwd;
     }
 }

@@ -26,8 +26,8 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
     private final OnClickListener mOnClickListener;
     private ArrayList<String> mImagesUri;
 
-    public RearrangeImagesAdapter(OnClickListener onClickListener,
-                                  ArrayList<String> uris, Context context) {
+    public RearrangeImagesAdapter(@NonNull OnClickListener onClickListener,
+                                  @NonNull ArrayList<String> uris, @NonNull Context context) {
         mOnClickListener = onClickListener;
         mImagesUri = uris;
         mContext = context;
@@ -64,7 +64,7 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
         return mImagesUri.size();
     }
 
-    public void positionChanged(ArrayList<String> images) {
+    public void positionChanged(@NonNull ArrayList<String> images) {
         mImagesUri = images;
         notifyDataSetChanged();
     }

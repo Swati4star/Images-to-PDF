@@ -18,6 +18,7 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.MediaStore;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -36,7 +37,7 @@ public class FileUtils {
     private final Activity mContext;
     private final SharedPreferences mSharedPreferences;
 
-    public FileUtils(Activity context) {
+    public FileUtils(@NonNull Activity context) {
         this.mContext = context;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -47,7 +48,8 @@ public class FileUtils {
      * @param path - file path
      * @return - extracted filename
      */
-    public static String getFileName(String path) {
+    @NonNull
+    public static String getFileName(@NonNull String path) {
         if (path == null)
             return null;
 
@@ -61,7 +63,8 @@ public class FileUtils {
      * @param path - file path
      * @return - extracted filename without extension
      */
-    public static String getFileNameWithoutExtension(String path) {
+    @NonNull
+    public static String getFileNameWithoutExtension(@NonNull String path) {
         if (path == null || path.lastIndexOf(PATH_SEPERATOR) == -1)
             return path;
 
@@ -77,7 +80,8 @@ public class FileUtils {
      * @param path absolute path of the file
      * @return absolute path of file directory
      */
-    public static String getFileDirectoryPath(String path) {
+    @NonNull
+    public static String getFileDirectoryPath(@NonNull String path) {
         return path.substring(0, path.lastIndexOf(PATH_SEPERATOR) + 1);
     }
 
@@ -86,7 +90,7 @@ public class FileUtils {
      *
      * @param file the file to be printed
      */
-    public void printFile(final File file) {
+    public void printFile(final @NonNull File file) {
         final PrintDocumentAdapter mPrintDocumentAdapter = new PrintDocumentAdapterHelper(file);
 
         PrintManager printManager = (PrintManager) mContext
@@ -103,7 +107,7 @@ public class FileUtils {
      *
      * @param file - the file to be shared
      */
-    public void shareFile(File file) {
+    public void shareFile(@NonNull File file) {
         Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
         ArrayList<Uri> uris = new ArrayList<>();
         uris.add(uri);
@@ -115,7 +119,7 @@ public class FileUtils {
      *
      * @param files - the list of files to be shared
      */
-    public void shareMultipleFiles(List<File> files) {
+    public void shareMultipleFiles(@NonNull List<File> files) {
         ArrayList<Uri> uris = new ArrayList<>();
         for (File file : files) {
             Uri uri = FileProvider.getUriForFile(mContext, AUTHORITY_APP, file);
@@ -145,7 +149,7 @@ public class FileUtils {
      *
      * @param path - path of the file to be opened
      */
-    public void openFile(String path, FileType fileType) {
+    public void openFile(@NonNull String path, @NonNull FileType fileType) {
         if (path == null) {
             StringUtils.getInstance().showSnackbar(mContext, R.string.error_path_not_found);
             return;
@@ -201,7 +205,8 @@ public class FileUtils {
      * @param uri - uri of the image
      * @return - real path of the image file on device
      */
-    public String getUriRealPath(Uri uri) {
+    @NonNull
+    public String getUriRealPath(@NonNull Uri uri) {
         if (uri == null || FileUriUtils.getInstance().isWhatsappImage(uri.getAuthority()))
             return null;
 
@@ -214,7 +219,7 @@ public class FileUtils {
      * @return true if file exists else false
      */
 
-    public boolean isFileExist(String mFileName) {
+    public boolean isFileExist(@NonNull String mFileName) {
         String path = mSharedPreferences.getString(STORAGE_LOCATION,
                 StringUtils.getInstance().getDefaultStorageLocation()) + mFileName;
         File file = new File(path);
@@ -228,7 +233,8 @@ public class FileUtils {
      * @param uri - file uri
      * @return - extracted filename
      */
-    public String getFileName(Uri uri) {
+    @NonNull
+    public String getFileName(@NonNull Uri uri) {
         String fileName = null;
         String scheme = uri.getScheme();
 
@@ -259,7 +265,8 @@ public class FileUtils {
      * @param filesPath - ArrayList of image paths
      * @return fileName with _pdf suffix
      */
-    public String getLastFileName(ArrayList<String> filesPath) {
+    @NonNull
+    public String getLastFileName(@NonNull ArrayList<String> filesPath) {
         if (filesPath.size() == 0)
             return "";
 
@@ -275,7 +282,8 @@ public class FileUtils {
      * @param fileNameWithExt fileName with extension. Ex: androidDev.jpg
      * @return fileName without extension. Ex: androidDev
      */
-    public String stripExtension(String fileNameWithExt) {
+    @NonNull
+    public String stripExtension(@NonNull String fileNameWithExt) {
         // Handle null case specially.
         if (fileNameWithExt == null) return null;
 
@@ -294,7 +302,7 @@ public class FileUtils {
      *
      * @param path - image path
      */
-    public void openImage(String path) {
+    public void openImage(@NonNull String path) {
         File file = new File(path);
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -322,6 +330,7 @@ public class FileUtils {
      *
      * @return - intent
      */
+    @NonNull
     public Intent getFileChooser() {
         String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();
@@ -337,6 +346,7 @@ public class FileUtils {
      *
      * @return - intent
      */
+    @NonNull
     public Intent getMultipleFileChooser() {
         String folderPath = Environment.getExternalStorageDirectory() + "/";
         Intent intent = new Intent();
@@ -377,7 +387,7 @@ public class FileUtils {
      * @param ext         the file extension
      * @param saveMethod  the method that should be called when a filename is chosen
      */
-    public void openSaveDialog(String preFillName, String ext, Consumer<String> saveMethod) {
+    public void openSaveDialog(@NonNull String preFillName, @NonNull String ext, @NonNull Consumer<String> saveMethod) {
 
         MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialog(mContext,
                 R.string.creating_pdf, R.string.enter_file_name);

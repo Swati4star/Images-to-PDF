@@ -2,6 +2,8 @@ package swati4star.createpdf.interfaces;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public interface OnPdfReorderedInterface {
@@ -16,7 +18,7 @@ public interface OnPdfReorderedInterface {
      *
      * @param bitmaps All the pages of the pdf as bitmap .
      */
-    void onPdfReorderCompleted(List<Bitmap> bitmaps);
+    void onPdfReorderCompleted(@NonNull List<Bitmap> bitmaps);
 
     /*
      * Called when the pdf reorder operation fails.

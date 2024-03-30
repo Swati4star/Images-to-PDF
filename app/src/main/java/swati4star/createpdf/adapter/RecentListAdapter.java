@@ -25,7 +25,7 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
     private List<String> mKeys;
     private List<Map<String, String>> mValues;
 
-    public RecentListAdapter(View.OnClickListener listener) {
+    public RecentListAdapter(@NonNull View.OnClickListener listener) {
         this.mOnClickListener = listener;
     }
 
@@ -36,7 +36,7 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
      * @param keys       - list of all the feature viewId
      * @param recentList - list of the features
      */
-    public void updateList(List<String> keys, List<Map<String, String>> recentList) {
+    public void updateList(@NonNull List<String> keys, @NonNull List<Map<String, String>> recentList) {
         this.mKeys = keys;
         this.mValues = recentList;
     }

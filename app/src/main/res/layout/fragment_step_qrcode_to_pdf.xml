@@ -9,7 +9,8 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="48dp"
         android:scaleType="centerInside"
-        android:src="@drawable/qrcode_to_pdf" />
+        android:src="@drawable/qrcode_to_pdf"
+        android:contentDescription="Image illustrating the process of qrcode to PDF" />
 
     <TextView
         android:id="@+id/tv_title"

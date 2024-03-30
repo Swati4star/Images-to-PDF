@@ -24,6 +24,7 @@ import swati4star.createpdf.interfaces.GenericCallback;
  */
 public class PermissionsUtils {
 
+    @NonNull
     public static PermissionsUtils getInstance() {
         return PermissionsUtils.SingletonHolder.INSTANCE;
     }
@@ -36,7 +37,7 @@ public class PermissionsUtils {
      * @param permissions string array of permissions
      * @return true if all permissions are granted, otherwise false
      */
-    public boolean checkRuntimePermissions(Object context, String[] permissions) {
+    public boolean checkRuntimePermissions(@NonNull Object context, @NonNull String[] permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (String permission : permissions) {
                 if ((ContextCompat.checkSelfPermission(retrieveContext(context),
@@ -58,7 +59,7 @@ public class PermissionsUtils {
      * @param permissions string array of permissions
      * @param requestCode permission request code
      */
-    public void requestRuntimePermissions(Object context, String[] permissions,
+    public void requestRuntimePermissions(@NonNull Object context, @NonNull String[] permissions,
                                           int requestCode) {
         if (context instanceof Activity) {
             ActivityCompat.requestPermissions((AppCompatActivity) context,
@@ -91,7 +92,7 @@ public class PermissionsUtils {
      * @param expectedRequest
      * @param whenSuccessful  the Runnable to call when permission is granted
      */
-    public void handleRequestPermissionsResult(Activity context, @NonNull int[] grantResults,
+    public void handleRequestPermissionsResult(@NonNull Activity context, @NonNull int[] grantResults,
                                                int requestCode, int expectedRequest, @NonNull Runnable whenSuccessful) {
 
         if (requestCode == expectedRequest && grantResults.length > 0) {
@@ -111,7 +112,7 @@ public class PermissionsUtils {
      * Manage storage permission for api above 30
      */
 
-    public void checkStoragePermissionAndProceed(Context context, final GenericCallback callback) {
+    public void checkStoragePermissionAndProceed(@NonNull Context context, final @NonNull GenericCallback callback) {
         if (Build.VERSION.SDK_INT >= 30) {
             if (Environment.isExternalStorageManager()) {
                 callback.proceed();
@@ -128,7 +129,7 @@ public class PermissionsUtils {
         }
     }
 
-    public boolean isStoragePermissionGranted(Context context) {
+    public boolean isStoragePermissionGranted(@NonNull Context context) {
         if (Build.VERSION.SDK_INT >= 30) {
             return Environment.isExternalStorageManager();
         } else {

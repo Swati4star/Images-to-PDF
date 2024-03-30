@@ -73,7 +73,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="please_wait"> Attendere un momento </string>
     <string name="bundleKey"> URI immagine </string>
     <string name="whatsappToast"> Scusa! Impossibile aggiungere l&#38;immagine, seleziona un&#38;immagine dall&#38;opzione ** Seleziona immagine **. </string>
     <string name="successToast"> è stato aggiunto con successo all&#38;immagine </string>
@@ -143,8 +142,6 @@
     <string name="snackbar_no_images"> Nessuna immagine selezionata </string>
     <string name="snackbar_no_pdfs_selected"> Nessun PDF selezionato </string>
     <string name="snackbar_name_not_blank"> Il nome non può essere vuoto </string>
-    <string name="snackbar_permissions_given"> Autorizzazioni fornite! </string>
-    <string name="snackbar_insufficient_permissions"> Autorizzazioni insufficienti! </string>
     <string name="no_permissions"> Fornisci le autorizzazioni di archiviazione per visualizzare i tuoi file. </string>
     <string name="prompt_give_permission"> Fornisci autorizzazioni </string>
     <string name="snackbar_images_added"> Immagini aggiunte </string>
@@ -165,7 +162,6 @@
     <string name="enter_password"> Inserisci password </string>
     <string name="snackbar_password_cannot_be_blank"> La password non può essere vuota </string>
     <string name="cannot_add_password"> Impossibile applicare la password al PDF. Controlla di nuovo il PDF. </string>
-    <string name="snackbar_imagecropped"> Immagini ritagliate </string>
     <string name="cropImage_activityTitle"> Ritaglia immagine </string>
     <string name="snackbar_pdfCreated"> PDF creato! </string>
     <string name="error_uri_not_found"> ​​Spiacenti, non siamo in grado di accedere all\'immagine ritagliata. Riprova </string>
@@ -201,8 +197,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject"> Suggerimenti per il convertitore di immagini in PDF </string>
     <string name="feedback_text"> Scrivi gentilmente il tuo prezioso feedback, o semplicemente invia un ciao! :) </string>
-    <string name="snackbar_no_email_clients"> Non ci sono client di posta installati. </string>
-    <string name="feedback_chooser"> "Invia messaggio …" </string>
     <string name="no_pdf"> Nessun PDF da mostrare </string>
     <string name="get_started"> Inizia ora </string>
     <string name="view_files_text"> Visualizza tutti i tuoi file convertiti qui! </string>
@@ -255,16 +249,6 @@
     <string name="sort"> Ordina </string>
 
     <!-- Directory Strings -->
-    <string name="directory"> Directory </string>
-    <string name="moving_files"> Spostamento dei file </string>
-    <string name="success_move"> I file sono stati spostati correttamente </string>
-    <string name="dir_does_not_exists"> La directory non esiste </string>
-    <string name="move_files_delete_dir"> Spostamento di file ed eliminazione della directory </string>
-    <string name="directory_deleted"> Directory eliminata </string>
-    <string name="success_delete_directory"> Eliminata la directory con successo </string>
-    <string name="moved_files"> File spostati correttamente </string>
-    <string name="dialog_new_dir"> Inserisci il nuovo nome della directory </string>
-    <string name="dialog_dir"> Immettere il nome della directory </string>
     <string name="cancel"> Annulla </string>
     <string name="ok"> OK </string>
     <string name="yes"> Sì </string>
@@ -277,7 +261,6 @@
     <string name="text_to_pdf"> Testo in PDF </string>
     <string name="text_file_selected"> File di testo selezionato </string>
     <string name="select_file"> "Seleziona un file da caricare" </string>
-    <string name="new_directory"> Nuova directory </string>
     <string name="previous_image_content_desc"> Immagine precedente </string>
     <string name="text_file_name"> "File di testo:" </string>
     <string name="extension_not_supported"> Spiacenti! Questo tipo di file non è attualmente supportato. </string>
@@ -363,7 +346,6 @@
     <string name="reset"> Reimposta </string>
     <string name="rotate"> Ruota </string>
     <string name="done"> Fine </string>
-    <string name="image_successfully_cropped"> Immagine ritagliata correttamente </string>
     <string name="confirm_exit_message"> Premi di nuovo indietro per uscire </string>
 
     <string name="filter_not_saved"> Impossibile salvare l\'immagine </string>
@@ -422,13 +404,11 @@
     <string name="rate_title"> Valutaci! </string>
     <string name="rate_dialog_text"> Se ti piace questa app, prenditi un momento per valutarla. Non ci vorrà più di un minuto. Grazie per il vostro sostegno! :) </string>
     <string name="rate_us_never"> Mai </string>
-    <string name="error_occurred"> Si è verificato un errore </string>
 
 
     <!--Rotate Pages    -->
     <string name="rotate_pages"> Ruota pagine </string>
     <string name="enter_rotation_angle"> Immettere l\'angolo di rotazione </string>
-    <string name="share_files"> Condividi file </string>
     <string name="pdf_removed_from_list"> Il PDF è stato rimosso dall\'elenco. </string>
     <string name="pdf_added_to_list"> PDF è stato aggiunto all\'elenco. </string>
     <string name="select_files"> Seleziona file </string>

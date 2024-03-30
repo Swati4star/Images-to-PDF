@@ -1,5 +1,7 @@
 package swati4star.createpdf.model;
 
+import androidx.annotation.NonNull;
+
 public class FAQItem {
 
     private String mQuestion;
@@ -12,7 +14,7 @@ public class FAQItem {
      * @param question - question text
      * @param answer   - answer text
      */
-    public FAQItem(String question, String answer) {
+    public FAQItem(@NonNull String question, @NonNull String answer) {
         this.mQuestion = question;
         this.mAnswer = answer;
         mIsExpanded = false;
@@ -26,19 +28,21 @@ public class FAQItem {
         mIsExpanded = expanded;
     }
 
+    @NonNull
     public String getQuestion() {
         return mQuestion;
     }
 
-    public void setQuestion(String question) {
+    public void setQuestion(@NonNull String question) {
         this.mQuestion = question;
     }
 
+    @NonNull
     public String getAnswer() {
         return mAnswer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(@NonNull String answer) {
         this.mAnswer = answer;
     }
 }

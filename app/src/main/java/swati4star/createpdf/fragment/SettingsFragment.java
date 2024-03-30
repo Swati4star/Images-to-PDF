@@ -61,14 +61,15 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, root);
@@ -86,7 +87,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
 //    }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (requestCode == MODIFY_STORAGE_LOCATION_CODE) {
             if (data.getExtras() != null) {
                 String folderLocation = data.getExtras().getString("data") + "/";

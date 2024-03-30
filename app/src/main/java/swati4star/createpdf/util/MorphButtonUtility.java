@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.DimenRes;
+import androidx.annotation.NonNull;
 
 import com.dd.morphingbutton.MorphingButton;
 
@@ -23,7 +24,7 @@ public class MorphButtonUtility {
     private final Activity mActivity;
     private boolean mDarkModeEnabled = false;
 
-    public MorphButtonUtility(Activity activity) {
+    public MorphButtonUtility(@NonNull Activity activity) {
         mActivity = activity;
         checkDarkMode();
     }
@@ -64,7 +65,7 @@ public class MorphButtonUtility {
      * @param btnMorph the button to be converted
      * @param duration time period of transition
      */
-    public void morphToSquare(final MorphingButton btnMorph, int duration) {
+    public void morphToSquare(final @NonNull MorphingButton btnMorph, int duration) {
         MorphingButton.Params square = defaultButton(duration);
         String text = btnMorph.getText().toString().isEmpty() ?
                 mActivity.getString(R.string.create_pdf) :
@@ -85,7 +86,7 @@ public class MorphButtonUtility {
      *
      * @param btnMorph the button to be converted
      */
-    public void morphToSuccess(final MorphingButton btnMorph) {
+    public void morphToSuccess(final @NonNull MorphingButton btnMorph) {
         MorphingButton.Params circle = MorphingButton.Params.create()
                 .duration(integer())
                 .cornerRadius(dimen(R.dimen.mb_height_56))
@@ -103,7 +104,7 @@ public class MorphButtonUtility {
      * @param btnMorph the button to be converted
      * @param duration time period of transition
      */
-    public void morphToGrey(final MorphingButton btnMorph, int duration) {
+    public void morphToGrey(final @NonNull MorphingButton btnMorph, int duration) {
         MorphingButton.Params square = defaultButton(duration);
         square.color(color(R.color.mb_gray));
         square.colorPressed(color(R.color.mb_gray));
@@ -125,17 +126,17 @@ public class MorphButtonUtility {
                 .height(FrameLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    public void setTextAndActivateButtons(String path,
-                                          MorphingButton toSetPathOn,
-                                          MorphingButton toEnable) {
+    public void setTextAndActivateButtons(@NonNull String path,
+                                          @NonNull MorphingButton toSetPathOn,
+                                          @NonNull MorphingButton toEnable) {
         toSetPathOn.setText(path);
         toSetPathOn.setBackgroundColor(mActivity.getResources().getColor(R.color.mb_green_dark));
         toEnable.setEnabled(true);
         morphToSquare(toEnable, integer());
     }
 
-    public void initializeButton(MorphingButton button,
-                                 MorphingButton buttonToDisable) {
+    public void initializeButton(@NonNull MorphingButton button,
+                                 @NonNull MorphingButton buttonToDisable) {
         button.setText(R.string.merge_file_select);
         if (mDarkModeEnabled) {
             button.setBackgroundColor(color(R.color.colorBlackAltLight));
@@ -144,8 +145,8 @@ public class MorphButtonUtility {
         buttonToDisable.setEnabled(false);
     }
 
-    public void initializeButtonForAddText(MorphingButton pdfButton, MorphingButton textButton,
-                                           MorphingButton buttonToDisable) {
+    public void initializeButtonForAddText(@NonNull MorphingButton pdfButton, @NonNull MorphingButton textButton,
+                                           @NonNull MorphingButton buttonToDisable) {
         pdfButton.setText(R.string.select_pdf_file);
         textButton.setText(R.string.select_text_file);
         if (mDarkModeEnabled) {

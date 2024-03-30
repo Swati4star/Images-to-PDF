@@ -2,11 +2,14 @@ package swati4star.createpdf.util;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 public class SharedPreferencesUtil {
 
     private SharedPreferencesUtil() {
     }
 
+    @NonNull
     public static SharedPreferencesUtil getInstance() {
         return SharedPreferencesUtil.SingletonHolder.INSTANCE;
     }
@@ -18,7 +21,7 @@ public class SharedPreferencesUtil {
      * @param pageNumStyle the page numbering style as defined in {@link Constants}
      * @param id           the id of the style
      */
-    public void setDefaultPageNumStyle(SharedPreferences.Editor editor, String pageNumStyle, int id) {
+    public void setDefaultPageNumStyle(@NonNull SharedPreferences.Editor editor, @NonNull String pageNumStyle, int id) {
         editor.putString(Constants.PREF_PAGE_STYLE, pageNumStyle);
         editor.putInt(Constants.PREF_PAGE_STYLE_ID, id);
         editor.apply();
@@ -29,7 +32,7 @@ public class SharedPreferencesUtil {
      *
      * @param editor the {@link SharedPreferences.Editor} to use for editing
      */
-    public void clearDefaultPageNumStyle(SharedPreferences.Editor editor) {
+    public void clearDefaultPageNumStyle(@NonNull SharedPreferences.Editor editor) {
         setDefaultPageNumStyle(editor, null, -1);
     }
 

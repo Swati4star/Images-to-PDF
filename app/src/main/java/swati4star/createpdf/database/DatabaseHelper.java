@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import java.util.Date;
 
 public class DatabaseHelper {
     private final Context mContext;
 
-    public DatabaseHelper(Context mContext) {
+    public DatabaseHelper(@NonNull Context mContext) {
         this.mContext = mContext;
     }
 
@@ -19,7 +21,7 @@ public class DatabaseHelper {
      * @param filePath      path of the file
      * @param operationType operation performed on file
      */
-    public void insertRecord(String filePath, String operationType) {
+    public void insertRecord(@NonNull String filePath, @NonNull String operationType) {
         new Insert().execute(new History(filePath, new Date().toString(), operationType));
     }
 

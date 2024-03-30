@@ -73,7 +73,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="please_wait">잠시 기다려주세요</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">죄송합니다. 이미지 생성에 실패했습니다. **이미지 선택**에서 이미지를 선택해주세요.</string>
     <string name="successToast">이미지가 성공적으로 생성되었습니다.</string>
@@ -143,8 +142,6 @@
     <string name="snackbar_no_images">선택된 이미지가 없습니다.</string>
     <string name="snackbar_no_pdfs_selected">선택된 PDF가 없습니다.</string>
     <string name="snackbar_name_not_blank">이름은 빈칸이 될 수 없습니다.</string>
-    <string name="snackbar_permissions_given">사용권한이 부여되었습니다.</string>
-    <string name="snackbar_insufficient_permissions">사용권한이 불충분합니다.</string>
     <string name="no_permissions">파일을 보려면 저장소 사용 권한이 필요합니다.</string>
     <string name="prompt_give_permission">사용권한 부여</string>
     <string name="snackbar_images_added">이미지가 추가되었습니다.</string>
@@ -165,7 +162,6 @@
     <string name="enter_password">암호 입력</string>
     <string name="snackbar_password_cannot_be_blank">암호는 빈칸이 될 수 없습니다.</string>
     <string name="cannot_add_password">PDF에 비밀번호를 적용할 수 없습니다. PDF를 다시 확인해 주세요.</string>
-    <string name="snackbar_imagecropped">이미지 자르기에 성공했습니다.</string>
     <string name="cropImage_activityTitle">이미지 자르기</string>
     <string name="snackbar_pdfCreated">PDF 생성에 성공했습니다!</string>
     <string name="error_uri_not_found">죄송합니다, 편집된 이미지에 접근 실패했습니다. 다시 시도해주세요.</string>
@@ -201,8 +197,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject">Images To PDF Converter를 위한 제안</string>
     <string name="feedback_text">피드백이나 인사를 남겨주세요 :)</string>
-    <string name="snackbar_no_email_clients">설치된 전자 메일 클라이언트가 없습니다.</string>
-    <string name="feedback_chooser">"메일 보내기…"</string>
     <string name="no_pdf">열람할 PDF 파일이 존재하지않습니다.</string>
     <string name="get_started">지금 바로 시작하세요!</string>
     <string name="view_files_text">모든 전환된 PDF를 열람하세요!</string>
@@ -255,16 +249,6 @@
     <string name="sort">정렬</string>
 
     <!-- Directory Strings -->
-    <string name="directory">디렉토리</string>
-    <string name="moving_files">파일을 이동합니다.</string>
-    <string name="success_move">성공적으로 파일을 이동했습니다.</string>
-    <string name="dir_does_not_exists">존재하지않는 디렉토리입니다.</string>
-    <string name="move_files_delete_dir">파일을 이동하고 디렉토리를 삭제합니다.</string>
-    <string name="directory_deleted">삭제된 디렉토리</string>
-    <string name="success_delete_directory">성공적으로 디렉토리를 삭제되었습니다.</string>
-    <string name="moved_files">성공적으로 파일을 이동했습니다.</string>
-    <string name="dialog_new_dir">새로운 디렉토리명을 입력해주세요.</string>
-    <string name="dialog_dir">디렉토리명을 입력해주세요.</string>
     <string name="cancel">취소</string>
     <string name="ok">OK</string>
     <string name="yes">예</string>
@@ -277,7 +261,6 @@
     <string name="text_to_pdf">텍스트를 PDF로 변환</string>
     <string name="text_file_selected">텍스트 파일이 선택되었습니다.</string>
     <string name="select_file">"업로드할 파일을 선택해주세요."</string>
-    <string name="new_directory">새로운 디렉토리</string>
     <string name="previous_image_content_desc">이전 이미지</string>
     <string name="text_file_name">"텍스트 파일 : "</string>
     <string name="extension_not_supported">죄송합니다. 현재 이 파일은 지원이 불가합니다.</string>
@@ -363,7 +346,6 @@
     <string name="reset">재설정</string>
     <string name="rotate">회전</string>
     <string name="done">완성</string>
-    <string name="image_successfully_cropped">성공적으로 이미지를 잘랐습니다.</string>
     <string name="confirm_exit_message">다시 이전을 누르면 종료됩니다.</string>
 
     <string name="filter_not_saved">이미지는 저장되지 않았습니다.</string>
@@ -422,13 +404,11 @@
     <string name="rate_title">평가하기!</string>
     <string name="rate_dialog_text">앱을 만족하신다면 평가해주세요. 감사합니다! :)</string>
     <string name="rate_us_never">다시보지않기</string>
-    <string name="error_occurred">오류 발생</string>
 
 
     <!--Rotate Pages    -->
     <string name="rotate_pages">페이지 회전하기</string>
     <string name="enter_rotation_angle">회전 각도 입력</string>
-    <string name="share_files">파일 공유</string>
     <string name="pdf_removed_from_list">목록에서 PDF 파일을 제거했습니다.</string>
     <string name="pdf_added_to_list">목록에 PDF 파일을 추가했습니다.</string>
     <string name="select_files">파일 선택s</string>

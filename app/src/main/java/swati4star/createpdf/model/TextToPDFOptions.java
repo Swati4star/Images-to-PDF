@@ -3,6 +3,8 @@ package swati4star.createpdf.model;
 import android.content.Context;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.Font;
 
 import swati4star.createpdf.preferences.TextToPdfPreferences;
@@ -13,8 +15,8 @@ public class TextToPDFOptions extends PDFOptions {
     private final Font.FontFamily mFontFamily;
     private final int mFontColor;
 
-    public TextToPDFOptions(String mFileName, String mPageSize, boolean mPasswordProtected,
-                            String mPassword, Uri mInFileUri, int mFontSize, Font.FontFamily mFontFamily, int color,
+    public TextToPDFOptions(@NonNull String mFileName, @NonNull String mPageSize, boolean mPasswordProtected,
+                            @NonNull String mPassword, @NonNull Uri mInFileUri, int mFontSize, @NonNull Font.FontFamily mFontFamily, int color,
                             int pageColor) {
         super(mFileName, mPageSize, mPasswordProtected, mPassword, 0, false, null, pageColor);
         this.mInFileUri = mInFileUri;
@@ -23,6 +25,7 @@ public class TextToPDFOptions extends PDFOptions {
         this.mFontColor = color;
     }
 
+    @NonNull
     public Uri getInFileUri() {
         return mInFileUri;
     }
@@ -31,6 +34,7 @@ public class TextToPDFOptions extends PDFOptions {
         return mFontSize;
     }
 
+    @NonNull
     public Font.FontFamily getFontFamily() {
         return mFontFamily;
     }
@@ -52,7 +56,7 @@ public class TextToPDFOptions extends PDFOptions {
         private int mFontColor;
         private String mFontSizeTitle;
 
-        public Builder(Context context) {
+        public Builder(@NonNull Context context) {
             final TextToPdfPreferences preferences = new TextToPdfPreferences(context);
             mPageSize = preferences.getPageSize();
             mPasswordProtected = false;
@@ -62,20 +66,24 @@ public class TextToPDFOptions extends PDFOptions {
             mPageColor = preferences.getPageColor();
         }
 
+        @NonNull
         public String getFileName() {
             return mFileName;
         }
 
-        public Builder setFileName(String fileName) {
+        @NonNull
+        public Builder setFileName(@NonNull String fileName) {
             mFileName = fileName;
             return this;
         }
 
+        @NonNull
         public String getPageSize() {
             return mPageSize;
         }
 
-        public Builder setPageSize(String pageSize) {
+        @NonNull
+        public Builder setPageSize(@NonNull String pageSize) {
             mPageSize = pageSize;
             return this;
         }
@@ -84,16 +92,19 @@ public class TextToPDFOptions extends PDFOptions {
             return mPasswordProtected;
         }
 
+        @NonNull
         public Builder setPasswordProtected(boolean passwordProtected) {
             mPasswordProtected = passwordProtected;
             return this;
         }
 
+        @NonNull
         public String getPassword() {
             return mPassword;
         }
 
-        public Builder setPassword(String password) {
+        @NonNull
+        public Builder setPassword(@NonNull String password) {
             mPassword = password;
             return this;
         }
@@ -102,16 +113,19 @@ public class TextToPDFOptions extends PDFOptions {
             return mPageColor;
         }
 
+        @NonNull
         public Builder setPageColor(int pageColor) {
             mPageColor = pageColor;
             return this;
         }
 
+        @NonNull
         public Uri getInFileUri() {
             return mInFileUri;
         }
 
-        public Builder setInFileUri(Uri inFileUri) {
+        @NonNull
+        public Builder setInFileUri(@NonNull Uri inFileUri) {
             mInFileUri = inFileUri;
             return this;
         }
@@ -120,16 +134,19 @@ public class TextToPDFOptions extends PDFOptions {
             return mFontSize;
         }
 
+        @NonNull
         public Builder setFontSize(int fontSize) {
             mFontSize = fontSize;
             return this;
         }
 
+        @NonNull
         public Font.FontFamily getFontFamily() {
             return mFontFamily;
         }
 
-        public Builder setFontFamily(Font.FontFamily fontFamily) {
+        @NonNull
+        public Builder setFontFamily(@NonNull Font.FontFamily fontFamily) {
             mFontFamily = fontFamily;
             return this;
         }
@@ -138,20 +155,24 @@ public class TextToPDFOptions extends PDFOptions {
             return mFontColor;
         }
 
+        @NonNull
         public Builder setFontColor(int fontColor) {
             mFontColor = fontColor;
             return this;
         }
 
+        @NonNull
         public String getFontSizeTitle() {
             return mFontSizeTitle;
         }
 
-        public Builder setFontSizeTitle(String fontSizeTitle) {
+        @NonNull
+        public Builder setFontSizeTitle(@NonNull String fontSizeTitle) {
             mFontSizeTitle = fontSizeTitle;
             return this;
         }
 
+        @NonNull
         public TextToPDFOptions build() {
             return new TextToPDFOptions(mFileName, mPageSize, mPasswordProtected,
                     mPassword, mInFileUri, mFontSize, mFontFamily, mFontColor, mPageColor);

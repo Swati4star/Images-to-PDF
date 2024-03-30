@@ -47,7 +47,7 @@ public class PDFUtils {
     private final Activity mContext;
     private final FileUtils mFileUtils;
 
-    public PDFUtils(Activity context) {
+    public PDFUtils(@NonNull Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(mContext);
     }
@@ -57,7 +57,7 @@ public class PDFUtils {
      *
      * @param file - file name
      */
-    public void showDetails(File file) {
+    public void showDetails(@NonNull File file) {
         String name = file.getName();
         String path = file.getPath();
         String size = FileInfoUtils.getFormattedSize(file);
@@ -89,7 +89,7 @@ public class PDFUtils {
      * @return true - if encrypted otherwise false
      */
     @WorkerThread
-    public boolean isPDFEncrypted(String path) {
+    public boolean isPDFEncrypted(@NonNull String path) {
         boolean isEncrypted;
         PdfReader pdfReader = null;
         try {
@@ -103,8 +103,8 @@ public class PDFUtils {
         return isEncrypted;
     }
 
-    public void compressPDF(String inputPath, String outputPath, int quality,
-                            OnPDFCompressedInterface onPDFCompressedInterface) {
+    public void compressPDF(@NonNull String inputPath, @NonNull String outputPath, int quality,
+                            @NonNull OnPDFCompressedInterface onPDFCompressedInterface) {
         new CompressPdfAsync(inputPath, outputPath, quality, onPDFCompressedInterface)
                 .execute();
     }
@@ -117,7 +117,7 @@ public class PDFUtils {
      * @param imagesUri - list of images to add
      * @return true, if succeeded, otherwise false
      */
-    public boolean addImagesToPdf(String inputPath, String output, ArrayList<String> imagesUri) {
+    public boolean addImagesToPdf(@NonNull String inputPath, @NonNull String output, @NonNull ArrayList<String> imagesUri) {
         try {
             PdfReader reader = new PdfReader(inputPath);
             Document document = new Document();
@@ -182,7 +182,7 @@ public class PDFUtils {
         }
     }
 
-    public boolean reorderRemovePDF(String inputPath, String output, String pages) {
+    public boolean reorderRemovePDF(@NonNull String inputPath, @NonNull String output, @NonNull String pages) {
         try {
             PdfReader reader = new PdfReader(inputPath);
             reader.selectPages(pages);
@@ -213,7 +213,7 @@ public class PDFUtils {
      * @param path                    Absolute path of the pdf
      * @param onPdfReorderedInterface interface to update  pdf reorder progress
      */
-    public void reorderPdfPages(Uri uri, String path, @NonNull OnPdfReorderedInterface onPdfReorderedInterface) {
+    public void reorderPdfPages(@NonNull Uri uri, @NonNull String path, @NonNull OnPdfReorderedInterface onPdfReorderedInterface) {
         new ReorderPdfPagesAsync(uri, path, mContext, onPdfReorderedInterface).execute();
     }
 

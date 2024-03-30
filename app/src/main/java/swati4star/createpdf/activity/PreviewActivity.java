@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,14 +37,15 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     private PreviewAdapter mPreviewAdapter;
     private ViewPager mViewPager;
 
-    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+    @NonNull
+    public static Intent getStartIntent(@NonNull Context context, @NonNull ArrayList<String> uris) {
         Intent intent = new Intent(context, PreviewActivity.class);
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull Bundle savedInstanceState) {
 
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);

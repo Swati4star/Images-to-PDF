@@ -6,6 +6,8 @@ import static swati4star.createpdf.util.Constants.pdfExtension;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfContentByte;
@@ -31,7 +33,7 @@ public class InvertPdf extends AsyncTask<Void, Void, Void> {
      * @param path                  - path of input file
      * @param onPDFCreatedInterface - interface implementation to handle pre & post
      */
-    public InvertPdf(String path, OnPDFCreatedInterface onPDFCreatedInterface) {
+    public InvertPdf(@NonNull String path, @NonNull OnPDFCreatedInterface onPDFCreatedInterface) {
         this.mPath = path;
         this.mOnPDFCreatedInterface = onPDFCreatedInterface;
     }

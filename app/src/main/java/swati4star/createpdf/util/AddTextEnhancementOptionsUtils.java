@@ -2,6 +2,8 @@ package swati4star.createpdf.util;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.Font;
 
 import java.util.ArrayList;
@@ -15,13 +17,15 @@ public class AddTextEnhancementOptionsUtils {
 
     }
 
+    @NonNull
     public static AddTextEnhancementOptionsUtils getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
-    public ArrayList<EnhancementOptionsEntity> getEnhancementOptions(Context context,
-                                                                     String fontTitle,
-                                                                     Font.FontFamily fontFamily) {
+    @NonNull
+    public ArrayList<EnhancementOptionsEntity> getEnhancementOptions(@NonNull Context context,
+                                                                     @NonNull String fontTitle,
+                                                                     @NonNull Font.FontFamily fontFamily) {
         ArrayList<EnhancementOptionsEntity> options = new ArrayList<>();
 
         options.add(new EnhancementOptionsEntity(

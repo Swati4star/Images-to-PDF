@@ -13,7 +13,6 @@
     <string name="search">खोजना</string>
     <string name="default_content_description">कोई विवरण नहीं</string>
     <string name="prompt_input">यहां दर्ज करें</string>
-    <string name="please_wait">कृपया प्रतीक्षा करें</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">"माफ़ करना! छवियाँ जोड़ी नहीं जा सकीं। कृपया हमारे **छवियों का चयन करें** विकल्प से छवियों का चयन करें। "</string>
     <string name="successToast">चित्र सफलतापूर्वक जोड़े गए।</string>
@@ -64,8 +63,6 @@
     <string name="snackbar_no_images">कोई चित्र नहीं चुना गया</string>
     <string name="snackbar_no_pdfs_selected">कोई पीडीएफ़ नहीं चुना गया</string>
     <string name="snackbar_name_not_blank">नाम खाली नहीं हो सकता</string>
-    <string name="snackbar_permissions_given">अनुमतियां दी गई हैं!</string>
-    <string name="snackbar_insufficient_permissions">अपर्याप्त अनुमति!</string>
     <string name="no_permissions">Please provide storage permissions to view your files.</string>
     <string name="prompt_give_permission">अनुमति प्रदान करें</string>
     <string name="snackbar_images_added">छवियां जोड़ी गईं</string>
@@ -86,7 +83,6 @@
     <string name="enter_password">पासवर्ड दर्ज करें</string>
     <string name="snackbar_password_cannot_be_blank">पासवर्ड खाली नहीं हो सकता</string>
     <string name="cannot_add_password">पीडीएफ पर पासवर्ड लागू नहीं किया जा सका। कृपया पीडीएफ को दोबारा जांचें।</string>
-    <string name="snackbar_imagecropped">छवियाँ क्रॉप की गईं</string>
     <string name="cropImage_activityTitle">क्रॉप इमेज</string>
     <string name="snackbar_pdfCreated">पीडीएफ बनाया गया!</string>
     <string name="error_uri_not_found">क्षमा करें, हम क्रॉप की गई छवि तक पहुंचने में असमर्थ हैं। कृपया पुन: प्रयास करें</string>
@@ -110,8 +106,6 @@
     <string name="images_selected">%1$d छवि (छवियों) चयनित।</string>
     <string name="feedback_subject">"Images To पीडीएफ Converter के लिए सुझाव "</string>
     <string name="feedback_text">कृपया अपनी बहुमूल्य प्रतिक्रिया लिखें, या बस एक नमस्ते! :)</string>
-    <string name="snackbar_no_email_clients">कोई ईमेल क्लाइंट स्थापित नहीं है।</string>
-    <string name="feedback_chooser">मेल भेजने…</string>
     <string name="no_pdf">दिखाने के लिए कोई पीडीएफ नहीं</string>
     <string name="get_started">अब शुरू हो जाओ</string>
     <string name="view_files_text">अपनी सभी रूपांतरित फ़ाइलें यहाँ देखें!</string>
@@ -151,16 +145,6 @@
     <string name="sort_by_title">इसके अनुसार क्रमबद्ध करें</string>
     <string name="delete">हटाएं</string>
     <string name="sort">छांटना</string>
-    <string name="directory">Directory</string>
-    <string name="moving_files">अपकी फ़ाइलें ले जा रहे</string>
-    <string name="success_move">आपकी फ़ाइलें सफलतापूर्वक स्थानांतरित कर दी गईं</string>
-    <string name="dir_does_not_exists">Directory मौजूद नहीं है</string>
-    <string name="move_files_delete_dir">फ़ाइलें ले जाना और Directory हटाना</string>
-    <string name="directory_deleted">Directory हटाई गई</string>
-    <string name="success_delete_directory">Directory को सफलतापूर्वक हटा दिया गया</string>
-    <string name="moved_files">फ़ाइलें सफलतापूर्वक ले जाया गया</string>
-    <string name="dialog_new_dir">नई Directory नाम दर्ज करें</string>
-    <string name="dialog_dir">Directory का नाम दर्ज करें</string>
     <string name="cancel">रद्द करें</string>
     <string name="ok">ठीक है</string>
     <string name="yes">हाँ</string>
@@ -171,7 +155,6 @@
     <string name="text_to_pdf">पाठ से पीडीएफ</string>
     <string name="text_file_selected">पाठ फ़ाइल चयनित</string>
     <string name="select_file">अपलोड करने के लिए एक फ़ाइल का चयन करें</string>
-    <string name="new_directory">नई Directory</string>
     <string name="previous_image_content_desc">पिछली छवि</string>
     <string name="text_file_name">पाठ फ़ाइल :</string>
     <string name="extension_not_supported">माफ़ करना! यह फ़ाइल प्रकार वर्तमान में समर्थित नहीं है।</string>
@@ -243,7 +226,6 @@
     <string name="reset">रीसेट</string>
     <string name="rotate">घुमाएँ</string>
     <string name="done">Done</string>
-    <string name="image_successfully_cropped">छवि सफलतापूर्वक काटी गई</string>
     <string name="confirm_exit_message">बाहर निकलने के लिए फिर से दबाएं</string>
     <string name="filter_not_saved">छवि सहेजी नहीं जा सकी</string>
     <string name="remove_image_message">क्या आप वाकई इस छवि को हटाना चाहते हैं?</string>
@@ -282,10 +264,8 @@
     <string name="rate_title">हमें रेटिंग दें!</string>
     <string name="rate_dialog_text">यदि आप इस ऐप का आनंद लेते हैं, तो कृपया इस ऐप को रेट करने के लिए कुछ समय दें। इसमें एक मिनट से ज्यादा नहीं लगेगा। आपके सहयोग के लिए धन्यवाद! :)</string>
     <string name="rate_us_never">कभी नहीँ</string>
-    <string name="error_occurred">त्रुटि हुई</string>
     <string name="rotate_pages">पन्ने घुमाएँ</string>
     <string name="enter_rotation_angle">रोटेशन एंगल दर्ज करें</string>
-    <string name="share_files">फ़ाइलें बाटें</string>
     <string name="pdf_removed_from_list">पीडीएफ को सूची से हटा दिया गया है।</string>
     <string name="pdf_added_to_list">पीडीएफ को सूची में जोड़ा गया है।</string>
     <string name="select_files">फ़ाइलें चुनें</string>

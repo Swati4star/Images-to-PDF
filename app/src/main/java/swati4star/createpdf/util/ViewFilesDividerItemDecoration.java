@@ -19,12 +19,12 @@ import swati4star.createpdf.R;
 public class ViewFilesDividerItemDecoration extends RecyclerView.ItemDecoration {
     private final Drawable mDivider;
 
-    public ViewFilesDividerItemDecoration(Context context) {
+    public ViewFilesDividerItemDecoration(@NonNull Context context) {
         mDivider = context.getResources().getDrawable(R.drawable.files_divider);
     }
 
     @Override
-    public void onDrawOver(@NonNull Canvas canvas, RecyclerView parent, @NonNull RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         int left = parent.getPaddingLeft();
         int right = parent.getWidth() - parent.getPaddingRight();
 

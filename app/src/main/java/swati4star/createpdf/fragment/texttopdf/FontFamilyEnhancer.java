@@ -73,6 +73,7 @@ public class FontFamilyEnhancer implements Enhancer {
         materialDialog.show();
     }
 
+    @NonNull
     @Override
     public EnhancementOptionsEntity getEnhancementOptionsEntity() {
         return mEnhancementOptionsEntity;

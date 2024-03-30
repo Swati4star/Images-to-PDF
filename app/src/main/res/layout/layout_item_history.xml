@@ -33,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:padding="8dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textIsSelectable="true" />
 
         </LinearLayout>
 
@@ -51,14 +52,16 @@
                 android:paddingLeft="8dp"
                 android:paddingTop="8dp"
                 android:paddingRight="8dp"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textIsSelectable="true" />
 
             <TextView
                 android:id="@+id/operationType"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:textIsSelectable="true" />
 
         </LinearLayout>
     </LinearLayout>

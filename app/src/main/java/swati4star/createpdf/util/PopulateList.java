@@ -39,9 +39,9 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
      * @param index                    - sorting order
      * @param mQuery                   - to filter pdf files, {@code null} to get all
      */
-    public PopulateList(ViewFilesAdapter adapter,
-                        EmptyStateChangeListener emptyStateChangeListener,
-                        DirectoryUtils directoryUtils, int index, @Nullable String mQuery) {
+    public PopulateList(@NonNull ViewFilesAdapter adapter,
+                        @NonNull EmptyStateChangeListener emptyStateChangeListener,
+                        @NonNull DirectoryUtils directoryUtils, int index, @Nullable String mQuery) {
         this.mAdapter = adapter;
         mCurrentSortingIndex = index;
         mEmptyStateChangeListener = emptyStateChangeListener;

@@ -104,9 +104,10 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private BottomSheetBehavior mSheetBehavior;
     private Uri mUri;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_remove_pages, container, false);
         ButterKnife.bind(this, rootview);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -134,7 +135,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
                 INTENT_REQUEST_PICKFILE_CODE);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
@@ -252,7 +253,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -262,7 +263,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
@@ -287,7 +288,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void pdfCompressionEnded(String path, Boolean success) {
+    public void pdfCompressionEnded(@NonNull String path, @NonNull Boolean success) {
         mMaterialDialog.dismiss();
         if (success && path != null && mPath != null) {
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
@@ -314,7 +315,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
@@ -338,7 +339,7 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onPdfReorderCompleted(List<Bitmap> bitmaps) {
+    public void onPdfReorderCompleted(@NonNull List<Bitmap> bitmaps) {
         mMaterialDialog.dismiss();
         RearrangePdfPages.mImages = new ArrayList<>(bitmaps);
         bitmaps.clear(); //releasing memory

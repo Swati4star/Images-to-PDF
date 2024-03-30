@@ -6,25 +6,21 @@
     android:orientation="vertical">
 
     <RadioButton
-        android:id="@+id/theme_system"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/theme_system" />
 
     <RadioButton
-        android:id="@+id/theme_black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/theme_black" />
 
     <RadioButton
-        android:id="@+id/theme_dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/theme_dark" />
 
     <RadioButton
-        android:id="@+id/theme_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/theme_white" />

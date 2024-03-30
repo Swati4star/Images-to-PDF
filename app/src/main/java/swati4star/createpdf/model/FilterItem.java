@@ -1,5 +1,7 @@
 package swati4star.createpdf.model;
 
+import androidx.annotation.NonNull;
+
 import ja.burhanrashid52.photoeditor.PhotoFilter;
 
 public class FilterItem {
@@ -14,7 +16,7 @@ public class FilterItem {
      * @param imageId - id of image to be set
      * @param name    - filter mName
      */
-    public FilterItem(int imageId, String name, PhotoFilter filter) {
+    public FilterItem(int imageId, @NonNull String name, @NonNull PhotoFilter filter) {
         this.mImageId = imageId;
         this.mName = name;
         this.mFilter = filter;
@@ -28,19 +30,21 @@ public class FilterItem {
         this.mImageId = imageId;
     }
 
+    @NonNull
     public String getName() {
         return mName;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.mName = name;
     }
 
+    @NonNull
     public PhotoFilter getFilter() {
         return mFilter;
     }
 
-    public void setFilter(PhotoFilter filter) {
+    public void setFilter(@NonNull PhotoFilter filter) {
         this.mFilter = filter;
     }
 }

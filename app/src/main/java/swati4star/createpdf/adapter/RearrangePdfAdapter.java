@@ -24,8 +24,8 @@ public class RearrangePdfAdapter extends RecyclerView.Adapter<RearrangePdfAdapte
     private final OnClickListener mOnClickListener;
     private ArrayList<Bitmap> mBitmaps;
 
-    public RearrangePdfAdapter(OnClickListener onClickListener,
-                               ArrayList<Bitmap> uris, Context context) {
+    public RearrangePdfAdapter(@NonNull OnClickListener onClickListener,
+                               @NonNull ArrayList<Bitmap> uris, @NonNull Context context) {
         mOnClickListener = onClickListener;
         mBitmaps = uris;
         mContext = context;
@@ -61,7 +61,7 @@ public class RearrangePdfAdapter extends RecyclerView.Adapter<RearrangePdfAdapte
         return mBitmaps.size();
     }
 
-    public void positionChanged(ArrayList<Bitmap> images) {
+    public void positionChanged(@NonNull ArrayList<Bitmap> images) {
         mBitmaps = images;
         notifyDataSetChanged();
     }

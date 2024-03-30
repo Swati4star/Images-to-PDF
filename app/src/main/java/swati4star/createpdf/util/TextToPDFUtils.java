@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -33,7 +35,7 @@ public class TextToPDFUtils {
     private final DocFileReader mDocFileReader;
     private final DocxFileReader mDocxFileReader;
 
-    public TextToPDFUtils(Activity context) {
+    public TextToPDFUtils(@NonNull Activity context) {
         mContext = context;
         mTextFileReader = new TextFileReader(mContext);
         mDocFileReader = new DocFileReader(mContext);
@@ -48,7 +50,7 @@ public class TextToPDFUtils {
      * @param mTextToPDFOptions TextToPDFOptions Object
      * @param fileExtension     file extension represented as string
      */
-    public void createPdfFromTextFile(TextToPDFOptions mTextToPDFOptions, String fileExtension)
+    public void createPdfFromTextFile(@NonNull TextToPDFOptions mTextToPDFOptions, @NonNull String fileExtension)
             throws DocumentException, IOException {
 
         String masterpwd = mSharedPreferences.getString(MASTER_PWD_STRING, appName);

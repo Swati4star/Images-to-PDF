@@ -25,8 +25,8 @@ public class EnhancementOptionsAdapter
     private final OnItemClickListener mOnItemClickListener;
     private final List<EnhancementOptionsEntity> mEnhancementOptionsEntityList;
 
-    public EnhancementOptionsAdapter(OnItemClickListener mOnItemClickListener,
-                                     List<EnhancementOptionsEntity> mEnhancementOptionsEntityList) {
+    public EnhancementOptionsAdapter(@NonNull OnItemClickListener mOnItemClickListener,
+                                     @NonNull List<EnhancementOptionsEntity> mEnhancementOptionsEntityList) {
         this.mOnItemClickListener = mOnItemClickListener;
         this.mEnhancementOptionsEntityList = mEnhancementOptionsEntityList;
     }

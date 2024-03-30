@@ -25,9 +25,10 @@ public class AboutUsFragment extends Fragment {
     private Activity mActivity;
     private FeedbackUtils mFeedbackUtils;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_about_us, container, false);
         ButterKnife.bind(this, rootView);
         try {
@@ -90,7 +91,7 @@ public class AboutUsFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }

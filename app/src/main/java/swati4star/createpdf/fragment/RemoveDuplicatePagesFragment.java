@@ -79,8 +79,9 @@ public class RemoveDuplicatePagesFragment extends Fragment
     private BottomSheetUtils mBottomSheetUtils;
     private MaterialDialog mMaterialDialog;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_remove_duplicate_pages, container, false);
         ButterKnife.bind(this, rootview);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -109,7 +110,7 @@ public class RemoveDuplicatePagesFragment extends Fragment
 // when accessing data.getData(). Added try-catch blocks to handle exceptions
 // in a better way(imo) to prevent app crashes.
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (resultCode != RESULT_OK || data == null || data.getData() == null) {
             return;
         }
@@ -143,12 +144,12 @@ public class RemoveDuplicatePagesFragment extends Fragment
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -157,13 +158,13 @@ public class RemoveDuplicatePagesFragment extends Fragment
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
 
     @Override
-    public void onFileItemClick(String path) {
+    public void onFileItemClick(@NonNull String path) {
         mFileUtils.openFile(path, FileUtils.FileType.e_PDF);
     }
 
@@ -179,7 +180,7 @@ public class RemoveDuplicatePagesFragment extends Fragment
     }
 
     @Override
-    public void onPDFCreated(boolean isNewPdfCreated, String path) {
+    public void onPDFCreated(boolean isNewPdfCreated, @NonNull String path) {
         mMaterialDialog.dismiss();
         if (!isNewPdfCreated) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_duplicate_pdf);

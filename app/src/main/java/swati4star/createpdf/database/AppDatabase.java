@@ -2,6 +2,7 @@ package swati4star.createpdf.database;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -13,7 +14,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
-    public static AppDatabase getDatabase(final Context context) {
+    @NonNull
+    public static AppDatabase getDatabase(final @NonNull Context context) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
@@ -26,5 +28,6 @@ public abstract class AppDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    @NonNull
     public abstract HistoryDao historyDao();
 }

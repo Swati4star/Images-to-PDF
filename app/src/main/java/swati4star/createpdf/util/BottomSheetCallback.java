@@ -13,7 +13,7 @@ public class BottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback
     private final ImageView mUpArrow;
     private final boolean mIsAdded;
 
-    public BottomSheetCallback(ImageView mUpArrow, boolean mIsFragmentAdded) {
+    public BottomSheetCallback(@NonNull ImageView mUpArrow, boolean mIsFragmentAdded) {
         this.mUpArrow = mUpArrow;
         this.mIsAdded = mIsFragmentAdded;
     }

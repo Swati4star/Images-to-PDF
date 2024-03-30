@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     private FragmentManagement mFragmentManagement;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
 
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_favourites_item) {
             setTitle(R.string.favourites);
             mFragmentManagement.favouritesFragmentOption();
@@ -375,7 +375,7 @@ public class MainActivity extends AppCompatActivity
      *
      * @param imageUris - ArrayList of image uri's in temp directory
      */
-    public void convertImagesToPdf(ArrayList<Uri> imageUris) {
+    public void convertImagesToPdf(@NonNull ArrayList<Uri> imageUris) {
         Fragment fragment = new ImageToPdfFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(getString(R.string.bundleKey), imageUris);

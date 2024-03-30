@@ -63,6 +63,7 @@ public class FontColorEnhancer implements Enhancer {
         materialDialog.show();
     }
 
+    @NonNull
     @Override
     public EnhancementOptionsEntity getEnhancementOptionsEntity() {
         return mEnhancementOptionsEntity;
