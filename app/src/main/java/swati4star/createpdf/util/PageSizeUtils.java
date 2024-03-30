@@ -8,6 +8,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Rectangle;
 
@@ -21,6 +23,7 @@ public class PageSizeUtils {
 
     public static final String PAGE_SIZE_FIT_SIZE = "FIT_SIZE";
 
+    @NonNull
     public static String mPageSize;
     private final Context mActivity;
     private final String mDefaultPageSize;
@@ -32,7 +35,7 @@ public class PageSizeUtils {
      *
      * @param mActivity - current context
      */
-    public PageSizeUtils(Context mActivity) {
+    public PageSizeUtils(@NonNull Context mActivity) {
         this.mActivity = mActivity;
         mPreferences = new TextToPdfPreferences(mActivity);
         mDefaultPageSize = mPreferences.getPageSize();
@@ -80,6 +83,7 @@ public class PageSizeUtils {
      * @param saveValue - save the value in shared preferences
      * @return - dialog object
      */
+    @NonNull
     public MaterialDialog showPageSizeDialog(boolean saveValue) {
         MaterialDialog materialDialog = getPageSizeDialog(saveValue);
 
@@ -119,7 +123,8 @@ public class PageSizeUtils {
      * @return common size of input images as Rectangle.
      * @see com.itextpdf.text.Rectangle
      */
-    public static Rectangle calculateCommonPageSize(List<String> imagesUri) {
+    @NonNull
+    public static Rectangle calculateCommonPageSize(@NonNull List<String> imagesUri) {
         float maxWidth = 0; float maxHeight = 0;
         for (String imageUri : imagesUri) {
             Rectangle imageSize = ImageUtils.getImageSize(imageUri);

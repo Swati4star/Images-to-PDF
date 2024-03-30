@@ -76,7 +76,6 @@
     <string name="pdf_ext" translatable="false">.pdf</string>
     <string name="pdf_type" translatable="false">application/pdf</string>
     <string name="txt_type" translatable="false">text/*</string>
-    <string name="please_wait">Please Wait</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Sorry! Images could not be added. Please select the images from our **Select Images** option.</string>
     <string name="successToast">Images successfully added.</string>
@@ -148,8 +147,6 @@
     <string name="snackbar_no_images">No Images selected</string>
     <string name="snackbar_no_pdfs_selected">No PDFs selected</string>
     <string name="snackbar_name_not_blank">Name cannot be blank</string>
-    <string name="snackbar_permissions_given">Permissions Given!</string>
-    <string name="snackbar_insufficient_permissions">Insufficient Permissions!</string>
     <string name="no_permissions">Please provide storage permissions to view your files.</string>
     <string name="prompt_give_permission">Provide permissions</string>
     <string name="snackbar_images_added">Images added</string>
@@ -170,7 +167,6 @@
     <string name="enter_password">Enter Password</string>
     <string name="snackbar_password_cannot_be_blank">Password cannot be blank</string>
     <string name="cannot_add_password">Password could not be applied to the PDF. Please check the PDF again.</string>
-    <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="error_uri_not_found">Sorry, We are unable to access the cropped image. Please try again</string>
@@ -206,8 +202,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
     <string name="feedback_text">Kindly write your precious feedback, or just drop a Hi! :)</string>
-    <string name="snackbar_no_email_clients">There are no email clients installed.</string>
-    <string name="feedback_chooser">Send mail…</string>
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
     <string name="view_files_text">View all your converted files here!</string>
@@ -268,16 +262,6 @@
     <string name="sort">Sort</string>
 
     <!-- Directory Strings -->
-    <string name="directory">Directory</string>
-    <string name="moving_files">Moving your files</string>
-    <string name="success_move">Successfully moved your files</string>
-    <string name="dir_does_not_exists">Directory does not exist</string>
-    <string name="move_files_delete_dir">Moving files and deleting the directory</string>
-    <string name="directory_deleted">Directory deleted</string>
-    <string name="success_delete_directory">Successfully deleted the directory</string>
-    <string name="moved_files">Files successfully moved</string>
-    <string name="dialog_new_dir">Enter new directory name</string>
-    <string name="dialog_dir">Enter the directory name</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
@@ -294,7 +278,6 @@
     <string name="text_file_selected">Text File Selected</string>
     <string name="select_file">Select a File to Upload</string>
     <string name="text_type" translatable="false">text/plain</string>
-    <string name="new_directory">New Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
     <string name="extension_not_supported">Sorry! This file type is not supported currently.</string>
@@ -386,7 +369,6 @@
     <string name="reset">Reset</string>
     <string name="rotate">Rotate</string>
     <string name="done">Done</string>
-    <string name="image_successfully_cropped">Image successfully cropped</string>
     <string name="confirm_exit_message">Press back again to exit</string>
 
     <string name="filter_not_saved">Image could not be saved</string>
@@ -445,7 +427,6 @@
     <string name="rate_title">Rate us!</string>
     <string name="rate_dialog_text">If you enjoy this app, please take a moment to rate this app. It won\'t take more than a minute. Thank you for your support! :)</string>
     <string name="rate_us_never">Never</string>
-    <string name="error_occurred">Error Occurred</string>
 
 
     <!--Rotate Pages    -->
@@ -455,7 +436,6 @@
     <string name="degree_90" translatable="false">90 &#xb0;</string>
     <string name="degree_180" translatable="false">180 &#xb0;</string>
     <string name="degree_270" translatable="false">270 &#xb0;</string>
-    <string name="share_files">Share Files</string>
     <string name="pdf_removed_from_list">PDF has been removed from the list.</string>
     <string name="pdf_added_to_list">PDF has been added to the list.</string>
     <string name="select_files">Select Files</string>

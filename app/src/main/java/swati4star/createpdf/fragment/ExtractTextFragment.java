@@ -87,9 +87,10 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private boolean mButtonClicked = false;
     private String mFileName;
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_extract_text, container,
                 false);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -105,7 +106,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
@@ -136,7 +137,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         mButtonClicked = false;
         if (requestCode == mFileSelectCode && resultCode == RESULT_OK) {
             mExcelFileUri = data.getData();
@@ -247,13 +248,13 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mRealPath = path;
         mFileName = FileUtils.getFileName(path);

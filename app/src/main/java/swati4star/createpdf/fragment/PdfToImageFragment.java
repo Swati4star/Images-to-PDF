@@ -102,9 +102,10 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * @param savedInstanceState bundle with saved data, if any
      * @return inflated view
      */
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pdf_to_image, container, false);
         ButterKnife.bind(this, rootView);
         mOperation = getArguments().getString(BUNDLE_DATA);
@@ -170,7 +171,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     /**
      * receives intent response for selecting a pdf file
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
@@ -224,7 +225,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -240,7 +241,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * @param path path of the file on the device
      */
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mUri = null;
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
@@ -271,7 +272,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * @param path path of the file on the device
      */
     @Override
-    public void onFileItemClick(String path) {
+    public void onFileItemClick(@NonNull String path) {
         mFileUtils.openImage(path);
     }
 
@@ -300,7 +301,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * @param outputFilePaths path for each generated image
      */
     @Override
-    public void updateView(int imageCount, ArrayList<String> outputFilePaths) {
+    public void updateView(int imageCount, @NonNull ArrayList<String> outputFilePaths) {
 
         mMaterialDialog.dismiss();
         resetView();
@@ -316,7 +317,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * @param paths paths for pdf files on the device
      */
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }

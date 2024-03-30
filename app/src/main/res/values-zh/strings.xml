@@ -73,7 +73,6 @@
         <item>BOLDITALIC</item>
     </string-array>
 
-    <string name="please_wait">请稍等</string>
     <string name="bundleKey">图像URI</string>
     <string name="whatsappToast">抱歉！无法添加图像。请从 **选择图像** 选项中选择图像。</string>
     <string name="successToast">成功添加图像。</string>
@@ -141,8 +140,6 @@
     <string name="snackbar_no_images">未选择图像</string>
     <string name="snackbar_no_pdfs_selected">未选择PDF文件</string>
     <string name="snackbar_name_not_blank">名称不能为空</string>
-    <string name="snackbar_permissions_given">已授予权限！</string>
-    <string name="snackbar_insufficient_permissions">权限不足！</string>
     <string name="no_permissions">请提供存储权限以查看您的文件。</string>
     <string name="prompt_give_permission">授予权限</string>
     <string name="snackbar_images_added">已添加图像</string>
@@ -163,7 +160,6 @@
     <string name="enter_password">输入密码</string>
     <string name="snackbar_password_cannot_be_blank">密码不能为空</string>
     <string name="cannot_add_password">无法将密码应用于PDF文件。请重新检查PDF文件。</string>
-    <string name="snackbar_imagecropped">图像已裁剪</string>
     <string name="cropImage_activityTitle">裁剪图像</string>
     <string name="snackbar_pdfCreated">已创建PDF！</string>
     <string name="error_uri_not_found">抱歉，我们无法访问裁剪后的图像。请重试。</string>
@@ -197,8 +193,6 @@
     <!-- 反馈字符串 -->
     <string name="feedback_subject">关于Images To PDF Converter的建议</string>
     <string name="feedback_text">请写下您宝贵的反馈，或者只是打个招呼！ :)</string>
-    <string name="snackbar_no_email_clients">未安装电子邮件客户端。</string>
-    <string name="feedback_chooser">发送邮件…</string>
     <string name="no_pdf">没有可显示的PDF文件</string>
     <string name="get_started">立即开始</string>
     <string name="view_files_text">在此查看所有转换后的文件！</string>
@@ -252,16 +246,6 @@
     <string name="sort">排序</string>
 
     <!-- 目录字符串 -->
-    <string name="directory">目录</string>
-    <string name="moving_files">正在移动您的文件</string>
-    <string name="success_move">已成功移动您的文件</string>
-    <string name="dir_does_not_exists">目录不存在</string>
-    <string name="move_files_delete_dir">移动文件并删除目录</string>
-    <string name="directory_deleted">目录已删除</string>
-    <string name="success_delete_directory">已成功删除目录</string>
-    <string name="moved_files">文件已成功移动</string>
-    <string name="dialog_new_dir">输入新目录名称</string>
-    <string name="dialog_dir">输入目录名称</string>
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
     <string name="yes">是</string>
@@ -274,7 +258,6 @@
     <string name="text_to_pdf">文本转PDF</string>
     <string name="text_file_selected">已选择文本文件</string>
     <string name="select_file">选择要上传的文件</string>
-    <string name="new_directory">新目录</string>
     <string name="previous_image_content_desc">上一张图像</string>
     <string name="text_file_name">"文本文件：" </string>
     <string name="extension_not_supported">抱歉！当前不支持此文件类型。</string>
@@ -359,7 +342,6 @@
     <string name="reset">重置</string>
     <string name="rotate">旋转</string>
     <string name="done">完成</string>
-    <string name="image_successfully_cropped">图像成功裁剪</string>
     <string name="confirm_exit_message">再次按下返回键退出</string>
 
     <string name="filter_not_saved">图像无法保存</string>
@@ -418,12 +400,10 @@
     <string name="rate_title">评价我们！</string>
     <string name="rate_dialog_text">如果您喜欢此应用，请花一点时间为此应用评分。不会超过一分钟。感谢您的支持！:)</string>
     <string name="rate_us_never">从不</string>
-    <string name="error_occurred">发生错误</string>
 
     <!-- 旋转页 -->
     <string name="rotate_pages">旋转页面</string>
     <string name="enter_rotation_angle">输入旋转角度</string>
-    <string name="share_files">分享文件</string>
     <string name="pdf_removed_from_list">PDF已从列表移除。</string>
     <string name="pdf_added_to_list">PDF已加入到列表。</string>
     <string name="select_files">选择文件</string>

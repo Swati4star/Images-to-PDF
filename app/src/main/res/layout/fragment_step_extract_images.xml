@@ -9,7 +9,8 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="48dp"
         android:scaleType="centerInside"
-        android:src="@drawable/extract_images" />
+        android:src="@drawable/extract_images"
+        android:contentDescription="Image illustrating the process of extracting images from PDF's" />
 
     <TextView
         android:id="@+id/tv_title"

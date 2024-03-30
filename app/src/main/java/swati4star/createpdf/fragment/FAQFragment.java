@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,9 +37,10 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
         // Required empty public constructor
     }
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_faq, container, false);
 
@@ -70,7 +72,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
      * @param text - This is the search text entered in the search box.
      *             Simply filtering out the questions that contains the given search query.
      */
-    public void filterFaq(String text) {
+    public void filterFaq(@NonNull String text) {
         mFaqs.clear();
         if (text.isEmpty())
             mFaqs.addAll(mFaqsCopy);

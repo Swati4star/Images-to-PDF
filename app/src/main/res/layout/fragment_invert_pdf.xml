@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -14,7 +13,6 @@
         tools:context=".fragment.AddImagesFragment">
 
         <TextView
-            android:id="@+id/invert_pdf_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

@@ -10,10 +10,13 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+
 import swati4star.createpdf.R;
 
 public class ThemeUtils {
 
+    @NonNull
     public static ThemeUtils getInstance() {
         return ThemeUtils.SingletonHolder.INSTANCE;
     }
@@ -23,7 +26,7 @@ public class ThemeUtils {
      *
      * @param context - current context
      */
-    public void setThemeApp(Context context) {
+    public void setThemeApp(@NonNull Context context) {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
@@ -55,7 +58,7 @@ public class ThemeUtils {
      * @param context - current context
      * @return - position
      */
-    public int getSelectedThemePosition(Context context) {
+    public int getSelectedThemePosition(@NonNull Context context) {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String themeName = mSharedPreferences.getString(Constants.DEFAULT_THEME_TEXT,
                 Constants.DEFAULT_THEME);
@@ -78,7 +81,7 @@ public class ThemeUtils {
      * @param context   - current context
      * @param themeName - name of theme to save
      */
-    public void saveTheme(Context context, String themeName) {
+    public void saveTheme(@NonNull Context context, @NonNull String themeName) {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.DEFAULT_THEME_TEXT, themeName);

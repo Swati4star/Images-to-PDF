@@ -30,7 +30,8 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textStyle="bold"
-        tools:targetApi="lollipop" />
+        tools:targetApi="lollipop"
+        android:textIsSelectable="true" />
 
     <ImageButton
         android:id="@+id/removeImage"

@@ -1,5 +1,6 @@
 package swati4star.createpdf.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -17,7 +18,7 @@ public class History {
     @ColumnInfo(name = "operation_type")
     private String mOperationType;
 
-    public History(String filePath, String date, String operationType) {
+    public History(@NonNull String filePath, @NonNull String date, @NonNull String operationType) {
         this.mFilePath = filePath;
         this.mDate = date;
         this.mOperationType = operationType;
@@ -31,27 +32,30 @@ public class History {
         this.mId = mId;
     }
 
+    @NonNull
     public String getFilePath() {
         return mFilePath;
     }
 
-    public void setFilePath(String fileName) {
+    public void setFilePath(@NonNull String fileName) {
         this.mFilePath = fileName;
     }
 
+    @NonNull
     public String getDate() {
         return mDate;
     }
 
-    public void setDate(String date) {
+    public void setDate(@NonNull String date) {
         this.mDate = date;
     }
 
+    @NonNull
     public String getOperationType() {
         return mOperationType;
     }
 
-    public void setOperationType(String operationType) {
+    public void setOperationType(@NonNull String operationType) {
         this.mOperationType = operationType;
     }
 }

@@ -27,8 +27,6 @@
         <item>Agregar marca de agua</item>
     </array>
 
-    <string name="please_wait">Por favor espere</string>
-
     <string name="create_pdf">Crear PDF</string>
     <string name="viewFiles">Ver Archivos</string>
 
@@ -41,8 +39,6 @@
     <string name="snackbar_no_images">Ninguna imagen seleccionada</string>
     <string name="snackbar_no_pdfs_selected">No hay archivos PDF seleccionados</string>
     <string name="snackbar_name_not_blank">El nombre no puede estar en blanco</string>
-    <string name="snackbar_permissions_given">¡Permisos concedidos!</string>
-    <string name="snackbar_insufficient_permissions">¡Permisos insuficientes!</string>
     <string name="snackbar_images_added">Imágenes añadidas</string>
     <string name="snackbar_file_renamed">Archivo renombrado.</string>
     <string name="snackbar_file_not_renamed">El archivo no puede ser renombrado.</string>
@@ -69,7 +65,6 @@
     <string name="snackbar_password_cannot_be_blank">La contraseña no puede estar en blanco</string>
     <string name="cannot_add_password">La contraseña no se pudo aplicar al PDF. Por favor revise el PDF nuevamente.</string>
 
-    <string name="snackbar_imagecropped">Imágenes recortadas</string>
     <string name="cropImage_activityTitle">Imagen N°</string>
     <string name="snackbar_pdfCreated">¡PDF creado!</string>
     <string name="error_uri_not_found">Lo sentimos, no podemos acceder a la imagen recortada. Inténtalo de nuevo</string>
@@ -79,13 +74,11 @@
     <string name="delete">Borrar</string>
     <string name="feedback_text">Escriba amablemente su anterior realimentación, o simplemente deje un ¡Hola! :)</string>
     <string name="feedback_subject">Sugerencias para PDF Converter</string>
-    <string name="snackbar_no_email_clients">No hay ningún cliente de correo instalado.</string>
     <string name="share">Compartir</string>
     <string name="rate_us_text">"¡Hola! acabo de revisar esta app en la playstore. Pruébalo en : https://play.google.com/store/apps/details?id=swati4star.createpdf .     Convierte imágenes a PDF ágilmente. :) "</string>
     <string name="snackbar_no_share_app">Ninguna aplicación para compartir.</string>
     <string name="extras">Extras</string>
     <string name="share_chooser">Seleccione la app para enviar el mensaje…</string>
-    <string name="feedback_chooser">Enviar correo…</string>
     <string name="no_pdf">Ningún PDF para mostrar</string>
     <string name="get_started">Comenzar Ahora Mismo</string>
     <string name="view_files_text">¡Vea todos sus archivos convertidos aquí!</string>
@@ -129,16 +122,6 @@
     <string name="default_page_size">DEFAULT ( %s )</string>
     <!-- Directory Strings -->
     <string name="text_file_selected">Archivo de Texto seleccionado</string>
-    <string name="directory">Directorio</string>
-    <string name="moving_files">Moviendo sus archivos</string>
-    <string name="success_move">Se movieron sus archivos con éxito</string>
-    <string name="dir_does_not_exists">El Directorio no existe</string>
-    <string name="move_files_delete_dir">Moviendo archivos y eliminando el directorio</string>
-    <string name="directory_deleted">Directorio eliminando</string>
-    <string name="success_delete_directory">Se eliminó el directorio con éxito</string>
-    <string name="moved_files">Los archivos se movieron con éxito</string>
-    <string name="dialog_new_dir">Ingrese el nombre del nuevo directorio</string>
-    <string name="dialog_dir">Ingrese el nombre del directorio</string>
     <string name="cancel">Cancelar</string>
     <string name="ok">Aceptar</string>
     <string name="yes">Sí</string>
@@ -148,7 +131,6 @@
     <string name="install_file_manager">Por favor instale un Gestor de Archivos</string>
     <string name="text_to_pdf">Texto A PDF</string>
     <string name="select_file">Seleccione un Archivo a Cargar</string>
-    <string name="new_directory">Nuevo Directorio</string>
     <string name="previous_image_content_desc">Imagen Anterior</string>
     <string name="text_file_name">"Archivo de Texto : "</string>
     <string name="edit_font_size">Tamaño del Texto (Por defecto : %d)</string>
@@ -254,14 +236,12 @@
     <string name="remove_pages">Remover Páginas</string>
     <string name="remove_pages_error">El valor de entrada no es válido</string>
     <string name="encrypted_pdf">PDF está protegido con contraseña</string>
-    <string name="error_occurred">Ocurrió un Error</string>
     <string name="rotate_pages">Rotar Páginas</string>
     <string name="enter_rotation_angle">Ingresar Ángulo de Rotación</string>
     <string name="rotated">Rotada</string>
     <string name="encrypted">Cifrado</string>
     <string name="decrypted">Descifrado</string>
     <string name="reorder_pages">Reordenar Páginas</string>
-    <string name="share_files">Compartir Archivos</string>
     <string name="images_rearranged">Imágenes reordenadas</string>
     <string name="compress_pdf">Comprimir PDF</string>
     <string name="compress_pdf_prompt">Ingresar % de compresión de PDF :</string>
@@ -344,7 +324,6 @@
     <string name="pdf_to_images">PDF a Imágenes</string>
     <string name="rotate">Rotar</string>
     <string name="done">Terminar</string>
-    <string name="image_successfully_cropped">Imagen correctamente recortada</string>
     <string name="page_x_of_n">Página X de N</string>
     <string name="page_x">X de N</string>
     <string name="x">X</string>

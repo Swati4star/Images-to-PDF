@@ -90,6 +90,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -110,6 +111,7 @@ public class CommonCodeUtils {
 
     Map<Integer, HomePageItem> mFragmentPositionMap;
 
+    @NonNull
     public static CommonCodeUtils getInstance() {
         return CommonCodeUtils.SingletonHolder.INSTANCE;
     }
@@ -118,10 +120,10 @@ public class CommonCodeUtils {
      * updates the output recycler view if paths.size > 0
      * else give the main view
      */
-    public void populateUtil(Activity mActivity, ArrayList<String> paths,
-                             MergeFilesAdapter.OnClickListener onClickListener,
-                             RelativeLayout layout, LottieAnimationView animationView,
-                             RecyclerView recyclerView) {
+    public void populateUtil(@NonNull Activity mActivity, @NonNull ArrayList<String> paths,
+                             @NonNull MergeFilesAdapter.OnClickListener onClickListener,
+                             @NonNull RelativeLayout layout, @NonNull LottieAnimationView animationView,
+                             @NonNull RecyclerView recyclerView) {
 
         if (paths == null || paths.size() == 0) {
             layout.setVisibility(View.GONE);
@@ -141,9 +143,9 @@ public class CommonCodeUtils {
     /**
      * sets the appropriate text to success Text View & display images in adapter
      */
-    public void updateView(Activity mActivity, int imageCount, ArrayList<String> outputFilePaths,
-                           TextView successTextView, LinearLayout options, RecyclerView mCreatedImages,
-                           ExtractImagesAdapter.OnFileItemClickedListener listener) {
+    public void updateView(@NonNull Activity mActivity, int imageCount, @NonNull ArrayList<String> outputFilePaths,
+                           @NonNull TextView successTextView, @NonNull LinearLayout options, @NonNull RecyclerView mCreatedImages,
+                           @NonNull ExtractImagesAdapter.OnFileItemClickedListener listener) {
 
         if (imageCount == 0) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.extract_images_failed);
@@ -169,7 +171,7 @@ public class CommonCodeUtils {
      * Closes the bottom sheet if it is expanded
      */
 
-    public void closeBottomSheetUtil(BottomSheetBehavior sheetBehavior) {
+    public void closeBottomSheetUtil(@NonNull BottomSheetBehavior sheetBehavior) {
         if (checkSheetBehaviourUtil(sheetBehavior))
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
@@ -177,7 +179,7 @@ public class CommonCodeUtils {
     /**
      * Checks whether the bottom sheet is expanded or collapsed
      */
-    public boolean checkSheetBehaviourUtil(BottomSheetBehavior sheetBehavior) {
+    public boolean checkSheetBehaviourUtil(@NonNull BottomSheetBehavior sheetBehavior) {
         return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 
@@ -186,6 +188,7 @@ public class CommonCodeUtils {
         mFragmentPositionMap.put(homePageItems ? iconA : iconB, new HomePageItem(iconId, drawableId, titleString));
     }
 
+    @NonNull
     public Map<Integer, HomePageItem> fillNavigationItemsMap(boolean homePageItems) {
         mFragmentPositionMap = new HashMap<>();
         addFragmentPosition(homePageItems, R.id.images_to_pdf,

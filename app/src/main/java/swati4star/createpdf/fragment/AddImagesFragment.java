@@ -83,9 +83,10 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private String mOperation;
     private BottomSheetBehavior mSheetBehavior;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_images, container, false);
         ButterKnife.bind(this, rootView);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -120,7 +121,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      * @param data        Data of the image selected
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode != Activity.RESULT_OK || data == null)
@@ -237,7 +238,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -247,7 +248,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
@@ -260,7 +261,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }

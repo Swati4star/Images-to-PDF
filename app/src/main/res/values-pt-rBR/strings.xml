@@ -27,7 +27,6 @@
         <item>Adicione marca d\'água</item>
     </array>
 
-    <string name="please_wait">Aguarde</string>
     <string name="bundleKey">ImagemUri</string>
     <string name="whatsappToast">Desculpe! As imagens não puderam ser adicionadas. Por favor, selecione as imagens via opção **Selecionar imagens**.</string>
     <string name="successToast">Imagens adicionadas com sucesso.</string>
@@ -97,8 +96,6 @@
     <string name="snackbar_no_images">Nenhuma imagem selecionada</string>
     <string name="snackbar_no_pdfs_selected">Nenhum PDF selecionado</string>
     <string name="snackbar_name_not_blank">Nome não pode estar em branco</string>
-    <string name="snackbar_permissions_given">Permissões concedidas!</string>
-    <string name="snackbar_insufficient_permissions">Permissões não concedidas!</string>
     <string name="no_permissions">Por favor, conceda permissão ao armazenamento para ver seus arquivos.</string>
     <string name="prompt_give_permission">Conceda permissões</string>
     <string name="snackbar_images_added">Imagens adicionadas</string>
@@ -119,7 +116,6 @@
     <string name="enter_password">Digite senha</string>
     <string name="snackbar_password_cannot_be_blank">Senha não pode estar em branco</string>
     <string name="cannot_add_password">A senha não podia ser usada no PDF. Por favor, verifique novamente o PDF.</string>
-    <string name="snackbar_imagecropped">Imagens recortadas</string>
     <string name="cropImage_activityTitle">Recortar a imagem</string>
     <string name="snackbar_pdfCreated">PDF criado!</string>
     <string name="error_uri_not_found">Desculpe, não foi possível acessar à imagem recortada. Por favor, tente novamente</string>
@@ -155,8 +151,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject">Sugestões sobre conversão de imagens para PDF</string>
     <string name="feedback_text">Por gentileza, deixe para nós seu valioso Feedback, ou um simples Olá ! :)</string>
-    <string name="snackbar_no_email_clients">Nenhum cliente de e-mail encontrado.</string>
-    <string name="feedback_chooser">"Enviar um email…"</string>
     <string name="no_pdf">Nenhum PDF encontrado</string>
     <string name="get_started">Comece agora</string>
     <string name="view_files_text">Encontre todos os seus arquivos convertidos aqui!</string>
@@ -209,16 +203,6 @@
     <string name="sort">Ordenar</string>
 
     <!-- Directory Strings -->
-    <string name="directory">Pasta</string>
-    <string name="moving_files">Transferindo seus arquivos</string>
-    <string name="success_move">Seus arquivos foram transferidos com sucesso</string>
-    <string name="dir_does_not_exists">Pasta não existe</string>
-    <string name="move_files_delete_dir">Transferindo arquivos e excluindo a pasta</string>
-    <string name="directory_deleted">Pasta excluída</string>
-    <string name="success_delete_directory">A pasta foi excluída com sucesso</string>
-    <string name="moved_files">Arquivos transferidos com sucesso</string>
-    <string name="dialog_new_dir">Digite um novo nome de pasta</string>
-    <string name="dialog_dir">Digite um nome de pasta</string>
     <string name="cancel">Cancelar</string>
     <string name="ok">OK</string>
     <string name="yes">Sim</string>
@@ -231,7 +215,6 @@
     <string name="text_to_pdf">Texto para PDF</string>
     <string name="text_file_selected">Selecionado o arquivo de texto</string>
     <string name="select_file">"Selecione um arquivo para Upload"</string>
-    <string name="new_directory">Nova pasta</string>
     <string name="previous_image_content_desc">Imagem anterior</string>
     <string name="text_file_name">"Arquivo de texto : "</string>
     <string name="extension_not_supported">Desculpe! Neste momento este tipo de arquivo não é suportado.</string>
@@ -317,7 +300,6 @@
     <string name="reset">Redefinir</string>
     <string name="rotate">Girar</string>
     <string name="done">Concluído</string>
-    <string name="image_successfully_cropped">Imagem recortada com sucesso</string>
     <string name="confirm_exit_message">Clique novamente para sair</string>
 
     <string name="filter_not_saved">A imagem não podia ser salva</string>
@@ -376,13 +358,11 @@
     <string name="rate_title">Deixe uma avaliação!</string>
     <string name="rate_dialog_text">Se você gosta deste App, por favor, deixe uma avaliação sobre este aplicativo. Não demorará mais de um minuto. Agradecemos seu apoio! :)</string>
     <string name="rate_us_never">Nunca</string>
-    <string name="error_occurred">Ocorreu um erro</string>
 
 
     <!--Rotate Pages    -->
     <string name="rotate_pages">Girar páginas</string>
     <string name="enter_rotation_angle">Digite o ângulo de rotação</string>
-    <string name="share_files">Compartilhe arquivos</string>
     <string name="pdf_removed_from_list">O PDF foi excluído da lista.</string>
     <string name="pdf_added_to_list">O PDF foi adicionado à lista.</string>
     <string name="select_files">Selecione arquivos</string>

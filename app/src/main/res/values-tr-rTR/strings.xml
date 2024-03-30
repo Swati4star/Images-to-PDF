@@ -38,7 +38,6 @@
         <item>ayrıntılar</item>
     </array>
 
-    <string name="please_wait">Lütfen Bekleyin</string>
     <string name="bundleKey">ImageUri</string>
     <string name="whatsappToast">Üzgünüz! Resimler eklenemedi. Lütfen **Resimleri Seç** seçeneğimizden resimleri seçin.</string>
     <string name="successToast">Resimler başarılı bir şekilde eklendi.</string>
@@ -107,8 +106,6 @@
     <string name="snackbar_no_images">Resim seçilmedi</string>
     <string name="snackbar_no_pdfs_selected">PDF seçilmedi</string>
     <string name="snackbar_name_not_blank">İsim boş olamaz</string>
-    <string name="snackbar_permissions_given">Verilen İzinler!</string>
-    <string name="snackbar_insufficient_permissions">Yetersiz Yetkiler!</string>
     <string name="no_permissions">Lüfen dosyalarınızı görüntüleyebilmek için depolama iznini veriniz.</string>
     <string name="prompt_give_permission">İzin ver</string>
     <string name="snackbar_images_added">Resim eklendi</string>
@@ -129,7 +126,6 @@
     <string name="enter_password">Parola Gir</string>
     <string name="snackbar_password_cannot_be_blank">Parola boşluk olamaz</string>
     <string name="cannot_add_password">Şifreleme PDF\'ye uygulanamadı. Lütfen PDF\'yi tekrar kontrol edin.</string>
-    <string name="snackbar_imagecropped">Resim kırpıldı</string>
     <string name="cropImage_activityTitle">Resmi Kırp</string>
     <string name="snackbar_pdfCreated">PDF oluşturuldu!</string>
     <string name="error_uri_not_found">Üzgünüz, kırpılan resme erişemiyoruz. Lütfen tekrar deneyiniz.</string>
@@ -163,8 +159,6 @@
     <!-- Feedback Strings -->
     <string name="feedback_subject">PDF Converter için Öneriler</string>
     <string name="feedback_text">Değerli geri bildirimlerinizi bize yazın ya  da bir Merhaba diyin! :)</string>
-    <string name="snackbar_no_email_clients">Yüklü e-posta istemcisi yok.</string>
-    <string name="feedback_chooser">Mail yolla...</string>
     <string name="no_pdf">Gösterilecek PDF yok</string>
     <string name="get_started">Şimdi Başla</string>
     <string name="view_files_text">Dönüştürülen tüm dosyalarınızı burada görüntüleyin!</string>
@@ -216,16 +210,6 @@
     <string name="sort">Sırala</string>
 
     <!-- Directory Strings -->
-    <string name="directory">Dizin</string>
-    <string name="moving_files">Dosyalarınızı taşıma</string>
-    <string name="success_move">Dosyalarınız başarıyla taşındı</string>
-    <string name="dir_does_not_exists">Dizin mevcut değil</string>
-    <string name="directory_deleted">Dizin silindi</string>
-    <string name="move_files_delete_dir">Dosyaları taşıma ve dizini silme</string>
-    <string name="success_delete_directory">Dizin başarıyla silindi</string>
-    <string name="moved_files">Dosyalar başarıyla taşındı</string>
-    <string name="dialog_new_dir">Yeni dizin adını giriniz</string>
-    <string name="dialog_dir">Dizin adını giriniz</string>
     <string name="cancel">İptal</string>
     <string name="ok">TAMAM</string>
     <string name="yes">EVET</string>
@@ -238,7 +222,6 @@
     <string name="text_to_pdf">"Metinden PDF'ye "</string>
     <string name="text_file_selected">Metin Dosyası Seçildi</string>
     <string name="select_file">Yüklenecek Bir Dosya Seçin</string>
-    <string name="new_directory">Yeni Dizin</string>
     <string name="previous_image_content_desc">Önceki Resim</string>
     <string name="text_file_name">Metin Dosyası :</string>
     <string name="extension_not_supported">Üzgünüz! Şu an bu dosya tipi desteklenmiyor.</string>
@@ -322,7 +305,6 @@
     <string name="reset">Sıfırla</string>
     <string name="rotate">Döndür</string>
     <string name="done">Bitti</string>
-    <string name="image_successfully_cropped">Resim başarıyla kırpıldı</string>
     <string name="confirm_exit_message">Çıkmak için tekrar geri basın</string>
 
     <string name="filter_not_saved">Resim kaydedilemedi</string>
@@ -378,12 +360,10 @@
     <string name="rate_title">Bizi değerlendir!</string>
     <string name="rate_dialog_text">Bu uygulamayı beğendiyseniz, lütfen bu uygulamayı değerlendirmek için bir dakikanızı ayırın. Desteğiniz için teşekkür ederiz! :)</string>
     <string name="rate_us_never">Asla</string>
-    <string name="error_occurred">Hata Oluştu</string>
 
     <!-- Rate us strings -->
     <string name="rotate_pages">Sayfaları Döndür</string>
     <string name="enter_rotation_angle">Dönüş Açısını Giriniz</string>
-    <string name="share_files">Dosyalar Paylaş</string>
     <string name="pdf_removed_from_list">PDF listeden kaldırıldı.</string>
     <string name="pdf_added_to_list">PDF listeye eklendi.</string>
     <string name="select_files">Dosyaları Seçin</string>

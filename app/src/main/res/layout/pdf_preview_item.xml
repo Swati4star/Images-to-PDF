@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:padding="3dp" />
+        android:padding="3dp"
+        android:textIsSelectable="true" />
 
 </RelativeLayout>

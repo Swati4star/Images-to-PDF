@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+
 import swati4star.createpdf.R;
 
 public class FeedbackUtils {
@@ -16,7 +18,7 @@ public class FeedbackUtils {
     private final Activity mContext;
     private final SharedPreferences mSharedPreferences;
 
-    public FeedbackUtils(Activity context) {
+    public FeedbackUtils(@NonNull Activity context) {
         this.mContext = context;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -31,7 +33,7 @@ public class FeedbackUtils {
         openMailIntent(intent);
     }
 
-    public void openMailIntent(Intent intent) {
+    public void openMailIntent(@NonNull Intent intent) {
         try {
             mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_chooser)));
         } catch (android.content.ActivityNotFoundException ex) {
@@ -77,7 +79,7 @@ public class FeedbackUtils {
      *
      * @param url - web page to open up
      */
-    public void openWebPage(String url) {
+    public void openWebPage(@NonNull String url) {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         if (intent.resolveActivity(mContext.getPackageManager()) != null)

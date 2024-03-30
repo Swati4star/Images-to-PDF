@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -41,7 +42,8 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
     private RearrangeImagesAdapter mRearrangeImagesAdapter;
     private SharedPreferences mSharedPreferences;
 
-    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+    @NonNull
+    public static Intent getStartIntent(@NonNull Context context, @NonNull ArrayList<String> uris) {
         Intent intent = new Intent(context, RearrangeImages.class);
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;
@@ -122,7 +124,7 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             passUris();
             return true;

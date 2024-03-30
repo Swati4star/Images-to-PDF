@@ -6,7 +6,6 @@
     tools:context=".fragment.ExtractTextFragment">
 
     <LinearLayout
-        android:id="@+id/buttonLayoutExtract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"

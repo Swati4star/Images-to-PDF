@@ -66,6 +66,7 @@ public class TextToPdfPreferences {
     /**
      * @return the default font family.
      */
+    @NonNull
     public String getFontFamily() {
         return mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY);
@@ -103,6 +104,7 @@ public class TextToPdfPreferences {
     /**
      * @return the default page size.
      */
+    @NonNull
     public String getPageSize() {
         return mSharedPreferences.getString(Constants.DEFAULT_PAGE_SIZE_TEXT, Constants.DEFAULT_PAGE_SIZE);
     }

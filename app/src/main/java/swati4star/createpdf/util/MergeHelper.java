@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import swati4star.createpdf.R;
@@ -27,7 +29,7 @@ public class MergeHelper implements MergeFilesListener {
     private MaterialDialog mMaterialDialog;
     private String mPassword;
 
-    public MergeHelper(Activity activity, ViewFilesAdapter viewFilesAdapter) {
+    public MergeHelper(@NonNull Activity activity, @NonNull ViewFilesAdapter viewFilesAdapter) {
         mActivity = activity;
         mFileUtils = new FileUtils(mActivity);
         mHomePath = PreferenceManager.getDefaultSharedPreferences(mActivity)
@@ -64,7 +66,7 @@ public class MergeHelper implements MergeFilesListener {
     }
 
     @Override
-    public void resetValues(boolean isPDFMerged, String path) {
+    public void resetValues(boolean isPDFMerged, @NonNull String path) {
         mMaterialDialog.dismiss();
         if (isPDFMerged) {
             StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.pdf_merged)

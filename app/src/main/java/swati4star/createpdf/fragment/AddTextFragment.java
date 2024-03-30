@@ -111,9 +111,10 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private Font.FontFamily mFontFamily;
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_add_text, container, false);
         ButterKnife.bind(this, rootView);
@@ -145,7 +146,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -208,7 +209,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
                 .show();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICK_PDF_FILE_CODE) {
@@ -321,14 +322,14 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mPdfpath = path;
         StringUtils.getInstance().showSnackbar(mActivity, getResources().getString(R.string.snackbar_pdfselected));
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }

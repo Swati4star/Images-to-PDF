@@ -26,7 +26,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
     private final OnClickListener mOnClickListener;
     private final HashMap<String, Integer> mIconsOperationList;
 
-    public HistoryAdapter(Activity mActivity, List<History> mHistoryList, OnClickListener mOnClickListener) {
+    public HistoryAdapter(@NonNull Activity mActivity, @NonNull List<History> mHistoryList, @NonNull OnClickListener mOnClickListener) {
         this.mHistoryList = mHistoryList;
         this.mActivity = mActivity;
         this.mOnClickListener = mOnClickListener;
@@ -88,7 +88,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
     }
 
     public interface OnClickListener {
-        void onItemClick(String path);
+        void onItemClick(@NonNull String path);
     }
 
     public class ViewHistoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

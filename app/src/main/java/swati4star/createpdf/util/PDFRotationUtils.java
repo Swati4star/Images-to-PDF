@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.util.SparseIntArray;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
@@ -23,7 +25,7 @@ public class PDFRotationUtils {
     private final SparseIntArray mAngleRadioButton;
     private final FileUtils mFileUtils;
 
-    public PDFRotationUtils(Activity context) {
+    public PDFRotationUtils(@NonNull Activity context) {
         this.mContext = context;
         this.mFileUtils = new FileUtils(mContext);
         mAngleRadioButton = new SparseIntArray();
@@ -37,7 +39,7 @@ public class PDFRotationUtils {
      *
      * @param sourceFilePath - path of file to be rotated
      */
-    public void rotatePages(String sourceFilePath, final DataSetChanged dataSetChanged) {
+    public void rotatePages(@NonNull String sourceFilePath, final @NonNull DataSetChanged dataSetChanged) {
         MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent(mContext,
                 R.string.rotate_pages);
         builder.customView(R.layout.dialog_rotate_pdf, true)

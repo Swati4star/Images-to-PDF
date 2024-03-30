@@ -2,6 +2,8 @@ package swati4star.createpdf.interfaces;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 public interface OnFilterItemClickedListener {
-    void onItemClick(View v, int position);
+    void onItemClick(@NonNull View v, int position);
 }

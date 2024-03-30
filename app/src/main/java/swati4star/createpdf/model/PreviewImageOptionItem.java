@@ -1,10 +1,12 @@
 package swati4star.createpdf.model;
 
+import androidx.annotation.NonNull;
+
 public class PreviewImageOptionItem {
     private int mOptionImageId;
     private String mOptionName;
 
-    public PreviewImageOptionItem(int mOptionImageId, String mOptionName) {
+    public PreviewImageOptionItem(int mOptionImageId, @NonNull String mOptionName) {
         this.mOptionImageId = mOptionImageId;
         this.mOptionName = mOptionName;
     }
@@ -17,11 +19,12 @@ public class PreviewImageOptionItem {
         this.mOptionImageId = mOptionImageId;
     }
 
+    @NonNull
     public String getOptionName() {
         return mOptionName;
     }
 
-    public void setOptionName(String mOptionName) {
+    public void setOptionName(@NonNull String mOptionName) {
         this.mOptionName = mOptionName;
     }
 }

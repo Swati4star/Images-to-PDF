@@ -77,10 +77,10 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      * @param emptyStateChangeListener interface for empty state change
      * @param itemSelectedListener     interface for monitoring the status of file selection
      */
-    public ViewFilesAdapter(Activity activity,
-                            List<PDFFile> feedItems,
-                            EmptyStateChangeListener emptyStateChangeListener,
-                            ItemSelectedListener itemSelectedListener) {
+    public ViewFilesAdapter(@NonNull Activity activity,
+                            @NonNull List<PDFFile> feedItems,
+                            @NonNull EmptyStateChangeListener emptyStateChangeListener,
+                            @NonNull ItemSelectedListener itemSelectedListener) {
         this.mActivity = activity;
         this.mEmptyStateChangeListener = emptyStateChangeListener;
         this.mItemSelectedListener = itemSelectedListener;
@@ -208,6 +208,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      *
      * @return paths of files
      */
+    @NonNull
     public ArrayList<String> getSelectedFilePath() {
         ArrayList<String> filePathList = new ArrayList<>();
         for (int position : mSelectedFiles) {
@@ -232,7 +233,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      *
      * @param pdfFiles list containing {@link PDFFile}
      */
-    public void setData(List<PDFFile> pdfFiles) {
+    public void setData(@NonNull List<PDFFile> pdfFiles) {
         mFileList = pdfFiles;
         notifyDataSetChanged();
     }
@@ -242,6 +243,7 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
      *
      * @return the Pdf Utils
      */
+    @NonNull
     public PDFUtils getPDFUtils() {
         return mPDFUtils;
     }

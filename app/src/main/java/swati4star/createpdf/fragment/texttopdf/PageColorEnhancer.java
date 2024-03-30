@@ -63,6 +63,7 @@ public class PageColorEnhancer implements Enhancer {
         materialDialog.show();
     }
 
+    @NonNull
     @Override
     public EnhancementOptionsEntity getEnhancementOptionsEntity() {
         return mEnhancementOptionsEntity;

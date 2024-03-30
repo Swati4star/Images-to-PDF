@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,8 +34,8 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     private PDFEncryptionUtility mPDFEncryptionUtility;
     private String mDecryptedPath;
 
-    public PdfToImages(Context context, String[] password, String mPath, Uri mUri,
-                       ExtractImagesListener mExtractImagesListener) {
+    public PdfToImages(@NonNull Context context, @NonNull String[] password, @NonNull String mPath, @NonNull Uri mUri,
+                       @NonNull ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
         this.mUri = mUri;
         this.mExtractImagesListener = mExtractImagesListener;

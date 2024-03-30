@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -24,39 +26,42 @@ public class StringUtils {
     private StringUtils() {
     }
 
+    @NonNull
     public static StringUtils getInstance() {
         return StringUtils.SingletonHolder.INSTANCE;
     }
 
-    public boolean isEmpty(CharSequence s) {
+    public boolean isEmpty(@NonNull CharSequence s) {
         return s == null || s.toString().trim().equals("");
     }
 
-    public boolean isNotEmpty(CharSequence s) {
+    public boolean isNotEmpty(@NonNull CharSequence s) {
         return s != null && !s.toString().trim().equals("");
     }
 
-    public void showSnackbar(Activity context, int resID) {
+    public void showSnackbar(@NonNull Activity context, int resID) {
         Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG).show();
     }
 
-    public void showSnackbar(Activity context, String resID) {
+    public void showSnackbar(@NonNull Activity context, @NonNull String resID) {
         Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG).show();
     }
 
-    public Snackbar showIndefiniteSnackbar(Activity context, String resID) {
+    @NonNull
+    public Snackbar showIndefiniteSnackbar(@NonNull Activity context, @NonNull String resID) {
         return Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_INDEFINITE);
     }
 
-    public Snackbar getSnackbarwithAction(Activity context, int resID) {
+    @NonNull
+    public Snackbar getSnackbarwithAction(@NonNull Activity context, int resID) {
         return Snackbar.make(Objects.requireNonNull(context).findViewById(android.R.id.content),
                 resID, Snackbar.LENGTH_LONG);
     }
 
-    public void hideKeyboard(Activity activity) {
+    public void hideKeyboard(@NonNull Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
@@ -68,6 +73,7 @@ public class StringUtils {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    @NonNull
     public String getDefaultStorageLocation() {
         File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),
                 pdfDirectory);
@@ -89,7 +95,7 @@ public class StringUtils {
      * @return the text parsed to an int or the default value
      * @throws NumberFormatException if the text is not empty and not formatted as an int
      */
-    public int parseIntOrDefault(CharSequence text, int def) throws NumberFormatException {
+    public int parseIntOrDefault(@NonNull CharSequence text, int def) throws NumberFormatException {
         if (isEmpty(text))
             return def;
         else

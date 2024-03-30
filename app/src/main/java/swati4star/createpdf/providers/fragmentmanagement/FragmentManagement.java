@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -68,7 +69,7 @@ public class FragmentManagement implements IFragmentManagement {
     private final FragmentUtils mFragmentUtils;
     private boolean mDoubleBackToExitPressedOnce = false;
 
-    public FragmentManagement(FragmentActivity context, NavigationView navigationView) {
+    public FragmentManagement(@NonNull FragmentActivity context, @NonNull NavigationView navigationView) {
         mContext = context;
         mNavigationView = navigationView;
         mFeedbackUtils = new FeedbackUtils(mContext);
@@ -88,6 +89,7 @@ public class FragmentManagement implements IFragmentManagement {
         transaction.commit();
     }
 
+    @NonNull
     public Fragment checkForAppShortcutClicked() {
         Fragment fragment = new HomeFragment();
         if (mContext.getIntent().getAction() != null) {

@@ -27,8 +27,8 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     private final OnFilterItemClickedListener mOnFilterItemClickedListener;
     private final Context mContext;
 
-    public ImageFiltersAdapter(ArrayList<FilterItem> filterItems, Context context,
-                               OnFilterItemClickedListener listener) {
+    public ImageFiltersAdapter(@NonNull ArrayList<FilterItem> filterItems, @NonNull Context context,
+                               @NonNull OnFilterItemClickedListener listener) {
         mFilterItem = filterItems;
         mContext = context;
         mOnFilterItemClickedListener = listener;

@@ -109,9 +109,10 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     public MergeFilesFragment() {
     }
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
         ButterKnife.bind(this, root);
         showEnhancementOptions();
@@ -253,7 +254,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
      * get uri from data of intent and convert it to absolute path
      * add absolute path to mFilePaths list
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (data == null || resultCode != RESULT_OK || ( data.getData() == null && data.getClipData() == null ) )
             return;
         if (requestCode == INTENT_REQUEST_PICK_FILE_CODE) {
@@ -294,7 +295,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
@@ -302,7 +303,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         if (mFilePaths.contains(path)) {
             mFilePaths.remove(path);
             StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
@@ -323,7 +324,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
      * resets fragment to initial stage
      */
     @Override
-    public void resetValues(boolean isPDFMerged, String path) {
+    public void resetValues(boolean isPDFMerged, @NonNull String path) {
         mMaterialDialog.dismiss();
 
         if (isPDFMerged) {
@@ -349,12 +350,12 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void viewFile(String path) {
+    public void viewFile(@NonNull String path) {
         mFileUtils.openFile(path, FileUtils.FileType.e_PDF);
     }
 
     @Override
-    public void removeFile(String path) {
+    public void removeFile(@NonNull String path) {
         mFilePaths.remove(path);
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
         StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
@@ -384,7 +385,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }

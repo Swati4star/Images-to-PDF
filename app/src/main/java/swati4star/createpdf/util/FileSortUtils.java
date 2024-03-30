@@ -1,5 +1,7 @@
 package swati4star.createpdf.util;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
@@ -15,13 +17,14 @@ public class FileSortUtils {
     private FileSortUtils() {
     }
 
+    @NonNull
     public static FileSortUtils getInstance() {
         return FileSortUtils.SingletonHolder.INSTANCE;
     }
 
     // SORTING FUNCTIONS
 
-    public void performSortOperation(int option, List<File> pdf) {
+    public void performSortOperation(int option, @NonNull List<File> pdf) {
         switch (option) {
             case DATE_INDEX:
                 sortFilesByDateNewestToOldest(pdf);

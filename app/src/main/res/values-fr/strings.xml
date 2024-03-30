@@ -25,7 +25,6 @@
         <item>Faire pivoter les pages</item>
         <item>Ajouter une filigrane</item>
     </array>
-    <string name="please_wait">Veuillez patienter</string>
     <string name="create_pdf">Accueil</string>
     <string name="viewFiles">Voir les fichiers</string>
     <string name="successToast">Images ajoutées avec succès.</string>
@@ -34,8 +33,6 @@
     <string name="snackbar_no_images">Aucune image n\'est sélectionnée</string>
     <string name="snackbar_no_pdfs_selected">Aucun fichier PDF sélectionné</string>
     <string name="snackbar_name_not_blank">Le nom ne peut pas être vide</string>
-    <string name="snackbar_permissions_given">Permissions accordées !</string>
-    <string name="snackbar_insufficient_permissions">Permissions Insuffisantes !</string>
     <string name="snackbar_images_added">Images ajoutées</string>
     <string name="snackbar_file_renamed">Fichier renommé.</string>
     <string name="snackbar_file_not_renamed">Le fichier ne peut pas être renommé.</string>
@@ -65,7 +62,6 @@
     <string name="share">Partager</string>
     <string name="extras">Extras</string>
     <string name="share_chooser">Sélectionnez une app pour envoyer un message …</string>
-    <string name="feedback_chooser">Envoyer un mail…</string>
     <string name="no_pdf">Aucun PDF à afficher</string>
     <string name="get_started">Commencer maintenant</string>
     <string name="view_files_text">Afficher tous vos fichiers convertis ici !</string>
@@ -103,13 +99,6 @@
     <string name="a0_to_a10">A0 à A10</string>
     <string name="default_page_size">PAR DÉFAUT ( %s )</string>
     <!-- Directory Strings -->
-    <string name="success_move">Vos fichiers ont été déplacés avec succès</string>
-    <string name="dir_does_not_exists">Dossier inexistant</string>
-    <string name="directory_deleted">Dossier supprimé</string>
-    <string name="success_delete_directory">Dossier supprimé avec succès</string>
-    <string name="moved_files">Fichiers déplacés avec succès</string>
-    <string name="dialog_new_dir">Entrer le nouveau nom du dossier</string>
-    <string name="dialog_dir">Entrez le nom du dossier</string>
     <string name="cancel">Annuler</string>
     <string name="ok">OK</string>
     <string name="yes">Oui</string>
@@ -119,7 +108,6 @@
     <string name="install_file_manager">Veuillez installer un gestionnaire de fichiers</string>
     <string name="text_to_pdf">Texte vers PDF</string>
     <string name="select_file">Sélectionnez un fichier à téléverser</string>
-    <string name="new_directory">Nouveau dossier</string>
     <string name="previous_image_content_desc">Image précédente</string>
     <string name="text_file_name">"Fichier texte : "</string>
     <string name="edit_font_size">Taille de la police (par défaut : %d)</string>
@@ -194,7 +182,6 @@
     <string name="encrypted_pdf">Le PDF est protégé par mot de passe</string>
     <string name="encrypted">Chiffré</string>
     <string name="reorder_pages">Réorganisation de pages</string>
-    <string name="share_files">Partager des fichiers</string>
     <string name="compress_pdf">Compresser un PDF</string>
     <string name="compress_pdf_prompt">Entrez %% de compression des fichiers PDF :</string>
     <string name="pdf_removed_from_list">Le PDF a été retiré de la liste.</string>
@@ -243,7 +230,6 @@
     <string name="select_pdf_file">Sélectionner un fichier PDF</string>
     <string name="pdf_to_images">PDF en Images</string>
     <string name="done">Fait</string>
-    <string name="image_successfully_cropped">Image recadrée avec succès</string>
     <string name="page_x_of_n">Page X de N</string>
     <string name="page_x">X de N</string>
     <string name="x">X</string>
@@ -299,19 +285,15 @@
     <string name="no_permissions">Veuillez fournir une permission pour afficher vos fichiers.</string>
     <string name="prompt_give_permission">Fournir des autorisations</string>
     <string name="snackbar_folder_not_created">Erreur lors de la création du dossier de l’application.</string>
-    <string name="snackbar_imagecropped">Images recadrées</string>
     <string name="snackbar_txtExtracted">Le texte a été extrait !</string>
     <string name="more_options_text">Plus d\'options d’amélioration</string>
     <string name="snackbar_no_share_app">Aucune application de partage.</string>
-    <string name="snackbar_no_email_clients">Aucun client de messagerie n’est installé.</string>
     <string name="empty_image_description">NoPdfs</string>
     <string name="enter_password_custom">Entrez le mot de passe</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">Chemin d’accès au second fichier PDF</string>
     <string name="i_have_attached_pdfs_to_this_message">J’ai attaché des fichiers à ce message</string>
     <string name="decrypt_protected_file">Le PDF est protégé par mot de passe. Entrez le mot de passe pour continuer …</string>
     <string name="save_first">Sauvegarder la présente image d’abord</string>
-    <string name="moving_files">Déplacement de vos fichiers</string>
-    <string name="move_files_delete_dir">Déplacement des fichiers et suppression du dossier</string>
     <string name="font_size_changed">La taille de la police a été modifiée</string>
     <string name="swipe_to_view_next">Glissez à gauche pour voir l’image suivante</string>
     <string name="filter_autofix">Correction automatique</string>
@@ -340,7 +322,6 @@
     <string name="rate_positive">Évaluer maintenant</string>
     <string name="rate_title">Évaluez-nous !</string>
     <string name="rate_dialog_text">Si vous aimez cette application, veuillez prendre un moment pour évaluer cette app. Cela ne prendra pas plus d’une minute. Merci pour votre soutien ! :)</string>
-    <string name="error_occurred">Une erreur s’est produite</string>
     <string name="rotate_pages">Tourner les pages</string>
     <string name="enter_rotation_angle">Entrez l’angle de rotation</string>
     <string name="compression_image_edit">Modifier la valeur de compression des images</string>
@@ -384,7 +365,6 @@
     <string name="feedback_text">Veuillez écrire vos précieux commentaires ou dîtes-nous bonjour ! :)</string>
     <string name="Filter_image_preview">Filter Image Preview</string>
     <string name="master_password_changed">Le mot de passe semble être incorrect. Il se peut que vous ayez modifié le mot de passe principal.</string>
-    <string name="directory">Répertoire</string>
     <string name="showing_image">Affichage de %1$d sur %2$d image(s)</string>
     <string name="filter_cross">Cross Process</string>
     <string name="filter_documentary">Documentaire</string>

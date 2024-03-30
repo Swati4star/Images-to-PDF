@@ -85,9 +85,10 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     private BottomSheetUtils mBottomSheetUtils;
     private BottomSheetBehavior mSheetBehavior;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_split_files, container, false);
         ButterKnife.bind(this, rootview);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -114,7 +115,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
                 INTENT_REQUEST_PICKFILE_CODE);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) throws NullPointerException {
         if (data == null || resultCode != RESULT_OK || data.getData() == null)
             return;
         if (requestCode == INTENT_REQUEST_PICKFILE_CODE) {
@@ -154,7 +155,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
@@ -164,7 +165,7 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onItemClick(String path) {
+    public void onItemClick(@NonNull String path) {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         setTextAndActivateButtons(path);
     }
@@ -211,12 +212,12 @@ public class SplitFilesFragment extends Fragment implements MergeFilesAdapter.On
     }
 
     @Override
-    public void onFileItemClick(String path) {
+    public void onFileItemClick(@NonNull String path) {
         mFileUtils.openFile(path, FileUtils.FileType.e_PDF);
     }
 
     @Override
-    public void onPopulate(ArrayList<String> paths) {
+    public void onPopulate(@NonNull ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
                 this, mLayout, mLottieProgress, mRecyclerViewFiles);
     }

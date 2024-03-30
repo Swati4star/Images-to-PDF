@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -42,8 +43,10 @@ import swati4star.createpdf.R;
 
 public class ImageUtils {
 
+    @NonNull
     public String mImageScaleType;
 
+    @NonNull
     public static ImageUtils getInstance() {
         return ImageUtils.SingletonHolder.INSTANCE;
     }
@@ -74,7 +77,8 @@ public class ImageUtils {
      * @return input image size as Rectangle.
      * @see com.itextpdf.text.Rectangle
      */
-    public static Rectangle getImageSize(String imageUri) {
+    @NonNull
+    public static Rectangle getImageSize(@NonNull String imageUri) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         File imageFile = new File(Uri.parse(imageUri).getPath());
@@ -88,7 +92,8 @@ public class ImageUtils {
      * @param filename    - name of the file
      * @param finalBitmap - bitmap to save
      */
-    public static String saveImage(String filename, Bitmap finalBitmap) {
+    @NonNull
+    public static String saveImage(@NonNull String filename, @NonNull Bitmap finalBitmap) {
 
         if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
             return null;
@@ -120,7 +125,7 @@ public class ImageUtils {
      * @param frag        the fragment that should receive the Images
      * @param requestCode the internal request code the fragment uses for image selection
      */
-    public static void selectImages(Fragment frag, int requestCode) {
+    public static void selectImages(@NonNull Fragment frag, int requestCode) {
         Matisse.from(frag)
                 .choose(MimeType.ofImage(), false)
                 .countable(true)
@@ -152,7 +157,8 @@ public class ImageUtils {
      * @param bmp - input bitmap
      * @return - output bitmap
      */
-    public Bitmap getRoundBitmap(Bitmap bmp) {
+    @NonNull
+    public Bitmap getRoundBitmap(@NonNull Bitmap bmp) {
         int width = bmp.getWidth(), height = bmp.getHeight();
         int radius = Math.min(width, height); // set the smallest edge as radius.
         Bitmap bitmap;
@@ -190,7 +196,8 @@ public class ImageUtils {
      * @param path - file path
      * @return - output round bitmap
      */
-    public Bitmap getRoundBitmapFromPath(String path) {
+    @NonNull
+    public Bitmap getRoundBitmapFromPath(@NonNull String path) {
         File file = new File(path);
 
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -238,7 +245,7 @@ public class ImageUtils {
         return inSampleSize;
     }
 
-    public void showImageScaleTypeDialog(Context context, Boolean saveValue) {
+    public void showImageScaleTypeDialog(@NonNull Context context, @NonNull Boolean saveValue) {
 
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         MaterialDialog.Builder builder = DialogUtils.getInstance().createCustomDialogWithoutContent((Activity) context,
@@ -274,7 +281,8 @@ public class ImageUtils {
      * @param bmpOriginal original bitmap which is converted to a new
      *                    grayscale bitmap
      */
-    public Bitmap toGrayscale(Bitmap bmpOriginal) {
+    @NonNull
+    public Bitmap toGrayscale(@NonNull Bitmap bmpOriginal) {
         int width, height;
         height = bmpOriginal.getHeight();
         width = bmpOriginal.getWidth();

@@ -102,6 +102,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
+    @NonNull
     public static ArrayList<String> mImagesUri = new ArrayList<>();
     @BindView(R.id.pdfCreate)
     MorphingButton mCreatePdf;
@@ -132,13 +133,14 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private boolean mShouldCropImages = false;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
         ButterKnife.bind(this, root);
@@ -288,7 +290,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
      * @param data        Data of the image selected
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mIsButtonAlreadyClicked = false;
         if (resultCode != Activity.RESULT_OK || data == null)
@@ -702,7 +704,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     @Override
-    public void onPDFCreated(boolean success, String path) {
+    public void onPDFCreated(boolean success, @NonNull String path) {
         if (mMaterialDialog != null && mMaterialDialog.isShowing())
             mMaterialDialog.dismiss();
 

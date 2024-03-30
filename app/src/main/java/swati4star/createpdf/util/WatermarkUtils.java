@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
@@ -35,12 +37,12 @@ public class WatermarkUtils {
     private final FileUtils mFileUtils;
     private Watermark mWatermark;
 
-    public WatermarkUtils(Activity context) {
+    public WatermarkUtils(@NonNull Activity context) {
         mContext = context;
         mFileUtils = new FileUtils(context);
     }
 
-    public static int getStyleValueFromName(String name) {
+    public static int getStyleValueFromName(@NonNull String name) {
         switch (name) {
             case "BOLD":
                 return Font.BOLD;
@@ -57,6 +59,7 @@ public class WatermarkUtils {
         }
     }
 
+    @NonNull
     public static String getStyleNameFromFont(int font) {
         switch (font) {
             case Font.BOLD:
@@ -74,7 +77,7 @@ public class WatermarkUtils {
         }
     }
 
-    public void setWatermark(String path, final DataSetChanged dataSetChanged) {
+    public void setWatermark(@NonNull String path, final @NonNull DataSetChanged dataSetChanged) {
 
         final MaterialDialog mDialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.add_watermark)

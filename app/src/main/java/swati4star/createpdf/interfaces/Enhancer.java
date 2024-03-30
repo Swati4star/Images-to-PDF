@@ -1,5 +1,7 @@
 package swati4star.createpdf.interfaces;
 
+import androidx.annotation.NonNull;
+
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 
 /**
@@ -14,5 +16,6 @@ public interface Enhancer {
     /**
      * @return The {@link EnhancementOptionsEntity} for this {@link Enhancer}.
      */
+    @NonNull
     EnhancementOptionsEntity getEnhancementOptionsEntity();
 }

@@ -23,8 +23,8 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
     private final Activity mContext;
     private final OnFileItemClickedListener mOnClickListener;
 
-    public FilesListAdapter(Activity mContext, ArrayList<String> mFilePaths,
-                            OnFileItemClickedListener mOnClickListener) {
+    public FilesListAdapter(@NonNull Activity mContext, @NonNull ArrayList<String> mFilePaths,
+                            @NonNull OnFileItemClickedListener mOnClickListener) {
         this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         this.mOnClickListener = mOnClickListener;
@@ -50,7 +50,7 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
     }
 
     public interface OnFileItemClickedListener {
-        void onFileItemClick(String path);
+        void onFileItemClick(@NonNull String path);
     }
 
     public class ViewMergeFilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

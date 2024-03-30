@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -36,6 +37,7 @@ import swati4star.createpdf.util.ThemeUtils;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
 
+    @NonNull
     public static ArrayList<Bitmap> mImages;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -45,7 +47,8 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     private SharedPreferences mSharedPreferences;
     private ArrayList<Integer> mSequence, mInitialSequence;
 
-    public static Intent getStartIntent(Context context) {
+    @NonNull
+    public static Intent getStartIntent(@NonNull Context context) {
         return new Intent(context, RearrangePdfPages.class);
     }
 
@@ -155,7 +158,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             passUris();
             return true;

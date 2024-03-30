@@ -1,5 +1,7 @@
 package swati4star.createpdf.interfaces;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public interface ExtractImagesListener {
@@ -7,5 +9,5 @@ public interface ExtractImagesListener {
 
     void extractionStarted();
 
-    void updateView(int imageCount, ArrayList<String> outputFilePaths);
+    void updateView(int imageCount, @NonNull ArrayList<String> outputFilePaths);
 }

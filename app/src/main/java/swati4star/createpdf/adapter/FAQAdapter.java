@@ -22,7 +22,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
     private final List<FAQItem> mFaqs;
     private final OnItemClickListener mOnItemClickListener;
 
-    public FAQAdapter(List<FAQItem> faqs, OnItemClickListener mOnItemClickListener) {
+    public FAQAdapter(@NonNull List<FAQItem> faqs, @NonNull OnItemClickListener mOnItemClickListener) {
         this.mFaqs = faqs;
         this.mOnItemClickListener = mOnItemClickListener;
     }

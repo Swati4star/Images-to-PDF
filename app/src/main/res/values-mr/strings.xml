@@ -14,7 +14,6 @@
     <string name="default_content_description">वर्णन नाही</string>
     <string name="prompt_input">येथे प्रविष्ट करा</string>
 
-    <string name="please_wait">कृपया थांबा</string>
     <string name="bundleKey">प्रतिमा URI</string>
     <string name="whatsappToast">क्षमस्व! प्रतिमा जोडल्या जाऊ शकल्या नाहीत. कृपया आमच्या **प्रतिमा निवडा** पर्यायातून प्रतिमा निवडा.</string>
     <string name="successToast">म्रतिमा यशस्वीरित्या जोडल्या.</string>
@@ -74,8 +73,6 @@
     <string name="snackbar_no_images">कोणतेही चित्र निवडलेले नाही</string>
     <string name="snackbar_no_pdfs_selected">पीडीएफ निवडलेला नाही</string>
     <string name="snackbar_name_not_blank">नाव रिक्त असू शकत नाही</string>
-    <string name="snackbar_permissions_given">परवानग्या दिल्या!</string>
-    <string name="snackbar_insufficient_permissions">अपुरी परवानगी!</string>
     <string name="no_permissions">कृपया तुमच्या फाइल पाहण्यासाठी स्टोरेज परवानग्या द्या</string>
     <string name="prompt_give_permission">परवानगी द्या</string>
     <string name="snackbar_images_added">प्रतिमा जोडल्या</string>
@@ -96,7 +93,6 @@
     <string name="enter_password">पासवर्ड टाका</string>
     <string name="snackbar_password_cannot_be_blank">पासवर्ड रिक्त असू शकत नाही</string>
     <string name="cannot_add_password">पासवर्ड पीडीएफ वर लागू केला जाऊ शकत नाही. कृपया पीडीएफ दोनदा तपासा</string>
-    <string name="snackbar_imagecropped">प्रतिमा क्रॉप केल्या</string>
     <string name="cropImage_activityTitle">क्रॉप प्रतिमा</string>
     <string name="snackbar_pdfCreated">पीडीएफ तयार केले!</string>
     <string name="error_uri_not_found">क्षमस्व,आम्ही क्रॉप केलेल्या प्रतिमेत प्रवेश करण्यात अक्षम आहोत.कृपया पुन्हा प्रयत्न करा.</string>
@@ -120,8 +116,6 @@
     <string name="images_selected">%1$d प्रतिमा निवडल्या.</string>
     <string name="feedback_subject">"Images To पीडीएफ Converter साठी टिपा "</string>
     <string name="feedback_text">कृपया तुमचे मौल्यवान अभिप्राय लिहा, किंवा फक्त एक नमस्कार</string>
-    <string name="snackbar_no_email_clients">कोणताही ईमेल क्लायंट स्थापित केलेला नाही</string>
-    <string name="feedback_chooser">मेल पाठवा</string>
     <string name="no_pdf">दाखवण्यासाठी pdf नाही</string>
     <string name="get_started">आता सुरू करा</string>
     <string name="view_files_text">आपल्या सर्व रूपांतरित फायली येथे पहा</string>
@@ -161,16 +155,6 @@
     <string name="sort_by_title">क्रमवारी लावा</string>
     <string name="delete">हटवा</string>
     <string name="sort">छेदन</string>
-    <string name="directory">Directory</string>
-    <string name="moving_files">आपल्या फायली हलवत आहे</string>
-    <string name="success_move">आपल्या फायली यशस्वीरित्या हस्तांतरित केल्या गेल्या</string>
-    <string name="dir_does_not_exists">Directory उपलब्ध नाही</string>
-    <string name="move_files_delete_dir">फायली हलवा आणि Directory काढा</string>
-    <string name="directory_deleted">Directory हटवले</string>
-    <string name="success_delete_directory">Directory यशस्वीरित्या काढले गेले</string>
-    <string name="moved_files">फायली यशस्वीरित्या हलवल्या</string>
-    <string name="dialog_new_dir">नवीन Directory नाव प्रविष्ट करा</string>
-    <string name="dialog_dir">Directory चे नाव प्रविष्ट करा</string>
     <string name="cancel">रद्द करा</string>
     <string name="ok">ठीक</string>
     <string name="yes">होय</string>
@@ -181,7 +165,6 @@
     <string name="text_to_pdf">पीडीएफ वर मजकूर</string>
     <string name="text_file_selected">मजकूर फाइल निवडली</string>
     <string name="select_file">अपलोड करण्यासाठी फाइल निवडा</string>
-    <string name="new_directory">नवीन Directory</string>
     <string name="previous_image_content_desc">मागील प्रतिमा</string>
     <string name="text_file_name">मजकूर फाइल</string>
     <string name="extension_not_supported">मला क्षमा! हा फाइल प्रकार सध्या समर्थित नाही</string>
@@ -253,7 +236,6 @@
     <string name="reset">रीसेट करा</string>
     <string name="rotate">फिरवा</string>
     <string name="done">पूर्ण</string>
-    <string name="image_successfully_cropped">प्रतिमा यशवीरित्या कापली</string>
     <string name="confirm_exit_message">बाहेर पद्यानसाथी पुन्हा डाबा</string>
     <string name="filter_not_saved">प्रतिमा जतन करणे शक्य नाही</string>
     <string name="remove_image_message">तुम्हाला खात्री आहे की तुम्ही ही प्रतिमा हटवू इच्छिता??</string>
@@ -292,10 +274,8 @@
     <string name="rate_title">आम्हाला रेट करा</string>
     <string name="rate_dialog_text"> आपण या अॅपचा आनंद घेत असल्यास, कृपया या अॅपला रेट करण्यासाठी थोडा वेळ द्या. याला एका मिनिटापेक्षा जास्त वेळ लागणार नाही. आपल्या सहकार्याबद्दल धन्यवाद!:)</string>
     <string name="rate_us_never">कभी नहीँ</string>
-    <string name="error_occurred">त्रुटी आली</string>
     <string name="rotate_pages">पृष्ठे फिरवा</string>
     <string name="enter_rotation_angle">रोटेशन कोन प्रविष्ट करा</string>
-    <string name="share_files">फायली सामायिक करा</string>
     <string name="pdf_removed_from_list">पीडीएफ सूचीमधून काढून टाकण्यात आले आहे</string>
     <string name="pdf_added_to_list">पीडीएफ सूचीमध्ये जोडली गेली आहे</string>
     <string name="select_files">फायली निवडा</string>

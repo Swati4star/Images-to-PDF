@@ -1,5 +1,7 @@
 package swati4star.createpdf.model;
 
+import androidx.annotation.NonNull;
+
 public class PDFOptions {
 
     private String mOutFileName;
@@ -27,19 +29,21 @@ public class PDFOptions {
         this.mPageColor = pageColor;
     }
 
+    @NonNull
     public String getOutFileName() {
         return mOutFileName;
     }
 
-    public void setOutFileName(String mOutFileName) {
+    public void setOutFileName(@NonNull String mOutFileName) {
         this.mOutFileName = mOutFileName;
     }
 
+    @NonNull
     public String getPageSize() {
         return mPageSize;
     }
 
-    public void setPageSize(String mPageSize) {
+    public void setPageSize(@NonNull String mPageSize) {
         this.mPageSize = mPageSize;
     }
 
@@ -51,11 +55,12 @@ public class PDFOptions {
         this.mPasswordProtected = mPasswordProtected;
     }
 
+    @NonNull
     public String getPassword() {
         return mPassword;
     }
 
-    public void setPassword(String mPassword) {
+    public void setPassword(@NonNull String mPassword) {
         this.mPassword = mPassword;
     }
 
@@ -75,11 +80,12 @@ public class PDFOptions {
         this.mWatermarkAdded = mWatermarkAdded;
     }
 
+    @NonNull
     public Watermark getWatermark() {
         return this.mWatermark;
     }
 
-    public void setWatermark(Watermark mWatermark) {
+    public void setWatermark(@NonNull Watermark mWatermark) {
         this.mWatermark = mWatermark;
     }
 

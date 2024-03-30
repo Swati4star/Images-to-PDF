@@ -21,7 +21,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/buttonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
@@ -84,7 +83,6 @@
     </androidx.core.widget.NestedScrollView>
 
     <TextView
-        android:id="@+id/tv_file_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

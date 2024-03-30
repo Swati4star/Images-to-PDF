@@ -46,6 +46,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -126,8 +127,8 @@ public class FavouritesFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.favourites_fragment, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -182,7 +183,7 @@ public class FavouritesFragment extends Fragment
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
         menu.findItem(R.id.menu_favourites_item).setVisible(false);
         super.onPrepareOptionsMenu(menu);
     }
@@ -229,7 +230,7 @@ public class FavouritesFragment extends Fragment
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }

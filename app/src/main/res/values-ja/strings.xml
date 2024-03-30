@@ -27,8 +27,6 @@
         <item>Add Watermark</item>
     </array>
 
-    <string name="please_wait">Please Wait</string>
-
     <string name="create_pdf">Create PDF</string>
     <string name="viewFiles">View Files</string>
 
@@ -41,8 +39,6 @@
     <string name="snackbar_no_images">No Images selected</string>
     <string name="snackbar_no_pdfs_selected">選択されたPDFはありません</string>
     <string name="snackbar_name_not_blank">Name cannot be blank</string>
-    <string name="snackbar_permissions_given">Permissions Given!</string>
-    <string name="snackbar_insufficient_permissions">Insufficient Permissions!</string>
     <string name="snackbar_images_added">Images added</string>
     <string name="snackbar_file_renamed">File renamed.</string>
     <string name="snackbar_file_not_renamed">File can\'t be renamed.</string>
@@ -69,7 +65,6 @@
     <string name="snackbar_password_cannot_be_blank">パスワードは空白にできません</string>
     <string name="cannot_add_password">パスワードをPDFに適用できませんでした。 PDFをもう一度チェックしてください。</string>
 
-    <string name="snackbar_imagecropped">Images cropped</string>
     <string name="cropImage_activityTitle">Crop Image</string>
     <string name="snackbar_pdfCreated">PDF created!</string>
     <string name="error_uri_not_found">トリミングされた画像にアクセスできません。もう一度お試しください</string>
@@ -79,13 +74,11 @@
     <string name="delete">Delete</string>
     <string name="feedback_text">Kindly write your previous feeback, or just drop a Hi! :)</string>
     <string name="feedback_subject">Suggestions for Images To PDF Converter</string>
-    <string name="snackbar_no_email_clients">There are no email clients installed.</string>
     <string name="share">Share</string>
     <string name="rate_us_text">"Hi! I just checked this app in playstore. Try it out : https://play.google.com/store/apps/details?id=swati4star.createpdf .     It converts images to PDF so smmothly. :) "</string>
     <string name="snackbar_no_share_app">No application to share.</string>
     <string name="extras">Extras</string>
     <string name="share_chooser">Select app to send message…</string>
-    <string name="feedback_chooser">Send mail…</string>
     <string name="no_pdf">No PDFs to show</string>
     <string name="get_started">Get Started Now</string>
     <string name="view_files_text">View all your converted files here!</string>
@@ -130,16 +123,6 @@
     <string name="a0_to_a10">A0 to A10</string>
     <string name="default_page_size">DEFAULT ( %s )</string>
     <!-- Directory Strings -->
-    <string name="directory">Directory</string>
-    <string name="moving_files">Moving your files</string>
-    <string name="success_move">Successfully moved your files</string>
-    <string name="dir_does_not_exists">Directory does not exists</string>
-    <string name="move_files_delete_dir">Moving files and deleting the directory</string>
-    <string name="directory_deleted">Directory deleted</string>
-    <string name="success_delete_directory">Successfully deleted the directory</string>
-    <string name="moved_files">Files successfully moved</string>
-    <string name="dialog_new_dir">Enter new directory name</string>
-    <string name="dialog_dir">Enter the directory name</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
@@ -150,7 +133,6 @@
     <string name="text_to_pdf">Text To PDF</string>
     <string name="text_file_selected">Text File Selected</string>
     <string name="select_file">Select a File to Upload</string>
-    <string name="new_directory">New Directory</string>
     <string name="previous_image_content_desc">Previous Image</string>
     <string name="text_file_name">"Text File : "</string>
     <string name="edit_font_size">Font Size (Default : %d)</string>
@@ -244,14 +226,12 @@
     <string name="remove_pages">Remove Pages</string>
     <string name="remove_pages_error">The input value is not valid</string>
     <string name="encrypted_pdf">PDF is password protected</string>
-    <string name="error_occurred">Error Occurred</string>
     <string name="rotate_pages">Rotate Pages</string>
     <string name="enter_rotation_angle">Enter Rotation Angle</string>
     <string name="rotated">Rotated</string>
     <string name="encrypted">Encrypted</string>
     <string name="decrypted">Decrypted</string>
     <string name="reorder_pages">Reorder Pages</string>
-    <string name="share_files">Share Files</string>
     <string name="images_rearranged">Images rearranged</string>
     <string name="compress_pdf">Compress PDF</string>
     <string name="compress_pdf_prompt">Enter %% compression of PDF :</string>
@@ -334,7 +314,6 @@
     <string name="pdf_to_images">PDF to Images</string>
     <string name="rotate">Rotate</string>
     <string name="done">Done</string>
-    <string name="image_successfully_cropped">Image successfully cropped</string>
     <string name="page_x_of_n">Page X of N</string>
     <string name="page_x">X of N</string>
     <string name="x">X</string>

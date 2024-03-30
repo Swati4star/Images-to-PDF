@@ -9,7 +9,8 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="48dp"
         android:scaleType="centerInside"
-        android:src="@drawable/view_pdf" />
+        android:src="@drawable/view_pdf"
+        android:contentDescription="Image illustrating the process of viewing PDF's" />
 
     <TextView
         android:id="@+id/tv_title"

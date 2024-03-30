@@ -4,6 +4,8 @@ import static swati4star.createpdf.util.Constants.pdfExtension;
 
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
@@ -32,8 +34,8 @@ public class MergePdf extends AsyncTask<String, Void, Void> {
      * @param mergeFilesListener  - listener object
      * @param masterpwd           - current master password
      */
-    public MergePdf(String fileName, String homePath, boolean isPasswordProtected,
-                    String password, MergeFilesListener mergeFilesListener, String masterpwd) {
+    public MergePdf(@NonNull String fileName, @NonNull String homePath, boolean isPasswordProtected,
+                    @NonNull String password, @NonNull MergeFilesListener mergeFilesListener, @NonNull String masterpwd) {
         mFilename = fileName;
         mFinPath = homePath;
         mMergeFilesListener = mergeFilesListener;

@@ -71,14 +71,15 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private boolean mDoodleSelected = false;
     private PhotoEditor mPhotoEditor;
 
-    public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+    @NonNull
+    public static Intent getStartIntent(@NonNull Context context, @NonNull ArrayList<String> uris) {
         Intent intent = new Intent(context, ImageEditor.class);
         intent.putExtra(IMAGE_EDITOR_KEY, uris);
         return intent;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull Bundle savedInstanceState) {
 
         ThemeUtils.getInstance().setThemeApp(this);
 
@@ -236,7 +237,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
      * @param position - position of item clicked
      */
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(@NonNull View view, int position) {
         //setting mClicked true when none filter is selected otherwise false
         mClicked = position == 0;
         // Brush effect is in second position

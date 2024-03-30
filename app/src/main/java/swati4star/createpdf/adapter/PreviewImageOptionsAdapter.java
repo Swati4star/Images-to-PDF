@@ -21,8 +21,8 @@ public class PreviewImageOptionsAdapter extends RecyclerView.Adapter<PreviewImag
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
 
-    public PreviewImageOptionsAdapter(OnItemClickListener onItemClickListener,
-                                      ArrayList<PreviewImageOptionItem> optionItems, Context context) {
+    public PreviewImageOptionsAdapter(@NonNull OnItemClickListener onItemClickListener,
+                                      @NonNull ArrayList<PreviewImageOptionItem> optionItems, @NonNull Context context) {
         mOnItemClickListener = onItemClickListener;
         mOptions = optionItems;
         mContext = context;

@@ -2,6 +2,8 @@ package swati4star.createpdf.util;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
@@ -10,11 +12,11 @@ public class BottomSheetUtils {
 
     private final Activity mContext;
 
-    public BottomSheetUtils(Activity context) {
+    public BottomSheetUtils(@NonNull Activity context) {
         this.mContext = context;
     }
 
-    public void showHideSheet(BottomSheetBehavior sheetBehavior) {
+    public void showHideSheet(@NonNull BottomSheetBehavior sheetBehavior) {
         if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {
@@ -22,7 +24,7 @@ public class BottomSheetUtils {
         }
     }
 
-    public void populateBottomSheetWithPDFs(BottomSheetPopulate listener) {
+    public void populateBottomSheetWithPDFs(@NonNull BottomSheetPopulate listener) {
         new PopulateBottomSheetList(listener, new DirectoryUtils(mContext)).execute();
     }
 
@@ -32,7 +34,7 @@ public class BottomSheetUtils {
      * @param listener a bottom sheet listener used to inform the caller when the list of files
      *                 is available
      */
-    public void populateBottomSheetWithExcelFiles(BottomSheetPopulate listener) {
+    public void populateBottomSheetWithExcelFiles(@NonNull BottomSheetPopulate listener) {
         new PopulateBottomSheetListWithExcelFiles(listener, new DirectoryUtils(mContext)).execute();
     }
 

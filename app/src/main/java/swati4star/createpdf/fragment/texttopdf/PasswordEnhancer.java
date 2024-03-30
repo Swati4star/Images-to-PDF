@@ -83,6 +83,7 @@ public class PasswordEnhancer implements Enhancer {
         positiveAction.setEnabled(false);
     }
 
+    @NonNull
     @Override
     public EnhancementOptionsEntity getEnhancementOptionsEntity() {
         return mEnhancementOptionsEntity;

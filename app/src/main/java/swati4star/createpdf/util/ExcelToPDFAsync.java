@@ -2,6 +2,8 @@ package swati4star.createpdf.util;
 
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import com.aspose.cells.FileFormatType;
 import com.aspose.cells.PdfSaveOptions;
 import com.aspose.cells.PdfSecurityOptions;
@@ -25,8 +27,8 @@ public class ExcelToPDFAsync extends AsyncTask<Void, Void, Void> {
      * @param destPath     is the path of the destination pdf file.
      * @param onPDFCreated is the onPDFCreatedInterface instance.
      */
-    public ExcelToPDFAsync(String parentPath, String destPath,
-                           OnPDFCreatedInterface onPDFCreated, boolean isPasswordProtected, String password) {
+    public ExcelToPDFAsync(@NonNull String parentPath, @NonNull String destPath,
+                           @NonNull OnPDFCreatedInterface onPDFCreated, boolean isPasswordProtected, @NonNull String password) {
         mPath = parentPath;
         mDestPath = destPath;
         this.mOnPDFCreatedInterface = onPDFCreated;

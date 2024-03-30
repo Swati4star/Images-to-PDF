@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -26,6 +27,7 @@ public class DialogUtils {
     private DialogUtils() {
     }
 
+    @NonNull
     public static DialogUtils getInstance() {
         return DialogUtils.SingletonHolder.INSTANCE;
     }
@@ -37,7 +39,8 @@ public class DialogUtils {
      * @param content  - content resource id
      * @return - material dialog builder
      */
-    public MaterialDialog.Builder createWarningDialog(Activity activity,
+    @NonNull
+    public MaterialDialog.Builder createWarningDialog(@NonNull Activity activity,
                                                       int content) {
         return new MaterialDialog.Builder(activity)
                 .title(R.string.warning)
@@ -52,7 +55,8 @@ public class DialogUtils {
      * @param activity - activity instance
      * @return - material dialog builder
      */
-    public MaterialDialog.Builder createOverwriteDialog(Activity activity) {
+    @NonNull
+    public MaterialDialog.Builder createOverwriteDialog(@NonNull Activity activity) {
         return new MaterialDialog.Builder(activity)
                 .title(R.string.warning)
                 .content(R.string.overwrite_message)
@@ -68,7 +72,8 @@ public class DialogUtils {
      * @param content  - content resource id
      * @return - material dialog builder
      */
-    public MaterialDialog.Builder createCustomDialog(Activity activity,
+    @NonNull
+    public MaterialDialog.Builder createCustomDialog(@NonNull Activity activity,
                                                      int title, int content) {
         return new MaterialDialog.Builder(activity)
                 .title(title)
@@ -84,7 +89,8 @@ public class DialogUtils {
      * @param title    - dialog title resource id
      * @return - material dialog builder
      */
-    public MaterialDialog.Builder createCustomDialogWithoutContent(Activity activity,
+    @NonNull
+    public MaterialDialog.Builder createCustomDialogWithoutContent(@NonNull Activity activity,
                                                                    int title) {
         return new MaterialDialog.Builder(activity)
                 .title(title)
@@ -98,7 +104,8 @@ public class DialogUtils {
      * @param activity - activity instance
      * @return - material dialog
      */
-    public MaterialDialog createAnimationDialog(Activity activity) {
+    @NonNull
+    public MaterialDialog createAnimationDialog(@NonNull Activity activity) {
         return new MaterialDialog.Builder(activity)
                 .customView(R.layout.lottie_anim_dialog, false)
                 .build();
@@ -111,7 +118,8 @@ public class DialogUtils {
      * @param title    - dialog message
      * @return - material dialog
      */
-    public MaterialDialog createCustomAnimationDialog(Activity activity, String title) {
+    @NonNull
+    public MaterialDialog createCustomAnimationDialog(@NonNull Activity activity, @NonNull String title) {
         View view = LayoutInflater.from(activity).inflate(R.layout.lottie_anim_dialog, null);
 
         TextView dialogTitle = view.findViewById(R.id.textView);
@@ -123,7 +131,7 @@ public class DialogUtils {
 
     }
 
-    public void showFilesInfoDialog(Activity activity, int dialogId) {
+    public void showFilesInfoDialog(@NonNull Activity activity, int dialogId) {
         int stringId = R.string.viewfiles_rotatepages;
         switch (dialogId) {
             case ROTATE_PAGES:
@@ -148,13 +156,13 @@ public class DialogUtils {
     }
 
     public static void showChoiceDialog(
-            Context context,
+            @NonNull Context context,
             int title,
             int message,
             int positiveButtonLabel,
             int negativeButtonLabel,
             boolean cancelable,
-            final DialogCallbacks callbacks
+            final @NonNull DialogCallbacks callbacks
     ) {
         new AlertDialog.Builder(context)
                 .setTitle(title == EMPTY_STRING ? "" : context.getString(title))

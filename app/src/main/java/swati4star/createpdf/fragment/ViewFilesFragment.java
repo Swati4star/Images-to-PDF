@@ -59,6 +59,7 @@ public class ViewFilesFragment extends Fragment
         ItemSelectedListener {
 
 
+    @NonNull
     @BindView(R.id.getStarted)
     public Button getStarted;
     @BindView(R.id.filesRecyclerView)
@@ -84,8 +85,9 @@ public class ViewFilesFragment extends Fragment
     private int mCountFiles = 0;
     private MergeHelper mMergeHelper;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_view_files, container, false);
         ButterKnife.bind(this, root);
@@ -115,7 +117,7 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem menuItem;
         if (!mIsMergeRequired) {
@@ -163,7 +165,7 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    public boolean onOptionsItemSelected(final @NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_sort:
                 displaySortDialog();
@@ -332,7 +334,7 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mDirectoryUtils = new DirectoryUtils(mActivity);
@@ -345,7 +347,7 @@ public class ViewFilesFragment extends Fragment
     }
 
     @Override
-    public void isSelected(Boolean isSelected, int countFiles) {
+    public void isSelected(@NonNull Boolean isSelected, int countFiles) {
         mCountFiles = countFiles;
         updateToolbar();
     }

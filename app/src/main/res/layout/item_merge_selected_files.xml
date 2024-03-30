@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:padding="12dp"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textIsSelectable="true" />
     </com.balysv.materialripple.MaterialRippleLayout>
 
     <ImageView

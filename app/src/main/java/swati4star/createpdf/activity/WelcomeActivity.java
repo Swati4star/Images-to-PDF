@@ -23,10 +23,13 @@ import swati4star.createpdf.util.ThemeUtils;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    @NonNull
     @BindView(R.id.view_pager)
     public ViewPager mViewPager;
+    @NonNull
     @BindView(R.id.layoutDots)
     public LinearLayout mDotsLayout;
+    @NonNull
     @BindView(R.id.btn_skip)
     public Button mBtnSkip;
 
@@ -51,7 +54,7 @@ public class WelcomeActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
 

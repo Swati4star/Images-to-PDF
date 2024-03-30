@@ -7,6 +7,8 @@ import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
@@ -25,7 +27,7 @@ public class RemoveDuplicates extends AsyncTask<Void, Void, Void> {
     private String mPath;
     private Boolean mIsNewPDFCreated;
 
-    public RemoveDuplicates(String mPath, OnPDFCreatedInterface onPDFCreatedInterface) {
+    public RemoveDuplicates(@NonNull String mPath, @NonNull OnPDFCreatedInterface onPDFCreatedInterface) {
         this.mPath = mPath;
         mSequence = new StringBuilder();
         mBitmaps = new ArrayList<>();

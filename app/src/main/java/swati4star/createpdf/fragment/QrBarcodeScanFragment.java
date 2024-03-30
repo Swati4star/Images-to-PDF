@@ -76,9 +76,10 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private Font.FontFamily mFontFamily;
     private int mFontColor;
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_qrcode_barcode, container, false);
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -96,7 +97,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result == null || result.getContents() == null)
             StringUtils.getInstance().showSnackbar(mActivity, R.string.scan_cancelled);
@@ -202,7 +203,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
@@ -230,7 +231,7 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onPDFCreated(boolean success, String path) {
+    public void onPDFCreated(boolean success, @NonNull String path) {
         mMaterialDialog.dismiss();
         if (!success) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_folder_not_created);

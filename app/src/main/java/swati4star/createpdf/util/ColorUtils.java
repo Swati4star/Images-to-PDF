@@ -2,6 +2,8 @@ package swati4star.createpdf.util;
 
 import android.graphics.Color;
 
+import androidx.annotation.NonNull;
+
 public class ColorUtils {
 
     private static final double COLOR_DIFF_THRESHOLD = 30.0;
@@ -9,6 +11,7 @@ public class ColorUtils {
     private ColorUtils() {
     }
 
+    @NonNull
     public static ColorUtils getInstance() {
         return ColorUtils.SingletonHolder.INSTANCE;
     }

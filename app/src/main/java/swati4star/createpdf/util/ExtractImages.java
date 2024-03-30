@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import com.itextpdf.text.pdf.PRStream;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfObject;
@@ -24,7 +26,7 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
 
-    public ExtractImages(String mPath, ExtractImagesListener mExtractImagesListener) {
+    public ExtractImages(@NonNull String mPath, @NonNull ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
         this.mExtractImagesListener = mExtractImagesListener;
         mOutputFilePaths = new ArrayList<>();
