@@ -27,7 +27,7 @@ public class ColorUtilsTest {
     }
 
     @Parameters
-    public static Collection<Object[]> parameters() {
+    public  static Collection<Object[]> parameters() {
         return Arrays.asList(
                 new Object[][]{
                         {Color.rgb(100, 69, 100), Color.rgb(100, 100, 100), false},
