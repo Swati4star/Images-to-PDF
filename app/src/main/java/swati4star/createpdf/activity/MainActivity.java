@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
 
+    //在主活动中，添加一个变量来跟踪当前页面
+    private String currentPage = "home"; // 默认页面
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
