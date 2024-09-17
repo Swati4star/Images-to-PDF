@@ -254,6 +254,21 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setCheckedItem(id);
     }
 
+    //在导航菜单的点击事件中，更新 currentPage 变量，并调用更新高亮的方法：
+    @Override
+    public void onNavigationItemSelected(int position) {
+        switch (position) {
+            case 0: // 首页
+                currentPage = "home";
+                break;
+            case 1: // 设置
+                currentPage = "settings";
+                break;
+            // 添加其他页面的情况
+        }
+        updateNavigationHighlight();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
