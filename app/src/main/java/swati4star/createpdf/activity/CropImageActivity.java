@@ -76,6 +76,12 @@ public class CropImageActivity extends AppCompatActivity {
         previousImageButton.setOnClickListener(view -> prevImgBtnClicked());
     }
 
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
     public void cropButtonClicked() {
         mCurrentImageEdited = false;
         String root = Environment.getExternalStorageDirectory().toString();

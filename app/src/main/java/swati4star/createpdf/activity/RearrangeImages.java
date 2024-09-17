@@ -72,6 +72,13 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
         recyclerView.setAdapter(mRearrangeImagesAdapter);
     }
 
+
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
     @Override
     public void onUpClick(int position) {
         mImages.add(position - 1, mImages.remove(position));

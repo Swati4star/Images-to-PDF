@@ -124,6 +124,12 @@ public class FavouritesActivity extends AppCompatActivity {
         mKeyState[19] = mSharedPreferences.getBoolean(EXCEL_TO_PDF_KEY, false);
         mKeyState[20] = mSharedPreferences.getBoolean(ZIP_TO_PDF_KEY, false);
     }
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
 
     /**
      * Restore the initial state if user
