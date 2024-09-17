@@ -82,6 +82,20 @@ public class CropImageActivity extends AppCompatActivity {
         settingsMenuItem.setBackgroundColor(defaultColor);
         // 添加其他菜单项
     }
+    @Override
+    public void onNavigationItemSelected(int position) {
+        switch (position) {
+            case 0: // 首页
+                currentPage = "home";
+                startActivity(new Intent(this, HomeActivity.class));
+                break;
+            case 1: // 设置
+                currentPage = "settings";
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            // 添加其他页面的情况
+        }
+    }
     public void cropButtonClicked() {
         mCurrentImageEdited = false;
         String root = Environment.getExternalStorageDirectory().toString();
