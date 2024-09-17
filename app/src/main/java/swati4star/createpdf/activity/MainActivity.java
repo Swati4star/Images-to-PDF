@@ -139,6 +139,10 @@ public class MainActivity extends AppCompatActivity
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         if (actionBar != null)
             actionBar.show();
+
+        //在每个页面的 onResume 方法中调用更新高亮的方法，以确保每次页面回到前台时都能更新状态。
+            updateNavigationHighlight(); // 更新高亮状态
+
     }
 
     @Override
@@ -442,6 +446,13 @@ public class MainActivity extends AppCompatActivity
             setTitle(title);
     }
 
+    //清除高亮状态
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
     private void setThemeOnActivityExclusiveComponents() {
         RelativeLayout toolbarBackgroundLayout = findViewById(R.id.toolbar_background_layout);
         MaterialCardView content = findViewById(R.id.content);

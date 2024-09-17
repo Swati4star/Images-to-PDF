@@ -64,6 +64,19 @@ public class FavouritesActivity extends AppCompatActivity {
         return true;
     }
 
+  //创建一个方法来根据 currentPage 更新导航菜单的高亮状态
+    private void updateNavigationHighlight() {
+        // 清除所有菜单项的高亮
+        clearHighlights();
+
+        // 根据当前页面高亮对应菜单项
+        if ("home".equals(currentPage)) {
+            // 设置首页菜单项高亮
+        } else if ("settings".equals(currentPage)) {
+            // 设置设置菜单项高亮
+        }
+        // 根据需要添加其他页面的处理
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
