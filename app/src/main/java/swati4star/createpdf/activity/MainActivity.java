@@ -320,6 +320,35 @@ public class MainActivity extends AppCompatActivity
                             return db.historyDao().existsOperationType(operationTypeToCheck);
                         }
 
+                        if (isPdfCreated) {
+                            deleteButton.setEnabled(true); // 启用删除按钮
+                            deleteButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // 删除PDF的代码逻辑
+                                    mCurrentImageEdited = false;
+                                    String root = Environment.getExternalStorageDirectory().toString();
+                                    File folder = new File(root + pdfDirectory);
+                                    Uri uri = mCropImageView.getImageUri();
+
+                                    if (uri == null) {
+                                        StringUtils.getInstance().showSnackbar(this, R.string.error_uri_not_found);
+                                        return;
+                                    }
+
+                                    String path = uri.getPath();
+                                    String filename = "cropped_im";
+                                    if (path != null)
+                                        filename = "cropped_" + FileUtils.getFileName(path);
+
+                                    File file = new File(folder, filename);
+
+                                    mCropImageView.saveCroppedImageAsync(Uri.fromFile(file));
+                                }
+                            });
+                        } else {
+                            deleteButton.setEnabled(false); // 禁用删除按钮
+                        }
 
                         Button deleteButton = findViewById(R.id.btn_delete);
 
