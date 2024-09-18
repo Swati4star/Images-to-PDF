@@ -36,6 +36,17 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     private PreviewAdapter mPreviewAdapter;
     private ViewPager mViewPager;
 
+    private boolean checkIfPdfCreated() {
+        AppDatabase db = AppDatabase.getDatabase(mContext.getApplicationContext());
+        // 你需要创建一个查询方法来检查是否存在PDF记录
+        // 假设历史记录中包含一个字段标识操作类型
+        // 这里假设operationType为"PDF_CREATED"，具体取决于你的实现
+        String operationTypeToCheck = "PDF_CREATED";
+
+        // 查询是否有任何记录的操作类型为"PDF_CREATED"
+        return db.historyDao().existsOperationType(operationTypeToCheck);
+    }
+
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
         changeAndShowImageCount((mCurrentImage - 1 % mDisplaySize));
         Intent intent = new Intent(context, PreviewActivity.class);

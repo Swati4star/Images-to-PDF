@@ -88,7 +88,7 @@ public class RearrangePdfPages extends AppCompatActivity implements RearrangePdf
             finish();
         } else
             initRecyclerView(mImages);
-    }
+        isPdfCreated    }
 
     private void initRecyclerView(ArrayList<Bitmap> images) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,

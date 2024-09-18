@@ -129,7 +129,7 @@ public class WelcomeActivity extends AppCompatActivity {
             View view = layoutInflater.inflate(mLayouts[position], container, false);
             if (position == 9) {
                 Button btnGetStarted = view.findViewById(R.id.getStarted);
-                btnGetStarted.setOnClickListener(v -> openMainActivity());
+                btnGetStarted.setOnisPdfCreatedListener(v -> openMainActivity());
             }
             container.addView(view);
             return view;

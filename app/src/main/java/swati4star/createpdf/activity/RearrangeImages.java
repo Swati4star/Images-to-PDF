@@ -87,6 +87,17 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
 
     @Override
     public void onRemoveClick(int position) {
+        private boolean checkIfPdfCreated() {
+            AppDatabase db = AppDatabase.getDatabase(mContext.getApplicationContext());
+            // 你需要创建一个查询方法来检查是否存在PDF记录
+            // 假设历史记录中包含一个字段标识操作类型
+            // 这里假设operationType为"PDF_CREATED"，具体取决于你的实现
+            String operationTypeToCheck = "PDF_CREATED";
+
+            // 查询是否有任何记录的操作类型为"PDF_CREATED"
+            return db.historyDao().existsOperationType(operationTypeToCheck);
+        }
+
 
         if (isPdfCreated) {
             deleteButton.setEnabled(true); // 启用删除按钮

@@ -309,6 +309,17 @@ public class MainActivity extends AppCompatActivity
                         // On Re-try button clicked
                         // 假设存在一个函数检查是否有PDF文件创建
                         boolean isPdfCreated = checkIfPdfCreated();
+                        private boolean checkIfPdfCreated() {
+                            AppDatabase db = AppDatabase.getDatabase(mContext.getApplicationContext());
+                            // 你需要创建一个查询方法来检查是否存在PDF记录
+                            // 假设历史记录中包含一个字段标识操作类型
+                            // 这里假设operationType为"PDF_CREATED"，具体取决于你的实现
+                            String operationTypeToCheck = "PDF_CREATED";
+
+                            // 查询是否有任何记录的操作类型为"PDF_CREATED"
+                            return db.historyDao().existsOperationType(operationTypeToCheck);
+                        }
+
 
                         Button deleteButton = findViewById(R.id.btn_delete);
 
