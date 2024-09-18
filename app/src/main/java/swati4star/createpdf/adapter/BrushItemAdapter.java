@@ -62,6 +62,24 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
+
+            // 假设存在一个函数检查是否有PDF文件创建
+            boolean isPdfCreated = checkIfPdfCreated();
+
+            Button deleteButton = findViewById(R.id.btn_delete);
+
+            if (isPdfCreated) {
+                deleteButton.setEnabled(true); // 启用删除按钮
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 删除PDF的代码逻辑
+                    }
+                });
+            } else {
+                deleteButton.setEnabled(false); // 禁用删除按钮
+            }
+
         }
 
         @Override

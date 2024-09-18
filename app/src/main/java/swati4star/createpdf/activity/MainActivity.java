@@ -307,7 +307,25 @@ public class MainActivity extends AppCompatActivity
                     public void onPositiveButtonClick() {
                         // On Allow button clicked
                         // On Re-try button clicked
-                        openOSSettingsForPermissionRequest_API30AndAbove();
+                        // 假设存在一个函数检查是否有PDF文件创建
+                        boolean isPdfCreated = checkIfPdfCreated();
+
+                        Button deleteButton = findViewById(R.id.btn_delete);
+
+                        if (isPdfCreated) {
+                            deleteButton.setEnabled(true); // 启用删除按钮
+                            deleteButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // 删除PDF的代码逻辑
+                                    // openOSSettingsForPermissionRequest_API30AndAbove();
+                                }
+                            });
+                        } else {
+                            deleteButton.setEnabled(false); // 禁用删除按钮
+                        }
+
+
                     }
 
                     @RequiresApi(api = Build.VERSION_CODES.R)

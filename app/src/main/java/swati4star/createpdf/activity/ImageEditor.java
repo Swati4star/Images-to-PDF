@@ -137,6 +137,24 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     void previousImg() {
         //move to previous if Save Current has been clicked
         if (mClicked) {
+            mCurrentImageEdited = false;
+            String root = Environment.getExternalStorageDirectory().toString();
+            File folder = new File(root + pdfDirectory);
+            Uri uri = mCropImageView.getImageUri();
+
+            if (uri == null) {
+                StringUtils.getInstance().showSnackbar(this, R.string.error_uri_not_found);
+                return;
+            }
+
+            String path = uri.getPath();
+            String filename = "cropped_im";
+            if (path != null)
+                filename = "cropped_" + FileUtils.getFileName(path);
+
+            File file = new File(folder, filename);
+
+            mCropImageView.saveCroppedImageAsync(Uri.fromFile(file));
             changeAndShowImageCount((mCurrentImage - 1 % mDisplaySize));
         } else
             StringUtils.getInstance().showSnackbar(this, R.string.save_first);

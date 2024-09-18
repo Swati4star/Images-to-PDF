@@ -37,9 +37,21 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     private ViewPager mViewPager;
 
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+        changeAndShowImageCount((mCurrentImage - 1 % mDisplaySize));
         Intent intent = new Intent(context, PreviewActivity.class);
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;
+        if (isPdfCreated) {
+            deleteButton.setEnabled(true); // 启用删除按钮
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 删除PDF的代码逻辑
+                }
+            });
+        } else {
+            deleteButton.setEnabled(false); // 禁用删除按钮
+        }
     }
 
     @Override

@@ -36,6 +36,26 @@ import swati4star.createpdf.util.ThemeUtils;
 
 public class RearrangePdfPages extends AppCompatActivity implements RearrangePdfAdapter.OnClickListener {
 
+
+     if (mSharedPreferences.getBoolean(Constants.CHOICE_REMOVE_IMAGE, false)) {
+        mImages.remove(position);
+        mRearrangeImagesAdapter.positionChanged(mImages);
+    } else {
+        MaterialDialog.Builder builder = DialogUtils.getInstance().createWarningDialog(this,
+                R.string.remove_image_message);
+        builder.checkBoxPrompt(getString(R.string.dont_show_again), false, null)
+                .onPositive((dialog, which) -> {
+                    if (dialog.isPromptCheckBoxChecked()) {
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putBoolean(CHOICE_REMOVE_IMAGE, true);
+                        editor.apply();
+                    }
+                    mImages.remove(position);
+                    mRearrangeImagesAdapter.positionChanged(mImages);
+
+                })
+                .show();
+    }
     public static ArrayList<Bitmap> mImages;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
