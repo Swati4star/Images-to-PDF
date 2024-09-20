@@ -64,6 +64,19 @@ public class FavouritesActivity extends AppCompatActivity {
         return true;
     }
 
+  //创建一个方法来根据 currentPage 更新导航菜单的高亮状态
+    private void updateNavigationHighlight() {
+        // 清除所有菜单项的高亮
+        clearHighlights();
+
+        // 根据当前页面高亮对应菜单项
+        if ("home".equals(currentPage)) {
+            // 设置首页菜单项高亮
+        } else if ("settings".equals(currentPage)) {
+            // 设置设置菜单项高亮
+        }
+        // 根据需要添加其他页面的处理
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -110,6 +123,27 @@ public class FavouritesActivity extends AppCompatActivity {
         mKeyState[18] = mSharedPreferences.getBoolean(PDF_TO_IMAGES_KEY, false);
         mKeyState[19] = mSharedPreferences.getBoolean(EXCEL_TO_PDF_KEY, false);
         mKeyState[20] = mSharedPreferences.getBoolean(ZIP_TO_PDF_KEY, false);
+    }
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
+
+    @Override
+    public void onNavigationItemSelected(int position) {
+        switch (position) {
+            case 0: // 首页
+                currentPage = "home";
+                startActivity(new Intent(this, HomeActivity.class));
+                break;
+            case 1: // 设置
+                currentPage = "settings";
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            // 添加其他页面的情况
+        }
     }
 
     /**

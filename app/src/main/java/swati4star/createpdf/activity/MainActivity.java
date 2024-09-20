@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
 
+    //在主活动中，添加一个变量来跟踪当前页面
+    private String currentPage = "home"; // 默认页面
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
@@ -136,6 +139,10 @@ public class MainActivity extends AppCompatActivity
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         if (actionBar != null)
             actionBar.show();
+
+        //在每个页面的 onResume 方法中调用更新高亮的方法，以确保每次页面回到前台时都能更新状态。
+            updateNavigationHighlight(); // 更新高亮状态
+
     }
 
     @Override
@@ -249,6 +256,21 @@ public class MainActivity extends AppCompatActivity
 
     public void setNavigationViewSelection(int id) {
         mNavigationView.setCheckedItem(id);
+    }
+
+    //在导航菜单的点击事件中，更新 currentPage 变量，并调用更新高亮的方法：
+    @Override
+    public void onNavigationItemSelected(int position) {
+        switch (position) {
+            case 0: // 首页
+                currentPage = "home";
+                break;
+            case 1: // 设置
+                currentPage = "settings";
+                break;
+            // 添加其他页面的情况
+        }
+        updateNavigationHighlight();
     }
 
     @Override
@@ -424,6 +446,13 @@ public class MainActivity extends AppCompatActivity
             setTitle(title);
     }
 
+    //清除高亮状态
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
     private void setThemeOnActivityExclusiveComponents() {
         RelativeLayout toolbarBackgroundLayout = findViewById(R.id.toolbar_background_layout);
         MaterialCardView content = findViewById(R.id.content);

@@ -37,6 +37,13 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
         this.mIsMergeFragment = mIsMergeFragment;
     }
 
+
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
     @NonNull
     @Override
     public ViewMergeFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

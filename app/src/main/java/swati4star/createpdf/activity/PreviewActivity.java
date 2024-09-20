@@ -41,6 +41,20 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;
     }
+    @Override
+    public void onNavigationItemSelected(int position) {
+        switch (position) {
+            case 0: // 首页
+                currentPage = "home";
+                startActivity(new Intent(this, HomeActivity.class));
+                break;
+            case 1: // 设置
+                currentPage = "settings";
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            // 添加其他页面的情况
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

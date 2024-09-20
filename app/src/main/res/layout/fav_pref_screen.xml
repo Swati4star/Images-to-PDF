@@ -23,4 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp" />
+
+    <item
+            android:id="@+id/nav_home"
+            android:title="Home" />
+    <item
+            android:id="@+id/nav_settings"
+            android:title="Settings" />
 </LinearLayout>

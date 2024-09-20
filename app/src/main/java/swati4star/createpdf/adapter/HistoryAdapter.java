@@ -40,6 +40,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         mIconsOperationList.put(mActivity.getString(R.string.decrypted), R.drawable.ic_lock_open_black_24dp);
     }
 
+
+    private void clearHighlights() {
+        // 例如，重置所有菜单项的背景或文本颜色
+        homeMenuItem.setBackgroundColor(defaultColor);
+        settingsMenuItem.setBackgroundColor(defaultColor);
+        // 添加其他菜单项
+    }
     @NonNull
     @Override
     public ViewHistoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

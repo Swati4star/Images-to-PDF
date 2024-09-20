@@ -71,6 +71,9 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
     private boolean mDoodleSelected = false;
     private PhotoEditor mPhotoEditor;
 
+    //每当用户点击菜单项跳转到其他页面时，要更新 currentPage 变量
+    //每当用户点击菜单项跳转到其他页面时，要更新 currentPage 变量
+    //AndroidManifest.xml 中包含这些活动
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
         Intent intent = new Intent(context, ImageEditor.class);
         intent.putExtra(IMAGE_EDITOR_KEY, uris);
