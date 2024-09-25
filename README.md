@@ -39,6 +39,29 @@ Here is an easy to use Android app to convert images to PDF file!
 - Extract images from PDF
 - History : View all the PDF related conversions
 
+### Getting Started with Images to PDF
+Follow these steps to start using the Images to PDF app:
+
+##### Step 1: Install the App
+You can download the app from:
+  - Google Play Store
+  - F-droid
+
+##### Step 2: Launch the App
+Once installed, open the app from your installed applications list. You will see the home screen with different options like the following:
+  - Create PDF
+  - History
+  - Text to PDF
+
+##### Step 3: Creating Your first PDF
+1. Tap on "Create PDF" from the home screen
+2. Select the images that you would like to transform to pdf (From your device's gallery)
+3. Put them in order and give a name or the file
+
+##### Step 4: Managing Files
+Once created, you can find it in the history tab where you are able to delete/share/edit the pdf. Further in depth details
+on how to create the files and navigate the app is shown below.
+
 Here is a home page to get quick access to all the features "PDF Converter" provides:
 
 <img src="./screenshots/0_1_home.png" width="190px"> <img src="./screenshots/0_2_home.png" width="190px">
@@ -87,6 +110,20 @@ Black | Dark | White |
 ### History
 
 <img src="./screenshots/9_history.png" width="190px">
+
+### Troubleshooting
+
+Common Issues:
+1. Unable to create file
+   2. Make sure the app has permission to use your camera or gallery. Navigating to 
+   Settings > Apps > Images to PDF > Permissions and turning on access will enable the 
+   correct permissions.
+2. Unable to find created pdf in history
+   3. Restart the app to refresh it. Check again to see if the pdf was created successfully 
+   and is showing up in the History tab
+3. App is Crashing
+   4. Verify that the app version you are using has the most recent updates. Try deleting the cache
+   in settings and then open the app again to see if the issue still exists.
 
 ### Contributing
 
