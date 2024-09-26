@@ -121,3 +121,17 @@ want.
 This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For
 any sort of queries feel free to mail at swati4star@gmail.com.
 
+### How to set up and run in Android Studio
+1. Fork the project.
+2. Use `git clone https://github.com/your-github-username/Images-to-PDF.git` to clone the forked project.
+3. Launch Android Studio and select the Images-to-PDF project from the directory where you saved it (<a href="https://developer.android.com/studio" target="_blank">Install Android Studio</a>)
+4. Wait for Gradle to build the project.
+5. You can now run the app!
+
+#### Gradle cannot build project
+If Gradle gives you errors when attempting to build the project, try these fixes:
+
+1. Clear gradle cache by running `gradlew cleanBuildCache` in Windows or `./gradlew cleanBuildCache` on Mac or Linux.
+2. Check for updates. If you are getting an error that states "The project is using an incompatible version of the Android Gradle plugin.", you may need to update Android Studio to one that supports the latest version of Gradle.
+
+Additionally, you can check the <a href="https://developer.android.com/studio" target="_blank">Gradle User Manual</a>.
