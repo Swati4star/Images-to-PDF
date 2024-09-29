@@ -10,42 +10,72 @@
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
-Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
-Here is an easy to use Android app to convert images to PDF file!
+## Table of Contents
 
-<img src="./screenshots/image_to_pdf2.gif"  width="300px">
+1. [Introduction](#introduction)
+2. [Features](#features)
 
-### Support Us
+## Introduction
 
-<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+Welcome to Images To PDF, a simple and efficient application designed to convert JPG image files into PDF format. This tool is perfect for anyone looking to quickly transform individual or multiple JPG images into a single PDF document, making it easy to store, share, or print image files in a widely-used format.
 
-### Features
+With an intuitive user interface, our app provides a seamless experience for converting images while maintaining the quality of the original files. Whether you're looking to bundle photos for a presentation, compile scanned documents, or simply store images more conveniently, JPG to PDF Converter is here to streamline your workflow.
 
-- Create PDF from multiple images from camera or gallery
-- View your converted PDFs
-    - Open, Rename, Delete, print, share files
-    - Sort the files order based on a number of options
-    - View File details
-    - Encrypt PDF
-    - Decrypt PDF
-    - Rotate Pages
-- Different themes
-- Merge existing PDFs
-- Split existing PDFs
-- Convert text file to PDFs
-- Compress existing PDF
-- Remove pages from a PDF
-- Rearrange pages of a PDF
-- Extract images from PDF
-- History : View all the PDF related conversions
+<div align="center">
+    <img src="./screenshots/image_to_pdf2.gif"  width="300px">
+</div>
 
-Here is a home page to get quick access to all the features "PDF Converter" provides:
+## Features
+
+### Image Conversion
+
+**Create PDF from Multiple Images:** Easily convert images from your camera or gallery into a single PDF document.
+
+### Security Features
+
+**Encrypt PDF:** Secure your PDFs with password protection.
+
+**Decrypt PDF:** Remove encryption from PDFs when needed.
+
+### PDF Management
+
+**View Converted PDFs:** View your PDF documents directly in the app. You can easily rename your files for better organization, delete unwated files, print your PDFs, sort your files, and view file details.
+
+<div align="center">
+    <img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
+</div>
+
+**Modify Existing PDFS:** Easily rotate pages within your documents, merge several PDFs into a single file, divide a PDF into separate files, delete specific pages, change order of pages, and extract images from PDFs.
+
+<div align="center">
+    <img src="./screenshots/7_merge_pdf.png" width="190px">
+</div>
+
+### Other Features
+
+**Convert Text Files to PDFs**: Transform your text documents into PDFs effortlessly.
+
+<div align="center">
+    <img src="./screenshots/8_text_to_pdf.png" width="190px">
+</div>
+
+**Compress Existing PDFs:** Reduce the file size of your PDFs for easier sharing and storage.
+
+**History:** Keep track of all PDF conversion in a single place.
+
+<div align="center">
+    <img src="./screenshots/9_history.png" width="190px">
+</div>
+
+## Usage
+
+Here is a home page to get a quick reference to all the features "PDF Converter" provides:
 
 <img src="./screenshots/0_1_home.png" width="190px"> <img src="./screenshots/0_2_home.png" width="190px">
 
 ### Creating a PDF file
 
-##### Step 1 : User can view the PDF files previously created or create a new one!
+#### Step 1 : User can view the PDF files previously created or create a new one!
 
 <img src="./screenshots/1_home.png" width="190px">
 
@@ -61,51 +91,34 @@ Here is a home page to get quick access to all the features "PDF Converter" prov
 
 <img src="./screenshots/4_converting.png" width="190px">
 
-
 Hurray! PDF files of selected images are created.
-
-### Viewing the PDF files
-
-<img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
 
 ### Different themes
 
 Go to Settings, and you can have three type of themes : Black, Dark and White
 
-Black | Dark | White |
---- | --- | --- |
-<img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> |  <img src="./screenshots/home_theme_white.png" width="190px"> |
-
-### Merge PDF
-
-<img src="./screenshots/7_merge_pdf.png" width="190px">
-
-### Text to PDF
-
-<img src="./screenshots/8_text_to_pdf.png" width="190px">
-
-### History
-
-<img src="./screenshots/9_history.png" width="190px">
+| Black                                                        | Dark                                                        | White                                                        |
+| ------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------ |
+| <img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> | <img src="./screenshots/home_theme_white.png" width="190px"> |
 
 ### Contributing
 
 #### Dependencies
 
-+ [Butterknife](https://jakewharton.github.io/butterknife/)
-+ [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
-+ [Image-cropper](https://github.com/ArthurHub/Android-Image-Cropper)
-+ [iTextG](http://developers.itextpdf.com/itextg-android)
-+ [Lottie](https://github.com/airbnb/lottie-android)
-+ [Matisse](https://github.com/zhihu/Matisse)
-+ [Material Dialogs](https://github.com/afollestad/material-dialogs)
-+ [Material Ripple](https://github.com/balysv/material-ripple)
-+ [Morphing Button](https://github.com/dmytrodanylyk/android-morphing-button)
-+ [Picasso](http://square.github.io/picasso/)
-+ [Picasso-transformations](https://github.com/wasabeef/picasso-transformations)
-+ [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
-+ [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
-+ [zxing](https://github.com/zxing/zxing)
+- [Butterknife](https://jakewharton.github.io/butterknife/)
+- [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
+- [Image-cropper](https://github.com/ArthurHub/Android-Image-Cropper)
+- [iTextG](http://developers.itextpdf.com/itextg-android)
+- [Lottie](https://github.com/airbnb/lottie-android)
+- [Matisse](https://github.com/zhihu/Matisse)
+- [Material Dialogs](https://github.com/afollestad/material-dialogs)
+- [Material Ripple](https://github.com/balysv/material-ripple)
+- [Morphing Button](https://github.com/dmytrodanylyk/android-morphing-button)
+- [Picasso](http://square.github.io/picasso/)
+- [Picasso-transformations](https://github.com/wasabeef/picasso-transformations)
+- [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
+- [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
+- [zxing](https://github.com/zxing/zxing)
 
 #### Code & Issues
 
@@ -116,8 +129,11 @@ If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) ab
 want.
 [Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 
+### Support Us
+
+<a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
 ### Project Maintainers
 
 This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For
 any sort of queries feel free to mail at swati4star@gmail.com.
-
