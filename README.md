@@ -1,25 +1,52 @@
 # Images To PDF
 
+
+
+
 ### Badges
+
+
+
 
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF)
 [![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PDF%20Converter-blue.svg?style=true)](https://android-arsenal.com/details/3/7132)
 
+
+
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/swati4star.createpdf)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height=
 "80">](https://play.google.com/store/apps/details?id=swati4star.createpdf)
 
+
+
+
 Have JPG when you need a PDF? Convert JPG to PDF in a few seconds! :smiley:  
 Here is an easy to use Android app to convert images to PDF file!
 
+
+
+
 <img src="./screenshots/image_to_pdf2.gif"  width="300px">
+
+
+
 
 ### Support Us
 
+
+
+
 <a href="https://www.buymeacoffee.com/qITGMWB" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
+
+
+
 ### Features
+
+
+
 
 - Create PDF from multiple images from camera or gallery
 - View your converted PDFs
@@ -39,58 +66,163 @@ Here is an easy to use Android app to convert images to PDF file!
 - Extract images from PDF
 - History : View all the PDF related conversions
 
+
+
+
 Here is a home page to get quick access to all the features "PDF Converter" provides:
+
 
 <img src="./screenshots/0_1_home.png" width="190px"> <img src="./screenshots/0_2_home.png" width="190px">
 
+
+
+
 ### Creating a PDF file
+
+
+Steps:
+1. User can view the PDF files previously created or create a new one!
+2. Select the images
+3. Name the PDF file
+4. Creating PDF
+
+
+More details on each step below.
+
 
 ##### Step 1 : User can view the PDF files previously created or create a new one!
 
+
+
+
 <img src="./screenshots/1_home.png" width="190px">
+
+
+From the home page users have the enhancement options with the included features above. Click the button to navigate to the selected tool.
+
 
 ##### Step 2 : Select the images
 
+
+
+
 <img src="./screenshots/2_1_camera.png" width="190px"> <img src="./screenshots/2_gallery.png" width="190px">
+
+
+Select the image by either option 
+- Taking a picture to use from you camera.
+-  Selecting an image from your gallery.
+
 
 ##### Step 3 : Name the PDF file
 
+
+
+
 <img src="./screenshots/3_rename.png" width="190px">
 
+
+Enter in a name to the text box and select ok.
+
+
 ##### Step 4 : Creating PDF
+
+
+
 
 <img src="./screenshots/4_converting.png" width="190px">
 
 
+
+
+
+
 Hurray! PDF files of selected images are created.
+
+
+
 
 ### Viewing the PDF files
 
+
+
+
 <img src="./screenshots/5_viewfiles.png" width="190px"> <img src="./screenshots/6_viewfiles_Action.png" width="190px">
+
+
+Traverse through the file list to find the pdf you want to view. Actions you can pick from include:
+- Opening files.
+- Deleting files.
+- Renaming files.
+- Printing files.
+- Sharing files.
+- Viewing details.
+- Adding or removing password.
+
 
 ### Different themes
 
+
+
+
 Go to Settings, and you can have three type of themes : Black, Dark and White
+
+
+
 
 Black | Dark | White |
 --- | --- | --- |
 <img src="./screenshots/home_theme_black.png" width="190px"> | <img src="./screenshots/home_theme_dark.png" width="190px"> |  <img src="./screenshots/home_theme_white.png" width="190px"> |
 
+
+
+
 ### Merge PDF
+
+
+
 
 <img src="./screenshots/7_merge_pdf.png" width="190px">
 
+
+Merge two pdfs with ease by just selecting both files. Once both files are selected click Merge Files.
+
+
 ### Text to PDF
+
+
+
 
 <img src="./screenshots/8_text_to_pdf.png" width="190px">
 
+
+Select text file to convert it to a pdf. Other enhancement options include:
+- Font Size.
+- Font Family
+- Set Page Size
+- Set Password
+
+
 ### History
+
+
+
 
 <img src="./screenshots/9_history.png" width="190px">
 
+
+View history of previously converted files.
+
+
 ### Contributing
 
+
+
+
 #### Dependencies
+
+
+
 
 + [Butterknife](https://jakewharton.github.io/butterknife/)
 + [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
@@ -107,7 +239,13 @@ Black | Dark | White |
 + [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
 + [zxing](https://github.com/zxing/zxing)
 
+
+
+
 #### Code & Issues
+
+
+
 
 If you are a developer and you wish to contribute to the app please fork the project
 and submit a pull request.
@@ -116,8 +254,26 @@ If you have any questions, feel free to ask [me](mailto:swati4star@gmail.com) ab
 want.
 [Here](https://github.com/Swati4star/Images-to-PDF/issues) is the list of known issues.
 
+
+
+
 ### Project Maintainers
+
+
+
 
 This project is founded and actively maintained by [Swati Garg](https://github.com/Swati4star/). For
 any sort of queries feel free to mail at swati4star@gmail.com.
+
+
+
+
+
+
+
+
+
+
+
+
 
