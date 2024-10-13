@@ -57,7 +57,17 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven {
+        url "https://repo1.maven.org/maven2/"
+    }
+    maven {
+        url "https://repository.jboss.org/maven2"
+    }
+    maven {
+        url 'https://repo.jenkins-ci.org/public/'
+    }
     maven { url "https://repository.aspose.com/repo/" }
+    maven { url 'https://maven.scijava.org/content/repositories/public' }
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -103,15 +113,16 @@ dependencies {
 
     // Picasso, image editor, image cropper
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
+    implementation 'jp.wasabeef:picasso-transformations:2.4.0'
     implementation 'ja.burhanrashid52:photoeditor:0.2.1'
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation "com.github.ArthurHub:Android-Image-Cropper:2.7.0"
+    api 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
     // Viewpager transformation
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     // Image picker, and folder picker
-    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
+    implementation 'com.github.zhihu:matisse:0.5.3-beta3'
     implementation 'lib.kashif:folderpicker:2.4'
 
     // Zxing - for scanning qr code
@@ -119,7 +130,7 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
 
     // color picker
-    implementation 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
+    implementation 'com.github.danielnilsson9:color-picker-view:master'
 
     implementation 'org.bouncycastle:bcpkix-jdk15to18:1.68'
     implementation 'org.bouncycastle:bcprov-jdk15to18:1.68'
