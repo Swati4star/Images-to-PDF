@@ -54,6 +54,11 @@ configurations {
         exclude module: 'httpclient'
     }
 }
+configurations.configureEach {
+    resolutionStrategy {
+        force 'com.squareup.picasso:picasso:2.5.2'
+    }
+}
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
@@ -122,7 +127,7 @@ dependencies {
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     // Image picker, and folder picker
-    implementation 'com.github.zhihu:matisse:0.5.3-beta3'
+    implementation 'com.github.zhihu:Matisse:v0.5.3-beta3'
     implementation 'lib.kashif:folderpicker:2.4'
 
     // Zxing - for scanning qr code

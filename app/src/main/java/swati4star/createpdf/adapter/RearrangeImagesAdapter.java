@@ -55,7 +55,7 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
         } else {
             holder.buttonDown.setVisibility(View.VISIBLE);
         }
-        Picasso.get().load(imageFile).into(holder.imageView);
+        Picasso.with(mContext).load(imageFile).into(holder.imageView);
         holder.pageNumber.setText(String.valueOf(position + 1));
     }
 
