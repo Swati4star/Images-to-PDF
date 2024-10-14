@@ -2,10 +2,19 @@
 
 buildscript {
     repositories {
+        mavenCentral()
         maven {
-            url "https://jcenter.bintray.com"
+            url "https://repo1.maven.org/maven2/"
         }
-
+        maven {
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            url 'https://repo.jenkins-ci.org/public/'
+        }
         google()
     }
     dependencies {
@@ -20,7 +29,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
