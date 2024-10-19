@@ -99,15 +99,28 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
         Log.v("stage 1", "store the pdf in sd card");
 
-        Rectangle pageSize = calculatePageSize();
-        pageSize.setBackgroundColor(getBaseColor(mPageColor));
-        Document document = new Document(pageSize,
-                mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
-        Log.v("stage 2", "Document Created");
-        document.setMargins(mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
-        Rectangle documentRect = document.getPageSize();
-
         try {
+
+            Rectangle pageSize;
+
+            Image first = Image.getInstance(mImagesUri.get(0));
+            float firstHeight = first.getPlainHeight();
+            float firstWidth = first.getPlainWidth();
+
+            if (firstWidth > firstHeight) { // this will guarantee the pdf to be landscape.
+                pageSize = PageSize.A4.rotate(); // set to landscape
+            } else {
+                pageSize = calculatePageSize(); // otherwise set to a4
+            }
+
+            pageSize.setBackgroundColor(getBaseColor(mPageColor));
+
+            Document document = new Document(pageSize,
+                    mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
+            document.setMargins(mMarginLeft, mMarginRight, mMarginTop, mMarginBottom);
+
+            Log.v("stage 2", "Document Created");
+
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(mPath));
 
             Log.v("Stage 3", "Pdf writer");
@@ -152,10 +165,13 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
                 float pageWidth = document.getPageSize().getWidth() - (mMarginLeft + mMarginRight);
                 float pageHeight = document.getPageSize().getHeight() - (mMarginBottom + mMarginTop);
-                if (mImageScaleType.equals(IMAGE_SCALE_TYPE_ASPECT_RATIO))
+                if (mImageScaleType.equals(IMAGE_SCALE_TYPE_ASPECT_RATIO)) {
                     image.scaleToFit(pageWidth, pageHeight);
-                else
+                } else {
                     image.scaleAbsolute(pageWidth, pageHeight);
+                }
+
+                Rectangle documentRect = document.getPageSize(); // updates with current document size
 
                 image.setAbsolutePosition(
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,
@@ -164,6 +180,21 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 Log.v("Stage 7", "Image Alignments");
                 addPageNumber(documentRect, writer);
                 document.add(image);
+
+                Log.v("Stage 7.1", "Calculating next page size");
+
+                if (i < (mImagesUri.size() - 1)) {
+                    Image next = Image.getInstance(mImagesUri.get(i + 1));
+
+                    float nextHeight = next.getPlainHeight();
+                    float nextWidth = next.getPlainWidth();
+
+                    if (nextWidth > nextHeight) { // this will guarantee the pdf to be landscape.
+                        document.setPageSize(PageSize.A4.rotate());
+                    } else {
+                        document.setPageSize(PageSize.A4);
+                    }
+                }
 
                 document.newPage();
             }
