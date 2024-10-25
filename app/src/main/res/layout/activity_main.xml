@@ -50,6 +50,51 @@
             app:contentPaddingBottom="30dp" />
     </LinearLayout>
 
+
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_background_layout"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/toolbar_bg">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@color/transparent"
+                android:paddingVertical="7.5dp"
+                app:elevation="0dp">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:navigationIcon="@drawable/ic_menu"
+                    app:titleTextAppearance="@style/ToolbarTheme"
+                    app:titleTextColor="?attr/titleToolbarTextColor" />
+            </com.google.android.material.appbar.AppBarLayout>
+        </RelativeLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-55dp"
+            android:layout_marginBottom="-30dp"
+            android:paddingTop="20dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="0dp"
+            app:contentPaddingBottom="30dp" />
+    </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="300dp"
