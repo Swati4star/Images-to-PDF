@@ -1,0 +1,614 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">محول PDF</string>
+    <string name="title">إجراءات PDF</string>
+
+    <string name="file_name_text">اسم الملف</string>
+    <string name="select_images_text">حدد الصور</string>
+    <string name="password_protect_pdf_text">حماية كلمة المرور لملف PDF</string>
+    <string name="edit_images_text">تعديل الصور</string>
+    <string name="open_pdf_text">افتح PDF</string>
+    <string name="create_pdf_text">إنشاء PDF</string>
+    <string name="details"><b>تفاصيل</b></string>
+    <string name="search_hint">اسم الملف</string>
+    <string name="search">بحث</string>
+    <string name="default_content_description">لا يوجد وصف</string>
+    <string name="prompt_input">أدخل هنا</string>
+
+    <!--   Items  -->
+    <array name="items">
+        <item>فتح الملف</item>
+        <item>حذف الملف</item>
+        <item>إعادة تسمية الملف</item>
+        <item>طباعة الملف</item>
+        <item>مشاركة الملف</item>
+        <item>عرض التفاصيل</item>
+        <item>إضافة كلمة مرور</item>
+        <item>إزالة كلمة المرور</item>
+        <item>تدوير الصفحات</item>
+        <item>إضافة علامة مائية</item>
+    </array>
+
+    <array name="itemIds" translatable="false">
+        <item>open</item>
+        <item>delete</item>
+        <item>rename</item>
+        <item>print</item>
+        <item>e-mail</item>
+        <item>details</item>
+    </array>
+
+    <string-array name="array_page_sizes_b0_b10" translatable="false">
+        <item>B0 (1000 x 1414 mm)</item>
+        <item>B1 (707 x 1000 mm)</item>
+        <item>B2 (500 x 707 mm)</item>
+        <item>B3 (353 x 500 mm)</item>
+        <item>B4 (250 x 353 mm)</item>
+        <item>B5 (176 x 250 mm)</item>
+        <item>B6 (125 x 176 mm)</item>
+        <item>B7 (88 x 125 mm)</item>
+        <item>B8 (62 x 88 mm)</item>
+        <item>B9 (44 x 62 mm)</item>
+        <item>B10 (31 x 44 mm)</item>
+    </string-array>
+
+    <string-array name="array_page_sizes_a0_b10" translatable="false">
+        <item>A0 (841 x 1189 mm)</item>
+        <item>A1 (594 x 841 mm)</item>
+        <item>A2 (420 x 594 mm)</item>
+        <item>A3 (297 x 420 mm)</item>
+        <item>A4 (210 x 297 mm)</item>
+        <item>A5 (148 x 210 mm)</item>
+        <item>A6 (105 x 148 mm)</item>
+        <item>A7 (74 x 105 mm)</item>
+        <item>A8 (52 x 74 mm)</item>
+        <item>A9 (37 x 52 mm)</item>
+        <item>A10 (26 x 37 mm)</item>
+    </string-array>
+
+    <string-array name="fontStyles" translatable="false">
+        <item>NORMAL</item>
+        <item>BOLD</item>
+        <item>ITALIC</item>
+        <item>UNDERLINE</item>
+        <item>STRIKETHRU</item>
+        <item>BOLDITALIC</item>
+    </string-array>
+
+    <string name="pdf_ext" translatable="false">.pdf</string>
+    <string name="pdf_type" translatable="false">application/pdf</string>
+    <string name="txt_type" translatable="false">text/*</string>
+    <string name="please_wait">يرجى الانتظار</string>
+    <string name="bundleKey">ImageUri</string>
+    <string name="whatsappToast">عذراً! لم تتم إضافة الصور. يرجى اختيار الصور من خيار **اختر الصور**.</string>
+    <string name="successToast">تمت إضافة الصور بنجاح.</string>
+
+    <!-- Navigation drawer strings -->
+    <string name="create_pdf">إنشاء PDF</string>
+    <string name="qr_barcode_pdf">رموز QR والباركود</string>
+    <string name="viewFiles">عرض الملفات</string>
+    <string name="extras">إضافات</string>
+    <string name="share">مشاركة</string>
+    <string name="help">مساعدة</string>
+    <string name="faqs" translatable="false">FAQ</string>
+
+    <!-- images to PDF -->
+    <string name="images_to_pdf">الصور إلى PDF</string>
+    <string name="page_color">لون الصفحة</string>
+    <string name="filter_images_Text">تصفية الصور \n</string>
+    <!-- Image to PDF -Preview PDF -->
+    <string name="preview_image_to_pdf">معاينة PDF</string>
+    <!-- Image to PDF -show page number -->
+    <string name="choose_page_number_style">اختر نمط رقم الصفحة</string>
+    <string name="show_pg_num">إظهار أرقام الصفحات</string>
+    <string name="page_x_of_n">الصفحة X من N</string>
+    <string name="page_x">X من N</string>
+    <string name="x">X</string>
+    <!-- Image to PDF -Rearrange images -->
+    <string name="arrow_up">السهم لأعلى</string>
+    <string name="arrow_down">السهم لأسفل</string>
+    <string name="rearrange_images">إعادة ترتيب الصور</string>
+    <string name="rearrange_text">إعادة الترتيب</string>
+    <string name="images_rearranged">تم إعادة ترتيب الصور</string>
+    <string name="snackbar_undoAction">تراجع</string>
+    <string name="pdf_does_not_exist_message">ملف PDF غير موجود.</string>
+    <string name="image_rearranging_options">خيارات إعادة ترتيب الصور</string>
+    <string name="filter_file_name" translatable="false">%1$s_%2$s.jpg</string>
+
+    <!--    Image compression-->
+    <string name="compress_image">ضغط الصورة : %1$s %%</string>
+    <string name="quality_image">أدخل نسبة %% لضغط الصورة :</string>
+    <string name="invalid_entry">إدخال غير صالح</string>
+    <string name="compress_dialog_enter_prompt">أدخل هنا</string>
+    <string name="compress_dialog_percentage">%</string>
+    <string name="set_as_default">تعيين كإعداد افتراضي</string>
+    <!-- Image to PDF -Add margins -->
+    <string name="add_margins">إضافة هوامش</string>
+    <string name="top">أعلى</string>
+    <string name="bottom">أسفل</string>
+    <string name="right">يمين</string>
+    <string name="left">يسار</string>
+
+    <!--  Add Image Border  -->
+    <string name="border">إضافة حدود للصورة</string>
+    <string name="border_dialog_title">عرض الحدود : %d</string>
+    <string name="border_width_prompt">أدخل وحدات عرض الحدود</string>
+
+    <!--  set Image Scale type  -->
+    <string name="image_scale_type">تعيين نوع مقياس الصورة</string>
+    <string name="stretch_image">تمديد الصورة لتناسب الصفحة</string>
+    <string name="maintain_aspect_ratio">الحفاظ على نسبة العرض إلى الارتفاع للصورة</string>
+
+
+    <!--QR & Barcode Scan-->
+    <string name="scan_qrcode">مسح رمز QR</string>
+    <string name="scan_barcode">مسح الرمز الشريطي</string>
+    <string name="qrbarcodes_to_pdf">إنشاء PDF من رموز QR والباركود</string>
+    <string name="scan_cancelled">تم إلغاء المسح بواسطة المستخدم</string>
+
+    <!--Snackbar strings -->
+    <string name="snackbar_no_images">لم يتم اختيار أي صور</string>
+    <string name="snackbar_no_pdfs_selected">لم يتم اختيار أي ملفات PDF</string>
+    <string name="snackbar_name_not_blank">لا يمكن أن يكون الاسم فارغاً</string>
+    <string name="snackbar_permissions_given">تم منح الأذونات!</string>
+    <string name="snackbar_insufficient_permissions">أذونات غير كافية!</string>
+    <string name="no_permissions">يرجى منح أذونات التخزين لعرض ملفاتك.</string>
+    <string name="prompt_give_permission">توفير الأذونات</string>
+    <string name="snackbar_images_added">تمت إضافة الصور</string>
+    <string name="snackbar_file_renamed">تمت إعادة تسمية الملف.</string>
+    <string name="snackbar_file_not_renamed">لا يمكن إعادة تسمية الملف.</string>
+    <string name="snackbar_file_deleted">تم حذف الملف.</string>
+    <string name="snackbar_file_not_deleted">لا يمكن حذف الملف.</string>
+    <string name="snackbar_folder_not_created">حدث خطأ أثناء إنشاء مجلد التطبيق.</string>
+    <string name="pdf_merged">تم دمج ملفات PDF</string>
+    <string name="error_path_not_found">عذراً، لا يمكننا الوصول إلى الملف في هذا الموقع</string>
+    <string name="creating_pdf">جاري إنشاء PDF</string>
+    <string name="creating_txt">جاري إنشاء ملف نصي</string>
+    <string name="enter_file_name">أدخل اسم الملف</string>
+    <string name="example">مثال : abc</string>
+    <string name="snackbar_no_pdf_app">لا يوجد تطبيق لقراءة ملف PDF</string>
+    <string name="open_file">فتح الملف</string>
+    <string name="set_password">تعيين كلمة مرور</string>
+    <string name="enter_password">أدخل كلمة المرور</string>
+    <string name="snackbar_password_cannot_be_blank">لا يمكن أن تكون كلمة المرور فارغة</string>
+    <string name="cannot_add_password">لم يتم تطبيق كلمة المرور على ملف PDF. يرجى التحقق من الملف مرة أخرى.</string>
+    <string name="snackbar_imagecropped">تم اقتصاص الصور</string>
+    <string name="cropImage_activityTitle">قص الصورة</string>
+    <string name="snackbar_pdfCreated">تم إنشاء ملف PDF!</string>
+    <string name="error_uri_not_found">عذراً، لا يمكننا الوصول إلى الصورة المقتصّة. يرجى المحاولة مرة أخرى</string>
+    <string name="snack_bar_empty_txt_in_pdf">الملف المختار لا يحتوي على نص لاستخراجه!</string>
+    <string name="snackbar_txtExtracted">تم استخراج النص!</string>
+    <string name="snackbar_pdfselected">تم اختيار ملف PDF!</string>
+    <string name="snackbar_viewAction">عرض</string>
+    <string name="more_options_text">مزيد من خيارات التحسين</string>
+    <string name="snackbar_no_duplicate_pdf">لم يتم العثور على صفحات مكررة. لم يتم إنشاء ملف PDF جديد.</string>
+    <string name="snackbar_duplicate_removed">تم إنشاء ملف PDF جديد بعد إزالة الصفحات المكررة.</string>
+    <string name="snackbar_invert_unsuccessful">لم يتم قلب ملف PDF</string>
+    <string name="snackbar_invert_successfull">تم قلب الملف</string>
+    <string name="snackbar_color_too_close">لون الخط ولون الخلفية متشابهان للغاية</string>
+    
+
+    <!-- Excel to PDF   -->
+    <string name="excel_selected">تم اختيار ملف Excel</string>
+    <string name="excel_to_pdf">تحويل Excel إلى PDF</string>
+    <string name="excel_tv_view_text">تم اختيار ملف Excel: </string>
+    <string name="select_excel_file">اختر ملف Excel</string>
+
+
+    <!-- Share strings -->
+    <string name="share_chooser">اختر التطبيق لإرسال الرسالة…</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_us_text">مرحباً! لقد قمت بمراجعة هذا التطبيق في متجر بلاي. جربه: https://play.google.com/store/apps/details?id=swati4star.createpdf . يقوم بتحويل الصور إلى PDF بسلاسة. :)</string>
+    <string name="snackbar_no_share_app">لا يوجد تطبيق للمشاركة.</string>
+
+    <!-- Select Images string -->
+    <string name="images_selected">تم اختيار %1$d صورة(صور).</string>
+
+    <!-- Feedback Strings -->
+    <string name="feedback_subject">اقتراحات لمحول الصور إلى PDF</string>
+    <string name="feedback_text">يرجى كتابة ملاحظاتك القيمة، أو فقط اكتب مرحباً! :)</string>
+    <string name="snackbar_no_email_clients">لا يوجد عملاء بريد إلكتروني مثبتون.</string>
+    <string name="feedback_chooser">إرسال بريد…</string>
+    <string name="no_pdf">لا توجد ملفات PDF لعرضها</string>
+    <string name="get_started">ابدأ الآن</string>
+    <string name="view_files_text">عرض جميع ملفاتك المحولة هنا!</string>
+    <string name="empty_image_description">لا توجد ملفات PDF</string>
+
+    <!--  Add Password -->
+    <string name="enter_password_custom">أدخل كلمة المرور</string>
+    <string name="example_pass_123">pass@123</string>
+    <string name="remove_dialog">إزالة</string>
+    <string name="password_remove">تمت إزالة كلمة المرور</string>
+
+    <!-- Merge PDF  -->
+    <string name="merge_pdf">دمج PDF</string>
+    <string name="merge_file_select">اختر ملفاً</string>
+    <string name="File_hint_two" tools:keep="@string/File_hint_two">مسار الملف لملف PDF الثاني</string>
+    <string name="merge_files">دمج الملفات</string>
+    <string name="file_date_text">تاريخ الملف</string>
+    <string name="file_size_text">حجم الملف</string>
+    <string name="encrypted_file">_مشفر.pdf</string>
+    <string name="i_have_attached_pdfs_to_this_message">لقد قمت بإرفاق ملف(ملفات) إلى هذه الرسالة</string>
+    <string name="btn_sav_text" translatable="false">حفظ النص</string>
+
+    <string name="nextimage_contentdesc">الصورة التالية</string>
+    <string name="decrypted_file">_غير مشفر.pdf</string>
+    <string name="decrypt_message">أدخل كلمة المرور للمتابعة</string>
+
+    <string name="snackbar_txtselected">تم اختيار ملف نصي!</string>
+    <string name="decrypt_protected_file">ملف PDF المحدد محمي بكلمة مرور. أدخل كلمة المرور للمتابعة…</string>
+    <string name="not_encrypted">ملف PDF غير مشفر</string>
+    <string name="save_current">حفظ</string>
+    <string name="save">حفظ</string>
+    <string name="choose_color_text">اختر لوناً :</string>
+    <string name="save_first">احفظ الصورة الحالية أولاً</string>
+    <string name="Filter_name">فلتر</string>
+    <string name="Filter_image_preview">معاينة فلتر الصورة</string>
+    <string name="warning">تحذير</string>
+    <string name="overwrite_message">يوجد بالفعل ملف بنفس الاسم. هل ترغب في الكتابة فوقه؟</string>
+
+    <!--  Text To PDF -Set Page Size-->
+    <string name="set_page_size_text">تعيين حجم الصفحة</string>
+    <string name="b0_to_b10">B0 إلى B10</string>
+    <string name="a0_to_a10">A0 إلى A10</string>
+    <string name="tabloid" translatable="false">TABLOID</string>
+    <string name="executive" translatable="false">EXECUTIVE</string>
+    <string name="ledger" translatable="false">LEDGER</string>
+    <string name="letter" translatable="false">LETTER</string>
+    <string name="legal" translatable="false">LEGAL</string>
+    <string name="a4" translatable="false">A4</string>
+    <string name="fit_size" translatable="false">Fit size</string>
+    <string name="default_page_size">افتراضي ( %s )</string>
+    <string name="master_password_changed">يبدو أن كلمة المرور غير صحيحة. قد تكون قد قمت بتغيير كلمة المرور الرئيسية.</string>
+
+
+    <!--View File options    -->
+    <string name="delete_alert_selected">هل ترغب في حذف جميع الملفات المحددة؟</string>
+    <string name="sort_by_title">ترتيب حسب</string>
+    <string name="delete">حذف</string>
+    <string name="sort">ترتيب</string>
+
+    <!-- Directory Strings -->
+    <string name="directory">المجلد</string>
+    <string name="moving_files">نقل ملفاتك</string>
+    <string name="success_move">تم نقل ملفاتك بنجاح</string>
+    <string name="dir_does_not_exists">المجلد غير موجود</string>
+    <string name="move_files_delete_dir">نقل الملفات وحذف المجلد</string>
+    <string name="directory_deleted">تم حذف المجلد</string>
+    <string name="success_delete_directory">تم حذف المجلد بنجاح</string>
+    <string name="moved_files">تم نقل الملفات بنجاح</string>
+    <string name="dialog_new_dir">أدخل اسم المجلد الجديد</string>
+    <string name="dialog_dir">أدخل اسم المجلد</string>
+    <string name="cancel">إلغاء</string>
+    <string name="ok">حسناً</string>
+    <string name="yes">نعم</string>
+    <string name="select_all">تحديد الكل</string>
+    <string name="converting_file_message">جارٍ تحويل ملفاتك إلى PDF.</string>
+    <string name="select_text_file">اختر ملف نصي</string>
+    <string name="install_file_manager">يرجى تثبيت مدير ملفات</string>
+    <string name="crop_images" translatable="false">Crop Images</string>
+    <string name="crop_images_content" translatable="false">Do you want to crop the images before processing?</string>
+    <string name="no" translatable="false">No</string>
+
+    <!-- Text to PDF   -->
+    <string name="text_to_pdf">تحويل النص إلى PDF</string>
+    <string name="text_file_selected">تم اختيار ملف نصي</string>
+    <string name="select_file">اختر ملفاً لرفعه</string>
+    <string name="text_type" translatable="false">text/plain</string>
+    <string name="new_directory">مجلد جديد</string>
+    <string name="previous_image_content_desc">الصورة السابقة</string>
+    <string name="text_file_name">"ملف نصي : "</string>
+    <string name="extension_not_supported">عذراً! نوع الملف هذا غير مدعوم حالياً.</string>
+    <string name="font_color">لون الخط</string>
+    <string name="edit_font_size">حجم الخط (افتراضي: %d)</string>
+    <string name="enter_font_size">أدخل حجم الخط</string>
+    <string name="example_font">مثال: 10</string>
+    <string name="font_size_changed">تم تغيير حجم الخط</string>
+    <string name="font_size">حجم الخط: %1$s</string>
+
+    <!--  About US & App Description & Contact US  -->
+    <string name="about_us">معلومات عنا</string>
+    <string name="rate_us">أعطنا تقييم</string>
+    <string name="app_description">تطبيق أندرويد سهل الاستخدام لتحويل ملفاتك إلى PDF.</string>
+    <string name="version">الإصدار: </string>
+    <string name="developer">المطور: سواتي غارغ</string>
+    <string name="github_repo">مستودع GitHub</string>
+    <string name="view_contributors">عرض المساهمين</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="mail">إرسال بريد</string>
+    <string name="join_slack">انضم إلينا على Slack</string>
+    <string name="website">زيارة موقعنا الإلكتروني</string>
+    <string name="license">الرخصة</string>
+    <string name="playstore">قيمنا على متجر Play</string>
+
+    <!-- Preview strings -->
+    <string name="swipe_to_view_next">اسحب لليسار لعرض الصورة التالية</string>
+    <string name="showing_image">عرض %1$d من %2$d صورة(صور)</string>
+
+    <!-- Filter strings -->
+    <string name="filter_brush">فرشاة</string>
+    <string name="filter_none">لا شيء</string>
+    <string name="filter_autofix">إصلاح تلقائي</string>
+    <string name="filter_grayscale">تدرج الرمادي</string>
+    <string name="filter_brightness">سطوع</string>
+    <string name="filter_contrast">تباين</string>
+    <string name="filter_cross">عملية تقاطع</string>
+    <string name="filter_documentary">وثائقي</string>
+    <string name="filter_duetone">تدرج مزدوج</string>
+    <string name="filter_filllight">إضاءة ملء</string>
+    <string name="filter_filpver">قلب عمودي</string>
+    <string name="filter_fliphor">قلب أفقي</string>
+    <string name="filter_grain">حبوب</string>
+    <string name="filter_lomish">فيلم ملون</string>
+    <string name="filter_negative">سلبي</string>
+    <string name="filter_poster">تأثير البوستر</string>
+    <string name="filter_rotate">دوران</string>
+    <string name="filter_saturate">إشباع</string>
+    <string name="filter_sepia">سيبيا</string>
+    <string name="filter_sharpen">تعزيز</string>
+    <string name="filter_temp">درجة الحرارة</string>
+    <string name="filter_tint">تلوين</string>
+    <string name="filter_vig">فينيت</string>
+    <string name="filter_saved">الصورة محفوظة</string>
+    <string name="created">تم الإنشاء</string>
+    <string name="printed">تم الطباعة</string>
+    <string name="renamed">تمت إعادة التسمية</string>
+    <string name="deleted">تم الحذف</string>
+    <string name="rotated">تم التدوير</string>
+    <string name="encrypted">تم التشفير</string>
+    <string name="decrypted">تم فك التشفير</string>
+    <string name="history">التاريخ</string>
+    <string name="no_history_message">لا توجد سجلات لعرضها</string>
+    <string name="view_history_here_message">عرض جميع سجلات الملفات المحولة هنا!</string>
+    <string name="delete_history_message">هل أنت متأكد أنك تريد حذف السجل؟</string>
+
+    <!-- Extract images -->
+    <string name="extract_images">استخراج الصور</string>
+    <string name="extract_images_failed">لم نتمكن من العثور على أي صور في ملف PDF المحدد.</string>
+    <string name="extract_images_success">وجدنا %1$d صورة(صور) في ملف PDF المحدد. لقد تم حفظها في مجلد ملفات PDF في الدليل الجذر.</string>
+
+
+    <!--  Extract Text-->
+    <string name="extract_text">استخراج النص</string>
+    <string name="pdf_selected">تم تحديد ملف PDF: </string>
+    <string name="file_info" translatable="false">\n  اسم الملف : %1$s \n\n  المسار : %2$s \n\n  الحجم : %3$s \n\n  تاريخ التعديل %4$s</string>
+
+
+    <!-- Text To PDF   FontFamily-->
+    <string name="default_font_family_text">عائلة الخط (افتراضي: %s)</string>
+    <string name="font_family_text">"عائلة الخط: "</string>
+    <string name="courier" translatable="false">COURIER</string>
+    <string name="helvetica" translatable="false">HELVETICA</string>
+    <string name="times_roman" translatable="false">TIMES_ROMAN</string>
+    <string name="symbol" translatable="false">SYMBOL</string>
+    <string name="zapfdingbats" translatable="false">ZAPFDINGBATS</string>
+    <string name="undefined">غير معرف</string>
+    <string name="selected_image">الصورة المحددة</string>
+    <string name="reset">إعادة تعيين</string>
+    <string name="rotate">تدوير</string>
+    <string name="done">تم</string>
+    <string name="image_successfully_cropped">تم قص الصورة بنجاح</string>
+    <string name="confirm_exit_message">اضغط على العودة مرة أخرى للخروج</string>
+
+    <string name="filter_not_saved">لم يتمكن من حفظ الصورة</string>
+    <string name="remove_image_message">هل أنت متأكد أنك تريد إزالة هذه الصورة؟</string>
+    <string name="dont_show_again">لا تظهر مرة أخرى</string>
+    <string name="remove_page_message">هل أنت متأكد أنك تريد إزالة هذه الصفحة؟</string>
+
+    <!-- Watermark Strings -->
+    <string name="encrypted_file_text">ملف مشفر</string>
+
+    <!-- Split PDF -->
+    <string name="split_pdf">تقسيم PDF</string>
+    <string name="split_success">تم تقسيم PDF المحدد بنجاح. تم تقسيمه إلى %1$d ملف PDF(ات)</string>
+    <string name="split_info">سيتم تقسيم PDF إلى ملفات PDF متعددة.\nمثال على التنسيق: 1&#8211;5، 6&#8211;7، 8، 9</string>
+    <string name="error_page_number">رقم الصفحة غير صالح</string>
+    <string name="error_page_range">مدخل النطاق غير صالح</string>
+    <string name="error_invalid_input">مدخل غير صالح</string>
+    <string name="split_one_page_pdf_alert">لا يمكن تقسيم PDF المحدد لأنه يحتوي على صفحة واحدة فقط!</string>
+
+    <!-- Remove Pages -->
+    <string name="remove_pages">إزالة الصفحات</string>
+    <string name="remove_pages_error">قيمة المدخل غير صالحة</string>
+    <string name="encrypted_pdf">PDF محمي بكلمة مرور</string>
+    <string name="file_access_error">لم نتمكن من الوصول إلى PDF. قد تكون الملفات مشفرة أو في التخزين الخارجي.</string>
+    <string name="file_order">لم يتم إجراء أي تغييرات على الملف</string>
+
+    <!-- Reorder Pages -->
+
+
+    <!-- Compress PDF -->
+    <string name="compress_pdf">ضغط PDF</string>
+    <string name="compress_pdf_prompt">أدخل نسبة ضغط PDF: </string>
+    <string name="compress_info">تهانينا! تم ضغط PDF الخاص بك: \n حجم PDF الأصلي: %s \n حجم PDF المضغوط: %s</string>
+
+    <!-- PDF to Images string resources-->
+    <string name="pdf_to_images">PDF إلى صور</string>
+    <string name="create_images">إنشاء صور</string>
+    <string name="select_pdf_file">اختر ملف PDF</string>
+    <string name="share_images">مشاركة الصور</string>
+    <string name="view_images">عرض الصور</string>
+    <string name="view_in_gallery">عرض الصور في المعرض</string>
+
+    <!-- Remove Duplicate Pages -->
+    <string name="remove_duplicate_pages">إزالة الصفحات المكررة</string>
+    <string name="remove_duplicate_info">سيتم إزالة الصفحات المكررة من ملف PDF.</string>
+    <string name="remove_duplicate">إزالة الصفحات المكررة.</string>
+
+    <!-- Invert Pdf -->
+    <string name="invert_pdf">عكس PDF</string>
+    <string name="invert_pdf_info">سيتم عكس جميع الألوان في ملف PDF</string>
+    <string name="invert_pdf_title">عكس PDF</string>
+
+    <!-- Rate us strings -->
+    <string name="rate_positive">قيم الآن</string>
+    <string name="rate_negative">لا، شكرًا</string>
+    <string name="rate_title">قيمنا!</string>
+    <string name="rate_dialog_text">إذا كنت تستمتع بهذا التطبيق، يرجى تخصيص لحظة لتقييمه. لن تستغرق أكثر من دقيقة. شكرًا لدعمك! :)</string>
+    <string name="rate_us_never">أبداً</string>
+    <string name="error_occurred">حدث خطأ</string>
+
+
+    <!--Rotate Pages    -->
+    <string name="rotate_pages">تدوير الصفحات</string>
+    <string name="enter_rotation_angle">أدخل زاوية التدوير</string>
+    <string name="rotated_file_name" translatable="false">%s_rotated_%s%s</string>
+    <string name="degree_90" translatable="false">90 &#xb0;</string>
+    <string name="degree_180" translatable="false">180 &#xb0;</string>
+    <string name="degree_270" translatable="false">270 &#xb0;</string>
+    <string name="share_files">مشاركة الملفات</string>
+    <string name="pdf_removed_from_list">تمت إزالة ملف PDF من القائمة.</string>
+    <string name="pdf_added_to_list">تمت إضافة ملف PDF إلى القائمة.</string>
+    <string name="select_files">اختر الملفات</string>
+
+    <!-- Settings page -->
+    <string name="settings">الإعدادات</string>
+    <string name="compression_image_edit">تغيير قيمة ضغط الصورة</string>
+    <string name="font_family_edit">تغيير خط الافتراضي</string>
+    <string name="font_size_edit">تغيير حجم الخط الافتراضي</string>
+    <string name="theme_edit">تغيير الثيم الافتراضي</string>
+    <string name="image_compression_value_default">قيمة ضغط الصورة الافتراضية: %d %%</string>
+    <string name="theme_value_def">قيمة الثيم الافتراضية: %s </string>
+    <string name="page_size_value_def">قيمة حجم الصفحة الافتراضية: %s </string>
+    <string name="font_size_value_def">قيمة حجم الخط الافتراضية: %d </string>
+    <string name="font_family_value_def">قيمة خط الافتراضي: %s </string>
+    <string name="settings_info">يمكنك تعديل القيمة الافتراضية لإعدادات مختلفة هنا.</string>
+    <string name="storage_location_modified">تم تغيير موقع التخزين</string>
+    <string name="storage_location_info">موقع التخزين (غير قابل للتغيير)</string>
+    <string name="theme_white">أبيض</string>
+    <string name="theme_dark">داكن</string>
+    <string name="theme_black">أسود</string>
+    <string name="theme_system" tools:ignore="MissingTranslation">النظام</string>
+    <string name="change_master_pwd">تغيير كلمة مرور الماستر</string>
+    <string name="current_master_pwd">كلمة مرور الماستر الحالية هي \"%1$s\" لكل ملف PDF مشفر. يمكنك تغييرها هنا:</string>
+
+    <!-- Home page -->
+    <string name="home_page">الرئيسية</string>
+    <string name="create_new_pdfs">إنشاء PDF جديد</string>
+    <string name="view_pdfs">عرض PDFs</string>
+    <string name="view_pdf">عرض PDF</string>
+    <string name="modify_existing_pdfs">تعديل PDFs الموجودة</string>
+    <string name="more_options">خيارات إضافية</string>
+    <string name="add_password">إضافة كلمة مرور</string>
+    <string name="add_text">إضافة نص</string>
+    <string name="reorder_pages">إعادة ترتيب الصفحات</string>
+    <string name="remove_password">إزالة كلمة المرور</string>
+    <string name="enhance_created_pdfs">تحسين PDFs المخصصة</string>
+    <string name="viewfiles_rotatepages">1. حدد PDF الذي ترغب في تدويره. \n2. اختر تدوير الصفحات. \n3. اختر زاوية التدوير. اختر موافق. \n4. سيتم إنشاء PDF مدور جديد.</string>
+    <string name="viewfiles_addpassword">1. حدد PDF الذي ترغب في إضافة كلمة مرور له. \n2. اختر إضافة كلمة مرور. \n3. اكتب كلمة المرور الجديدة. اختر موافق. \n4. سيتم إنشاء PDF جديد بكلمة مرور.</string>
+    <string name="viewfiles_removepassword">1. حدد PDF الذي ترغب في إزالة كلمة المرور منه. \n2. اختر إزالة كلمة المرور. \n3. اكتب كلمة مرور PDF. اختر موافق. \n4. سيتم إنشاء PDF جديد بدون كلمة مرور.</string>
+    <string name="grayscale_images">إنشاء PDF بالألوان الرمادية</string>
+
+    <!-- Welcome screens-->
+    <string name="welcome_create_pdf_message">إنشاء ملف PDF</string>
+    <string name="welcome_create_pdf_info">عرض ملفات PDF التي تم إنشاؤها مسبقًا أو إنشاء ملف جديد!</string>
+    <string name="welcome_themes_title">ثيمات مختلفة</string>
+    <string name="welcome_themes_message">انتقل إلى الإعدادات، ويمكنك اختيار من ثلاثة أنواع من الثيمات: أسود، داكن، أبيض</string>
+    <string name="welcome_merge_title">دمج ملف PDF</string>
+    <string name="welcome_text_to_pdf">النص إلى PDF</string>
+    <string name="welcome_text_to_pdf_message">قم بتحويل ملفات النص إلى ملفات PDF المفضلة لديك بسهولة</string>
+    <string name="welcome_qrcode_to_pdf">QR Code إلى PDF</string>
+    <string name="welcome_qrcode_to_pdf_message">قم بتحويل رموز QR وباركود إلى PDF بطريقة بسيطة</string>
+    <string name="welcome_remove_pages">إزالة الصفحات</string>
+    <string name="welcome_remove_pages_message">قم بإزالة الصفحات غير المرغوب فيها التي لم تعد بحاجة إليها</string>
+    <string name="welcome_reorder_pages">إعادة ترتيب الصفحات</string>
+    <string name="welcome_reorder_pages_message">قم بإعادة ترتيب الصفحات بالطريقة التي ترغب بها</string>
+    <string name="welcome_extract_images">استخراج الصور من PDF</string>
+    <string name="welcome_extract_images_message">استخراج جميع الصور الممكنة من PDFs دفعة واحدة</string>
+    <string name="welcome_merge_message">دمج ملفات PDF المختلفة الموجودة في هاتفك في ملف واحد</string>
+    <string name="welcome_viewfiles_title">عرض ملفات PDF</string>
+    <string name="welcome_viewfiles_message">عرض، حذف، إعادة تسمية، مشاركة وإضافة كلمة مرور إلى ملف PDF الخاص بك</string>
+    <string name="welcome_excel_message" translatable="false">Convert your excel files into your most desired PDFs at ease</string>
+    <string name="skip_text">تخطي</string>
+    <string name="get_started_title">ابدأ!</string>
+
+    <!-- Whats New Dialog -->
+    <string name="whatsnew_continue">استمر</string>
+    <string name="whatsnew_title">ما هو الجديد</string>
+
+    <!--watermark strings -->
+    <string name="watermark_added">تم إضافة علامة مائية</string>
+    <string name="watermarked">بها علامة مائية</string>
+    <string name="watermarked_file">_بها_علامة_مائية.pdf</string>
+    <string name="watermark_remove">تمت إزالة العلامة المائية</string>
+    <string name="snackbar_watermark_cannot_be_blank">النص لا يمكن أن يكون فارغاً</string>
+    <string name="cannot_add_watermark">لم تتمكن من إضافة العلامة المائية إلى ملف PDF. يرجى التحقق من ملف PDF مرة أخرى.</string>
+    <string name="add_watermark">إضافة علامة مائية</string>
+    <string name="enter_watermark_text">أدخل النص</string>
+    <string name="enter_watermark_angle">أدخل الزاوية</string>
+    <string name="watermark_angle">زاوية</string>
+    <string name="choose_watermark_color">اختر اللون</string>
+    <string name="enter_watermark_font_size">أدخل حجم الخط</string>
+    <string name="choose_watermark_font_family">اختر نوع الخط</string>
+    <string name="watermark_font_size">حجم الخط</string>
+    <string name="choose_watermark_style">اختر النمط</string>
+    <string name="viewfiles_addwatermark">1. اختر ملف PDF الذي ترغب في إضافة علامة مائية إليه. \n2. اختر إضافة علامة مائية. \n3. املأ المعلومات المطلوبة. اختر موافق. \n4. سيتم إنشاء ملف PDF جديد بعلامة مائية.</string>
+
+    <!--<nav add images>-->
+    <string name="add_images">إضافة صور</string>
+    <string name="selected_images_text">الصور التي تختارها ستضاف إلى نهاية ملف PDF المحدد.</string>
+    <string name="no_images_selected">لم يتم اختيار أي صور</string>
+    <string name="title_filter_history_dialog">تصفية حسب نوع العملية</string>
+
+    <!--zip to pdf-->
+    <string name="zip_to_pdf">ZIP إلى PDF</string>
+    <string name="convert_to_pdf">تحويل إلى PDF</string>
+    <string name="error_no_image_in_zip">ملف ZIP لا يحتوي على أي صورة</string>
+    <string name="error_open_file">حدث خطأ أثناء فتح الملف. يرجى محاولة إعادة الفتح</string>
+
+    <!--text to pdf-->
+    <string name="error_pdf_not_created">عذرًا، لم يتم إنشاء PDF. يرجى المحاولة مرة أخرى</string>
+
+    <!--favourite fragment-->
+    <string name="favourites">المفضلات</string>
+    <string name="add_to_favourite">أضف إلى المفضلة</string>
+    <string name="favourites_text">اختر رمز + لإضافة ميزاتك المفضلة!</string>
+    <string name="no_excel_file">لم يتم اختيار أي ملف Excel</string>
+    <string name="split_range_alert">النطاق المدخل للتقسيم سيعيد إنشاء ملف PDF المحدد!</string>
+
+    <!--file name suffix-->
+    <string name="pdf_suffix" translatable="false">_pdf</string>
+    <string name="reordering_pages_dialog">إعادة ترتيب صفحاتك...</string>
+    <string name="delete_alert_singular">هل تريد حذف الملف المحدد؟</string>
+    <string name="snackbar_files_deleted">تم حذف الملفات</string>
+    <string name="lbl_recently_used">الميزات المستخدمة مؤخرًا</string>
+
+    <!--  FAQs  -->
+    <string name="faqSearch">بحث في الأسئلة المتكررة</string>
+    <string name="manage_storage_permission_alert_dialog_title" translatable="false">Allow app to access files on your device</string>
+    <string name="manage_storage_permission_alert_dialog_positive_button_label" translatable="false">Allow</string>
+    <string name="manage_storage_permission_alert_dialog_negative_button_label" translatable="false">Deny</string>
+    <string name="manage_storage_permission_denied_alert_dialog_title" translatable="false">Permission denied</string>
+    <string name="manage_storage_permission_denied_alert_dialog_message" translatable="false">Without storage permission the app is unable to read files from your device. Are you sure you want to deny this permission?</string>
+    <string name="manage_storage_permission_denied_alert_dialog_positive_button_label" translatable="false">Re-try</string>
+    <string name="manage_storage_permission_denied_alert_dialog_negative_button_label" translatable="false">I\'m sure</string>
+    <string name="manage_storage_permission_denied_with_never_ask_alert_dialog_positive_button_label" translatable="false">Allow from settings</string>
+
+    <string-array name="faq_question_answers">
+        <item>ما هي صيغ ملفات الصور المدعومة؟#####يدعم التطبيق صيغ jpeg و jpg و tiff و gif و psd و bmp و eps و png وغيرها.</item>
+        <item>هل يمكنني إنشاء ملف نصي جديد باستخدام التطبيق؟#####يمكنك فقط إنشاء ملف نصي جديد من خلال استخراج النصوص من ملفات PDF الموجودة. لإنشاء ملف نصي، \n1) اضغط على خيار <strong>استخراج النص</strong> في الصفحة الرئيسية. \n2) حدد ملف PDF باستخدام زر <strong>تحديد ملف PDF</strong>. \n3) ثم، اضغط على <strong>استخراج النص</strong>. \n4) بمجرد الانتهاء، سيتم إنشاء ملف نصي يحتوي على النصوص من ملف PDF.</item>
+        <item>هل هناك حد لعدد الصور التي يمكنني إضافتها مرة واحدة لإنشاء ملف PDF؟#####لا، لا توجد قيود.</item>
+        <item>هل هناك حد لحجم الصورة التي يمكنني إضافتها؟#####لا، لا توجد حدود. ومع ذلك، ننصح بتقييد الحجم إلى <strong>أقل من 10 ميجابايت</strong>. يستغرق تحويل ملفات الصور الكبيرة المتعددة أكثر من 10 ثوانٍ.</item>
+        <item>هل يمكنني إدراج تسميات توضيحية على الصورة بعد الإضافة؟#####لا، لا يمكن إدراج تسميات توضيحية على الصور إلا إذا تم تعديلها على الصورة نفسها.</item>
+        <item>هل يمكنني قراءة ملفات PDF باستخدام التطبيق؟#####لا، لا يمكنك ذلك في الوقت الحالي. هذا التطبيق لا يعمل كعارض PDF.</item>
+        <item>أين يتم حفظ ملفات PDF التي أنشأتها باستخدام التطبيق؟#####يتم حفظ ملفات PDF التي تم إنشاؤها بواسطة التطبيق تلقائيًا في المجلد المسمى PDFfiles على تخزين جهازك. \nيمكنك أيضًا تغيير الموقع الافتراضي في قسم <strong>الإعدادات</strong>.</item>
+        <item>كيف يمكنني تغيير موقع التخزين الافتراضي؟#####لتغيير موقع التخزين الافتراضي، \n1) انقر على <strong>رمز الهامبرغر</strong> (ثلاثة خطوط أفقية) في الزاوية العلوية اليسرى. \n2) قم بالتمرير لأسفل وانقر على <strong>الإعدادات</strong>. \n3) في صفحة الإعدادات، انقر على الحقل الموجود تحت النص <strong>تغيير موقع التخزين</strong>. \n4) افتح موقع الحفظ المفضل وانقر على <strong>رمز التحديد</strong> في الأعلى. \nبمجرد تغييره، سيتم تخزين الملفات التي تم إنشاؤها باستخدام التطبيق في الموقع الجديد.</item>
+        <item>كيف يمكنني مشاركة ملفات PDF التي تم تعديلها/إنشاؤها باستخدام التطبيق؟#####يمكنك الوصول إلى ملفات PDF التي قمت بتعديلها/إنشائها ومشاركتها مباشرة من التطبيق. لمشاركة ملفات PDF، \n1) انقر على خيار <strong>عرض الملفات</strong> في الصفحة الرئيسية. \n2) حدد الملف (الملفات) التي تريد مشاركتها باستخدام مربع الاختيار. \n3) بعد ذلك، انقر على <strong>المزيد من الخيارات</strong> (ثلاث نقاط رأسية) في الزاوية العلوية اليمنى وانقر على <strong>مشاركة</strong>. \n4) اختر الطريقة المرغوبة لمشاركة الملفات.</item>
+        <item>هل يمكنني استعادة كلمة المرور المنسية لملف PDF باستخدام التطبيق؟#####لا، لا يمكن استعادة كلمة المرور المفقودة.</item>
+        <item>هل يمكنني تغيير كلمة المرور لملف PDF؟#####نعم، ولكن فقط إذا قمت بإزالة كلمة المرور الحالية. بمجرد إزالة كلمة المرور، استخدم خيار <strong>تغيير كلمة المرور</strong> في الصفحة الرئيسية لتغيير كلمة المرور.</item>
+        <item>هل يمكنني ضغط الصور قبل إنشاء ملف PDF؟#####نعم، يمكنك ذلك. لضغط الصور، \n1) انقر على خيار <strong>الصور إلى PDF</strong> في الصفحة الرئيسية. \n2) حدد الصور باستخدام زر <strong>تحديد الصور</strong>. \n3) بعد ذلك، اختر خيار <strong>ضغط الصور</strong> لضغط الصور.</item>
+        <item>ما هو تنسيق الصور المستخرجة من ملف PDF؟#####ستكون الصور المستخرجة من ملف PDF بتنسيق <strong>.png</strong>.</item>
+        <item>هل يمكنني إضافة ملفات من التخزين السحابي/التخزين عبر الإنترنت؟#####حالياً، لا يمكنك ذلك. لكن ذلك على خريطة التطوير وسيكون متاحًا قريبًا.</item>
+        <item>كيف يمكنني التحقق من تاريخ الملفات التي تم إنشاؤها/تعديلها؟#####لمشاهدة جميع الملفات التي أنشأتها/عدلتها في التطبيق، \nاضغط على خيار <strong>التاريخ</strong> في الصفحة الرئيسية.</item>
+        <item>كيف يمكنني دمج عدة ملفات PDF؟#####لدمج عدة ملفات PDF، \n1) اضغط على خيار <strong>دمج PDF</strong> في الصفحة الرئيسية. \n2) اختر ملفات PDF باستخدام زر <strong>تحديد الملفات</strong>. \n3) بعد تحديدها، اضغط على زر <strong>دمج الملفات</strong>.</item>
+        <item>هل يمكنني تعديل الصور أثناء إنشاء ملف PDF؟#####نعم، يمكنك ذلك. للقيام بذلك، \n1) اضغط على خيار <strong>الصور إلى PDF</strong> في الصفحة الرئيسية. \n2) اختر الصور باستخدام زر <strong>تحديد الصور</strong>. \n3) بعد تحديدها، اضغط على خيار <strong>تعديل الصور</strong> أو <strong>تصفية الصور</strong> بناءً على احتياجاتك. \n4) انتهي من التعديل أو تطبيق الفلتر. \n5) الآن، اختر الصور المعدلة باستخدام زر <strong>تحديد الصور</strong> واضغط على <strong>إنشاء PDF</strong> لإنشاء ملف PDF.</item>
+        <item>كيف يمكنني إضافة علامة مائية إلى ملف PDF؟#####لإضافة علامة مائية، قم بالتمرير لأسفل إلى <strong>تعزيز ملفات PDF التي تم إنشاؤها</strong> في الصفحة الرئيسية أو في قائمة الخيارات عن طريق السحب من اليسار إلى اليمين واضغط على <strong>إضافة علامة مائية</strong>.</item>
+        <item>هل يمكنني إعادة ترتيب الصفحات في ملف PDF؟#####نعم، يمكنك ذلك. لإعادة ترتيب الصفحات، \n1) اضغط على خيار <strong>إعادة ترتيب الصفحات</strong> في الصفحة الرئيسية. \n2) حدد ملف PDF باستخدام زر <strong>تحديد ملف</strong>. \n3) اضغط على <strong>إنشاء PDF</strong>. \n4) استخدم سهمي لأعلى ولأسفل لإعادة ترتيب الصفحات. \n5) بمجرد إعادة الترتيب، اضغط على <strong>سهم العودة</strong> في أعلى اليسار لإنشاء ملف PDF الجديد المحدث.</item>
+        <item>كيف يمكنني استخراج الصور من ملف PDF؟#####لاستخراج الصور، \n1) اضغط على خيار استخراج الصور في الصفحة الرئيسية. \n2) حدد ملف PDF باستخدام زر <strong>تحديد ملف</strong>. \n3) بمجرد التحديد، اضغط على زر <strong>إنشاء الصور</strong>.</item>
+        <item>هل يمكنني تحويل ملفات PDF إلى تنسيقات PPT، PPTX، ODT، DOC، DOCX؟#####لا، يمكن تحويل ملفات PDF حاليًا إلى تنسيق نص فقط.</item>
+        <item>أين يمكنني تنزيل تطبيق PDF CONVERTER: Files to PDF؟#####التطبيق متاح على متجر Google Play و F-Droid.</item>
+        <item>هل يمكنني المساهمة في هذا التطبيق؟#####نعم، يمكنك ذلك. ابحث عنا على GitHub باستخدام اسم المشروع <strong>Swati4star/Images-to-PDF</strong>. \nلا تتردد في مشاركة أفكارك (طلبات الميزات) أو تقديم تقرير عن خطأ أو طلب سحب لأي شيء تعتقد أنه يجب إضافته. \nيحتوي هذا المشروع على مساهمين متعددين يضيفون تغييرات صغيرة مثل سطر واحد فقط. اقرأ <strong>دليل المساهمين</strong> للمشروع للبدء.</item>
+        <item>لدي بعض الأسئلة التي ليست في مستند الأسئلة الشائعة هذا. كيف يمكنني الاتصال بالمطور؟#####لأي استفسارات إضافية، يرجى إرسال بريد إلكتروني إلى المطور على <strong>swati4star@gmail.com</strong></item>
+    </string-array>
+
+</resources>

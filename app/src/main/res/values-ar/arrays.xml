@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>اسم</item>
+        <item>التاريخ</item>
+        <item>حجم  ▲</item>
+        <item>حجم  ▼</item>
+    </string-array>
+
+    <string-array name="sort_options_images">
+        <item>اسم ▲</item>
+        <item>اسم ▼</item>
+        <item>تاريخ ▲</item>
+        <item>تاريخ ▼</item>
+    </string-array>
+
+    <string-array name="filter_options_history">
+        <item>تم الإنشاء</item>
+        <item>تم الحذف</item>
+        <item>تم إعادة التسمية</item>
+        <item>تدوير</item>
+        <item>مطبوع</item>
+        <item>تم فك التشفير</item>
+        <item>مُشفَّر</item>
+        <item>مقلوب</item>
+    </string-array>
+    
+</resources>
