@@ -63,10 +63,7 @@ public class RealPathUtil {
         Cursor cursor = null;
         try {
             cursor = context.getContentResolver().query(uri, projection, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                return cursor.getString(columnIndex);
-            }
+            return getColumnDataFromCursor(cursor, MediaStore.Images.Media.DATA);
         } catch (Exception e) {
             e.printStackTrace(); // Consider logging this instead of printing to console
         } finally {
@@ -158,12 +155,8 @@ public class RealPathUtil {
         final String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
         try (Cursor cursor = context.getContentResolver().query(uri, projection, null, null,
                 null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                final int index = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
-                return cursor.getString(index);
-            }
+            return getColumnDataFromCursor(cursor, MediaStore.Files.FileColumns.DISPLAY_NAME);
         }
-        return null;
     }
 
     /**
@@ -235,5 +228,20 @@ public class RealPathUtil {
 
     private static class SingletonHolder {
         static final RealPathUtil INSTANCE = new RealPathUtil();
+    }
+
+    /**
+     * Retrieves the data from the cursor for the specified column.
+     *
+     * @param cursor     The cursor pointing to the data.
+     * @param columnName The name of the column to retrieve data from.
+     * @return The string value of the specified column, or null if the cursor is empty or the column is not found.
+     */
+    private String getColumnDataFromCursor(Cursor cursor, String columnName) {
+        if (cursor != null && cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndexOrThrow(columnName);
+            return cursor.getString(columnIndex);
+        }
+        return null;
     }
 }
