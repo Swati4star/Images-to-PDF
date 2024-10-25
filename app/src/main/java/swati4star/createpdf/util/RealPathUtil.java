@@ -28,7 +28,7 @@ public class RealPathUtil {
     }
 
     /**
-     * Get a file path from a Uri. This will get the the path for Storage Access
+     * Get a file path from a Uri. This will get the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and
      * other file-based ContentProviders.
      *
@@ -37,33 +37,41 @@ public class RealPathUtil {
      */
     private String getRealPathFromURI_API19(final Context context, final Uri uri) {
         String path = null;
+
         // DocumentProvider
-        if (isDriveFile(uri)) {
-            return null;
-        }
         if (DocumentsContract.isDocumentUri(context, uri)) {
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
+            String docId = DocumentsContract.getDocumentId(uri);
+            String[] split = docId.split(":");
+            String type = split[0];
 
-                if ("primary".equalsIgnoreCase(type)) {
-                    if (split.length > 1) {
-                        path = Environment.getExternalStorageDirectory() + "/" + split[1];
-                    } else {
-                        path = Environment.getExternalStorageDirectory() + "/";
-                    }
-                } else {
-                    path = "storage" + "/" + docId.replace(":", "/");
-                }
+            if ("primary".equalsIgnoreCase(type)) {
+                path = Environment.getExternalStorageDirectory() + "/" + split[1];
+            } else {
+                path = "storage/" + docId.replace(":", "/");
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            path = getMediaDocumentPath(context, uri);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            path = uri.getPath();
+        }
 
-            } else if (isRawDownloadsDocument(uri)) {
-                path = getDownloadsDocumentPath(context, uri, true);
-            } else if (isDownloadsDocument(uri)) {
-                path = getDownloadsDocumentPath(context, uri, false);
+        return path;
+    }
+
+    private String getMediaDocumentPath(Context context, Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(uri, projection, null, null, null);
+            return getColumnDataFromCursor(cursor, MediaStore.Images.Media.DATA);
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider logging this instead of printing to console
+        } finally {
+            if (cursor != null) {
+                cursor.close();
             }
         }
-        return path;
+        return null;
     }
 
     /**
@@ -147,12 +155,8 @@ public class RealPathUtil {
         final String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
         try (Cursor cursor = context.getContentResolver().query(uri, projection, null, null,
                 null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                final int index = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
-                return cursor.getString(index);
-            }
+            return getColumnDataFromCursor(cursor, MediaStore.Files.FileColumns.DISPLAY_NAME);
         }
-        return null;
     }
 
     /**
@@ -224,5 +228,20 @@ public class RealPathUtil {
 
     private static class SingletonHolder {
         static final RealPathUtil INSTANCE = new RealPathUtil();
+    }
+
+    /**
+     * Retrieves the data from the cursor for the specified column.
+     *
+     * @param cursor     The cursor pointing to the data.
+     * @param columnName The name of the column to retrieve data from.
+     * @return The string value of the specified column, or null if the cursor is empty or the column is not found.
+     */
+    private String getColumnDataFromCursor(Cursor cursor, String columnName) {
+        if (cursor != null && cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndexOrThrow(columnName);
+            return cursor.getString(columnIndex);
+        }
+        return null;
     }
 }
