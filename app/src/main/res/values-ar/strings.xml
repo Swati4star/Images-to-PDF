@@ -13,6 +13,7 @@
     <string name="search">بحث</string>
     <string name="default_content_description">لا يوجد وصف</string>
     <string name="prompt_input">أدخل هنا</string>
+
     <!--   Items  -->
     <array name="items">
         <item>فتح الملف</item>
