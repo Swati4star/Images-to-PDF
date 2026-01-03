@@ -64,11 +64,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.activity.CropImageActivity;
 import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.activity.RearrangeImages;
@@ -128,8 +130,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private int mMarginRight = 38;
     private String mPageNumStyle;
     private int mChoseId;
-    private int mImageCounter = 0;
-    private boolean mShouldCropImages = false;
+
 
     @Override
     public void onAttach(Context context) {
@@ -295,6 +296,35 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             return;
 
         switch (requestCode) {
+            case INTENT_REQUEST_GET_IMAGES:
+                mImagesUri.clear();
+                mUnarrangedImagesUri.clear();
+                mImagesUri.addAll(Matisse.obtainPathResult(data));
+                mUnarrangedImagesUri.addAll(mImagesUri);
+                if (mImagesUri.size() > 0) {
+                    mNoOfImages.setText(String.format(mActivity.getResources()
+                            .getString(R.string.images_selected), mImagesUri.size()));
+                    mNoOfImages.setVisibility(View.VISIBLE);
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
+                    mCreatePdf.setEnabled(true);
+                    mCreatePdf.unblockTouch();
+                }
+                mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+                mOpenPdf.setVisibility(View.GONE);
+                break;
+
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                HashMap<Integer, Uri> croppedImageUris =
+                        (HashMap) data.getSerializableExtra(CropImage.CROP_IMAGE_EXTRA_RESULT);
+
+                for (int i = 0; i < mImagesUri.size(); i++) {
+                    if (croppedImageUris.get(i) != null) {
+                        mImagesUri.set(i, croppedImageUris.get(i).getPath());
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_imagecropped);
+                    }
+                }
+                break;
+
             case INTENT_REQUEST_APPLY_FILTER:
                 mImagesUri.clear();
                 ArrayList<String> mFilterUris = data.getStringArrayListExtra(RESULT);
@@ -330,57 +360,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                     mCreatePdf.setEnabled(false);
                 }
                 break;
-
-            case INTENT_REQUEST_GET_IMAGES:
-                mImagesUri.clear();
-                mUnarrangedImagesUri.clear();
-                mImagesUri.addAll(Matisse.obtainPathResult(data));
-                mUnarrangedImagesUri.addAll(mImagesUri);
-                if (mImagesUri.size() > 0) {
-                    mNoOfImages.setText(String.format(mActivity.getResources()
-                            .getString(R.string.images_selected), mImagesUri.size()));
-                    mNoOfImages.setVisibility(View.VISIBLE);
-                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
-                    mCreatePdf.setEnabled(true);
-                    mCreatePdf.unblockTouch();
-                    mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
-                    mOpenPdf.setVisibility(View.GONE);
-
-                    // Prompt user to crop images
-                    new MaterialDialog.Builder(mActivity)
-                            .title(R.string.crop_images)
-                            .content(R.string.crop_images_content)
-                            .positiveText(R.string.yes)
-                            .negativeText(R.string.no)
-                            .onPositive((dialog, which) -> {
-                                mShouldCropImages = true;
-                                mImageCounter = 0;
-                                cropImage(Uri.parse(mImagesUri.get(mImageCounter)));
-                            })
-                            .onNegative((dialog, which) -> {
-                                // No cropping, continue with other operations...
-                            })
-                            .show();
-                }
-                break;
-
-            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == Activity.RESULT_OK && mShouldCropImages) {
-                    Uri resultUri = result.getUri();
-                    mImagesUri.set(mImageCounter, resultUri.toString());
-                    mImageCounter++;
-
-                    if (mImageCounter < mImagesUri.size()) {
-                        cropImage(Uri.parse(mImagesUri.get(mImageCounter)));
-                    } else {
-                        mShouldCropImages = false;
-                        mImageCounter = 0;
-                    }
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Exception error = result.getError();
-                }
-                break;
         }
     }
 
@@ -396,7 +375,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 passwordProtectPDF();
                 break;
             case 1:
-                cropImage(Uri.parse(mImagesUri.get(0)));
+                cropImage();
                 break;
             case 2:
                 compressImage();
@@ -721,10 +700,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         resetValues();
     }
 
-    private void cropImage(Uri imageUri) {
-        //Intent intent = new Intent(mActivity, CropImageActivity.class);
-        //startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
-        CropImage.activity(imageUri).start(getContext(), this);
+    private void cropImage() {
+        Intent intent = new Intent(mActivity, CropImageActivity.class);
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     private void getRuntimePermissions() {
@@ -838,4 +816,3 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         materialDialog.show();
     }
 }
-
