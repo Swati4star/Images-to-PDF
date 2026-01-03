@@ -58,6 +58,9 @@ repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
     maven { url "https://repository.aspose.com/repo/" }
+    maven {
+        url "https://artifactory.appodeal.com/appodeal"
+    }
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

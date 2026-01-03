@@ -15,7 +15,7 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     include '**/*.java'
 
     reports {
-        xml.enabled = true
+        xml.required = true
         xml {
             destination file("$reportsDir/checkstyle/checkstyle.xml")
         }
