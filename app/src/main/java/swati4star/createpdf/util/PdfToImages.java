@@ -29,6 +29,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     private final Context mContext;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
+    private ArrayList<String> mOutputFileUris;
     private PDFEncryptionUtility mPDFEncryptionUtility;
     private String mDecryptedPath;
 
@@ -38,6 +39,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
         this.mUri = mUri;
         this.mExtractImagesListener = mExtractImagesListener;
         mOutputFilePaths = new ArrayList<>();
+        mOutputFileUris = new ArrayList<>();
         this.mPassword = password;
         this.mContext = context;
     }
@@ -55,6 +57,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
             mDecryptedPath = mPDFEncryptionUtility.removeDefPasswordForImages(mPath, mPassword);
         }
         mOutputFilePaths = new ArrayList<>();
+        mOutputFileUris = new ArrayList<>();
         mImagesCount = 0;
 
         // Render pdf pages as bitmap
@@ -91,9 +94,11 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
                     // generate numbered image file names
                     String filename = getFileNameWithoutExtension(mPath) +
                             "_" + (i + 1);
-                    String path = saveImage(filename, bitmap);
+                    Uri uri = saveImage(filename, bitmap);
+                    String path = uri.getPath();
                     if (path != null) {
                         mOutputFilePaths.add(path);
+                        mOutputFileUris.add(uri.toString());
                         mImagesCount++;
                     }
                 }
@@ -110,7 +115,7 @@ public class PdfToImages extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mExtractImagesListener.updateView(mImagesCount, mOutputFilePaths);
+        mExtractImagesListener.updateView(mImagesCount, mOutputFilePaths, mOutputFileUris);
         if (mDecryptedPath != null)
             new File(mDecryptedPath).delete();
     }

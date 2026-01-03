@@ -2,14 +2,12 @@ package swati4star.createpdf.fragment;
 
 import static swati4star.createpdf.util.Constants.DEFAULT_COMPRESSION;
 import static swati4star.createpdf.util.Constants.MASTER_PWD_STRING;
-import static swati4star.createpdf.util.Constants.MODIFY_STORAGE_LOCATION_CODE;
 import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.appName;
 import static swati4star.createpdf.util.SettingsOptions.getEnhancementOptions;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -77,26 +75,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
                 StringUtils.getInstance().getDefaultStorageLocation()));
         showSettingsOptions();
         return root;
-    }
-
-//    @OnClick(R.id.storagelocation)
-//    void modifyStorageLocation() {
-////        Intent intent = new Intent(mActivity, FolderPicker.class);
-////        startActivityForResult(intent, MODIFY_STORAGE_LOCATION_CODE);
-//    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MODIFY_STORAGE_LOCATION_CODE) {
-            if (data.getExtras() != null) {
-                String folderLocation = data.getExtras().getString("data") + "/";
-                mSharedPreferences.edit().putString(STORAGE_LOCATION, folderLocation).apply();
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.storage_location_modified);
-                storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
-                        StringUtils.getInstance().getDefaultStorageLocation()));
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showSettingsOptions() {

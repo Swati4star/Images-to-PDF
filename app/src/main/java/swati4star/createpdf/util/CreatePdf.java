@@ -3,9 +3,9 @@ package swati4star.createpdf.util;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.pdfExtension;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -23,6 +23,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -52,16 +53,18 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private final String mPageNumStyle;
     private final String mMasterPwd;
     private final int mPageColor;
+    private final Context mContext;
     private boolean mSuccess;
     private String mPath;
 
     public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
-                     OnPDFCreatedInterface onPDFCreated) {
+                     OnPDFCreatedInterface onPDFCreated, Context context) {
         this.mImagesUri = mImageToPDFOptions.getImagesUri();
         this.mFileName = mImageToPDFOptions.getOutFileName();
         this.mPassword = mImageToPDFOptions.getPassword();
         this.mQualityString = mImageToPDFOptions.getQualityString();
         this.mOnPDFCreatedInterface = onPDFCreated;
+        this.mContext = context;
         this.mPageSize = mImageToPDFOptions.getPageSize();
         this.mPasswordProtected = mImageToPDFOptions.isPasswordProtected();
         this.mBorderWidth = mImageToPDFOptions.getBorderWidth();
@@ -136,7 +139,11 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 if (StringUtils.getInstance().isNotEmpty(mQualityString)) {
                     quality = Integer.parseInt(mQualityString);
                 }
-                Image image = Image.getInstance(mImagesUri.get(i));
+
+                InputStream is = mContext.getContentResolver().openInputStream(Uri.parse(mImagesUri.get(i)));
+                byte[] bytes = StreamUtils.getBytes(is);
+                is.close();
+                Image image = Image.getInstance(bytes);
                 // compressionLevel is a value between 0 (best speed) and 9 (best compression)
                 double qualityMod = quality * 0.09;
                 image.setCompressionLevel((int) qualityMod);
@@ -144,11 +151,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 image.setBorderWidth(mBorderWidth);
 
                 Log.v("Stage 5", "Image compressed " + qualityMod);
-
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                Bitmap bitmap = BitmapFactory.decodeFile(mImagesUri.get(i), bmOptions);
-
-                Log.v("Stage 6", "Image path adding");
 
                 float pageWidth = document.getPageSize().getWidth() - (mMarginLeft + mMarginRight);
                 float pageHeight = document.getPageSize().getHeight() - (mMarginBottom + mMarginTop);
@@ -161,20 +163,20 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,
                         (documentRect.getHeight() - image.getScaledHeight()) / 2);
 
-                Log.v("Stage 7", "Image Alignments");
+                Log.v("Stage 6", "Image Alignments");
                 addPageNumber(documentRect, writer);
                 document.add(image);
 
                 document.newPage();
             }
 
-            Log.v("Stage 8", "Image adding");
+            Log.v("Stage 7", "Image adding");
 
             document.close();
 
-            Log.v("Stage 7", "Document Closed" + mPath);
+            Log.v("Stage 8", "Document Closed" + mPath);
 
-            Log.v("Stage 8", "Record inserted in database");
+            Log.v("Stage 9", "Record inserted in database");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,7 +234,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
 
     private Rectangle calculatePageSize() {
         if (PageSizeUtils.PAGE_SIZE_FIT_SIZE.equals(mPageSize)) {
-            return PageSizeUtils.calculateCommonPageSize(mImagesUri);
+            return PageSizeUtils.calculateCommonPageSize(mImagesUri, mContext);
         }
         return new Rectangle(PageSize.getRectangle(mPageSize));
     }

@@ -1,6 +1,7 @@
 package swati4star.createpdf.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class PreviewAdapter extends PagerAdapter {
         final ImageView imageView = layout.findViewById(R.id.image);
         String path = mPreviewItems.get(position);
         File fileLocation = new File(path);
-        Picasso.with(mContext).load(fileLocation).into(imageView);
+        Picasso.with(mContext).load(Uri.parse(path)).into(imageView);
         TextView fileName = layout.findViewById(R.id.tvFileName);
         String fileNameString = fileLocation.getName();
         fileName.setText(fileNameString);

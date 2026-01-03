@@ -4,6 +4,7 @@ import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -35,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
@@ -124,7 +126,7 @@ public class PDFUtils {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(output));
             document.open();
             initDoc(reader, document, writer);
-            appendImages(document, imagesUri);
+            appendImages(document, imagesUri, mContext);
             document.close();
 
             StringUtils.getInstance().getSnackbarwithAction(mContext, R.string.snackbar_pdfCreated)
@@ -166,11 +168,14 @@ public class PDFUtils {
      * @throws DocumentException
      * @throws IOException
      */
-    private void appendImages(Document document, ArrayList<String> imagesUri) throws DocumentException, IOException {
+    private void appendImages(Document document, ArrayList<String> imagesUri, Context context) throws DocumentException, IOException {
         Rectangle documentRect = document.getPageSize();
         for (int i = 0; i < imagesUri.size(); i++) {
             document.newPage();
-            Image image = Image.getInstance(imagesUri.get(i));
+            InputStream is = mContext.getContentResolver().openInputStream(Uri.parse(imagesUri.get(i)));
+            byte[] bytes = StreamUtils.getBytes(is);
+            is.close();
+            Image image = Image.getInstance(bytes);
             image.setBorder(0);
             float pageWidth = document.getPageSize().getWidth(); // - (mMarginLeft + mMarginRight);
             float pageHeight = document.getPageSize().getHeight(); // - (mMarginBottom + mMarginTop);

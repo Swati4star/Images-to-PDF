@@ -119,9 +119,6 @@ public class Constants {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
-
-    public static final int MODIFY_STORAGE_LOCATION_CODE = 1;
-
     public static final int ROTATE_PAGES = 20;
     public static final int ADD_PASSWORD = 21;
     public static final int REMOVE_PASSWORD = 22;

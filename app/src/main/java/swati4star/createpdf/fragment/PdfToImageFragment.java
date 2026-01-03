@@ -88,6 +88,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     private BottomSheetBehavior mSheetBehavior;
     private BottomSheetUtils mBottomSheetUtils;
     private ArrayList<String> mOutputFilePaths;
+    private ArrayList<String> mOutputFileUris;
     private MaterialDialog mMaterialDialog;
     private String mOperation;
     private Context mContext;
@@ -154,7 +155,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      */
     @OnClick(R.id.viewImages)
     void onViewImagesClicked() {
-        mActivity.startActivity(ImagesPreviewActivity.getStartIntent(mActivity, mOutputFilePaths));
+        mActivity.startActivity(ImagesPreviewActivity.getStartIntent(mActivity, mOutputFileUris));
     }
 
     /**
@@ -300,11 +301,12 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
      * @param outputFilePaths path for each generated image
      */
     @Override
-    public void updateView(int imageCount, ArrayList<String> outputFilePaths) {
+    public void updateView(int imageCount, ArrayList<String> outputFilePaths, ArrayList<String> outputFileUris) {
 
         mMaterialDialog.dismiss();
         resetView();
         mOutputFilePaths = outputFilePaths;
+        mOutputFileUris = outputFileUris;
 
         CommonCodeUtils.getInstance().updateView(mActivity, imageCount, outputFilePaths,
                 mCreateImagesSuccessText, options, mCreatedImages, this);

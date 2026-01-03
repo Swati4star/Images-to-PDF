@@ -58,7 +58,7 @@ public class CropImageActivity extends AppCompatActivity {
         mFinishedClicked = false;
 
         for (int i = 0; i < mImages.size(); i++)
-            mCroppedImageUris.put(i, Uri.fromFile(new File(mImages.get(i))));
+            mCroppedImageUris.put(i, Uri.parse(mImages.get(i)));
 
         if (mImages.size() == 0)
             finish();

@@ -37,8 +37,8 @@ public class ImageEnhancementOptionsUtils {
                 String.format(context.getResources().getString(R.string.compress_image),
                         pdfOptions.getQualityString())));
 
-        options.add(new EnhancementOptionsEntity(
-                context, R.drawable.ic_photo_filter_black_24dp, R.string.filter_images_Text));
+//        options.add(new EnhancementOptionsEntity(
+//                context, R.drawable.ic_photo_filter_black_24dp, R.string.filter_images_Text));
 
         options.add(new EnhancementOptionsEntity(
                 context, R.drawable.ic_page_size_24dp, R.string.set_page_size_text));

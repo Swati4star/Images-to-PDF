@@ -6,7 +6,7 @@ import static swati4star.createpdf.util.Constants.RESULT;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -101,7 +101,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         mImagePaths.addAll(mFilterUris);
 
         photoEditorView.getSource()
-                .setImageBitmap(BitmapFactory.decodeFile(mFilterUris.get(0)));
+                .setImageURI(Uri.parse(mFilterUris.get(0)));
         changeAndShowImageCount(0);
 
         initRecyclerView();
@@ -150,7 +150,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
 
         mCurrentImage = count % mDisplaySize;
         photoEditorView.getSource()
-                .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
+                .setImageURI(Uri.parse(mImagePaths.get(mCurrentImage)));
         imageCount.setText(String.format(getString(R.string.showing_image), mCurrentImage + 1, mDisplaySize));
     }
 
@@ -171,7 +171,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
         String originalPath = mFilterUris.get(mCurrentImage);
         mImagePaths.set(mCurrentImage, originalPath);
         photoEditorView.getSource()
-                .setImageBitmap(BitmapFactory.decodeFile(originalPath));
+                .setImageURI(Uri.parse(originalPath));
         mPhotoEditor.clearAllViews();
         mPhotoEditor.undo();
     }
@@ -197,7 +197,7 @@ public class ImageEditor extends AppCompatActivity implements OnFilterItemClicke
                     mImagePaths.remove(mCurrentImage);
                     mImagePaths.add(mCurrentImage, imagePath);
                     photoEditorView.getSource()
-                            .setImageBitmap(BitmapFactory.decodeFile(mImagePaths.get(mCurrentImage)));
+                            .setImageURI(Uri.parse(mImagePaths.get(mCurrentImage)));
                     Toast.makeText(getApplicationContext(), R.string.filter_saved, Toast.LENGTH_SHORT).show();
                 }
 
