@@ -3,7 +3,7 @@
 ### Badges
 
 [![Build Status](https://travis-ci.org/Swati4star/Images-to-PDF.svg?branch=master)](https://travis-ci.org/Swati4star/Images-to-PDF)
-[![Code Climate](https://codeclimate.com/github/Swati4star/Images-to-PDF.svg)](https://codeclimate.com/github/Swati4star/Images-to-PDF)
+[![Code Climate](https://qlty.sh/gh/Swati4star/projects/Images-to-PDF/maintainability.svg)]([https://codeclimate.com/github/Swati4star/Images-to-PDF](https://qlty.sh/gh/Swati4star/projects/Images-to-PDF))
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PDF%20Converter-blue.svg?style=true)](https://android-arsenal.com/details/3/7132)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/swati4star.createpdf)
@@ -89,23 +89,6 @@ Black | Dark | White |
 <img src="./screenshots/9_history.png" width="190px">
 
 ### Contributing
-
-#### Dependencies
-
-+ [Butterknife](https://jakewharton.github.io/butterknife/)
-+ [Folderpicker](https://github.com/kashifo/android-folder-picker-library)
-+ [Image-cropper](https://github.com/ArthurHub/Android-Image-Cropper)
-+ [iTextG](http://developers.itextpdf.com/itextg-android)
-+ [Lottie](https://github.com/airbnb/lottie-android)
-+ [Matisse](https://github.com/zhihu/Matisse)
-+ [Material Dialogs](https://github.com/afollestad/material-dialogs)
-+ [Material Ripple](https://github.com/balysv/material-ripple)
-+ [Morphing Button](https://github.com/dmytrodanylyk/android-morphing-button)
-+ [Picasso](http://square.github.io/picasso/)
-+ [Picasso-transformations](https://github.com/wasabeef/picasso-transformations)
-+ [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)
-+ [viewpager-transformers](https://github.com/geftimov/android-viewpager-transformers)
-+ [zxing](https://github.com/zxing/zxing)
 
 #### Code & Issues
 
