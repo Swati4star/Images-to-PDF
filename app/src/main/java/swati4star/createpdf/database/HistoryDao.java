@@ -19,4 +19,11 @@ public interface HistoryDao {
 
     @Query("select * from history where operation_type IN(:types) order by mId desc")
     List<History> getHistoryByOperationType(String[] types);
+
+    @Dao
+    public interface HistoryDao {
+        @Query("SELECT COUNT(*) > 0 FROM history WHERE operationType = :operationType")
+        boolean existsOperationType(String operationType);
+    }
+
 }

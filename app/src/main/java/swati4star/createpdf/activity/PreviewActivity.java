@@ -36,10 +36,62 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
     private PreviewAdapter mPreviewAdapter;
     private ViewPager mViewPager;
 
+    private boolean checkIfPdfCreated() {
+        AppDatabase db = AppDatabase.getDatabase(mContext.getApplicationContext());
+        // 你需要创建一个查询方法来检查是否存在PDF记录
+        // 假设历史记录中包含一个字段标识操作类型
+        // 这里假设operationType为"PDF_CREATED"，具体取决于你的实现
+        String operationTypeToCheck = "PDF_CREATED";
+
+        // 查询是否有任何记录的操作类型为"PDF_CREATED"
+        return db.historyDao().existsOperationType(operationTypeToCheck);
+    }
+     if (isPdfCreated) {
+        deleteButton.setEnabled(true); // 启用删除按钮
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 删除PDF的代码逻辑
+                mCurrentImageEdited = false;
+                String root = Environment.getExternalStorageDirectory().toString();
+                File folder = new File(root + pdfDirectory);
+                Uri uri = mCropImageView.getImageUri();
+
+                if (uri == null) {
+                    StringUtils.getInstance().showSnackbar(this, R.string.error_uri_not_found);
+                    return;
+                }
+
+                String path = uri.getPath();
+                String filename = "cropped_im";
+                if (path != null)
+                    filename = "cropped_" + FileUtils.getFileName(path);
+
+                File file = new File(folder, filename);
+
+                mCropImageView.saveCroppedImageAsync(Uri.fromFile(file));
+            }
+        });
+    } else {
+        deleteButton.setEnabled(false); // 禁用删除按钮
+    }
+
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
+        changeAndShowImageCount((mCurrentImage - 1 % mDisplaySize));
         Intent intent = new Intent(context, PreviewActivity.class);
         intent.putExtra(PREVIEW_IMAGES, uris);
         return intent;
+        if (isPdfCreated) {
+            deleteButton.setEnabled(true); // 启用删除按钮
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 删除PDF的代码逻辑
+                }
+            });
+        } else {
+            deleteButton.setEnabled(false); // 禁用删除按钮
+        }
     }
 
     @Override

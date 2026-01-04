@@ -19,6 +19,13 @@
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true">
 
+
+        <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete" />
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:layout_width="match_parent"

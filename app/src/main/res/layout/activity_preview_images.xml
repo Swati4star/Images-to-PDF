@@ -13,6 +13,13 @@
         android:layout_weight="1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete" />
+
+
         <com.google.android.material.tabs.TabLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

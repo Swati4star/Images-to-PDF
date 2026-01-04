@@ -15,6 +15,13 @@
             android:layout_height="?android:attr/actionBarSize"
             app:titleTextColor="?attr/titleToolbarTextColor" />
 
+        <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete" />
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
