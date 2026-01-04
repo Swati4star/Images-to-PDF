@@ -174,6 +174,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         }
 
         pickMultipleMedia = registerForActivityResult(new PickMultipleVisualMedia(100), uris -> {
+            mIsButtonAlreadyClicked = false;
             mImagesUri.clear();
             mUnarrangedImagesUri.clear();
             if (!uris.isEmpty()) {
