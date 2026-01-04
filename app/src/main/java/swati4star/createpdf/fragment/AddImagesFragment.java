@@ -8,6 +8,7 @@ import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +29,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.airbnb.lottie.LottieAnimationView;
 import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.zhihu.matisse.Matisse;
 
 import java.util.ArrayList;
 
@@ -42,7 +45,6 @@ import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUriUtils;
 import swati4star.createpdf.util.FileUtils;
-import swati4star.createpdf.util.ImageUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -82,6 +84,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private PDFUtils mPDFUtils;
     private String mOperation;
     private BottomSheetBehavior mSheetBehavior;
+    ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -93,6 +96,26 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mOperation = getArguments().getString(BUNDLE_DATA);
         mLottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+
+        pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(100), uris -> {
+            mImagesUri.clear();
+            if (!uris.isEmpty()) {
+                ArrayList<String> stringUris = new ArrayList<>();
+                for (Uri uri : uris) {
+                    stringUris.add(uri.toString());
+                }
+                mImagesUri.addAll(stringUris);
+                mNoOfImages.setText(String.format(mActivity.getResources()
+                        .getString(R.string.images_selected), mImagesUri.size()));
+                mNoOfImages.setVisibility(View.VISIBLE);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
+                mCreatePdf.setEnabled(true);
+            } else {
+                mNoOfImages.setVisibility(View.GONE);
+            }
+
+            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+        });
 
         resetValues();
         return rootView;
@@ -113,9 +136,9 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     /**
-     * Called after Matisse Activity is called
+     * Called after Activity is called
      *
-     * @param requestCode REQUEST Code for opening Matisse Activity
+     * @param requestCode REQUEST Code for opening Activity
      * @param resultCode  result code of the process
      * @param data        Data of the image selected
      */
@@ -127,23 +150,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
             return;
 
         switch (requestCode) {
-
-            case INTENT_REQUEST_GET_IMAGES:
-                mImagesUri.clear();
-                mImagesUri.addAll(Matisse.obtainPathResult(data));
-
-                if (mImagesUri.size() > 0) {
-                    mNoOfImages.setText(String.format(mActivity.getResources()
-                            .getString(R.string.images_selected), mImagesUri.size()));
-                    mNoOfImages.setVisibility(View.VISIBLE);
-                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
-                    mCreatePdf.setEnabled(true);
-                } else {
-                    mNoOfImages.setVisibility(View.GONE);
-                }
-
-                mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
-                break;
 
             case INTENT_REQUEST_PICK_FILE_CODE:
                 setTextAndActivateButtons(FileUriUtils.getInstance().getFilePath(data.getData()));
@@ -230,10 +236,12 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     }
 
     /**
-     * Opens Matisse activity to select Images
+     * Opens PickVisualMedia activity to select Images
      */
     private void selectImages() {
-        ImageUtils.selectImages(this, INTENT_REQUEST_GET_IMAGES);
+        pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build());
     }
 
     @Override

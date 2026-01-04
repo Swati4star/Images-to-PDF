@@ -5,6 +5,7 @@ import static swati4star.createpdf.util.ImageUtils.saveImage;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.itextpdf.text.pdf.PRStream;
@@ -23,11 +24,13 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
     private final ExtractImagesListener mExtractImagesListener;
     private int mImagesCount = 0;
     private ArrayList<String> mOutputFilePaths;
+    private ArrayList<String> mOutputFileUris;
 
     public ExtractImages(String mPath, ExtractImagesListener mExtractImagesListener) {
         this.mPath = mPath;
         this.mExtractImagesListener = mExtractImagesListener;
         mOutputFilePaths = new ArrayList<>();
+        mOutputFileUris = new ArrayList<>();
     }
 
     @Override
@@ -39,6 +42,7 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         mOutputFilePaths = new ArrayList<>();
+        mOutputFileUris = new ArrayList<>();
         mImagesCount = 0;
         try {
             PdfReader reader = new PdfReader(mPath);
@@ -55,9 +59,11 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
                                 image.length);
                         String filename = getFileNameWithoutExtension(mPath) +
                                 "_" + (mImagesCount + 1);
-                        String path = saveImage(filename, bmp);
+                        Uri uri = saveImage(filename, bmp);
+                        String path = uri.getPath();
                         if (path != null) {
                             mOutputFilePaths.add(path);
+                            mOutputFileUris.add(uri.toString());
                             mImagesCount++;
                         }
                     }
@@ -73,6 +79,6 @@ public class ExtractImages extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mExtractImagesListener.updateView(mImagesCount, mOutputFilePaths);
+        mExtractImagesListener.updateView(mImagesCount, mOutputFilePaths, mOutputFileUris);
     }
 }

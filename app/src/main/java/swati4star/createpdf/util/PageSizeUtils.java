@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Rectangle;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -119,10 +120,16 @@ public class PageSizeUtils {
      * @return common size of input images as Rectangle.
      * @see com.itextpdf.text.Rectangle
      */
-    public static Rectangle calculateCommonPageSize(List<String> imagesUri) {
+    public static Rectangle calculateCommonPageSize(List<String> imagesUri, Context context) {
         float maxWidth = 0; float maxHeight = 0;
         for (String imageUri : imagesUri) {
-            Rectangle imageSize = ImageUtils.getImageSize(imageUri);
+            Rectangle imageSize = null;
+            try {
+                imageSize = ImageUtils.getImageSize(imageUri, context);
+            } catch (IOException e) {
+                e.printStackTrace();
+                continue;
+            }
             float imageWidth = imageSize.getWidth(); float imageHeight = imageSize.getHeight();
             if (imageWidth > maxWidth) maxWidth = imageWidth;
             if (imageHeight > maxHeight) maxHeight = imageHeight;

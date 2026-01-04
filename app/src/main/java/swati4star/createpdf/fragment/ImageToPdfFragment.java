@@ -44,6 +44,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts.PickMultipleVisualMedia;
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -56,7 +60,6 @@ import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.zhihu.matisse.Matisse;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -71,7 +74,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.CropImageActivity;
-import swati4star.createpdf.activity.ImageEditor;
 import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.activity.RearrangeImages;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
@@ -102,7 +104,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
-    private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     public static ArrayList<String> mImagesUri = new ArrayList<>();
     @BindView(R.id.pdfCreate)
@@ -130,7 +131,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private int mMarginRight = 38;
     private String mPageNumStyle;
     private int mChoseId;
-
+    ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
     @Override
     public void onAttach(Context context) {
@@ -171,6 +172,28 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             mNoOfImages.setVisibility(View.GONE);
             mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
         }
+
+        pickMultipleMedia = registerForActivityResult(new PickMultipleVisualMedia(100), uris -> {
+            mIsButtonAlreadyClicked = false;
+            mImagesUri.clear();
+            mUnarrangedImagesUri.clear();
+            if (!uris.isEmpty()) {
+                ArrayList<String> stringUris = new ArrayList<>();
+                for (Uri uri : uris) {
+                    stringUris.add(uri.toString());
+                }
+                mImagesUri.addAll(stringUris);
+                mUnarrangedImagesUri.addAll(mImagesUri);
+                mNoOfImages.setText(String.format(mActivity.getResources()
+                        .getString(R.string.images_selected), mImagesUri.size()));
+                mNoOfImages.setVisibility(View.VISIBLE);
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
+                mCreatePdf.setEnabled(true);
+                mCreatePdf.unblockTouch();
+            }
+            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+            mOpenPdf.setVisibility(View.GONE);
+        });
 
         return root;
     }
@@ -257,7 +280,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         mPdfOptions.setOutFileName(filename);
         if (isGrayScale)
             saveImagesInGrayScale();
-        new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this).execute();
+        new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this, requireContext()).execute();
     }
 
     @OnClick(R.id.pdfOpen)
@@ -282,9 +305,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     /**
-     * Called after Matisse Activity is called
+     * Called after Activity is called
      *
-     * @param requestCode REQUEST Code for opening Matisse Activity
+     * @param requestCode REQUEST Code for opening Activity
      * @param resultCode  result code of the process
      * @param data        Data of the image selected
      */
@@ -296,22 +319,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             return;
 
         switch (requestCode) {
-            case INTENT_REQUEST_GET_IMAGES:
-                mImagesUri.clear();
-                mUnarrangedImagesUri.clear();
-                mImagesUri.addAll(Matisse.obtainPathResult(data));
-                mUnarrangedImagesUri.addAll(mImagesUri);
-                if (mImagesUri.size() > 0) {
-                    mNoOfImages.setText(String.format(mActivity.getResources()
-                            .getString(R.string.images_selected), mImagesUri.size()));
-                    mNoOfImages.setVisibility(View.VISIBLE);
-                    StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
-                    mCreatePdf.setEnabled(true);
-                    mCreatePdf.unblockTouch();
-                }
-                mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
-                mOpenPdf.setVisibility(View.GONE);
-                break;
 
             case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                 HashMap<Integer, Uri> croppedImageUris =
@@ -319,7 +326,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
                 for (int i = 0; i < mImagesUri.size(); i++) {
                     if (croppedImageUris.get(i) != null) {
-                        mImagesUri.set(i, croppedImageUris.get(i).getPath());
+                        mImagesUri.set(i, croppedImageUris.get(i).toString());
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_imagecropped);
                     }
                 }
@@ -381,39 +388,35 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 compressImage();
                 break;
             case 3:
-                startActivityForResult(ImageEditor.getStartIntent(mActivity, mImagesUri),
-                        INTENT_REQUEST_APPLY_FILTER);
-                break;
-            case 4:
                 mPageSizeUtils.showPageSizeDialog(false);
                 break;
-            case 5:
+            case 4:
                 ImageUtils.getInstance().showImageScaleTypeDialog(mActivity, false);
                 break;
-            case 6:
+            case 5:
                 startActivityForResult(PreviewActivity.getStartIntent(mActivity, mImagesUri),
                         INTENT_REQUEST_PREVIEW_IMAGE);
                 break;
-            case 7:
+            case 6:
                 addBorder();
                 break;
-            case 8:
+            case 7:
                 startActivityForResult(RearrangeImages.getStartIntent(mActivity, mImagesUri),
                         INTENT_REQUEST_REARRANGE_IMAGE);
                 break;
-            case 9:
+            case 8:
                 createPdf(true);
                 break;
-            case 10:
+            case 9:
                 addMargins();
                 break;
-            case 11:
+            case 10:
                 addPageNumbers();
                 break;
-            case 12:
+            case 11:
                 addWatermark();
                 break;
-            case 13:
+            case 12:
                 setPageColor();
                 break;
         }
@@ -712,10 +715,12 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     }
 
     /**
-     * Opens Matisse activity to select Images
+     * Opens PickVisualMedia activity to select Images
      */
     private void selectImages() {
-        ImageUtils.selectImages(this, INTENT_REQUEST_GET_IMAGES);
+        pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(PickVisualMedia.ImageOnly.INSTANCE)
+                .build());
     }
 
     /**

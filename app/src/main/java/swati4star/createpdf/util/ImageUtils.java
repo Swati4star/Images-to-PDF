@@ -1,6 +1,5 @@
 package swati4star.createpdf.util;
 
-import static swati4star.createpdf.util.Constants.AUTHORITY_APP;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_ASPECT_RATIO;
 import static swati4star.createpdf.util.Constants.IMAGE_SCALE_TYPE_STRETCH;
 import static swati4star.createpdf.util.Constants.pdfDirectory;
@@ -26,17 +25,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
 
-import androidx.fragment.app.Fragment;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Rectangle;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.PicassoEngine;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import swati4star.createpdf.R;
 
@@ -74,11 +69,12 @@ public class ImageUtils {
      * @return input image size as Rectangle.
      * @see com.itextpdf.text.Rectangle
      */
-    public static Rectangle getImageSize(String imageUri) {
+    public static Rectangle getImageSize(String imageUri, Context context) throws IOException {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        File imageFile = new File(Uri.parse(imageUri).getPath());
-        BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+        InputStream is = context.getContentResolver().openInputStream(Uri.parse(imageUri));
+        BitmapFactory.decodeStream(is, null, options);
+        is.close();
         return new Rectangle(options.outWidth, options.outHeight);
     }
 
@@ -88,7 +84,7 @@ public class ImageUtils {
      * @param filename    - name of the file
      * @param finalBitmap - bitmap to save
      */
-    public static String saveImage(String filename, Bitmap finalBitmap) {
+    public static Uri saveImage(String filename, Bitmap finalBitmap) {
 
         if (finalBitmap == null || checkIfBitmapIsWhite(finalBitmap))
             return null;
@@ -111,24 +107,7 @@ public class ImageUtils {
             e.printStackTrace();
         }
 
-        return myDir + "/" + fileName;
-    }
-
-    /**
-     * Open a dialog to select some Images
-     *
-     * @param frag        the fragment that should receive the Images
-     * @param requestCode the internal request code the fragment uses for image selection
-     */
-    public static void selectImages(Fragment frag, int requestCode) {
-        Matisse.from(frag)
-                .choose(MimeType.ofImage(), false)
-                .countable(true)
-                .capture(true)
-                .captureStrategy(new CaptureStrategy(true, AUTHORITY_APP))
-                .maxSelectable(1000)
-                .imageEngine(new PicassoEngine())
-                .forResult(requestCode);
+        return Uri.fromFile(file);
     }
 
     /**

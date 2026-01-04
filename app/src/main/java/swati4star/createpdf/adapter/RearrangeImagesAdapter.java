@@ -2,6 +2,7 @@ package swati4star.createpdf.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -44,7 +44,6 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
     @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(@NonNull RearrangeImagesAdapter.ViewHolder holder, int position) {
-        File imageFile = new File(mImagesUri.get(position));
         if (position == 0) {
             holder.buttonUp.setVisibility(View.GONE);
         } else {
@@ -55,7 +54,7 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
         } else {
             holder.buttonDown.setVisibility(View.VISIBLE);
         }
-        Picasso.with(mContext).load(imageFile).into(holder.imageView);
+        Picasso.with(mContext).load(Uri.parse(mImagesUri.get(position))).into(holder.imageView);
         holder.pageNumber.setText(String.valueOf(position + 1));
     }
 
