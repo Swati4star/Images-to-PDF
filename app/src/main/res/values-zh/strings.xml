@@ -239,7 +239,6 @@
     <string name="set_page_size_text">设置页面大小</string>
     <string name="b0_to_b10">B0 至 B10</string>
     <string name="a0_to_a10">A0 至 A10</string>
-    <string name="fit_size" translatable="false">适应大小</string>
     <string name="default_page_size">默认（%s）</string>
     <string name="master_password_changed">密码似乎不正确。也许您已变更了主密码。</string>
 
@@ -531,7 +530,6 @@
     <string name="split_range_alert">输入的分割范围将重新创建所选的PDF！</string>
 
     <!-- 文件名后缀 -->
-    <string name="pdf_suffix" translatable="false">_pdf</string>
     <string name="reordering_pages_dialog">正在重新排序您的页面...</string>
     <string name="delete_alert_singular">您是否要删除所选文件？</string>
     <string name="snackbar_files_deleted">文件已删除</string>

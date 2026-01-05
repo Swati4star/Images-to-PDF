@@ -10,23 +10,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.RearrangeImagesAdapter;
+import swati4star.createpdf.databinding.ActivityRearrangeImagesBinding;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.ImageSortUtils;
@@ -34,12 +31,10 @@ import swati4star.createpdf.util.ThemeUtils;
 
 public class RearrangeImages extends AppCompatActivity implements RearrangeImagesAdapter.OnClickListener {
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-
     private ArrayList<String> mImages;
     private RearrangeImagesAdapter mRearrangeImagesAdapter;
     private SharedPreferences mSharedPreferences;
+    private ActivityRearrangeImagesBinding mBinding;
 
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
         Intent intent = new Intent(context, RearrangeImages.class);
@@ -52,24 +47,27 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rearrange_images);
+        mBinding = ActivityRearrangeImagesBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mBinding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        ButterKnife.bind(this);
         Intent intent = getIntent();
         mImages = intent.getStringArrayListExtra(PREVIEW_IMAGES);
         initRecyclerView(mImages);
+
+        mBinding.sort.setOnClickListener(v -> {
+            sortImages();
+        });
     }
 
     private void initRecyclerView(ArrayList<String> images) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(layoutManager);
+        mBinding.recyclerView.setLayoutManager(layoutManager);
         mRearrangeImagesAdapter = new RearrangeImagesAdapter(this, images, this);
-        recyclerView.setAdapter(mRearrangeImagesAdapter);
+        mBinding.recyclerView.setAdapter(mRearrangeImagesAdapter);
     }
 
     @Override
@@ -140,11 +138,6 @@ public class RearrangeImages extends AppCompatActivity implements RearrangeImage
                 })
                 .negativeText(R.string.cancel)
                 .show();
-    }
-
-    @OnClick(R.id.sort)
-    void sortImg() {
-        sortImages();
     }
 }
 

@@ -6,10 +6,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -17,11 +17,10 @@ import com.eftimoff.viewpagertransformers.DepthPageTransformer;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.PreviewAdapter;
 import swati4star.createpdf.adapter.PreviewImageOptionsAdapter;
+import swati4star.createpdf.databinding.ActivityPreviewBinding;
 import swati4star.createpdf.model.PreviewImageOptionItem;
 import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.ImageSortUtils;
@@ -30,11 +29,10 @@ import swati4star.createpdf.util.ThemeUtils;
 public class PreviewActivity extends AppCompatActivity implements PreviewImageOptionsAdapter.OnItemClickListener {
 
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 1;
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
     private ArrayList<String> mImagesArrayList;
     private PreviewAdapter mPreviewAdapter;
     private ViewPager mViewPager;
+    private ActivityPreviewBinding mBinding;
 
     public static Intent getStartIntent(Context context, ArrayList<String> uris) {
         Intent intent = new Intent(context, PreviewActivity.class);
@@ -47,9 +45,11 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
 
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preview);
 
-        ButterKnife.bind(this);
+        mBinding = ActivityPreviewBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
+
         // Extract mImagesArrayList uri array from the intent
         Intent intent = getIntent();
         mImagesArrayList = intent.getStringArrayListExtra(PREVIEW_IMAGES);
@@ -70,10 +70,10 @@ public class PreviewActivity extends AppCompatActivity implements PreviewImageOp
      */
     private void showOptions() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mBinding.recyclerView.setLayoutManager(layoutManager);
         PreviewImageOptionsAdapter adapter = new PreviewImageOptionsAdapter(this, getOptions(),
                 getApplicationContext());
-        mRecyclerView.setAdapter(adapter);
+        mBinding.recyclerView.setAdapter(adapter);
     }
 
     /**
