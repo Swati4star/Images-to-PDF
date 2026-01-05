@@ -210,7 +210,6 @@
     <string name="empty_image_description">NemaPdf-a</string>
 
     <!--  Add Password -->
-    <string name="enter_password_custom">Unesite Lozinku</string>
     <string name="example_pass_123">lozinka@123</string>
     <string name="remove_dialog">IZBRIŠI</string>
     <string name="password_remove">Lozinka Izbrisana</string>
@@ -227,7 +226,6 @@
 
     <string name="nextimage_contentdesc">Slijedeća Fotografija</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">Unesite lozinku za nastavak</string>
 
     <string name="snackbar_txtselected">Tekstualna datoteka odabrana!</string>
     <string name="decrypt_protected_file">Odrabrani PDF je zaštićen lozinkom. Unesite lozinku za nastavak…</string>

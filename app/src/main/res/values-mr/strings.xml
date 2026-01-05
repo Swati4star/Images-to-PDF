@@ -126,7 +126,6 @@
     <string name="get_started">आता सुरू करा</string>
     <string name="view_files_text">आपल्या सर्व रूपांतरित फायली येथे पहा</string>
     <string name="empty_image_description">पीडीएफ नाही</string>
-    <string name="enter_password_custom">पासवर्ड टाका</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">काढा</string>
     <string name="password_remove">पासवर्ड काढला</string>
@@ -140,7 +139,6 @@
     <string name="i_have_attached_pdfs_to_this_message">मी या संदेशाशी फाईल संलग्न केली आहे</string>
     <string name="nextimage_contentdesc">पुढील प्रतिमा</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">सुरू ठेवण्यासाठी पासवर्ड एंटर करा</string>
     <string name="snackbar_txtselected">मजकूर फाइल निवडली</string>
     <string name="decrypt_protected_file">निवडलेला पीडीएफ पासवर्ड संरक्षित आहे. सुरू ठेवण्यासाठी पासवर्ड एंटर करा</string>
     <string name="not_encrypted">पीडीएफ एन्क्रिप्ट केलेले नाही</string>

@@ -210,7 +210,6 @@
     <string name="empty_image_description">沒有Pdf</string>
 
     <!--  Add Password -->
-    <string name="enter_password_custom">輸入密碼</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">移除</string>
     <string name="password_remove">已移除密碼</string>
@@ -227,7 +226,6 @@
 
     <string name="nextimage_contentdesc">下一張圖像</string>
     <string name="decrypted_file">解密pdf文件</string>
-    <string name="decrypt_message">輸入密碼以繼續</string>
 
     <string name="snackbar_txtselected">已選擇文字文檔！</string>
     <string name="decrypt_protected_file">已選擇PDF有密碼保護，請輸入密碼以繼續……</string>

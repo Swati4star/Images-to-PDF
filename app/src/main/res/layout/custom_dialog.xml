@@ -6,13 +6,6 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <TextView
-        android:id="@+id/enter_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/enter_password_custom"
-        android:textSize="20sp" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordlayout"
         android:layout_width="match_parent"

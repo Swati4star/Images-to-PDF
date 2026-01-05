@@ -183,7 +183,6 @@
     <string name="view_files_text">Sieh hier alle von dir konvertierten Dateien!</string>
     <string name="empty_image_description">Keine PDFs</string>
 
-    <string name="enter_password_custom">Passwort eingeben</string>
     <string name="example_pass_123">pass @ 123</string>
     <string name="remove_dialog">ENTFERNEN</string>
     <string name="password_remove">Passwort entfernt</string>
@@ -205,7 +204,6 @@
     <string name="compress_dialog_percentage">%%</string>
     <string name="set_as_default">Als Standard festlegen</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">Gebe das Passwort ein, um fortzufahren</string>
     <string name="add_text">Text hinzufügen</string>
     <string name="snackbar_txtselected">Textdatei ausgewählt!</string>
     <string name="decrypt_protected_file">Das ausgewählte PDF ist passwortgeschützt. Gebe das Passwort ein, um fortzufahren …</string>

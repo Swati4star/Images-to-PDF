@@ -205,7 +205,6 @@
     <string name="empty_image_description">无PDF文件</string>
 
     <!-- 添加密码 -->
-    <string name="enter_password_custom">输入密码</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">移除</string>
     <string name="password_remove">已移除密码</string>
@@ -223,7 +222,6 @@
 
     <string name="nextimage_contentdesc">下一张图像</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">输入密码以继续</string>
 
     <string name="snackbar_txtselected">已选择文本文件！</string>
     <string name="decrypt_protected_file">所选PDF文件受密码保护。请输入密码以继续…</string>

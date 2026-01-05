@@ -208,7 +208,6 @@
     <string name="empty_image_description">কোনো PDF নেই</string>
 
     <!-- Add Password -->
-    <string name="enter_password_custom">পাসওয়ার্ড লিখুন</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">সরান...</string>
     <string name="password_remove">পাসওয়ার্ড সরিয়ে ফেলা হয়েছে</string>
@@ -224,7 +223,6 @@
     <string name="i_have_attached_pdfs_to_this_message">আমি এই বার্তায় ফাইল(গুলি) সংযুক্ত করেছি</string>
     <string name="nextimage_contentdesc">পরবর্তী চিত্র</string>
     <string name="decrypted_file">_অন-এনক্রিপ্টেড.pdf</string>
-    <string name="decrypt_message">চালনার জন্য পাসওয়ার্ড লিখুন</string>
 
     <string name="snackbar_txtselected">টেক্সট ফাইল নির্বাচিত হয়েছে!</string>
     <string name="decrypt_protected_file">নির্বাচিত PDF পাসওয়ার্ড সুরক্ষিত। চালনার জন্য পাসওয়ার্ড লিখুন...</string>

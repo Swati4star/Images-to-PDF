@@ -152,8 +152,6 @@ public class PDFEncryptionUtility {
         mDialog.setTitle(R.string.enter_password);
         final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
         final EditText mPasswordInput = Objects.requireNonNull(mDialog.getCustomView()).findViewById(R.id.password);
-        TextView text = mDialog.getCustomView().findViewById(R.id.enter_password);
-        text.setText(R.string.decrypt_message);
         mPasswordInput.addTextChangedListener(
                 new DefaultTextWatcher() {
                     @Override

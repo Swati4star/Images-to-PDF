@@ -117,7 +117,6 @@
     <string name="view_files_text">Просмотрите все конвертированные файлы здесь</string>
     <string name="empty_image_description">NoPdfs</string>
 
-    <string name="enter_password_custom">Введите пароль</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">Удалить</string>
     <string name="password_remove">Пароль удален</string>
@@ -139,7 +138,6 @@
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Установить по умолчанию</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">Введите пароль</string>
     <string name="not_encrypted">PDF не зашифрованd</string>
     <string name="save_current">Сохранить</string>
     <string name="save_first">Сохранить вначале текущее изображение</string>

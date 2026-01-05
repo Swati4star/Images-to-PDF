@@ -90,7 +90,6 @@
     <string name="get_started">Comenzar Ahora Mismo</string>
     <string name="view_files_text">¡Vea todos sus archivos convertidos aquí!</string>
     <string name="empty_image_description">NoPdfs</string>
-    <string name="enter_password_custom">Ingresar Contraseña</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">REMOVER</string>
     <string name="password_remove">Contraseña removida</string>
@@ -115,7 +114,6 @@
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Establecer por defecto</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">Ingrese la contraseña para continuar</string>
     <string name="not_encrypted">PDF no está Cifrado</string>
     <string name="save_current">Guardar</string>
     <string name="save_first">Guardar Imagen Actual Primero</string>
