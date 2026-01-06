@@ -13,30 +13,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.databinding.FragmentAddImagesBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
@@ -54,28 +47,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         MergeFilesAdapter.OnClickListener, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final ArrayList<String> mImagesUri = new ArrayList<>();
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.selectFile)
-    MorphingButton selectFileButton;
-    @BindView(R.id.pdfCreate)
-    MorphingButton mCreatePdf;
-    @BindView(R.id.addImages)
-    MorphingButton addImages;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.downArrow)
-    ImageView mDownArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.tvNoOfImages)
-    TextView mNoOfImages;
     private Activity mActivity;
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
@@ -84,17 +56,20 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private PDFUtils mPDFUtils;
     private String mOperation;
     private BottomSheetBehavior mSheetBehavior;
+    private FragmentAddImagesBinding mBinding;
     ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_images, container, false);
-        ButterKnife.bind(this, rootView);
+
+        mBinding = FragmentAddImagesBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
+        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet)
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
-        mLottieProgress.setVisibility(View.VISIBLE);
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
         pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(100), uris -> {
@@ -105,34 +80,34 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                     stringUris.add(uri.toString());
                 }
                 mImagesUri.addAll(stringUris);
-                mNoOfImages.setText(String.format(mActivity.getResources()
+                mBinding.tvNoOfImages.setText(String.format(mActivity.getResources()
                         .getString(R.string.images_selected), mImagesUri.size()));
-                mNoOfImages.setVisibility(View.VISIBLE);
+                mBinding.tvNoOfImages.setVisibility(View.VISIBLE);
                 StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
-                mCreatePdf.setEnabled(true);
+                mBinding.pdfCreate.setEnabled(true);
             } else {
-                mNoOfImages.setVisibility(View.GONE);
+                mBinding.tvNoOfImages.setVisibility(View.GONE);
             }
 
-            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
+            mMorphButtonUtility.morphToSquare(mBinding.pdfCreate, mMorphButtonUtility.integer());
         });
 
         resetValues();
+
+        mBinding.selectFile.setOnClickListener(v->{
+            startActivityForResult(mFileUtils.getFileChooser(),
+                    INTENT_REQUEST_PICK_FILE_CODE);
+        });
+
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v->{
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
+
+        mBinding.addImages.setOnClickListener(v->{
+            PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectImages);
+        });
+
         return rootView;
-    }
-
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick() {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
-    }
-
-    /**
-     * Displays file chooser intent
-     */
-    @OnClick(R.id.selectFile)
-    public void showFileChooser() {
-        startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     /**
@@ -211,7 +186,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
             MaterialDialog progressDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
             progressDialog.show();
             mPDFUtils.addImagesToPdf(mPath, outputPath, mImagesUri);
-            mMorphButtonUtility.morphToSuccess(mCreatePdf);
+            mMorphButtonUtility.morphToSuccess(mBinding.pdfCreate);
             resetValues();
             progressDialog.dismiss();
         } else {
@@ -222,17 +197,9 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private void resetValues() {
         mPath = null;
         mImagesUri.clear();
-        mMorphButtonUtility.initializeButton(selectFileButton, mCreatePdf);
-        mMorphButtonUtility.initializeButton(selectFileButton, addImages);
+        mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.pdfCreate);
+        mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.addImages);
         mNoOfImages.setVisibility(View.GONE);
-    }
-
-    /**
-     * Adding Images to PDF
-     */
-    @OnClick(R.id.addImages)
-    void startAddingImages() {
-        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectImages);
     }
 
     /**
@@ -263,14 +230,14 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private void setTextAndActivateButtons(String path) {
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, addImages);
+                mBinding.selectFile, mBinding.addImages);
 
     }
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout, mBinding.bottomSheet.lottieProgress, mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override
