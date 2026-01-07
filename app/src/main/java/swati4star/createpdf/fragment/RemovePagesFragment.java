@@ -21,33 +21,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.RearrangePdfPages;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.FragmentRemovePagesBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCompressedInterface;
@@ -69,30 +59,6 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     private static final int INTENT_REQUEST_REARRANGE_PDF = 11;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.selectFile)
-    MorphingButton selectFileButton;
-    @BindView(R.id.pdfCreate)
-    MorphingButton createPdf;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.downArrow)
-    ImageView mDownArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.pages)
-    EditText pagesInput;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.infoText)
-    TextView mInfoText;
-    @BindView(R.id.compressionInfoText)
-    TextView mCompressionInfoText;
-    @BindView(R.id.view_pdf)
-    Button mViewPdf;
     private Activity mActivity;
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
@@ -103,35 +69,63 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     private MaterialDialog mMaterialDialog;
     private BottomSheetBehavior mSheetBehavior;
     private Uri mUri;
+    private FragmentRemovePagesBinding mBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_remove_pages, container, false);
-        ButterKnife.bind(this, rootview);
+        mBinding = FragmentRemovePagesBinding.inflate(inflater, container, false);
+        View rootview = mBinding.getRoot();
+
+        LinearLayout layoutBottomSheet = rootview.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
-        mLottieProgress.setVisibility(View.VISIBLE);
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         getRuntimePermissions();
 
         resetValues();
+
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
+
+        mBinding.selectFile.setOnClickListener(v -> {
+            startActivityForResult(mFileUtils.getFileChooser(),
+                    INTENT_REQUEST_PICKFILE_CODE);
+        });
+
+        mBinding.pdfCreate.setOnClickListener(v -> {
+            StringUtils.getInstance().hideKeyboard(mActivity);
+            if (mOperation.equals(COMPRESS_PDF)) {
+                compressPDF();
+                return;
+            }
+
+            PDFEncryptionUtility pdfEncryptionUtility = new PDFEncryptionUtility(mActivity);
+            if (mOperation.equals(ADD_PWD)) {
+                if (!mPDFUtils.isPDFEncrypted(mPath)) {
+                    pdfEncryptionUtility.setPassword(mPath, null);
+                } else {
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.encrypted_pdf);
+                }
+                return;
+            }
+
+            if (mOperation.equals(REMOVE_PWd)) {
+                if (mPDFUtils.isPDFEncrypted(mPath)) {
+                    pdfEncryptionUtility.removePassword(mPath, null);
+                } else {
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.not_encrypted);
+                }
+                return;
+            }
+
+            mPDFUtils.reorderPdfPages(mUri, mPath, this);
+        });
+
         return rootview;
-    }
-
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
-    }
-
-    /**
-     * Displays file chooser intent
-     */
-    @OnClick(R.id.selectFile)
-    public void showFileChooser() {
-        startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICKFILE_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
@@ -186,38 +180,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
         return outputPath;
     }
 
-    @OnClick(R.id.pdfCreate)
-    public void parse() {
-        StringUtils.getInstance().hideKeyboard(mActivity);
-        if (mOperation.equals(COMPRESS_PDF)) {
-            compressPDF();
-            return;
-        }
-
-        PDFEncryptionUtility pdfEncryptionUtility = new PDFEncryptionUtility(mActivity);
-        if (mOperation.equals(ADD_PWD)) {
-            if (!mPDFUtils.isPDFEncrypted(mPath)) {
-                pdfEncryptionUtility.setPassword(mPath, null);
-            } else {
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.encrypted_pdf);
-            }
-            return;
-        }
-
-        if (mOperation.equals(REMOVE_PWd)) {
-            if (mPDFUtils.isPDFEncrypted(mPath)) {
-                pdfEncryptionUtility.removePassword(mPath, null);
-            } else {
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.not_encrypted);
-            }
-            return;
-        }
-
-        mPDFUtils.reorderPdfPages(mUri, mPath, this);
-    }
-
     private void compressPDF() {
-        String input = pagesInput.getText().toString();
+        String input = mBinding.pages.getText().toString();
         int check;
         try {
             check = Integer.parseInt(input);
@@ -235,18 +199,18 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
 
     private void resetValues() {
         mPath = null;
-        pagesInput.setText(null);
-        mMorphButtonUtility.initializeButton(selectFileButton, createPdf);
+        mBinding.pages.setText(null);
+        mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.pdfCreate);
         switch (mOperation) {
             case REORDER_PAGES:
             case REMOVE_PAGES:
             case ADD_PWD:
             case REMOVE_PWd:
-                mInfoText.setVisibility(View.GONE);
-                pagesInput.setVisibility(View.GONE);
+                mBinding.infoText.setVisibility(View.GONE);
+                mBinding.pages.setVisibility(View.GONE);
                 break;
             case COMPRESS_PDF:
-                mInfoText.setText(R.string.compress_pdf_prompt);
+                mBinding.infoText.setText(R.string.compress_pdf_prompt);
                 break;
         }
     }
@@ -274,10 +238,10 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             return;
         }
         mPath = path;
-        mCompressionInfoText.setVisibility(View.GONE);
-        mViewPdf.setVisibility(View.GONE);
+        mBinding.compressionInfoText.setVisibility(View.GONE);
+        mBinding.viewPdf.setVisibility(View.GONE);
         mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, createPdf);
+                mBinding.selectFile, mBinding.pdfCreate);
     }
 
     @Override
@@ -298,8 +262,8 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
             File input = new File(mPath);
             File output = new File(path);
             viewPdfButton(path);
-            mCompressionInfoText.setVisibility(View.VISIBLE);
-            mCompressionInfoText.setText(String.format(mActivity.getString(R.string.compress_info),
+            mBinding.compressionInfoText.setVisibility(View.VISIBLE);
+            mBinding.compressionInfoText.setText(String.format(mActivity.getString(R.string.compress_info),
                     getFormattedSize(input),
                     getFormattedSize(output)));
         } else {
@@ -309,14 +273,14 @@ public class RemovePagesFragment extends Fragment implements MergeFilesAdapter.O
     }
 
     private void viewPdfButton(String path) {
-        mViewPdf.setVisibility(View.VISIBLE);
-        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
+        mBinding.viewPdf.setVisibility(View.VISIBLE);
+        mBinding.viewPdf.setOnClickListener(v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
     }
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout, mBinding.bottomSheet.lottieProgress, mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override
