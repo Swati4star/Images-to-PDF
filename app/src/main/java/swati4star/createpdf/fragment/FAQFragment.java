@@ -9,28 +9,24 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FAQAdapter;
+import swati4star.createpdf.databinding.FragmentFaqBinding;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.FAQItem;
 
-
 public class FAQFragment extends Fragment implements OnItemClickListener {
-
-    @BindView(R.id.recycler_view_faq)
-    RecyclerView mFAQRecyclerView;
     private FAQAdapter mFaqAdapter;
     private List<FAQItem> mFaqs;
     private List<FAQItem> mFaqsCopy;
     private Context mContext;
     private SearchView mSearchView;
+    private FragmentFaqBinding mBinding;
 
     public FAQFragment() {
         // Required empty public constructor
@@ -40,7 +36,8 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_faq, container, false);
+        mBinding = FragmentFaqBinding.inflate(inflater, container, false);
+        View view = mBinding.getRoot();
 
         mSearchView = view.findViewById(R.id.searchView);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -110,7 +107,7 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
      */
     private void initFAQRecyclerView() {
         mFaqAdapter = new FAQAdapter(mFaqs, this);
-        mFAQRecyclerView.setAdapter(mFaqAdapter);
+        mBinding.recyclerViewFaq.setAdapter(mFaqAdapter);
     }
 
     /**

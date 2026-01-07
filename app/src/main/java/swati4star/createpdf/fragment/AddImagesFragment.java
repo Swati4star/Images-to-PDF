@@ -26,7 +26,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.databinding.FragmentAddImagesBinding;
@@ -65,7 +64,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
         mBinding = FragmentAddImagesBinding.inflate(inflater, container, false);
         View rootView = mBinding.getRoot();
-        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet)
+        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
         mOperation = getArguments().getString(BUNDLE_DATA);
@@ -94,17 +93,23 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
 
         resetValues();
 
-        mBinding.selectFile.setOnClickListener(v->{
+        mBinding.selectFile.setOnClickListener(v -> {
             startActivityForResult(mFileUtils.getFileChooser(),
                     INTENT_REQUEST_PICK_FILE_CODE);
         });
 
-        mBinding.bottomSheet.viewFiles.setOnClickListener(v->{
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
             mBottomSheetUtils.showHideSheet(mSheetBehavior);
         });
 
-        mBinding.addImages.setOnClickListener(v->{
+        mBinding.addImages.setOnClickListener(v -> {
             PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectImages);
+        });
+
+        mBinding.pdfCreate.setOnClickListener(v -> {
+            StringUtils.getInstance().hideKeyboard(mActivity);
+            if (mOperation.equals(ADD_IMAGES))
+                getFileName();
         });
 
         return rootView;
@@ -143,13 +148,6 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionsUtils.getInstance().handleRequestPermissionsResult(mActivity, grantResults,
                 requestCode, REQUEST_CODE_FOR_WRITE_PERMISSION, this::selectImages);
-    }
-
-    @OnClick(R.id.pdfCreate)
-    public void parse() {
-        StringUtils.getInstance().hideKeyboard(mActivity);
-        if (mOperation.equals(ADD_IMAGES))
-            getFileName();
     }
 
     private void getFileName() {
@@ -199,7 +197,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mImagesUri.clear();
         mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.pdfCreate);
         mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.addImages);
-        mNoOfImages.setVisibility(View.GONE);
+        mBinding.tvNoOfImages.setVisibility(View.GONE);
     }
 
     /**

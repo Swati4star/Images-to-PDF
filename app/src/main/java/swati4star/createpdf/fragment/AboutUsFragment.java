@@ -55,7 +55,7 @@ public class AboutUsFragment extends Fragment {
             mFeedbackUtils.openWebPage("http://swati4star.github.io/Images-to-PDF/");
         });
 
-        mBinding.layoutSlack.setOnClickListener(v->{
+        mBinding.layoutSlack.setOnClickListener( v -> {
             mFeedbackUtils.openWebPage("https://join.slack.com/t/imagestopdf/shared_invite/" +
                     "enQtNDA2ODk1NDE3Mzk3LTUwNjllYzY5YWZkZDliY2FmNDhkNmM1NjIwZTc1Y" +
                     "jU4NTgxNWI0ZDczMWQxMTEyZjA0M2Y5N2RlN2NiMWRjZGI");

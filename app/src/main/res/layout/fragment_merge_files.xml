@@ -88,5 +88,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <include layout="@layout/bottom_sheet" />
+    <include
+        android:id="@+id/bottom_sheet"
+        layout="@layout/bottom_sheet" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,21 +18,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
@@ -50,12 +45,10 @@ import java.io.FileReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.databinding.FragmentAddTextBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnItemClickListener;
@@ -78,26 +71,6 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private static final int INTENT_REQUEST_PICK_TEXT_FILE_CODE = 0;
     private static String mPdfpath;
     private static String mTextPath;
-    @BindView(R.id.select_pdf_file)
-    MorphingButton mSelectPDF;
-    @BindView(R.id.select_text_file)
-    MorphingButton mSelectText;
-    @BindView(R.id.create_pdf_added_text)
-    MorphingButton mCreateTextPDF;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.downArrow)
-    ImageView mDownArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.enhancement_options_recycle_view_text)
-    RecyclerView mTextEnhancementOptionsRecycleView;
     private Activity mActivity;
     private String mFontTitle;
     private FileUtils mFileUtils;
@@ -111,24 +84,57 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     private EnhancementOptionsAdapter mTextEnhancementOptionsAdapter;
     private Font.FontFamily mFontFamily;
 
+    private FragmentAddTextBinding mBinding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_add_text, container, false);
-        ButterKnife.bind(this, rootView);
+        mBinding = FragmentAddTextBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mFontTitle = String.format(getString(R.string.edit_font_size),
                 mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE));
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
+
+        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         showEnhancementOptions();
-        mLottieProgress.setVisibility(View.VISIBLE);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
         resetView();
+        mBinding.selectPdfFile.setOnClickListener(v -> {
+            try {
+                startActivityForResult(mFileUtils.getFileChooser(),
+                        INTENT_REQUEST_PICK_PDF_FILE_CODE);
+            } catch (android.content.ActivityNotFoundException ex) {
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
+            }
+        });
+        mBinding.selectTextFile.setOnClickListener(v -> {
+            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setDataAndType(uri, "*/*");
+            String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    "application/msword", getString(R.string.text_type)};
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            try {
+                startActivityForResult(
+                        Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                        INTENT_REQUEST_PICK_TEXT_FILE_CODE);
+            } catch (android.content.ActivityNotFoundException ex) {
+                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
+            }
+        });
+        mBinding.createPdfAddedText.setOnClickListener(v -> {
+            openPdfNameDialog();
+        });
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
         return rootView;
     }
 
@@ -137,11 +143,11 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
      */
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
-        mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mBinding.enhancementOptionsRecycleViewText.setLayoutManager(mGridLayoutManager);
         mTextEnhancementOptionsEntityArrayList = AddTextEnhancementOptionsUtils.getInstance()
                 .getEnhancementOptions(mActivity, mFontTitle, mFontFamily);
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mTextEnhancementOptionsEntityArrayList);
-        mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
+        mBinding.enhancementOptionsRecycleViewText.setAdapter(mTextEnhancementOptionsAdapter);
     }
 
     @Override
@@ -153,35 +159,6 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         mBottomSheetUtils = new BottomSheetUtils(mActivity);
     }
 
-    @OnClick(R.id.select_pdf_file)
-    public void showPdfFileChooser() {
-        try {
-            startActivityForResult(mFileUtils.getFileChooser(),
-                    INTENT_REQUEST_PICK_PDF_FILE_CODE);
-        } catch (android.content.ActivityNotFoundException ex) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
-        }
-    }
-
-    @OnClick(R.id.select_text_file)
-    public void showTextFileChooser() {
-        Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setDataAndType(uri, "*/*");
-        String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/msword", getString(R.string.text_type)};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        try {
-            startActivityForResult(
-                    Intent.createChooser(intent, String.valueOf(R.string.select_file)),
-                    INTENT_REQUEST_PICK_TEXT_FILE_CODE);
-        } catch (android.content.ActivityNotFoundException ex) {
-            StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
-        }
-    }
-
-    @OnClick(R.id.create_pdf_added_text)
     public void openPdfNameDialog() {
         PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::openPdfNameDialog_);
     }
@@ -230,14 +207,9 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
             return;
         }
         mMorphButtonUtility.setTextAndActivateButtons(pdfPath,
-                mSelectPDF, mCreateTextPDF);
+                mBinding.selectPdfFile, mBinding.createPdfAddedText);
         mMorphButtonUtility.setTextAndActivateButtons(textPath,
-                mSelectText, mCreateTextPDF);
-    }
-
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
+                mBinding.selectTextFile, mBinding.createPdfAddedText);
     }
 
     /**
@@ -245,8 +217,8 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
      */
     private void resetView() {
         mPdfpath = mTextPath = null;
-        mMorphButtonUtility.morphToGrey(mCreateTextPDF, mMorphButtonUtility.integer());
-        mCreateTextPDF.setEnabled(false);
+        mMorphButtonUtility.morphToGrey(mBinding.createPdfAddedText, mMorphButtonUtility.integer());
+        mBinding.createPdfAddedText.setEnabled(false);
         mFontSize = mSharedPreferences.getInt(Constants.DEFAULT_FONT_SIZE_TEXT, Constants.DEFAULT_FONT_SIZE);
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
@@ -302,7 +274,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            mMorphButtonUtility.initializeButtonForAddText(mSelectPDF, mSelectText, mCreateTextPDF);
+            mMorphButtonUtility.initializeButtonForAddText(mBinding.selectPdfFile, mBinding.selectTextFile, mBinding.createPdfAddedText);
             resetView();
         }
     }
@@ -330,7 +302,7 @@ public class AddTextFragment extends Fragment implements MergeFilesAdapter.OnCli
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout, mBinding.bottomSheet.lottieProgress, mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override
