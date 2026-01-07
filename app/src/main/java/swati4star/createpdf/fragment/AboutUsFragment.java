@@ -55,31 +55,21 @@ public class AboutUsFragment extends Fragment {
             mFeedbackUtils.openWebPage("http://swati4star.github.io/Images-to-PDF/");
         });
 
-        mBinding.layoutSlack.setOnClickListener( v -> {
-            mFeedbackUtils.openWebPage("https://join.slack.com/t/imagestopdf/shared_invite/" +
-                    "enQtNDA2ODk1NDE3Mzk3LTUwNjllYzY5YWZkZDliY2FmNDhkNmM1NjIwZTc1Y" +
-                    "jU4NTgxNWI0ZDczMWQxMTEyZjA0M2Y5N2RlN2NiMWRjZGI");
-        });
-
         mBinding.layoutGithub.setOnClickListener(v -> {
             mFeedbackUtils.openWebPage("https://github.com/Swati4star/Images-to-PDF");
         });
-
 
         mBinding.layoutContri.setOnClickListener(v -> {
             mFeedbackUtils.openWebPage("https://github.com/Swati4star/Images-to-PDF/graphs/contributors");
         });
 
-
         mBinding.layoutPlaystore.setOnClickListener(v -> {
             mFeedbackUtils.openWebPage("https://play.google.com/store/apps/details?id=swati4star.createpdf");
         });
 
-
         mBinding.layoutPrivacy.setOnClickListener(v -> {
             mFeedbackUtils.openWebPage("https://sites.google.com/view/privacy-policy-image-to-pdf/home");
         });
-
 
         mBinding.layoutLicense.setOnClickListener(v -> {
             mFeedbackUtils.openWebPage("https://github.com/Swati4star/Images-to-PDF/blob/master/LICENSE.md");

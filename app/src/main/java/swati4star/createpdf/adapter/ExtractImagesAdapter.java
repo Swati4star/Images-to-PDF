@@ -23,12 +23,10 @@ import swati4star.createpdf.util.ImageUtils;
 public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdapter.ViewMergeFilesHolder> {
 
     private final ArrayList<String> mFilePaths;
-    private final Activity mContext;
     private final OnFileItemClickedListener mOnClickListener;
 
     public ExtractImagesAdapter(Activity mContext, ArrayList<String> mFilePaths,
                                 OnFileItemClickedListener mOnClickListener) {
-        this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         this.mOnClickListener = mOnClickListener;
     }

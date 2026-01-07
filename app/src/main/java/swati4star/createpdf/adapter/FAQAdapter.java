@@ -34,7 +34,6 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
      * @param position  - view position
      * @return FAQViewHolder View
      */
-
     @NonNull
     @Override
     public FAQViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {

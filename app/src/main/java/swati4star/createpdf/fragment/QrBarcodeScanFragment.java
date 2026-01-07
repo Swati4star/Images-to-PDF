@@ -44,11 +44,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
-import swati4star.createpdf.customviews.MyCardView;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.FragmentQrcodeBarcodeBinding;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.model.TextToPDFOptions;
@@ -64,10 +62,6 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private static final int REQUEST_CODE_FOR_QR_CODE = 1;
     private static final int REQUEST_CODE_FOR_BARCODE = 2;
     private final String mTempFileName = "scan_result_temp.txt";
-    @BindView(R.id.scan_qrcode)
-    MyCardView scanQrcode;
-    @BindView(R.id.scan_barcode)
-    MyCardView scanBarcode;
     private SharedPreferences mSharedPreferences;
     private Activity mActivity;
     private MaterialDialog mMaterialDialog;
@@ -75,17 +69,19 @@ public class QrBarcodeScanFragment extends Fragment implements View.OnClickListe
     private FileUtils mFileUtils;
     private Font.FontFamily mFontFamily;
     private int mFontColor;
+    private FragmentQrcodeBarcodeBinding mBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_qrcode_barcode, container, false);
+        mBinding = FragmentQrcodeBarcodeBinding.inflate(inflater, container, false);
+        View rootview = mBinding.getRoot();
+
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
-        ButterKnife.bind(this, rootview);
-        scanQrcode.setOnClickListener(this);
-        scanBarcode.setOnClickListener(this);
+        mBinding.scanQrcode.setOnClickListener(this);
+        mBinding.scanBarcode.setOnClickListener(this);
         mFontFamily = Font.FontFamily.valueOf(mSharedPreferences.getString(Constants.DEFAULT_FONT_FAMILY_TEXT,
                 Constants.DEFAULT_FONT_FAMILY));
         mFontColor = mSharedPreferences.getInt(Constants.DEFAULT_FONT_COLOR_TEXT,

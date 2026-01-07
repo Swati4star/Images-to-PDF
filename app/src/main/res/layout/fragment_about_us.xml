@@ -180,25 +180,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/layout_slack"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:drawableStart="@drawable/ic_slack"
-                android:drawablePadding="15dp"
-                app:drawableTint="?attr/historyIconColor"
-                android:padding="8dp"
-                android:text="@string/join_slack"
-                tools:targetApi="m" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/layout_privacy"
             android:layout_width="match_parent"
             android:layout_height="50dp"

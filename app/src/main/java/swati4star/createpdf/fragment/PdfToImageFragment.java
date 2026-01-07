@@ -1,6 +1,5 @@
 package swati4star.createpdf.fragment;
 
-
 import static android.app.Activity.RESULT_OK;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
 import static swati4star.createpdf.util.Constants.PDF_TO_IMAGES;
@@ -16,30 +15,22 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.ImagesPreviewActivity;
 import swati4star.createpdf.adapter.ExtractImagesAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.databinding.FragmentPdfToImageBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.ExtractImagesListener;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
@@ -60,26 +51,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         ExtractImagesListener, ExtractImagesAdapter.OnFileItemClickedListener, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout mLayoutBottomSheet;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.selectFile)
-    MorphingButton mSelectFileButton;
-    @BindView(R.id.createImages)
-    MorphingButton mCreateImagesButton;
-    @BindView(R.id.created_images)
-    RecyclerView mCreatedImages;
-    @BindView(R.id.pdfToImagesText)
-    TextView mCreateImagesSuccessText;
-    @BindView(R.id.options)
-    LinearLayout options;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
     private Activity mActivity;
     private String mPath;
     private Uri mUri;
@@ -94,6 +65,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     private Context mContext;
     private PDFUtils mPDFUtils;
     private String[] mInputPassword;
+    private FragmentPdfToImageBinding mBinding;
 
     /**
      * inflates the layout for the fragment
@@ -106,67 +78,74 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_pdf_to_image, container, false);
-        ButterKnife.bind(this, rootView);
+        mBinding = FragmentPdfToImageBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
         mOperation = getArguments().getString(BUNDLE_DATA);
-        mSheetBehavior = BottomSheetBehavior.from(mLayoutBottomSheet);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        mLottieProgress.setVisibility(View.VISIBLE);
+        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet);
+        mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         resetView();
         getRuntimePermissions();
+
+        mBinding.viewImagesInGallery.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri imagesUri = Uri.parse("content:///storage/emulated/0/PDFfiles/");
+            intent.setDataAndType(imagesUri, "image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+        });
+
+        mBinding.shareImages.setOnClickListener(v -> {
+            if (mOutputFilePaths != null) {
+                ArrayList<File> fileArrayList = new ArrayList<>();
+                for (String path : mOutputFilePaths) {
+                    fileArrayList.add(new File(path));
+                }
+                mFileUtils.shareMultipleFiles(fileArrayList);
+            }
+        });
+
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
+
+        mBinding.viewImages.setOnClickListener(v -> {
+            mActivity.startActivity(ImagesPreviewActivity.getStartIntent(mActivity, mOutputFileUris));
+        });
+
+        mBinding.selectFile.setOnClickListener(v -> {
+            startActivityForResult(mFileUtils.getFileChooser(),
+                    INTENT_REQUEST_PICK_FILE_CODE);
+        });
+
+        mBinding.createImages.setOnClickListener(v -> {
+            if (mPDFUtils.isPDFEncrypted(mPath)) {
+                mInputPassword = new String[1];
+                new MaterialDialog.Builder(mActivity)
+                        .title(R.string.enter_password)
+                        .content(R.string.decrypt_protected_file)
+                        .inputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        .input(null, null, (dialog, input) -> {
+                            if (StringUtils.getInstance().isEmpty(input)) {
+                                StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
+                            } else {
+                                final String inputName = input.toString();
+                                mInputPassword[0] = inputName;
+                                pdfToImage(mInputPassword);
+                            }
+                        })
+                        .show();
+            } else {
+                pdfToImage(mInputPassword);
+            }
+        });
+
         return rootView;
     }
 
-    @OnClick(R.id.viewImagesInGallery)
-    void onImagesInGalleryClick() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        Uri imagesUri = Uri.parse("content:///storage/emulated/0/PDFfiles/");
-        intent.setDataAndType(imagesUri, "image/*");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(intent);
-    }
-
-    /**
-     * called when user chooses to share generated images
-     */
-    @OnClick(R.id.shareImages)
-    void onShareFilesClick() {
-        if (mOutputFilePaths != null) {
-            ArrayList<File> fileArrayList = new ArrayList<>();
-            for (String path : mOutputFilePaths) {
-                fileArrayList.add(new File(path));
-            }
-            mFileUtils.shareMultipleFiles(fileArrayList);
-        }
-    }
-
-    /**
-     * called on click of bottom sheet
-     */
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick() {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
-    }
-
-    /**
-     * called when user chooses to view generated images
-     */
-    @OnClick(R.id.viewImages)
-    void onViewImagesClicked() {
-        mActivity.startActivity(ImagesPreviewActivity.getStartIntent(mActivity, mOutputFileUris));
-    }
-
-    /**
-     * invoked when user chooses to select a pdf file
-     * initiates an intent to pick a pdf file
-     */
-    @OnClick(R.id.selectFile)
-    public void showFileChooser() {
-        startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICK_FILE_CODE);
-    }
 
     /**
      * receives intent response for selecting a pdf file
@@ -180,33 +159,6 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             String path = RealPathUtil.getInstance().getRealPath(getContext(), data.getData());
             setTextAndActivateButtons(path);
 
-        }
-    }
-
-    /**
-     * invokes generation of images for pdf pages in the background by checking
-     * for encryption first.
-     */
-    @OnClick(R.id.createImages)
-    public void parse() {
-        if (mPDFUtils.isPDFEncrypted(mPath)) {
-            mInputPassword = new String[1];
-            new MaterialDialog.Builder(mActivity)
-                    .title(R.string.enter_password)
-                    .content(R.string.decrypt_protected_file)
-                    .inputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                    .input(null, null, (dialog, input) -> {
-                        if (StringUtils.getInstance().isEmpty(input)) {
-                            StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_name_not_blank);
-                        } else {
-                            final String inputName = input.toString();
-                            mInputPassword[0] = inputName;
-                            pdfToImage(mInputPassword);
-                        }
-                    })
-                    .show();
-        } else {
-            pdfToImage(mInputPassword);
         }
     }
 
@@ -258,12 +210,12 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
             resetView();
             return;
         }
-        mCreatedImages.setVisibility(View.GONE);
-        options.setVisibility(View.GONE);
-        mCreateImagesSuccessText.setVisibility(View.GONE);
+        mBinding.createdImages.setVisibility(View.GONE);
+        mBinding.options.setVisibility(View.GONE);
+        mBinding.pdfToImagesText.setVisibility(View.GONE);
         mPath = path;
         mMorphButtonUtility.setTextAndActivateButtons(path,
-                mSelectFileButton, mCreateImagesButton);
+                mBinding.selectFile, mBinding.createImages);
     }
 
     /**
@@ -282,7 +234,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     @Override
     public void resetView() {
         mPath = null;
-        mMorphButtonUtility.initializeButton(mSelectFileButton, mCreateImagesButton);
+        mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.createImages);
     }
 
     /**
@@ -309,7 +261,7 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
         mOutputFileUris = outputFileUris;
 
         CommonCodeUtils.getInstance().updateView(mActivity, imageCount, outputFilePaths,
-                mCreateImagesSuccessText, options, mCreatedImages, this);
+                mBinding.pdfToImagesText, mBinding.options, mBinding.createdImages, this);
     }
 
     /**
@@ -320,7 +272,8 @@ public class PdfToImageFragment extends Fragment implements BottomSheetPopulate,
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout,
+                mBinding.bottomSheet.lottieProgress, mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override

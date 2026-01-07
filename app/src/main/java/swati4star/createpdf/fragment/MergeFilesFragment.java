@@ -17,36 +17,28 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.adapter.MergeSelectedFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.FragmentMergeFilesBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.MergeFilesListener;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
@@ -70,26 +62,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         MergeSelectedFilesAdapter.OnFileItemClickListener, OnItemClickListener,
         BottomSheetPopulate, OnBackPressedInterface {
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.mergebtn)
-    MorphingButton mergeBtn;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.downArrow)
-    ImageView mDownArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.selectFiles)
-    Button mSelectFiles;
-    @BindView(R.id.selected_files)
-    RecyclerView mSelectedFiles;
-    @BindView(R.id.enhancement_options_recycle_view)
-    RecyclerView mEnhancementOptionsRecycleView;
     private Activity mActivity;
     private String mCheckbtClickTag = "";
     private MorphButtonUtility mMorphButtonUtility;
@@ -106,15 +78,19 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
     private SharedPreferences mSharedPrefs;
     private BottomSheetBehavior mSheetBehavior;
 
+    private FragmentMergeFilesBinding mBinding;
+
     public MergeFilesFragment() {
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_merge_files, container, false);
-        ButterKnife.bind(this, root);
+
+        mBinding = FragmentMergeFilesBinding.inflate(inflater, container, false);
+        View root = mBinding.getRoot();
         showEnhancementOptions();
+        LinearLayout layoutBottomSheet = root.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         mFilePaths = new ArrayList<>();
         mMergeSelectedFilesAdapter = new MergeSelectedFilesAdapter(mActivity, mFilePaths, this);
@@ -122,16 +98,30 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mHomePath = mSharedPrefs.getString(STORAGE_LOCATION,
                 StringUtils.getInstance().getDefaultStorageLocation());
-        mLottieProgress.setVisibility(View.VISIBLE);
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
 
-        mSelectedFiles.setAdapter(mMergeSelectedFilesAdapter);
-        mSelectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+        mBinding.selectedFiles.setAdapter(mMergeSelectedFilesAdapter);
+        mBinding.selectedFiles.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
 
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow,
+                isAdded()));
         setMorphingButtonState(false);
 
         getRuntimePermissions();
+
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
+
+        mBinding.selectFiles.setOnClickListener(v -> {
+            startActivityForResult(mFileUtils.getMultipleFileChooser(),
+                    INTENT_REQUEST_PICK_FILE_CODE);
+        });
+
+        mBinding.mergebtn.setOnClickListener(v -> {
+            mergeFiles(v);
+        });
 
         return root;
     }
@@ -141,16 +131,16 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
      */
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
-        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mBinding.enhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         mEnhancementOptionsEntityArrayList = MergePdfEnhancementOptionsUtils.getInstance()
                 .getEnhancementOptions(mActivity);
         mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
-        mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
+        mBinding.enhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }
 
     @Override
     public void onItemClick(int position) {
-        if (mFilePaths.size() == 0) {
+        if (mFilePaths.isEmpty()) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
             return;
         }
@@ -211,18 +201,6 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mEnhancementOptionsAdapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
-    }
-
-    @OnClick(R.id.selectFiles)
-    void startAddingPDF(View v) {
-        startActivityForResult(mFileUtils.getMultipleFileChooser(),
-                INTENT_REQUEST_PICK_FILE_CODE);
-    }
-
-    @OnClick(R.id.mergebtn)
     void mergeFiles(final View view) {
         String[] pdfpaths = mFilePaths.toArray(new String[0]);
         String masterpwd = mSharedPrefs.getString(MASTER_PWD_STRING, appName);
@@ -265,7 +243,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                     mFilePaths.add(path);
                     mMergeSelectedFilesAdapter.notifyDataSetChanged();
                     StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
-                    if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
+                    if (mFilePaths.size() > 1 && !mBinding.mergebtn.isEnabled())
                         setMorphingButtonState(true);
                 }
             } else {
@@ -273,7 +251,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
                 mFilePaths.add(path);
                 mMergeSelectedFilesAdapter.notifyDataSetChanged();
                 StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_added_to_list));
-                if (mFilePaths.size() > 1 && !mergeBtn.isEnabled())
+                if (mFilePaths.size() > 1 && !mBinding.mergebtn.isEnabled())
                     setMorphingButtonState(true);
             }
         }
@@ -313,9 +291,9 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
         if (mFilePaths.size() > 1) {
-            if (!mergeBtn.isEnabled()) setMorphingButtonState(true);
+            if (!mBinding.mergebtn.isEnabled()) setMorphingButtonState(true);
         } else {
-            if (mergeBtn.isEnabled()) setMorphingButtonState(false);
+            if (mBinding.mergebtn.isEnabled()) setMorphingButtonState(false);
         }
     }
 
@@ -358,7 +336,7 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
         mFilePaths.remove(path);
         mMergeSelectedFilesAdapter.notifyDataSetChanged();
         StringUtils.getInstance().showSnackbar(mActivity, getString(R.string.pdf_removed_from_list));
-        if (mFilePaths.size() < 2 && mergeBtn.isEnabled())
+        if (mFilePaths.size() < 2 && mBinding.mergebtn.isEnabled())
             setMorphingButtonState(false);
     }
 
@@ -376,17 +354,18 @@ public class MergeFilesFragment extends Fragment implements MergeFilesAdapter.On
 
     private void setMorphingButtonState(Boolean enabled) {
         if (enabled)
-            mMorphButtonUtility.morphToSquare(mergeBtn, mMorphButtonUtility.integer());
+            mMorphButtonUtility.morphToSquare(mBinding.mergebtn, mMorphButtonUtility.integer());
         else
-            mMorphButtonUtility.morphToGrey(mergeBtn, mMorphButtonUtility.integer());
+            mMorphButtonUtility.morphToGrey(mBinding.mergebtn, mMorphButtonUtility.integer());
 
-        mergeBtn.setEnabled(enabled);
+        mBinding.mergebtn.setEnabled(enabled);
     }
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout, mBinding.bottomSheet.lottieProgress,
+                mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override
