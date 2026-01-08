@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FAQAdapter;
 import swati4star.createpdf.databinding.FragmentFaqBinding;
@@ -37,9 +36,9 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
                              Bundle savedInstanceState) {
 
         mBinding = FragmentFaqBinding.inflate(inflater, container, false);
-        View view = mBinding.getRoot();
+        View rootView = mBinding.getRoot();
 
-        mSearchView = view.findViewById(R.id.searchView);
+        mSearchView = rootView.findViewById(R.id.searchView);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -54,13 +53,12 @@ public class FAQFragment extends Fragment implements OnItemClickListener {
             }
         });
 
-        ButterKnife.bind(this, view);
-        mContext = view.getContext();
+        mContext = rootView.getContext();
 
         initFAQs();
         initFAQRecyclerView();
 
-        return view;
+        return rootView;
     }
 
     /**

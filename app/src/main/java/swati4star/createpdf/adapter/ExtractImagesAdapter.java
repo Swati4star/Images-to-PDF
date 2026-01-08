@@ -15,9 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemImageExtractedBinding;
 import swati4star.createpdf.util.ImageUtils;
 
 public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdapter.ViewMergeFilesHolder> {
@@ -34,9 +32,8 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
     @NonNull
     @Override
     public ViewMergeFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_image_extracted, parent, false);
-        return new ExtractImagesAdapter.ViewMergeFilesHolder(itemView);
+        ItemImageExtractedBinding binding = ItemImageExtractedBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ExtractImagesAdapter.ViewMergeFilesHolder(binding);
     }
 
     @Override
@@ -57,15 +54,14 @@ public class ExtractImagesAdapter extends RecyclerView.Adapter<ExtractImagesAdap
     }
 
     public class ViewMergeFilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.fileName)
         TextView mFileName;
-        @BindView(R.id.imagePreview)
         ImageView mImagePreview;
 
-        ViewMergeFilesHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            mFileName.setOnClickListener(this);
+        ViewMergeFilesHolder(ItemImageExtractedBinding binding) {
+            super(binding.getRoot());
+            binding.fileName.setOnClickListener(this);
+            mFileName = binding.fileName;
+            mImagePreview = binding.imagePreview;
         }
 
         @Override

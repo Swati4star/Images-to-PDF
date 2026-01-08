@@ -82,11 +82,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference:1.2.0'
 
-    // butterknife
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    implementation 'androidx.test.ext:junit:1.1.5'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-
     // persistence room library - for db operations
     implementation 'androidx.room:room-runtime:2.5.1'
     annotationProcessor 'androidx.room:room-compiler:2.5.1'

@@ -12,20 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemMergeFilesBinding;
 import swati4star.createpdf.util.FileUtils;
 
 public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.ViewMergeFilesHolder> {
 
     private final ArrayList<String> mFilePaths;
-    private final Activity mContext;
     private final OnFileItemClickedListener mOnClickListener;
 
     public FilesListAdapter(Activity mContext, ArrayList<String> mFilePaths,
                             OnFileItemClickedListener mOnClickListener) {
-        this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         this.mOnClickListener = mOnClickListener;
     }
@@ -33,9 +29,8 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
     @NonNull
     @Override
     public ViewMergeFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_merge_files, parent, false);
-        return new FilesListAdapter.ViewMergeFilesHolder(itemView);
+        ItemMergeFilesBinding binding = ItemMergeFilesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new FilesListAdapter.ViewMergeFilesHolder(binding);
     }
 
     @Override
@@ -54,15 +49,14 @@ public class FilesListAdapter extends RecyclerView.Adapter<FilesListAdapter.View
     }
 
     public class ViewMergeFilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.fileName)
         TextView mFileName;
-        @BindView(R.id.encryptionImage)
         ImageView mEncryptionImage;
 
-        ViewMergeFilesHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            mFileName.setOnClickListener(this);
+        ViewMergeFilesHolder(ItemMergeFilesBinding binding) {
+            super(binding.getRoot());
+            binding.fileName.setOnClickListener(this);
+            mFileName = binding.fileName;
+            mEncryptionImage = binding.encryptionImage;
         }
 
         @Override

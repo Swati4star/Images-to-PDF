@@ -15,9 +15,8 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemViewEnhancementOptionBinding;
 
 public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.RecentItemViewHolder> {
 
@@ -44,10 +43,9 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
     @NonNull
     @Override
     public RecentItemViewHolder onCreateViewHolder(
-            @NonNull final ViewGroup viewGroup, final int i) {
-        View mView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_view_enhancement_option, viewGroup, false);
-        return new RecentListAdapter.RecentItemViewHolder(mView);
+            @NonNull final ViewGroup parent, final int i) {
+        ItemViewEnhancementOptionBinding binding = ItemViewEnhancementOptionBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);;
+        return new RecentListAdapter.RecentItemViewHolder(binding);
     }
 
     @Override
@@ -70,17 +68,16 @@ public class RecentListAdapter extends RecyclerView.Adapter<RecentListAdapter.Re
     }
 
     class RecentItemViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.option_image)
         ImageView icon;
-        @BindView(R.id.option_name)
         TextView name;
 
         MaterialCardView cardView;
 
-        private RecentItemViewHolder(@NonNull final View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        private RecentItemViewHolder(@NonNull final ItemViewEnhancementOptionBinding binding) {
+            super(binding.getRoot());
             cardView = itemView.findViewById(R.id.container_card_view);
+            icon = binding.optionImage;
+            name = binding.optionName;
         }
     }
 }

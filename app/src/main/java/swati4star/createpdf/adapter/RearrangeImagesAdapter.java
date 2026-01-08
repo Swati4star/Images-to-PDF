@@ -17,9 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemRearrangeImagesBinding;
 
 public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImagesAdapter.ViewHolder> {
     private final Context mContext;
@@ -36,9 +35,8 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
     @NonNull
     @Override
     public RearrangeImagesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_rearrange_images, parent, false);
-        return new RearrangeImagesAdapter.ViewHolder(view);
+        ItemRearrangeImagesBinding binding = ItemRearrangeImagesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new RearrangeImagesAdapter.ViewHolder(binding);
     }
 
     @SuppressLint("NewApi")
@@ -77,23 +75,22 @@ public class RearrangeImagesAdapter extends RecyclerView.Adapter<RearrangeImages
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.image)
         ImageView imageView;
-        @BindView(R.id.buttonUp)
         ImageButton buttonUp;
-        @BindView(R.id.buttonDown)
         ImageButton buttonDown;
-        @BindView(R.id.pageNumber)
         TextView pageNumber;
-        @BindView(R.id.removeImage)
-        ImageButton mRemoveImage;
+        ImageButton removeImage;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        ViewHolder(ItemRearrangeImagesBinding binding) {
+            super(binding.getRoot());
+            imageView = binding.image;
+            buttonUp = binding.buttonUp;
+            buttonDown = binding.buttonDown;
+            pageNumber = binding.pageNumber;
+            removeImage = binding.removeImage;
             buttonDown.setOnClickListener(this);
             buttonUp.setOnClickListener(this);
-            mRemoveImage.setOnClickListener(this);
+            removeImage.setOnClickListener(this);
         }
 
         @Override

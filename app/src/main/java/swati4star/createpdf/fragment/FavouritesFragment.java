@@ -52,7 +52,6 @@ import androidx.preference.PreferenceManager;
 
 import java.util.Map;
 
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
 import swati4star.createpdf.activity.MainActivity;
@@ -84,6 +83,11 @@ public class FavouritesFragment extends Fragment
         initializeValues();
 
         setHasOptionsMenu(true);
+
+        mBinding.favAddFab.setOnClickListener(v -> {
+            startActivity(new Intent(this.getContext(), FavouritesActivity.class));
+        });
+
         return rootView;
     }
 
@@ -120,11 +124,6 @@ public class FavouritesFragment extends Fragment
         mBinding.excelToPdfFav.setOnClickListener(this);
         mBinding.zipToPdfFav.setOnClickListener(this);
 
-    }
-
-    @OnClick(R.id.fav_add_fab)
-    public void onAddFavouriteButtonClicked() {
-        startActivity(new Intent(this.getContext(), FavouritesActivity.class));
     }
 
     @Override

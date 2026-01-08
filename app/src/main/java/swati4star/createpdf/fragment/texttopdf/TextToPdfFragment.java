@@ -18,19 +18,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.dd.morphingbutton.MorphingButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.databinding.FragmentTextToPdfBinding;
 import swati4star.createpdf.interfaces.Enhancer;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.interfaces.OnTextToPdfInterface;
@@ -51,12 +47,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         OnTextToPdfInterface, TextToPdfContract.View {
 
     private final int mFileSelectCode = 0;
-    @BindView(R.id.enhancement_options_recycle_view_text)
-    RecyclerView mTextEnhancementOptionsRecycleView;
-    @BindView(R.id.selectFile)
-    MorphingButton mSelectFile;
-    @BindView(R.id.createtextpdf)
-    MorphingButton mCreateTextPdf;
     private Activity mActivity;
     private FileUtils mFileUtils;
     private DirectoryUtils mDirectoryUtils;
@@ -71,19 +61,31 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
     private List<Enhancer> mEnhancerList;
     private TextToPDFOptions.Builder mBuilder;
 
+    private FragmentTextToPdfBinding mBinding;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_text_to_pdf, container, false);
+
+        mBinding = FragmentTextToPdfBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
 
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootView);
 
         mBuilder = new TextToPDFOptions.Builder(mActivity);
         addEnhancements();
         showEnhancementOptions();
-        mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
-        mCreateTextPdf.setEnabled(false);
+        mMorphButtonUtility.morphToGrey(mBinding.createtextpdf, mMorphButtonUtility.integer());
+        mBinding.createtextpdf.setEnabled(false);
+
+        mBinding.createtextpdf.setOnClickListener(v -> {
+            openCreateTextPdf();
+        });
+
+        mBinding.selectFile.setOnClickListener(v -> {
+            PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectFile);
+        });
+
         return rootView;
     }
 
@@ -99,13 +101,13 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
      */
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
-        mTextEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mBinding.enhancementOptionsRecycleViewText.setLayoutManager(mGridLayoutManager);
         List<EnhancementOptionsEntity> optionsEntityist = new ArrayList<>();
         for (Enhancer enhancer : mEnhancerList) {
             optionsEntityist.add(enhancer.getEnhancementOptionsEntity());
         }
         mTextEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, optionsEntityist);
-        mTextEnhancementOptionsRecycleView.setAdapter(mTextEnhancementOptionsAdapter);
+        mBinding.enhancementOptionsRecycleViewText.setAdapter(mTextEnhancementOptionsAdapter);
     }
 
     @Override
@@ -114,7 +116,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         enhancer.enhance();
     }
 
-    @OnClick(R.id.createtextpdf)
     public void openCreateTextPdf() {
         new MaterialDialog.Builder(mActivity)
                 .title(R.string.creating_pdf)
@@ -154,14 +155,6 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         TextToPDFUtils fileUtil = new TextToPDFUtils(mActivity);
         new TextToPdfAsync(fileUtil, options, mFileExtension,
                 TextToPdfFragment.this).execute();
-    }
-
-    /**
-     * Create a file picker to get text file.
-     */
-    @OnClick(R.id.selectFile)
-    public void selectTextFile() {
-        PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::selectFile);
     }
 
     private void selectFile() {
@@ -205,9 +198,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
                     }
                 }
                 mFileNameWithType = mFileUtils.stripExtension(fileName) + getString(R.string.pdf_suffix);
-                mSelectFile.setText(getString(R.string.text_file_name) + fileName);
-                mCreateTextPdf.setEnabled(true);
-                mMorphButtonUtility.morphToSquare(mCreateTextPdf, mMorphButtonUtility.integer());
+                mBinding.selectFile.setText(getString(R.string.text_file_name) + fileName);
+                mBinding.createtextpdf.setEnabled(true);
+                mMorphButtonUtility.morphToSquare(mBinding.createtextpdf, mMorphButtonUtility.integer());
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -253,8 +246,8 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
             mMaterialDialog.dismiss();
         if (!success) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.error_pdf_not_created);
-            mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
-            mCreateTextPdf.setEnabled(false);
+            mMorphButtonUtility.morphToGrey(mBinding.createtextpdf, mMorphButtonUtility.integer());
+            mBinding.createtextpdf.setEnabled(false);
             mTextFileUri = null;
             mButtonClicked = 0;
             return;
@@ -262,9 +255,9 @@ public class TextToPdfFragment extends Fragment implements OnItemClickListener,
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction,
                         v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF)).show();
-        mSelectFile.setText(R.string.select_text_file);
-        mMorphButtonUtility.morphToGrey(mCreateTextPdf, mMorphButtonUtility.integer());
-        mCreateTextPdf.setEnabled(false);
+        mBinding.selectFile.setText(R.string.select_text_file);
+        mMorphButtonUtility.morphToGrey(mBinding.createtextpdf, mMorphButtonUtility.integer());
+        mBinding.createtextpdf.setEnabled(false);
         mTextFileUri = null;
         mButtonClicked = 0;
         mBuilder = new TextToPDFOptions.Builder(mActivity);

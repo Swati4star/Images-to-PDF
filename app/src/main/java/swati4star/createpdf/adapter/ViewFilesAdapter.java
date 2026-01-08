@@ -26,10 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.ItemFileBinding;
 import swati4star.createpdf.interfaces.DataSetChanged;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
@@ -45,12 +44,6 @@ import swati4star.createpdf.util.PDFUtils;
 import swati4star.createpdf.util.PopulateList;
 import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.WatermarkUtils;
-
-/**
- * Created by swati on 9/10/15.
- * <p>
- * An adapter to view the existing PDF files
- */
 
 public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.ViewFilesHolder>
         implements DataSetChanged, EmptyStateChangeListener {
@@ -98,9 +91,8 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     @NonNull
     @Override
     public ViewFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_file, parent, false);
-        return new ViewFilesHolder(itemView, mItemSelectedListener);
+        ItemFileBinding binding = ItemFileBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewFilesHolder(binding, mItemSelectedListener);
     }
 
     @Override
@@ -425,24 +417,22 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     }
 
     class ViewFilesHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.fileRipple)
         MaterialRippleLayout ripple;
-        @BindView(R.id.fileName)
         TextView fileName;
-        @BindView(R.id.checkbox)
         CheckBox checkBox;
-        @BindView(R.id.fileDate)
         TextView fileDate;
-        @BindView(R.id.fileSize)
         TextView fileSize;
-        @BindView(R.id.encryptionImage)
         ImageView encryptionImage;
 
-        ViewFilesHolder(View itemView, ItemSelectedListener itemSelectedListener) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        ViewFilesHolder(ItemFileBinding binding, ItemSelectedListener itemSelectedListener) {
+            super(binding.getRoot());
+            ripple = binding.fileRipple;
+            fileName = binding.fileName;
+            checkBox = binding.checkbox;
+            fileDate = binding.fileDate;
+            fileSize = binding.fileSize;
+            encryptionImage = binding.encryptionImage;
+            binding.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     if (!mSelectedFiles.contains(getAdapterPosition())) {
                         mSelectedFiles.add(getAdapterPosition());
