@@ -2,14 +2,19 @@ package swati4star.createpdf.fragment;
 
 import static swati4star.createpdf.util.Constants.ADD_IMAGES;
 import static swati4star.createpdf.util.Constants.BUNDLE_DATA;
+import static swati4star.createpdf.util.Constants.DEFAULT_PAGE_COLOR;
 import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISSION;
+import static swati4star.createpdf.util.Constants.STORAGE_LOCATION;
 import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +29,11 @@ import androidx.fragment.app.Fragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
@@ -34,11 +44,13 @@ import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
 import swati4star.createpdf.util.BottomSheetUtils;
 import swati4star.createpdf.util.CommonCodeUtils;
+import swati4star.createpdf.util.Constants;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUriUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.MorphButtonUtility;
 import swati4star.createpdf.util.PDFUtils;
+import swati4star.createpdf.util.PageSizeUtils;
 import swati4star.createpdf.util.PermissionsUtils;
 import swati4star.createpdf.util.StringUtils;
 
@@ -57,6 +69,8 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
     private BottomSheetBehavior mSheetBehavior;
     private FragmentAddImagesBinding mBinding;
     ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
+    private SharedPreferences mSharedPreferences;
+    private String mHomePath;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -70,6 +84,9 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mOperation = getArguments().getString(BUNDLE_DATA);
         mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        mHomePath = mSharedPreferences.getString(STORAGE_LOCATION,
+                StringUtils.getInstance().getDefaultStorageLocation());
 
         pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(100), uris -> {
             mImagesUri.clear();
@@ -159,13 +176,25 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
             } else {
                 final String filename = input.toString();
                 FileUtils utils = new FileUtils(mActivity);
+
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
-                    this.addImagesToPdf(filename);
+                    try {
+                        this.addImagesToPdf(filename);
+                    } catch (IOException e) {
+                        StringUtils.getInstance().showSnackbar(mActivity, R.string.error_path_not_found);
+                    }
                 } else {
                     MaterialDialog.Builder builder2 = DialogUtils.getInstance().createOverwriteDialog(mActivity);
                     builder2.onPositive((dialog2, which) ->
-                            this.addImagesToPdf(filename)).onNegative((dialog1, which) -> getFileName()).show();
+                    {
+                        try {
+                            this.addImagesToPdf(filename);
+                        } catch (IOException e) {
+                            StringUtils.getInstance().showSnackbar(mActivity, R.string.error_path_not_found);
+                        }
+                    }).onNegative((dialog1, which) -> getFileName()).show();
                 }
+
             }
         }).show();
     }
@@ -175,15 +204,21 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      *
      * @param output - path of output PDF
      */
-    private void addImagesToPdf(String output) {
-        int index = mPath.lastIndexOf("/");
-        String outputPath = mPath.replace(mPath.substring(index + 1),
-                output + mActivity.getString(R.string.pdf_ext));
+    private void addImagesToPdf(String output) throws IOException {
+        Log.d("RAHUL", mPath);
+        String fileName = output + ".pdf";
 
         if (mImagesUri.size() > 0) {
             MaterialDialog progressDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
             progressDialog.show();
-            mPDFUtils.addImagesToPdf(mPath, outputPath, mImagesUri);
+            Context context = requireContext();
+            InputStream is = context.getContentResolver().openInputStream(Uri.parse(mPath));
+            File outputFile = new File(context.getFilesDir(), fileName);
+            FileOutputStream fos = new FileOutputStream(outputFile);
+            mPDFUtils.addImagesToPdf(is, fos, outputFile.getAbsolutePath(), mImagesUri);
+            is.close();
+            fos.close();
+
             mMorphButtonUtility.morphToSuccess(mBinding.pdfCreate);
             resetValues();
             progressDialog.dismiss();

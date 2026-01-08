@@ -129,9 +129,9 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
-        if (PermissionsUtils.getInstance().isStoragePermissionGranted(this)) {
+//        if (PermissionsUtils.getInstance().isStoragePermissionGranted(this)) {
             DirectoryUtils.makeAndClearTemp();
-        }
+//        }
     }
 
     @Override
@@ -260,13 +260,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        if (!PermissionsUtils.getInstance().isStoragePermissionGranted(this)) {
-            if (Build.VERSION.SDK_INT >= 30) { // Above Android 11
-                requestStoragePermission_API30AndAbove(false);
-            } else { // Below Android 11
-                mPermissionLauncher.launch(WRITE_STORAGE_PERMISSION);
-            }
-        }
+//        if (!PermissionsUtils.getInstance().isStoragePermissionGranted(this)) {
+//            if (Build.VERSION.SDK_INT >= 30) { // Above Android 11
+//                requestStoragePermission_API30AndAbove(false);
+//            } else { // Below Android 11
+//                mPermissionLauncher.launch(WRITE_STORAGE_PERMISSION);
+//            }
+//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)

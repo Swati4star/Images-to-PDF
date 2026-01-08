@@ -186,7 +186,7 @@ public class FileUriUtils {
      * @return - path
      */
     public String getFilePath(Uri uri) {
-        String path = uri.getPath();
+        String path = uri.toString();
         if (path == null)
             return null;
         path = path.replace("/document/raw:", "");

@@ -37,16 +37,17 @@ public class PermissionsUtils {
      * @return true if all permissions are granted, otherwise false
      */
     public boolean checkRuntimePermissions(Object context, String[] permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            for (String permission : permissions) {
-                if ((ContextCompat.checkSelfPermission(retrieveContext(context),
-                        permission)
-                        != PackageManager.PERMISSION_GRANTED)) {
-                    return false;
-                }
-            }
-        }
         return true;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            for (String permission : permissions) {
+//                if ((ContextCompat.checkSelfPermission(retrieveContext(context),
+//                        permission)
+//                        != PackageManager.PERMISSION_GRANTED)) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
     }
 
     /**
@@ -60,12 +61,13 @@ public class PermissionsUtils {
      */
     public void requestRuntimePermissions(Object context, String[] permissions,
                                           int requestCode) {
-        if (context instanceof Activity) {
-            ActivityCompat.requestPermissions((AppCompatActivity) context,
-                    permissions, requestCode);
-        } else if (context instanceof Fragment) {
-            ((Fragment) context).requestPermissions(permissions, requestCode);
-        }
+        return;
+//        if (context instanceof Activity) {
+//            ActivityCompat.requestPermissions((AppCompatActivity) context,
+//                    permissions, requestCode);
+//        } else if (context instanceof Fragment) {
+//            ((Fragment) context).requestPermissions(permissions, requestCode);
+//        }
     }
 
     /**
@@ -94,6 +96,7 @@ public class PermissionsUtils {
     public void handleRequestPermissionsResult(Activity context, @NonNull int[] grantResults,
                                                int requestCode, int expectedRequest, @NonNull Runnable whenSuccessful) {
 
+        whenSuccessful.run();
         if (requestCode == expectedRequest && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 whenSuccessful.run();
@@ -112,20 +115,21 @@ public class PermissionsUtils {
      */
 
     public void checkStoragePermissionAndProceed(Context context, final GenericCallback callback) {
-        if (Build.VERSION.SDK_INT >= 30) {
-            if (Environment.isExternalStorageManager()) {
-                callback.proceed();
-            } else {
-                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                    PackageManager.PERMISSION_GRANTED) {
-                callback.proceed();
-            } else {
-                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
-            }
-        }
+        callback.proceed();
+//        if (Build.VERSION.SDK_INT >= 30) {
+//            if (Environment.isExternalStorageManager()) {
+//                callback.proceed();
+//            } else {
+//                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
+//            }
+//        } else {
+//            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+//                    PackageManager.PERMISSION_GRANTED) {
+//                callback.proceed();
+//            } else {
+//                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
+//            }
+//        }
     }
 
     public boolean isStoragePermissionGranted(Context context) {

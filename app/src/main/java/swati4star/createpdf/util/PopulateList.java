@@ -62,7 +62,7 @@ public class PopulateList extends AsyncTask<Void, Void, Void> {
     private void populateListView() {
         ArrayList<File> pdfFiles;
         if (TextUtils.isEmpty(mQuery)) {
-            pdfFiles = mDirectoryUtils.getPdfFromOtherDirectories();
+            pdfFiles = mDirectoryUtils.getPdfFilesFromInternalDirectory();
         } else {
             pdfFiles = mDirectoryUtils.searchPDF(mQuery);
         }

@@ -22,7 +22,7 @@ class PopulateBottomSheetList extends AsyncTask<Void, Void, ArrayList<String>> {
 
     @Override
     protected ArrayList<String> doInBackground(Void... voids) {
-        return mDirectoryUtils.getAllPDFsOnDevice();
+        return mDirectoryUtils.getPdfPathsFromInternalDirectory();
     }
 
     @Override

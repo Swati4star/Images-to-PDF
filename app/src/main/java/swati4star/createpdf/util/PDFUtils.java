@@ -114,16 +114,16 @@ public class PDFUtils {
     /**
      * Main function to add images to PDF
      *
-     * @param inputPath - path of input PDF
+     * @param inputStream - inputStream of input PDF
      * @param output    - path of output PDF
      * @param imagesUri - list of images to add
      * @return true, if succeeded, otherwise false
      */
-    public boolean addImagesToPdf(String inputPath, String output, ArrayList<String> imagesUri) {
+    public boolean addImagesToPdf(InputStream inputStream, FileOutputStream fileOutputStream, String output, ArrayList<String> imagesUri) {
         try {
-            PdfReader reader = new PdfReader(inputPath);
+            PdfReader reader = new PdfReader(inputStream);
             Document document = new Document();
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(output));
+            PdfWriter writer = PdfWriter.getInstance(document, fileOutputStream);
             document.open();
             initDoc(reader, document, writer);
             appendImages(document, imagesUri, mContext);
