@@ -348,7 +348,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                     mUnarrangedImagesUri.clear();
                     mUnarrangedImagesUri.addAll(mImagesUri);
                 }
-                if (mImagesUri.size() == 0) {
+                if (mImagesUri.isEmpty()) {
                     mBinding.tvNoOfImages.setVisibility(View.GONE);
                     mMorphButtonUtility.morphToGrey(mBinding.pdfCreate, mMorphButtonUtility.integer());
                     mBinding.pdfCreate.setEnabled(false);
@@ -360,7 +360,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     @Override
     public void onItemClick(int position) {
 
-        if (mImagesUri.size() == 0) {
+        if (mImagesUri.isEmpty()) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_images);
             return;
         }

@@ -85,7 +85,7 @@ public class ZipToPdf {
 
             zipInputStream.close();
 
-            if (imageUris.size() == 0) {
+            if (imageUris.isEmpty()) {
                 StringUtils.getInstance().showSnackbar(context, R.string.error_no_image_in_zip);
                 return;
             }

@@ -301,13 +301,13 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
                     updateActionBarTitle();
                     notifyDataSetChanged();
 
-                    if (mFileList.size() == 0)
+                    if (mFileList.isEmpty())
                         mEmptyStateChangeListener.setEmptyStateVisible();
 
                     AtomicInteger undoClicked = new AtomicInteger();
                     StringUtils.getInstance().getSnackbarwithAction(mActivity, messageSnackbar)
                             .setAction(R.string.snackbar_undoAction, v -> {
-                                if (mFileList.size() == 0) {
+                                if (mFileList.isEmpty()) {
                                     mEmptyStateChangeListener.setEmptyStateInvisible();
                                 }
                                 updateDataset();
