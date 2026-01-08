@@ -42,7 +42,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -51,11 +50,9 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.dd.morphingbutton.MorphingButton;
 import com.github.danielnilsson9.colorpickerview.view.ColorPickerView;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
@@ -69,15 +66,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.CropImageActivity;
 import swati4star.createpdf.activity.PreviewActivity;
 import swati4star.createpdf.activity.RearrangeImages;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.FragmentImagesToPdfBinding;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
@@ -106,14 +101,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
     private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
     public static ArrayList<String> mImagesUri = new ArrayList<>();
-    @BindView(R.id.pdfCreate)
-    MorphingButton mCreatePdf;
-    @BindView(R.id.pdfOpen)
-    MorphingButton mOpenPdf;
-    @BindView(R.id.enhancement_options_recycle_view)
-    RecyclerView mEnhancementOptionsRecycleView;
-    @BindView(R.id.tvNoOfImages)
-    TextView mNoOfImages;
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     private String mPath;
@@ -133,6 +120,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private int mChoseId;
     ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
+    private FragmentImagesToPdfBinding mBinding;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -142,8 +131,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_images_to_pdf, container, false);
-        ButterKnife.bind(this, root);
+        mBinding = FragmentImagesToPdfBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
 
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -162,15 +151,15 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         checkForImagesInBundle();
 
         if (mImagesUri.size() > 0) {
-            mNoOfImages.setText(String.format(mActivity.getResources()
+            mBinding.tvNoOfImages.setText(String.format(mActivity.getResources()
                     .getString(R.string.images_selected), mImagesUri.size()));
-            mNoOfImages.setVisibility(View.VISIBLE);
-            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
-            mCreatePdf.setEnabled(true);
+            mBinding.tvNoOfImages.setVisibility(View.VISIBLE);
+            mMorphButtonUtility.morphToSquare(mBinding.pdfCreate, mMorphButtonUtility.integer());
+            mBinding.pdfCreate.setEnabled(true);
             StringUtils.getInstance().showSnackbar(mActivity, R.string.successToast);
         } else {
-            mNoOfImages.setVisibility(View.GONE);
-            mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
+            mBinding.tvNoOfImages.setVisibility(View.GONE);
+            mMorphButtonUtility.morphToGrey(mBinding.pdfCreate, mMorphButtonUtility.integer());
         }
 
         pickMultipleMedia = registerForActivityResult(new PickMultipleVisualMedia(100), uris -> {
@@ -184,18 +173,30 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
                 }
                 mImagesUri.addAll(stringUris);
                 mUnarrangedImagesUri.addAll(mImagesUri);
-                mNoOfImages.setText(String.format(mActivity.getResources()
+                mBinding.tvNoOfImages.setText(String.format(mActivity.getResources()
                         .getString(R.string.images_selected), mImagesUri.size()));
-                mNoOfImages.setVisibility(View.VISIBLE);
+                mBinding.tvNoOfImages.setVisibility(View.VISIBLE);
                 StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_images_added);
-                mCreatePdf.setEnabled(true);
-                mCreatePdf.unblockTouch();
+                mBinding.pdfCreate.setEnabled(true);
+                mBinding.pdfCreate.unblockTouch();
             }
-            mMorphButtonUtility.morphToSquare(mCreatePdf, mMorphButtonUtility.integer());
-            mOpenPdf.setVisibility(View.GONE);
+            mMorphButtonUtility.morphToSquare(mBinding.pdfCreate, mMorphButtonUtility.integer());
+            mBinding.pdfOpen.setVisibility(View.GONE);
         });
 
-        return root;
+        mBinding.addImages.setOnClickListener(v -> {
+            startAddingImages();
+        });
+
+        mBinding.pdfCreate.setOnClickListener(v -> {
+            createPdf(false);
+        });
+
+        mBinding.pdfOpen.setOnClickListener(v -> {
+            mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF);
+        });
+
+        return rootView;
     }
 
     /**
@@ -225,19 +226,18 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
      */
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
-        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mBinding.enhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         ImageEnhancementOptionsUtils imageEnhancementOptionsUtilsInstance = ImageEnhancementOptionsUtils.getInstance();
         ArrayList<EnhancementOptionsEntity> list = imageEnhancementOptionsUtilsInstance.getEnhancementOptions(mActivity,
                 mPdfOptions);
         EnhancementOptionsAdapter adapter =
                 new EnhancementOptionsAdapter(this, list);
-        mEnhancementOptionsRecycleView.setAdapter(adapter);
+        mBinding.enhancementOptionsRecycleView.setAdapter(adapter);
     }
 
     /**
      * Adding Images to PDF
      */
-    @OnClick(R.id.addImages)
     void startAddingImages() {
         if (!mIsButtonAlreadyClicked) {
             PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), () -> {
@@ -247,13 +247,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         }
     }
 
-    /**
-     * Create Pdf of selected images
-     */
-    @OnClick(R.id.pdfCreate)
-    void pdfCreateClicked() {
-        createPdf(false);
-    }
 
     /**
      * Opens the dialog to select a save name
@@ -282,12 +275,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             saveImagesInGrayScale();
         new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this, requireContext()).execute();
     }
-
-    @OnClick(R.id.pdfOpen)
-    void openPdf() {
-        mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF);
-    }
-
 
     /**
      * Called after user is asked to grant permissions
@@ -343,28 +330,28 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
             case INTENT_REQUEST_PREVIEW_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
                 if (mImagesUri.size() > 0) {
-                    mNoOfImages.setText(String.format(mActivity.getResources()
+                    mBinding.tvNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
                 } else {
-                    mNoOfImages.setVisibility(View.GONE);
-                    mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
-                    mCreatePdf.setEnabled(false);
+                    mBinding.tvNoOfImages.setVisibility(View.GONE);
+                    mMorphButtonUtility.morphToGrey(mBinding.pdfCreate, mMorphButtonUtility.integer());
+                    mBinding.pdfCreate.setEnabled(false);
                 }
                 break;
 
             case INTENT_REQUEST_REARRANGE_IMAGE:
                 mImagesUri = data.getStringArrayListExtra(RESULT);
                 if (!mUnarrangedImagesUri.equals(mImagesUri) && mImagesUri.size() > 0) {
-                    mNoOfImages.setText(String.format(mActivity.getResources()
+                    mBinding.tvNoOfImages.setText(String.format(mActivity.getResources()
                             .getString(R.string.images_selected), mImagesUri.size()));
                     StringUtils.getInstance().showSnackbar(mActivity, R.string.images_rearranged);
                     mUnarrangedImagesUri.clear();
                     mUnarrangedImagesUri.addAll(mImagesUri);
                 }
-                if (mImagesUri.size() == 0) {
-                    mNoOfImages.setVisibility(View.GONE);
-                    mMorphButtonUtility.morphToGrey(mCreatePdf, mMorphButtonUtility.integer());
-                    mCreatePdf.setEnabled(false);
+                if (mImagesUri.isEmpty()) {
+                    mBinding.tvNoOfImages.setVisibility(View.GONE);
+                    mMorphButtonUtility.morphToGrey(mBinding.pdfCreate, mMorphButtonUtility.integer());
+                    mBinding.pdfCreate.setEnabled(false);
                 }
                 break;
         }
@@ -373,7 +360,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     @Override
     public void onItemClick(int position) {
 
-        if (mImagesUri.size() == 0) {
+        if (mImagesUri.isEmpty()) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_images);
             return;
         }
@@ -696,9 +683,9 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         StringUtils.getInstance().getSnackbarwithAction(mActivity, R.string.snackbar_pdfCreated)
                 .setAction(R.string.snackbar_viewAction,
                         v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF)).show();
-        mOpenPdf.setVisibility(View.VISIBLE);
-        mMorphButtonUtility.morphToSuccess(mCreatePdf);
-        mCreatePdf.blockTouch();
+        mBinding.pdfOpen.setVisibility(View.VISIBLE);
+        mMorphButtonUtility.morphToSuccess(mBinding.pdfCreate);
+        mBinding.pdfCreate.blockTouch();
         mPath = path;
         resetValues();
     }
@@ -739,7 +726,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         mPdfOptions.setWatermarkAdded(false);
         mImagesUri.clear();
         showEnhancementOptions();
-        mNoOfImages.setVisibility(View.GONE);
+        mBinding.tvNoOfImages.setVisibility(View.GONE);
         ImageUtils.getInstance().mImageScaleType = mSharedPreferences.getString(DEFAULT_IMAGE_SCALE_TYPE_TEXT,
                 IMAGE_SCALE_TYPE_ASPECT_RATIO);
         mPdfOptions.setMargins(0, 0, 0, 0);
@@ -773,7 +760,6 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
 
     private void addPageNumbers() {
-
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         mPageNumStyle = mSharedPreferences.getString(Constants.PREF_PAGE_STYLE, null);
         mChoseId = mSharedPreferences.getInt(Constants.PREF_PAGE_STYLE_ID, -1);

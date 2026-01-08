@@ -13,9 +13,8 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemViewEnhancementOptionBinding;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 
@@ -34,9 +33,8 @@ public class EnhancementOptionsAdapter
     @NonNull
     @Override
     public EnhancementOptionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_view_enhancement_option, parent, false);
-        return new EnhancementOptionsViewHolder(mView);
+        ItemViewEnhancementOptionBinding binding = ItemViewEnhancementOptionBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new EnhancementOptionsViewHolder(binding);
     }
 
     @Override
@@ -52,18 +50,15 @@ public class EnhancementOptionsAdapter
 
     public class EnhancementOptionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.option_image)
         ImageView optionImage;
-        @BindView(R.id.option_name)
         TextView optionName;
-
         MaterialCardView cardView;
-
-        EnhancementOptionsViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
-            cardView = itemView.findViewById(R.id.container_card_view);
+        EnhancementOptionsViewHolder(ItemViewEnhancementOptionBinding binding) {
+            super(binding.getRoot());
+            binding.getRoot().setOnClickListener(this);
+            cardView = binding.getRoot().findViewById(R.id.container_card_view);
+            optionImage = binding.optionImage;
+            optionName = binding.optionName;
         }
 
         @Override

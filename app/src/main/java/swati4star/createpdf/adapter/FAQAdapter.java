@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemFaqBinding;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.FAQItem;
 
@@ -29,25 +27,16 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
     /**
      * Inflates the layout view and returns it
-     *
-     * @param viewGroup - holds view
-     * @param position  - view position
-     * @return FAQViewHolder View
      */
-
     @NonNull
     @Override
-    public FAQViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_faq, viewGroup, false);
-        return new FAQAdapter.FAQViewHolder(view);
+    public FAQViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+        ItemFaqBinding binding = ItemFaqBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new FAQAdapter.FAQViewHolder(binding);
     }
 
     /**
      * Binds the FAQItem with the proper data that it fetches from List
-     *
-     * @param viewHolder - holds view
-     * @param position   - view position
      */
     @Override
     public void onBindViewHolder(@NonNull FAQViewHolder viewHolder, int position) {
@@ -65,23 +54,20 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
 
     public class FAQViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.question)
         TextView question;
-        @BindView(R.id.answer)
         TextView answer;
-        @BindView(R.id.expandable_view)
         ConstraintLayout expandableView;
 
         /**
          * Initializes and binds the view and sets the onClickListener
-         *
-         * @param itemView - holds view
          */
-        FAQViewHolder(@NonNull View itemView) {
-            super(itemView);
+        FAQViewHolder(@NonNull ItemFaqBinding binding) {
+            super(binding.getRoot());
 
-            ButterKnife.bind(this, itemView);
-            question.setOnClickListener(this);
+            binding.question.setOnClickListener(this);
+            answer = binding.answer;
+            question = binding.question;
+            expandableView = binding.expandableView;
         }
 
         /**

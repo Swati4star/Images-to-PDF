@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -152,8 +151,6 @@ public class PDFEncryptionUtility {
         mDialog.setTitle(R.string.enter_password);
         final View mPositiveAction = mDialog.getActionButton(DialogAction.POSITIVE);
         final EditText mPasswordInput = Objects.requireNonNull(mDialog.getCustomView()).findViewById(R.id.password);
-        TextView text = mDialog.getCustomView().findViewById(R.id.enter_password);
-        text.setText(R.string.decrypt_message);
         mPasswordInput.addTextChangedListener(
                 new DefaultTextWatcher() {
                     @Override

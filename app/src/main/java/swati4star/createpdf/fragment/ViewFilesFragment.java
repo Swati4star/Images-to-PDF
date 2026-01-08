@@ -17,8 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +24,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,12 +33,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.io.File;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.ViewFilesAdapter;
+import swati4star.createpdf.databinding.FragmentViewFilesBinding;
 import swati4star.createpdf.interfaces.EmptyStateChangeListener;
 import swati4star.createpdf.interfaces.ItemSelectedListener;
 import swati4star.createpdf.util.DialogUtils;
@@ -58,21 +53,8 @@ public class ViewFilesFragment extends Fragment
         EmptyStateChangeListener,
         ItemSelectedListener {
 
-
-    @BindView(R.id.getStarted)
-    public Button getStarted;
-    @BindView(R.id.filesRecyclerView)
-    RecyclerView mViewFilesListRecyclerView;
-    @BindView(R.id.swipe)
-    SwipeRefreshLayout mSwipeView;
-    @BindView(R.id.emptyStatusView)
-    ConstraintLayout emptyView;
-    @BindView(R.id.no_permissions_view)
-    RelativeLayout noPermissionsLayout;
-
     private Activity mActivity;
     private ViewFilesAdapter mViewFilesAdapter;
-
     private DirectoryUtils mDirectoryUtils;
     private SearchView mSearchView;
     private int mCurrentSortingIndex;
@@ -81,14 +63,16 @@ public class ViewFilesFragment extends Fragment
     private boolean mIsMergeRequired = false;
     private AlertDialog.Builder mAlertDialogBuilder;
 
+    private FragmentViewFilesBinding mBinding;
+
     private int mCountFiles = 0;
     private MergeHelper mMergeHelper;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_view_files, container, false);
-        ButterKnife.bind(this, root);
+        mBinding = FragmentViewFilesBinding.inflate(inflater, container, false);
+        View root = mBinding.getRoot();
         // Initialize variables
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mCurrentSortingIndex = mSharedPreferences.getInt(SORTING_INDEX, FileSortUtils.getInstance().NAME_INDEX);
@@ -98,10 +82,10 @@ public class ViewFilesFragment extends Fragment
                 .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss());
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
-        mViewFilesListRecyclerView.setLayoutManager(mLayoutManager);
-        mViewFilesListRecyclerView.setAdapter(mViewFilesAdapter);
-        mViewFilesListRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
-        mSwipeView.setOnRefreshListener(this);
+        mBinding.filesRecyclerView.setLayoutManager(mLayoutManager);
+        mBinding.filesRecyclerView.setAdapter(mViewFilesAdapter);
+        mBinding.filesRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(root.getContext()));
+        mBinding.swipe.setOnRefreshListener(this);
 
         int dialogId;
         if (getArguments() != null) {
@@ -111,6 +95,24 @@ public class ViewFilesFragment extends Fragment
 
         checkIfListEmpty();
         mMergeHelper = new MergeHelper(mActivity, mViewFilesAdapter);
+
+        mBinding.getStarted.setOnClickListener(v -> {
+            Fragment fragment = new HomeFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+            mActivity.setTitle(appName);
+            //Set default item selected
+            if (mActivity instanceof MainActivity) {
+                ((MainActivity) mActivity).setNavigationViewSelection(R.id.nav_home);
+            }
+        });
+
+        mBinding.providePermissions.setOnClickListener(v -> {
+            if (!PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
+                getRuntimePermissions();
+            }
+        });
+
         return root;
     }
 
@@ -200,7 +202,6 @@ public class ViewFilesFragment extends Fragment
         return true;
     }
 
-
     private void deleteFiles() {
         mViewFilesAdapter.deleteFile();
     }
@@ -234,7 +235,7 @@ public class ViewFilesFragment extends Fragment
     @Override
     public void onRefresh() {
         populatePdfList(null);
-        mSwipeView.setRefreshing(false);
+        mBinding.swipe.setRefreshing(false);
     }
 
     /**
@@ -259,25 +260,25 @@ public class ViewFilesFragment extends Fragment
 
     @Override
     public void setEmptyStateVisible() {
-        emptyView.setVisibility(View.VISIBLE);
-        noPermissionsLayout.setVisibility(View.GONE);
+        mBinding.emptyStatusView.setVisibility(View.VISIBLE);
+        mBinding.noPermissionsView.setVisibility(View.GONE);
     }
 
     @Override
     public void setEmptyStateInvisible() {
-        emptyView.setVisibility(View.GONE);
-        noPermissionsLayout.setVisibility(View.GONE);
+        mBinding.emptyStatusView.setVisibility(View.GONE);
+        mBinding.noPermissionsView.setVisibility(View.GONE);
     }
 
     @Override
     public void showNoPermissionsView() {
-        emptyView.setVisibility(View.GONE);
-        noPermissionsLayout.setVisibility(View.VISIBLE);
+        mBinding.emptyStatusView.setVisibility(View.GONE);
+        mBinding.noPermissionsView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideNoPermissionsView() {
-        noPermissionsLayout.setVisibility(View.GONE);
+        mBinding.noPermissionsView.setVisibility(View.GONE);
     }
 
     @Override
@@ -287,26 +288,6 @@ public class ViewFilesFragment extends Fragment
             mIsMergeRequired = false;
             mIsAllFilesSelected = false;
             mActivity.invalidateOptionsMenu();
-        }
-    }
-
-    //When the "GET STARTED" button is clicked, the user is taken to home
-    @OnClick(R.id.getStarted)
-    public void loadHome() {
-        Fragment fragment = new HomeFragment();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-        mActivity.setTitle(appName);
-        //Set default item selected
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).setNavigationViewSelection(R.id.nav_home);
-        }
-    }
-
-    @OnClick(R.id.provide_permissions)
-    public void providePermissions() {
-        if (!PermissionsUtils.getInstance().checkRuntimePermissions(this, WRITE_PERMISSIONS)) {
-            getRuntimePermissions();
         }
     }
 
@@ -368,52 +349,4 @@ public class ViewFilesFragment extends Fragment
             activity.invalidateOptionsMenu();
         }
     }
-
-
-
-    /*
-    Just for reference
-    private void moveFilesToDirectory(int operation) {
-        LayoutInflater inflater = getLayoutInflater();
-        View alertView = inflater.inflate(R.layout.directory_dialog, null);
-        final ArrayList<String> filePath = mViewFilesAdapter.getSelectedFilePath();
-        if (filePath == null) {
-            showSnackbar(mActivity, R.string.snackbar_no_pdfs_selected);
-        } else {
-            final EditText input = alertView.findViewById(R.id.directory_editText);
-            TextView message = alertView.findViewById(R.id.directory_textView);
-            if (operation == NEW_DIR) {
-                message.setText(R.string.dialog_new_dir);
-                mAlertDialogBuilder.setTitle(R.string.new_directory)
-                        .setView(alertView)
-                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                            String fileName = input.getText().toString();
-                            new MoveFilesToDirectory(mActivity
-                                    , filePath
-                                    , fileName
-                                    , MoveFilesToDirectory.MOVE_FILES)
-                                    .execute();
-                            populatePdfList();
-                        });
-            } else if (operation == EXISTING_DIR) {
-                message.setText(R.string.dialog_dir);
-                mAlertDialogBuilder.setTitle(R.string.directory)
-                        .setView(alertView)
-                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                            String fileName = input.getText().toString();
-                            File directory = mDirectoryUtils.getDirectory(fileName);
-                            if (directory != null) {
-                                new MoveFilesToDirectory(mActivity, filePath, fileName, MoveFilesToDirectory.MOVE_FILES)
-                                        .execute();
-                                populatePdfList();
-                            } else {
-                                showSnackbar(mActivity, R.string.dir_does_not_exists);
-                                dialogInterface.dismiss();
-                            }
-                        });
-            }
-            mAlertDialogBuilder.create().show();
-        }
-    }*/
-
 }

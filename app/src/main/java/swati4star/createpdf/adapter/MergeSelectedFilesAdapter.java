@@ -12,21 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemMergeSelectedFilesBinding;
 import swati4star.createpdf.util.FileUtils;
 
 public class MergeSelectedFilesAdapter extends
         RecyclerView.Adapter<MergeSelectedFilesAdapter.MergeSelectedFilesHolder> {
 
     private final ArrayList<String> mFilePaths;
-    private final Activity mContext;
     private final OnFileItemClickListener mOnClickListener;
 
     public MergeSelectedFilesAdapter(Activity mContext, ArrayList<String> mFilePaths,
                                      OnFileItemClickListener mOnClickListener) {
-        this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         this.mOnClickListener = mOnClickListener;
     }
@@ -34,9 +31,8 @@ public class MergeSelectedFilesAdapter extends
     @NonNull
     @Override
     public MergeSelectedFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_merge_selected_files, parent, false);
-        return new MergeSelectedFilesAdapter.MergeSelectedFilesHolder(itemView);
+        ItemMergeSelectedFilesBinding binding = ItemMergeSelectedFilesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new MergeSelectedFilesAdapter.MergeSelectedFilesHolder(binding);
     }
 
     @Override
@@ -60,24 +56,23 @@ public class MergeSelectedFilesAdapter extends
     }
 
     public class MergeSelectedFilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.fileName)
         TextView mFileName;
-        @BindView(R.id.view_file)
         ImageView mViewFile;
-        @BindView(R.id.remove)
         ImageView mRemove;
-        @BindView(R.id.up_file)
         ImageView mUp;
-        @BindView(R.id.down_file)
         ImageView mDown;
 
-        MergeSelectedFilesHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            mViewFile.setOnClickListener(this);
-            mRemove.setOnClickListener(this);
-            mUp.setOnClickListener(this);
-            mDown.setOnClickListener(this);
+        MergeSelectedFilesHolder(ItemMergeSelectedFilesBinding binding) {
+            super(binding.getRoot());
+            binding.viewFile.setOnClickListener(this);
+            binding.remove.setOnClickListener(this);
+            binding.upFile.setOnClickListener(this);
+            binding.downFile.setOnClickListener(this);
+
+            mFileName = binding.fileName;
+            mViewFile = binding.viewFile;
+            mUp = binding.upFile;
+            mDown = binding.downFile;
         }
 
         @Override

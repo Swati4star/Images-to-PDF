@@ -3,7 +3,6 @@ package swati4star.createpdf.adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemWhatsNewBinding;
 import swati4star.createpdf.model.WhatsNew;
 
 public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsNewViewHolder> {
@@ -31,10 +28,9 @@ public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsN
 
     @NonNull
     @Override
-    public WhatsNewViewHolder onCreateViewHolder(@NonNull ViewGroup mParent, int viewType) {
-        View mView = LayoutInflater.from(mParent.getContext())
-                .inflate(R.layout.item_whats_new, mParent, false);
-        return new WhatsNewAdapter.WhatsNewViewHolder(mView);
+    public WhatsNewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemWhatsNewBinding binding = ItemWhatsNewBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new WhatsNewAdapter.WhatsNewViewHolder(binding);
     }
 
     @Override
@@ -55,19 +51,15 @@ public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsN
     }
 
     class WhatsNewViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.title)
         TextView tvHeading;
-        @BindView(R.id.description)
         TextView tvDescription;
-        @BindView(R.id.icon)
         ImageView icon;
 
-        WhatsNewViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        WhatsNewViewHolder(ItemWhatsNewBinding binding) {
+            super(binding.getRoot());
+            tvHeading = binding.title;
+            tvDescription = binding.description;
+            icon = binding.icon;
         }
-
     }
-
 }

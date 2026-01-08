@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,22 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ActivityWelcomeBinding;
 import swati4star.createpdf.util.ThemeUtils;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    @BindView(R.id.view_pager)
-    public ViewPager mViewPager;
-    @BindView(R.id.layoutDots)
-    public LinearLayout mDotsLayout;
-    @BindView(R.id.btn_skip)
-    public Button mBtnSkip;
-
     private int[] mLayouts;
+    private ActivityWelcomeBinding mBinding;
+
     /**
      * viewpager change listener
      */
@@ -55,10 +47,11 @@ public class WelcomeActivity extends AppCompatActivity {
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_welcome);
-        ButterKnife.bind(this);
+        mBinding = ActivityWelcomeBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
 
-        /**
+        /***
          * layouts of all welcome sliders
          * add few more layouts if you want
          */
@@ -80,14 +73,13 @@ public class WelcomeActivity extends AppCompatActivity {
         addBottomDots(0);
 
         MyViewPagerAdapter adapter = new MyViewPagerAdapter();
-        mViewPager.setAdapter(adapter);
-        mViewPager.addOnPageChangeListener(mViewPagerPageChangeListener);
-        mViewPager.setOffscreenPageLimit(3);
-    }
+        mBinding.viewPager.setAdapter(adapter);
+        mBinding.viewPager.addOnPageChangeListener(mViewPagerPageChangeListener);
+        mBinding.viewPager.setOffscreenPageLimit(3);
 
-    @OnClick(R.id.btn_skip)
-    public void openMainActivity() {
-        finish();
+        mBinding.btnSkip.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     /**
@@ -101,13 +93,13 @@ public class WelcomeActivity extends AppCompatActivity {
         int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
         int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
 
-        mDotsLayout.removeAllViews();
+        mBinding.layoutDots.removeAllViews();
         for (int i = 0; i < mDots.length; i++) {
             mDots[i] = new TextView(this);
             mDots[i].setText(Html.fromHtml("&#8226;"));
             mDots[i].setTextSize(35);
             mDots[i].setTextColor(colorsInactive[currentPage]);
-            mDotsLayout.addView(mDots[i]);
+            mBinding.layoutDots.addView(mDots[i]);
         }
 
         if (mDots.length > 0)
@@ -129,7 +121,7 @@ public class WelcomeActivity extends AppCompatActivity {
             View view = layoutInflater.inflate(mLayouts[position], container, false);
             if (position == 9) {
                 Button btnGetStarted = view.findViewById(R.id.getStarted);
-                btnGetStarted.setOnClickListener(v -> openMainActivity());
+                btnGetStarted.setOnClickListener(v -> finish());
             }
             container.addView(view);
             return view;

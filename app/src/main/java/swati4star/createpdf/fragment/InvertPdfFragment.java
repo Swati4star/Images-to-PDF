@@ -11,29 +11,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.FragmentInvertPdfBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -52,24 +44,6 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         FilesListAdapter.OnFileItemClickedListener, BottomSheetPopulate, OnPDFCreatedInterface, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.selectFile)
-    MorphingButton selectFileButton;
-    @BindView(R.id.invert)
-    MorphingButton invertPdfButton;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.downArrow)
-    ImageView mDownArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.view_pdf)
-    Button mViewPdf;
     private Activity mActivity;
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
@@ -77,34 +51,36 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     private BottomSheetUtils mBottomSheetUtils;
     private MaterialDialog mMaterialDialog;
     private BottomSheetBehavior mSheetBehavior;
+    FragmentInvertPdfBinding mBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_invert_pdf, container, false);
-        ButterKnife.bind(this, rootView);
+        mBinding = FragmentInvertPdfBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
+        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        mLottieProgress.setVisibility(View.VISIBLE);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         getRuntimePermissions();
 
         resetValues();
+
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
+
+        mBinding.selectFile.setOnClickListener(v -> {
+            startActivityForResult(mFileUtils.getFileChooser(),
+                    INTENT_REQUEST_PICK_FILE_CODE);
+        });
+
+        mBinding.invert.setOnClickListener(v -> {
+            new InvertPdf(mPath, this).execute();
+        });
+
         return rootView;
-    }
-
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
-    }
-
-    /**
-     * Displays file chooser intent
-     */
-    @OnClick(R.id.selectFile)
-    public void showFileChooser() {
-        startActivityForResult(mFileUtils.getFileChooser(),
-                INTENT_REQUEST_PICK_FILE_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws NullPointerException {
@@ -117,30 +93,24 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
         }
     }
 
-    //Inverts colors in PDF
-    @OnClick(R.id.invert)
-    public void parse() {
-        new InvertPdf(mPath, this).execute();
-    }
-
-
     private void resetValues() {
         mPath = null;
-        mMorphButtonUtility.initializeButton(selectFileButton, invertPdfButton);
+        mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.invert);
     }
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
         // Remove stale "View PDF" button
-        mViewPdf.setVisibility(View.GONE);
+        mBinding.viewPdf.setVisibility(View.GONE);
         mMorphButtonUtility.setTextAndActivateButtons(path,
-                selectFileButton, invertPdfButton);
+                mBinding.selectFile, mBinding.invert);
     }
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout,
+                mBinding.bottomSheet.lottieProgress, mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override
@@ -164,8 +134,9 @@ public class InvertPdfFragment extends Fragment implements MergeFilesAdapter.OnC
     }
 
     private void viewPdfButton(String path) {
-        mViewPdf.setVisibility(View.VISIBLE);
-        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
+        mBinding.viewPdf.setVisibility(View.VISIBLE);
+        mBinding.viewPdf.setOnClickListener(v ->
+                mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
     }
 
     @Override

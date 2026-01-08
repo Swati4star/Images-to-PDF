@@ -17,19 +17,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
@@ -38,11 +32,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
+import swati4star.createpdf.databinding.FragmentExtractTextBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.util.BottomSheetCallback;
@@ -60,22 +52,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         BottomSheetPopulate, OnBackPressedInterface {
 
     private final int mFileSelectCode = 0;
-    @BindView(R.id.tv_extract_text_bottom)
-    TextView mTextView;
-    @BindView(R.id.extract_text)
-    MorphingButton extractText;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.downArrow)
-    ImageView mDownArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
     private Activity mActivity;
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
@@ -86,21 +62,49 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     private MorphButtonUtility mMorphButtonUtility;
     private boolean mButtonClicked = false;
     private String mFileName;
+    private FragmentExtractTextBinding mBinding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_extract_text, container,
-                false);
+        mBinding = FragmentExtractTextBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootView);
+        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());
-        extractText.setEnabled(false);
+        mMorphButtonUtility.morphToGrey(mBinding.extractText, mMorphButtonUtility.integer());
+        mBinding.extractText.setEnabled(false);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
-        mLottieProgress.setVisibility(View.VISIBLE);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
+
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
+
+        mBinding.selectPdfFile.setOnClickListener(v -> {
+            if (!mButtonClicked) {
+                Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setDataAndType(uri, "*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                try {
+                    startActivityForResult(
+                            Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                            mFileSelectCode);
+                    mButtonClicked = true;
+                } catch (android.content.ActivityNotFoundException ex) {
+                    StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
+                }
+            }
+        });
+
+        mBinding.extractText.setOnClickListener(v -> {
+            openExtractText();
+        });
+
         return rootView;
     }
 
@@ -110,29 +114,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         mActivity = (Activity) context;
         mFileUtils = new FileUtils(mActivity);
         mBottomSheetUtils = new BottomSheetUtils(mActivity);
-    }
-
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
-    }
-
-    @OnClick(R.id.select_pdf_file)
-    public void selectPdfFile() {
-        if (!mButtonClicked) {
-            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setDataAndType(uri, "*/*");
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            try {
-                startActivityForResult(
-                        Intent.createChooser(intent, String.valueOf(R.string.select_file)),
-                        mFileSelectCode);
-                mButtonClicked = true;
-            } catch (android.content.ActivityNotFoundException ex) {
-                StringUtils.getInstance().showSnackbar(mActivity, R.string.install_file_manager);
-            }
-        }
     }
 
     @Override
@@ -149,10 +130,10 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
             }
             mFileName = mActivity.getResources().getString(R.string.pdf_selected)
                     + mFileName;
-            mTextView.setText(mFileName);
-            mTextView.setVisibility(View.VISIBLE);
-            extractText.setEnabled(true);
-            mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
+            mBinding.tvExtractTextBottom.setText(mFileName);
+            mBinding.tvExtractTextBottom.setVisibility(View.VISIBLE);
+            mBinding.extractText.setEnabled(true);
+            mMorphButtonUtility.morphToSquare(mBinding.extractText, mMorphButtonUtility.integer());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -174,7 +155,6 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
      * This function is used to open up the Dialog box to enter the
      * file name.
      */
-    @OnClick(R.id.extract_text)
     public void openExtractText() {
         PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::openText);
     }
@@ -234,13 +214,13 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
                     .setAction(R.string.snackbar_viewAction,
                             v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_TXT))
                     .show();
-            mTextView.setVisibility(View.GONE);
+            mBinding.tvExtractTextBottom.setVisibility(View.GONE);
             mButtonClicked = false;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            mMorphButtonUtility.morphToGrey(extractText, mMorphButtonUtility.integer());
-            extractText.setEnabled(false);
+            mMorphButtonUtility.morphToGrey(mBinding.extractText, mMorphButtonUtility.integer());
+            mBinding.extractText.setEnabled(false);
             mRealPath = null;
             mExcelFileUri = null;
         }
@@ -249,7 +229,7 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout, mBinding.bottomSheet.lottieProgress, mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override
@@ -258,10 +238,10 @@ public class ExtractTextFragment extends Fragment implements MergeFilesAdapter.O
         mRealPath = path;
         mFileName = FileUtils.getFileName(path);
         mFileName = getResources().getString(R.string.pdf_selected) + mFileName;
-        mTextView.setText(mFileName);
-        mTextView.setVisibility(View.VISIBLE);
-        extractText.setEnabled(true);
-        mMorphButtonUtility.morphToSquare(extractText, mMorphButtonUtility.integer());
+        mBinding.tvExtractTextBottom.setText(mFileName);
+        mBinding.tvExtractTextBottom.setVisibility(View.VISIBLE);
+        mBinding.extractText.setEnabled(true);
+        mMorphButtonUtility.morphToSquare(mBinding.extractText, mMorphButtonUtility.integer());
     }
 
     @Override

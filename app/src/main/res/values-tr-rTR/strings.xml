@@ -171,7 +171,6 @@
     <string name="empty_image_description">PDF yok</string>
 
     <!--  Add Password -->
-    <string name="enter_password_custom">Parola Gir</string>
     <string name="example_pass_123">p4rol4@!23</string>
     <string name="remove_dialog">KALDIR</string>
     <string name="password_remove">Parola Kaldırıldı</string>
@@ -188,7 +187,6 @@
 
     <string name="nextimage_contentdesc">Sonraki Resim</string>
     <string name="decrypted_file">_şifrelenmemiş.pdf</string>
-    <string name="decrypt_message">Devam etmek için parola giriniz</string>
 
     <string name="snackbar_txtselected">Metin Dosyası seçildi!</string>
     <string name="decrypt_protected_file">Parola korumalı bir pdf seçildi. Devam etmek için parola giriniz...</string>

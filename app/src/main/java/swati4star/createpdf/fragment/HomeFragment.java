@@ -24,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
 
@@ -34,109 +33,55 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.RecentListAdapter;
-import swati4star.createpdf.customviews.MyCardView;
+import swati4star.createpdf.databinding.FragmentHomeBinding;
 import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
 import swati4star.createpdf.model.HomePageItem;
 import swati4star.createpdf.util.CommonCodeUtils;
 import swati4star.createpdf.util.RecentUtil;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-
-    @BindView(R.id.images_to_pdf)
-    MyCardView imagesToPdf;
-    @BindView(R.id.qr_barcode_to_pdf)
-    MyCardView qrbarcodeToPdf;
-    @BindView(R.id.text_to_pdf)
-    MyCardView textToPdf;
-    @BindView(R.id.view_files)
-    MyCardView viewFiles;
-    @BindView(R.id.view_history)
-    MyCardView viewHistory;
-    @BindView(R.id.split_pdf)
-    MyCardView splitPdf;
-    @BindView(R.id.merge_pdf)
-    MyCardView mergePdf;
-    @BindView(R.id.compress_pdf)
-    MyCardView compressPdf;
-    @BindView(R.id.remove_pages)
-    MyCardView removePages;
-    @BindView(R.id.rearrange_pages)
-    MyCardView rearrangePages;
-    @BindView(R.id.extract_images)
-    MyCardView extractImages;
-    @BindView(R.id.pdf_to_images)
-    MyCardView mPdfToImages;
-    @BindView(R.id.add_password)
-    MyCardView addPassword;
-    @BindView(R.id.remove_password)
-    MyCardView removePassword;
-    @BindView(R.id.rotate_pages)
-    MyCardView rotatePdf;
-    @BindView(R.id.add_watermark)
-    MyCardView addWatermark;
-    @BindView(R.id.add_images)
-    MyCardView addImages;
-    @BindView(R.id.remove_duplicates_pages_pdf)
-    MyCardView removeDuplicatePages;
-    @BindView(R.id.invert_pdf)
-    MyCardView invertPdf;
-    @BindView(R.id.zip_to_pdf)
-    MyCardView zipToPdf;
-    @BindView(R.id.excel_to_pdf)
-    MyCardView excelToPdf;
-    @BindView(R.id.extract_text)
-    MyCardView extractText;
-    @BindView(R.id.add_text)
-    MyCardView addText;
-    @BindView(R.id.recent_list)
-    RecyclerView recentList;
-    @BindView(R.id.recent_lbl)
-    View recentLabel;
-    @BindView(R.id.recent_list_lay)
-    ViewGroup recentLayout;
     private Activity mActivity;
     private Map<Integer, HomePageItem> mFragmentPositionMap;
     private RecentListAdapter mAdapter;
+    private FragmentHomeBinding mBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this, rootview);
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
         mFragmentPositionMap = CommonCodeUtils.getInstance().fillNavigationItemsMap(true);
 
-        imagesToPdf.setOnClickListener(this);
-        qrbarcodeToPdf.setOnClickListener(this);
-        textToPdf.setOnClickListener(this);
-        viewFiles.setOnClickListener(this);
-        viewHistory.setOnClickListener(this);
-        splitPdf.setOnClickListener(this);
-        mergePdf.setOnClickListener(this);
-        compressPdf.setOnClickListener(this);
-        removePages.setOnClickListener(this);
-        rearrangePages.setOnClickListener(this);
-        extractImages.setOnClickListener(this);
-        mPdfToImages.setOnClickListener(this);
-        addPassword.setOnClickListener(this);
-        removePassword.setOnClickListener(this);
-        rotatePdf.setOnClickListener(this);
-        addWatermark.setOnClickListener(this);
-        addImages.setOnClickListener(this);
-        removeDuplicatePages.setOnClickListener(this);
-        invertPdf.setOnClickListener(this);
-        zipToPdf.setOnClickListener(this);
-        excelToPdf.setOnClickListener(this);
-        extractText.setOnClickListener(this);
-        addText.setOnClickListener(this);
+        mBinding.imagesToPdf.setOnClickListener(this);
+        mBinding.qrBarcodeToPdf.setOnClickListener(this);
+        mBinding.textToPdf.setOnClickListener(this);
+        mBinding.viewFiles.setOnClickListener(this);
+        mBinding.viewHistory.setOnClickListener(this);
+        mBinding.splitPdf.setOnClickListener(this);
+        mBinding.mergePdf.setOnClickListener(this);
+        mBinding.compressPdf.setOnClickListener(this);
+        mBinding.removePages.setOnClickListener(this);
+        mBinding.rearrangePages.setOnClickListener(this);
+        mBinding.extractImages.setOnClickListener(this);
+        mBinding.pdfToImages.setOnClickListener(this);
+        mBinding.addPassword.setOnClickListener(this);
+        mBinding.removePassword.setOnClickListener(this);
+        mBinding.rotatePages.setOnClickListener(this);
+        mBinding.addWatermark.setOnClickListener(this);
+        mBinding.addImages.setOnClickListener(this);
+        mBinding.removeDuplicatesPagesPdf.setOnClickListener(this);
+        mBinding.invertPdf.setOnClickListener(this);
+        mBinding.zipToPdf.setOnClickListener(this);
+        mBinding.excelToPdf.setOnClickListener(this);
+        mBinding.extractText.setOnClickListener(this);
+        mBinding.addText.setOnClickListener(this);
 
         mAdapter = new RecentListAdapter(this);
-        recentList.setAdapter(mAdapter);
-        return rootview;
+        mBinding.recentList.setAdapter(mAdapter);
+        return rootView;
     }
 
     @Override
@@ -148,15 +93,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             LinkedHashMap<String, Map<String, String>> mRecentList = RecentUtil.getInstance()
                     .getList(PreferenceManager.getDefaultSharedPreferences(mActivity));
             if (!mRecentList.isEmpty()) {
-                recentLabel.setVisibility(View.VISIBLE);
-                recentLayout.setVisibility(View.VISIBLE);
+                mBinding.recentLbl.setVisibility(View.VISIBLE);
+                mBinding.recentListLay.setVisibility(View.VISIBLE);
                 List<String> featureItemIds = new ArrayList<>(mRecentList.keySet());
                 List<Map<String, String>> featureItemList = new ArrayList<>(mRecentList.values());
                 mAdapter.updateList(featureItemIds, featureItemList);
                 mAdapter.notifyDataSetChanged();
             } else {
-                recentLabel.setVisibility(View.GONE);
-                recentLayout.setVisibility(View.GONE);
+                mBinding.recentLbl.setVisibility(View.GONE);
+                mBinding.recentListLay.setVisibility(View.GONE);
             }
 
         } catch (JSONException e) {
@@ -172,7 +117,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();

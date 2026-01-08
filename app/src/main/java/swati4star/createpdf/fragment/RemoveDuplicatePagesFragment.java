@@ -11,29 +11,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.FilesListAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.FragmentRemoveDuplicatePagesBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnBackPressedInterface;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -54,24 +46,6 @@ public class RemoveDuplicatePagesFragment extends Fragment
 
     private static final int INTENT_REQUEST_PICKFILE_CODE = 10;
     BottomSheetBehavior mSheetBehavior;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.selectFile)
-    MorphingButton selectFileButton;
-    @BindView(R.id.remove)
-    MorphingButton removeDuplicateButton;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.downArrow)
-    ImageView mDownArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
-    @BindView(R.id.view_pdf)
-    Button mViewPdf;
     private Activity mActivity;
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
@@ -79,35 +53,39 @@ public class RemoveDuplicatePagesFragment extends Fragment
     private BottomSheetUtils mBottomSheetUtils;
     private MaterialDialog mMaterialDialog;
 
+    private FragmentRemoveDuplicatePagesBinding mBinding;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_remove_duplicate_pages, container, false);
-        ButterKnife.bind(this, rootview);
+        mBinding = FragmentRemoveDuplicatePagesBinding.inflate(inflater, container, false);
+        View rootview = mBinding.getRoot();
+        LinearLayout layoutBottomSheet = rootview.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        mLottieProgress.setVisibility(View.VISIBLE);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
         getRuntimePermissions();
         resetValues();
+
+        mBinding.bottomSheet.viewFiles.setOnClickListener(v -> {
+            mBottomSheetUtils.showHideSheet(mSheetBehavior);
+        });
+
+        mBinding.selectFile.setOnClickListener(v -> {
+            startActivityForResult(mFileUtils.getFileChooser(), INTENT_REQUEST_PICKFILE_CODE);
+        });
+
+        mBinding.remove.setOnClickListener(v -> {
+            new RemoveDuplicates(mPath, this).execute();
+        });
+
         return rootview;
     }
 
-    @OnClick(R.id.viewFiles)
-    void onViewFilesClick(View view) {
-        mBottomSheetUtils.showHideSheet(mSheetBehavior);
-    }
-
-    /**
-     * Displays file chooser intent
-     */
-    @OnClick(R.id.selectFile)
-    public void showFileChooser() {
-        startActivityForResult(mFileUtils.getFileChooser(), INTENT_REQUEST_PICKFILE_CODE);
-    }
 
     // Refactor onActivityResult() method to handle possible NullPointerExceptions
-// when accessing data.getData(). Added try-catch blocks to handle exceptions
-// in a better way(imo) to prevent app crashes.
+    // when accessing data.getData(). Added try-catch blocks to handle exceptions
+    // in a better way(imo) to prevent app crashes.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK || data == null || data.getData() == null) {
@@ -126,25 +104,22 @@ public class RemoveDuplicatePagesFragment extends Fragment
         }
     }
 
-    //On click remove duplicate button
-    @OnClick(R.id.remove)
-    public void parse() {
-        new RemoveDuplicates(mPath, this).execute();
-    }
-
     private void resetValues() {
         mPath = null;
-        mMorphButtonUtility.initializeButton(selectFileButton, removeDuplicateButton);
+        mMorphButtonUtility.initializeButton(mBinding.selectFile, mBinding.remove);
     }
 
     private void setTextAndActivateButtons(String path) {
         mPath = path;
-        mMorphButtonUtility.setTextAndActivateButtons(path, selectFileButton, removeDuplicateButton);
+        mMorphButtonUtility.setTextAndActivateButtons(path, mBinding.selectFile, mBinding.remove);
     }
 
     @Override
     public void onPopulate(ArrayList<String> paths) {
-        CommonCodeUtils.getInstance().populateUtil(mActivity, paths, this, mLayout, mLottieProgress, mRecyclerViewFiles);
+        CommonCodeUtils.getInstance().populateUtil(mActivity,
+                paths, this, mBinding.bottomSheet.layout,
+                mBinding.bottomSheet.lottieProgress,
+                mBinding.bottomSheet.recyclerViewFiles);
     }
 
     @Override
@@ -168,8 +143,8 @@ public class RemoveDuplicatePagesFragment extends Fragment
     }
 
     private void viewPdfButton(String path) {
-        mViewPdf.setVisibility(View.VISIBLE);
-        mViewPdf.setOnClickListener(v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
+        mBinding.viewPdf.setVisibility(View.VISIBLE);
+        mBinding.viewPdf.setOnClickListener(v -> mFileUtils.openFile(path, FileUtils.FileType.e_PDF));
     }
 
     @Override
@@ -183,8 +158,8 @@ public class RemoveDuplicatePagesFragment extends Fragment
         mMaterialDialog.dismiss();
         if (!isNewPdfCreated) {
             StringUtils.getInstance().showSnackbar(mActivity, R.string.snackbar_no_duplicate_pdf);
-            //Hiding View PDF button
-            mViewPdf.setVisibility(View.GONE);
+            // Hiding View PDF button
+            mBinding.viewPdf.setVisibility(View.GONE);
             return;
         }
         new DatabaseHelper(mActivity).insertRecord(path, mActivity.getString(R.string.created));

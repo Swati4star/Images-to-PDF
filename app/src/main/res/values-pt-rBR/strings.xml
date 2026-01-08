@@ -163,7 +163,6 @@
     <string name="empty_image_description">NenhumPdf</string>
 
     <!--  Add Password -->
-    <string name="enter_password_custom">Digite a Senha</string>
     <string name="example_pass_123">senha@123</string>
     <string name="remove_dialog">EXCLUIR</string>
     <string name="password_remove">Senha excluída</string>
@@ -180,7 +179,6 @@
 
     <string name="nextimage_contentdesc">Imagem seguinte</string>
     <string name="decrypted_file">_descriptografado.pdf</string>
-    <string name="decrypt_message">Digite a senha para continuar</string>
 
     <string name="snackbar_txtselected">Arquivo de texto selecionado!</string>
     <string name="decrypt_protected_file">O PDF selecionado é protegido por senha. Digite a senha para continuar…</string>

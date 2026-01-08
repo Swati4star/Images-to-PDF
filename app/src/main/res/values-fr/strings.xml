@@ -92,7 +92,6 @@
     <string name="compress_dialog_percentage">%</string>
     <string name="set_as_default">Définir par défaut</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">Entrez le mot de passe pour continuer</string>
     <string name="not_encrypted">Le PDF n\'est pas chiffré</string>
     <string name="save_current">Sauvegarder</string>
     <string name="Filter_name">Filtre</string>
@@ -305,7 +304,6 @@
     <string name="snackbar_no_share_app">Aucune application de partage.</string>
     <string name="snackbar_no_email_clients">Aucun client de messagerie n’est installé.</string>
     <string name="empty_image_description">NoPdfs</string>
-    <string name="enter_password_custom">Entrez le mot de passe</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">Chemin d’accès au second fichier PDF</string>
     <string name="i_have_attached_pdfs_to_this_message">J’ai attaché des fichiers à ce message</string>
     <string name="decrypt_protected_file">Le PDF est protégé par mot de passe. Entrez le mot de passe pour continuer …</string>

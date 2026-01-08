@@ -25,6 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    viewBinding {
+        enabled = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -78,11 +81,6 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference:1.2.0'
-
-    // butterknife
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    implementation 'androidx.test.ext:junit:1.1.5'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 
     // persistence room library - for db operations
     implementation 'androidx.room:room-runtime:2.5.1'

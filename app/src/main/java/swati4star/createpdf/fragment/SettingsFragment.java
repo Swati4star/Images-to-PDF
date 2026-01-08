@@ -24,17 +24,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.itextpdf.text.Font;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
+import swati4star.createpdf.databinding.FragmentSettingsBinding;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.EnhancementOptionsEntity;
 import swati4star.createpdf.util.Constants;
@@ -47,16 +45,11 @@ import swati4star.createpdf.util.ThemeUtils;
 
 public class SettingsFragment extends Fragment implements OnItemClickListener {
 
-    @BindView(R.id.settings_list)
-    RecyclerView mEnhancementOptionsRecycleView;
-    @BindView(R.id.storagelocation)
-    TextView storageLocation;
-
     private Activity mActivity;
     private SharedPreferences mSharedPreferences;
+    private FragmentSettingsBinding mBinding;
 
-    public SettingsFragment() {
-    }
+    public SettingsFragment() { }
 
     @Override
     public void onAttach(Context context) {
@@ -68,10 +61,10 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        ButterKnife.bind(this, root);
+        mBinding = FragmentSettingsBinding.inflate(inflater, container, false);
+        View root = mBinding.getRoot();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        storageLocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
+        mBinding.storagelocation.setText(mSharedPreferences.getString(STORAGE_LOCATION,
                 StringUtils.getInstance().getDefaultStorageLocation()));
         showSettingsOptions();
         return root;
@@ -79,11 +72,11 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
 
     private void showSettingsOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
-        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mBinding.settingsList.setLayoutManager(mGridLayoutManager);
         ArrayList<EnhancementOptionsEntity> mEnhancementOptionsEntityArrayList = getEnhancementOptions(mActivity);
         EnhancementOptionsAdapter adapter =
                 new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
-        mEnhancementOptionsRecycleView.setAdapter(adapter);
+        mBinding.settingsList.setAdapter(adapter);
     }
 
     @Override
@@ -145,7 +138,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListener {
      * To modify default image compression value
      */
     private void changeCompressImage() {
-
         MaterialDialog dialog = DialogUtils.getInstance()
                 .createCustomDialogWithoutContent(mActivity, R.string.compression_image_edit)
                 .customView(R.layout.compress_image_dialog, true)

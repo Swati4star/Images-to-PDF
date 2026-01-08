@@ -123,7 +123,7 @@ public class CommonCodeUtils {
                              RelativeLayout layout, LottieAnimationView animationView,
                              RecyclerView recyclerView) {
 
-        if (paths == null || paths.size() == 0) {
+        if (paths == null || paths.isEmpty()) {
             layout.setVisibility(View.GONE);
         } else {
             // Init recycler view

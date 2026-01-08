@@ -13,24 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ItemMergeFilesBinding;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PDFUtils;
 
 public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.ViewMergeFilesHolder> {
 
     private final ArrayList<String> mFilePaths;
-    private final Activity mContext;
     private final OnClickListener mOnClickListener;
     private final PDFUtils mPDFUtils;
     private final boolean mIsMergeFragment;
 
     public MergeFilesAdapter(Activity mContext, ArrayList<String> mFilePaths,
                              boolean mIsMergeFragment, OnClickListener mOnClickListener) {
-        this.mContext = mContext;
         this.mFilePaths = mFilePaths;
         this.mOnClickListener = mOnClickListener;
         mPDFUtils = new PDFUtils(mContext);
@@ -40,9 +35,8 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     @NonNull
     @Override
     public ViewMergeFilesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_merge_files, parent, false);
-        return new MergeFilesAdapter.ViewMergeFilesHolder(itemView);
+        ItemMergeFilesBinding binding = ItemMergeFilesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new MergeFilesAdapter.ViewMergeFilesHolder(binding);
     }
 
     @Override
@@ -63,35 +57,33 @@ public class MergeFilesAdapter extends RecyclerView.Adapter<MergeFilesAdapter.Vi
     }
 
     public class ViewMergeFilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.fileName)
         TextView mFileName;
-        @BindView(R.id.encryptionImage)
         ImageView mEncryptionImage;
-        @BindView(R.id.itemMerge_checkbox)
         AppCompatCheckBox mCheckbox;
 
-        ViewMergeFilesHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            mFileName.setOnClickListener(this);
-            if (mIsMergeFragment) mCheckbox.setVisibility(View.VISIBLE);
-            else mCheckbox.setVisibility(View.GONE);
+        ViewMergeFilesHolder(ItemMergeFilesBinding binding) {
+            super(binding.getRoot());
+            binding.fileName.setOnClickListener(this);
+            if (mIsMergeFragment) {
+                binding.itemMergeCheckbox.setVisibility(View.VISIBLE);
+            } else {
+                binding.itemMergeCheckbox.setVisibility(View.GONE);
+            }
+            mFileName = binding.fileName;
+            mEncryptionImage = binding.encryptionImage;
+            mCheckbox = binding.itemMergeCheckbox;
+            binding.itemMergeCheckbox.setOnClickListener(v -> {
+                mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
+            });
         }
 
         @Override
         public void onClick(View view) {
-
             if (getAdapterPosition() >= mFilePaths.size())
                 return;
 
             if (mIsMergeFragment) mCheckbox.toggle();
             mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
         }
-
-        @OnClick(R.id.itemMerge_checkbox)
-        public void onCheckboxClick() {
-            mOnClickListener.onItemClick(mFilePaths.get(getAdapterPosition()));
-        }
-
     }
 }

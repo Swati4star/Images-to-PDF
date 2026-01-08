@@ -260,7 +260,7 @@ public class FileUtils {
      * @return fileName with _pdf suffix
      */
     public String getLastFileName(ArrayList<String> filesPath) {
-        if (filesPath.size() == 0)
+        if (filesPath.isEmpty())
             return "";
 
         String lastSelectedFilePath = filesPath.get(filesPath.size() - 1);

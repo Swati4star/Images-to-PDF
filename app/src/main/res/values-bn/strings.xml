@@ -85,7 +85,6 @@
     <string name="extras">অতিরিক্ত</string>
     <string name="share">শেয়ার করুন</string>
     <string name="help">সাহায্য</string>
-    <string name="faqs" translatable="false">FAQ</string>
 
     <!-- images to PDF -->
     <string name="images_to_pdf">পিডিএফে ছবি</string>
@@ -208,7 +207,6 @@
     <string name="empty_image_description">কোনো PDF নেই</string>
 
     <!-- Add Password -->
-    <string name="enter_password_custom">পাসওয়ার্ড লিখুন</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">সরান...</string>
     <string name="password_remove">পাসওয়ার্ড সরিয়ে ফেলা হয়েছে</string>
@@ -224,7 +222,6 @@
     <string name="i_have_attached_pdfs_to_this_message">আমি এই বার্তায় ফাইল(গুলি) সংযুক্ত করেছি</string>
     <string name="nextimage_contentdesc">পরবর্তী চিত্র</string>
     <string name="decrypted_file">_অন-এনক্রিপ্টেড.pdf</string>
-    <string name="decrypt_message">চালনার জন্য পাসওয়ার্ড লিখুন</string>
 
     <string name="snackbar_txtselected">টেক্সট ফাইল নির্বাচিত হয়েছে!</string>
     <string name="decrypt_protected_file">নির্বাচিত PDF পাসওয়ার্ড সুরক্ষিত। চালনার জন্য পাসওয়ার্ড লিখুন...</string>
@@ -242,13 +239,6 @@
     <string name="set_page_size_text">পৃষ্ঠা আকার নির্ধারণ করুন</string>
     <string name="b0_to_b10">B0 থেকে B10</string>
     <string name="a0_to_a10">A0 থেকে A10</string>
-    <string name="tabloid" translatable="false">ট্যাবলোইড</string>
-    <string name="executive" translatable="false">এক্জিকিউটিভ</string>
-    <string name="ledger" translatable="false">লেজার</string>
-    <string name="letter" translatable="false">চিঠি</string>
-    <string name="legal" translatable="false">আইনি</string>
-    <string name="a4" translatable="false">A4</string>
-    <string name="fit_size" translatable="false">আকারে মিলান</string>
     <string name="default_page_size">ডিফল্ট ( %s )</string>
     <string name="master_password_changed">পাসওয়ার্ড অবশ্যই ভুল হয়েছে। সম্ভবত, আপনি মাস্টার পাসওয়ার্ড পরিবর্তন করেছেন।</string>
 
@@ -281,7 +271,6 @@
     <string name="text_to_pdf">টেক্সট থেকে পিডিএফ</string>
     <string name="text_file_selected">টেক্সট ফাইল নির্বাচিত হয়েছে</string>
     <string name="select_file">আপলোড করার জন্য একটি ফাইল নির্বাচন করুন</string>
-    <string name="text_type" translatable="false">text/plain</string>
     <string name="new_directory">নতুন ডিরেক্টরি</string>
     <string name="previous_image_content_desc">আগের চিত্র</string>
     <string name="text_file_name">"টেক্সট ফাইল : "</string>
@@ -362,11 +351,6 @@
     <!-- Text To PDF FontFamily -->
     <string name="default_font_family_text">ফন্ট পরিবার (ডিফল্ট : %s)</string>
     <string name="font_family_text">"ফন্ট পরিবার : "</string>
-    <string name="courier" translatable="false">কুরিয়ার</string>
-    <string name="helvetica" translatable="false">হেলভেটিকা</string>
-    <string name="times_roman" translatable="false">টাইমস রোমান</string>
-    <string name="symbol" translatable="false">প্রতীক</string>
-    <string name="zapfdingbats" translatable="false">জাপফ ডিংব্যাটস</string>
     <string name="undefined">অনির্ধারিত</string>
     <string name="selected_image">নির্বাচিত চিত্র</string>
     <string name="reset">রিসেট</string>
@@ -438,10 +422,6 @@
     <!--Rotate Pages -->
     <string name="rotate_pages">পৃষ্ঠা ঘুরান</string>
     <string name="enter_rotation_angle">ঘুরানোর কোন কোণ লিখুন</string>
-    <string name="rotated_file_name" translatable="false">%s_ঘুরে_%s%s</string>
-    <string name="degree_90" translatable="false">90 &#xb0;</string>
-    <string name="degree_180" translatable="false">180 &#xb0;</string>
-    <string name="degree_270" translatable="false">270 &#xb0;</string>
     <string name="share_files">ফাইল ভাগ করুন</string>
     <string name="pdf_removed_from_list">পিডিএফটি তালিকা থেকে সরে যায়েছে।</string>
     <string name="pdf_added_to_list">পিডিএফটি তালিকা এ যোগ করা হয়েছে।</string>
@@ -554,7 +534,6 @@
     <string name="split_range_alert">প্রবেশ ক্ষেত্র দ্বারা নির্ধারিত পিডিএফটি আবার তৈরি হবে!</string>
 
     <!--file name suffix-->
-    <string name="pdf_suffix" translatable="false">_pdf</string>
     <string name="reordering_pages_dialog">আপনার পৃষ্ঠা পুনর্বিন্যাস করা হচ্ছে...</string>
     <string name="delete_alert_singular">আপনি নির্বাচিত ফাইলটি মুছতে চান?</string>
     <string name="snackbar_files_deleted">ফাইলগুলি মুছে গেছে</string>

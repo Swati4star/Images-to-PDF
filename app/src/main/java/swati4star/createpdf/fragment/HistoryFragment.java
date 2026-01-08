@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,14 +31,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.MainActivity;
 import swati4star.createpdf.adapter.HistoryAdapter;
 import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
+import swati4star.createpdf.databinding.FragmentHistoryBinding;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -47,15 +44,11 @@ import swati4star.createpdf.util.StringUtils;
 import swati4star.createpdf.util.ViewFilesDividerItemDecoration;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickListener {
-
-    @BindView(R.id.emptyStatusView)
-    ConstraintLayout mEmptyStatusLayout;
-    @BindView(R.id.historyRecyclerView)
-    RecyclerView mHistoryRecyclerView;
     private Activity mActivity;
     private List<History> mHistoryList;
     private HistoryAdapter mHistoryAdapter;
     private boolean[] mFilterOptionState;
+    FragmentHistoryBinding mBinding;
 
     @Override
     public void onAttach(Context context) {
@@ -73,14 +66,22 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_history, container, false);
-        ButterKnife.bind(this, root);
-
+        mBinding = FragmentHistoryBinding.inflate(inflater, container, false);
+        View root = mBinding.getRoot();
         mFilterOptionState = new boolean[getResources().getStringArray(R.array.filter_options_history).length];
         Arrays.fill(mFilterOptionState, Boolean.TRUE); //by default all options should be selected
         // by default all operations should be shown, so pass empty array
         new LoadHistory(mActivity).execute(new String[0]);
         getRuntimePermissions();
+        mBinding.getStarted.setOnClickListener(v -> {
+            Fragment fragment = new HomeFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+            mActivity.setTitle(appName);
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).setNavigationViewSelection(R.id.nav_home);
+            }
+        });
         return root;
     }
 
@@ -136,17 +137,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                 .show();
     }
 
-    @OnClick(R.id.getStarted)
-    public void loadHome() {
-        Fragment fragment = new HomeFragment();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
-        mActivity.setTitle(appName);
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).setNavigationViewSelection(R.id.nav_home);
-        }
-    }
-
     @Override
     public void onItemClick(String path) {
         FileUtils fileUtils = new FileUtils(mActivity);
@@ -190,14 +180,14 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         @Override
         protected void onPostExecute(Void aVoid) {
             if (mHistoryList != null && !mHistoryList.isEmpty()) {
-                mEmptyStatusLayout.setVisibility(View.GONE);
+                mBinding.emptyStatusView.setVisibility(View.GONE);
                 mHistoryAdapter = new HistoryAdapter(mActivity, mHistoryList, HistoryFragment.this);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-                mHistoryRecyclerView.setLayoutManager(mLayoutManager);
-                mHistoryRecyclerView.setAdapter(mHistoryAdapter);
-                mHistoryRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(mContext));
+                mBinding.historyRecyclerView.setLayoutManager(mLayoutManager);
+                mBinding.historyRecyclerView.setAdapter(mHistoryAdapter);
+                mBinding.historyRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(mContext));
             } else {
-                mEmptyStatusLayout.setVisibility(View.VISIBLE);
+                mBinding.emptyStatusView.setVisibility(View.VISIBLE);
             }
             super.onPostExecute(aVoid);
         }
@@ -218,7 +208,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
             if (mHistoryAdapter != null) {
                 mHistoryAdapter.deleteHistory();
             }
-            mEmptyStatusLayout.setVisibility(View.VISIBLE);
+            mBinding.emptyStatusView.setVisibility(View.VISIBLE);
         }
     }
 }

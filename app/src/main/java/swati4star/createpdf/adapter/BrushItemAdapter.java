@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.BrushColorItemBinding;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.model.BrushItem;
 
@@ -34,9 +32,8 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
     @NonNull
     @Override
     public BrushItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.brush_color_item, parent, false);
-        return new BrushItemAdapter.BrushItemViewHolder(mView);
+        BrushColorItemBinding binding = BrushColorItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new BrushItemAdapter.BrushItemViewHolder(binding);
     }
 
     @Override
@@ -55,13 +52,12 @@ public class BrushItemAdapter extends RecyclerView.Adapter<BrushItemAdapter.Brus
 
     public class BrushItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.doodle_color)
         Button doodleButton;
 
-        BrushItemViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
+        BrushItemViewHolder(BrushColorItemBinding binding) {
+            super(binding.getRoot());
+            binding.getRoot().setOnClickListener(this);
+            doodleButton = binding.doodleColor;
         }
 
         @Override

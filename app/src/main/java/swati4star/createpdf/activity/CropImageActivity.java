@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,8 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import butterknife.ButterKnife;
 import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ActivityCropImageBinding;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.StringUtils;
@@ -39,12 +40,14 @@ public class CropImageActivity extends AppCompatActivity {
     private boolean mCurrentImageEdited = false;
     private boolean mFinishedClicked = false;
     private CropImageView mCropImageView;
+    private ActivityCropImageBinding mBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crop_image_activity);
-        ButterKnife.bind(this);
+        mBinding = ActivityCropImageBinding.inflate(getLayoutInflater());
+        View rootView = mBinding.getRoot();
+        setContentView(rootView);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,7 +63,7 @@ public class CropImageActivity extends AppCompatActivity {
         for (int i = 0; i < mImages.size(); i++)
             mCroppedImageUris.put(i, Uri.parse(mImages.get(i)));
 
-        if (mImages.size() == 0)
+        if (mImages.isEmpty())
             finish();
 
         setImage(0);
@@ -103,7 +106,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     public void nextImageClicked() {
-        if (mImages.size() == 0)
+        if (mImages.isEmpty())
             return;
 
         if (!mCurrentImageEdited) {
@@ -115,7 +118,7 @@ public class CropImageActivity extends AppCompatActivity {
     }
 
     public void prevImgBtnClicked() {
-        if (mImages.size() == 0)
+        if (mImages.isEmpty())
             return;
 
         if (!mCurrentImageEdited) {

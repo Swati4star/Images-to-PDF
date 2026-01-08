@@ -20,6 +20,7 @@ import android.provider.Settings;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -40,6 +41,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ActivityMainBinding;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.interfaces.DialogCallbacks;
 import swati4star.createpdf.providers.fragmentmanagement.FragmentManagement;
@@ -59,13 +61,17 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private SparseIntArray mFragmentSelectedMap;
     private FragmentManagement mFragmentManagement;
+    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
+
         mNavigationView = findViewById(R.id.nav_view);
 
         setThemeOnActivityExclusiveComponents();

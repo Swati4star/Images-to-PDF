@@ -209,7 +209,6 @@
     <string name="empty_image_description">PDF가 존재하지않습니다.</string>
 
     <!--  Add Password -->
-    <string name="enter_password_custom">암호를 입력해주세요.</string>
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">제거</string>
     <string name="password_remove">암호 제거</string>
@@ -226,7 +225,6 @@
 
     <string name="nextimage_contentdesc">다음 이미지</string>
     <string name="decrypted_file">_unencrypted.pdf</string>
-    <string name="decrypt_message">계속하기 위해서 암호를 입력해주세요.</string>
 
     <string name="snackbar_txtselected">텍스트 파일이 선택되었습니다!</string>
     <string name="decrypt_protected_file">선택된 파일에 암호가 존재합니다. 계속하기 위해서 암호를 입력해주세요…</string>

@@ -44,24 +44,18 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
-import com.airbnb.lottie.LottieAnimationView;
-
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.activity.FavouritesActivity;
 import swati4star.createpdf.activity.MainActivity;
-import swati4star.createpdf.customviews.MyCardView;
+import swati4star.createpdf.databinding.FragmentFavouritesBinding;
 import swati4star.createpdf.fragment.texttopdf.TextToPdfFragment;
 import swati4star.createpdf.model.HomePageItem;
 import swati4star.createpdf.util.CommonCodeUtils;
@@ -69,67 +63,18 @@ import swati4star.createpdf.util.CommonCodeUtils;
 public class FavouritesFragment extends Fragment
         implements SharedPreferences.OnSharedPreferenceChangeListener,
         View.OnClickListener {
-    @BindView(R.id.images_to_pdf_fav)
-    MyCardView pref_img_to_pdf;
-    @BindView(R.id.text_to_pdf_fav)
-    MyCardView pref_text_to_pdf;
-    @BindView(R.id.qr_barcode_to_pdf_fav)
-    MyCardView pref_qr_barcode;
-    @BindView(R.id.view_files_fav)
-    MyCardView pref_view_files;
-    @BindView(R.id.view_history_fav)
-    MyCardView pref_history;
-    @BindView(R.id.add_password_fav)
-    MyCardView pref_add_password;
-    @BindView(R.id.remove_password_fav)
-    MyCardView pref_rem_pass;
-    @BindView(R.id.rotate_pages_fav)
-    MyCardView pref_rot_pages;
-    @BindView(R.id.add_watermark_fav)
-    MyCardView pref_add_watermark;
-    @BindView(R.id.add_images_fav)
-    MyCardView pref_add_images;
-    @BindView(R.id.merge_pdf_fav)
-    MyCardView pref_merge_pdf;
-    @BindView(R.id.split_pdf_fav)
-    MyCardView pref_split_pdf;
-    @BindView(R.id.invert_pdf_fav)
-    MyCardView pref_invert_pdf;
-    @BindView(R.id.compress_pdf_fav)
-    MyCardView pref_compress;
-    @BindView(R.id.remove_duplicates_pages_pdf_fav)
-    MyCardView pref_rem_dup_pages;
-    @BindView(R.id.remove_pages_fav)
-    MyCardView pref_remove_pages;
-    @BindView(R.id.rearrange_pages_fav)
-    MyCardView pref_reorder_pages;
-    @BindView(R.id.extract_images_fav)
-    MyCardView pref_extract_img;
-    @BindView(R.id.pdf_to_images_fav)
-    MyCardView pref_pdf_to_img;
-    @BindView(R.id.extract_text_fav)
-    MyCardView pref_extract_txt;
-    @BindView(R.id.excel_to_pdf_fav)
-    MyCardView pref_excel_to_pdf;
-    @BindView(R.id.add_text_fav)
-    MyCardView pref_add_text;
-    @BindView(R.id.favourites)
-    LottieAnimationView favouritesAnimation;
-    @BindView(R.id.favourites_text)
-    TextView favouritesText;
-    @BindView(R.id.zip_to_pdf_fav)
-    MyCardView pref_zip_to_pdf;
     private SharedPreferences mSharedpreferences;
     private boolean mDoesFavouritesExist;
     private Activity mActivity;
     private Map<Integer, HomePageItem> mFragmentPositionMap;
+    FragmentFavouritesBinding mBinding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.favourites_fragment, container, false);
-        ButterKnife.bind(this, rootView);
+        mBinding = FragmentFavouritesBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
 
         mSharedpreferences = PreferenceManager
                 .getDefaultSharedPreferences(mActivity);
@@ -138,6 +83,11 @@ public class FavouritesFragment extends Fragment
         initializeValues();
 
         setHasOptionsMenu(true);
+
+        mBinding.favAddFab.setOnClickListener(v -> {
+            startActivity(new Intent(this.getContext(), FavouritesActivity.class));
+        });
+
         return rootView;
     }
 
@@ -150,35 +100,30 @@ public class FavouritesFragment extends Fragment
         checkFavourites(mSharedpreferences);
         mFragmentPositionMap = CommonCodeUtils.getInstance().fillNavigationItemsMap(false);
 
-        pref_img_to_pdf.setOnClickListener(this);
-        pref_text_to_pdf.setOnClickListener(this);
-        pref_qr_barcode.setOnClickListener(this);
-        pref_view_files.setOnClickListener(this);
-        pref_history.setOnClickListener(this);
-        pref_extract_txt.setOnClickListener(this);
-        pref_add_text.setOnClickListener(this);
-        pref_split_pdf.setOnClickListener(this);
-        pref_merge_pdf.setOnClickListener(this);
-        pref_compress.setOnClickListener(this);
-        pref_remove_pages.setOnClickListener(this);
-        pref_reorder_pages.setOnClickListener(this);
-        pref_extract_img.setOnClickListener(this);
-        pref_pdf_to_img.setOnClickListener(this);
-        pref_add_password.setOnClickListener(this);
-        pref_rem_pass.setOnClickListener(this);
-        pref_rot_pages.setOnClickListener(this);
-        pref_add_watermark.setOnClickListener(this);
-        pref_add_images.setOnClickListener(this);
-        pref_rem_dup_pages.setOnClickListener(this);
-        pref_invert_pdf.setOnClickListener(this);
-        pref_excel_to_pdf.setOnClickListener(this);
-        pref_zip_to_pdf.setOnClickListener(this);
+        mBinding.imagesToPdfFav.setOnClickListener(this);
+        mBinding.textToPdfFav.setOnClickListener(this);
+        mBinding.qrBarcodeToPdfFav.setOnClickListener(this);
+        mBinding.viewFilesFav.setOnClickListener(this);
+        mBinding.viewHistoryFav.setOnClickListener(this);
+        mBinding.extractTextFav.setOnClickListener(this);
+        mBinding.addTextFav.setOnClickListener(this);
+        mBinding.splitPdfFav.setOnClickListener(this);
+        mBinding.mergePdfFav.setOnClickListener(this);
+        mBinding.compressPdfFav.setOnClickListener(this);
+        mBinding.removePagesFav.setOnClickListener(this);
+        mBinding.removePagesFav.setOnClickListener(this);
+        mBinding.extractImagesFav.setOnClickListener(this);
+        mBinding.pdfToImagesFav.setOnClickListener(this);
+        mBinding.addPasswordFav.setOnClickListener(this);
+        mBinding.removePasswordFav.setOnClickListener(this);
+        mBinding.rotatePagesFav.setOnClickListener(this);
+        mBinding.addWatermarkFav.setOnClickListener(this);
+        mBinding.addImagesFav.setOnClickListener(this);
+        mBinding.removeDuplicatesPagesPdfFav.setOnClickListener(this);
+        mBinding.invertPdfFav.setOnClickListener(this);
+        mBinding.excelToPdfFav.setOnClickListener(this);
+        mBinding.zipToPdfFav.setOnClickListener(this);
 
-    }
-
-    @OnClick(R.id.fav_add_fab)
-    public void onAddFavouriteButtonClicked() {
-        startActivity(new Intent(this.getContext(), FavouritesActivity.class));
     }
 
     @Override
@@ -197,34 +142,34 @@ public class FavouritesFragment extends Fragment
 
         // assigned due to onSharedPreferenceChanged
         mSharedpreferences = sharedPreferences;
-        viewVisibility(pref_img_to_pdf, IMAGE_TO_PDF_KEY);
-        viewVisibility(pref_text_to_pdf, TEXT_TO_PDF_KEY);
-        viewVisibility(pref_qr_barcode, QR_BARCODE_KEY);
-        viewVisibility(pref_view_files, VIEW_FILES_KEY);
-        viewVisibility(pref_history, HISTORY_KEY);
-        viewVisibility(pref_add_text, ADD_TEXT_KEY);
-        viewVisibility(pref_add_password, ADD_PASSWORD_KEY);
-        viewVisibility(pref_rem_pass, REMOVE_PASSWORD_KEY);
-        viewVisibility(pref_rot_pages, ROTATE_PAGES_KEY);
-        viewVisibility(pref_add_watermark, ADD_WATERMARK_KEY);
-        viewVisibility(pref_add_images, ADD_IMAGES_KEY);
-        viewVisibility(pref_merge_pdf, MERGE_PDF_KEY);
-        viewVisibility(pref_split_pdf, SPLIT_PDF_KEY);
-        viewVisibility(pref_invert_pdf, INVERT_PDF_KEY);
-        viewVisibility(pref_compress, COMPRESS_PDF_KEY);
-        viewVisibility(pref_rem_dup_pages, REMOVE_DUPLICATE_PAGES_KEY);
-        viewVisibility(pref_remove_pages, REMOVE_PAGES_KEY);
-        viewVisibility(pref_reorder_pages, REORDER_PAGES_KEY);
-        viewVisibility(pref_extract_txt, EXTRACT_TEXT_KEY);
-        viewVisibility(pref_extract_img, EXTRACT_IMAGES_KEY);
-        viewVisibility(pref_pdf_to_img, PDF_TO_IMAGES_KEY);
-        viewVisibility(pref_excel_to_pdf, EXCEL_TO_PDF_KEY);
-        viewVisibility(pref_zip_to_pdf, ZIP_TO_PDF_KEY);
+        viewVisibility(mBinding.imagesToPdfFav, IMAGE_TO_PDF_KEY);
+        viewVisibility(mBinding.textToPdfFav, TEXT_TO_PDF_KEY);
+        viewVisibility(mBinding.qrBarcodeToPdfFav, QR_BARCODE_KEY);
+        viewVisibility(mBinding.viewFilesFav, VIEW_FILES_KEY);
+        viewVisibility(mBinding.viewHistoryFav, HISTORY_KEY);
+        viewVisibility(mBinding.addTextFav, ADD_TEXT_KEY);
+        viewVisibility(mBinding.addPasswordFav, ADD_PASSWORD_KEY);
+        viewVisibility(mBinding.removePasswordFav, REMOVE_PASSWORD_KEY);
+        viewVisibility(mBinding.rotatePagesFav, ROTATE_PAGES_KEY);
+        viewVisibility(mBinding.addWatermarkFav, ADD_WATERMARK_KEY);
+        viewVisibility(mBinding.addImagesFav, ADD_IMAGES_KEY);
+        viewVisibility(mBinding.mergePdfFav, MERGE_PDF_KEY);
+        viewVisibility(mBinding.splitPdfFav, SPLIT_PDF_KEY);
+        viewVisibility(mBinding.invertPdfFav, INVERT_PDF_KEY);
+        viewVisibility(mBinding.compressPdfFav, COMPRESS_PDF_KEY);
+        viewVisibility(mBinding.removeDuplicatesPagesPdfFav, REMOVE_DUPLICATE_PAGES_KEY);
+        viewVisibility(mBinding.removePagesFav, REMOVE_PAGES_KEY);
+        viewVisibility(mBinding.rearrangePagesFav, REORDER_PAGES_KEY);
+        viewVisibility(mBinding.extractTextFav, EXTRACT_TEXT_KEY);
+        viewVisibility(mBinding.extractImagesFav, EXTRACT_IMAGES_KEY);
+        viewVisibility(mBinding.pdfToImagesFav, PDF_TO_IMAGES_KEY);
+        viewVisibility(mBinding.excelToPdfFav, EXCEL_TO_PDF_KEY);
+        viewVisibility(mBinding.zipToPdfFav, ZIP_TO_PDF_KEY);
 
         // if there are no favourites then show favourites animation and text
         if (!mDoesFavouritesExist) {
-            favouritesAnimation.setVisibility(View.VISIBLE);
-            favouritesText.setVisibility(View.VISIBLE);
+            mBinding.favourites.setVisibility(View.VISIBLE);
+            mBinding.favouritesText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -246,8 +191,8 @@ public class FavouritesFragment extends Fragment
             // if any favourites exists set mDoesFavouritesExist to true
             mDoesFavouritesExist = true;
             // & disable favourites animation and text
-            favouritesAnimation.setVisibility(View.GONE);
-            favouritesText.setVisibility(View.GONE);
+            mBinding.favourites.setVisibility(View.GONE);
+            mBinding.favouritesText.setVisibility(View.GONE);
         } else {
             view.setVisibility(View.GONE);
         }

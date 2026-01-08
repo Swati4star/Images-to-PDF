@@ -17,33 +17,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.airbnb.lottie.LottieAnimationView;
-import com.dd.morphingbutton.MorphingButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.EnhancementOptionsAdapter;
 import swati4star.createpdf.adapter.MergeFilesAdapter;
 import swati4star.createpdf.database.DatabaseHelper;
+import swati4star.createpdf.databinding.FragmentExceltoPdfBinding;
 import swati4star.createpdf.interfaces.BottomSheetPopulate;
 import swati4star.createpdf.interfaces.OnItemClickListener;
 import swati4star.createpdf.interfaces.OnPDFCreatedInterface;
@@ -65,24 +57,6 @@ import swati4star.createpdf.util.StringUtils;
 public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.OnClickListener,
         OnPDFCreatedInterface, OnItemClickListener, BottomSheetPopulate {
     private final int mFileSelectCode = 0;
-    @BindView(R.id.lottie_progress)
-    LottieAnimationView mLottieProgress;
-    @BindView(R.id.tv_excel_file_name_bottom)
-    TextView mTextView;
-    @BindView(R.id.open_pdf)
-    MorphingButton mOpenPdf;
-    @BindView(R.id.create_excel_to_pdf)
-    MorphingButton mCreateExcelPdf;
-    @BindView(R.id.enhancement_options_recycle_view)
-    RecyclerView mEnhancementOptionsRecycleView;
-    @BindView(R.id.bottom_sheet)
-    LinearLayout layoutBottomSheet;
-    @BindView(R.id.upArrow)
-    ImageView mUpArrow;
-    @BindView(R.id.layout)
-    RelativeLayout mLayout;
-    @BindView(R.id.recyclerViewFiles)
-    RecyclerView mRecyclerViewFiles;
     private Activity mActivity;
     private FileUtils mFileUtils;
     private Uri mExcelFileUri;
@@ -99,33 +73,59 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     private EnhancementOptionsAdapter mEnhancementOptionsAdapter;
     private boolean mPasswordProtected = false;
     private String mPassword;
+    private FragmentExceltoPdfBinding mBinding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_excelto_pdf, container,
-                false);
+        mBinding = FragmentExceltoPdfBinding.inflate(inflater, container, false);
+        View rootView = mBinding.getRoot();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mMorphButtonUtility = new MorphButtonUtility(mActivity);
-        ButterKnife.bind(this, rootView);
         showEnhancementOptions();
-        mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
-        mCreateExcelPdf.setEnabled(false);
+        mMorphButtonUtility.morphToGrey(mBinding.createExcelToPdf, mMorphButtonUtility.integer());
+        mBinding.createExcelToPdf.setEnabled(false);
 
-        ButterKnife.bind(this, rootView);
+        LinearLayout layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet);
         mSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mUpArrow, isAdded()));
-        mLottieProgress.setVisibility(View.VISIBLE);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetCallback(mBinding.bottomSheet.upArrow, isAdded()));
+        mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithExcelFiles(this);
+
+        mBinding.selectExcelFile.setOnClickListener(v -> {
+            if (!mButtonClicked) {
+                Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setDataAndType(uri, "*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                try {
+                    startActivityForResult(
+                            Intent.createChooser(intent, String.valueOf(R.string.select_file)),
+                            mFileSelectCode);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    mStringUtils.showSnackbar(mActivity, R.string.install_file_manager);
+                }
+                mButtonClicked = true;
+            }
+        });
+
+        mBinding.createExcelToPdf.setOnClickListener(v -> {
+            openExcelToPdf();
+        });
+
+        mBinding.openPdf.setOnClickListener(v -> {
+            mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF);
+        });
+
         return rootView;
     }
 
     private void showEnhancementOptions() {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(mActivity, 2);
-        mEnhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
+        mBinding.enhancementOptionsRecycleView.setLayoutManager(mGridLayoutManager);
         mEnhancementOptionsEntityArrayList = MergePdfEnhancementOptionsUtils.getInstance()
                 .getEnhancementOptions(mActivity);
         mEnhancementOptionsAdapter = new EnhancementOptionsAdapter(this, mEnhancementOptionsEntityArrayList);
-        mEnhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
+        mBinding.enhancementOptionsRecycleView.setAdapter(mEnhancementOptionsAdapter);
     }
 
     @Override
@@ -137,29 +137,10 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
         mStringUtils = StringUtils.getInstance();
     }
 
-    @OnClick(R.id.select_excel_file)
-    public void selectExcelFile() {
-        if (!mButtonClicked) {
-            Uri uri = Uri.parse(Environment.getRootDirectory() + "/");
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setDataAndType(uri, "*/*");
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            try {
-                startActivityForResult(
-                        Intent.createChooser(intent, String.valueOf(R.string.select_file)),
-                        mFileSelectCode);
-            } catch (android.content.ActivityNotFoundException ex) {
-                mStringUtils.showSnackbar(mActivity, R.string.install_file_manager);
-            }
-            mButtonClicked = true;
-        }
-    }
-
     /**
      * This function opens a dialog to enter the file name of
      * the converted file.
      */
-    @OnClick(R.id.create_excel_to_pdf)
     public void openExcelToPdf() {
         PermissionsUtils.getInstance().checkStoragePermissionAndProceed(getContext(), this::openExcelToPdf_);
     }
@@ -184,11 +165,6 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
                     }
                 })
                 .show();
-    }
-
-    @OnClick(R.id.open_pdf)
-    void openPdf() {
-        mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF);
     }
 
     @Override
@@ -228,12 +204,12 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
         fileName = getResources().getString(R.string.excel_selected)
                 + fileName;
-        mTextView.setText(fileName);
-        mTextView.setVisibility(View.VISIBLE);
-        mCreateExcelPdf.setEnabled(true);
-        mCreateExcelPdf.unblockTouch();
-        mMorphButtonUtility.morphToSquare(mCreateExcelPdf, mMorphButtonUtility.integer());
-        mOpenPdf.setVisibility(View.GONE);
+        mBinding.tvExcelFileNameBottom.setText(fileName);
+        mBinding.tvExcelFileNameBottom.setVisibility(View.VISIBLE);
+        mBinding.createExcelToPdf.setEnabled(true);
+        mBinding.createExcelToPdf.unblockTouch();
+        mMorphButtonUtility.morphToSquare(mBinding.createExcelToPdf, mMorphButtonUtility.integer());
+        mBinding.openPdf.setVisibility(View.GONE);
     }
 
     /**
@@ -242,7 +218,6 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
      *
      * @param mFilename - output PDF name
      */
-
     private void convertToPdf(String mFilename) {
         String mStorePath = mSharedPreferences.getString(STORAGE_LOCATION,
                 mStringUtils.getDefaultStorageLocation());
@@ -263,9 +238,9 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
             mMaterialDialog.dismiss();
         if (!success) {
             mStringUtils.showSnackbar(mActivity, R.string.error_pdf_not_created);
-            mTextView.setVisibility(View.GONE);
-            mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
-            mCreateExcelPdf.setEnabled(false);
+            mBinding.tvExcelFileNameBottom.setVisibility(View.GONE);
+            mMorphButtonUtility.morphToGrey(mBinding.createExcelToPdf, mMorphButtonUtility.integer());
+            mBinding.createExcelToPdf.setEnabled(false);
             mExcelFileUri = null;
             return;
         }
@@ -274,11 +249,11 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
                         v -> mFileUtils.openFile(mPath, FileUtils.FileType.e_PDF))
                 .show();
         new DatabaseHelper(mActivity).insertRecord(mPath, mActivity.getString(R.string.created));
-        mTextView.setVisibility(View.GONE);
-        mOpenPdf.setVisibility(View.VISIBLE);
-        mMorphButtonUtility.morphToSuccess(mCreateExcelPdf);
-        mCreateExcelPdf.blockTouch();
-        mMorphButtonUtility.morphToGrey(mCreateExcelPdf, mMorphButtonUtility.integer());
+        mBinding.tvExcelFileNameBottom.setVisibility(View.GONE);
+        mBinding.openPdf.setVisibility(View.VISIBLE);
+        mMorphButtonUtility.morphToSuccess(mBinding.createExcelToPdf);
+        mBinding.createExcelToPdf.blockTouch();
+        mMorphButtonUtility.morphToGrey(mBinding.createExcelToPdf, mMorphButtonUtility.integer());
         mExcelFileUri = null;
         mPasswordProtected = false;
         showEnhancementOptions();
@@ -286,7 +261,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
 
     @Override
     public void onItemClick(int position) {
-        if (!mCreateExcelPdf.isEnabled()) {
+        if (!mBinding.createExcelToPdf.isEnabled()) {
             mStringUtils.showSnackbar(mActivity, R.string.no_excel_file);
             return;
         }
@@ -357,7 +332,7 @@ public class ExceltoPdfFragment extends Fragment implements MergeFilesAdapter.On
     @Override
     public void onPopulate(ArrayList<String> paths) {
         CommonCodeUtils.getInstance().populateUtil(mActivity, paths,
-                this, mLayout, mLottieProgress, mRecyclerViewFiles);
+                this, mBinding.bottomSheet.layout, mBinding.bottomSheet.lottieProgress, mBinding.enhancementOptionsRecycleView);
     }
 
 }

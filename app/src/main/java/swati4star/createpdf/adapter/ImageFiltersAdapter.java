@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import swati4star.createpdf.R;
+import swati4star.createpdf.databinding.ListItemFilterBinding;
 import swati4star.createpdf.interfaces.OnFilterItemClickedListener;
 import swati4star.createpdf.model.FilterItem;
 import swati4star.createpdf.util.ImageUtils;
@@ -37,8 +35,8 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_filter, parent, false);
-        return new ViewHolder(view);
+        ListItemFilterBinding binding = ListItemFilterBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -58,15 +56,14 @@ public class ImageFiltersAdapter extends RecyclerView.Adapter<ImageFiltersAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.filter_preview)
         ImageView img;
-        @BindView(R.id.filter_Name)
         TextView name;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
+        ViewHolder(ListItemFilterBinding binding) {
+            super(binding.getRoot());
+            binding.getRoot().setOnClickListener(this);
+            img = binding.filterPreview;
+            name = binding.filterName;
         }
 
         @Override

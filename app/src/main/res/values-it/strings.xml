@@ -209,7 +209,6 @@
     <string name="empty_image_description"> NoPdfs </string>
 
     <!--  Add Password -->
-    <string name="enter_password_custom"> Inserisci password </string>
     <string name="example_pass_123"> passa @ 123 </string>
     <string name="remove_dialog"> RIMUOVI </string>
     <string name="password_remove"> Password rimossa </string>
@@ -226,7 +225,6 @@
 
     <string name="nextimage_contentdesc"> Immagine successiva </string>
     <string name="decrypted_file"> _ unencrypted.pdf </string>
-    <string name="decrypt_message"> Inserisci la password per continuare </string>
 
     <string name="snackbar_txtselected"> File di testo selezionato! </string>
     <string name="decrypt_protected_file"> Il pdf selezionato è protetto da password. Immettere la password per continuare … </string>

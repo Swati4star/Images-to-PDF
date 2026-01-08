@@ -5,20 +5,21 @@ import static swati4star.createpdf.util.Constants.PREVIEW_IMAGES;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import com.eftimoff.viewpagertransformers.DepthPageTransformer;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
-import swati4star.createpdf.R;
 import swati4star.createpdf.adapter.PreviewAdapter;
+import swati4star.createpdf.databinding.ActivityPreviewImagesBinding;
 import swati4star.createpdf.util.ThemeUtils;
 
 public class ImagesPreviewActivity extends AppCompatActivity {
+
+    private ActivityPreviewImagesBinding mBinding;
 
     /**
      * get start intent for this activity
@@ -37,17 +38,18 @@ public class ImagesPreviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.getInstance().setThemeApp(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preview_images);
 
-        ButterKnife.bind(this);
+        mBinding = ActivityPreviewImagesBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
+
         // Extract mImagesArrayList uri array from the intent
         Intent intent = getIntent();
         ArrayList<String> mImagesArrayList = intent.getStringArrayListExtra(PREVIEW_IMAGES);
 
-        ViewPager mViewPager = findViewById(R.id.viewpager);
         PreviewAdapter mPreviewAdapter = new PreviewAdapter(this, mImagesArrayList);
-        mViewPager.setAdapter(mPreviewAdapter);
-        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mBinding.viewpager.setAdapter(mPreviewAdapter);
+        mBinding.viewpager.setPageTransformer(true, new DepthPageTransformer());
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
