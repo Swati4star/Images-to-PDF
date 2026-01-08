@@ -171,6 +171,7 @@ public class FileUtils {
             target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             openIntent(Intent.createChooser(target, mContext.getString(R.string.open_file)));
         } catch (Exception e) {
+            e.printStackTrace();
             StringUtils.getInstance().showSnackbar(mContext, R.string.error_open_file);
         }
     }

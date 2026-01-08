@@ -29,7 +29,10 @@ import androidx.fragment.app.Fragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -177,7 +180,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                 if (!utils.isFileExist(filename + getString(R.string.pdf_ext))) {
                     try {
                         this.addImagesToPdf(filename);
-                    } catch (FileNotFoundException e) {
+                    } catch (IOException e) {
                         StringUtils.getInstance().showSnackbar(mActivity, R.string.error_path_not_found);
                     }
                 } else {
@@ -186,7 +189,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
                     {
                         try {
                             this.addImagesToPdf(filename);
-                        } catch (FileNotFoundException e) {
+                        } catch (IOException e) {
                             StringUtils.getInstance().showSnackbar(mActivity, R.string.error_path_not_found);
                         }
                     }).onNegative((dialog1, which) -> getFileName()).show();
@@ -201,16 +204,21 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
      *
      * @param output - path of output PDF
      */
-    private void addImagesToPdf(String output) throws FileNotFoundException {
+    private void addImagesToPdf(String output) throws IOException {
         Log.d("RAHUL", mPath);
-        int index = mPath.lastIndexOf("/");
-        String outputPath = mHomePath + output + mActivity.getString(R.string.pdf_ext);
+        String fileName = output + ".pdf";
 
         if (mImagesUri.size() > 0) {
             MaterialDialog progressDialog = DialogUtils.getInstance().createAnimationDialog(mActivity);
             progressDialog.show();
-            InputStream is = requireContext().getContentResolver().openInputStream(Uri.parse(mPath));
-            mPDFUtils.addImagesToPdf(is, outputPath, mImagesUri);
+            Context context = requireContext();
+            InputStream is = context.getContentResolver().openInputStream(Uri.parse(mPath));
+            File outputFile = new File(context.getFilesDir(), fileName);
+            FileOutputStream fos = new FileOutputStream(outputFile);
+            mPDFUtils.addImagesToPdf(is, fos, outputFile.getAbsolutePath(), mImagesUri);
+            is.close();
+            fos.close();
+
             mMorphButtonUtility.morphToSuccess(mBinding.pdfCreate);
             resetValues();
             progressDialog.dismiss();

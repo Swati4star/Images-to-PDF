@@ -273,7 +273,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         mPdfOptions.setOutFileName(filename);
         if (isGrayScale)
             saveImagesInGrayScale();
-        new CreatePdf(mPdfOptions, mHomePath, ImageToPdfFragment.this, requireContext()).execute();
+        new CreatePdf(mPdfOptions, ImageToPdfFragment.this, requireContext()).execute();
     }
 
     /**

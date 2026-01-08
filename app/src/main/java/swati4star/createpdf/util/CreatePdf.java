@@ -57,7 +57,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
     private boolean mSuccess;
     private String mPath;
 
-    public CreatePdf(ImageToPDFOptions mImageToPDFOptions, String parentPath,
+    public CreatePdf(ImageToPDFOptions mImageToPDFOptions,
                      OnPDFCreatedInterface onPDFCreated, Context context) {
         this.mImagesUri = mImageToPDFOptions.getImagesUri();
         this.mFileName = mImageToPDFOptions.getOutFileName();
@@ -78,7 +78,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         this.mPageNumStyle = mImageToPDFOptions.getPageNumStyle();
         this.mMasterPwd = mImageToPDFOptions.getMasterPwd();
         this.mPageColor = mImageToPDFOptions.getPageColor();
-        mPath = parentPath;
     }
 
     @Override
@@ -88,17 +87,15 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         mOnPDFCreatedInterface.onPDFCreationStarted();
     }
 
-    private void setFilePath() {
-        File folder = new File(mPath);
-        if (!folder.exists())
-            folder.mkdir();
-        mPath = mPath + mFileName + pdfExtension;
+    private void setFilePath(String filePath) {
+        mPath = filePath;
     }
 
     @Override
     protected String doInBackground(String... params) {
 
-        setFilePath();
+        File file = new File(mContext.getFilesDir(), mFileName + pdfExtension);
+        setFilePath(file.getAbsolutePath());
 
         Log.v("stage 1", "store the pdf in sd card");
 
@@ -111,7 +108,10 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         Rectangle documentRect = document.getPageSize();
 
         try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(mPath));
+            Log.d("RAHUL", "Starting dfefe");
+            Log.d("RAHUL", file.getAbsolutePath());
+            FileOutputStream fos = new FileOutputStream(file);
+            PdfWriter writer = PdfWriter.getInstance(document, fos);
 
             Log.v("Stage 3", "Pdf writer");
 
@@ -173,6 +173,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             Log.v("Stage 7", "Image adding");
 
             document.close();
+            fos.close();
 
             Log.v("Stage 8", "Document Closed" + mPath);
 

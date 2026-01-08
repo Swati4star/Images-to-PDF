@@ -158,6 +158,7 @@ public class DirectoryUtils {
     public ArrayList<String> getPdfPathsFromInternalDirectory() {
         mFilePaths = new ArrayList<>();
         walkDir(getOrCreatePdfDirectory());
+        walkDir(mContext.getFilesDir());
         return mFilePaths;
     }
 
