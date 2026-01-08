@@ -151,28 +151,27 @@ public class DirectoryUtils {
     }
 
     /**
+     * get the PDF file paths stored in internal directory
+     *
+     * @return ArrayList of PDF file paths
+     */
+    public ArrayList<String> getPdfPathsFromInternalDirectory() {
+        mFilePaths = new ArrayList<>();
+        walkDir(getOrCreatePdfDirectory());
+        return mFilePaths;
+    }
+
+    /**
      * get the PDF files stored in directories other than home directory
      *
      * @return ArrayList of PDF files
      */
-    public ArrayList<File> getPdfFromOtherDirectories() {
-        mFilePaths = new ArrayList<>();
-        walkDir(getOrCreatePdfDirectory());
+    public ArrayList<File> getPdfFilesFromInternalDirectory() {
+        mFilePaths = getPdfPathsFromInternalDirectory();
         ArrayList<File> files = new ArrayList<>();
         for (String path : mFilePaths)
             files.add(new File(path));
         return files;
-    }
-
-    /**
-     * gets a list of all the pdf files on the user device
-     *
-     * @return - list of file absolute paths
-     */
-    ArrayList<String> getAllPDFsOnDevice() {
-        mFilePaths = new ArrayList<>();
-        walkDir(Environment.getExternalStorageDirectory());
-        return mFilePaths;
     }
 
     /**
