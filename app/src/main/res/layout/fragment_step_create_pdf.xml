@@ -9,7 +9,7 @@
         android:layout_above="@+id/tv_title"
         android:layout_margin="48dp"
         android:scaleType="centerInside"
-        android:src="@drawable/create_pdf" />
+        android:src="@drawable/create_pdf-transformed" />
 
     <TextView
         android:id="@+id/tv_title"
