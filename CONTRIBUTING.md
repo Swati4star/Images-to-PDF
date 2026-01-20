@@ -24,9 +24,13 @@ git checkout -b 13-add-xyz-feature
 
 ### 3. Build & run the project locally
 
-[Import the project](https://developer.android.com/studio/projects/create-project.html#ImportAProject)
+- [Import the project](https://developer.android.com/studio/projects/create-project.html#ImportAProject)
 in Android Studio.
-Build it & run the project on emulator / real device.
+- Build the project locally by going to Build > Make Project
+- Launch a emulator / real device
+	- You can create a emulator in Android Studio by going to Device Manager > Create device > select a phone > download a release > define a AVD Name > Finish
+- Run the project
+	- If you have a different version of Fradle, you will need to sync the project with Gradle Files.
 
 ### 4. Implement your fix or feature
 
