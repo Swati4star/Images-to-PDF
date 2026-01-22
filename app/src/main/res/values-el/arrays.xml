@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>Όνομα</item>
+        <item>Ημερομηνία</item>
+        <item>Μέγεθος  ▲</item>
+        <item>Μέγεθος  ▼</item>
+    </string-array>
+
+    <string-array name="sort_options_images">
+        <item>Όνομα ▲</item>
+        <item>Όνομα ▼</item>
+        <item>Ημερομηνία ▲</item>
+        <item>Ημερομηνία ▼</item>
+    </string-array>
+
+    <string-array name="filter_options_history">
+        <item>Δημιουργήθηκε</item>
+        <item>Διαγράφηκε</item>
+        <item>Μετονομάστηκε</item>
+        <item>Περιστράφηκε</item>
+        <item>Εκτυπώθηκε</item>
+        <item>Αποκρυπτογραφήθηκε</item>
+        <item>Κρυπτογραφήθηκε</item>
+        <item>Ανεστράφη</item>
+    </string-array>
+</resources>
