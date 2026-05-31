@@ -11,10 +11,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 @RunWith(BlockJUnit4ClassRunner.class)
 @SuppressWarnings("unchecked")
@@ -111,7 +110,7 @@ public class ImageSortUtilsTest {
     @Test
     public void shouldThrowExceptionForInvalidSortOption() {
         // given
-        List<Integer> invalidSortOption = Arrays.asList(new Object[]{-10, -1, 4, 10});
+        List<Integer> invalidSortOption = Arrays.asList(-10, -1, 4, 10);
 
         // when
         invalidSortOption.forEach(sortOption -> {

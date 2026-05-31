@@ -543,6 +543,7 @@
     <string name="selected_images_text">The images you select will be added to the end of selected PDF.</string>
     <string name="no_images_selected">No images selected</string>
     <string name="title_filter_history_dialog">Filter by operation type</string>
+    <string name="search_history">Search History</string>
 
     <!--zip to pdf-->
     <string name="zip_to_pdf">ZIP to PDF</string>

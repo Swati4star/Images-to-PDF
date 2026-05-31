@@ -112,7 +112,14 @@ public class PermissionsUtils {
      */
 
     public void checkStoragePermissionAndProceed(Context context, final GenericCallback callback) {
-        if (Build.VERSION.SDK_INT >= 30) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                callback.proceed();
+            } else {
+                Toast.makeText(context, "Please grant storage permission", Toast.LENGTH_SHORT).show();
+            }
+        } else if (Build.VERSION.SDK_INT >= 30) {
             if (Environment.isExternalStorageManager()) {
                 callback.proceed();
             } else {
@@ -129,7 +136,10 @@ public class PermissionsUtils {
     }
 
     public boolean isStoragePermissionGranted(Context context) {
-        if (Build.VERSION.SDK_INT >= 30) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) ==
+                    PackageManager.PERMISSION_GRANTED;
+        } else if (Build.VERSION.SDK_INT >= 30) {
             return Environment.isExternalStorageManager();
         } else {
             return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==

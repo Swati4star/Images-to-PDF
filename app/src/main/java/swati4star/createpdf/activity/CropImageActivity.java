@@ -28,7 +28,6 @@ import java.util.Objects;
 
 import swati4star.createpdf.R;
 import swati4star.createpdf.databinding.ActivityCropImageBinding;
-import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.StringUtils;
 
@@ -57,7 +56,9 @@ public class CropImageActivity extends AppCompatActivity {
 
         setUpCropImageView();
 
-        mImages = ImageToPdfFragment.mImagesUri;
+        mImages = getIntent().getStringArrayListExtra("images");
+        if (mImages == null)
+            mImages = new ArrayList<>();
         mFinishedClicked = false;
 
         for (int i = 0; i < mImages.size(); i++)

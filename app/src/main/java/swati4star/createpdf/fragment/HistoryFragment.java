@@ -4,11 +4,9 @@ import static swati4star.createpdf.util.Constants.REQUEST_CODE_FOR_WRITE_PERMISS
 import static swati4star.createpdf.util.Constants.WRITE_PERMISSIONS;
 import static swati4star.createpdf.util.Constants.appName;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -37,6 +36,7 @@ import swati4star.createpdf.adapter.HistoryAdapter;
 import swati4star.createpdf.database.AppDatabase;
 import swati4star.createpdf.database.History;
 import swati4star.createpdf.databinding.FragmentHistoryBinding;
+import swati4star.createpdf.util.BackgroundExecutor;
 import swati4star.createpdf.util.DialogUtils;
 import swati4star.createpdf.util.FileUtils;
 import swati4star.createpdf.util.PermissionsUtils;
@@ -51,7 +51,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     FragmentHistoryBinding mBinding;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
@@ -71,7 +71,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         mFilterOptionState = new boolean[getResources().getStringArray(R.array.filter_options_history).length];
         Arrays.fill(mFilterOptionState, Boolean.TRUE); //by default all options should be selected
         // by default all operations should be shown, so pass empty array
-        new LoadHistory(mActivity).execute(new String[0]);
+        loadHistory(new String[0]);
         getRuntimePermissions();
         mBinding.getStarted.setOnClickListener(v -> {
             Fragment fragment = new HomeFragment();
@@ -86,12 +86,55 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_history_fragment, menu);
+        MenuItem searchItem = menu.findItem(R.id.actionSearchHistory);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(getString(R.string.search_history));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchHistory(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchHistory(newText);
+                return true;
+            }
+        });
+    }
+
+    private void searchHistory(String query) {
+        if (query.isEmpty()) {
+            loadHistory(new String[0]);
+            return;
+        }
+        BackgroundExecutor.execute(() -> {
+            AppDatabase db = AppDatabase.getDatabase(mActivity.getApplicationContext());
+            mHistoryList = db.historyDao().searchHistory("%" + query + "%");
+            BackgroundExecutor.postToMainThread(() -> {
+                if (mHistoryList != null && !mHistoryList.isEmpty()) {
+                    mBinding.emptyStatusView.setVisibility(View.GONE);
+                    if (mHistoryAdapter == null) {
+                        mHistoryAdapter = new HistoryAdapter(mActivity, mHistoryList, HistoryFragment.this);
+                        mBinding.historyRecyclerView.setAdapter(mHistoryAdapter);
+                    } else {
+                        mHistoryAdapter.setData(mHistoryList);
+                    }
+                } else {
+                    if (mHistoryAdapter != null) {
+                        mHistoryAdapter.setData(new ArrayList<>());
+                    }
+                    mBinding.emptyStatusView.setVisibility(View.VISIBLE);
+                }
+            });
+        });
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionDeleteHistory:
                 deleteHistory();
@@ -120,12 +163,12 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
                     selectedOptions.add(options[j]);
                 }
             }
-            new LoadHistory(mActivity).execute(selectedOptions.toArray(new String[0]));
+            loadHistory(selectedOptions.toArray(new String[0]));
         });
 
         builder.setNeutralButton(getString(R.string.select_all), (dialogInterface, i) -> {
-            Arrays.fill(mFilterOptionState, Boolean.TRUE); //reset state 
-            new LoadHistory(mActivity).execute(new String[0]);
+            Arrays.fill(mFilterOptionState, Boolean.TRUE); //reset state
+            loadHistory(new String[0]);
         });
         builder.create().show();
     }
@@ -133,8 +176,39 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
     private void deleteHistory() {
         MaterialDialog.Builder builder = DialogUtils.getInstance().createWarningDialog(mActivity,
                 R.string.delete_history_message);
-        builder.onPositive((dialog2, which) -> new DeleteHistory().execute())
-                .show();
+        builder.onPositive((dialog2, which) -> BackgroundExecutor.execute(() -> {
+            AppDatabase db = AppDatabase.getDatabase(mActivity.getApplicationContext());
+            db.historyDao().deleteHistory();
+            BackgroundExecutor.postToMainThread(() -> {
+                if (mHistoryAdapter != null) {
+                    mHistoryAdapter.deleteHistory();
+                }
+                mBinding.emptyStatusView.setVisibility(View.VISIBLE);
+            });
+        })).show();
+    }
+
+    private void loadHistory(String[] filters) {
+        BackgroundExecutor.execute(() -> {
+            AppDatabase db = AppDatabase.getDatabase(mActivity.getApplicationContext());
+            if (filters.length == 0) {
+                mHistoryList = db.historyDao().getAllHistory();
+            } else {
+                mHistoryList = db.historyDao().getHistoryByOperationType(filters);
+            }
+            BackgroundExecutor.postToMainThread(() -> {
+                if (mHistoryList != null && !mHistoryList.isEmpty()) {
+                    mBinding.emptyStatusView.setVisibility(View.GONE);
+                    mHistoryAdapter = new HistoryAdapter(mActivity, mHistoryList, HistoryFragment.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+                    mBinding.historyRecyclerView.setLayoutManager(mLayoutManager);
+                    mBinding.historyRecyclerView.setAdapter(mHistoryAdapter);
+                    mBinding.historyRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(mActivity));
+                } else {
+                    mBinding.emptyStatusView.setVisibility(View.VISIBLE);
+                }
+            });
+        });
     }
 
     @Override
@@ -155,60 +229,5 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnClickL
         PermissionsUtils.getInstance().requestRuntimePermissions(this,
                 WRITE_PERMISSIONS,
                 REQUEST_CODE_FOR_WRITE_PERMISSION);
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private class LoadHistory extends AsyncTask<String[], Void, Void> {
-        private final Context mContext;
-
-        LoadHistory(Context mContext) {
-            this.mContext = mContext;
-        }
-
-        @Override
-        protected Void doInBackground(String[]... args) {
-            AppDatabase db = AppDatabase.getDatabase(mActivity.getApplicationContext());
-            if (args[0].length == 0) {
-                mHistoryList = db.historyDao().getAllHistory();
-            } else {
-                String[] filters = args[0];
-                mHistoryList = db.historyDao().getHistoryByOperationType(filters);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (mHistoryList != null && !mHistoryList.isEmpty()) {
-                mBinding.emptyStatusView.setVisibility(View.GONE);
-                mHistoryAdapter = new HistoryAdapter(mActivity, mHistoryList, HistoryFragment.this);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-                mBinding.historyRecyclerView.setLayoutManager(mLayoutManager);
-                mBinding.historyRecyclerView.setAdapter(mHistoryAdapter);
-                mBinding.historyRecyclerView.addItemDecoration(new ViewFilesDividerItemDecoration(mContext));
-            } else {
-                mBinding.emptyStatusView.setVisibility(View.VISIBLE);
-            }
-            super.onPostExecute(aVoid);
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private class DeleteHistory extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            AppDatabase db = AppDatabase.getDatabase(mActivity.getApplicationContext());
-            db.historyDao().deleteHistory();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (mHistoryAdapter != null) {
-                mHistoryAdapter.deleteHistory();
-            }
-            mBinding.emptyStatusView.setVisibility(View.VISIBLE);
-        }
     }
 }

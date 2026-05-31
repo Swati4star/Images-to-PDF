@@ -99,8 +99,8 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
     private static final int INTENT_REQUEST_APPLY_FILTER = 10;
     private static final int INTENT_REQUEST_PREVIEW_IMAGE = 11;
     private static final int INTENT_REQUEST_REARRANGE_IMAGE = 12;
-    private static final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
-    public static ArrayList<String> mImagesUri = new ArrayList<>();
+    private final ArrayList<String> mUnarrangedImagesUri = new ArrayList<>();
+    public ArrayList<String> mImagesUri = new ArrayList<>();
     private MorphButtonUtility mMorphButtonUtility;
     private Activity mActivity;
     private String mPath;
@@ -146,6 +146,17 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
         // Get default values & show enhancement options
         resetValues();
+
+        if (savedInstanceState != null) {
+            ArrayList<String> images = savedInstanceState.getStringArrayList("images_uri");
+            if (images != null) {
+                mImagesUri.addAll(images);
+            }
+            ArrayList<String> unarranged = savedInstanceState.getStringArrayList("unarranged_images_uri");
+            if (unarranged != null) {
+                mUnarrangedImagesUri.addAll(unarranged);
+            }
+        }
 
         // Check for the images received
         checkForImagesInBundle();
@@ -197,6 +208,13 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("images_uri", mImagesUri);
+        outState.putStringArrayList("unarranged_images_uri", mUnarrangedImagesUri);
     }
 
     /**
@@ -692,6 +710,7 @@ public class ImageToPdfFragment extends Fragment implements OnItemClickListener,
 
     private void cropImage() {
         Intent intent = new Intent(mActivity, CropImageActivity.class);
+        intent.putStringArrayListExtra("images", mImagesUri);
         startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 

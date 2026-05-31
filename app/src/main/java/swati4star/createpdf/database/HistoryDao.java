@@ -19,4 +19,7 @@ public interface HistoryDao {
 
     @Query("select * from history where operation_type IN(:types) order by mId desc")
     List<History> getHistoryByOperationType(String[] types);
+
+    @Query("SELECT * FROM History WHERE file_path LIKE :query ORDER BY mId DESC")
+    List<History> searchHistory(String query);
 }

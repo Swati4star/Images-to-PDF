@@ -79,6 +79,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHist
         notifyDataSetChanged();
     }
 
+    public void setData(List<History> historyList) {
+        mHistoryList.clear();
+        mHistoryList.addAll(historyList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mHistoryList == null ? 0 : mHistoryList.size();

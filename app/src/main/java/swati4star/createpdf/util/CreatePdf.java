@@ -6,7 +6,6 @@ import static swati4star.createpdf.util.Constants.pdfExtension;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -31,9 +30,9 @@ import swati4star.createpdf.model.ImageToPDFOptions;
 import swati4star.createpdf.model.Watermark;
 
 /**
- * An async task that converts selected images to Pdf
+ * A class that converts selected images to Pdf
  */
-public class CreatePdf extends AsyncTask<String, String, String> {
+public class CreatePdf {
 
     private final String mFileName;
     private final String mPassword;
@@ -81,11 +80,13 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         mPath = parentPath;
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
+    public void execute() {
         mSuccess = true;
         mOnPDFCreatedInterface.onPDFCreationStarted();
+        BackgroundExecutor.execute(() -> {
+            doWork();
+            BackgroundExecutor.postToMainThread(() -> mOnPDFCreatedInterface.onPDFCreated(mSuccess, mPath));
+        });
     }
 
     private void setFilePath() {
@@ -95,8 +96,7 @@ public class CreatePdf extends AsyncTask<String, String, String> {
         mPath = mPath + mFileName + pdfExtension;
     }
 
-    @Override
-    protected String doInBackground(String... params) {
+    private void doWork() {
 
         setFilePath();
 
@@ -182,8 +182,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
             e.printStackTrace();
             mSuccess = false;
         }
-
-        return null;
     }
 
     private void addPageNumber(Rectangle documentRect, PdfWriter writer) {
@@ -211,12 +209,6 @@ public class CreatePdf extends AsyncTask<String, String, String> {
                 break;
         }
         return phrase;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        mOnPDFCreatedInterface.onPDFCreated(mSuccess, mPath);
     }
 
     /**

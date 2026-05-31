@@ -2,6 +2,7 @@ package swati4star.createpdf.util;
 
 import android.Manifest;
 import android.graphics.Color;
+import android.os.Build;
 
 public class Constants {
 
@@ -112,12 +113,12 @@ public class Constants {
     public static final int REQUEST_CODE_FOR_READ_PERMISSION = 5;
 
 
-    public static final String[] WRITE_PERMISSIONS = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-    public static final String[] READ_PERMISSIONS = {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    };
+    public static final String[] WRITE_PERMISSIONS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ?
+            new String[]{Manifest.permission.READ_MEDIA_IMAGES} :
+            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    public static final String[] READ_PERMISSIONS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ?
+            new String[]{Manifest.permission.READ_MEDIA_IMAGES} :
+            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
 
     public static final int ROTATE_PAGES = 20;
     public static final int ADD_PASSWORD = 21;

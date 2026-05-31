@@ -46,7 +46,7 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         MergeFilesAdapter.OnClickListener, OnBackPressedInterface {
 
     private static final int INTENT_REQUEST_PICK_FILE_CODE = 10;
-    private static final ArrayList<String> mImagesUri = new ArrayList<>();
+    private final ArrayList<String> mImagesUri = new ArrayList<>();
     private Activity mActivity;
     private String mPath;
     private MorphButtonUtility mMorphButtonUtility;
@@ -70,6 +70,13 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         mOperation = getArguments().getString(BUNDLE_DATA);
         mBinding.bottomSheet.lottieProgress.setVisibility(View.VISIBLE);
         mBottomSheetUtils.populateBottomSheetWithPDFs(this);
+
+        if (savedInstanceState != null) {
+            ArrayList<String> images = savedInstanceState.getStringArrayList("images_uri");
+            if (images != null) {
+                mImagesUri.addAll(images);
+            }
+        }
 
         pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(100), uris -> {
             mImagesUri.clear();
@@ -113,6 +120,12 @@ public class AddImagesFragment extends Fragment implements BottomSheetPopulate,
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("images_uri", mImagesUri);
     }
 
     /**

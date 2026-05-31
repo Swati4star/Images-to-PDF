@@ -9,6 +9,12 @@
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/actionSearchHistory"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/search_history"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+    <item
         android:id="@+id/actionFilterHistory"
         android:icon="@drawable/ic_filter_list"
         android:orderInCategory="2"
