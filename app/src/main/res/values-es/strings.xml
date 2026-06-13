@@ -97,6 +97,7 @@
     <!-- Select Images string -->
     <string name="images_selected">%1$d imágenes seleccionadas.</string>
     <string name="merge_pdf">Unir PDF</string>
+    <string name="merge_pages">Fusionar páginas</string>
     <string name="merge_file_select">Seleccione un archivo</string>
     <string name="pdf_merged">PDFs Unidos</string>
     <string name="File_hint_two">Ruta del archivo para el PDF dos</string>

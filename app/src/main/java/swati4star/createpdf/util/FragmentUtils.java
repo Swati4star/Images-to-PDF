@@ -19,6 +19,7 @@ import swati4star.createpdf.fragment.HistoryFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.InvertPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
+import swati4star.createpdf.fragment.MergePagesFragment;
 import swati4star.createpdf.fragment.PdfToImageFragment;
 import swati4star.createpdf.fragment.QrBarcodeScanFragment;
 import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
@@ -69,6 +70,8 @@ public class FragmentUtils {
             name = mContext.getString(R.string.pdf_to_images);
         } else if (fragment instanceof ZipToPdfFragment) {
             name = mContext.getString(R.string.zip_to_pdf);
+        } else if (fragment instanceof MergePagesFragment) {
+            name = mContext.getString(R.string.merge_pages);
         }
         return name;
     }

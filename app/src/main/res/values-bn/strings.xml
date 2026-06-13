@@ -213,6 +213,7 @@
 
     <!-- Merge PDF -->
     <string name="merge_pdf">PDF মার্জ করুন</string>
+    <string name="merge_pages">পৃষ্ঠাগুলি একত্রিত করুন</string>
     <string name="merge_file_select">একটি ফাইল নির্বাচন করুন</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">দ্বিতীয় PDF এর ফাইল পাথ</string>
     <string name="merge_files">ফাইল মার্জ করুন</string>

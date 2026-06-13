@@ -122,6 +122,7 @@
     <string name="password_remove">Пароль удален</string>
 
     <string name="merge_pdf">Объединить PDF</string>
+    <string name="merge_pages">Объединить страницы</string>
     <string name="merge_file_select">Выберите файл</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">File Path for PDF two</string>
     <string name="merge_files">Слить файлы</string>

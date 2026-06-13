@@ -215,6 +215,7 @@
 
     <!-- Merge PDF  -->
     <string name="merge_pdf">PDF 병합</string>
+    <string name="merge_pages">pagsamahin ang mga pahina</string>
     <string name="merge_file_select">파일 선택</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">PDF 2의 파일 경로</string>
     <string name="merge_files">파일 병합</string>

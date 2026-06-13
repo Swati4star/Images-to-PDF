@@ -398,6 +398,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentSelectedMap.append(R.id.nav_add_text, R.string.add_text);
         mFragmentSelectedMap.append(R.id.nav_gallery, R.string.viewFiles);
         mFragmentSelectedMap.append(R.id.nav_merge, R.string.merge_pdf);
+        mFragmentSelectedMap.append(R.id.nav_merge_pages, R.string.merge_pages);
         mFragmentSelectedMap.append(R.id.nav_split, R.string.split_pdf);
         mFragmentSelectedMap.append(R.id.nav_text_to_pdf, R.string.text_to_pdf);
         mFragmentSelectedMap.append(R.id.nav_history, R.string.history);

@@ -216,6 +216,7 @@
 
     <!-- Merge PDF  -->
     <string name="merge_pdf">Spoji PDF</string>
+    <string name="merge_pages">Spoji stranice</string>
     <string name="merge_file_select">Odaberite datoteku</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">Putanja datoteke za drugi PDF</string>
     <string name="merge_files">SPOJO DATOTEKE</string>

@@ -119,6 +119,7 @@
     <string name="remove_dialog">हटाउनुहोस्</string>
     <string name="password_remove">पासवर्ड हटाइयो</string>
     <string name="merge_pdf">पीडीएफ मर्ज गर्नुहोस्</string>
+    <string name="merge_pages">पृष्ठहरू मर्ज गर्नुहोस्</string>
     <string name="merge_file_select">एउटा फाइल चयन गर्नुहोस्</string>
     <string name="File_hint_two">पीडीएफ दुई को लागि फाइल पथ</string>
     <string name="merge_files">फाइलहरू मर्ज गर्नुहोस्</string>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MergePagesFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+        </FrameLayout>
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/select_file_btn"
+            style="@style/MorphingButton"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:text="@string/select_file" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="73dp">
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/filetitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="File"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/filepath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="file name"
+            android:textSize="24dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/pagestitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pages"
+            android:textSize="24dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pagesinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="select pages (ex.,1,3,5-7)"
+            android:textSize="24dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+        </FrameLayout>
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/merge_file_btn"
+            style="@style/MorphingButton"
+            android:layout_width="331dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:text="@string/merge_pages" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

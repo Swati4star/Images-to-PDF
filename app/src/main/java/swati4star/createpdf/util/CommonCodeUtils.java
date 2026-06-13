@@ -18,6 +18,7 @@ import static swati4star.createpdf.R.drawable.ic_merge_type_black_24dp;
 import static swati4star.createpdf.R.drawable.ic_qrcode_24dp;
 import static swati4star.createpdf.R.drawable.ic_rearrange;
 import static swati4star.createpdf.R.drawable.ic_remove_circle_black_24dp;
+import static swati4star.createpdf.R.drawable.ic_remove_duplicate_square_black;
 import static swati4star.createpdf.R.drawable.ic_text_format_black_24dp;
 import static swati4star.createpdf.R.drawable.ic_zip_to_pdf;
 import static swati4star.createpdf.R.id.add_images;
@@ -36,6 +37,7 @@ import static swati4star.createpdf.R.id.extract_text;
 import static swati4star.createpdf.R.id.extract_text_fav;
 import static swati4star.createpdf.R.id.images_to_pdf_fav;
 import static swati4star.createpdf.R.id.invert_pdf_fav;
+import static swati4star.createpdf.R.id.merge_pages;
 import static swati4star.createpdf.R.id.merge_pdf;
 import static swati4star.createpdf.R.id.merge_pdf_fav;
 import static swati4star.createpdf.R.id.nav_add_images;
@@ -50,6 +52,7 @@ import static swati4star.createpdf.R.id.nav_gallery;
 import static swati4star.createpdf.R.id.nav_history;
 import static swati4star.createpdf.R.id.nav_invert_pdf;
 import static swati4star.createpdf.R.id.nav_merge;
+import static swati4star.createpdf.R.id.nav_merge_pages;
 import static swati4star.createpdf.R.id.nav_pdf_to_images;
 import static swati4star.createpdf.R.id.nav_qrcode;
 import static swati4star.createpdf.R.id.nav_rearrange_pages;
@@ -204,6 +207,8 @@ public class CommonCodeUtils {
                 nav_add_watermark, ic_branding_watermark_black_24dp, R.string.add_watermark);
         addFragmentPosition(homePageItems, merge_pdf, merge_pdf_fav,
                 nav_merge, ic_merge_type_black_24dp, R.string.merge_pdf);
+        addFragmentPosition(homePageItems, merge_pages, merge_pdf_fav,
+                nav_merge_pages, ic_remove_duplicate_square_black, R.string.merge_pages);
         addFragmentPosition(homePageItems, split_pdf, split_pdf_fav,
                 nav_split, ic_call_split_black_24dp, R.string.split_pdf);
         addFragmentPosition(homePageItems, text_to_pdf, text_to_pdf_fav,

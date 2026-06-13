@@ -211,6 +211,7 @@
 
     <!-- 合并PDF -->
     <string name="merge_pdf">合并PDF</string>
+    <string name="merge_pages">合并页面</string>
     <string name="merge_file_select">选择文件</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">第二个PDF的文件路径</string>
     <string name="merge_files">合并文件</string>
