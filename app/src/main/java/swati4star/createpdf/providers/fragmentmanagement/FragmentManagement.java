@@ -45,6 +45,7 @@ import swati4star.createpdf.fragment.HomeFragment;
 import swati4star.createpdf.fragment.ImageToPdfFragment;
 import swati4star.createpdf.fragment.InvertPdfFragment;
 import swati4star.createpdf.fragment.MergeFilesFragment;
+import swati4star.createpdf.fragment.MergePagesFragment;
 import swati4star.createpdf.fragment.PdfToImageFragment;
 import swati4star.createpdf.fragment.QrBarcodeScanFragment;
 import swati4star.createpdf.fragment.RemoveDuplicatePagesFragment;
@@ -156,6 +157,9 @@ public class FragmentManagement implements IFragmentManagement {
                 break;
             case R.id.nav_merge:
                 fragment = new MergeFilesFragment();
+                break;
+            case R.id.nav_merge_pages:
+                fragment = new MergePagesFragment();
                 break;
             case R.id.nav_split:
                 fragment = new SplitFilesFragment();

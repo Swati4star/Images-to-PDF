@@ -128,7 +128,8 @@
     <string name="example_pass_123">pass@123</string>
     <string name="remove_dialog">काढा</string>
     <string name="password_remove">पासवर्ड काढला</string>
-    <string name="merge_pdf">पीडीएफ विलीन करा</string>
+    <string name="merge_pdf">पृष्ठे एकत्र करा</string>
+    <string name="merge_pages">पृष्ठे विलीन करा</string>
     <string name="merge_file_select">फाइल निवडा</string>
     <string name="File_hint_two">पीडीएफ दोन साठी फाईल मार्ग</string>
     <string name="merge_files">फायली विलीन करा</string>

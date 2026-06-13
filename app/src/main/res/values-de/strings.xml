@@ -188,6 +188,7 @@
     <string name="password_remove">Passwort entfernt</string>
 
     <string name="merge_pdf">PDFs zusammenführen</string>
+    <string name="merge_pages">Seiten zusammenführen</string>
     <string name="merge_file_select">Wähle eine Datei aus</string>
     <string name="File_hint_two" ns0:keep="@string/File_hint_two">Dateipfad für PDF zwei</string>
     <string name="merge_files">DATEIEN ZUSAMMENFÜHREN</string>

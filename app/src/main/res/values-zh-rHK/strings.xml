@@ -216,6 +216,7 @@
 
     <!-- Merge PDF  -->
     <string name="merge_pdf">合併PDF</string>
+    <string name="merge_pages">合併頁面</string>
     <string name="merge_file_select">選擇文件</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">第二份PDF的檔路徑</string>
     <string name="merge_files">合併文件</string>

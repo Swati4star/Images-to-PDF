@@ -73,6 +73,7 @@
     <string name="remove_dialog">SUPPRIMER</string>
     <string name="password_remove">Mot de passe supprimé</string>
     <string name="merge_pdf">Fusionner des PDF</string>
+    <string name="merge_pages">Fusionner des pages</string>
     <string name="merge_file_select">Sélectionnez un fichier</string>
     <string name="pdf_merged">Fichiers PDF fusionnés</string>
     <string name="merge_files">FUSIONNER DES FICHIERS</string>

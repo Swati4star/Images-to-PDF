@@ -177,6 +177,7 @@
 
     <!-- Merge PDF  -->
     <string name="merge_pdf">PDF Birleştirme</string>
+    <string name="merge_pages">Sayfaları birleştir</string>
     <string name="merge_file_select">Bir dosya Seç</string>
     <string name="File_hint_two">PDF\'nin Dosya Yolu</string>
     <string name="merge_files">DOSYALARI BİRLEŞTİR</string>

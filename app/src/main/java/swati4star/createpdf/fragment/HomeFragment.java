@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mBinding.viewHistory.setOnClickListener(this);
         mBinding.splitPdf.setOnClickListener(this);
         mBinding.mergePdf.setOnClickListener(this);
+        mBinding.mergePages.setOnClickListener(this);
         mBinding.compressPdf.setOnClickListener(this);
         mBinding.removePages.setOnClickListener(this);
         mBinding.rearrangePages.setOnClickListener(this);
@@ -154,6 +155,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.merge_pdf:
                 fragment = new MergeFilesFragment();
+                break;
+            case R.id.merge_pages:
+                fragment = new MergePagesFragment();
                 break;
             case R.id.split_pdf:
                 fragment = new SplitFilesFragment();

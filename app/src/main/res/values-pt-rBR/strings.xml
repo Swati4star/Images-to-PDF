@@ -169,6 +169,7 @@
 
     <!-- Merge PDF  -->
     <string name="merge_pdf">Agregar PDF</string>
+    <string name="merge_pages">Mesclar páginas</string>
     <string name="merge_file_select">Selecione um arquivo</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">Local de outro arquivo PDF</string>
     <string name="merge_files">AGREGAR ARQUIVOS</string>

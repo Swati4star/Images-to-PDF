@@ -99,6 +99,7 @@
     <string name="images_selected">%1$d image(s) selected.</string>
 
     <string name="merge_pdf">Merge PDF</string>
+    <string name="merge_pages">Merge Pages</string>
     <string name="merge_file_select">Select a file</string>
     <string name="pdf_merged">PDFs Merged</string>
     <string name="File_hint_two">File Path for PDF two</string>

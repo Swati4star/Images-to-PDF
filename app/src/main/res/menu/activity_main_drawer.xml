@@ -81,6 +81,10 @@
                         android:icon="@drawable/ic_merge_type_black_24dp"
                         android:title="@string/merge_pdf" />
                     <item
+                        android:id="@+id/nav_merge_pages"
+                        android:icon="@drawable/ic_remove_duplicate_square_black"
+                        android:title="@string/merge_pages" />
+                    <item
                         android:id="@+id/nav_split"
                         android:icon="@drawable/ic_call_split_black_24dp"
                         android:title="@string/split_pdf" />

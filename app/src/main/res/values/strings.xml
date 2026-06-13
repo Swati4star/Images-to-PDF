@@ -220,6 +220,7 @@
 
     <!-- Merge PDF  -->
     <string name="merge_pdf">Merge PDF</string>
+    <string name="merge_pages">Merge Pages</string>
     <string name="merge_file_select">Select a file</string>
     <string name="File_hint_two" tools:keep="@string/File_hint_two">File Path for PDF two</string>
     <string name="merge_files">MERGE FILES</string>
@@ -577,7 +578,7 @@
     <string name="manage_storage_permission_denied_alert_dialog_positive_button_label" translatable="false">Re-try</string>
     <string name="manage_storage_permission_denied_alert_dialog_negative_button_label" translatable="false">I\'m sure</string>
     <string name="manage_storage_permission_denied_with_never_ask_alert_dialog_positive_button_label" translatable="false">Allow from settings</string>
-  
+
     <string-array name="faq_question_answers">
         <item>What image file formats are supported?#####The app supports jpeg, jpg, tiff, gif, psd, bmp, eps, png, etc.</item>
         <item>Can I create a new text file using the app?#####You can only create a new text file by extracting texts from an existing PDFs. To create a text file, \n1) Click the <strong>Extract Text</strong> option on the homepage. \n2) Select the PDF using <strong>SELECT PDF FILE</strong> button. \n3) Then, click <strong>EXTRACT TEXT</strong>. \n4) Once done, a text file with the texts from the PDF file will be created.</item>
@@ -604,5 +605,7 @@
         <item>Can I contribute to this app?#####Yes, you can. Find us on GitHub using the project name <strong>Swati4star/Images-to-PDF</strong>. \nFeel free to share your ideas(feature requests), submit a bug or pull request for anything you feel should be added. \nThis project has multiple contributors that add as little as a single line change. Read the project <strong>Contributor\'s guide</strong> to get started.</item>
         <item>I have some questions which are not in this FAQs document. How can I contact the developer?#####For further inquiries, email the developer at <strong>swati4star@gmail.com</strong></item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

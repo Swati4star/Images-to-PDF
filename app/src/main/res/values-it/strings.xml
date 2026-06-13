@@ -215,6 +215,7 @@
 
     <!-- Merge PDF  -->
     <string name="merge_pdf"> Unisci PDF </string>
+    <string name="merge_pages">Unire le pagineं</string>
     <string name="merge_file_select"> Seleziona un file </string>
     <string name="File_hint_two" tools:keep="@ string / File_hint_two"> Percorso file per PDF due </string>
     <string name="merge_files"> UNISCI FILE </string>
